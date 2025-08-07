@@ -76,13 +76,16 @@ async function convertAdocFiles(directory) {
 			const headerMatch = mdContent.match(/^#+\s+(.+)$/m);
 			const title = headerMatch ? headerMatch[1].trim() : filename;
 
+			// Remove the first H1 from content
+			const contentWithoutFirstH1 = mdContent.replace(/^#+\s+.+$/m, '').replace(/^\n+/, '');
+
 			// Create MDX with frontmatter
 			const mdxContent = `---
 title: ${title}
 description: ${title}
 ---
 
-${mdContent}`;
+${contentWithoutFirstH1}`;
 
 			await fs.writeFile(mdxFile, mdxContent, "utf8");
 
