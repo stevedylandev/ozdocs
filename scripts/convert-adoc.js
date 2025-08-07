@@ -35,6 +35,17 @@ async function convertAdocFiles(directory) {
 				"<include cwd lang='solidity'>./examples/$1</include>",
 			);
 
+			// Replace TIP: and NOTE: callouts with <Callout> tags
+			content = content.replace(
+				/^(TIP|NOTE):\s*(.+)$/gm,
+				"<Callout>\n$2\n</Callout>",
+			);
+
+			content = content.replace(
+				/^(IMPORTANT|WARNING):\s*(.+)$/gm,
+				"<Callout type='warn'>\n$2\n</Callout>",
+			);
+
 			// Write preprocessed content
 			const tempFile = path.join(dir, `temp_${filename}.adoc`);
 			await fs.writeFile(tempFile, content, "utf8");
@@ -46,10 +57,19 @@ async function convertAdocFiles(directory) {
 			const tempMdFile = path.join(dir, `temp_${filename}.md`);
 			let mdContent = await fs.readFile(tempMdFile, "utf8");
 
-			// Fix HTML entities in include tags (only fix the opening bracket encoding)
+			// Fix HTML entities globally
+			mdContent = mdContent
+				.replace(/&lt;/g, "<")
+				.replace(/&gt;/g, ">")
+				.replace(/&quot;/g, '"')
+				.replace(/&#x27;/g, "'")
+				.replace(/&#x2F;/g, "/")
+				.replace(/&amp;/g, "&"); // This should be last to avoid double-decoding
+
+			// Convert api: links to contracts/v5.x/api/ and change .adoc to .mdx
 			mdContent = mdContent.replace(
-				/&lt;include cwd lang='solidity'>([^&]+)&lt;\/include>/g,
-				'<include cwd lang="solidity">$1</include>',
+				/\(api:([^)]+)\.adoc([^)]*)\)/g,
+				"(contracts/v5.x/api/$1.mdx$2)",
 			);
 
 			// Extract title
