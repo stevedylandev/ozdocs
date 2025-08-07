@@ -72,6 +72,12 @@ async function convertAdocFiles(directory) {
 				"(contracts/v5.x/api/$1.mdx$2)",
 			);
 
+			// Add forward slash to image paths
+			mdContent = mdContent.replace(
+				/!\[([^\]]*)\]\(([^/)][^)]*\.(png|jpg|jpeg|gif|svg|webp))\)/g,
+				"![$1](/$2)",
+			);
+
 			// Extract title
 			const headerMatch = mdContent.match(/^#+\s+(.+)$/m);
 			const title = headerMatch ? headerMatch[1].trim() : filename;
