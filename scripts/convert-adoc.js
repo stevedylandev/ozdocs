@@ -42,10 +42,20 @@ async function convertAdocFiles(directory) {
 			);
 
 			content = content.replace(
-				/^(IMPORTANT|WARNING):\s*(.+)$/gm,
+				/^(IMPORTANT|WARNING|CAUTION):\s*(.+)$/gm,
 				"<Callout type='warn'>\n$2\n</Callout>",
 			);
 
+			// Handle multi-line callouts
+			content = content.replace(
+				/^(TIP|NOTE):\s*\n((?:.*\n?)*?)(?=\n\n|$)/gm,
+				"<Callout>\n$2\n</Callout>",
+			);
+
+			content = content.replace(
+				/^(IMPORTANT|WARNING|CAUTION):\s*\n((?:.*\n?)*?)(?=\n\n|$)/gm,
+				"<Callout type='warn'>\n$2\n</Callout>",
+			);
 			// Write preprocessed content
 			const tempFile = path.join(dir, `temp_${filename}.adoc`);
 			await fs.writeFile(tempFile, content, "utf8");
@@ -78,6 +88,85 @@ async function convertAdocFiles(directory) {
 				"![$1](/$2)",
 			);
 
+			// Fix xref: links - remove xref: and convert .adoc to .mdx
+			mdContent = mdContent.replace(
+				/xref:\[([^\]]+)\]\(([^)]+)\)/g,
+				"[$1]($2)"
+			);
+
+			// Fix .adoc internal links to .mdx
+			mdContent = mdContent.replace(
+				/\]\(([^)]+)\.adoc([^)]*)\)/g,
+				"]($1.mdx$2)"
+			);
+
+			// Fix curly bracket file references {filename} -> filename
+			mdContent = mdContent.replace(
+				/\{([^}]+)\}/g,
+				"$1"
+			);
+
+			// Fix HTML-style callouts <dl><dt><strong>📌 NOTE</strong></dt><dd> ... </dd></dl>
+			// Handle multi-line callouts by using a more permissive pattern
+			mdContent = mdContent.replace(
+				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>([\s\S]*?)<\/dd><\/dl>/g,
+				"<Callout>\n$2\n</Callout>"
+			);
+
+			mdContent = mdContent.replace(
+				/<dl><dt><strong>[⚠️🚨❗]\s*(WARNING|IMPORTANT|CAUTION|DANGER)<\/strong><\/dt><dd>([\s\S]*?)<\/dd><\/dl>/g,
+				"<Callout type='warn'>\n$2\n</Callout>"
+			);
+
+			// Handle cases where </dd></dl> might be missing or malformed
+			mdContent = mdContent.replace(
+				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>([\s\S]*?)(?=\n\n|<dl>|$)/g,
+				"<Callout>\n$2\n</Callout>"
+			);
+
+			mdContent = mdContent.replace(
+				/<dl><dt><strong>[⚠️🚨❗]\s*(WARNING|IMPORTANT|CAUTION|DANGER)<\/strong><\/dt><dd>([\s\S]*?)(?=\n\n|<dl>|$)/g,
+				"<Callout type='warn'>\n$2\n</Callout>"
+			);
+
+			// Fix xref patterns with complex anchors like xref:#ISRC6-\\__execute__[...]
+			mdContent = mdContent.replace(
+				/xref:#([^[\]]+)\[([^\]]+)\]/g,
+				"[$2](#$1)"
+			);
+
+			// Fix simple xref patterns
+			mdContent = mdContent.replace(
+				/xref:([^[\s]+)\[([^\]]+)\]/g,
+				"[$2]($1)"
+			);
+
+			// Clean up orphaned HTML tags from malformed callouts
+			// Handle orphaned <dl><dt><strong>EMOJI TYPE</strong></dt><dd> without closing tags
+			mdContent = mdContent.replace(
+				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>\s*\n([\s\S]*?)(?=\n\n|<dl>|$)/g,
+				"<Callout>\n$2\n</Callout>"
+			);
+
+			mdContent = mdContent.replace(
+				/<dl><dt><strong>[⚠️🚨❗]\s*(WARNING|IMPORTANT|CAUTION|DANGER)<\/strong><\/dt><dd>\s*\n([\s\S]*?)(?=\n\n|<dl>|$)/g,
+				"<Callout type='warn'>\n$2\n</Callout>"
+			);
+
+			// Clean up any remaining orphaned HTML tags
+			mdContent = mdContent.replace(/<dl><dt><strong>.*?<\/strong><\/dt><dd>/g, "");
+			mdContent = mdContent.replace(/<\/dd><\/dl>/g, "");
+			mdContent = mdContent.replace(/<dd>/g, "");
+			mdContent = mdContent.replace(/<\/dd>/g, "");
+			mdContent = mdContent.replace(/<dl>/g, "");
+			mdContent = mdContent.replace(/<\/dl>/g, "");
+
+			// Fix AsciiDoc monospace formatting (++ to backticks)
+			// Handle ++text++ -> `text`
+			mdContent = mdContent.replace(/\+\+([^+]+)\+\+/g, "`$1`");
+
+			// Fix any remaining ++ that might be standalone
+			mdContent = mdContent.replace(/\+\+/g, "");
 			// Extract title
 			const headerMatch = mdContent.match(/^#+\s+(.+)$/m);
 			const title = headerMatch ? headerMatch[1].trim() : filename;
