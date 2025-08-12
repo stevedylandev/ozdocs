@@ -22,11 +22,11 @@ git clone --depth 1 --branch "$CONTRACTS_BRANCH" "$CONTRACTS_REPO" "$TEMP_DIR"
 # Navigate to contracts directory and install dependencies
 echo "📚 Installing dependencies..."
 cd "$TEMP_DIR"
-npm ci --silent
+bun i --silent
 
 # Generate markdown documentation using default templates
 echo "🏗️  Generating clean markdown documentation..."
-npm run prepare-docs
+bun run prepare-docs:markdown
 
 # Copy generated markdown files to our docs directory
 echo "📋 Copying generated documentation..."
@@ -57,7 +57,11 @@ rm -rf "$TEMP_DIR"
 
 # Generate index file
 echo "📝 Generating API index..."
-cat > "$API_OUTPUT_DIR/index.md" << 'EOF'
+cat > "$API_OUTPUT_DIR/index.mdx" << 'EOF'
+---
+title: API Reference
+---
+
 # OpenZeppelin Contracts API Reference
 
 This API reference is automatically generated from the OpenZeppelin Contracts repository.

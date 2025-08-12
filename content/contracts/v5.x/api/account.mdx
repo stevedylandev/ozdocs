@@ -1,0 +1,1288 @@
+---
+title: "Account"
+description: "Smart contract account utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/contracts/api/account
+</Callout>
+
+This directory includes contracts to build accounts for ERC-4337. These include:
+
+* [`Account`](#Account): An ERC-4337 smart account implementation that includes the core logic to process user operations.
+* [`AccountERC7579`](#AccountERC7579): An extension of `Account` that implements support for ERC-7579 modules.
+* [`AccountERC7579Hooked`](#AccountERC7579Hooked): An extension of `AccountERC7579` with support for a single hook module (type 4).
+* [`ERC7821`](#ERC7821): Minimal batch executor implementation contracts. Useful to enable easy batch execution for smart contracts.
+* [`ERC4337Utils`](#ERC4337Utils): Utility functions for working with ERC-4337 user operations.
+* [`ERC7579Utils`](#ERC7579Utils): Utility functions for working with ERC-7579 modules and account modularity.
+
+## Core
+
+[`Account`](#Account)
+
+## Extensions
+
+[`AccountERC7579`](#AccountERC7579)
+
+[`AccountERC7579Hooked`](#AccountERC7579Hooked)
+
+[`ERC7821`](#ERC7821)
+
+## Utilities
+
+[`ERC4337Utils`](#ERC4337Utils)
+
+[`ERC7579Utils`](#ERC7579Utils)
+
+<a id="Account"></a>
+
+## `Account` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/Account.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/Account.sol";
+```
+
+A simple ERC4337 account implementation. This base implementation only includes the minimal logic to process
+user operations.
+
+Developers must implement the [`AbstractSigner._rawSignatureValidation`](utils/cryptography#AbstractSigner-_rawSignatureValidation-bytes32-bytes-) function to define the account's validation logic.
+
+NOTE: This core account doesn't include any mechanism for performing arbitrary external calls. This is an essential
+feature that all Account should have. We leave it up to the developers to implement the mechanism of their choice.
+Common choices include ERC-6900, ERC-7579 and ERC-7821 (among others).
+
+IMPORTANT: Implementing a mechanism to validate signatures is a security-sensitive operation as it may allow an
+attacker to bypass the account's security measures. Check out [`SignerECDSA`](utils/cryptography#SignerECDSA), [`SignerP256`](utils/cryptography#SignerP256), or [`SignerRSA`](utils/cryptography#SignerRSA) for
+digital signature validation implementations.
+
+@custom:stateless
+
+### Modifiers
+- [onlyEntryPointOrSelf()](#Account-onlyEntryPointOrSelf--)
+- [onlyEntryPoint()](#Account-onlyEntryPoint--)
+
+### Functions
+- [entryPoint()](#Account-entryPoint--)
+- [getNonce()](#Account-getNonce--)
+- [getNonce(key)](#Account-getNonce-uint192-)
+- [validateUserOp(userOp, userOpHash, missingAccountFunds)](#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-)
+- [_validateUserOp(userOp, userOpHash)](#Account-_validateUserOp-struct-PackedUserOperation-bytes32-)
+- [_signableUserOpHash(, userOpHash)](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-)
+- [_payPrefund(missingAccountFunds)](#Account-_payPrefund-uint256-)
+- [_checkEntryPoint()](#Account-_checkEntryPoint--)
+- [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
+- [receive()](#Account-receive--)
+
+#### IAccount
+
+#### AbstractSigner
+- [_rawSignatureValidation(hash, signature)](#AbstractSigner-_rawSignatureValidation-bytes32-bytes-)
+
+### Errors
+- [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
+
+#### IAccount
+
+#### AbstractSigner
+
+<a id="Account-onlyEntryPointOrSelf--"></a>
+
+### `onlyEntryPointOrSelf()`
+
+Revert if the caller is not the entry point or the account itself.
+
+<a id="Account-onlyEntryPoint--"></a>
+
+### `onlyEntryPoint()`
+
+Revert if the caller is not the entry point.
+
+<a id="Account-entryPoint--"></a>
+
+### `entryPoint() → contract IEntryPoint`
+*public*
+
+Canonical entry point for the account that forwards and validates user operations.
+
+<a id="Account-getNonce--"></a>
+
+### `getNonce() → uint256`
+*public*
+
+Return the account nonce for the canonical sequence.
+
+<a id="Account-getNonce-uint192-"></a>
+
+### `getNonce(uint192 key) → uint256`
+*public*
+
+Return the account nonce for a given sequence (key).
+
+<a id="Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-"></a>
+
+### `validateUserOp(struct PackedUserOperation userOp, bytes32 userOpHash, uint256 missingAccountFunds) → uint256`
+*public*
+
+Validates a user operation.
+
+* MUST validate the caller is a trusted EntryPoint
+* MUST validate that the signature is a valid signature of the userOpHash, and SHOULD
+  return SIG_VALIDATION_FAILED (and not revert) on signature mismatch. Any other error MUST revert.
+* MUST pay the entryPoint (caller) at least the “missingAccountFunds” (which might
+  be zero, in case the current account’s deposit is high enough)
+
+Returns an encoded packed validation data that is composed of the following elements:
+
+- `authorizer` (`address`): 0 for success, 1 for failure, otherwise the address of an authorizer contract
+- `validUntil` (`uint48`): The UserOp is valid only up to this time. Zero for “infinite”.
+- `validAfter` (`uint48`): The UserOp is valid only after this time.
+
+<a id="Account-_validateUserOp-struct-PackedUserOperation-bytes32-"></a>
+
+### `_validateUserOp(struct PackedUserOperation userOp, bytes32 userOpHash) → uint256`
+*internal*
+
+Returns the validationData for a given user operation. By default, this checks the signature of the
+signable hash (produced by [`Account._signableUserOpHash`](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-)) using the abstract signer ([`AbstractSigner._rawSignatureValidation`](utils/cryptography#AbstractSigner-_rawSignatureValidation-bytes32-bytes-)).
+
+NOTE: The userOpHash is assumed to be correct. Calling this function with a userOpHash that does not match the
+userOp will result in undefined behavior.
+
+<a id="Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-"></a>
+
+### `_signableUserOpHash(struct PackedUserOperation, bytes32 userOpHash) → bytes32`
+*internal*
+
+Virtual function that returns the signable hash for a user operations. Since v0.8.0 of the entrypoint,
+`userOpHash` is an EIP-712 hash that can be signed directly.
+
+<a id="Account-_payPrefund-uint256-"></a>
+
+### `_payPrefund(uint256 missingAccountFunds)`
+*internal*
+
+Sends the missing funds for executing the user operation to the {entrypoint}.
+The `missingAccountFunds` must be defined by the entrypoint when calling [`Account.validateUserOp`](#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-).
+
+<a id="Account-_checkEntryPoint--"></a>
+
+### `_checkEntryPoint()`
+*internal*
+
+Ensures the caller is the {entrypoint}.
+
+<a id="Account-_checkEntryPointOrSelf--"></a>
+
+### `_checkEntryPointOrSelf()`
+*internal*
+
+Ensures the caller is the {entrypoint} or the account itself.
+
+<a id="Account-receive--"></a>
+
+### `receive()`
+*external*
+
+Receive Ether.
+
+<a id="Account-AccountUnauthorized-address-"></a>
+
+### `AccountUnauthorized(address sender)`
+*error*
+
+Unauthorized call to the account.
+
+<a id="AccountERC7579"></a>
+
+## `AccountERC7579` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/extensions/draft-AccountERC7579.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/extensions/draft-AccountERC7579.sol";
+```
+
+Extension of [`Account`](#Account) that implements support for ERC-7579 modules.
+
+To comply with the ERC-1271 support requirement, this contract defers signature validation to
+installed validator modules by calling [`IERC7579Validator.isValidSignatureWithSender`](interfaces#IERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-).
+
+This contract does not implement validation logic for user operations since this functionality
+is often delegated to self-contained validation modules. Developers must install a validator module
+upon initialization (or any other mechanism to enable execution from the account):
+
+```solidity
+contract MyAccountERC7579 is AccountERC7579, Initializable {
+  function initializeAccount(address validator, bytes calldata validatorData) public initializer {
+    _installModule(MODULE_TYPE_VALIDATOR, validator, validatorData);
+  }
+}
+```
+
+[NOTE]
+====
+* Hook support is not included. See [`AccountERC7579Hooked`](#AccountERC7579Hooked) for a version that hooks to execution.
+* Validator selection, when verifying either ERC-1271 signature or ERC-4337 UserOperation is implemented in
+  internal virtual functions [`AccountERC7579._extractUserOpValidator`](#AccountERC7579-_extractUserOpValidator-struct-PackedUserOperation-) and [`AccountERC7579._extractSignatureValidator`](#AccountERC7579-_extractSignatureValidator-bytes-). Both are implemented
+  following common practices. However, this part is not standardized in ERC-7579 (or in any follow-up ERC). Some
+  accounts may want to override these internal functions.
+* When combined with [`ERC7739`](utils/cryptography#ERC7739), resolution ordering of [`AccountERC7579.isValidSignature`](#AccountERC7579-isValidSignature-bytes32-bytes-) may have an impact ([`ERC7739`](utils/cryptography#ERC7739) does not
+  call super). Manual resolution might be necessary.
+* Static calls (using callType `0xfe`) are currently NOT supported.
+====
+
+WARNING: Removing all validator modules will render the account inoperable, as no user operations can be validated thereafter.
+
+### Modifiers
+- [onlyModule(moduleTypeId, additionalContext)](#AccountERC7579-onlyModule-uint256-bytes-)
+
+### Functions
+- [fallback()](#AccountERC7579-fallback-bytes-)
+- [accountId()](#AccountERC7579-accountId--)
+- [supportsExecutionMode(encodedMode)](#AccountERC7579-supportsExecutionMode-bytes32-)
+- [supportsModule(moduleTypeId)](#AccountERC7579-supportsModule-uint256-)
+- [installModule(moduleTypeId, module, initData)](#AccountERC7579-installModule-uint256-address-bytes-)
+- [uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579-uninstallModule-uint256-address-bytes-)
+- [isModuleInstalled(moduleTypeId, module, additionalContext)](#AccountERC7579-isModuleInstalled-uint256-address-bytes-)
+- [execute(mode, executionCalldata)](#AccountERC7579-execute-bytes32-bytes-)
+- [executeFromExecutor(mode, executionCalldata)](#AccountERC7579-executeFromExecutor-bytes32-bytes-)
+- [isValidSignature(hash, signature)](#AccountERC7579-isValidSignature-bytes32-bytes-)
+- [_validateUserOp(userOp, userOpHash)](#AccountERC7579-_validateUserOp-struct-PackedUserOperation-bytes32-)
+- [_execute(mode, executionCalldata)](#AccountERC7579-_execute-Mode-bytes-)
+- [_installModule(moduleTypeId, module, initData)](#AccountERC7579-_installModule-uint256-address-bytes-)
+- [_uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579-_uninstallModule-uint256-address-bytes-)
+- [_fallback()](#AccountERC7579-_fallback--)
+- [_fallbackHandler(selector)](#AccountERC7579-_fallbackHandler-bytes4-)
+- [_checkModule(moduleTypeId, module, additionalContext)](#AccountERC7579-_checkModule-uint256-address-bytes-)
+- [_extractUserOpValidator(userOp)](#AccountERC7579-_extractUserOpValidator-struct-PackedUserOperation-)
+- [_extractSignatureValidator(signature)](#AccountERC7579-_extractSignatureValidator-bytes-)
+- [_decodeFallbackData(data)](#AccountERC7579-_decodeFallbackData-bytes-)
+- [_rawSignatureValidation(, )](#AccountERC7579-_rawSignatureValidation-bytes32-bytes-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [entryPoint()](#Account-entryPoint--)
+- [getNonce()](#Account-getNonce--)
+- [getNonce(key)](#Account-getNonce-uint192-)
+- [validateUserOp(userOp, userOpHash, missingAccountFunds)](#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-)
+- [_signableUserOpHash(, userOpHash)](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-)
+- [_payPrefund(missingAccountFunds)](#Account-_payPrefund-uint256-)
+- [_checkEntryPoint()](#Account-_checkEntryPoint--)
+- [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
+- [receive()](#Account-receive--)
+
+#### IAccount
+
+#### AbstractSigner
+
+### Events
+
+#### IERC7579ModuleConfig
+- [ModuleInstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleInstalled-uint256-address-)
+- [ModuleUninstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleUninstalled-uint256-address-)
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+
+#### IAccount
+
+#### AbstractSigner
+
+### Errors
+- [ERC7579MissingFallbackHandler(selector)](#AccountERC7579-ERC7579MissingFallbackHandler-bytes4-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
+
+#### IAccount
+
+#### AbstractSigner
+
+<a id="AccountERC7579-onlyModule-uint256-bytes-"></a>
+
+### `onlyModule(uint256 moduleTypeId, bytes additionalContext)`
+
+Modifier that checks if the caller is an installed module of the given type.
+
+<a id="AccountERC7579-fallback-bytes-"></a>
+
+### `fallback(bytes) → bytes`
+*external*
+
+See [`AccountERC7579._fallback`](#AccountERC7579-_fallback--).
+
+<a id="AccountERC7579-accountId--"></a>
+
+### `accountId() → string`
+*public*
+
+Returns the account id of the smart account
+
+<a id="AccountERC7579-supportsExecutionMode-bytes32-"></a>
+
+### `supportsExecutionMode(bytes32 encodedMode) → bool`
+*public*
+
+Supported call types:
+* Single (`0x00`): A single transaction execution.
+* Batch (`0x01`): A batch of transactions execution.
+* Delegate (`0xff`): A delegate call execution.
+
+Supported exec types:
+* Default (`0x00`): Default execution type (revert on failure).
+* Try (`0x01`): Try execution type (emits ERC7579TryExecuteFail on failure).
+
+<a id="AccountERC7579-supportsModule-uint256-"></a>
+
+### `supportsModule(uint256 moduleTypeId) → bool`
+*public*
+
+Supported module types:
+
+* Validator: A module used during the validation phase to determine if a transaction is valid and
+should be executed on the account.
+* Executor: A module that can execute transactions on behalf of the smart account via a callback.
+* Fallback Handler: A module that can extend the fallback functionality of a smart account.
+
+<a id="AccountERC7579-installModule-uint256-address-bytes-"></a>
+
+### `installModule(uint256 moduleTypeId, address module, bytes initData)`
+*public*
+
+Installs a Module of a certain type on the smart account
+
+<a id="AccountERC7579-uninstallModule-uint256-address-bytes-"></a>
+
+### `uninstallModule(uint256 moduleTypeId, address module, bytes deInitData)`
+*public*
+
+Uninstalls a Module of a certain type on the smart account
+
+<a id="AccountERC7579-isModuleInstalled-uint256-address-bytes-"></a>
+
+### `isModuleInstalled(uint256 moduleTypeId, address module, bytes additionalContext) → bool`
+*public*
+
+Returns whether a module is installed on the smart account
+
+<a id="AccountERC7579-execute-bytes32-bytes-"></a>
+
+### `execute(bytes32 mode, bytes executionCalldata)`
+*public*
+
+Executes a transaction on behalf of the account.
+
+<a id="AccountERC7579-executeFromExecutor-bytes32-bytes-"></a>
+
+### `executeFromExecutor(bytes32 mode, bytes executionCalldata) → bytes[] returnData`
+*public*
+
+Executes a transaction on behalf of the account.
+        This function is intended to be called by Executor Modules
+
+<a id="AccountERC7579-isValidSignature-bytes32-bytes-"></a>
+
+### `isValidSignature(bytes32 hash, bytes signature) → bytes4`
+*public*
+
+Implement ERC-1271 through IERC7579Validator modules. If module based validation fails, fallback to
+"native" validation by the abstract signer.
+
+NOTE: when combined with [`ERC7739`](utils/cryptography#ERC7739), resolution ordering may have an impact ([`ERC7739`](utils/cryptography#ERC7739) does not call super).
+Manual resolution might be necessary.
+
+<a id="AccountERC7579-_validateUserOp-struct-PackedUserOperation-bytes32-"></a>
+
+### `_validateUserOp(struct PackedUserOperation userOp, bytes32 userOpHash) → uint256`
+*internal*
+
+Validates a user operation with [`Account._signableUserOpHash`](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-) and returns the validation data
+if the module specified by the first 20 bytes of the nonce key is installed. Falls back to
+[`Account._validateUserOp`](#Account-_validateUserOp-struct-PackedUserOperation-bytes32-) otherwise.
+
+See [`AccountERC7579._extractUserOpValidator`](#AccountERC7579-_extractUserOpValidator-struct-PackedUserOperation-) for the module extraction logic.
+
+<a id="AccountERC7579-_execute-Mode-bytes-"></a>
+
+### `_execute(Mode mode, bytes executionCalldata) → bytes[] returnData`
+*internal*
+
+ERC-7579 execution logic. See [`AccountERC7579.supportsExecutionMode`](#AccountERC7579-supportsExecutionMode-bytes32-) for supported modes.
+
+Reverts if the call type is not supported.
+
+<a id="AccountERC7579-_installModule-uint256-address-bytes-"></a>
+
+### `_installModule(uint256 moduleTypeId, address module, bytes initData)`
+*internal*
+
+Installs a module of the given type with the given initialization data.
+
+For the fallback module type, the `initData` is expected to be the (packed) concatenation of a 4-byte
+selector and the rest of the data to be sent to the handler when calling [`IERC7579Module.onInstall`](interfaces#IERC7579Module-onInstall-bytes-).
+
+Requirements:
+
+* Module type must be supported. See [`AccountERC7579.supportsModule`](#AccountERC7579-supportsModule-uint256-). Reverts with [`ERC7579Utils.ERC7579UnsupportedModuleType`](#ERC7579Utils-ERC7579UnsupportedModuleType-uint256-).
+* Module must be of the given type. Reverts with [`ERC7579Utils.ERC7579MismatchedModuleTypeId`](#ERC7579Utils-ERC7579MismatchedModuleTypeId-uint256-address-).
+* Module must not be already installed. Reverts with [`ERC7579Utils.ERC7579AlreadyInstalledModule`](#ERC7579Utils-ERC7579AlreadyInstalledModule-uint256-address-).
+
+Emits a [`IERC7579ModuleConfig.ModuleInstalled`](interfaces#IERC7579ModuleConfig-ModuleInstalled-uint256-address-) event.
+
+<a id="AccountERC7579-_uninstallModule-uint256-address-bytes-"></a>
+
+### `_uninstallModule(uint256 moduleTypeId, address module, bytes deInitData)`
+*internal*
+
+Uninstalls a module of the given type with the given de-initialization data.
+
+For the fallback module type, the `deInitData` is expected to be the (packed) concatenation of a 4-byte
+selector and the rest of the data to be sent to the handler when calling [`IERC7579Module.onUninstall`](interfaces#IERC7579Module-onUninstall-bytes-).
+
+Requirements:
+
+* Module must be already installed. Reverts with [`ERC7579Utils.ERC7579UninstalledModule`](#ERC7579Utils-ERC7579UninstalledModule-uint256-address-) otherwise.
+
+<a id="AccountERC7579-_fallback--"></a>
+
+### `_fallback() → bytes`
+*internal*
+
+Fallback function that delegates the call to the installed handler for the given selector.
+
+Reverts with [`AccountERC7579.ERC7579MissingFallbackHandler`](#AccountERC7579-ERC7579MissingFallbackHandler-bytes4-) if the handler is not installed.
+
+Calls the handler with the original `msg.sender` appended at the end of the calldata following
+the ERC-2771 format.
+
+<a id="AccountERC7579-_fallbackHandler-bytes4-"></a>
+
+### `_fallbackHandler(bytes4 selector) → address`
+*internal*
+
+Returns the fallback handler for the given selector. Returns `address(0)` if not installed.
+
+<a id="AccountERC7579-_checkModule-uint256-address-bytes-"></a>
+
+### `_checkModule(uint256 moduleTypeId, address module, bytes additionalContext)`
+*internal*
+
+Checks if the module is installed. Reverts if the module is not installed.
+
+<a id="AccountERC7579-_extractUserOpValidator-struct-PackedUserOperation-"></a>
+
+### `_extractUserOpValidator(struct PackedUserOperation userOp) → address`
+*internal*
+
+Extracts the nonce validator from the user operation.
+
+To construct a nonce key, set nonce as follows:
+
+```
+<module address (20 bytes)> | <key (4 bytes)> | <nonce (8 bytes)>
+```
+NOTE: The default behavior of this function replicates the behavior of
+[Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L266),
+[Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L227), and
+[ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L247).
+
+This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
+
+For example, [Biconomy's Nexus](https://github.com/bcnmy/nexus/blob/54f4e19baaff96081a8843672977caf712ef19f4/contracts/lib/NonceLib.sol#L17)
+uses a similar yet incompatible approach (the validator address is also part of the nonce, but not at the same location)
+
+<a id="AccountERC7579-_extractSignatureValidator-bytes-"></a>
+
+### `_extractSignatureValidator(bytes signature) → address module, bytes innerSignature`
+*internal*
+
+Extracts the signature validator from the signature.
+
+To construct a signature, set the first 20 bytes as the module address and the remaining bytes as the
+signature data:
+
+```
+<module address (20 bytes)> | <signature data>
+```
+
+NOTE: The default behavior of this function replicates the behavior of
+[Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L350),
+[Biconomy's Nexus](https://github.com/bcnmy/nexus/blob/54f4e19baaff96081a8843672977caf712ef19f4/contracts/Nexus.sol#L239),
+[Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L252), and
+[ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L296).
+
+This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
+
+<a id="AccountERC7579-_decodeFallbackData-bytes-"></a>
+
+### `_decodeFallbackData(bytes data) → bytes4 selector, bytes remaining`
+*internal*
+
+Extract the function selector from initData/deInitData for MODULE_TYPE_FALLBACK
+
+NOTE: If we had calldata here, we could use calldata slice which are cheaper to manipulate and don't require
+actual copy. However, this would require `_installModule` to get a calldata bytes object instead of a memory
+bytes object. This would prevent calling `_installModule` from a contract constructor and would force the use
+of external initializers. That may change in the future, as most accounts will probably be deployed as
+clones/proxy/ERC-7702 delegates and therefore rely on initializers anyway.
+
+<a id="AccountERC7579-_rawSignatureValidation-bytes32-bytes-"></a>
+
+### `_rawSignatureValidation(bytes32, bytes) → bool`
+*internal*
+
+By default, only use the modules for validation of userOp and signature. Disable raw signatures.
+
+<a id="AccountERC7579-ERC7579MissingFallbackHandler-bytes4-"></a>
+
+### `ERC7579MissingFallbackHandler(bytes4 selector)`
+*error*
+
+The account's [`AccountERC7579.fallback`](#AccountERC7579-fallback-bytes-) was called with a selector that doesn't have an installed handler.
+
+<a id="AccountERC7579Hooked"></a>
+
+## `AccountERC7579Hooked` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/extensions/draft-AccountERC7579Hooked.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/extensions/draft-AccountERC7579Hooked.sol";
+```
+
+Extension of [`AccountERC7579`](#AccountERC7579) with support for a single hook module (type 4).
+
+If installed, this extension will call the hook module's [`IERC7579Hook.preCheck`](interfaces#IERC7579Hook-preCheck-address-uint256-bytes-) before executing any operation
+with [`AccountERC7579._execute`](#AccountERC7579-_execute-Mode-bytes-) (including [`AccessManager.execute`](access#AccessManager-execute-address-bytes-) and [`AccountERC7579.executeFromExecutor`](#AccountERC7579-executeFromExecutor-bytes32-bytes-) by default) and [`IERC7579Hook.postCheck`](interfaces#IERC7579Hook-postCheck-bytes-) thereafter.
+
+NOTE: Hook modules break the check-effect-interaction pattern. In particular, the [`IERC7579Hook.preCheck`](interfaces#IERC7579Hook-preCheck-address-uint256-bytes-) hook can
+lead to potentially dangerous reentrancy. Using the `withHook()` modifier is safe if no effect is performed
+before the preHook or after the postHook. That is the case on all functions here, but it may not be the case if
+functions that have this modifier are overridden. Developers should be extremely careful when implementing hook
+modules or further overriding functions that involve hooks.
+
+### Modifiers
+- [withHook()](#AccountERC7579Hooked-withHook--)
+
+### Functions
+- [accountId()](#AccountERC7579Hooked-accountId--)
+- [hook()](#AccountERC7579Hooked-hook--)
+- [supportsModule(moduleTypeId)](#AccountERC7579Hooked-supportsModule-uint256-)
+- [isModuleInstalled(moduleTypeId, module, data)](#AccountERC7579Hooked-isModuleInstalled-uint256-address-bytes-)
+- [_installModule(moduleTypeId, module, initData)](#AccountERC7579Hooked-_installModule-uint256-address-bytes-)
+- [_uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579Hooked-_uninstallModule-uint256-address-bytes-)
+- [_execute(mode, executionCalldata)](#AccountERC7579Hooked-_execute-Mode-bytes-)
+- [_fallback()](#AccountERC7579Hooked-_fallback--)
+
+#### AccountERC7579
+- [fallback()](#AccountERC7579-fallback-bytes-)
+- [supportsExecutionMode(encodedMode)](#AccountERC7579-supportsExecutionMode-bytes32-)
+- [installModule(moduleTypeId, module, initData)](#AccountERC7579-installModule-uint256-address-bytes-)
+- [uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579-uninstallModule-uint256-address-bytes-)
+- [execute(mode, executionCalldata)](#AccountERC7579-execute-bytes32-bytes-)
+- [executeFromExecutor(mode, executionCalldata)](#AccountERC7579-executeFromExecutor-bytes32-bytes-)
+- [isValidSignature(hash, signature)](#AccountERC7579-isValidSignature-bytes32-bytes-)
+- [_validateUserOp(userOp, userOpHash)](#AccountERC7579-_validateUserOp-struct-PackedUserOperation-bytes32-)
+- [_fallbackHandler(selector)](#AccountERC7579-_fallbackHandler-bytes4-)
+- [_checkModule(moduleTypeId, module, additionalContext)](#AccountERC7579-_checkModule-uint256-address-bytes-)
+- [_extractUserOpValidator(userOp)](#AccountERC7579-_extractUserOpValidator-struct-PackedUserOperation-)
+- [_extractSignatureValidator(signature)](#AccountERC7579-_extractSignatureValidator-bytes-)
+- [_decodeFallbackData(data)](#AccountERC7579-_decodeFallbackData-bytes-)
+- [_rawSignatureValidation(, )](#AccountERC7579-_rawSignatureValidation-bytes32-bytes-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [entryPoint()](#Account-entryPoint--)
+- [getNonce()](#Account-getNonce--)
+- [getNonce(key)](#Account-getNonce-uint192-)
+- [validateUserOp(userOp, userOpHash, missingAccountFunds)](#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-)
+- [_signableUserOpHash(, userOpHash)](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-)
+- [_payPrefund(missingAccountFunds)](#Account-_payPrefund-uint256-)
+- [_checkEntryPoint()](#Account-_checkEntryPoint--)
+- [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
+- [receive()](#Account-receive--)
+
+#### IAccount
+
+#### AbstractSigner
+
+### Events
+
+#### AccountERC7579
+
+#### IERC7579ModuleConfig
+- [ModuleInstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleInstalled-uint256-address-)
+- [ModuleUninstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleUninstalled-uint256-address-)
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+
+#### IAccount
+
+#### AbstractSigner
+
+### Errors
+- [ERC7579HookModuleAlreadyPresent(hook)](#AccountERC7579Hooked-ERC7579HookModuleAlreadyPresent-address-)
+
+#### AccountERC7579
+- [ERC7579MissingFallbackHandler(selector)](#AccountERC7579-ERC7579MissingFallbackHandler-bytes4-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
+
+#### IAccount
+
+#### AbstractSigner
+
+<a id="AccountERC7579Hooked-withHook--"></a>
+
+### `withHook()`
+
+Calls [`IERC7579Hook.preCheck`](interfaces#IERC7579Hook-preCheck-address-uint256-bytes-) before executing the modified function and [`IERC7579Hook.postCheck`](interfaces#IERC7579Hook-postCheck-bytes-)
+thereafter.
+
+<a id="AccountERC7579Hooked-accountId--"></a>
+
+### `accountId() → string`
+*public*
+
+Returns the account id of the smart account
+
+<a id="AccountERC7579Hooked-hook--"></a>
+
+### `hook() → address`
+*public*
+
+Returns the hook module address if installed, or `address(0)` otherwise.
+
+<a id="AccountERC7579Hooked-supportsModule-uint256-"></a>
+
+### `supportsModule(uint256 moduleTypeId) → bool`
+*public*
+
+Supports hook modules. See [`AccountERC7579.supportsModule`](#AccountERC7579-supportsModule-uint256-)
+
+<a id="AccountERC7579Hooked-isModuleInstalled-uint256-address-bytes-"></a>
+
+### `isModuleInstalled(uint256 moduleTypeId, address module, bytes data) → bool`
+*public*
+
+Returns whether a module is installed on the smart account
+
+<a id="AccountERC7579Hooked-_installModule-uint256-address-bytes-"></a>
+
+### `_installModule(uint256 moduleTypeId, address module, bytes initData)`
+*internal*
+
+Installs a module with support for hook modules. See [`AccountERC7579._installModule`](#AccountERC7579-_installModule-uint256-address-bytes-)
+
+<a id="AccountERC7579Hooked-_uninstallModule-uint256-address-bytes-"></a>
+
+### `_uninstallModule(uint256 moduleTypeId, address module, bytes deInitData)`
+*internal*
+
+Uninstalls a module with support for hook modules. See [`AccountERC7579._uninstallModule`](#AccountERC7579-_uninstallModule-uint256-address-bytes-)
+
+<a id="AccountERC7579Hooked-_execute-Mode-bytes-"></a>
+
+### `_execute(Mode mode, bytes executionCalldata) → bytes[]`
+*internal*
+
+Hooked version of [`AccountERC7579._execute`](#AccountERC7579-_execute-Mode-bytes-).
+
+<a id="AccountERC7579Hooked-_fallback--"></a>
+
+### `_fallback() → bytes`
+*internal*
+
+Hooked version of [`AccountERC7579._fallback`](#AccountERC7579-_fallback--).
+
+<a id="AccountERC7579Hooked-ERC7579HookModuleAlreadyPresent-address-"></a>
+
+### `ERC7579HookModuleAlreadyPresent(address hook)`
+*error*
+
+A hook module is already present. This contract only supports one hook module.
+
+<a id="ERC7821"></a>
+
+## `ERC7821` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/extensions/draft-ERC7821.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/extensions/draft-ERC7821.sol";
+```
+
+Minimal batch executor following ERC-7821.
+
+Only supports supports single batch mode (`0x01000000000000000000`). Does not support optional "opData".
+
+@custom:stateless
+
+### Functions
+- [execute(mode, executionData)](#ERC7821-execute-bytes32-bytes-)
+- [supportsExecutionMode(mode)](#ERC7821-supportsExecutionMode-bytes32-)
+- [_erc7821AuthorizedExecutor(caller, , )](#ERC7821-_erc7821AuthorizedExecutor-address-bytes32-bytes-)
+
+#### IERC7821
+
+### Errors
+- [UnsupportedExecutionMode()](#ERC7821-UnsupportedExecutionMode--)
+
+#### IERC7821
+
+<a id="ERC7821-execute-bytes32-bytes-"></a>
+
+### `execute(bytes32 mode, bytes executionData)`
+*public*
+
+Executes the calls in `executionData` with no optional `opData` support.
+
+NOTE: Access to this function is controlled by [`ERC7821._erc7821AuthorizedExecutor`](#ERC7821-_erc7821AuthorizedExecutor-address-bytes32-bytes-). Changing access permissions, for
+example to approve calls by the ERC-4337 entrypoint, should be implemented by overriding it.
+
+Reverts and bubbles up error if any call fails.
+
+<a id="ERC7821-supportsExecutionMode-bytes32-"></a>
+
+### `supportsExecutionMode(bytes32 mode) → bool result`
+*public*
+
+This function is provided for frontends to detect support.
+Only returns true for:
+- `bytes32(0x01000000000000000000...)`: does not support optional `opData`.
+- `bytes32(0x01000000000078210001...)`: supports optional `opData`.
+
+<a id="ERC7821-_erc7821AuthorizedExecutor-address-bytes32-bytes-"></a>
+
+### `_erc7821AuthorizedExecutor(address caller, bytes32, bytes) → bool`
+*internal*
+
+Access control mechanism for the [`AccessManager.execute`](access#AccessManager-execute-address-bytes-) function.
+By default, only the contract itself is allowed to execute.
+
+Override this function to implement custom access control, for example to allow the
+ERC-4337 entrypoint to execute.
+
+```solidity
+function _erc7821AuthorizedExecutor(
+  address caller,
+  bytes32 mode,
+  bytes calldata executionData
+) internal view virtual override returns (bool) {
+  return caller == address(entryPoint()) || super._erc7821AuthorizedExecutor(caller, mode, executionData);
+}
+```
+
+<a id="ERC7821-UnsupportedExecutionMode--"></a>
+
+### `UnsupportedExecutionMode()`
+*error*
+
+<a id="EIP7702Utils"></a>
+
+## `EIP7702Utils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/EIP7702Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/EIP7702Utils.sol";
+```
+
+Library with common EIP-7702 utility functions.
+
+See [ERC-7702](https://eips.ethereum.org/EIPS/eip-7702).
+
+### Functions
+- [fetchDelegate(account)](#EIP7702Utils-fetchDelegate-address-)
+
+<a id="EIP7702Utils-fetchDelegate-address-"></a>
+
+### `fetchDelegate(address account) → address`
+*internal*
+
+Returns the address of the delegate if `account` as an EIP-7702 delegation setup, or address(0) otherwise.
+
+<a id="IEntryPointExtra"></a>
+
+## `IEntryPointExtra` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC4337Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC4337Utils.sol";
+```
+
+This is available on all entrypoint since v0.4.0, but is not formally part of the ERC.
+
+### Functions
+- [getUserOpHash(userOp)](#IEntryPointExtra-getUserOpHash-struct-PackedUserOperation-)
+
+<a id="IEntryPointExtra-getUserOpHash-struct-PackedUserOperation-"></a>
+
+### `getUserOpHash(struct PackedUserOperation userOp) → bytes32`
+*external*
+
+<a id="ERC4337Utils"></a>
+
+## `ERC4337Utils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC4337Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC4337Utils.sol";
+```
+
+Library with common ERC-4337 utility functions.
+
+See [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337).
+
+### Functions
+- [parseValidationData(validationData)](#ERC4337Utils-parseValidationData-uint256-)
+- [packValidationData(aggregator, validAfter, validUntil)](#ERC4337Utils-packValidationData-address-uint48-uint48-)
+- [packValidationData(sigSuccess, validAfter, validUntil)](#ERC4337Utils-packValidationData-bool-uint48-uint48-)
+- [combineValidationData(validationData1, validationData2)](#ERC4337Utils-combineValidationData-uint256-uint256-)
+- [getValidationData(validationData)](#ERC4337Utils-getValidationData-uint256-)
+- [hash(self, entrypoint)](#ERC4337Utils-hash-struct-PackedUserOperation-address-)
+- [factory(self)](#ERC4337Utils-factory-struct-PackedUserOperation-)
+- [factoryData(self)](#ERC4337Utils-factoryData-struct-PackedUserOperation-)
+- [verificationGasLimit(self)](#ERC4337Utils-verificationGasLimit-struct-PackedUserOperation-)
+- [callGasLimit(self)](#ERC4337Utils-callGasLimit-struct-PackedUserOperation-)
+- [maxPriorityFeePerGas(self)](#ERC4337Utils-maxPriorityFeePerGas-struct-PackedUserOperation-)
+- [maxFeePerGas(self)](#ERC4337Utils-maxFeePerGas-struct-PackedUserOperation-)
+- [gasPrice(self)](#ERC4337Utils-gasPrice-struct-PackedUserOperation-)
+- [paymaster(self)](#ERC4337Utils-paymaster-struct-PackedUserOperation-)
+- [paymasterVerificationGasLimit(self)](#ERC4337Utils-paymasterVerificationGasLimit-struct-PackedUserOperation-)
+- [paymasterPostOpGasLimit(self)](#ERC4337Utils-paymasterPostOpGasLimit-struct-PackedUserOperation-)
+- [paymasterData(self)](#ERC4337Utils-paymasterData-struct-PackedUserOperation-)
+
+<a id="ERC4337Utils-parseValidationData-uint256-"></a>
+
+### `parseValidationData(uint256 validationData) → address aggregator, uint48 validAfter, uint48 validUntil`
+*internal*
+
+Parses the validation data into its components. See [`ERC4337Utils.packValidationData`](#ERC4337Utils-packValidationData-bool-uint48-uint48-).
+
+<a id="ERC4337Utils-packValidationData-address-uint48-uint48-"></a>
+
+### `packValidationData(address aggregator, uint48 validAfter, uint48 validUntil) → uint256`
+*internal*
+
+Packs the validation data into a single uint256. See [`ERC4337Utils.parseValidationData`](#ERC4337Utils-parseValidationData-uint256-).
+
+<a id="ERC4337Utils-packValidationData-bool-uint48-uint48-"></a>
+
+### `packValidationData(bool sigSuccess, uint48 validAfter, uint48 validUntil) → uint256`
+*internal*
+
+Same as [`ERC4337Utils.packValidationData`](#ERC4337Utils-packValidationData-bool-uint48-uint48-), but with a boolean signature success flag.
+
+<a id="ERC4337Utils-combineValidationData-uint256-uint256-"></a>
+
+### `combineValidationData(uint256 validationData1, uint256 validationData2) → uint256`
+*internal*
+
+Combines two validation data into a single one.
+
+The `aggregator` is set to [`ERC4337Utils.SIG_VALIDATION_SUCCESS`](#ERC4337Utils-SIG_VALIDATION_SUCCESS-uint256) if both are successful, while
+the `validAfter` is the maximum and the `validUntil` is the minimum of both.
+
+<a id="ERC4337Utils-getValidationData-uint256-"></a>
+
+### `getValidationData(uint256 validationData) → address aggregator, bool outOfTimeRange`
+*internal*
+
+Returns the aggregator of the `validationData` and whether it is out of time range.
+
+<a id="ERC4337Utils-hash-struct-PackedUserOperation-address-"></a>
+
+### `hash(struct PackedUserOperation self, address entrypoint) → bytes32`
+*internal*
+
+Get the hash of a user operation for a given entrypoint
+
+<a id="ERC4337Utils-factory-struct-PackedUserOperation-"></a>
+
+### `factory(struct PackedUserOperation self) → address`
+*internal*
+
+Returns `factory` from the [`PackedUserOperation`](interfaces#PackedUserOperation), or address(0) if the initCode is empty or not properly formatted.
+
+<a id="ERC4337Utils-factoryData-struct-PackedUserOperation-"></a>
+
+### `factoryData(struct PackedUserOperation self) → bytes`
+*internal*
+
+Returns `factoryData` from the [`PackedUserOperation`](interfaces#PackedUserOperation), or empty bytes if the initCode is empty or not properly formatted.
+
+<a id="ERC4337Utils-verificationGasLimit-struct-PackedUserOperation-"></a>
+
+### `verificationGasLimit(struct PackedUserOperation self) → uint256`
+*internal*
+
+Returns `verificationGasLimit` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="ERC4337Utils-callGasLimit-struct-PackedUserOperation-"></a>
+
+### `callGasLimit(struct PackedUserOperation self) → uint256`
+*internal*
+
+Returns `callGasLimit` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="ERC4337Utils-maxPriorityFeePerGas-struct-PackedUserOperation-"></a>
+
+### `maxPriorityFeePerGas(struct PackedUserOperation self) → uint256`
+*internal*
+
+Returns the first section of `gasFees` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="ERC4337Utils-maxFeePerGas-struct-PackedUserOperation-"></a>
+
+### `maxFeePerGas(struct PackedUserOperation self) → uint256`
+*internal*
+
+Returns the second section of `gasFees` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="ERC4337Utils-gasPrice-struct-PackedUserOperation-"></a>
+
+### `gasPrice(struct PackedUserOperation self) → uint256`
+*internal*
+
+Returns the total gas price for the [`PackedUserOperation`](interfaces#PackedUserOperation) (ie. `maxFeePerGas` or `maxPriorityFeePerGas + basefee`).
+
+<a id="ERC4337Utils-paymaster-struct-PackedUserOperation-"></a>
+
+### `paymaster(struct PackedUserOperation self) → address`
+*internal*
+
+Returns the first section of `paymasterAndData` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="ERC4337Utils-paymasterVerificationGasLimit-struct-PackedUserOperation-"></a>
+
+### `paymasterVerificationGasLimit(struct PackedUserOperation self) → uint256`
+*internal*
+
+Returns the second section of `paymasterAndData` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="ERC4337Utils-paymasterPostOpGasLimit-struct-PackedUserOperation-"></a>
+
+### `paymasterPostOpGasLimit(struct PackedUserOperation self) → uint256`
+*internal*
+
+Returns the third section of `paymasterAndData` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="ERC4337Utils-paymasterData-struct-PackedUserOperation-"></a>
+
+### `paymasterData(struct PackedUserOperation self) → bytes`
+*internal*
+
+Returns the fourth section of `paymasterAndData` from the [`PackedUserOperation`](interfaces#PackedUserOperation).
+
+<a id="Mode"></a>
+
+## `Mode` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+<a id="CallType"></a>
+
+## `CallType` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+<a id="ExecType"></a>
+
+## `ExecType` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+<a id="ModeSelector"></a>
+
+## `ModeSelector` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+<a id="ModePayload"></a>
+
+## `ModePayload` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+<a id="ERC7579Utils"></a>
+
+## `ERC7579Utils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+Library with common ERC-7579 utility functions.
+
+See [ERC-7579](https://eips.ethereum.org/EIPS/eip-7579).
+
+### Functions
+- [execSingle(executionCalldata, execType)](#ERC7579Utils-execSingle-bytes-ExecType-)
+- [execBatch(executionCalldata, execType)](#ERC7579Utils-execBatch-bytes-ExecType-)
+- [execDelegateCall(executionCalldata, execType)](#ERC7579Utils-execDelegateCall-bytes-ExecType-)
+- [encodeMode(callType, execType, selector, payload)](#ERC7579Utils-encodeMode-CallType-ExecType-ModeSelector-ModePayload-)
+- [decodeMode(mode)](#ERC7579Utils-decodeMode-Mode-)
+- [encodeSingle(target, value, callData)](#ERC7579Utils-encodeSingle-address-uint256-bytes-)
+- [decodeSingle(executionCalldata)](#ERC7579Utils-decodeSingle-bytes-)
+- [encodeDelegate(target, callData)](#ERC7579Utils-encodeDelegate-address-bytes-)
+- [decodeDelegate(executionCalldata)](#ERC7579Utils-decodeDelegate-bytes-)
+- [encodeBatch(executionBatch)](#ERC7579Utils-encodeBatch-struct-Execution---)
+- [decodeBatch(executionCalldata)](#ERC7579Utils-decodeBatch-bytes-)
+
+### Events
+- [ERC7579TryExecuteFail(batchExecutionIndex, returndata)](#ERC7579Utils-ERC7579TryExecuteFail-uint256-bytes-)
+
+### Errors
+- [ERC7579UnsupportedCallType(callType)](#ERC7579Utils-ERC7579UnsupportedCallType-CallType-)
+- [ERC7579UnsupportedExecType(execType)](#ERC7579Utils-ERC7579UnsupportedExecType-ExecType-)
+- [ERC7579MismatchedModuleTypeId(moduleTypeId, module)](#ERC7579Utils-ERC7579MismatchedModuleTypeId-uint256-address-)
+- [ERC7579UninstalledModule(moduleTypeId, module)](#ERC7579Utils-ERC7579UninstalledModule-uint256-address-)
+- [ERC7579AlreadyInstalledModule(moduleTypeId, module)](#ERC7579Utils-ERC7579AlreadyInstalledModule-uint256-address-)
+- [ERC7579UnsupportedModuleType(moduleTypeId)](#ERC7579Utils-ERC7579UnsupportedModuleType-uint256-)
+- [ERC7579DecodingError()](#ERC7579Utils-ERC7579DecodingError--)
+
+<a id="ERC7579Utils-execSingle-bytes-ExecType-"></a>
+
+### `execSingle(bytes executionCalldata, ExecType execType) → bytes[] returnData`
+*internal*
+
+Executes a single call.
+
+<a id="ERC7579Utils-execBatch-bytes-ExecType-"></a>
+
+### `execBatch(bytes executionCalldata, ExecType execType) → bytes[] returnData`
+*internal*
+
+Executes a batch of calls.
+
+<a id="ERC7579Utils-execDelegateCall-bytes-ExecType-"></a>
+
+### `execDelegateCall(bytes executionCalldata, ExecType execType) → bytes[] returnData`
+*internal*
+
+Executes a delegate call.
+
+<a id="ERC7579Utils-encodeMode-CallType-ExecType-ModeSelector-ModePayload-"></a>
+
+### `encodeMode(CallType callType, ExecType execType, ModeSelector selector, ModePayload payload) → Mode mode`
+*internal*
+
+Encodes the mode with the provided parameters. See [`ERC7579Utils.decodeMode`](#ERC7579Utils-decodeMode-Mode-).
+
+<a id="ERC7579Utils-decodeMode-Mode-"></a>
+
+### `decodeMode(Mode mode) → CallType callType, ExecType execType, ModeSelector selector, ModePayload payload`
+*internal*
+
+Decodes the mode into its parameters. See [`ERC7579Utils.encodeMode`](#ERC7579Utils-encodeMode-CallType-ExecType-ModeSelector-ModePayload-).
+
+<a id="ERC7579Utils-encodeSingle-address-uint256-bytes-"></a>
+
+### `encodeSingle(address target, uint256 value, bytes callData) → bytes executionCalldata`
+*internal*
+
+Encodes a single call execution. See [`ERC7579Utils.decodeSingle`](#ERC7579Utils-decodeSingle-bytes-).
+
+<a id="ERC7579Utils-decodeSingle-bytes-"></a>
+
+### `decodeSingle(bytes executionCalldata) → address target, uint256 value, bytes callData`
+*internal*
+
+Decodes a single call execution. See [`ERC7579Utils.encodeSingle`](#ERC7579Utils-encodeSingle-address-uint256-bytes-).
+
+<a id="ERC7579Utils-encodeDelegate-address-bytes-"></a>
+
+### `encodeDelegate(address target, bytes callData) → bytes executionCalldata`
+*internal*
+
+Encodes a delegate call execution. See [`ERC7579Utils.decodeDelegate`](#ERC7579Utils-decodeDelegate-bytes-).
+
+<a id="ERC7579Utils-decodeDelegate-bytes-"></a>
+
+### `decodeDelegate(bytes executionCalldata) → address target, bytes callData`
+*internal*
+
+Decodes a delegate call execution. See [`ERC7579Utils.encodeDelegate`](#ERC7579Utils-encodeDelegate-address-bytes-).
+
+<a id="ERC7579Utils-encodeBatch-struct-Execution---"></a>
+
+### `encodeBatch(struct Execution[] executionBatch) → bytes executionCalldata`
+*internal*
+
+Encodes a batch of executions. See [`ERC7579Utils.decodeBatch`](#ERC7579Utils-decodeBatch-bytes-).
+
+<a id="ERC7579Utils-decodeBatch-bytes-"></a>
+
+### `decodeBatch(bytes executionCalldata) → struct Execution[] executionBatch`
+*internal*
+
+Decodes a batch of executions. See [`ERC7579Utils.encodeBatch`](#ERC7579Utils-encodeBatch-struct-Execution---).
+
+NOTE: This function runs some checks and will throw a [`ERC7579Utils.ERC7579DecodingError`](#ERC7579Utils-ERC7579DecodingError--) if the input is not properly formatted.
+
+<a id="ERC7579Utils-ERC7579TryExecuteFail-uint256-bytes-"></a>
+
+### `ERC7579TryExecuteFail(uint256 batchExecutionIndex, bytes returndata)`
+*event*
+
+Emits when an [`ERC7579Utils.EXECTYPE_TRY`](#ERC7579Utils-EXECTYPE_TRY-ExecType) execution fails.
+
+<a id="ERC7579Utils-ERC7579UnsupportedCallType-CallType-"></a>
+
+### `ERC7579UnsupportedCallType(CallType callType)`
+*error*
+
+The provided [`CallType`](#CallType) is not supported.
+
+<a id="ERC7579Utils-ERC7579UnsupportedExecType-ExecType-"></a>
+
+### `ERC7579UnsupportedExecType(ExecType execType)`
+*error*
+
+The provided [`ExecType`](#ExecType) is not supported.
+
+<a id="ERC7579Utils-ERC7579MismatchedModuleTypeId-uint256-address-"></a>
+
+### `ERC7579MismatchedModuleTypeId(uint256 moduleTypeId, address module)`
+*error*
+
+The provided module doesn't match the provided module type.
+
+<a id="ERC7579Utils-ERC7579UninstalledModule-uint256-address-"></a>
+
+### `ERC7579UninstalledModule(uint256 moduleTypeId, address module)`
+*error*
+
+The module is not installed.
+
+<a id="ERC7579Utils-ERC7579AlreadyInstalledModule-uint256-address-"></a>
+
+### `ERC7579AlreadyInstalledModule(uint256 moduleTypeId, address module)`
+*error*
+
+The module is already installed.
+
+<a id="ERC7579Utils-ERC7579UnsupportedModuleType-uint256-"></a>
+
+### `ERC7579UnsupportedModuleType(uint256 moduleTypeId)`
+*error*
+
+The module type is not supported.
+
+<a id="ERC7579Utils-ERC7579DecodingError--"></a>
+
+### `ERC7579DecodingError()`
+*error*
+
+Input calldata not properly formatted and possibly malicious.
+
+<a id="eqCallType-CallType-CallType-"></a>
+
+## `eqCallType` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+Compares two `CallType` values for equality.
+
+<a id="eqCallType-CallType-CallType-"></a>
+
+### `eqCallType(CallType a, CallType b) → bool`
+*internal*
+
+Compares two `CallType` values for equality.
+
+<a id="eqExecType-ExecType-ExecType-"></a>
+
+## `eqExecType` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+Compares two `ExecType` values for equality.
+
+<a id="eqExecType-ExecType-ExecType-"></a>
+
+### `eqExecType(ExecType a, ExecType b) → bool`
+*internal*
+
+Compares two `ExecType` values for equality.
+
+<a id="eqModeSelector-ModeSelector-ModeSelector-"></a>
+
+## `eqModeSelector` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+Compares two `ModeSelector` values for equality.
+
+<a id="eqModeSelector-ModeSelector-ModeSelector-"></a>
+
+### `eqModeSelector(ModeSelector a, ModeSelector b) → bool`
+*internal*
+
+Compares two `ModeSelector` values for equality.
+
+<a id="eqModePayload-ModePayload-ModePayload-"></a>
+
+## `eqModePayload` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/utils/draft-ERC7579Utils.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol";
+```
+
+Compares two `ModePayload` values for equality.
+
+<a id="eqModePayload-ModePayload-ModePayload-"></a>
+
+### `eqModePayload(ModePayload a, ModePayload b) → bool`
+*internal*
+
+Compares two `ModePayload` values for equality.
