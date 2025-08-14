@@ -1,0 +1,588 @@
+---
+title: "Utils"
+description: "Smart contract utils utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/confidential-contracts/api/utils
+</Callout>
+
+Miscellaneous contracts and libraries containing utility functions you can use to improve security, and ease integrations when working with confidential contracts.
+
+* [`FHESafeMath`](#FHESafeMath): Implementation of safe math operations for encrypted values.
+* [`CheckpointsConfidential`](#CheckpointsConfidential): Implementation of checkpoints for encrypted values.
+* [`HandleAccessManager`](#HandleAccessManager): Minimal contract that adds a function to give allowance to callers for a given ciphertext handle.
+
+## Math
+
+[`FHESafeMath`](#FHESafeMath)
+
+## Structs
+
+[`CheckpointsConfidential`](#CheckpointsConfidential)
+
+## Other
+[`HandleAccessManager`](#HandleAccessManager)
+
+<a id="FHESafeMath"></a>
+
+## `FHESafeMath` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/FHESafeMath.sol)
+
+```solidity
+import "@openzeppelin/contracts/utils/FHESafeMath.sol";
+```
+
+Library providing safe arithmetic operations for encrypted values
+to handle potential overflows in FHE operations.
+
+### Functions
+- [tryIncrease(oldValue, delta)](#FHESafeMath-tryIncrease-euint64-euint64-)
+- [tryDecrease(oldValue, delta)](#FHESafeMath-tryDecrease-euint64-euint64-)
+
+<a id="FHESafeMath-tryIncrease-euint64-euint64-"></a>
+
+### `tryIncrease(euint64 oldValue, euint64 delta) → ebool success, euint64 updated`
+*internal*
+
+Try to increase the encrypted value `oldValue` by `delta`. If the operation is successful,
+`success` will be true and `updated` will be the new value. Otherwise, `success` will be false
+and `updated` will be the original value.
+
+<a id="FHESafeMath-tryDecrease-euint64-euint64-"></a>
+
+### `tryDecrease(euint64 oldValue, euint64 delta) → ebool success, euint64 updated`
+*internal*
+
+Try to decrease the encrypted value `oldValue` by `delta`. If the operation is successful,
+`success` will be true and `updated` will be the new value. Otherwise, `success` will be false
+and `updated` will be the original value.
+
+<a id="HandleAccessManager"></a>
+
+## `HandleAccessManager` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/HandleAccessManager.sol)
+
+```solidity
+import "@openzeppelin/contracts/utils/HandleAccessManager.sol";
+```
+
+### Functions
+- [getHandleAllowance(handle, account, persistent)](#HandleAccessManager-getHandleAllowance-bytes32-address-bool-)
+- [_validateHandleAllowance(handle)](#HandleAccessManager-_validateHandleAllowance-bytes32-)
+
+<a id="HandleAccessManager-getHandleAllowance-bytes32-address-bool-"></a>
+
+### `getHandleAllowance(bytes32 handle, address account, bool persistent)`
+*public*
+
+Get handle access for the given handle `handle`. Access will be given to the
+account `account` with the given persistence flag.
+
+NOTE: This function call is gated by `msg.sender` and validated by the
+[`HandleAccessManager._validateHandleAllowance`](#HandleAccessManager-_validateHandleAllowance-bytes32-) function.
+
+<a id="HandleAccessManager-_validateHandleAllowance-bytes32-"></a>
+
+### `_validateHandleAllowance(bytes32 handle)`
+*internal*
+
+Unimplemented function that must revert if the message sender is not allowed to call
+[`HandleAccessManager.getHandleAllowance`](#HandleAccessManager-getHandleAllowance-bytes32-address-bool-) for the given handle.
+
+<a id="CheckpointsConfidential"></a>
+
+## `CheckpointsConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/structs/CheckpointsConfidential.sol)
+
+```solidity
+import "@openzeppelin/contracts/utils/structs/CheckpointsConfidential.sol";
+```
+
+This library defines the `Trace*` struct, for checkpointing values as they change at different points in
+time, and later looking up past values by block number.
+
+To create a history of checkpoints, define a variable type `CheckpointsConfidential.Trace*` in your contract, and store a new
+checkpoint for the current transaction block using the [`CheckpointsConfidential.push`](#CheckpointsConfidential-push-struct-CheckpointsConfidential-TraceEuint64-uint256-euint64-) function.
+
+### Functions
+- [push(self, key, value)](#CheckpointsConfidential-push-struct-CheckpointsConfidential-TraceEuint32-uint256-euint32-)
+- [lowerLookup(self, key)](#CheckpointsConfidential-lowerLookup-struct-CheckpointsConfidential-TraceEuint32-uint256-)
+- [upperLookup(self, key)](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint32-uint256-)
+- [upperLookupRecent(self, key)](#CheckpointsConfidential-upperLookupRecent-struct-CheckpointsConfidential-TraceEuint32-uint256-)
+- [latest(self)](#CheckpointsConfidential-latest-struct-CheckpointsConfidential-TraceEuint32-)
+- [latestCheckpoint(self)](#CheckpointsConfidential-latestCheckpoint-struct-CheckpointsConfidential-TraceEuint32-)
+- [length(self)](#CheckpointsConfidential-length-struct-CheckpointsConfidential-TraceEuint32-)
+- [at(self, pos)](#CheckpointsConfidential-at-struct-CheckpointsConfidential-TraceEuint32-uint32-)
+- [push(self, key, value)](#CheckpointsConfidential-push-struct-CheckpointsConfidential-TraceEuint64-uint256-euint64-)
+- [lowerLookup(self, key)](#CheckpointsConfidential-lowerLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-)
+- [upperLookup(self, key)](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-)
+- [upperLookupRecent(self, key)](#CheckpointsConfidential-upperLookupRecent-struct-CheckpointsConfidential-TraceEuint64-uint256-)
+- [latest(self)](#CheckpointsConfidential-latest-struct-CheckpointsConfidential-TraceEuint64-)
+- [latestCheckpoint(self)](#CheckpointsConfidential-latestCheckpoint-struct-CheckpointsConfidential-TraceEuint64-)
+- [length(self)](#CheckpointsConfidential-length-struct-CheckpointsConfidential-TraceEuint64-)
+- [at(self, pos)](#CheckpointsConfidential-at-struct-CheckpointsConfidential-TraceEuint64-uint32-)
+
+<a id="CheckpointsConfidential-push-struct-CheckpointsConfidential-TraceEuint32-uint256-euint32-"></a>
+
+### `push(struct CheckpointsConfidential.TraceEuint32 self, uint256 key, euint32 value) → euint32 oldValue, euint32 newValue`
+*internal*
+
+Pushes a (`key`, `value`) pair into a TraceEuint32 so that it is stored as the checkpoint.
+
+Returns previous value and new value.
+
+IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint256).max` key set will disable the
+library.
+
+<a id="CheckpointsConfidential-lowerLookup-struct-CheckpointsConfidential-TraceEuint32-uint256-"></a>
+
+### `lowerLookup(struct CheckpointsConfidential.TraceEuint32 self, uint256 key) → euint32`
+*internal*
+
+Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if
+there is none.
+
+<a id="CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint32-uint256-"></a>
+
+### `upperLookup(struct CheckpointsConfidential.TraceEuint32 self, uint256 key) → euint32`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+<a id="CheckpointsConfidential-upperLookupRecent-struct-CheckpointsConfidential-TraceEuint32-uint256-"></a>
+
+### `upperLookupRecent(struct CheckpointsConfidential.TraceEuint32 self, uint256 key) → euint32`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+keys).
+
+<a id="CheckpointsConfidential-latest-struct-CheckpointsConfidential-TraceEuint32-"></a>
+
+### `latest(struct CheckpointsConfidential.TraceEuint32 self) → euint32`
+*internal*
+
+Returns the value in the most recent checkpoint, or zero if there are no checkpoints.
+
+<a id="CheckpointsConfidential-latestCheckpoint-struct-CheckpointsConfidential-TraceEuint32-"></a>
+
+### `latestCheckpoint(struct CheckpointsConfidential.TraceEuint32 self) → bool exists, uint256 key, euint32 value`
+*internal*
+
+Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value
+in the most recent checkpoint.
+
+<a id="CheckpointsConfidential-length-struct-CheckpointsConfidential-TraceEuint32-"></a>
+
+### `length(struct CheckpointsConfidential.TraceEuint32 self) → uint256`
+*internal*
+
+Returns the number of checkpoints.
+
+<a id="CheckpointsConfidential-at-struct-CheckpointsConfidential-TraceEuint32-uint32-"></a>
+
+### `at(struct CheckpointsConfidential.TraceEuint32 self, uint32 pos) → uint256 key, euint32 value`
+*internal*
+
+Returns checkpoint at given position.
+
+<a id="CheckpointsConfidential-push-struct-CheckpointsConfidential-TraceEuint64-uint256-euint64-"></a>
+
+### `push(struct CheckpointsConfidential.TraceEuint64 self, uint256 key, euint64 value) → euint64 oldValue, euint64 newValue`
+*internal*
+
+Pushes a (`key`, `value`) pair into a TraceEuint64 so that it is stored as the checkpoint.
+
+Returns previous value and new value.
+
+IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint256).max` key set will disable the
+library.
+
+<a id="CheckpointsConfidential-lowerLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-"></a>
+
+### `lowerLookup(struct CheckpointsConfidential.TraceEuint64 self, uint256 key) → euint64`
+*internal*
+
+Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if
+there is none.
+
+<a id="CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-"></a>
+
+### `upperLookup(struct CheckpointsConfidential.TraceEuint64 self, uint256 key) → euint64`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+<a id="CheckpointsConfidential-upperLookupRecent-struct-CheckpointsConfidential-TraceEuint64-uint256-"></a>
+
+### `upperLookupRecent(struct CheckpointsConfidential.TraceEuint64 self, uint256 key) → euint64`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+keys).
+
+<a id="CheckpointsConfidential-latest-struct-CheckpointsConfidential-TraceEuint64-"></a>
+
+### `latest(struct CheckpointsConfidential.TraceEuint64 self) → euint64`
+*internal*
+
+Returns the value in the most recent checkpoint, or zero if there are no checkpoints.
+
+<a id="CheckpointsConfidential-latestCheckpoint-struct-CheckpointsConfidential-TraceEuint64-"></a>
+
+### `latestCheckpoint(struct CheckpointsConfidential.TraceEuint64 self) → bool exists, uint256 key, euint64 value`
+*internal*
+
+Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value
+in the most recent checkpoint.
+
+<a id="CheckpointsConfidential-length-struct-CheckpointsConfidential-TraceEuint64-"></a>
+
+### `length(struct CheckpointsConfidential.TraceEuint64 self) → uint256`
+*internal*
+
+Returns the number of checkpoints.
+
+<a id="CheckpointsConfidential-at-struct-CheckpointsConfidential-TraceEuint64-uint32-"></a>
+
+### `at(struct CheckpointsConfidential.TraceEuint64 self, uint32 pos) → uint256 key, euint64 value`
+*internal*
+
+Returns checkpoint at given position.
+
+<a id="Checkpoints"></a>
+
+## `Checkpoints` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/structs/temporary-Checkpoints.sol)
+
+```solidity
+import "@openzeppelin/contracts/utils/structs/temporary-Checkpoints.sol";
+```
+
+This library defines the `Trace*` struct, for checkpointing values as they change at different points in
+time, and later looking up past values by block number. See [`VotesConfidential`](governance#VotesConfidential) as an example.
+
+To create a history of checkpoints define a variable type `Checkpoints.Trace*` in your contract, and store a new
+checkpoint for the current transaction block using the [`CheckpointsConfidential.push`](#CheckpointsConfidential-push-struct-CheckpointsConfidential-TraceEuint64-uint256-euint64-) function.
+
+### Functions
+- [push(self, key, value)](#Checkpoints-push-struct-Checkpoints-Trace256-uint256-uint256-)
+- [lowerLookup(self, key)](#Checkpoints-lowerLookup-struct-Checkpoints-Trace256-uint256-)
+- [upperLookup(self, key)](#Checkpoints-upperLookup-struct-Checkpoints-Trace256-uint256-)
+- [upperLookupRecent(self, key)](#Checkpoints-upperLookupRecent-struct-Checkpoints-Trace256-uint256-)
+- [latest(self)](#Checkpoints-latest-struct-Checkpoints-Trace256-)
+- [latestCheckpoint(self)](#Checkpoints-latestCheckpoint-struct-Checkpoints-Trace256-)
+- [length(self)](#Checkpoints-length-struct-Checkpoints-Trace256-)
+- [at(self, pos)](#Checkpoints-at-struct-Checkpoints-Trace256-uint32-)
+- [push(self, key, value)](#Checkpoints-push-struct-Checkpoints-Trace224-uint32-uint224-)
+- [lowerLookup(self, key)](#Checkpoints-lowerLookup-struct-Checkpoints-Trace224-uint32-)
+- [upperLookup(self, key)](#Checkpoints-upperLookup-struct-Checkpoints-Trace224-uint32-)
+- [upperLookupRecent(self, key)](#Checkpoints-upperLookupRecent-struct-Checkpoints-Trace224-uint32-)
+- [latest(self)](#Checkpoints-latest-struct-Checkpoints-Trace224-)
+- [latestCheckpoint(self)](#Checkpoints-latestCheckpoint-struct-Checkpoints-Trace224-)
+- [length(self)](#Checkpoints-length-struct-Checkpoints-Trace224-)
+- [at(self, pos)](#Checkpoints-at-struct-Checkpoints-Trace224-uint32-)
+- [push(self, key, value)](#Checkpoints-push-struct-Checkpoints-Trace208-uint48-uint208-)
+- [lowerLookup(self, key)](#Checkpoints-lowerLookup-struct-Checkpoints-Trace208-uint48-)
+- [upperLookup(self, key)](#Checkpoints-upperLookup-struct-Checkpoints-Trace208-uint48-)
+- [upperLookupRecent(self, key)](#Checkpoints-upperLookupRecent-struct-Checkpoints-Trace208-uint48-)
+- [latest(self)](#Checkpoints-latest-struct-Checkpoints-Trace208-)
+- [latestCheckpoint(self)](#Checkpoints-latestCheckpoint-struct-Checkpoints-Trace208-)
+- [length(self)](#Checkpoints-length-struct-Checkpoints-Trace208-)
+- [at(self, pos)](#Checkpoints-at-struct-Checkpoints-Trace208-uint32-)
+- [push(self, key, value)](#Checkpoints-push-struct-Checkpoints-Trace160-uint96-uint160-)
+- [lowerLookup(self, key)](#Checkpoints-lowerLookup-struct-Checkpoints-Trace160-uint96-)
+- [upperLookup(self, key)](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-)
+- [upperLookupRecent(self, key)](#Checkpoints-upperLookupRecent-struct-Checkpoints-Trace160-uint96-)
+- [latest(self)](#Checkpoints-latest-struct-Checkpoints-Trace160-)
+- [latestCheckpoint(self)](#Checkpoints-latestCheckpoint-struct-Checkpoints-Trace160-)
+- [length(self)](#Checkpoints-length-struct-Checkpoints-Trace160-)
+- [at(self, pos)](#Checkpoints-at-struct-Checkpoints-Trace160-uint32-)
+
+### Errors
+- [CheckpointUnorderedInsertion()](#Checkpoints-CheckpointUnorderedInsertion--)
+
+<a id="Checkpoints-push-struct-Checkpoints-Trace256-uint256-uint256-"></a>
+
+### `push(struct Checkpoints.Trace256 self, uint256 key, uint256 value) → uint256 oldValue, uint256 newValue`
+*internal*
+
+Pushes a (`key`, `value`) pair into a Trace256 so that it is stored as the checkpoint.
+
+Returns previous value and new value.
+
+IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint256).max` key set will disable the
+library.
+
+<a id="Checkpoints-lowerLookup-struct-Checkpoints-Trace256-uint256-"></a>
+
+### `lowerLookup(struct Checkpoints.Trace256 self, uint256 key) → uint256`
+*internal*
+
+Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if
+there is none.
+
+<a id="Checkpoints-upperLookup-struct-Checkpoints-Trace256-uint256-"></a>
+
+### `upperLookup(struct Checkpoints.Trace256 self, uint256 key) → uint256`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+<a id="Checkpoints-upperLookupRecent-struct-Checkpoints-Trace256-uint256-"></a>
+
+### `upperLookupRecent(struct Checkpoints.Trace256 self, uint256 key) → uint256`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+keys).
+
+<a id="Checkpoints-latest-struct-Checkpoints-Trace256-"></a>
+
+### `latest(struct Checkpoints.Trace256 self) → uint256`
+*internal*
+
+Returns the value in the most recent checkpoint, or zero if there are no checkpoints.
+
+<a id="Checkpoints-latestCheckpoint-struct-Checkpoints-Trace256-"></a>
+
+### `latestCheckpoint(struct Checkpoints.Trace256 self) → bool exists, uint256 _key, uint256 _value`
+*internal*
+
+Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value
+in the most recent checkpoint.
+
+<a id="Checkpoints-length-struct-Checkpoints-Trace256-"></a>
+
+### `length(struct Checkpoints.Trace256 self) → uint256`
+*internal*
+
+Returns the number of checkpoints.
+
+<a id="Checkpoints-at-struct-Checkpoints-Trace256-uint32-"></a>
+
+### `at(struct Checkpoints.Trace256 self, uint32 pos) → struct Checkpoints.Checkpoint256`
+*internal*
+
+Returns checkpoint at given position.
+
+<a id="Checkpoints-push-struct-Checkpoints-Trace224-uint32-uint224-"></a>
+
+### `push(struct Checkpoints.Trace224 self, uint32 key, uint224 value) → uint224 oldValue, uint224 newValue`
+*internal*
+
+Pushes a (`key`, `value`) pair into a Trace224 so that it is stored as the checkpoint.
+
+Returns previous value and new value.
+
+IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint32).max` key set will disable the
+library.
+
+<a id="Checkpoints-lowerLookup-struct-Checkpoints-Trace224-uint32-"></a>
+
+### `lowerLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224`
+*internal*
+
+Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if
+there is none.
+
+<a id="Checkpoints-upperLookup-struct-Checkpoints-Trace224-uint32-"></a>
+
+### `upperLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+<a id="Checkpoints-upperLookupRecent-struct-Checkpoints-Trace224-uint32-"></a>
+
+### `upperLookupRecent(struct Checkpoints.Trace224 self, uint32 key) → uint224`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+keys).
+
+<a id="Checkpoints-latest-struct-Checkpoints-Trace224-"></a>
+
+### `latest(struct Checkpoints.Trace224 self) → uint224`
+*internal*
+
+Returns the value in the most recent checkpoint, or zero if there are no checkpoints.
+
+<a id="Checkpoints-latestCheckpoint-struct-Checkpoints-Trace224-"></a>
+
+### `latestCheckpoint(struct Checkpoints.Trace224 self) → bool exists, uint32 _key, uint224 _value`
+*internal*
+
+Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value
+in the most recent checkpoint.
+
+<a id="Checkpoints-length-struct-Checkpoints-Trace224-"></a>
+
+### `length(struct Checkpoints.Trace224 self) → uint256`
+*internal*
+
+Returns the number of checkpoints.
+
+<a id="Checkpoints-at-struct-Checkpoints-Trace224-uint32-"></a>
+
+### `at(struct Checkpoints.Trace224 self, uint32 pos) → struct Checkpoints.Checkpoint224`
+*internal*
+
+Returns checkpoint at given position.
+
+<a id="Checkpoints-push-struct-Checkpoints-Trace208-uint48-uint208-"></a>
+
+### `push(struct Checkpoints.Trace208 self, uint48 key, uint208 value) → uint208 oldValue, uint208 newValue`
+*internal*
+
+Pushes a (`key`, `value`) pair into a Trace208 so that it is stored as the checkpoint.
+
+Returns previous value and new value.
+
+IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint48).max` key set will disable the
+library.
+
+<a id="Checkpoints-lowerLookup-struct-Checkpoints-Trace208-uint48-"></a>
+
+### `lowerLookup(struct Checkpoints.Trace208 self, uint48 key) → uint208`
+*internal*
+
+Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if
+there is none.
+
+<a id="Checkpoints-upperLookup-struct-Checkpoints-Trace208-uint48-"></a>
+
+### `upperLookup(struct Checkpoints.Trace208 self, uint48 key) → uint208`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+<a id="Checkpoints-upperLookupRecent-struct-Checkpoints-Trace208-uint48-"></a>
+
+### `upperLookupRecent(struct Checkpoints.Trace208 self, uint48 key) → uint208`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+keys).
+
+<a id="Checkpoints-latest-struct-Checkpoints-Trace208-"></a>
+
+### `latest(struct Checkpoints.Trace208 self) → uint208`
+*internal*
+
+Returns the value in the most recent checkpoint, or zero if there are no checkpoints.
+
+<a id="Checkpoints-latestCheckpoint-struct-Checkpoints-Trace208-"></a>
+
+### `latestCheckpoint(struct Checkpoints.Trace208 self) → bool exists, uint48 _key, uint208 _value`
+*internal*
+
+Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value
+in the most recent checkpoint.
+
+<a id="Checkpoints-length-struct-Checkpoints-Trace208-"></a>
+
+### `length(struct Checkpoints.Trace208 self) → uint256`
+*internal*
+
+Returns the number of checkpoints.
+
+<a id="Checkpoints-at-struct-Checkpoints-Trace208-uint32-"></a>
+
+### `at(struct Checkpoints.Trace208 self, uint32 pos) → struct Checkpoints.Checkpoint208`
+*internal*
+
+Returns checkpoint at given position.
+
+<a id="Checkpoints-push-struct-Checkpoints-Trace160-uint96-uint160-"></a>
+
+### `push(struct Checkpoints.Trace160 self, uint96 key, uint160 value) → uint160 oldValue, uint160 newValue`
+*internal*
+
+Pushes a (`key`, `value`) pair into a Trace160 so that it is stored as the checkpoint.
+
+Returns previous value and new value.
+
+IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint96).max` key set will disable the
+library.
+
+<a id="Checkpoints-lowerLookup-struct-Checkpoints-Trace160-uint96-"></a>
+
+### `lowerLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160`
+*internal*
+
+Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if
+there is none.
+
+<a id="Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-"></a>
+
+### `upperLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+<a id="Checkpoints-upperLookupRecent-struct-Checkpoints-Trace160-uint96-"></a>
+
+### `upperLookupRecent(struct Checkpoints.Trace160 self, uint96 key) → uint160`
+*internal*
+
+Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
+if there is none.
+
+NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+keys).
+
+<a id="Checkpoints-latest-struct-Checkpoints-Trace160-"></a>
+
+### `latest(struct Checkpoints.Trace160 self) → uint160`
+*internal*
+
+Returns the value in the most recent checkpoint, or zero if there are no checkpoints.
+
+<a id="Checkpoints-latestCheckpoint-struct-Checkpoints-Trace160-"></a>
+
+### `latestCheckpoint(struct Checkpoints.Trace160 self) → bool exists, uint96 _key, uint160 _value`
+*internal*
+
+Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value
+in the most recent checkpoint.
+
+<a id="Checkpoints-length-struct-Checkpoints-Trace160-"></a>
+
+### `length(struct Checkpoints.Trace160 self) → uint256`
+*internal*
+
+Returns the number of checkpoints.
+
+<a id="Checkpoints-at-struct-Checkpoints-Trace160-uint32-"></a>
+
+### `at(struct Checkpoints.Trace160 self, uint32 pos) → struct Checkpoints.Checkpoint160`
+*internal*
+
+Returns checkpoint at given position.
+
+<a id="Checkpoints-CheckpointUnorderedInsertion--"></a>
+
+### `CheckpointUnorderedInsertion()`
+*error*
+
+A value was attempted to be inserted on a past checkpoint.
+

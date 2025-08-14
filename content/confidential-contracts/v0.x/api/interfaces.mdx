@@ -1,0 +1,225 @@
+---
+title: "Interfaces"
+description: "Smart contract interfaces utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/confidential-contracts/api/interfaces
+</Callout>
+
+These interfaces are available as `.sol` files and are useful to interact with third party contracts that implement them.
+
+* [`IConfidentialFungibleToken`](#IConfidentialFungibleToken)
+* [`IConfidentialFungibleTokenReceiver`](#IConfidentialFungibleTokenReceiver)
+
+## Core
+[`IConfidentialFungibleToken`](#IConfidentialFungibleToken)
+[`IConfidentialFungibleTokenReceiver`](#IConfidentialFungibleTokenReceiver)
+
+<a id="IConfidentialFungibleToken"></a>
+
+## `IConfidentialFungibleToken` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/interfaces/IConfidentialFungibleToken.sol)
+
+```solidity
+import "@openzeppelin/contracts/interfaces/IConfidentialFungibleToken.sol";
+```
+
+Draft interface for a confidential fungible token standard utilizing the Zama FHE library.
+
+### Functions
+- [name()](#IConfidentialFungibleToken-name--)
+- [symbol()](#IConfidentialFungibleToken-symbol--)
+- [decimals()](#IConfidentialFungibleToken-decimals--)
+- [tokenURI()](#IConfidentialFungibleToken-tokenURI--)
+- [confidentialTotalSupply()](#IConfidentialFungibleToken-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#IConfidentialFungibleToken-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#IConfidentialFungibleToken-isOperator-address-address-)
+- [setOperator(operator, until)](#IConfidentialFungibleToken-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#IConfidentialFungibleToken-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#IConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#IConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#IConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#IConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#IConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+
+### Events
+- [OperatorSet(holder, operator, until)](#IConfidentialFungibleToken-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+
+<a id="IConfidentialFungibleToken-name--"></a>
+
+### `name() → string`
+*external*
+
+Returns the name of the token.
+
+<a id="IConfidentialFungibleToken-symbol--"></a>
+
+### `symbol() → string`
+*external*
+
+Returns the symbol of the token.
+
+<a id="IConfidentialFungibleToken-decimals--"></a>
+
+### `decimals() → uint8`
+*external*
+
+Returns the number of decimals of the token. Recommended to be 6.
+
+<a id="IConfidentialFungibleToken-tokenURI--"></a>
+
+### `tokenURI() → string`
+*external*
+
+Returns the token URI.
+
+<a id="IConfidentialFungibleToken-confidentialTotalSupply--"></a>
+
+### `confidentialTotalSupply() → euint64`
+*external*
+
+Returns the confidential total supply of the token.
+
+<a id="IConfidentialFungibleToken-confidentialBalanceOf-address-"></a>
+
+### `confidentialBalanceOf(address account) → euint64`
+*external*
+
+Returns the confidential balance of the account `account`.
+
+<a id="IConfidentialFungibleToken-isOperator-address-address-"></a>
+
+### `isOperator(address holder, address spender) → bool`
+*external*
+
+Returns true if `spender` is currently an operator for `holder`.
+
+<a id="IConfidentialFungibleToken-setOperator-address-uint48-"></a>
+
+### `setOperator(address operator, uint48 until)`
+*external*
+
+Sets `operator` as an operator for `holder` until the timestamp `until`.
+
+NOTE: An operator may transfer any amount of tokens on behalf of a holder while approved.
+
+<a id="IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-"></a>
+
+### `confidentialTransfer(address to, externalEuint64 encryptedAmount, bytes inputProof) → euint64`
+*external*
+
+Transfers the encrypted amount `encryptedAmount` to `to` with the given input proof `inputProof`.
+
+Returns the encrypted amount that was actually transferred.
+
+<a id="IConfidentialFungibleToken-confidentialTransfer-address-euint64-"></a>
+
+### `confidentialTransfer(address to, euint64 amount) → euint64 transferred`
+*external*
+
+Similar to #IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes- but without an input proof. The caller
+*must* already be allowed by ACL for the given `amount`.
+
+<a id="IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-"></a>
+
+### `confidentialTransferFrom(address from, address to, externalEuint64 encryptedAmount, bytes inputProof) → euint64`
+*external*
+
+Transfers the encrypted amount `encryptedAmount` from `from` to `to` with the given input proof
+`inputProof`. `msg.sender` must be either `from` or an operator for `from`.
+
+Returns the encrypted amount that was actually transferred.
+
+<a id="IConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-"></a>
+
+### `confidentialTransferFrom(address from, address to, euint64 amount) → euint64 transferred`
+*external*
+
+Similar to #IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes- but without an input proof.
+The caller *must* be already allowed by ACL for the given `amount`.
+
+<a id="IConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-"></a>
+
+### `confidentialTransferAndCall(address to, externalEuint64 encryptedAmount, bytes inputProof, bytes data) → euint64 transferred`
+*external*
+
+Similar to #IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes- but with a callback to `to` after
+the transfer.
+
+The callback is made to the [`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) function on the
+to address with the actual transferred amount (may differ from the given `encryptedAmount`) and the given
+data `data`.
+
+<a id="IConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-"></a>
+
+### `confidentialTransferAndCall(address to, euint64 amount, bytes data) → euint64 transferred`
+*external*
+
+Similar to #IConfidentialFungibleToken-confidentialTransfer-address-euint64- but with a callback to `to` after the transfer.
+
+<a id="IConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-"></a>
+
+### `confidentialTransferFromAndCall(address from, address to, externalEuint64 encryptedAmount, bytes inputProof, bytes data) → euint64 transferred`
+*external*
+
+Similar to #IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes- but with a callback to `to`
+after the transfer.
+
+<a id="IConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-"></a>
+
+### `confidentialTransferFromAndCall(address from, address to, euint64 amount, bytes data) → euint64 transferred`
+*external*
+
+Similar to #IConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64- but with a callback to `to`
+after the transfer.
+
+<a id="IConfidentialFungibleToken-OperatorSet-address-address-uint48-"></a>
+
+### `OperatorSet(address indexed holder, address indexed operator, uint48 until)`
+*event*
+
+Emitted when the expiration timestamp for an operator `operator` is updated for a given `holder`.
+The operator may move any amount of tokens on behalf of the holder until the timestamp `until`.
+
+<a id="IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-"></a>
+
+### `ConfidentialTransfer(address indexed from, address indexed to, euint64 indexed amount)`
+*event*
+
+Emitted when a confidential transfer is made from `from` to `to` of encrypted amount `amount`.
+
+<a id="IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-"></a>
+
+### `AmountDisclosed(euint64 indexed encryptedAmount, uint64 amount)`
+*event*
+
+Emitted when an encrypted amount is disclosed.
+
+Accounts with access to the encrypted amount `encryptedAmount` that is also accessible to this contract
+should be able to disclose the amount. This functionality is implementation specific.
+
+<a id="IConfidentialFungibleTokenReceiver"></a>
+
+## `IConfidentialFungibleTokenReceiver` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/interfaces/IConfidentialFungibleTokenReceiver.sol)
+
+```solidity
+import "@openzeppelin/contracts/interfaces/IConfidentialFungibleTokenReceiver.sol";
+```
+
+Interface for contracts that can receive confidential token transfers with a callback.
+
+### Functions
+- [onConfidentialTransferReceived(operator, from, amount, data)](#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-)
+
+<a id="IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-"></a>
+
+### `onConfidentialTransferReceived(address operator, address from, euint64 amount, bytes data) → ebool`
+*external*
+
+Called upon receiving a confidential token transfer. Returns an encrypted boolean indicating success
+of the callback. If false is returned, the transfer must be reversed.
+

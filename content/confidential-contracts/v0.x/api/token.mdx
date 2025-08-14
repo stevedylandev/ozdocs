@@ -1,0 +1,677 @@
+---
+title: "Token"
+description: "Smart contract token utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/confidential-contracts/api/token
+</Callout>
+
+This set of interfaces, contracts, and utilities are all related to the evolving Confidential Token Standard. The standard utilizes the Zama fhEVM co-processor for manipulating FHE values. All amounts are stored on-chain as ciphertext handles (or pointers) to values stored on the co-processor.
+
+* [`ConfidentialFungibleToken`](#ConfidentialFungibleToken): Implementation of [`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken).
+* [`ConfidentialFungibleTokenERC20Wrapper`](#ConfidentialFungibleTokenERC20Wrapper): Extension of [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) which wraps an `ERC20` into a confidential token. The wrapper allows for free conversion in both directions at a fixed rate.
+* [`ConfidentialFungibleTokenUtils`](#ConfidentialFungibleTokenUtils): A library that provides the on-transfer callback check used by [`ConfidentialFungibleToken`](#ConfidentialFungibleToken). 
+
+## Core
+[`ConfidentialFungibleToken`](#ConfidentialFungibleToken)
+
+## Extensions
+[`ConfidentialFungibleTokenERC20Wrapper`](#ConfidentialFungibleTokenERC20Wrapper)
+
+## Utilities
+[`ConfidentialFungibleTokenUtils`](#ConfidentialFungibleTokenUtils)
+
+<a id="ConfidentialFungibleToken"></a>
+
+## `ConfidentialFungibleToken` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/ConfidentialFungibleToken.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ConfidentialFungibleToken.sol";
+```
+
+Reference implementation for [`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken).
+
+This contract implements a fungible token where balances and transfers are encrypted using the Zama fhEVM,
+providing confidentiality to users. Token amounts are stored as encrypted, unsigned integers (`euint64`)
+that can only be decrypted by authorized parties.
+
+Key features:
+
+- All balances are encrypted
+- Transfers happen without revealing amounts
+- Support for operators (delegated transfer capabilities with time bounds)
+- Transfer and call pattern
+- Safe overflow/underflow handling for FHE operations
+
+### Functions
+- [constructor(name_, symbol_, tokenURI_)](#ConfidentialFungibleToken-constructor-string-string-string-)
+- [name()](#ConfidentialFungibleToken-name--)
+- [symbol()](#ConfidentialFungibleToken-symbol--)
+- [decimals()](#ConfidentialFungibleToken-decimals--)
+- [tokenURI()](#ConfidentialFungibleToken-tokenURI--)
+- [confidentialTotalSupply()](#ConfidentialFungibleToken-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#ConfidentialFungibleToken-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ConfidentialFungibleToken-isOperator-address-address-)
+- [setOperator(operator, until)](#ConfidentialFungibleToken-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ConfidentialFungibleToken-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ConfidentialFungibleToken-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ConfidentialFungibleToken-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ConfidentialFungibleToken-_mint-address-euint64-)
+- [_burn(from, amount)](#ConfidentialFungibleToken-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ConfidentialFungibleToken-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-)
+- [_update(from, to, amount)](#ConfidentialFungibleToken-_update-address-address-euint64-)
+
+#### IConfidentialFungibleToken
+
+### Events
+
+#### IConfidentialFungibleToken
+- [OperatorSet(holder, operator, until)](#IConfidentialFungibleToken-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+
+### Errors
+- [ConfidentialFungibleTokenInvalidReceiver(receiver)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-)
+- [ConfidentialFungibleTokenInvalidSender(sender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-)
+- [ConfidentialFungibleTokenUnauthorizedSpender(holder, spender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-)
+- [ConfidentialFungibleTokenZeroBalance(holder)](#ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-)
+- [ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(amount, user)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ConfidentialFungibleTokenUnauthorizedCaller(caller)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-)
+- [ConfidentialFungibleTokenInvalidGatewayRequest(requestId)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-)
+
+#### IConfidentialFungibleToken
+
+<a id="ConfidentialFungibleToken-constructor-string-string-string-"></a>
+
+### `constructor(string name_, string symbol_, string tokenURI_)`
+*internal*
+
+<a id="ConfidentialFungibleToken-name--"></a>
+
+### `name() → string`
+*public*
+
+Returns the name of the token.
+
+<a id="ConfidentialFungibleToken-symbol--"></a>
+
+### `symbol() → string`
+*public*
+
+Returns the symbol of the token.
+
+<a id="ConfidentialFungibleToken-decimals--"></a>
+
+### `decimals() → uint8`
+*public*
+
+Returns the number of decimals of the token. Recommended to be 6.
+
+<a id="ConfidentialFungibleToken-tokenURI--"></a>
+
+### `tokenURI() → string`
+*public*
+
+Returns the token URI.
+
+<a id="ConfidentialFungibleToken-confidentialTotalSupply--"></a>
+
+### `confidentialTotalSupply() → euint64`
+*public*
+
+Returns the confidential total supply of the token.
+
+<a id="ConfidentialFungibleToken-confidentialBalanceOf-address-"></a>
+
+### `confidentialBalanceOf(address account) → euint64`
+*public*
+
+Returns the confidential balance of the account `account`.
+
+<a id="ConfidentialFungibleToken-isOperator-address-address-"></a>
+
+### `isOperator(address holder, address spender) → bool`
+*public*
+
+Returns true if `spender` is currently an operator for `holder`.
+
+<a id="ConfidentialFungibleToken-setOperator-address-uint48-"></a>
+
+### `setOperator(address operator, uint48 until)`
+*public*
+
+Sets `operator` as an operator for `holder` until the timestamp `until`.
+
+NOTE: An operator may transfer any amount of tokens on behalf of a holder while approved.
+
+<a id="ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-"></a>
+
+### `confidentialTransfer(address to, externalEuint64 encryptedAmount, bytes inputProof) → euint64`
+*public*
+
+Transfers the encrypted amount `encryptedAmount` to `to` with the given input proof `inputProof`.
+
+Returns the encrypted amount that was actually transferred.
+
+<a id="ConfidentialFungibleToken-confidentialTransfer-address-euint64-"></a>
+
+### `confidentialTransfer(address to, euint64 amount) → euint64`
+*public*
+
+Similar to interfaces#IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes- but without an input proof. The caller
+*must* already be allowed by ACL for the given `amount`.
+
+<a id="ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-"></a>
+
+### `confidentialTransferFrom(address from, address to, externalEuint64 encryptedAmount, bytes inputProof) → euint64 transferred`
+*public*
+
+Transfers the encrypted amount `encryptedAmount` from `from` to `to` with the given input proof
+`inputProof`. `msg.sender` must be either `from` or an operator for `from`.
+
+Returns the encrypted amount that was actually transferred.
+
+<a id="ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-"></a>
+
+### `confidentialTransferFrom(address from, address to, euint64 amount) → euint64 transferred`
+*public*
+
+Similar to interfaces#IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes- but without an input proof.
+The caller *must* be already allowed by ACL for the given `amount`.
+
+<a id="ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-"></a>
+
+### `confidentialTransferAndCall(address to, externalEuint64 encryptedAmount, bytes inputProof, bytes data) → euint64 transferred`
+*public*
+
+Similar to interfaces#IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes- but with a callback to `to` after
+the transfer.
+
+The callback is made to the [`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) function on the
+to address with the actual transferred amount (may differ from the given `encryptedAmount`) and the given
+data `data`.
+
+<a id="ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-"></a>
+
+### `confidentialTransferAndCall(address to, euint64 amount, bytes data) → euint64 transferred`
+*public*
+
+Similar to interfaces#IConfidentialFungibleToken-confidentialTransfer-address-euint64- but with a callback to `to` after the transfer.
+
+<a id="ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-"></a>
+
+### `confidentialTransferFromAndCall(address from, address to, externalEuint64 encryptedAmount, bytes inputProof, bytes data) → euint64 transferred`
+*public*
+
+Similar to interfaces#IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes- but with a callback to `to`
+after the transfer.
+
+<a id="ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-"></a>
+
+### `confidentialTransferFromAndCall(address from, address to, euint64 amount, bytes data) → euint64 transferred`
+*public*
+
+Similar to interfaces#IConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64- but with a callback to `to`
+after the transfer.
+
+<a id="ConfidentialFungibleToken-discloseEncryptedAmount-euint64-"></a>
+
+### `discloseEncryptedAmount(euint64 encryptedAmount)`
+*public*
+
+Discloses an encrypted amount `encryptedAmount` publicly via an [`IConfidentialFungibleToken.AmountDisclosed`](interfaces#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+event. The caller and this contract must be authorized to use the encrypted amount on the ACL.
+
+NOTE: This is an asynchronous operation where the actual decryption happens off-chain and
+[`ConfidentialFungibleToken.finalizeDiscloseEncryptedAmount`](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---) is called with the result.
+
+<a id="ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---"></a>
+
+### `finalizeDiscloseEncryptedAmount(uint256 requestId, uint64 amount, bytes[] signatures)`
+*public*
+
+Finalizes a disclose encrypted amount request.
+
+<a id="ConfidentialFungibleToken-_setOperator-address-address-uint48-"></a>
+
+### `_setOperator(address holder, address operator, uint48 until)`
+*internal*
+
+<a id="ConfidentialFungibleToken-_mint-address-euint64-"></a>
+
+### `_mint(address to, euint64 amount) → euint64 transferred`
+*internal*
+
+<a id="ConfidentialFungibleToken-_burn-address-euint64-"></a>
+
+### `_burn(address from, euint64 amount) → euint64 transferred`
+*internal*
+
+<a id="ConfidentialFungibleToken-_transfer-address-address-euint64-"></a>
+
+### `_transfer(address from, address to, euint64 amount) → euint64 transferred`
+*internal*
+
+<a id="ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-"></a>
+
+### `_transferAndCall(address from, address to, euint64 amount, bytes data) → euint64 transferred`
+*internal*
+
+<a id="ConfidentialFungibleToken-_update-address-address-euint64-"></a>
+
+### `_update(address from, address to, euint64 amount) → euint64 transferred`
+*internal*
+
+<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-"></a>
+
+### `ConfidentialFungibleTokenInvalidReceiver(address receiver)`
+*error*
+
+The given receiver `receiver` is invalid for transfers.
+
+<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-"></a>
+
+### `ConfidentialFungibleTokenInvalidSender(address sender)`
+*error*
+
+The given sender `sender` is invalid for transfers.
+
+<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-"></a>
+
+### `ConfidentialFungibleTokenUnauthorizedSpender(address holder, address spender)`
+*error*
+
+The given holder `holder` is not authorized to spend on behalf of `spender`.
+
+<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-"></a>
+
+### `ConfidentialFungibleTokenZeroBalance(address holder)`
+*error*
+
+The holder `holder` is trying to send tokens but has a balance of 0.
+
+<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-"></a>
+
+### `ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(euint64 amount, address user)`
+*error*
+
+The caller `user` does not have access to the encrypted amount `amount`.
+
+NOTE: Try using the equivalent transfer function with an input proof.
+
+<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-"></a>
+
+### `ConfidentialFungibleTokenUnauthorizedCaller(address caller)`
+*error*
+
+The given caller `caller` is not authorized for the current operation.
+
+<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-"></a>
+
+### `ConfidentialFungibleTokenInvalidGatewayRequest(uint256 requestId)`
+*error*
+
+The given gateway request ID `requestId` is invalid.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper"></a>
+
+## `ConfidentialFungibleTokenERC20Wrapper` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/extensions/ConfidentialFungibleTokenERC20Wrapper.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/extensions/ConfidentialFungibleTokenERC20Wrapper.sol";
+```
+
+A wrapper contract built on top of [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) that allows wrapping an `ERC20` token
+into a confidential fungible token. The wrapper contract implements the `IERC1363Receiver` interface
+which allows users to transfer `ERC1363` tokens directly to the wrapper with a callback to wrap the tokens.
+
+WARNING: Minting assumes the full amount of the underlying token transfer has been received, hence some non-standard
+tokens such as fee-on-transfer or other deflationary-type tokens are not supported by this wrapper.
+
+### Functions
+- [constructor(underlying_)](#ConfidentialFungibleTokenERC20Wrapper-constructor-contract-IERC20-)
+- [decimals()](#ConfidentialFungibleTokenERC20Wrapper-decimals--)
+- [rate()](#ConfidentialFungibleTokenERC20Wrapper-rate--)
+- [underlying()](#ConfidentialFungibleTokenERC20Wrapper-underlying--)
+- [onTransferReceived(, from, amount, data)](#ConfidentialFungibleTokenERC20Wrapper-onTransferReceived-address-address-uint256-bytes-)
+- [wrap(to, amount)](#ConfidentialFungibleTokenERC20Wrapper-wrap-address-uint256-)
+- [unwrap(from, to, amount)](#ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-euint64-)
+- [unwrap(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-externalEuint64-bytes-)
+- [finalizeUnwrap(requestID, amount, signatures)](#ConfidentialFungibleTokenERC20Wrapper-finalizeUnwrap-uint256-uint64-bytes---)
+- [_unwrap(from, to, amount)](#ConfidentialFungibleTokenERC20Wrapper-_unwrap-address-address-euint64-)
+- [_fallbackUnderlyingDecimals()](#ConfidentialFungibleTokenERC20Wrapper-_fallbackUnderlyingDecimals--)
+- [_maxDecimals()](#ConfidentialFungibleTokenERC20Wrapper-_maxDecimals--)
+
+#### IERC1363Receiver
+
+#### ConfidentialFungibleToken
+- [name()](#ConfidentialFungibleToken-name--)
+- [symbol()](#ConfidentialFungibleToken-symbol--)
+- [tokenURI()](#ConfidentialFungibleToken-tokenURI--)
+- [confidentialTotalSupply()](#ConfidentialFungibleToken-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#ConfidentialFungibleToken-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ConfidentialFungibleToken-isOperator-address-address-)
+- [setOperator(operator, until)](#ConfidentialFungibleToken-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ConfidentialFungibleToken-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ConfidentialFungibleToken-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ConfidentialFungibleToken-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ConfidentialFungibleToken-_mint-address-euint64-)
+- [_burn(from, amount)](#ConfidentialFungibleToken-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ConfidentialFungibleToken-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-)
+- [_update(from, to, amount)](#ConfidentialFungibleToken-_update-address-address-euint64-)
+
+#### IConfidentialFungibleToken
+
+### Events
+
+#### IERC1363Receiver
+
+#### ConfidentialFungibleToken
+
+#### IConfidentialFungibleToken
+- [OperatorSet(holder, operator, until)](#IConfidentialFungibleToken-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+
+### Errors
+
+#### IERC1363Receiver
+
+#### ConfidentialFungibleToken
+- [ConfidentialFungibleTokenInvalidReceiver(receiver)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-)
+- [ConfidentialFungibleTokenInvalidSender(sender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-)
+- [ConfidentialFungibleTokenUnauthorizedSpender(holder, spender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-)
+- [ConfidentialFungibleTokenZeroBalance(holder)](#ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-)
+- [ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(amount, user)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ConfidentialFungibleTokenUnauthorizedCaller(caller)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-)
+- [ConfidentialFungibleTokenInvalidGatewayRequest(requestId)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-)
+
+#### IConfidentialFungibleToken
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-constructor-contract-IERC20-"></a>
+
+### `constructor(contract IERC20 underlying_)`
+*internal*
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-decimals--"></a>
+
+### `decimals() → uint8`
+*public*
+
+Returns the number of decimals of the token. Recommended to be 6.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-rate--"></a>
+
+### `rate() → uint256`
+*public*
+
+Returns the rate at which the underlying token is converted to the wrapped token.
+For example, if the `rate` is 1000, then 1000 units of the underlying token equal 1 unit of the wrapped token.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-underlying--"></a>
+
+### `underlying() → contract IERC20`
+*public*
+
+Returns the address of the underlying ERC-20 token that is being wrapped.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-onTransferReceived-address-address-uint256-bytes-"></a>
+
+### `onTransferReceived(address, address from, uint256 amount, bytes data) → bytes4`
+*public*
+
+`ERC1363` callback function which wraps tokens to the address specified in `data` or
+the address `from` (if no address is specified in `data`). This function refunds any excess tokens
+sent beyond the nearest multiple of [`ConfidentialFungibleTokenERC20Wrapper.rate`](#ConfidentialFungibleTokenERC20Wrapper-rate--). See [`ConfidentialFungibleTokenERC20Wrapper.wrap`](#ConfidentialFungibleTokenERC20Wrapper-wrap-address-uint256-) from more details on wrapping tokens.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-wrap-address-uint256-"></a>
+
+### `wrap(address to, uint256 amount)`
+*public*
+
+Wraps amount `amount` of the underlying token into a confidential token and sends it to
+`to`. Tokens are exchanged at a fixed rate specified by [`ConfidentialFungibleTokenERC20Wrapper.rate`](#ConfidentialFungibleTokenERC20Wrapper-rate--) such that `amount / rate()` confidential
+tokens are sent. Amount transferred in is rounded down to the nearest multiple of [`ConfidentialFungibleTokenERC20Wrapper.rate`](#ConfidentialFungibleTokenERC20Wrapper-rate--).
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-euint64-"></a>
+
+### `unwrap(address from, address to, euint64 amount)`
+*public*
+
+Unwraps tokens from `from` and sends the underlying tokens to `to`. The caller must be `from`
+or be an approved operator for `from`. `amount * rate()` underlying tokens are sent to `to`.
+
+NOTE: This is an asynchronous function and waits for decryption to be completed off-chain before disbursing
+tokens.
+NOTE: The caller *must* already be approved by ACL for the given `amount`.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-externalEuint64-bytes-"></a>
+
+### `unwrap(address from, address to, externalEuint64 encryptedAmount, bytes inputProof)`
+*public*
+
+Variant of [`ConfidentialFungibleTokenERC20Wrapper.unwrap`](#ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-externalEuint64-bytes-) that passes an `inputProof` which approves the caller for the `encryptedAmount`
+in the ACL.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-finalizeUnwrap-uint256-uint64-bytes---"></a>
+
+### `finalizeUnwrap(uint256 requestID, uint64 amount, bytes[] signatures)`
+*public*
+
+Fills an unwrap request for a given request id related to a decrypted unwrap amount.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-_unwrap-address-address-euint64-"></a>
+
+### `_unwrap(address from, address to, euint64 amount)`
+*internal*
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-_fallbackUnderlyingDecimals--"></a>
+
+### `_fallbackUnderlyingDecimals() → uint8`
+*internal*
+
+Returns the default number of decimals of the underlying ERC-20 token that is being wrapped.
+Used as a default fallback when [`ConfidentialFungibleTokenERC20Wrapper._tryGetAssetDecimals`](#ConfidentialFungibleTokenERC20Wrapper-_tryGetAssetDecimals-contract-IERC20-) fails to fetch decimals of the underlying
+ERC-20 token.
+
+<a id="ConfidentialFungibleTokenERC20Wrapper-_maxDecimals--"></a>
+
+### `_maxDecimals() → uint8`
+*internal*
+
+Returns the maximum number that will be used for [`IConfidentialFungibleToken.decimals`](interfaces#IConfidentialFungibleToken-decimals--) by the wrapper.
+
+<a id="ConfidentialFungibleTokenVotes"></a>
+
+## `ConfidentialFungibleTokenVotes` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/extensions/ConfidentialFungibleTokenVotes.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/extensions/ConfidentialFungibleTokenVotes.sol";
+```
+
+Extension of [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) supporting confidential votes tracking and delegation.
+
+The amount of confidential voting units an account has is equal to the confidential token balance of
+that account. Voing power is taken into account when an account delegates votes to itself or to another
+account.
+
+### Functions
+- [confidentialTotalSupply()](#ConfidentialFungibleTokenVotes-confidentialTotalSupply--)
+- [_update(from, to, amount)](#ConfidentialFungibleTokenVotes-_update-address-address-euint64-)
+- [_getVotingUnits(account)](#ConfidentialFungibleTokenVotes-_getVotingUnits-address-)
+
+#### VotesConfidential
+- [clock()](#VotesConfidential-clock--)
+- [CLOCK_MODE()](#VotesConfidential-CLOCK_MODE--)
+- [getVotes(account)](#VotesConfidential-getVotes-address-)
+- [getPastVotes(account, timepoint)](#VotesConfidential-getPastVotes-address-uint256-)
+- [getPastTotalSupply(timepoint)](#VotesConfidential-getPastTotalSupply-uint256-)
+- [delegates(account)](#VotesConfidential-delegates-address-)
+- [delegate(delegatee)](#VotesConfidential-delegate-address-)
+- [delegateBySig(delegatee, nonce, expiry, v, r, s)](#VotesConfidential-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-)
+- [_delegate(account, delegatee)](#VotesConfidential-_delegate-address-address-)
+- [_transferVotingUnits(from, to, amount)](#VotesConfidential-_transferVotingUnits-address-address-euint64-)
+- [_moveDelegateVotes(from, to, amount)](#VotesConfidential-_moveDelegateVotes-address-address-euint64-)
+- [_validateTimepoint(timepoint)](#VotesConfidential-_validateTimepoint-uint256-)
+
+#### HandleAccessManager
+- [getHandleAllowance(handle, account, persistent)](#HandleAccessManager-getHandleAllowance-bytes32-address-bool-)
+- [_validateHandleAllowance(handle)](#HandleAccessManager-_validateHandleAllowance-bytes32-)
+
+#### IERC6372
+
+#### EIP712
+- [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
+- [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
+- [eip712Domain()](#EIP712-eip712Domain--)
+- [_EIP712Name()](#EIP712-_EIP712Name--)
+- [_EIP712Version()](#EIP712-_EIP712Version--)
+
+#### IERC5267
+
+#### Nonces
+- [nonces(owner)](#Nonces-nonces-address-)
+- [_useNonce(owner)](#Nonces-_useNonce-address-)
+- [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
+
+#### ConfidentialFungibleToken
+- [name()](#ConfidentialFungibleToken-name--)
+- [symbol()](#ConfidentialFungibleToken-symbol--)
+- [decimals()](#ConfidentialFungibleToken-decimals--)
+- [tokenURI()](#ConfidentialFungibleToken-tokenURI--)
+- [confidentialBalanceOf(account)](#ConfidentialFungibleToken-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ConfidentialFungibleToken-isOperator-address-address-)
+- [setOperator(operator, until)](#ConfidentialFungibleToken-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ConfidentialFungibleToken-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ConfidentialFungibleToken-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ConfidentialFungibleToken-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ConfidentialFungibleToken-_mint-address-euint64-)
+- [_burn(from, amount)](#ConfidentialFungibleToken-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ConfidentialFungibleToken-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-)
+
+#### IConfidentialFungibleToken
+
+### Events
+
+#### VotesConfidential
+- [DelegateVotesChanged(delegate, previousVotes, newVotes)](#VotesConfidential-DelegateVotesChanged-address-euint64-euint64-)
+- [DelegateChanged(delegator, fromDelegate, toDelegate)](#VotesConfidential-DelegateChanged-address-address-address-)
+
+#### HandleAccessManager
+
+#### IERC6372
+
+#### EIP712
+
+#### IERC5267
+- [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
+
+#### Nonces
+
+#### ConfidentialFungibleToken
+
+#### IConfidentialFungibleToken
+- [OperatorSet(holder, operator, until)](#IConfidentialFungibleToken-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+
+### Errors
+
+#### VotesConfidential
+- [VotesExpiredSignature(expiry)](#VotesConfidential-VotesExpiredSignature-uint256-)
+- [ERC6372InconsistentClock()](#VotesConfidential-ERC6372InconsistentClock--)
+- [ERC5805FutureLookup(timepoint, clock)](#VotesConfidential-ERC5805FutureLookup-uint256-uint48-)
+
+#### HandleAccessManager
+
+#### IERC6372
+
+#### EIP712
+
+#### IERC5267
+
+#### Nonces
+- [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
+
+#### ConfidentialFungibleToken
+- [ConfidentialFungibleTokenInvalidReceiver(receiver)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-)
+- [ConfidentialFungibleTokenInvalidSender(sender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-)
+- [ConfidentialFungibleTokenUnauthorizedSpender(holder, spender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-)
+- [ConfidentialFungibleTokenZeroBalance(holder)](#ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-)
+- [ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(amount, user)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ConfidentialFungibleTokenUnauthorizedCaller(caller)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-)
+- [ConfidentialFungibleTokenInvalidGatewayRequest(requestId)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-)
+
+#### IConfidentialFungibleToken
+
+<a id="ConfidentialFungibleTokenVotes-confidentialTotalSupply--"></a>
+
+### `confidentialTotalSupply() → euint64`
+*public*
+
+Returns the confidential total supply of the token.
+
+<a id="ConfidentialFungibleTokenVotes-_update-address-address-euint64-"></a>
+
+### `_update(address from, address to, euint64 amount) → euint64 transferred`
+*internal*
+
+<a id="ConfidentialFungibleTokenVotes-_getVotingUnits-address-"></a>
+
+### `_getVotingUnits(address account) → euint64`
+*internal*
+
+<a id="ConfidentialFungibleTokenUtils"></a>
+
+## `ConfidentialFungibleTokenUtils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/utils/ConfidentialFungibleTokenUtils.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/utils/ConfidentialFungibleTokenUtils.sol";
+```
+
+Library that provides common [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) utility functions.
+
+### Functions
+- [checkOnTransferReceived(operator, from, to, amount, data)](#ConfidentialFungibleTokenUtils-checkOnTransferReceived-address-address-address-euint64-bytes-)
+
+<a id="ConfidentialFungibleTokenUtils-checkOnTransferReceived-address-address-address-euint64-bytes-"></a>
+
+### `checkOnTransferReceived(address operator, address from, address to, euint64 amount, bytes data) → ebool`
+*internal*
+
+Performs a transfer callback to the recipient of the transfer `to`. Should be invoked
+after all transfers "withCallback" on a [`ConfidentialFungibleToken`](#ConfidentialFungibleToken).
+
+The transfer callback is not invoked on the recipient if the recipient has no code (i.e. is an EOA). If the
+recipient has non-zero code, it must implement
+[`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) and return an `ebool` indicating
+whether the transfer was accepted or not. If the `ebool` is `false`, the transfer will be reversed.
+

@@ -3,10 +3,10 @@
 set -euo pipefail
 
 # Configuration
-CONTRACTS_REPO="${CONTRACTS_REPO:-https://github.com/stevedylandev/uniswap-hooks.git}"
+CONTRACTS_REPO="${CONTRACTS_REPO:-https://github.com/stevedylandev/openzeppelin-confidential-contracts.git}"
 CONTRACTS_BRANCH="${CONTRACTS_BRANCH:-master}"
 TEMP_DIR="temp-contracts"
-API_OUTPUT_DIR="content/uniswap-hooks/v1.x/api"
+API_OUTPUT_DIR="content/confidential-contracts/v0.x/api"
 EXAMPLES_OUTPUT_DIR="examples"
 
 echo "🔄 Generating OpenZeppelin Contracts API documentation..."

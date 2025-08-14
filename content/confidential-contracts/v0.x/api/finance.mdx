@@ -1,0 +1,505 @@
+---
+title: "Finance"
+description: "Smart contract finance utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/confidential-contracts/api#finance
+</Callout>
+
+This directory includes primitives for on-chain confidential financial systems:
+
+* [`VestingWalletConfidential`](#VestingWalletConfidential): Handles the vesting of confidential tokens for a given beneficiary. Custody of multiple tokens can be given to this contract, which will release the token to the beneficiary following a given, customizable, vesting schedule.
+* [`VestingWalletCliffConfidential`](#VestingWalletCliffConfidential): Variant of [`VestingWalletConfidential`](#VestingWalletConfidential) which adds a cliff period to the vesting schedule.
+
+For convenience, this directory also includes:
+
+* [`VestingWalletConfidentialFactory`](#VestingWalletConfidentialFactory): A factory which enables batch funding of vesting wallets.
+
+## Contracts
+[`VestingWalletConfidential`](#VestingWalletConfidential)
+[`VestingWalletCliffConfidential`](#VestingWalletCliffConfidential)
+[`VestingWalletConfidentialFactory`](#VestingWalletConfidentialFactory)
+
+<a id="ERC7821WithExecutor"></a>
+
+## `ERC7821WithExecutor` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/ERC7821WithExecutor.sol)
+
+```solidity
+import "@openzeppelin/contracts/finance/ERC7821WithExecutor.sol";
+```
+
+Extension of `ERC7821` that adds an [`ERC7821WithExecutor.executor`](#ERC7821WithExecutor-executor--) address that is able to execute arbitrary calls via `ERC7821.execute`.
+
+### Functions
+- [executor()](#ERC7821WithExecutor-executor--)
+- [__ERC7821WithExecutor_init(executor_)](#ERC7821WithExecutor-__ERC7821WithExecutor_init-address-)
+- [_erc7821AuthorizedExecutor(caller, mode, executionData)](#ERC7821WithExecutor-_erc7821AuthorizedExecutor-address-bytes32-bytes-)
+
+#### ERC7821
+- [execute(mode, executionData)](#ERC7821-execute-bytes32-bytes-)
+- [supportsExecutionMode(mode)](#ERC7821-supportsExecutionMode-bytes32-)
+
+#### IERC7821
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC7821
+
+#### IERC7821
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### ERC7821
+- [UnsupportedExecutionMode()](#ERC7821-UnsupportedExecutionMode--)
+
+#### IERC7821
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC7821WithExecutor-executor--"></a>
+
+### `executor() → address`
+*public*
+
+Trusted address that is able to execute arbitrary calls from the vesting wallet via `ERC7821.execute`.
+
+<a id="ERC7821WithExecutor-__ERC7821WithExecutor_init-address-"></a>
+
+### `__ERC7821WithExecutor_init(address executor_)`
+*internal*
+
+<a id="ERC7821WithExecutor-_erc7821AuthorizedExecutor-address-bytes32-bytes-"></a>
+
+### `_erc7821AuthorizedExecutor(address caller, bytes32 mode, bytes executionData) → bool`
+*internal*
+
+Access control mechanism for the execute function.
+By default, only the contract itself is allowed to execute.
+
+Override this function to implement custom access control, for example to allow the
+ERC-4337 entrypoint to execute.
+
+```solidity
+function _erc7821AuthorizedExecutor(
+  address caller,
+  bytes32 mode,
+  bytes calldata executionData
+) internal view virtual override returns (bool) {
+  return caller == address(entryPoint()) || super._erc7821AuthorizedExecutor(caller, mode, executionData);
+}
+```
+
+<a id="VestingWalletCliffConfidential"></a>
+
+## `VestingWalletCliffConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/VestingWalletCliffConfidential.sol)
+
+```solidity
+import "@openzeppelin/contracts/finance/VestingWalletCliffConfidential.sol";
+```
+
+An extension of [`VestingWalletConfidential`](#VestingWalletConfidential) that adds a cliff to the vesting schedule. The cliff is `cliffSeconds` long and
+starts at the vesting start timestamp (see [`VestingWalletConfidential`](#VestingWalletConfidential)).
+
+### Functions
+- [cliff()](#VestingWalletCliffConfidential-cliff--)
+- [__VestingWalletCliffConfidential_init(beneficiary, startTimestamp, durationSeconds, cliffSeconds)](#VestingWalletCliffConfidential-__VestingWalletCliffConfidential_init-address-uint48-uint48-uint48-)
+- [__VestingWalletCliffConfidential_init_unchained(cliffSeconds)](#VestingWalletCliffConfidential-__VestingWalletCliffConfidential_init_unchained-uint48-)
+- [_vestingSchedule(totalAllocation, timestamp)](#VestingWalletCliffConfidential-_vestingSchedule-euint128-uint48-)
+
+#### VestingWalletConfidential
+- [start()](#VestingWalletConfidential-start--)
+- [duration()](#VestingWalletConfidential-duration--)
+- [end()](#VestingWalletConfidential-end--)
+- [released(token)](#VestingWalletConfidential-released-address-)
+- [releasable(token)](#VestingWalletConfidential-releasable-address-)
+- [release(token)](#VestingWalletConfidential-release-address-)
+- [vestedAmount(token, timestamp)](#VestingWalletConfidential-vestedAmount-address-uint48-)
+- [__VestingWalletConfidential_init(beneficiary, startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init-address-uint48-uint48-)
+- [__VestingWalletConfidential_init_unchained(startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init_unchained-uint48-uint48-)
+
+#### ReentrancyGuardTransient
+- [_reentrancyGuardEntered()](#ReentrancyGuardTransient-_reentrancyGuardEntered--)
+
+#### OwnableUpgradeable
+- [__Ownable_init(initialOwner)](#OwnableUpgradeable-__Ownable_init-address-)
+- [__Ownable_init_unchained(initialOwner)](#OwnableUpgradeable-__Ownable_init_unchained-address-)
+- [owner()](#OwnableUpgradeable-owner--)
+- [_checkOwner()](#OwnableUpgradeable-_checkOwner--)
+- [renounceOwnership()](#OwnableUpgradeable-renounceOwnership--)
+- [transferOwnership(newOwner)](#OwnableUpgradeable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#OwnableUpgradeable-_transferOwnership-address-)
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### VestingWalletConfidential
+- [VestingWalletConfidentialTokenReleased(token, amount)](#VestingWalletConfidential-VestingWalletConfidentialTokenReleased-address-euint64-)
+
+#### ReentrancyGuardTransient
+
+#### OwnableUpgradeable
+- [OwnershipTransferred(previousOwner, newOwner)](#OwnableUpgradeable-OwnershipTransferred-address-address-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [VestingWalletCliffConfidentialInvalidCliffDuration(cliffSeconds, durationSeconds)](#VestingWalletCliffConfidential-VestingWalletCliffConfidentialInvalidCliffDuration-uint64-uint64-)
+
+#### VestingWalletConfidential
+
+#### ReentrancyGuardTransient
+- [ReentrancyGuardReentrantCall()](#ReentrancyGuardTransient-ReentrancyGuardReentrantCall--)
+
+#### OwnableUpgradeable
+- [OwnableUnauthorizedAccount(account)](#OwnableUpgradeable-OwnableUnauthorizedAccount-address-)
+- [OwnableInvalidOwner(owner)](#OwnableUpgradeable-OwnableInvalidOwner-address-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="VestingWalletCliffConfidential-cliff--"></a>
+
+### `cliff() → uint64`
+*public*
+
+The timestamp at which the cliff ends.
+
+<a id="VestingWalletCliffConfidential-__VestingWalletCliffConfidential_init-address-uint48-uint48-uint48-"></a>
+
+### `__VestingWalletCliffConfidential_init(address beneficiary, uint48 startTimestamp, uint48 durationSeconds, uint48 cliffSeconds)`
+*internal*
+
+Set the duration of the cliff, in seconds. The cliff starts at the vesting
+start timestamp (see [`VestingWalletConfidential.start`](#VestingWalletConfidential-start--)) and ends `cliffSeconds` later.
+
+<a id="VestingWalletCliffConfidential-__VestingWalletCliffConfidential_init_unchained-uint48-"></a>
+
+### `__VestingWalletCliffConfidential_init_unchained(uint48 cliffSeconds)`
+*internal*
+
+<a id="VestingWalletCliffConfidential-_vestingSchedule-euint128-uint48-"></a>
+
+### `_vestingSchedule(euint128 totalAllocation, uint48 timestamp) → euint128`
+*internal*
+
+This function returns the amount vested, as a function of time, for
+an asset given its total historical allocation. Returns 0 if the [`VestingWalletCliffConfidential.cliff`](#VestingWalletCliffConfidential-cliff--) timestamp is not met.
+
+IMPORTANT: The cliff not only makes the schedule return 0, but it also ignores every possible side
+effect from calling the inherited implementation (i.e. `super._vestingSchedule`). Carefully consider
+this caveat if the overridden implementation of this function has any (e.g. writing to memory or reverting).
+
+<a id="VestingWalletCliffConfidential-VestingWalletCliffConfidentialInvalidCliffDuration-uint64-uint64-"></a>
+
+### `VestingWalletCliffConfidentialInvalidCliffDuration(uint64 cliffSeconds, uint64 durationSeconds)`
+*error*
+
+The specified cliff duration is larger than the vesting duration.
+
+<a id="VestingWalletConfidential"></a>
+
+## `VestingWalletConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/VestingWalletConfidential.sol)
+
+```solidity
+import "@openzeppelin/contracts/finance/VestingWalletConfidential.sol";
+```
+
+A vesting wallet is an ownable contract that can receive ConfidentialFungibleTokens, and release these
+assets to the wallet owner, also referred to as "beneficiary", according to a vesting schedule.
+
+Any assets transferred to this contract will follow the vesting schedule as if they were locked from the beginning.
+Consequently, if the vesting has already started, any amount of tokens sent to this contract will (at least partly)
+be immediately releasable.
+
+By setting the duration to 0, one can configure this contract to behave like an asset timelock that holds tokens for
+a beneficiary until a specified time.
+
+NOTE: Since the wallet is `Ownable`, and ownership can be transferred, it is possible to sell unvested tokens.
+
+NOTE: When using this contract with any token whose balance is adjusted automatically (i.e. a rebase token), make
+sure to account the supply/balance adjustment in the vesting schedule to ensure the vested amount is as intended.
+
+Confidential vesting wallet contracts can be deployed (as clones) using the [`VestingWalletConfidentialFactory`](#VestingWalletConfidentialFactory).
+
+### Functions
+- [start()](#VestingWalletConfidential-start--)
+- [duration()](#VestingWalletConfidential-duration--)
+- [end()](#VestingWalletConfidential-end--)
+- [released(token)](#VestingWalletConfidential-released-address-)
+- [releasable(token)](#VestingWalletConfidential-releasable-address-)
+- [release(token)](#VestingWalletConfidential-release-address-)
+- [vestedAmount(token, timestamp)](#VestingWalletConfidential-vestedAmount-address-uint48-)
+- [__VestingWalletConfidential_init(beneficiary, startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init-address-uint48-uint48-)
+- [__VestingWalletConfidential_init_unchained(startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init_unchained-uint48-uint48-)
+- [_vestingSchedule(totalAllocation, timestamp)](#VestingWalletConfidential-_vestingSchedule-euint128-uint48-)
+
+#### ReentrancyGuardTransient
+- [_reentrancyGuardEntered()](#ReentrancyGuardTransient-_reentrancyGuardEntered--)
+
+#### OwnableUpgradeable
+- [__Ownable_init(initialOwner)](#OwnableUpgradeable-__Ownable_init-address-)
+- [__Ownable_init_unchained(initialOwner)](#OwnableUpgradeable-__Ownable_init_unchained-address-)
+- [owner()](#OwnableUpgradeable-owner--)
+- [_checkOwner()](#OwnableUpgradeable-_checkOwner--)
+- [renounceOwnership()](#OwnableUpgradeable-renounceOwnership--)
+- [transferOwnership(newOwner)](#OwnableUpgradeable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#OwnableUpgradeable-_transferOwnership-address-)
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+- [VestingWalletConfidentialTokenReleased(token, amount)](#VestingWalletConfidential-VestingWalletConfidentialTokenReleased-address-euint64-)
+
+#### ReentrancyGuardTransient
+
+#### OwnableUpgradeable
+- [OwnershipTransferred(previousOwner, newOwner)](#OwnableUpgradeable-OwnershipTransferred-address-address-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### ReentrancyGuardTransient
+- [ReentrancyGuardReentrantCall()](#ReentrancyGuardTransient-ReentrancyGuardReentrantCall--)
+
+#### OwnableUpgradeable
+- [OwnableUnauthorizedAccount(account)](#OwnableUpgradeable-OwnableUnauthorizedAccount-address-)
+- [OwnableInvalidOwner(owner)](#OwnableUpgradeable-OwnableInvalidOwner-address-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="VestingWalletConfidential-start--"></a>
+
+### `start() → uint64`
+*public*
+
+Timestamp at which the vesting starts.
+
+<a id="VestingWalletConfidential-duration--"></a>
+
+### `duration() → uint64`
+*public*
+
+Duration of the vesting in seconds.
+
+<a id="VestingWalletConfidential-end--"></a>
+
+### `end() → uint64`
+*public*
+
+Timestamp at which the vesting ends.
+
+<a id="VestingWalletConfidential-released-address-"></a>
+
+### `released(address token) → euint128`
+*public*
+
+Amount of token already released
+
+<a id="VestingWalletConfidential-releasable-address-"></a>
+
+### `releasable(address token) → euint64`
+*public*
+
+Getter for the amount of releasable `token` tokens. `token` should be the address of an
+[`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken) contract.
+
+<a id="VestingWalletConfidential-release-address-"></a>
+
+### `release(address token)`
+*public*
+
+Release the tokens that have already vested.
+
+Emits a [`VestingWalletConfidential.VestingWalletConfidentialTokenReleased`](#VestingWalletConfidential-VestingWalletConfidentialTokenReleased-address-euint64-) event.
+
+<a id="VestingWalletConfidential-vestedAmount-address-uint48-"></a>
+
+### `vestedAmount(address token, uint48 timestamp) → euint128`
+*public*
+
+Calculates the amount of tokens that have been vested at the given timestamp.
+Default implementation is a linear vesting curve.
+
+<a id="VestingWalletConfidential-__VestingWalletConfidential_init-address-uint48-uint48-"></a>
+
+### `__VestingWalletConfidential_init(address beneficiary, uint48 startTimestamp, uint48 durationSeconds)`
+*internal*
+
+Initializes the vesting wallet for a given `beneficiary` with a start time of `startTimestamp`
+and an end time of `startTimestamp + durationSeconds`.
+
+<a id="VestingWalletConfidential-__VestingWalletConfidential_init_unchained-uint48-uint48-"></a>
+
+### `__VestingWalletConfidential_init_unchained(uint48 startTimestamp, uint48 durationSeconds)`
+*internal*
+
+<a id="VestingWalletConfidential-_vestingSchedule-euint128-uint48-"></a>
+
+### `_vestingSchedule(euint128 totalAllocation, uint48 timestamp) → euint128`
+*internal*
+
+This returns the amount vested, as a function of time, for an asset given its total historical allocation.
+
+<a id="VestingWalletConfidential-VestingWalletConfidentialTokenReleased-address-euint64-"></a>
+
+### `VestingWalletConfidentialTokenReleased(address indexed token, euint64 amount)`
+*event*
+
+Emitted when releasable vested tokens are released.
+
+<a id="VestingWalletConfidentialFactory"></a>
+
+## `VestingWalletConfidentialFactory` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/VestingWalletConfidentialFactory.sol)
+
+```solidity
+import "@openzeppelin/contracts/finance/VestingWalletConfidentialFactory.sol";
+```
+
+A factory which enables batch funding of vesting wallets.
+
+The [`VestingWalletConfidentialFactory._deployVestingWalletImplementation`](#VestingWalletConfidentialFactory-_deployVestingWalletImplementation--), [`VestingWalletConfidentialFactory._initializeVestingWallet`](#VestingWalletConfidentialFactory-_initializeVestingWallet-address-bytes-), and [`VestingWalletConfidentialFactory._validateVestingWalletInitArgs`](#VestingWalletConfidentialFactory-_validateVestingWalletInitArgs-bytes-)
+functions remain unimplemented to allow for custom implementations of the vesting wallet to be used.
+
+### Functions
+- [constructor()](#VestingWalletConfidentialFactory-constructor--)
+- [batchFundVestingWalletConfidential(confidentialFungibleToken, vestingPlans, inputProof)](#VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-)
+- [createVestingWalletConfidential(initArgs)](#VestingWalletConfidentialFactory-createVestingWalletConfidential-bytes-)
+- [predictVestingWalletConfidential(initArgs)](#VestingWalletConfidentialFactory-predictVestingWalletConfidential-bytes-)
+- [_validateVestingWalletInitArgs(initArgs)](#VestingWalletConfidentialFactory-_validateVestingWalletInitArgs-bytes-)
+- [_initializeVestingWallet(vestingWalletAddress, initArgs)](#VestingWalletConfidentialFactory-_initializeVestingWallet-address-bytes-)
+- [_deployVestingWalletImplementation()](#VestingWalletConfidentialFactory-_deployVestingWalletImplementation--)
+- [_getCreate2VestingWalletConfidentialSalt(initArgs)](#VestingWalletConfidentialFactory-_getCreate2VestingWalletConfidentialSalt-bytes-)
+
+### Events
+- [VestingWalletConfidentialFunded(vestingWalletConfidential, confidentialFungibleToken, transferredAmount, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-)
+- [VestingWalletConfidentialCreated(vestingWalletConfidential, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialCreated-address-bytes-)
+
+<a id="VestingWalletConfidentialFactory-constructor--"></a>
+
+### `constructor()`
+*internal*
+
+<a id="VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-"></a>
+
+### `batchFundVestingWalletConfidential(address confidentialFungibleToken, struct VestingWalletConfidentialFactory.VestingPlan[] vestingPlans, bytes inputProof)`
+*public*
+
+Batches the funding of multiple confidential vesting wallets.
+
+Funds are sent to deterministic wallet addresses. Wallets can be created either
+before or after this operation.
+
+Emits a [`VestingWalletConfidentialFactory.VestingWalletConfidentialFunded`](#VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-) event for each funded vesting plan.
+
+<a id="VestingWalletConfidentialFactory-createVestingWalletConfidential-bytes-"></a>
+
+### `createVestingWalletConfidential(bytes initArgs) → address`
+*public*
+
+Creates a confidential vesting wallet.
+
+Emits a [`VestingWalletConfidentialFactory.VestingWalletConfidentialCreated`](#VestingWalletConfidentialFactory-VestingWalletConfidentialCreated-address-bytes-).
+
+<a id="VestingWalletConfidentialFactory-predictVestingWalletConfidential-bytes-"></a>
+
+### `predictVestingWalletConfidential(bytes initArgs) → address`
+*public*
+
+Predicts the deterministic address for a confidential vesting wallet.
+
+<a id="VestingWalletConfidentialFactory-_validateVestingWalletInitArgs-bytes-"></a>
+
+### `_validateVestingWalletInitArgs(bytes initArgs)`
+*internal*
+
+Virtual function that must be implemented to validate the initArgs bytes.
+
+<a id="VestingWalletConfidentialFactory-_initializeVestingWallet-address-bytes-"></a>
+
+### `_initializeVestingWallet(address vestingWalletAddress, bytes initArgs)`
+*internal*
+
+Virtual function that must be implemented to initialize the vesting wallet at `vestingWalletAddress`.
+
+<a id="VestingWalletConfidentialFactory-_deployVestingWalletImplementation--"></a>
+
+### `_deployVestingWalletImplementation() → address`
+*internal*
+
+Internal function that is called once to deploy the vesting wallet implementation.
+
+Vesting wallet clones will be initialized by calls to the [`VestingWalletConfidentialFactory._initializeVestingWallet`](#VestingWalletConfidentialFactory-_initializeVestingWallet-address-bytes-) function.
+
+<a id="VestingWalletConfidentialFactory-_getCreate2VestingWalletConfidentialSalt-bytes-"></a>
+
+### `_getCreate2VestingWalletConfidentialSalt(bytes initArgs) → bytes32`
+*internal*
+
+Gets create2 salt for a confidential vesting wallet.
+
+<a id="VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-"></a>
+
+### `VestingWalletConfidentialFunded(address indexed vestingWalletConfidential, address indexed confidentialFungibleToken, euint64 transferredAmount, bytes initArgs)`
+*event*
+
+Emitted for each vesting wallet funded within a batch.
+
+<a id="VestingWalletConfidentialFactory-VestingWalletConfidentialCreated-address-bytes-"></a>
+
+### `VestingWalletConfidentialCreated(address indexed vestingWalletConfidential, bytes initArgs)`
+*event*
+
+Emitted when a vesting wallet is deployed.
+
