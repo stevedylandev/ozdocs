@@ -1,0 +1,2757 @@
+---
+title: "ERC20"
+description: "Smart contract ERC20 utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/contracts/api/token/erc20
+</Callout>
+
+This set of interfaces, contracts, and utilities are all related to the [ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
+
+<Callout>
+For an overview of ERC-20 tokens and a walk through on how to create a token contract read our [ERC-20 guide](ROOT:erc20.mdx).
+</Callout>
+
+There are a few core contracts that implement the behavior specified in the ERC-20 standard:
+
+* [`IERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20): the interface all ERC-20 implementations should conform to.
+* [`IERC20Metadata`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20Metadata): the extended ERC-20 interface including the [`name`](#ERC20-name--), [`symbol`](#ERC20-symbol--) and [`decimals`](#ERC20-decimals--) functions.
+* [`ERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20): the implementation of the ERC-20 interface, including the [`name`](#ERC20-name--), [`symbol`](#ERC20-symbol--) and [`decimals`](#ERC20-decimals--) optional extensions to the standard interface.
+
+Additionally there are multiple custom extensions, including:
+
+* [`ERC20Permit`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Permit): gasless approval of tokens (standardized as ERC-2612).
+* [`ERC20Bridgeable`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Bridgeable): compatibility with crosschain bridges through ERC-7802.
+* [`ERC20Burnable`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Burnable): destruction of own tokens.
+* [`ERC20Capped`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Capped): enforcement of a cap to the total supply when minting tokens.
+* [`ERC20Pausable`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Pausable): ability to pause token transfers.
+* [`ERC20FlashMint`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20FlashMint): token level support for flash loans through the minting and burning of ephemeral tokens (standardized as ERC-3156).
+* [`ERC20Votes`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Votes): support for voting and vote delegation.
+* [`ERC20Wrapper`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Wrapper): wrapper to create an ERC-20 backed by another ERC-20, with deposit and withdraw methods. Useful in conjunction with [`ERC20Votes`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Votes).
+* [`ERC20TemporaryApproval`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20TemporaryApproval): support for approvals lasting for only one transaction, as defined in ERC-7674.
+* [`ERC1363`](https://docs.openzeppelin.com/contracts/api/token#ERC1363): support for calling the target of a transfer or approval, enabling code execution on the receiver within a single transaction.
+* [`ERC4626`](https://docs.openzeppelin.com/contracts/api/token#ERC4626): tokenized vault that manages shares (represented as ERC-20) that are backed by assets (another ERC-20).
+
+Finally, there are some utilities to interact with ERC-20 contracts in various ways:
+
+* [`SafeERC20`](https://docs.openzeppelin.com/contracts/api/utils#SafeERC20): a wrapper around the interface that eliminates the need to handle boolean return values.
+
+Other utilities that support ERC-20 assets can be found in the codebase:
+
+* ERC-20 tokens can be timelocked (held for a beneficiary until a specified time) or vested (released following a given schedule) using a [`VestingWallet`](https://docs.openzeppelin.com/contracts/api/finance#VestingWallet).
+
+<Callout>
+This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC-20 (such as [`_mint`](#ERC20-_mint-address-uint256-)) and expose them as external functions in the way they prefer.
+</Callout>
+
+## Core
+
+[`IERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20)
+
+[`IERC20Metadata`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20Metadata)
+
+[`ERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20)
+
+## Extensions
+
+[`IERC20Permit`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20Permit)
+
+[`ERC20Permit`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Permit)
+
+[`ERC20Bridgeable`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Bridgeable)
+
+[`ERC20Burnable`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Burnable)
+
+[`ERC20Capped`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Capped)
+
+[`ERC20Pausable`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Pausable)
+
+[`ERC20Votes`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Votes)
+
+[`ERC20Wrapper`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Wrapper)
+
+[`ERC20FlashMint`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20FlashMint)
+
+[`ERC20TemporaryApproval`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20TemporaryApproval)
+
+[`ERC1363`](https://docs.openzeppelin.com/contracts/api/token#ERC1363)
+
+[`ERC4626`](https://docs.openzeppelin.com/contracts/api/token#ERC4626)
+
+## Utilities
+
+[`SafeERC20`](https://docs.openzeppelin.com/contracts/api/utils#SafeERC20)
+
+[`ERC1363Utils`](https://docs.openzeppelin.com/contracts/api/token#ERC1363Utils)
+
+<a id="ERC20Upgradeable"></a>
+
+## `ERC20Upgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/ERC20Upgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/ERC20Upgradeable.sol";
+```
+
+Implementation of the [`IERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20) interface.
+
+This implementation is agnostic to the way tokens are created. This means
+that a supply mechanism has to be added in a derived contract using [`ERC1155Upgradeable._mint`](ERC1155#ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-).
+
+<Callout>
+For a detailed writeup see our guide
+</Callout>
+[How
+to implement supply mechanisms](https://forum.openzeppelin.com/t/how-to-implement-erc20-supply-mechanisms/226).
+
+The default value of [`ERC20Upgradeable.decimals`](#ERC20Upgradeable-decimals--) is 18. To change this, you should override
+this function so it returns a different value.
+
+We have followed general OpenZeppelin Contracts guidelines: functions revert
+instead returning `false` on failure. This behavior is nonetheless
+conventional and does not conflict with the expectations of ERC-20
+applications.
+
+### Functions
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20Upgradeable-__ERC20_init-string-string-"></a>
+
+### `__ERC20_init(string name_, string symbol_)`
+*internal*
+
+Sets the values for [`GovernorUpgradeable.name`](../governance#GovernorUpgradeable-name--) and [`ERC20Upgradeable.symbol`](#ERC20Upgradeable-symbol--).
+
+Both values are immutable: they can only be set once during construction.
+
+<a id="ERC20Upgradeable-__ERC20_init_unchained-string-string-"></a>
+
+### `__ERC20_init_unchained(string name_, string symbol_)`
+*internal*
+
+<a id="ERC20Upgradeable-name--"></a>
+
+### `name() → string`
+*public*
+
+Returns the name of the token.
+
+<a id="ERC20Upgradeable-symbol--"></a>
+
+### `symbol() → string`
+*public*
+
+Returns the symbol of the token, usually a shorter version of the
+name.
+
+<a id="ERC20Upgradeable-decimals--"></a>
+
+### `decimals() → uint8`
+*public*
+
+Returns the number of decimals used to get its user representation.
+For example, if `decimals` equals `2`, a balance of `505` tokens should
+be displayed to a user as `5.05` (`505 / 10 ** 2`).
+
+Tokens usually opt for a value of 18, imitating the relationship between
+Ether and Wei. This is the default value returned by this function, unless
+it's overridden.
+
+<Callout>
+This information is only used for _display_ purposes: it in
+</Callout>
+no way affects any of the arithmetic of the contract, including
+[`IERC20.balanceOf`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-balanceOf) and [`IERC20.transfer`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-transfer).
+
+<a id="ERC20Upgradeable-totalSupply--"></a>
+
+### `totalSupply() → uint256`
+*public*
+
+Returns the value of tokens in existence.
+
+<a id="ERC20Upgradeable-balanceOf-address-"></a>
+
+### `balanceOf(address account) → uint256`
+*public*
+
+Returns the value of tokens owned by `account`.
+
+<a id="ERC20Upgradeable-transfer-address-uint256-"></a>
+
+### `transfer(address to, uint256 value) → bool`
+*public*
+
+See [`IERC20.transfer`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-transfer).
+
+Requirements:
+
+- `to` cannot be the zero address.
+- the caller must have a balance of at least `value`.
+
+<a id="ERC20Upgradeable-allowance-address-address-"></a>
+
+### `allowance(address owner, address spender) → uint256`
+*public*
+
+Returns the remaining number of tokens that `spender` will be
+allowed to spend on behalf of `owner` through [`ERC20Upgradeable.transferFrom`](#ERC20Upgradeable-transferFrom-address-address-uint256-). This is
+zero by default.
+
+This value changes when [`ERC20Upgradeable.approve`](#ERC20Upgradeable-approve-address-uint256-) or [`ERC20Upgradeable.transferFrom`](#ERC20Upgradeable-transferFrom-address-address-uint256-) are called.
+
+<a id="ERC20Upgradeable-approve-address-uint256-"></a>
+
+### `approve(address spender, uint256 value) → bool`
+*public*
+
+See [`IERC20.approve`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-approve).
+
+<Callout>
+If `value` is the maximum `uint256`, the allowance is not updated on
+</Callout>
+`transferFrom`. This is semantically equivalent to an infinite approval.
+
+Requirements:
+
+- `spender` cannot be the zero address.
+
+<a id="ERC20Upgradeable-transferFrom-address-address-uint256-"></a>
+
+### `transferFrom(address from, address to, uint256 value) → bool`
+*public*
+
+See [`IERC20.transferFrom`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-transferFrom).
+
+Skips emitting an [`Approval`](https://docs.openzeppelin.com/contracts/api/utils#Approval) event indicating an allowance update. This is not
+required by the ERC. See [_approve](#ERC20Upgradeable-_approve-address-address-uint256-bool-).
+
+<Callout>
+Does not update the allowance if the current allowance
+</Callout>
+is the maximum `uint256`.
+
+Requirements:
+
+- `from` and `to` cannot be the zero address.
+- `from` must have a balance of at least `value`.
+- the caller must have allowance for ``from``'s tokens of at least
+`value`.
+
+<a id="ERC20Upgradeable-_transfer-address-address-uint256-"></a>
+
+### `_transfer(address from, address to, uint256 value)`
+*internal*
+
+Moves a `value` amount of tokens from `from` to `to`.
+
+This internal function is equivalent to [`ERC20Upgradeable.transfer`](#ERC20Upgradeable-transfer-address-uint256-), and can be used to
+e.g. implement automatic token fees, slashing mechanisms, etc.
+
+Emits a [`Transfer`](https://docs.openzeppelin.com/contracts/api/utils#Transfer) event.
+
+<Callout>
+This function is not virtual, [`ERC1155Upgradeable._update`](ERC1155#ERC1155Upgradeable-_update-address-address-uint256---uint256---) should be overridden instead.
+</Callout>
+
+<a id="ERC20Upgradeable-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`
+(or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
+this function.
+
+Emits a [`Transfer`](https://docs.openzeppelin.com/contracts/api/utils#Transfer) event.
+
+<a id="ERC20Upgradeable-_mint-address-uint256-"></a>
+
+### `_mint(address account, uint256 value)`
+*internal*
+
+Creates a `value` amount of tokens and assigns them to `account`, by transferring it from address(0).
+Relies on the `_update` mechanism
+
+Emits a [`Transfer`](https://docs.openzeppelin.com/contracts/api/utils#Transfer) event with `from` set to the zero address.
+
+<Callout>
+This function is not virtual, [`ERC1155Upgradeable._update`](ERC1155#ERC1155Upgradeable-_update-address-address-uint256---uint256---) should be overridden instead.
+</Callout>
+
+<a id="ERC20Upgradeable-_burn-address-uint256-"></a>
+
+### `_burn(address account, uint256 value)`
+*internal*
+
+Destroys a `value` amount of tokens from `account`, lowering the total supply.
+Relies on the `_update` mechanism.
+
+Emits a [`Transfer`](https://docs.openzeppelin.com/contracts/api/utils#Transfer) event with `to` set to the zero address.
+
+<Callout>
+This function is not virtual, [`ERC1155Upgradeable._update`](ERC1155#ERC1155Upgradeable-_update-address-address-uint256---uint256---) should be overridden instead
+</Callout>
+
+<a id="ERC20Upgradeable-_approve-address-address-uint256-"></a>
+
+### `_approve(address owner, address spender, uint256 value)`
+*internal*
+
+Sets `value` as the allowance of `spender` over the `owner`'s tokens.
+
+This internal function is equivalent to `approve`, and can be used to
+e.g. set automatic allowances for certain subsystems, etc.
+
+Emits an [`Approval`](https://docs.openzeppelin.com/contracts/api/utils#Approval) event.
+
+Requirements:
+
+- `owner` cannot be the zero address.
+- `spender` cannot be the zero address.
+
+Overrides to this logic should be done to the variant with an additional `bool emitEvent` argument.
+
+<a id="ERC20Upgradeable-_approve-address-address-uint256-bool-"></a>
+
+### `_approve(address owner, address spender, uint256 value, bool emitEvent)`
+*internal*
+
+Variant of [`ERC20Upgradeable._approve`](#ERC20Upgradeable-_approve-address-address-uint256-bool-) with an optional flag to enable or disable the [`Approval`](https://docs.openzeppelin.com/contracts/api/utils#Approval) event.
+
+By default (when calling [`ERC20Upgradeable._approve`](#ERC20Upgradeable-_approve-address-address-uint256-bool-)) the flag is set to true. On the other hand, approval changes made by
+`_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any
+`Approval` event during `transferFrom` operations.
+
+Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to
+true using the following override:
+
+```solidity
+function _approve(address owner, address spender, uint256 value, bool) internal virtual override 
+    super._approve(owner, spender, value, true);
+
+```
+
+Requirements are the same as [`ERC20Upgradeable._approve`](#ERC20Upgradeable-_approve-address-address-uint256-bool-).
+
+<a id="ERC20Upgradeable-_spendAllowance-address-address-uint256-"></a>
+
+### `_spendAllowance(address owner, address spender, uint256 value)`
+*internal*
+
+Updates `owner`'s allowance for `spender` based on spent `value`.
+
+Does not update the allowance value in case of infinite allowance.
+Revert if not enough allowance is available.
+
+Does not emit an [`Approval`](https://docs.openzeppelin.com/contracts/api/utils#Approval) event.
+
+<a id="ERC1363Upgradeable"></a>
+
+## `ERC1363Upgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC1363Upgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC1363Upgradeable.sol";
+```
+
+Extension of [`ERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20) tokens that adds support for code execution after transfers and approvals
+on recipient contracts. Calls after transfers are enabled through the [`ERC1363.transferAndCall`](https://docs.openzeppelin.com/contracts/api/token#ERC1363-transferAndCall) and
+[`ERC1363.transferFromAndCall`](https://docs.openzeppelin.com/contracts/api/token#ERC1363-transferFromAndCall) methods while calls after approvals can be made with [`ERC1363.approveAndCall`](https://docs.openzeppelin.com/contracts/api/token#ERC1363-approveAndCall)
+
+_Available since v5.1._
+
+### Functions
+- [__ERC1363_init()](#ERC1363Upgradeable-__ERC1363_init--)
+- [__ERC1363_init_unchained()](#ERC1363Upgradeable-__ERC1363_init_unchained--)
+- [supportsInterface(interfaceId)](#ERC1363Upgradeable-supportsInterface-bytes4-)
+- [transferAndCall(to, value)](#ERC1363Upgradeable-transferAndCall-address-uint256-)
+- [transferAndCall(to, value, data)](#ERC1363Upgradeable-transferAndCall-address-uint256-bytes-)
+- [transferFromAndCall(from, to, value)](#ERC1363Upgradeable-transferFromAndCall-address-address-uint256-)
+- [transferFromAndCall(from, to, value, data)](#ERC1363Upgradeable-transferFromAndCall-address-address-uint256-bytes-)
+- [approveAndCall(spender, value)](#ERC1363Upgradeable-approveAndCall-address-uint256-)
+- [approveAndCall(spender, value, data)](#ERC1363Upgradeable-approveAndCall-address-uint256-bytes-)
+
+#### IERC1363
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC1363
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC1363TransferFailed(receiver, value)](#ERC1363Upgradeable-ERC1363TransferFailed-address-uint256-)
+- [ERC1363TransferFromFailed(sender, receiver, value)](#ERC1363Upgradeable-ERC1363TransferFromFailed-address-address-uint256-)
+- [ERC1363ApproveFailed(spender, value)](#ERC1363Upgradeable-ERC1363ApproveFailed-address-uint256-)
+
+#### IERC1363
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC1363Upgradeable-__ERC1363_init--"></a>
+
+### `__ERC1363_init()`
+*internal*
+
+<a id="ERC1363Upgradeable-__ERC1363_init_unchained--"></a>
+
+### `__ERC1363_init_unchained()`
+*internal*
+
+<a id="ERC1363Upgradeable-supportsInterface-bytes4-"></a>
+
+### `supportsInterface(bytes4 interfaceId) → bool`
+*public*
+
+Returns true if this contract implements the interface defined by
+`interfaceId`. See the corresponding
+[ERC section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+to learn more about how these ids are created.
+
+This function call must use less than 30 000 gas.
+
+<a id="ERC1363Upgradeable-transferAndCall-address-uint256-"></a>
+
+### `transferAndCall(address to, uint256 value) → bool`
+*public*
+
+Moves a `value` amount of tokens from the caller's account to `to`
+and then calls [`IERC1363Receiver.onTransferReceived`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Receiver-onTransferReceived) on `to`. Returns a flag that indicates
+if the call succeeded.
+
+Requirements:
+
+- The target has code (i.e. is a contract).
+- The target `to` must implement the [`IERC1363Receiver`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Receiver) interface.
+- The target must return the [`IERC1363Receiver.onTransferReceived`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Receiver-onTransferReceived) selector to accept the transfer.
+- The internal [`ERC20Upgradeable.transfer`](#ERC20Upgradeable-transfer-address-uint256-) must succeed (returned `true`).
+
+<a id="ERC1363Upgradeable-transferAndCall-address-uint256-bytes-"></a>
+
+### `transferAndCall(address to, uint256 value, bytes data) → bool`
+*public*
+
+Variant of [`ERC1363Upgradeable.transferAndCall`](#ERC1363Upgradeable-transferAndCall-address-uint256-bytes-) that accepts an additional `data` parameter with
+no specified format.
+
+<a id="ERC1363Upgradeable-transferFromAndCall-address-address-uint256-"></a>
+
+### `transferFromAndCall(address from, address to, uint256 value) → bool`
+*public*
+
+Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism
+and then calls [`IERC1363Receiver.onTransferReceived`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Receiver-onTransferReceived) on `to`. Returns a flag that indicates
+if the call succeeded.
+
+Requirements:
+
+- The target has code (i.e. is a contract).
+- The target `to` must implement the [`IERC1363Receiver`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Receiver) interface.
+- The target must return the [`IERC1363Receiver.onTransferReceived`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Receiver-onTransferReceived) selector to accept the transfer.
+- The internal [`ERC20Upgradeable.transferFrom`](#ERC20Upgradeable-transferFrom-address-address-uint256-) must succeed (returned `true`).
+
+<a id="ERC1363Upgradeable-transferFromAndCall-address-address-uint256-bytes-"></a>
+
+### `transferFromAndCall(address from, address to, uint256 value, bytes data) → bool`
+*public*
+
+Variant of [`ERC1363Upgradeable.transferFromAndCall`](#ERC1363Upgradeable-transferFromAndCall-address-address-uint256-bytes-) that accepts an additional `data` parameter with
+no specified format.
+
+<a id="ERC1363Upgradeable-approveAndCall-address-uint256-"></a>
+
+### `approveAndCall(address spender, uint256 value) → bool`
+*public*
+
+Sets a `value` amount of tokens as the allowance of `spender` over the
+caller's tokens and then calls [`IERC1363Spender.onApprovalReceived`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Spender-onApprovalReceived) on `spender`.
+Returns a flag that indicates if the call succeeded.
+
+Requirements:
+
+- The target has code (i.e. is a contract).
+- The target `spender` must implement the [`IERC1363Spender`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Spender) interface.
+- The target must return the [`IERC1363Spender.onApprovalReceived`](https://docs.openzeppelin.com/contracts/api/token#IERC1363Spender-onApprovalReceived) selector to accept the approval.
+- The internal [`ERC20Upgradeable.approve`](#ERC20Upgradeable-approve-address-uint256-) must succeed (returned `true`).
+
+<a id="ERC1363Upgradeable-approveAndCall-address-uint256-bytes-"></a>
+
+### `approveAndCall(address spender, uint256 value, bytes data) → bool`
+*public*
+
+Variant of [`ERC1363Upgradeable.approveAndCall`](#ERC1363Upgradeable-approveAndCall-address-uint256-bytes-) that accepts an additional `data` parameter with
+no specified format.
+
+<a id="ERC1363Upgradeable-ERC1363TransferFailed-address-uint256-"></a>
+
+### `ERC1363TransferFailed(address receiver, uint256 value)`
+*error*
+
+Indicates a failure within the [`ERC20Upgradeable.transfer`](#ERC20Upgradeable-transfer-address-uint256-) part of a transferAndCall operation.
+
+<a id="ERC1363Upgradeable-ERC1363TransferFromFailed-address-address-uint256-"></a>
+
+### `ERC1363TransferFromFailed(address sender, address receiver, uint256 value)`
+*error*
+
+Indicates a failure within the [`ERC20Upgradeable.transferFrom`](#ERC20Upgradeable-transferFrom-address-address-uint256-) part of a transferFromAndCall operation.
+
+<a id="ERC1363Upgradeable-ERC1363ApproveFailed-address-uint256-"></a>
+
+### `ERC1363ApproveFailed(address spender, uint256 value)`
+*error*
+
+Indicates a failure within the [`ERC20Upgradeable.approve`](#ERC20Upgradeable-approve-address-uint256-) part of a approveAndCall operation.
+
+<a id="ERC20BurnableUpgradeable"></a>
+
+## `ERC20BurnableUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20BurnableUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
+```
+
+Extension of [`ERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20) that allows token holders to destroy both their own
+tokens and those that they have an allowance for, in a way that can be
+recognized off-chain (via event analysis).
+
+### Functions
+- [__ERC20Burnable_init()](#ERC20BurnableUpgradeable-__ERC20Burnable_init--)
+- [__ERC20Burnable_init_unchained()](#ERC20BurnableUpgradeable-__ERC20Burnable_init_unchained--)
+- [burn(value)](#ERC20BurnableUpgradeable-burn-uint256-)
+- [burnFrom(account, value)](#ERC20BurnableUpgradeable-burnFrom-address-uint256-)
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20BurnableUpgradeable-__ERC20Burnable_init--"></a>
+
+### `__ERC20Burnable_init()`
+*internal*
+
+<a id="ERC20BurnableUpgradeable-__ERC20Burnable_init_unchained--"></a>
+
+### `__ERC20Burnable_init_unchained()`
+*internal*
+
+<a id="ERC20BurnableUpgradeable-burn-uint256-"></a>
+
+### `burn(uint256 value)`
+*public*
+
+Destroys a `value` amount of tokens from the caller.
+
+See [`ERC20._burn`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20-burn).
+
+<a id="ERC20BurnableUpgradeable-burnFrom-address-uint256-"></a>
+
+### `burnFrom(address account, uint256 value)`
+*public*
+
+Destroys a `value` amount of tokens from `account`, deducting from
+the caller's allowance.
+
+See [`ERC20._burn`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20-burn) and [`ERC20.allowance`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20-allowance).
+
+Requirements:
+
+- the caller must have allowance for ``accounts``'s tokens of at least
+`value`.
+
+<a id="ERC20CappedUpgradeable"></a>
+
+## `ERC20CappedUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20CappedUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20CappedUpgradeable.sol";
+```
+
+Extension of [`ERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20) that adds a cap to the supply of tokens.
+
+### Functions
+- [__ERC20Capped_init(cap_)](#ERC20CappedUpgradeable-__ERC20Capped_init-uint256-)
+- [__ERC20Capped_init_unchained(cap_)](#ERC20CappedUpgradeable-__ERC20Capped_init_unchained-uint256-)
+- [cap()](#ERC20CappedUpgradeable-cap--)
+- [_update(from, to, value)](#ERC20CappedUpgradeable-_update-address-address-uint256-)
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC20ExceededCap(increasedSupply, cap)](#ERC20CappedUpgradeable-ERC20ExceededCap-uint256-uint256-)
+- [ERC20InvalidCap(cap)](#ERC20CappedUpgradeable-ERC20InvalidCap-uint256-)
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20CappedUpgradeable-__ERC20Capped_init-uint256-"></a>
+
+### `__ERC20Capped_init(uint256 cap_)`
+*internal*
+
+Sets the value of the `cap`. This value is immutable, it can only be
+set once during construction.
+
+<a id="ERC20CappedUpgradeable-__ERC20Capped_init_unchained-uint256-"></a>
+
+### `__ERC20Capped_init_unchained(uint256 cap_)`
+*internal*
+
+<a id="ERC20CappedUpgradeable-cap--"></a>
+
+### `cap() → uint256`
+*public*
+
+Returns the cap on the token's total supply.
+
+<a id="ERC20CappedUpgradeable-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`
+(or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
+this function.
+
+Emits a [`Transfer`](https://docs.openzeppelin.com/contracts/api/utils#Transfer) event.
+
+<a id="ERC20CappedUpgradeable-ERC20ExceededCap-uint256-uint256-"></a>
+
+### `ERC20ExceededCap(uint256 increasedSupply, uint256 cap)`
+*error*
+
+Total supply cap has been exceeded.
+
+<a id="ERC20CappedUpgradeable-ERC20InvalidCap-uint256-"></a>
+
+### `ERC20InvalidCap(uint256 cap)`
+*error*
+
+The supplied cap is not a valid cap.
+
+<a id="ERC20FlashMintUpgradeable"></a>
+
+## `ERC20FlashMintUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20FlashMintUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMintUpgradeable.sol";
+```
+
+Implementation of the ERC-3156 Flash loans extension, as defined in
+[ERC-3156](https://eips.ethereum.org/EIPS/eip-3156).
+
+Adds the [`ERC20FlashMintUpgradeable.flashLoan`](#ERC20FlashMintUpgradeable-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-) method, which provides flash loan support at the token
+level. By default there is no fee, but this can be changed by overriding [`ERC20FlashMintUpgradeable.flashFee`](#ERC20FlashMintUpgradeable-flashFee-address-uint256-).
+
+<Callout>
+When this extension is used along with the [`ERC20Capped`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Capped) or [`ERC20Votes`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Votes) extensions,
+</Callout>
+[`ERC20FlashMintUpgradeable.maxFlashLoan`](#ERC20FlashMintUpgradeable-maxFlashLoan-address-) will not correctly reflect the maximum that can be flash minted. We recommend
+overriding [`ERC20FlashMintUpgradeable.maxFlashLoan`](#ERC20FlashMintUpgradeable-maxFlashLoan-address-) so that it correctly reflects the supply cap.
+
+### Functions
+- [__ERC20FlashMint_init()](#ERC20FlashMintUpgradeable-__ERC20FlashMint_init--)
+- [__ERC20FlashMint_init_unchained()](#ERC20FlashMintUpgradeable-__ERC20FlashMint_init_unchained--)
+- [maxFlashLoan(token)](#ERC20FlashMintUpgradeable-maxFlashLoan-address-)
+- [flashFee(token, value)](#ERC20FlashMintUpgradeable-flashFee-address-uint256-)
+- [_flashFee(token, value)](#ERC20FlashMintUpgradeable-_flashFee-address-uint256-)
+- [_flashFeeReceiver()](#ERC20FlashMintUpgradeable-_flashFeeReceiver--)
+- [flashLoan(receiver, token, value, data)](#ERC20FlashMintUpgradeable-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-)
+
+#### IERC3156FlashLender
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC3156FlashLender
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC3156UnsupportedToken(token)](#ERC20FlashMintUpgradeable-ERC3156UnsupportedToken-address-)
+- [ERC3156ExceededMaxLoan(maxLoan)](#ERC20FlashMintUpgradeable-ERC3156ExceededMaxLoan-uint256-)
+- [ERC3156InvalidReceiver(receiver)](#ERC20FlashMintUpgradeable-ERC3156InvalidReceiver-address-)
+
+#### IERC3156FlashLender
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20FlashMintUpgradeable-__ERC20FlashMint_init--"></a>
+
+### `__ERC20FlashMint_init()`
+*internal*
+
+<a id="ERC20FlashMintUpgradeable-__ERC20FlashMint_init_unchained--"></a>
+
+### `__ERC20FlashMint_init_unchained()`
+*internal*
+
+<a id="ERC20FlashMintUpgradeable-maxFlashLoan-address-"></a>
+
+### `maxFlashLoan(address token) → uint256`
+*public*
+
+Returns the maximum amount of tokens available for loan.
+
+<a id="ERC20FlashMintUpgradeable-flashFee-address-uint256-"></a>
+
+### `flashFee(address token, uint256 value) → uint256`
+*public*
+
+Returns the fee applied when doing flash loans. This function calls
+the [`ERC20FlashMintUpgradeable._flashFee`](#ERC20FlashMintUpgradeable-_flashFee-address-uint256-) function which returns the fee applied when doing flash
+loans.
+
+<a id="ERC20FlashMintUpgradeable-_flashFee-address-uint256-"></a>
+
+### `_flashFee(address token, uint256 value) → uint256`
+*internal*
+
+Returns the fee applied when doing flash loans. By default this
+implementation has 0 fees. This function can be overloaded to make
+the flash loan mechanism deflationary.
+
+<a id="ERC20FlashMintUpgradeable-_flashFeeReceiver--"></a>
+
+### `_flashFeeReceiver() → address`
+*internal*
+
+Returns the receiver address of the flash fee. By default this
+implementation returns the address(0) which means the fee amount will be burnt.
+This function can be overloaded to change the fee receiver.
+
+<a id="ERC20FlashMintUpgradeable-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-"></a>
+
+### `flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 value, bytes data) → bool`
+*public*
+
+Performs a flash loan. New tokens are minted and sent to the
+`receiver`, who is required to implement the [`IERC3156FlashBorrower`](https://docs.openzeppelin.com/contracts/api/token#IERC3156FlashBorrower)
+interface. By the end of the flash loan, the receiver is expected to own
+value + fee tokens and have them approved back to the token contract itself so
+they can be burned.
+
+<a id="ERC20FlashMintUpgradeable-ERC3156UnsupportedToken-address-"></a>
+
+### `ERC3156UnsupportedToken(address token)`
+*error*
+
+The loan token is not valid.
+
+<a id="ERC20FlashMintUpgradeable-ERC3156ExceededMaxLoan-uint256-"></a>
+
+### `ERC3156ExceededMaxLoan(uint256 maxLoan)`
+*error*
+
+The requested loan exceeds the max loan value for `token`.
+
+<a id="ERC20FlashMintUpgradeable-ERC3156InvalidReceiver-address-"></a>
+
+### `ERC3156InvalidReceiver(address receiver)`
+*error*
+
+The receiver of a flashloan is not a valid [`IERC3156FlashBorrower.onFlashLoan`](https://docs.openzeppelin.com/contracts/api/token#IERC3156FlashBorrower-onFlashLoan) implementer.
+
+<a id="ERC20PausableUpgradeable"></a>
+
+## `ERC20PausableUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20PausableUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20PausableUpgradeable.sol";
+```
+
+ERC-20 token with pausable token transfers, minting and burning.
+
+Useful for scenarios such as preventing trades until the end of an evaluation
+period, or having an emergency switch for freezing all token transfers in the
+event of a large bug.
+
+<Callout type='warn'>
+This contract does not include public pause and unpause functions. In
+</Callout>
+addition to inheriting this contract, you must define both functions, invoking the
+[`Pausable._pause`](https://docs.openzeppelin.com/contracts/api/utils#Pausable-pause) and [`Pausable._unpause`](https://docs.openzeppelin.com/contracts/api/utils#Pausable-unpause) internal functions, with appropriate
+access control, e.g. using [`AccessControl`](https://docs.openzeppelin.com/contracts/api/access#AccessControl) or [`Ownable`](https://docs.openzeppelin.com/contracts/api/access#Ownable). Not doing so will
+make the contract pause mechanism of the contract unreachable, and thus unusable.
+
+### Functions
+- [__ERC20Pausable_init()](#ERC20PausableUpgradeable-__ERC20Pausable_init--)
+- [__ERC20Pausable_init_unchained()](#ERC20PausableUpgradeable-__ERC20Pausable_init_unchained--)
+- [_update(from, to, value)](#ERC20PausableUpgradeable-_update-address-address-uint256-)
+
+#### PausableUpgradeable
+- [__Pausable_init()](#PausableUpgradeable-__Pausable_init--)
+- [__Pausable_init_unchained()](#PausableUpgradeable-__Pausable_init_unchained--)
+- [paused()](#PausableUpgradeable-paused--)
+- [_requireNotPaused()](#PausableUpgradeable-_requireNotPaused--)
+- [_requirePaused()](#PausableUpgradeable-_requirePaused--)
+- [_pause()](#PausableUpgradeable-_pause--)
+- [_unpause()](#PausableUpgradeable-_unpause--)
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### PausableUpgradeable
+- [Paused(account)](#PausableUpgradeable-Paused-address-)
+- [Unpaused(account)](#PausableUpgradeable-Unpaused-address-)
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### PausableUpgradeable
+- [EnforcedPause()](#PausableUpgradeable-EnforcedPause--)
+- [ExpectedPause()](#PausableUpgradeable-ExpectedPause--)
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20PausableUpgradeable-__ERC20Pausable_init--"></a>
+
+### `__ERC20Pausable_init()`
+*internal*
+
+<a id="ERC20PausableUpgradeable-__ERC20Pausable_init_unchained--"></a>
+
+### `__ERC20Pausable_init_unchained()`
+*internal*
+
+<a id="ERC20PausableUpgradeable-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+See [`ERC20._update`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20-update).
+
+Requirements:
+
+- the contract must not be paused.
+
+<a id="ERC20PermitUpgradeable"></a>
+
+## `ERC20PermitUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20PermitUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20PermitUpgradeable.sol";
+```
+
+Implementation of the ERC-20 Permit extension allowing approvals to be made via signatures, as defined in
+[ERC-2612](https://eips.ethereum.org/EIPS/eip-2612).
+
+Adds the [`ERC20PermitUpgradeable.permit`](#ERC20PermitUpgradeable-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) method, which can be used to change an account's ERC-20 allowance (see [`IERC20.allowance`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-allowance)) by
+presenting a message signed by the account. By not relying on `[`IERC20.approve`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-approve)`, the token holder account doesn't
+need to send a transaction, and thus is not required to hold Ether at all.
+
+### Functions
+- [__ERC20Permit_init(name)](#ERC20PermitUpgradeable-__ERC20Permit_init-string-)
+- [__ERC20Permit_init_unchained()](#ERC20PermitUpgradeable-__ERC20Permit_init_unchained-string-)
+- [permit(owner, spender, value, deadline, v, r, s)](#ERC20PermitUpgradeable-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
+- [nonces(owner)](#ERC20PermitUpgradeable-nonces-address-)
+- [DOMAIN_SEPARATOR()](#ERC20PermitUpgradeable-DOMAIN_SEPARATOR--)
+
+#### NoncesUpgradeable
+- [__Nonces_init()](#NoncesUpgradeable-__Nonces_init--)
+- [__Nonces_init_unchained()](#NoncesUpgradeable-__Nonces_init_unchained--)
+- [_useNonce(owner)](#NoncesUpgradeable-_useNonce-address-)
+- [_useCheckedNonce(owner, nonce)](#NoncesUpgradeable-_useCheckedNonce-address-uint256-)
+
+#### EIP712Upgradeable
+- [__EIP712_init(name, version)](#EIP712Upgradeable-__EIP712_init-string-string-)
+- [__EIP712_init_unchained(name, version)](#EIP712Upgradeable-__EIP712_init_unchained-string-string-)
+- [_domainSeparatorV4()](#EIP712Upgradeable-_domainSeparatorV4--)
+- [_hashTypedDataV4(structHash)](#EIP712Upgradeable-_hashTypedDataV4-bytes32-)
+- [eip712Domain()](#EIP712Upgradeable-eip712Domain--)
+- [_EIP712Name()](#EIP712Upgradeable-_EIP712Name--)
+- [_EIP712Version()](#EIP712Upgradeable-_EIP712Version--)
+- [_EIP712NameHash()](#EIP712Upgradeable-_EIP712NameHash--)
+- [_EIP712VersionHash()](#EIP712Upgradeable-_EIP712VersionHash--)
+
+#### IERC5267
+
+#### IERC20Permit
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### NoncesUpgradeable
+
+#### EIP712Upgradeable
+
+#### IERC5267
+- [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
+
+#### IERC20Permit
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC2612ExpiredSignature(deadline)](#ERC20PermitUpgradeable-ERC2612ExpiredSignature-uint256-)
+- [ERC2612InvalidSigner(signer, owner)](#ERC20PermitUpgradeable-ERC2612InvalidSigner-address-address-)
+
+#### NoncesUpgradeable
+- [InvalidAccountNonce(account, currentNonce)](#NoncesUpgradeable-InvalidAccountNonce-address-uint256-)
+
+#### EIP712Upgradeable
+
+#### IERC5267
+
+#### IERC20Permit
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20PermitUpgradeable-__ERC20Permit_init-string-"></a>
+
+### `__ERC20Permit_init(string name)`
+*internal*
+
+Initializes the [`EIP712`](https://docs.openzeppelin.com/contracts/api/utils/cryptography#EIP712) domain separator using the `name` parameter, and setting `version` to `"1"`.
+
+It's a good idea to use the same `name` that is defined as the ERC-20 token name.
+
+<a id="ERC20PermitUpgradeable-__ERC20Permit_init_unchained-string-"></a>
+
+### `__ERC20Permit_init_unchained(string)`
+*internal*
+
+<a id="ERC20PermitUpgradeable-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
+
+### `permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)`
+*public*
+
+Sets `value` as the allowance of `spender` over ``owner``'s tokens,
+given ``owner``'s signed approval.
+
+<Callout type='warn'>
+The same issues [`IERC20.approve`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20-approve) has related to transaction
+</Callout>
+ordering also apply here.
+
+Emits an [`Approval`](https://docs.openzeppelin.com/contracts/api/utils#Approval) event.
+
+Requirements:
+
+- `spender` cannot be the zero address.
+- `deadline` must be a timestamp in the future.
+- `v`, `r` and `s` must be a valid `secp256k1` signature from `owner`
+over the EIP712-formatted function arguments.
+- the signature must use ``owner``'s current nonce (see [`ERC20PermitUpgradeable.nonces`](#ERC20PermitUpgradeable-nonces-address-)).
+
+For more information on the signature format, see the
+[relevant EIP
+section](https://eips.ethereum.org/EIPS/eip-2612#specification).
+
+<Callout type='warn'>
+See Security Considerations above.
+</Callout>
+
+<a id="ERC20PermitUpgradeable-nonces-address-"></a>
+
+### `nonces(address owner) → uint256`
+*public*
+
+Returns the current nonce for `owner`. This value must be
+included whenever a signature is generated for [`ERC20PermitUpgradeable.permit`](#ERC20PermitUpgradeable-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-).
+
+Every successful call to [`ERC20PermitUpgradeable.permit`](#ERC20PermitUpgradeable-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) increases ``owner``'s nonce by one. This
+prevents a signature from being used multiple times.
+
+<a id="ERC20PermitUpgradeable-DOMAIN_SEPARATOR--"></a>
+
+### `DOMAIN_SEPARATOR() → bytes32`
+*external*
+
+Returns the domain separator used in the encoding of the signature for [`ERC20PermitUpgradeable.permit`](#ERC20PermitUpgradeable-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-), as defined by [`EIP712`](https://docs.openzeppelin.com/contracts/api/utils/cryptography#EIP712).
+
+<a id="ERC20PermitUpgradeable-ERC2612ExpiredSignature-uint256-"></a>
+
+### `ERC2612ExpiredSignature(uint256 deadline)`
+*error*
+
+Permit deadline has expired.
+
+<a id="ERC20PermitUpgradeable-ERC2612InvalidSigner-address-address-"></a>
+
+### `ERC2612InvalidSigner(address signer, address owner)`
+*error*
+
+Mismatched signature.
+
+<a id="ERC20VotesUpgradeable"></a>
+
+## `ERC20VotesUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20VotesUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
+```
+
+Extension of ERC-20 to support Compound-like voting and delegation. This version is more generic than Compound's,
+and supports token supply up to 2^208^ - 1, while COMP is limited to 2^96^ - 1.
+
+<Callout>
+This contract does not provide interface compatibility with Compound's COMP token.
+</Callout>
+
+This extension keeps a history (checkpoints) of each account's vote power. Vote power can be delegated either
+by calling the [`Votes.delegate`](https://docs.openzeppelin.com/contracts/api/governance#Votes-delegate) function directly, or by providing a signature to be used with [`Votes.delegateBySig`](https://docs.openzeppelin.com/contracts/api/governance#Votes-delegateBySig). Voting
+power can be queried through the public accessors [`Votes.getVotes`](https://docs.openzeppelin.com/contracts/api/governance#Votes-getVotes) and [`Votes.getPastVotes`](https://docs.openzeppelin.com/contracts/api/governance#Votes-getPastVotes).
+
+By default, token balance does not account for voting power. This makes transfers cheaper. The downside is that it
+requires users to delegate to themselves in order to activate checkpoints and have their voting power tracked.
+
+### Functions
+- [__ERC20Votes_init()](#ERC20VotesUpgradeable-__ERC20Votes_init--)
+- [__ERC20Votes_init_unchained()](#ERC20VotesUpgradeable-__ERC20Votes_init_unchained--)
+- [_maxSupply()](#ERC20VotesUpgradeable-_maxSupply--)
+- [_update(from, to, value)](#ERC20VotesUpgradeable-_update-address-address-uint256-)
+- [_getVotingUnits(account)](#ERC20VotesUpgradeable-_getVotingUnits-address-)
+- [numCheckpoints(account)](#ERC20VotesUpgradeable-numCheckpoints-address-)
+- [checkpoints(account, pos)](#ERC20VotesUpgradeable-checkpoints-address-uint32-)
+
+#### VotesUpgradeable
+- [__Votes_init()](#VotesUpgradeable-__Votes_init--)
+- [__Votes_init_unchained()](#VotesUpgradeable-__Votes_init_unchained--)
+- [clock()](#VotesUpgradeable-clock--)
+- [CLOCK_MODE()](#VotesUpgradeable-CLOCK_MODE--)
+- [_validateTimepoint(timepoint)](#VotesUpgradeable-_validateTimepoint-uint256-)
+- [getVotes(account)](#VotesUpgradeable-getVotes-address-)
+- [getPastVotes(account, timepoint)](#VotesUpgradeable-getPastVotes-address-uint256-)
+- [getPastTotalSupply(timepoint)](#VotesUpgradeable-getPastTotalSupply-uint256-)
+- [_getTotalSupply()](#VotesUpgradeable-_getTotalSupply--)
+- [delegates(account)](#VotesUpgradeable-delegates-address-)
+- [delegate(delegatee)](#VotesUpgradeable-delegate-address-)
+- [delegateBySig(delegatee, nonce, expiry, v, r, s)](#VotesUpgradeable-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-)
+- [_delegate(account, delegatee)](#VotesUpgradeable-_delegate-address-address-)
+- [_transferVotingUnits(from, to, amount)](#VotesUpgradeable-_transferVotingUnits-address-address-uint256-)
+- [_moveDelegateVotes(from, to, amount)](#VotesUpgradeable-_moveDelegateVotes-address-address-uint256-)
+- [_numCheckpoints(account)](#VotesUpgradeable-_numCheckpoints-address-)
+- [_checkpoints(account, pos)](#VotesUpgradeable-_checkpoints-address-uint32-)
+
+#### IERC5805
+
+#### IVotes
+
+#### IERC6372
+
+#### NoncesUpgradeable
+- [__Nonces_init()](#NoncesUpgradeable-__Nonces_init--)
+- [__Nonces_init_unchained()](#NoncesUpgradeable-__Nonces_init_unchained--)
+- [nonces(owner)](#NoncesUpgradeable-nonces-address-)
+- [_useNonce(owner)](#NoncesUpgradeable-_useNonce-address-)
+- [_useCheckedNonce(owner, nonce)](#NoncesUpgradeable-_useCheckedNonce-address-uint256-)
+
+#### EIP712Upgradeable
+- [__EIP712_init(name, version)](#EIP712Upgradeable-__EIP712_init-string-string-)
+- [__EIP712_init_unchained(name, version)](#EIP712Upgradeable-__EIP712_init_unchained-string-string-)
+- [_domainSeparatorV4()](#EIP712Upgradeable-_domainSeparatorV4--)
+- [_hashTypedDataV4(structHash)](#EIP712Upgradeable-_hashTypedDataV4-bytes32-)
+- [eip712Domain()](#EIP712Upgradeable-eip712Domain--)
+- [_EIP712Name()](#EIP712Upgradeable-_EIP712Name--)
+- [_EIP712Version()](#EIP712Upgradeable-_EIP712Version--)
+- [_EIP712NameHash()](#EIP712Upgradeable-_EIP712NameHash--)
+- [_EIP712VersionHash()](#EIP712Upgradeable-_EIP712VersionHash--)
+
+#### IERC5267
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### VotesUpgradeable
+
+#### IERC5805
+
+#### IVotes
+- [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
+- [DelegateVotesChanged(delegate, previousVotes, newVotes)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
+
+#### IERC6372
+
+#### NoncesUpgradeable
+
+#### EIP712Upgradeable
+
+#### IERC5267
+- [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC20ExceededSafeSupply(increasedSupply, cap)](#ERC20VotesUpgradeable-ERC20ExceededSafeSupply-uint256-uint256-)
+
+#### VotesUpgradeable
+- [ERC6372InconsistentClock()](#VotesUpgradeable-ERC6372InconsistentClock--)
+- [ERC5805FutureLookup(timepoint, clock)](#VotesUpgradeable-ERC5805FutureLookup-uint256-uint48-)
+
+#### IERC5805
+
+#### IVotes
+- [VotesExpiredSignature(expiry)](#IVotes-VotesExpiredSignature-uint256-)
+
+#### IERC6372
+
+#### NoncesUpgradeable
+- [InvalidAccountNonce(account, currentNonce)](#NoncesUpgradeable-InvalidAccountNonce-address-uint256-)
+
+#### EIP712Upgradeable
+
+#### IERC5267
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20VotesUpgradeable-__ERC20Votes_init--"></a>
+
+### `__ERC20Votes_init()`
+*internal*
+
+<a id="ERC20VotesUpgradeable-__ERC20Votes_init_unchained--"></a>
+
+### `__ERC20Votes_init_unchained()`
+*internal*
+
+<a id="ERC20VotesUpgradeable-_maxSupply--"></a>
+
+### `_maxSupply() → uint256`
+*internal*
+
+Maximum token supply. Defaults to `type(uint208).max` (2^208^ - 1).
+
+This maximum is enforced in [`ERC1155Upgradeable._update`](ERC1155#ERC1155Upgradeable-_update-address-address-uint256---uint256---). It limits the total supply of the token, which is otherwise a uint256,
+so that checkpoints can be stored in the Trace208 structure used by [`Votes`](https://docs.openzeppelin.com/contracts/api/governance#Votes). Increasing this value will not
+remove the underlying limitation, and will cause [`ERC1155Upgradeable._update`](ERC1155#ERC1155Upgradeable-_update-address-address-uint256---uint256---) to fail because of a math overflow in
+[`Votes._transferVotingUnits`](https://docs.openzeppelin.com/contracts/api/governance#Votes-transferVotingUnits). An override could be used to further restrict the total supply (to a lower value) if
+additional logic requires it. When resolving override conflicts on this function, the minimum should be
+returned.
+
+<a id="ERC20VotesUpgradeable-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+Move voting power when tokens are transferred.
+
+Emits a [`IVotes.DelegateVotesChanged`](https://docs.openzeppelin.com/contracts/api/governance#IVotes-DelegateVotesChanged) event.
+
+<a id="ERC20VotesUpgradeable-_getVotingUnits-address-"></a>
+
+### `_getVotingUnits(address account) → uint256`
+*internal*
+
+Returns the voting units of an `account`.
+
+<Callout type='warn'>
+Overriding this function may compromise the internal vote accounting.
+</Callout>
+`ERC20Votes` assumes tokens map to voting units 1:1 and this is not easy to change.
+
+<a id="ERC20VotesUpgradeable-numCheckpoints-address-"></a>
+
+### `numCheckpoints(address account) → uint32`
+*public*
+
+Get number of checkpoints for `account`.
+
+<a id="ERC20VotesUpgradeable-checkpoints-address-uint32-"></a>
+
+### `checkpoints(address account, uint32 pos) → struct Checkpoints.Checkpoint208`
+*public*
+
+Get the `pos`-th checkpoint for `account`.
+
+<a id="ERC20VotesUpgradeable-ERC20ExceededSafeSupply-uint256-uint256-"></a>
+
+### `ERC20ExceededSafeSupply(uint256 increasedSupply, uint256 cap)`
+*error*
+
+Total supply cap has been exceeded, introducing a risk of votes overflowing.
+
+<a id="ERC20WrapperUpgradeable"></a>
+
+## `ERC20WrapperUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20WrapperUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20WrapperUpgradeable.sol";
+```
+
+Extension of the ERC-20 token contract to support token wrapping.
+
+Users can deposit and withdraw "underlying tokens" and receive a matching number of "wrapped tokens". This is useful
+in conjunction with other modules. For example, combining this wrapping mechanism with [`ERC20Votes`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20Votes) will allow the
+wrapping of an existing "basic" ERC-20 into a governance token.
+
+<Callout type='warn'>
+Any mechanism in which the underlying token changes the [`ERC1155Upgradeable.balanceOf`](ERC1155#ERC1155Upgradeable-balanceOf-address-uint256-) of an account without an explicit transfer
+</Callout>
+may desynchronize this contract's supply and its underlying balance. Please exercise caution when wrapping tokens that
+may undercollateralize the wrapper (i.e. wrapper's total supply is higher than its underlying balance). See [`ERC20WrapperUpgradeable._recover`](#ERC20WrapperUpgradeable-_recover-address-)
+for recovering value accrued to the wrapper.
+
+### Functions
+- [__ERC20Wrapper_init(underlyingToken)](#ERC20WrapperUpgradeable-__ERC20Wrapper_init-contract-IERC20-)
+- [__ERC20Wrapper_init_unchained(underlyingToken)](#ERC20WrapperUpgradeable-__ERC20Wrapper_init_unchained-contract-IERC20-)
+- [decimals()](#ERC20WrapperUpgradeable-decimals--)
+- [underlying()](#ERC20WrapperUpgradeable-underlying--)
+- [depositFor(account, value)](#ERC20WrapperUpgradeable-depositFor-address-uint256-)
+- [withdrawTo(account, value)](#ERC20WrapperUpgradeable-withdrawTo-address-uint256-)
+- [_recover(account)](#ERC20WrapperUpgradeable-_recover-address-)
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC20InvalidUnderlying(token)](#ERC20WrapperUpgradeable-ERC20InvalidUnderlying-address-)
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20WrapperUpgradeable-__ERC20Wrapper_init-contract-IERC20-"></a>
+
+### `__ERC20Wrapper_init(contract IERC20 underlyingToken)`
+*internal*
+
+<a id="ERC20WrapperUpgradeable-__ERC20Wrapper_init_unchained-contract-IERC20-"></a>
+
+### `__ERC20Wrapper_init_unchained(contract IERC20 underlyingToken)`
+*internal*
+
+<a id="ERC20WrapperUpgradeable-decimals--"></a>
+
+### `decimals() → uint8`
+*public*
+
+<a id="ERC20WrapperUpgradeable-underlying--"></a>
+
+### `underlying() → contract IERC20`
+*public*
+
+Returns the address of the underlying ERC-20 token that is being wrapped.
+
+<a id="ERC20WrapperUpgradeable-depositFor-address-uint256-"></a>
+
+### `depositFor(address account, uint256 value) → bool`
+*public*
+
+Allow a user to deposit underlying tokens and mint the corresponding number of wrapped tokens.
+
+<a id="ERC20WrapperUpgradeable-withdrawTo-address-uint256-"></a>
+
+### `withdrawTo(address account, uint256 value) → bool`
+*public*
+
+Allow a user to burn a number of wrapped tokens and withdraw the corresponding number of underlying tokens.
+
+<a id="ERC20WrapperUpgradeable-_recover-address-"></a>
+
+### `_recover(address account) → uint256`
+*internal*
+
+Mint wrapped token to cover any underlyingTokens that would have been transferred by mistake or acquired from
+rebasing mechanisms. Internal function that can be exposed with access control if desired.
+
+<a id="ERC20WrapperUpgradeable-ERC20InvalidUnderlying-address-"></a>
+
+### `ERC20InvalidUnderlying(address token)`
+*error*
+
+The underlying token couldn't be wrapped.
+
+<a id="ERC4626Upgradeable"></a>
+
+## `ERC4626Upgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC4626Upgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626Upgradeable.sol";
+```
+
+Implementation of the ERC-4626 "Tokenized Vault Standard" as defined in
+[ERC-4626](https://eips.ethereum.org/EIPS/eip-4626).
+
+This extension allows the minting and burning of "shares" (represented using the ERC-20 inheritance) in exchange for
+underlying "assets" through standardized [`ERC4626Upgradeable.deposit`](#ERC4626Upgradeable-deposit-uint256-address-), [`ERC4626Upgradeable.mint`](#ERC4626Upgradeable-mint-uint256-address-), [`ERC4626Upgradeable.redeem`](#ERC4626Upgradeable-redeem-uint256-address-address-) and [`ERC1155BurnableUpgradeable.burn`](ERC1155#ERC1155BurnableUpgradeable-burn-address-uint256-uint256-) workflows. This contract extends
+the ERC-20 standard. Any additional extensions included along it would affect the "shares" token represented by this
+contract and not the "assets" token which is an independent contract.
+
+[CAUTION]
+====
+In empty (or nearly empty) ERC-4626 vaults, deposits are at high risk of being stolen through frontrunning
+with a "donation" to the vault that inflates the price of a share. This is variously known as a donation or inflation
+attack and is essentially a problem of slippage. Vault deployers can protect against this attack by making an initial
+deposit of a non-trivial amount of the asset, such that price manipulation becomes infeasible. Withdrawals may
+similarly be affected by slippage. Users can protect against this attack as well as unexpected slippage in general by
+verifying the amount received is as expected, using a wrapper that performs these checks such as
+[ERC4626Router](https://github.com/fei-protocol/ERC4626#erc4626router-and-base).
+
+Since v4.9, this implementation introduces configurable virtual assets and shares to help developers mitigate that risk.
+The `_decimalsOffset()` corresponds to an offset in the decimal representation between the underlying asset's decimals
+and the vault decimals. This offset also determines the rate of virtual shares to virtual assets in the vault, which
+itself determines the initial exchange rate. While not fully preventing the attack, analysis shows that the default
+offset (0) makes it non-profitable even if an attacker is able to capture value from multiple user deposits, as a result
+of the value being captured by the virtual shares (out of the attacker's donation) matching the attacker's expected gains.
+With a larger offset, the attack becomes orders of magnitude more expensive than it is profitable. More details about the
+underlying math can be found [here](ROOT:erc4626.mdx#inflation-attack).
+
+The drawback of this approach is that the virtual shares do capture (a very small) part of the value being accrued
+to the vault. Also, if the vault experiences losses, the users try to exit the vault, the virtual shares and assets
+will cause the first user to exit to experience reduced losses in detriment to the last users that will experience
+bigger losses. Developers willing to revert back to the pre-v4.9 behavior just need to override the
+`_convertToShares` and `_convertToAssets` functions.
+
+To learn more, check out our [ERC-4626 guide](ROOT:erc4626.mdx).
+====
+
+### Functions
+- [__ERC4626_init(asset_)](#ERC4626Upgradeable-__ERC4626_init-contract-IERC20-)
+- [__ERC4626_init_unchained(asset_)](#ERC4626Upgradeable-__ERC4626_init_unchained-contract-IERC20-)
+- [decimals()](#ERC4626Upgradeable-decimals--)
+- [asset()](#ERC4626Upgradeable-asset--)
+- [totalAssets()](#ERC4626Upgradeable-totalAssets--)
+- [convertToShares(assets)](#ERC4626Upgradeable-convertToShares-uint256-)
+- [convertToAssets(shares)](#ERC4626Upgradeable-convertToAssets-uint256-)
+- [maxDeposit()](#ERC4626Upgradeable-maxDeposit-address-)
+- [maxMint()](#ERC4626Upgradeable-maxMint-address-)
+- [maxWithdraw(owner)](#ERC4626Upgradeable-maxWithdraw-address-)
+- [maxRedeem(owner)](#ERC4626Upgradeable-maxRedeem-address-)
+- [previewDeposit(assets)](#ERC4626Upgradeable-previewDeposit-uint256-)
+- [previewMint(shares)](#ERC4626Upgradeable-previewMint-uint256-)
+- [previewWithdraw(assets)](#ERC4626Upgradeable-previewWithdraw-uint256-)
+- [previewRedeem(shares)](#ERC4626Upgradeable-previewRedeem-uint256-)
+- [deposit(assets, receiver)](#ERC4626Upgradeable-deposit-uint256-address-)
+- [mint(shares, receiver)](#ERC4626Upgradeable-mint-uint256-address-)
+- [withdraw(assets, receiver, owner)](#ERC4626Upgradeable-withdraw-uint256-address-address-)
+- [redeem(shares, receiver, owner)](#ERC4626Upgradeable-redeem-uint256-address-address-)
+- [_convertToShares(assets, rounding)](#ERC4626Upgradeable-_convertToShares-uint256-enum-Math-Rounding-)
+- [_convertToAssets(shares, rounding)](#ERC4626Upgradeable-_convertToAssets-uint256-enum-Math-Rounding-)
+- [_deposit(caller, receiver, assets, shares)](#ERC4626Upgradeable-_deposit-address-address-uint256-uint256-)
+- [_withdraw(caller, receiver, owner, assets, shares)](#ERC4626Upgradeable-_withdraw-address-address-address-uint256-uint256-)
+- [_decimalsOffset()](#ERC4626Upgradeable-_decimalsOffset--)
+
+#### IERC4626
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC4626
+- [Deposit(sender, owner, assets, shares)](#IERC4626-Deposit-address-address-uint256-uint256-)
+- [Withdraw(sender, receiver, owner, assets, shares)](#IERC4626-Withdraw-address-address-address-uint256-uint256-)
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC4626ExceededMaxDeposit(receiver, assets, max)](#ERC4626Upgradeable-ERC4626ExceededMaxDeposit-address-uint256-uint256-)
+- [ERC4626ExceededMaxMint(receiver, shares, max)](#ERC4626Upgradeable-ERC4626ExceededMaxMint-address-uint256-uint256-)
+- [ERC4626ExceededMaxWithdraw(owner, assets, max)](#ERC4626Upgradeable-ERC4626ExceededMaxWithdraw-address-uint256-uint256-)
+- [ERC4626ExceededMaxRedeem(owner, shares, max)](#ERC4626Upgradeable-ERC4626ExceededMaxRedeem-address-uint256-uint256-)
+
+#### IERC4626
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC4626Upgradeable-__ERC4626_init-contract-IERC20-"></a>
+
+### `__ERC4626_init(contract IERC20 asset_)`
+*internal*
+
+Set the underlying asset contract. This must be an ERC20-compatible contract (ERC-20 or ERC-777).
+
+<a id="ERC4626Upgradeable-__ERC4626_init_unchained-contract-IERC20-"></a>
+
+### `__ERC4626_init_unchained(contract IERC20 asset_)`
+*internal*
+
+<a id="ERC4626Upgradeable-decimals--"></a>
+
+### `decimals() → uint8`
+*public*
+
+Decimals are computed by adding the decimal offset on top of the underlying asset's decimals. This
+"original" value is cached during construction of the vault contract. If this read operation fails (e.g., the
+asset has not been created yet), a default of 18 is used to represent the underlying asset's decimals.
+
+See [`IERC20Metadata.decimals`](https://docs.openzeppelin.com/contracts/api/token/ERC20#IERC20Metadata-decimals).
+
+<a id="ERC4626Upgradeable-asset--"></a>
+
+### `asset() → address`
+*public*
+
+Returns the address of the underlying token used for the Vault for accounting, depositing, and withdrawing.
+
+- MUST be an ERC-20 token contract.
+- MUST NOT revert.
+
+<a id="ERC4626Upgradeable-totalAssets--"></a>
+
+### `totalAssets() → uint256`
+*public*
+
+Returns the total amount of the underlying asset that is “managed” by Vault.
+
+- SHOULD include any compounding that occurs from yield.
+- MUST be inclusive of any fees that are charged against assets in the Vault.
+- MUST NOT revert.
+
+<a id="ERC4626Upgradeable-convertToShares-uint256-"></a>
+
+### `convertToShares(uint256 assets) → uint256`
+*public*
+
+Returns the amount of shares that the Vault would exchange for the amount of assets provided, in an ideal
+scenario where all the conditions are met.
+
+- MUST NOT be inclusive of any fees that are charged against assets in the Vault.
+- MUST NOT show any variations depending on the caller.
+- MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
+- MUST NOT revert.
+
+<Callout>
+This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
+</Callout>
+“average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
+from.
+
+<a id="ERC4626Upgradeable-convertToAssets-uint256-"></a>
+
+### `convertToAssets(uint256 shares) → uint256`
+*public*
+
+Returns the amount of assets that the Vault would exchange for the amount of shares provided, in an ideal
+scenario where all the conditions are met.
+
+- MUST NOT be inclusive of any fees that are charged against assets in the Vault.
+- MUST NOT show any variations depending on the caller.
+- MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
+- MUST NOT revert.
+
+<Callout>
+This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
+</Callout>
+“average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
+from.
+
+<a id="ERC4626Upgradeable-maxDeposit-address-"></a>
+
+### `maxDeposit(address) → uint256`
+*public*
+
+Returns the maximum amount of the underlying asset that can be deposited into the Vault for the receiver,
+through a deposit call.
+
+- MUST return a limited value if receiver is subject to some deposit limit.
+- MUST return 2 ** 256 - 1 if there is no limit on the maximum amount of assets that may be deposited.
+- MUST NOT revert.
+
+<a id="ERC4626Upgradeable-maxMint-address-"></a>
+
+### `maxMint(address) → uint256`
+*public*
+
+Returns the maximum amount of the Vault shares that can be minted for the receiver, through a mint call.
+- MUST return a limited value if receiver is subject to some mint limit.
+- MUST return 2 ** 256 - 1 if there is no limit on the maximum amount of shares that may be minted.
+- MUST NOT revert.
+
+<a id="ERC4626Upgradeable-maxWithdraw-address-"></a>
+
+### `maxWithdraw(address owner) → uint256`
+*public*
+
+Returns the maximum amount of the underlying asset that can be withdrawn from the owner balance in the
+Vault, through a withdraw call.
+
+- MUST return a limited value if owner is subject to some withdrawal limit or timelock.
+- MUST NOT revert.
+
+<a id="ERC4626Upgradeable-maxRedeem-address-"></a>
+
+### `maxRedeem(address owner) → uint256`
+*public*
+
+Returns the maximum amount of Vault shares that can be redeemed from the owner balance in the Vault,
+through a redeem call.
+
+- MUST return a limited value if owner is subject to some withdrawal limit or timelock.
+- MUST return balanceOf(owner) if owner is not subject to any withdrawal limit or timelock.
+- MUST NOT revert.
+
+<a id="ERC4626Upgradeable-previewDeposit-uint256-"></a>
+
+### `previewDeposit(uint256 assets) → uint256`
+*public*
+
+Allows an on-chain or off-chain user to simulate the effects of their deposit at the current block, given
+current on-chain conditions.
+
+- MUST return as close to and no more than the exact amount of Vault shares that would be minted in a deposit
+  call in the same transaction. I.e. deposit should return the same or more shares as previewDeposit if called
+  in the same transaction.
+- MUST NOT account for deposit limits like those returned from maxDeposit and should always act as though the
+  deposit would be accepted, regardless if the user has enough tokens approved, etc.
+- MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
+- MUST NOT revert.
+
+<Callout>
+any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
+</Callout>
+share price or some other type of condition, meaning the depositor will lose assets by depositing.
+
+<a id="ERC4626Upgradeable-previewMint-uint256-"></a>
+
+### `previewMint(uint256 shares) → uint256`
+*public*
+
+Allows an on-chain or off-chain user to simulate the effects of their mint at the current block, given
+current on-chain conditions.
+
+- MUST return as close to and no fewer than the exact amount of assets that would be deposited in a mint call
+  in the same transaction. I.e. mint should return the same or fewer assets as previewMint if called in the
+  same transaction.
+- MUST NOT account for mint limits like those returned from maxMint and should always act as though the mint
+  would be accepted, regardless if the user has enough tokens approved, etc.
+- MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
+- MUST NOT revert.
+
+<Callout>
+any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
+</Callout>
+share price or some other type of condition, meaning the depositor will lose assets by minting.
+
+<a id="ERC4626Upgradeable-previewWithdraw-uint256-"></a>
+
+### `previewWithdraw(uint256 assets) → uint256`
+*public*
+
+Allows an on-chain or off-chain user to simulate the effects of their withdrawal at the current block,
+given current on-chain conditions.
+
+- MUST return as close to and no fewer than the exact amount of Vault shares that would be burned in a withdraw
+  call in the same transaction. I.e. withdraw should return the same or fewer shares as previewWithdraw if
+  called
+  in the same transaction.
+- MUST NOT account for withdrawal limits like those returned from maxWithdraw and should always act as though
+  the withdrawal would be accepted, regardless if the user has enough shares, etc.
+- MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
+- MUST NOT revert.
+
+<Callout>
+any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
+</Callout>
+share price or some other type of condition, meaning the depositor will lose assets by depositing.
+
+<a id="ERC4626Upgradeable-previewRedeem-uint256-"></a>
+
+### `previewRedeem(uint256 shares) → uint256`
+*public*
+
+Allows an on-chain or off-chain user to simulate the effects of their redemption at the current block,
+given current on-chain conditions.
+
+- MUST return as close to and no more than the exact amount of assets that would be withdrawn in a redeem call
+  in the same transaction. I.e. redeem should return the same or more assets as previewRedeem if called in the
+  same transaction.
+- MUST NOT account for redemption limits like those returned from maxRedeem and should always act as though the
+  redemption would be accepted, regardless if the user has enough shares, etc.
+- MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
+- MUST NOT revert.
+
+<Callout>
+any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
+</Callout>
+share price or some other type of condition, meaning the depositor will lose assets by redeeming.
+
+<a id="ERC4626Upgradeable-deposit-uint256-address-"></a>
+
+### `deposit(uint256 assets, address receiver) → uint256`
+*public*
+
+Mints shares Vault shares to receiver by depositing exactly amount of underlying tokens.
+
+- MUST emit the Deposit event.
+- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the
+  deposit execution, and are accounted for during deposit.
+- MUST revert if all of assets cannot be deposited (due to deposit limit being reached, slippage, the user not
+  approving enough underlying tokens to the Vault contract, etc).
+
+<Callout>
+most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+</Callout>
+
+<a id="ERC4626Upgradeable-mint-uint256-address-"></a>
+
+### `mint(uint256 shares, address receiver) → uint256`
+*public*
+
+Mints exactly shares Vault shares to receiver by depositing amount of underlying tokens.
+
+- MUST emit the Deposit event.
+- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the mint
+  execution, and are accounted for during mint.
+- MUST revert if all of shares cannot be minted (due to deposit limit being reached, slippage, the user not
+  approving enough underlying tokens to the Vault contract, etc).
+
+<Callout>
+most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+</Callout>
+
+<a id="ERC4626Upgradeable-withdraw-uint256-address-address-"></a>
+
+### `withdraw(uint256 assets, address receiver, address owner) → uint256`
+*public*
+
+Burns shares from owner and sends exactly assets of underlying tokens to receiver.
+
+- MUST emit the Withdraw event.
+- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the
+  withdraw execution, and are accounted for during withdraw.
+- MUST revert if all of assets cannot be withdrawn (due to withdrawal limit being reached, slippage, the owner
+  not having enough shares, etc).
+
+Note that some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
+Those methods should be performed separately.
+
+<a id="ERC4626Upgradeable-redeem-uint256-address-address-"></a>
+
+### `redeem(uint256 shares, address receiver, address owner) → uint256`
+*public*
+
+Burns exactly shares from owner and sends assets of underlying tokens to receiver.
+
+- MUST emit the Withdraw event.
+- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the
+  redeem execution, and are accounted for during redeem.
+- MUST revert if all of shares cannot be redeemed (due to withdrawal limit being reached, slippage, the owner
+  not having enough shares, etc).
+
+<Callout>
+some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
+</Callout>
+Those methods should be performed separately.
+
+<a id="ERC4626Upgradeable-_convertToShares-uint256-enum-Math-Rounding-"></a>
+
+### `_convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256`
+*internal*
+
+Internal conversion function (from assets to shares) with support for rounding direction.
+
+<a id="ERC4626Upgradeable-_convertToAssets-uint256-enum-Math-Rounding-"></a>
+
+### `_convertToAssets(uint256 shares, enum Math.Rounding rounding) → uint256`
+*internal*
+
+Internal conversion function (from shares to assets) with support for rounding direction.
+
+<a id="ERC4626Upgradeable-_deposit-address-address-uint256-uint256-"></a>
+
+### `_deposit(address caller, address receiver, uint256 assets, uint256 shares)`
+*internal*
+
+Deposit/mint common workflow.
+
+<a id="ERC4626Upgradeable-_withdraw-address-address-address-uint256-uint256-"></a>
+
+### `_withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)`
+*internal*
+
+Withdraw/redeem common workflow.
+
+<a id="ERC4626Upgradeable-_decimalsOffset--"></a>
+
+### `_decimalsOffset() → uint8`
+*internal*
+
+<a id="ERC4626Upgradeable-ERC4626ExceededMaxDeposit-address-uint256-uint256-"></a>
+
+### `ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)`
+*error*
+
+Attempted to deposit more assets than the max amount for `receiver`.
+
+<a id="ERC4626Upgradeable-ERC4626ExceededMaxMint-address-uint256-uint256-"></a>
+
+### `ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)`
+*error*
+
+Attempted to mint more shares than the max amount for `receiver`.
+
+<a id="ERC4626Upgradeable-ERC4626ExceededMaxWithdraw-address-uint256-uint256-"></a>
+
+### `ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)`
+*error*
+
+Attempted to withdraw more assets than the max amount for `receiver`.
+
+<a id="ERC4626Upgradeable-ERC4626ExceededMaxRedeem-address-uint256-uint256-"></a>
+
+### `ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)`
+*error*
+
+Attempted to redeem more shares than the max amount for `receiver`.
+
+<a id="ERC20BridgeableUpgradeable"></a>
+
+## `ERC20BridgeableUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/draft-ERC20BridgeableUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20BridgeableUpgradeable.sol";
+```
+
+ERC20 extension that implements the standard token interface according to
+[ERC-7802](https://eips.ethereum.org/EIPS/eip-7802).
+
+### Modifiers
+- [onlyTokenBridge()](#ERC20BridgeableUpgradeable-onlyTokenBridge--)
+
+### Functions
+- [__ERC20Bridgeable_init()](#ERC20BridgeableUpgradeable-__ERC20Bridgeable_init--)
+- [__ERC20Bridgeable_init_unchained()](#ERC20BridgeableUpgradeable-__ERC20Bridgeable_init_unchained--)
+- [supportsInterface(interfaceId)](#ERC20BridgeableUpgradeable-supportsInterface-bytes4-)
+- [crosschainMint(to, value)](#ERC20BridgeableUpgradeable-crosschainMint-address-uint256-)
+- [crosschainBurn(from, value)](#ERC20BridgeableUpgradeable-crosschainBurn-address-uint256-)
+- [_checkTokenBridge(caller)](#ERC20BridgeableUpgradeable-_checkTokenBridge-address-)
+
+#### IERC7802
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20Upgradeable-allowance-address-address-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20Upgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC7802
+- [CrosschainMint(to, amount, sender)](#IERC7802-CrosschainMint-address-uint256-address-)
+- [CrosschainBurn(from, amount, sender)](#IERC7802-CrosschainBurn-address-uint256-address-)
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### IERC7802
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20BridgeableUpgradeable-onlyTokenBridge--"></a>
+
+### `onlyTokenBridge()`
+
+Modifier to restrict access to the token bridge.
+
+<a id="ERC20BridgeableUpgradeable-__ERC20Bridgeable_init--"></a>
+
+### `__ERC20Bridgeable_init()`
+*internal*
+
+<a id="ERC20BridgeableUpgradeable-__ERC20Bridgeable_init_unchained--"></a>
+
+### `__ERC20Bridgeable_init_unchained()`
+*internal*
+
+<a id="ERC20BridgeableUpgradeable-supportsInterface-bytes4-"></a>
+
+### `supportsInterface(bytes4 interfaceId) → bool`
+*public*
+
+Returns true if this contract implements the interface defined by
+`interfaceId`. See the corresponding
+[ERC section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+to learn more about how these ids are created.
+
+This function call must use less than 30 000 gas.
+
+<a id="ERC20BridgeableUpgradeable-crosschainMint-address-uint256-"></a>
+
+### `crosschainMint(address to, uint256 value)`
+*public*
+
+See [`IERC7802.crosschainMint`](https://docs.openzeppelin.com/contracts/api/token#IERC7802-crosschainMint). Emits a [`IERC7802.CrosschainMint`](https://docs.openzeppelin.com/contracts/api/token#IERC7802-CrosschainMint) event.
+
+<a id="ERC20BridgeableUpgradeable-crosschainBurn-address-uint256-"></a>
+
+### `crosschainBurn(address from, uint256 value)`
+*public*
+
+See [`IERC7802.crosschainBurn`](https://docs.openzeppelin.com/contracts/api/token#IERC7802-crosschainBurn). Emits a [`IERC7802.CrosschainBurn`](https://docs.openzeppelin.com/contracts/api/token#IERC7802-CrosschainBurn) event.
+
+<a id="ERC20BridgeableUpgradeable-_checkTokenBridge-address-"></a>
+
+### `_checkTokenBridge(address caller)`
+*internal*
+
+Checks if the caller is a trusted token bridge. MUST revert otherwise.
+
+Developers should implement this function using an access control mechanism that allows
+customizing the list of allowed senders. Consider using [`AccessControl`](https://docs.openzeppelin.com/contracts/api/access#AccessControl) or [`AccessManaged`](https://docs.openzeppelin.com/contracts/api/access#AccessManaged).
+
+<a id="ERC20TemporaryApprovalUpgradeable"></a>
+
+## `ERC20TemporaryApprovalUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/draft-ERC20TemporaryApprovalUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20TemporaryApprovalUpgradeable.sol";
+```
+
+Extension of [`ERC20`](https://docs.openzeppelin.com/contracts/api/token/ERC20#ERC20) that adds support for temporary allowances following ERC-7674.
+
+<Callout type='warn'>
+This is a draft contract. The corresponding ERC is still subject to changes.
+</Callout>
+
+_Available since v5.1._
+
+### Functions
+- [__ERC20TemporaryApproval_init()](#ERC20TemporaryApprovalUpgradeable-__ERC20TemporaryApproval_init--)
+- [__ERC20TemporaryApproval_init_unchained()](#ERC20TemporaryApprovalUpgradeable-__ERC20TemporaryApproval_init_unchained--)
+- [allowance(owner, spender)](#ERC20TemporaryApprovalUpgradeable-allowance-address-address-)
+- [_temporaryAllowance(owner, spender)](#ERC20TemporaryApprovalUpgradeable-_temporaryAllowance-address-address-)
+- [temporaryApprove(spender, value)](#ERC20TemporaryApprovalUpgradeable-temporaryApprove-address-uint256-)
+- [_temporaryApprove(owner, spender, value)](#ERC20TemporaryApprovalUpgradeable-_temporaryApprove-address-address-uint256-)
+- [_spendAllowance(owner, spender, value)](#ERC20TemporaryApprovalUpgradeable-_spendAllowance-address-address-uint256-)
+
+#### IERC7674
+
+#### ERC20Upgradeable
+- [__ERC20_init(name_, symbol_)](#ERC20Upgradeable-__ERC20_init-string-string-)
+- [__ERC20_init_unchained(name_, symbol_)](#ERC20Upgradeable-__ERC20_init_unchained-string-string-)
+- [name()](#ERC20Upgradeable-name--)
+- [symbol()](#ERC20Upgradeable-symbol--)
+- [decimals()](#ERC20Upgradeable-decimals--)
+- [totalSupply()](#ERC20Upgradeable-totalSupply--)
+- [balanceOf(account)](#ERC20Upgradeable-balanceOf-address-)
+- [transfer(to, value)](#ERC20Upgradeable-transfer-address-uint256-)
+- [approve(spender, value)](#ERC20Upgradeable-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20Upgradeable-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20Upgradeable-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20Upgradeable-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20Upgradeable-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20Upgradeable-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20Upgradeable-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Upgradeable-_approve-address-address-uint256-bool-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC7674
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### IERC7674
+
+#### ERC20Upgradeable
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC20TemporaryApprovalUpgradeable-__ERC20TemporaryApproval_init--"></a>
+
+### `__ERC20TemporaryApproval_init()`
+*internal*
+
+<a id="ERC20TemporaryApprovalUpgradeable-__ERC20TemporaryApproval_init_unchained--"></a>
+
+### `__ERC20TemporaryApproval_init_unchained()`
+*internal*
+
+<a id="ERC20TemporaryApprovalUpgradeable-allowance-address-address-"></a>
+
+### `allowance(address owner, address spender) → uint256`
+*public*
+
+[`ERC20Upgradeable.allowance`](#ERC20Upgradeable-allowance-address-address-) override that includes the temporary allowance when looking up the current allowance. If
+adding up the persistent and the temporary allowances result in an overflow, type(uint256).max is returned.
+
+<a id="ERC20TemporaryApprovalUpgradeable-_temporaryAllowance-address-address-"></a>
+
+### `_temporaryAllowance(address owner, address spender) → uint256`
+*internal*
+
+Internal getter for the current temporary allowance that `spender` has over `owner` tokens.
+
+<a id="ERC20TemporaryApprovalUpgradeable-temporaryApprove-address-uint256-"></a>
+
+### `temporaryApprove(address spender, uint256 value) → bool`
+*public*
+
+Alternative to [`ERC20Upgradeable.approve`](#ERC20Upgradeable-approve-address-uint256-) that sets a `value` amount of tokens as the temporary allowance of `spender` over
+the caller's tokens.
+
+Returns a boolean value indicating whether the operation succeeded.
+
+Requirements:
+- `spender` cannot be the zero address.
+
+Does NOT emit an [`Approval`](https://docs.openzeppelin.com/contracts/api/utils#Approval) event.
+
+<a id="ERC20TemporaryApprovalUpgradeable-_temporaryApprove-address-address-uint256-"></a>
+
+### `_temporaryApprove(address owner, address spender, uint256 value)`
+*internal*
+
+Sets `value` as the temporary allowance of `spender` over the `owner`'s tokens.
+
+This internal function is equivalent to `temporaryApprove`, and can be used to e.g. set automatic allowances
+for certain subsystems, etc.
+
+Requirements:
+- `owner` cannot be the zero address.
+- `spender` cannot be the zero address.
+
+Does NOT emit an [`Approval`](https://docs.openzeppelin.com/contracts/api/utils#Approval) event.
+
+<a id="ERC20TemporaryApprovalUpgradeable-_spendAllowance-address-address-uint256-"></a>
+
+### `_spendAllowance(address owner, address spender, uint256 value)`
+*internal*
+
+[`ERC20Upgradeable._spendAllowance`](#ERC20Upgradeable-_spendAllowance-address-address-uint256-) override that consumes the temporary allowance (if any) before eventually falling back
+to consuming the persistent allowance.
+<Callout>
+This function skips calling `super._spendAllowance` if the temporary allowance
+</Callout>
+is enough to cover the spending.
+

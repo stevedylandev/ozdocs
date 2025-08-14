@@ -1,0 +1,1172 @@
+---
+title: "ERC1155"
+description: "Smart contract ERC1155 utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/contracts/api/token/erc1155
+</Callout>
+
+This set of interfaces and contracts are all related to the [ERC-1155 Multi Token Standard](https://eips.ethereum.org/EIPS/eip-1155).
+
+The ERC consists of three interfaces which fulfill different roles, found here as [`IERC1155`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155), [`IERC1155MetadataURI`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155MetadataURI) and [`IERC1155Receiver`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver).
+
+[`ERC1155`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155) implements the mandatory [`IERC1155`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155) interface, as well as the optional extension [`IERC1155MetadataURI`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155MetadataURI), by relying on the substitution mechanism to use the same URI for all token types, dramatically reducing gas costs.
+
+Additionally there are multiple custom extensions, including:
+
+* designation of addresses that can pause token transfers for all users ([`ERC1155Pausable`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155Pausable)).
+* destruction of own tokens ([`ERC1155Burnable`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155Burnable)).
+
+<Callout>
+This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC-1155 (such as [`_mint`](#ERC1155-_mint-address-uint256-uint256-bytes-)) and expose them as external functions in the way they prefer.
+</Callout>
+
+## Core
+
+[`IERC1155`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155)
+
+[`IERC1155MetadataURI`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155MetadataURI)
+
+[`ERC1155`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155)
+
+[`IERC1155Receiver`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver)
+
+## Extensions
+
+[`ERC1155Pausable`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155Pausable)
+
+[`ERC1155Burnable`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155Burnable)
+
+[`ERC1155Supply`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155Supply)
+
+[`ERC1155URIStorage`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155URIStorage)
+
+## Utilities
+
+[`ERC1155Holder`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155Holder)
+
+[`ERC1155Utils`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155Utils)
+
+<a id="ERC1155Upgradeable"></a>
+
+## `ERC1155Upgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC1155/ERC1155Upgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC1155/ERC1155Upgradeable.sol";
+```
+
+Implementation of the basic standard multi-token.
+See https://eips.ethereum.org/EIPS/eip-1155
+Originally based on code by Enjin: https://github.com/enjin/erc-1155
+
+### Functions
+- [__ERC1155_init(uri_)](#ERC1155Upgradeable-__ERC1155_init-string-)
+- [__ERC1155_init_unchained(uri_)](#ERC1155Upgradeable-__ERC1155_init_unchained-string-)
+- [supportsInterface(interfaceId)](#ERC1155Upgradeable-supportsInterface-bytes4-)
+- [uri()](#ERC1155Upgradeable-uri-uint256-)
+- [balanceOf(account, id)](#ERC1155Upgradeable-balanceOf-address-uint256-)
+- [balanceOfBatch(accounts, ids)](#ERC1155Upgradeable-balanceOfBatch-address---uint256---)
+- [setApprovalForAll(operator, approved)](#ERC1155Upgradeable-setApprovalForAll-address-bool-)
+- [isApprovedForAll(account, operator)](#ERC1155Upgradeable-isApprovedForAll-address-address-)
+- [safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_update(from, to, ids, values)](#ERC1155Upgradeable-_update-address-address-uint256---uint256---)
+- [_updateWithAcceptanceCheck(from, to, ids, values, data)](#ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-)
+- [_safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-_safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [_safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-_safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_setURI(newuri)](#ERC1155Upgradeable-_setURI-string-)
+- [_mint(to, id, value, data)](#ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-)
+- [_mintBatch(to, ids, values, data)](#ERC1155Upgradeable-_mintBatch-address-uint256---uint256---bytes-)
+- [_burn(from, id, value)](#ERC1155Upgradeable-_burn-address-uint256-uint256-)
+- [_burnBatch(from, ids, values)](#ERC1155Upgradeable-_burnBatch-address-uint256---uint256---)
+- [_setApprovalForAll(owner, operator, approved)](#ERC1155Upgradeable-_setApprovalForAll-address-address-bool-)
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+- [TransferSingle(operator, from, to, id, value)](#IERC1155-TransferSingle-address-address-address-uint256-uint256-)
+- [TransferBatch(operator, from, to, ids, values)](#IERC1155-TransferBatch-address-address-address-uint256---uint256---)
+- [ApprovalForAll(account, operator, approved)](#IERC1155-ApprovalForAll-address-address-bool-)
+- [URI(value, id)](#IERC1155-URI-string-uint256-)
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### IERC1155Errors
+- [ERC1155InsufficientBalance(sender, balance, needed, tokenId)](#IERC1155Errors-ERC1155InsufficientBalance-address-uint256-uint256-uint256-)
+- [ERC1155InvalidSender(sender)](#IERC1155Errors-ERC1155InvalidSender-address-)
+- [ERC1155InvalidReceiver(receiver)](#IERC1155Errors-ERC1155InvalidReceiver-address-)
+- [ERC1155MissingApprovalForAll(operator, owner)](#IERC1155Errors-ERC1155MissingApprovalForAll-address-address-)
+- [ERC1155InvalidApprover(approver)](#IERC1155Errors-ERC1155InvalidApprover-address-)
+- [ERC1155InvalidOperator(operator)](#IERC1155Errors-ERC1155InvalidOperator-address-)
+- [ERC1155InvalidArrayLength(idsLength, valuesLength)](#IERC1155Errors-ERC1155InvalidArrayLength-uint256-uint256-)
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC1155Upgradeable-__ERC1155_init-string-"></a>
+
+### `__ERC1155_init(string uri_)`
+*internal*
+
+See [`ERC1155Upgradeable._setURI`](#ERC1155Upgradeable-_setURI-string-).
+
+<a id="ERC1155Upgradeable-__ERC1155_init_unchained-string-"></a>
+
+### `__ERC1155_init_unchained(string uri_)`
+*internal*
+
+<a id="ERC1155Upgradeable-supportsInterface-bytes4-"></a>
+
+### `supportsInterface(bytes4 interfaceId) → bool`
+*public*
+
+Returns true if this contract implements the interface defined by
+`interfaceId`. See the corresponding
+[ERC section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+to learn more about how these ids are created.
+
+This function call must use less than 30 000 gas.
+
+<a id="ERC1155Upgradeable-uri-uint256-"></a>
+
+### `uri(uint256) → string`
+*public*
+
+See [`IERC1155MetadataURI.uri`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155MetadataURI-uri).
+
+This implementation returns the same URI for *all* token types. It relies
+on the token type ID substitution mechanism
+[defined in the ERC](https://eips.ethereum.org/EIPS/eip-1155#metadata).
+
+Clients calling this function must replace the `\id\` substring with the
+actual token type ID.
+
+<a id="ERC1155Upgradeable-balanceOf-address-uint256-"></a>
+
+### `balanceOf(address account, uint256 id) → uint256`
+*public*
+
+Returns the value of tokens of token type `id` owned by `account`.
+
+<a id="ERC1155Upgradeable-balanceOfBatch-address---uint256---"></a>
+
+### `balanceOfBatch(address[] accounts, uint256[] ids) → uint256[]`
+*public*
+
+See [`IERC1155.balanceOfBatch`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155-balanceOfBatch).
+
+Requirements:
+
+- `accounts` and `ids` must have the same length.
+
+<a id="ERC1155Upgradeable-setApprovalForAll-address-bool-"></a>
+
+### `setApprovalForAll(address operator, bool approved)`
+*public*
+
+Grants or revokes permission to `operator` to transfer the caller's tokens, according to `approved`,
+
+Emits an [`ApprovalForAll`](https://docs.openzeppelin.com/contracts/api/utils#ApprovalForAll) event.
+
+Requirements:
+
+- `operator` cannot be the zero address.
+
+<a id="ERC1155Upgradeable-isApprovedForAll-address-address-"></a>
+
+### `isApprovedForAll(address account, address operator) → bool`
+*public*
+
+Returns true if `operator` is approved to transfer ``account``'s tokens.
+
+See [`ERC1155Upgradeable.setApprovalForAll`](#ERC1155Upgradeable-setApprovalForAll-address-bool-).
+
+<a id="ERC1155Upgradeable-safeTransferFrom-address-address-uint256-uint256-bytes-"></a>
+
+### `safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes data)`
+*public*
+
+Transfers a `value` amount of tokens of type `id` from `from` to `to`.
+
+<Callout type='warn'>
+This function can potentially allow a reentrancy attack when transferring tokens
+</Callout>
+to an untrusted contract, when invoking [`IERC1155Receiver.onERC1155Received`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155Received) on the receiver.
+Ensure to follow the checks-effects-interactions pattern and consider employing
+reentrancy guards when interacting with untrusted contracts.
+
+Emits a [`TransferSingle`](https://docs.openzeppelin.com/contracts/api/utils#TransferSingle) event.
+
+Requirements:
+
+- `to` cannot be the zero address.
+- If the caller is not `from`, it must have been approved to spend ``from``'s tokens via [`ERC1155Upgradeable.setApprovalForAll`](#ERC1155Upgradeable-setApprovalForAll-address-bool-).
+- `from` must have a balance of tokens of type `id` of at least `value` amount.
+- If `to` refers to a smart contract, it must implement [`IERC1155Receiver.onERC1155Received`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155Received) and return the
+acceptance magic value.
+
+<a id="ERC1155Upgradeable-safeBatchTransferFrom-address-address-uint256---uint256---bytes-"></a>
+
+### `safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] values, bytes data)`
+*public*
+
+[Batched](ROOT:erc1155.mdx#batch-operations) version of [`ERC1155Upgradeable.safeTransferFrom`](#ERC1155Upgradeable-safeTransferFrom-address-address-uint256-uint256-bytes-).
+
+<Callout type='warn'>
+This function can potentially allow a reentrancy attack when transferring tokens
+</Callout>
+to an untrusted contract, when invoking [`IERC1155Receiver.onERC1155BatchReceived`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived) on the receiver.
+Ensure to follow the checks-effects-interactions pattern and consider employing
+reentrancy guards when interacting with untrusted contracts.
+
+Emits either a [`TransferSingle`](https://docs.openzeppelin.com/contracts/api/utils#TransferSingle) or a [`TransferBatch`](https://docs.openzeppelin.com/contracts/api/utils#TransferBatch) event, depending on the length of the array arguments.
+
+Requirements:
+
+- `ids` and `values` must have the same length.
+- If `to` refers to a smart contract, it must implement [`IERC1155Receiver.onERC1155BatchReceived`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived) and return the
+acceptance magic value.
+
+<a id="ERC1155Upgradeable-_update-address-address-uint256---uint256---"></a>
+
+### `_update(address from, address to, uint256[] ids, uint256[] values)`
+*internal*
+
+Transfers a `value` amount of tokens of type `id` from `from` to `to`. Will mint (or burn) if `from`
+(or `to`) is the zero address.
+
+Emits a [`TransferSingle`](https://docs.openzeppelin.com/contracts/api/utils#TransferSingle) event if the arrays contain one element, and [`TransferBatch`](https://docs.openzeppelin.com/contracts/api/utils#TransferBatch) otherwise.
+
+Requirements:
+
+- If `to` refers to a smart contract, it must implement either [`IERC1155Receiver.onERC1155Received`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155Received)
+  or [`IERC1155Receiver.onERC1155BatchReceived`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived) and return the acceptance magic value.
+- `ids` and `values` must have the same length.
+
+<Callout>
+The ERC-1155 acceptance check is not performed in this function. See [`ERC1155Upgradeable._updateWithAcceptanceCheck`](#ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-) instead.
+</Callout>
+
+<a id="ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-"></a>
+
+### `_updateWithAcceptanceCheck(address from, address to, uint256[] ids, uint256[] values, bytes data)`
+*internal*
+
+Version of [`ERC1155Upgradeable._update`](#ERC1155Upgradeable-_update-address-address-uint256---uint256---) that performs the token acceptance check by calling
+[`IERC1155Receiver.onERC1155Received`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155Received) or [`IERC1155Receiver.onERC1155BatchReceived`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived) on the receiver address if it
+contains code (eg. is a smart contract at the moment of execution).
+
+<Callout type='warn'>
+Overriding this function is discouraged because it poses a reentrancy risk from the receiver. So any
+</Callout>
+update to the contract state after this function would break the check-effect-interaction pattern. Consider
+overriding [`ERC1155Upgradeable._update`](#ERC1155Upgradeable-_update-address-address-uint256---uint256---) instead.
+
+<a id="ERC1155Upgradeable-_safeTransferFrom-address-address-uint256-uint256-bytes-"></a>
+
+### `_safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes data)`
+*internal*
+
+Transfers a `value` tokens of token type `id` from `from` to `to`.
+
+Emits a [`TransferSingle`](https://docs.openzeppelin.com/contracts/api/utils#TransferSingle) event.
+
+Requirements:
+
+- `to` cannot be the zero address.
+- `from` must have a balance of tokens of type `id` of at least `value` amount.
+- If `to` refers to a smart contract, it must implement [`IERC1155Receiver.onERC1155Received`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155Received) and return the
+acceptance magic value.
+
+<a id="ERC1155Upgradeable-_safeBatchTransferFrom-address-address-uint256---uint256---bytes-"></a>
+
+### `_safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] values, bytes data)`
+*internal*
+
+[Batched](ROOT:erc1155.mdx#batch-operations) version of [`ERC1155Upgradeable._safeTransferFrom`](#ERC1155Upgradeable-_safeTransferFrom-address-address-uint256-uint256-bytes-).
+
+Emits a [`TransferBatch`](https://docs.openzeppelin.com/contracts/api/utils#TransferBatch) event.
+
+Requirements:
+
+- If `to` refers to a smart contract, it must implement [`IERC1155Receiver.onERC1155BatchReceived`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived) and return the
+acceptance magic value.
+- `ids` and `values` must have the same length.
+
+<a id="ERC1155Upgradeable-_setURI-string-"></a>
+
+### `_setURI(string newuri)`
+*internal*
+
+Sets a new URI for all token types, by relying on the token type ID
+substitution mechanism
+[defined in the ERC](https://eips.ethereum.org/EIPS/eip-1155#metadata).
+
+By this mechanism, any occurrence of the `\id\` substring in either the
+URI or any of the values in the JSON file at said URI will be replaced by
+clients with the token type ID.
+
+For example, the `https://token-cdn-domain/\id\.json` URI would be
+interpreted by clients as
+`https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json`
+for token type ID 0x4cce0.
+
+See [`ERC1155Upgradeable.uri`](#ERC1155Upgradeable-uri-uint256-).
+
+Because these URIs cannot be meaningfully represented by the [`URI`](https://docs.openzeppelin.com/contracts/api/token/ERC6909#URI) event,
+this function emits no events.
+
+<a id="ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-"></a>
+
+### `_mint(address to, uint256 id, uint256 value, bytes data)`
+*internal*
+
+Creates a `value` amount of tokens of type `id`, and assigns them to `to`.
+
+Emits a [`TransferSingle`](https://docs.openzeppelin.com/contracts/api/utils#TransferSingle) event.
+
+Requirements:
+
+- `to` cannot be the zero address.
+- If `to` refers to a smart contract, it must implement [`IERC1155Receiver.onERC1155Received`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155Received) and return the
+acceptance magic value.
+
+<a id="ERC1155Upgradeable-_mintBatch-address-uint256---uint256---bytes-"></a>
+
+### `_mintBatch(address to, uint256[] ids, uint256[] values, bytes data)`
+*internal*
+
+[Batched](ROOT:erc1155.mdx#batch-operations) version of [`ERC1155Upgradeable._mint`](#ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-).
+
+Emits a [`TransferBatch`](https://docs.openzeppelin.com/contracts/api/utils#TransferBatch) event.
+
+Requirements:
+
+- `ids` and `values` must have the same length.
+- `to` cannot be the zero address.
+- If `to` refers to a smart contract, it must implement [`IERC1155Receiver.onERC1155BatchReceived`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived) and return the
+acceptance magic value.
+
+<a id="ERC1155Upgradeable-_burn-address-uint256-uint256-"></a>
+
+### `_burn(address from, uint256 id, uint256 value)`
+*internal*
+
+Destroys a `value` amount of tokens of type `id` from `from`
+
+Emits a [`TransferSingle`](https://docs.openzeppelin.com/contracts/api/utils#TransferSingle) event.
+
+Requirements:
+
+- `from` cannot be the zero address.
+- `from` must have at least `value` amount of tokens of type `id`.
+
+<a id="ERC1155Upgradeable-_burnBatch-address-uint256---uint256---"></a>
+
+### `_burnBatch(address from, uint256[] ids, uint256[] values)`
+*internal*
+
+[Batched](ROOT:erc1155.mdx#batch-operations) version of [`ERC1155Upgradeable._burn`](#ERC1155Upgradeable-_burn-address-uint256-uint256-).
+
+Emits a [`TransferBatch`](https://docs.openzeppelin.com/contracts/api/utils#TransferBatch) event.
+
+Requirements:
+
+- `from` cannot be the zero address.
+- `from` must have at least `value` amount of tokens of type `id`.
+- `ids` and `values` must have the same length.
+
+<a id="ERC1155Upgradeable-_setApprovalForAll-address-address-bool-"></a>
+
+### `_setApprovalForAll(address owner, address operator, bool approved)`
+*internal*
+
+Approve `operator` to operate on all of `owner` tokens
+
+Emits an [`ApprovalForAll`](https://docs.openzeppelin.com/contracts/api/utils#ApprovalForAll) event.
+
+Requirements:
+
+- `operator` cannot be the zero address.
+
+<a id="ERC1155BurnableUpgradeable"></a>
+
+## `ERC1155BurnableUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC1155/extensions/ERC1155BurnableUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155BurnableUpgradeable.sol";
+```
+
+Extension of [`ERC1155`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155) that allows token holders to destroy both their
+own tokens and those that they have been approved to use.
+
+### Functions
+- [__ERC1155Burnable_init()](#ERC1155BurnableUpgradeable-__ERC1155Burnable_init--)
+- [__ERC1155Burnable_init_unchained()](#ERC1155BurnableUpgradeable-__ERC1155Burnable_init_unchained--)
+- [burn(account, id, value)](#ERC1155BurnableUpgradeable-burn-address-uint256-uint256-)
+- [burnBatch(account, ids, values)](#ERC1155BurnableUpgradeable-burnBatch-address-uint256---uint256---)
+
+#### ERC1155Upgradeable
+- [__ERC1155_init(uri_)](#ERC1155Upgradeable-__ERC1155_init-string-)
+- [__ERC1155_init_unchained(uri_)](#ERC1155Upgradeable-__ERC1155_init_unchained-string-)
+- [supportsInterface(interfaceId)](#ERC1155Upgradeable-supportsInterface-bytes4-)
+- [uri()](#ERC1155Upgradeable-uri-uint256-)
+- [balanceOf(account, id)](#ERC1155Upgradeable-balanceOf-address-uint256-)
+- [balanceOfBatch(accounts, ids)](#ERC1155Upgradeable-balanceOfBatch-address---uint256---)
+- [setApprovalForAll(operator, approved)](#ERC1155Upgradeable-setApprovalForAll-address-bool-)
+- [isApprovedForAll(account, operator)](#ERC1155Upgradeable-isApprovedForAll-address-address-)
+- [safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_update(from, to, ids, values)](#ERC1155Upgradeable-_update-address-address-uint256---uint256---)
+- [_updateWithAcceptanceCheck(from, to, ids, values, data)](#ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-)
+- [_safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-_safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [_safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-_safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_setURI(newuri)](#ERC1155Upgradeable-_setURI-string-)
+- [_mint(to, id, value, data)](#ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-)
+- [_mintBatch(to, ids, values, data)](#ERC1155Upgradeable-_mintBatch-address-uint256---uint256---bytes-)
+- [_burn(from, id, value)](#ERC1155Upgradeable-_burn-address-uint256-uint256-)
+- [_burnBatch(from, ids, values)](#ERC1155Upgradeable-_burnBatch-address-uint256---uint256---)
+- [_setApprovalForAll(owner, operator, approved)](#ERC1155Upgradeable-_setApprovalForAll-address-address-bool-)
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+- [TransferSingle(operator, from, to, id, value)](#IERC1155-TransferSingle-address-address-address-uint256-uint256-)
+- [TransferBatch(operator, from, to, ids, values)](#IERC1155-TransferBatch-address-address-address-uint256---uint256---)
+- [ApprovalForAll(account, operator, approved)](#IERC1155-ApprovalForAll-address-address-bool-)
+- [URI(value, id)](#IERC1155-URI-string-uint256-)
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+- [ERC1155InsufficientBalance(sender, balance, needed, tokenId)](#IERC1155Errors-ERC1155InsufficientBalance-address-uint256-uint256-uint256-)
+- [ERC1155InvalidSender(sender)](#IERC1155Errors-ERC1155InvalidSender-address-)
+- [ERC1155InvalidReceiver(receiver)](#IERC1155Errors-ERC1155InvalidReceiver-address-)
+- [ERC1155MissingApprovalForAll(operator, owner)](#IERC1155Errors-ERC1155MissingApprovalForAll-address-address-)
+- [ERC1155InvalidApprover(approver)](#IERC1155Errors-ERC1155InvalidApprover-address-)
+- [ERC1155InvalidOperator(operator)](#IERC1155Errors-ERC1155InvalidOperator-address-)
+- [ERC1155InvalidArrayLength(idsLength, valuesLength)](#IERC1155Errors-ERC1155InvalidArrayLength-uint256-uint256-)
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC1155BurnableUpgradeable-__ERC1155Burnable_init--"></a>
+
+### `__ERC1155Burnable_init()`
+*internal*
+
+<a id="ERC1155BurnableUpgradeable-__ERC1155Burnable_init_unchained--"></a>
+
+### `__ERC1155Burnable_init_unchained()`
+*internal*
+
+<a id="ERC1155BurnableUpgradeable-burn-address-uint256-uint256-"></a>
+
+### `burn(address account, uint256 id, uint256 value)`
+*public*
+
+<a id="ERC1155BurnableUpgradeable-burnBatch-address-uint256---uint256---"></a>
+
+### `burnBatch(address account, uint256[] ids, uint256[] values)`
+*public*
+
+<a id="ERC1155PausableUpgradeable"></a>
+
+## `ERC1155PausableUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC1155/extensions/ERC1155PausableUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155PausableUpgradeable.sol";
+```
+
+ERC-1155 token with pausable token transfers, minting and burning.
+
+Useful for scenarios such as preventing trades until the end of an evaluation
+period, or having an emergency switch for freezing all token transfers in the
+event of a large bug.
+
+<Callout type='warn'>
+This contract does not include public pause and unpause functions. In
+</Callout>
+addition to inheriting this contract, you must define both functions, invoking the
+[`Pausable._pause`](https://docs.openzeppelin.com/contracts/api/utils#Pausable-pause) and [`Pausable._unpause`](https://docs.openzeppelin.com/contracts/api/utils#Pausable-unpause) internal functions, with appropriate
+access control, e.g. using [`AccessControl`](https://docs.openzeppelin.com/contracts/api/access#AccessControl) or [`Ownable`](https://docs.openzeppelin.com/contracts/api/access#Ownable). Not doing so will
+make the contract pause mechanism of the contract unreachable, and thus unusable.
+
+### Functions
+- [__ERC1155Pausable_init()](#ERC1155PausableUpgradeable-__ERC1155Pausable_init--)
+- [__ERC1155Pausable_init_unchained()](#ERC1155PausableUpgradeable-__ERC1155Pausable_init_unchained--)
+- [_update(from, to, ids, values)](#ERC1155PausableUpgradeable-_update-address-address-uint256---uint256---)
+
+#### PausableUpgradeable
+- [__Pausable_init()](#PausableUpgradeable-__Pausable_init--)
+- [__Pausable_init_unchained()](#PausableUpgradeable-__Pausable_init_unchained--)
+- [paused()](#PausableUpgradeable-paused--)
+- [_requireNotPaused()](#PausableUpgradeable-_requireNotPaused--)
+- [_requirePaused()](#PausableUpgradeable-_requirePaused--)
+- [_pause()](#PausableUpgradeable-_pause--)
+- [_unpause()](#PausableUpgradeable-_unpause--)
+
+#### ERC1155Upgradeable
+- [__ERC1155_init(uri_)](#ERC1155Upgradeable-__ERC1155_init-string-)
+- [__ERC1155_init_unchained(uri_)](#ERC1155Upgradeable-__ERC1155_init_unchained-string-)
+- [supportsInterface(interfaceId)](#ERC1155Upgradeable-supportsInterface-bytes4-)
+- [uri()](#ERC1155Upgradeable-uri-uint256-)
+- [balanceOf(account, id)](#ERC1155Upgradeable-balanceOf-address-uint256-)
+- [balanceOfBatch(accounts, ids)](#ERC1155Upgradeable-balanceOfBatch-address---uint256---)
+- [setApprovalForAll(operator, approved)](#ERC1155Upgradeable-setApprovalForAll-address-bool-)
+- [isApprovedForAll(account, operator)](#ERC1155Upgradeable-isApprovedForAll-address-address-)
+- [safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_updateWithAcceptanceCheck(from, to, ids, values, data)](#ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-)
+- [_safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-_safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [_safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-_safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_setURI(newuri)](#ERC1155Upgradeable-_setURI-string-)
+- [_mint(to, id, value, data)](#ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-)
+- [_mintBatch(to, ids, values, data)](#ERC1155Upgradeable-_mintBatch-address-uint256---uint256---bytes-)
+- [_burn(from, id, value)](#ERC1155Upgradeable-_burn-address-uint256-uint256-)
+- [_burnBatch(from, ids, values)](#ERC1155Upgradeable-_burnBatch-address-uint256---uint256---)
+- [_setApprovalForAll(owner, operator, approved)](#ERC1155Upgradeable-_setApprovalForAll-address-address-bool-)
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### PausableUpgradeable
+- [Paused(account)](#PausableUpgradeable-Paused-address-)
+- [Unpaused(account)](#PausableUpgradeable-Unpaused-address-)
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+- [TransferSingle(operator, from, to, id, value)](#IERC1155-TransferSingle-address-address-address-uint256-uint256-)
+- [TransferBatch(operator, from, to, ids, values)](#IERC1155-TransferBatch-address-address-address-uint256---uint256---)
+- [ApprovalForAll(account, operator, approved)](#IERC1155-ApprovalForAll-address-address-bool-)
+- [URI(value, id)](#IERC1155-URI-string-uint256-)
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### PausableUpgradeable
+- [EnforcedPause()](#PausableUpgradeable-EnforcedPause--)
+- [ExpectedPause()](#PausableUpgradeable-ExpectedPause--)
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+- [ERC1155InsufficientBalance(sender, balance, needed, tokenId)](#IERC1155Errors-ERC1155InsufficientBalance-address-uint256-uint256-uint256-)
+- [ERC1155InvalidSender(sender)](#IERC1155Errors-ERC1155InvalidSender-address-)
+- [ERC1155InvalidReceiver(receiver)](#IERC1155Errors-ERC1155InvalidReceiver-address-)
+- [ERC1155MissingApprovalForAll(operator, owner)](#IERC1155Errors-ERC1155MissingApprovalForAll-address-address-)
+- [ERC1155InvalidApprover(approver)](#IERC1155Errors-ERC1155InvalidApprover-address-)
+- [ERC1155InvalidOperator(operator)](#IERC1155Errors-ERC1155InvalidOperator-address-)
+- [ERC1155InvalidArrayLength(idsLength, valuesLength)](#IERC1155Errors-ERC1155InvalidArrayLength-uint256-uint256-)
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC1155PausableUpgradeable-__ERC1155Pausable_init--"></a>
+
+### `__ERC1155Pausable_init()`
+*internal*
+
+<a id="ERC1155PausableUpgradeable-__ERC1155Pausable_init_unchained--"></a>
+
+### `__ERC1155Pausable_init_unchained()`
+*internal*
+
+<a id="ERC1155PausableUpgradeable-_update-address-address-uint256---uint256---"></a>
+
+### `_update(address from, address to, uint256[] ids, uint256[] values)`
+*internal*
+
+See [`ERC1155._update`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#ERC1155-update).
+
+Requirements:
+
+- the contract must not be paused.
+
+<a id="ERC1155SupplyUpgradeable"></a>
+
+## `ERC1155SupplyUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC1155/extensions/ERC1155SupplyUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155SupplyUpgradeable.sol";
+```
+
+Extension of ERC-1155 that adds tracking of total supply per id.
+
+Useful for scenarios where Fungible and Non-fungible tokens have to be
+clearly identified. Note: While a totalSupply of 1 might mean the
+corresponding is an NFT, there is no guarantees that no other token with the
+same id are not going to be minted.
+
+<Callout>
+This contract implies a global limit of 2**256 - 1 to the number of tokens
+</Callout>
+that can be minted.
+
+<Callout type='warn'>
+This extension should not be added in an upgrade to an already deployed contract.
+</Callout>
+
+### Functions
+- [__ERC1155Supply_init()](#ERC1155SupplyUpgradeable-__ERC1155Supply_init--)
+- [__ERC1155Supply_init_unchained()](#ERC1155SupplyUpgradeable-__ERC1155Supply_init_unchained--)
+- [totalSupply(id)](#ERC1155SupplyUpgradeable-totalSupply-uint256-)
+- [totalSupply()](#ERC1155SupplyUpgradeable-totalSupply--)
+- [exists(id)](#ERC1155SupplyUpgradeable-exists-uint256-)
+- [_update(from, to, ids, values)](#ERC1155SupplyUpgradeable-_update-address-address-uint256---uint256---)
+
+#### ERC1155Upgradeable
+- [__ERC1155_init(uri_)](#ERC1155Upgradeable-__ERC1155_init-string-)
+- [__ERC1155_init_unchained(uri_)](#ERC1155Upgradeable-__ERC1155_init_unchained-string-)
+- [supportsInterface(interfaceId)](#ERC1155Upgradeable-supportsInterface-bytes4-)
+- [uri()](#ERC1155Upgradeable-uri-uint256-)
+- [balanceOf(account, id)](#ERC1155Upgradeable-balanceOf-address-uint256-)
+- [balanceOfBatch(accounts, ids)](#ERC1155Upgradeable-balanceOfBatch-address---uint256---)
+- [setApprovalForAll(operator, approved)](#ERC1155Upgradeable-setApprovalForAll-address-bool-)
+- [isApprovedForAll(account, operator)](#ERC1155Upgradeable-isApprovedForAll-address-address-)
+- [safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_updateWithAcceptanceCheck(from, to, ids, values, data)](#ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-)
+- [_safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-_safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [_safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-_safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_setURI(newuri)](#ERC1155Upgradeable-_setURI-string-)
+- [_mint(to, id, value, data)](#ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-)
+- [_mintBatch(to, ids, values, data)](#ERC1155Upgradeable-_mintBatch-address-uint256---uint256---bytes-)
+- [_burn(from, id, value)](#ERC1155Upgradeable-_burn-address-uint256-uint256-)
+- [_burnBatch(from, ids, values)](#ERC1155Upgradeable-_burnBatch-address-uint256---uint256---)
+- [_setApprovalForAll(owner, operator, approved)](#ERC1155Upgradeable-_setApprovalForAll-address-address-bool-)
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+- [TransferSingle(operator, from, to, id, value)](#IERC1155-TransferSingle-address-address-address-uint256-uint256-)
+- [TransferBatch(operator, from, to, ids, values)](#IERC1155-TransferBatch-address-address-address-uint256---uint256---)
+- [ApprovalForAll(account, operator, approved)](#IERC1155-ApprovalForAll-address-address-bool-)
+- [URI(value, id)](#IERC1155-URI-string-uint256-)
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+- [ERC1155InsufficientBalance(sender, balance, needed, tokenId)](#IERC1155Errors-ERC1155InsufficientBalance-address-uint256-uint256-uint256-)
+- [ERC1155InvalidSender(sender)](#IERC1155Errors-ERC1155InvalidSender-address-)
+- [ERC1155InvalidReceiver(receiver)](#IERC1155Errors-ERC1155InvalidReceiver-address-)
+- [ERC1155MissingApprovalForAll(operator, owner)](#IERC1155Errors-ERC1155MissingApprovalForAll-address-address-)
+- [ERC1155InvalidApprover(approver)](#IERC1155Errors-ERC1155InvalidApprover-address-)
+- [ERC1155InvalidOperator(operator)](#IERC1155Errors-ERC1155InvalidOperator-address-)
+- [ERC1155InvalidArrayLength(idsLength, valuesLength)](#IERC1155Errors-ERC1155InvalidArrayLength-uint256-uint256-)
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC1155SupplyUpgradeable-__ERC1155Supply_init--"></a>
+
+### `__ERC1155Supply_init()`
+*internal*
+
+<a id="ERC1155SupplyUpgradeable-__ERC1155Supply_init_unchained--"></a>
+
+### `__ERC1155Supply_init_unchained()`
+*internal*
+
+<a id="ERC1155SupplyUpgradeable-totalSupply-uint256-"></a>
+
+### `totalSupply(uint256 id) → uint256`
+*public*
+
+Total value of tokens in with a given id.
+
+<a id="ERC1155SupplyUpgradeable-totalSupply--"></a>
+
+### `totalSupply() → uint256`
+*public*
+
+Total value of tokens.
+
+<a id="ERC1155SupplyUpgradeable-exists-uint256-"></a>
+
+### `exists(uint256 id) → bool`
+*public*
+
+Indicates whether any token exist with a given id, or not.
+
+<a id="ERC1155SupplyUpgradeable-_update-address-address-uint256---uint256---"></a>
+
+### `_update(address from, address to, uint256[] ids, uint256[] values)`
+*internal*
+
+Transfers a `value` amount of tokens of type `id` from `from` to `to`. Will mint (or burn) if `from`
+(or `to`) is the zero address.
+
+Emits a [`TransferSingle`](https://docs.openzeppelin.com/contracts/api/utils#TransferSingle) event if the arrays contain one element, and [`TransferBatch`](https://docs.openzeppelin.com/contracts/api/utils#TransferBatch) otherwise.
+
+Requirements:
+
+- If `to` refers to a smart contract, it must implement either [`IERC1155Receiver.onERC1155Received`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155Received)
+  or [`IERC1155Receiver.onERC1155BatchReceived`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived) and return the acceptance magic value.
+- `ids` and `values` must have the same length.
+
+<Callout>
+The ERC-1155 acceptance check is not performed in this function. See [`ERC1155Upgradeable._updateWithAcceptanceCheck`](#ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-) instead.
+</Callout>
+
+<a id="ERC1155URIStorageUpgradeable"></a>
+
+## `ERC1155URIStorageUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC1155/extensions/ERC1155URIStorageUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorageUpgradeable.sol";
+```
+
+ERC-1155 token with storage based token URI management.
+Inspired by the [`ERC721URIStorage`](https://docs.openzeppelin.com/contracts/api/token/ERC721#ERC721URIStorage) extension
+
+### Functions
+- [__ERC1155URIStorage_init()](#ERC1155URIStorageUpgradeable-__ERC1155URIStorage_init--)
+- [__ERC1155URIStorage_init_unchained()](#ERC1155URIStorageUpgradeable-__ERC1155URIStorage_init_unchained--)
+- [uri(tokenId)](#ERC1155URIStorageUpgradeable-uri-uint256-)
+- [_setURI(tokenId, tokenURI)](#ERC1155URIStorageUpgradeable-_setURI-uint256-string-)
+- [_setBaseURI(baseURI)](#ERC1155URIStorageUpgradeable-_setBaseURI-string-)
+
+#### ERC1155Upgradeable
+- [__ERC1155_init(uri_)](#ERC1155Upgradeable-__ERC1155_init-string-)
+- [__ERC1155_init_unchained(uri_)](#ERC1155Upgradeable-__ERC1155_init_unchained-string-)
+- [supportsInterface(interfaceId)](#ERC1155Upgradeable-supportsInterface-bytes4-)
+- [balanceOf(account, id)](#ERC1155Upgradeable-balanceOf-address-uint256-)
+- [balanceOfBatch(accounts, ids)](#ERC1155Upgradeable-balanceOfBatch-address---uint256---)
+- [setApprovalForAll(operator, approved)](#ERC1155Upgradeable-setApprovalForAll-address-bool-)
+- [isApprovedForAll(account, operator)](#ERC1155Upgradeable-isApprovedForAll-address-address-)
+- [safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_update(from, to, ids, values)](#ERC1155Upgradeable-_update-address-address-uint256---uint256---)
+- [_updateWithAcceptanceCheck(from, to, ids, values, data)](#ERC1155Upgradeable-_updateWithAcceptanceCheck-address-address-uint256---uint256---bytes-)
+- [_safeTransferFrom(from, to, id, value, data)](#ERC1155Upgradeable-_safeTransferFrom-address-address-uint256-uint256-bytes-)
+- [_safeBatchTransferFrom(from, to, ids, values, data)](#ERC1155Upgradeable-_safeBatchTransferFrom-address-address-uint256---uint256---bytes-)
+- [_setURI(newuri)](#ERC1155Upgradeable-_setURI-string-)
+- [_mint(to, id, value, data)](#ERC1155Upgradeable-_mint-address-uint256-uint256-bytes-)
+- [_mintBatch(to, ids, values, data)](#ERC1155Upgradeable-_mintBatch-address-uint256---uint256---bytes-)
+- [_burn(from, id, value)](#ERC1155Upgradeable-_burn-address-uint256-uint256-)
+- [_burnBatch(from, ids, values)](#ERC1155Upgradeable-_burnBatch-address-uint256---uint256---)
+- [_setApprovalForAll(owner, operator, approved)](#ERC1155Upgradeable-_setApprovalForAll-address-address-bool-)
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### ContextUpgradeable
+- [__Context_init()](#ContextUpgradeable-__Context_init--)
+- [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
+- [_msgSender()](#ContextUpgradeable-_msgSender--)
+- [_msgData()](#ContextUpgradeable-_msgData--)
+- [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+- [TransferSingle(operator, from, to, id, value)](#IERC1155-TransferSingle-address-address-address-uint256-uint256-)
+- [TransferBatch(operator, from, to, ids, values)](#IERC1155-TransferBatch-address-address-address-uint256---uint256---)
+- [ApprovalForAll(account, operator, approved)](#IERC1155-ApprovalForAll-address-address-bool-)
+- [URI(value, id)](#IERC1155-URI-string-uint256-)
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### ERC1155Upgradeable
+
+#### IERC1155Errors
+- [ERC1155InsufficientBalance(sender, balance, needed, tokenId)](#IERC1155Errors-ERC1155InsufficientBalance-address-uint256-uint256-uint256-)
+- [ERC1155InvalidSender(sender)](#IERC1155Errors-ERC1155InvalidSender-address-)
+- [ERC1155InvalidReceiver(receiver)](#IERC1155Errors-ERC1155InvalidReceiver-address-)
+- [ERC1155MissingApprovalForAll(operator, owner)](#IERC1155Errors-ERC1155MissingApprovalForAll-address-address-)
+- [ERC1155InvalidApprover(approver)](#IERC1155Errors-ERC1155InvalidApprover-address-)
+- [ERC1155InvalidOperator(operator)](#IERC1155Errors-ERC1155InvalidOperator-address-)
+- [ERC1155InvalidArrayLength(idsLength, valuesLength)](#IERC1155Errors-ERC1155InvalidArrayLength-uint256-uint256-)
+
+#### IERC1155MetadataURI
+
+#### IERC1155
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### ContextUpgradeable
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC1155URIStorageUpgradeable-__ERC1155URIStorage_init--"></a>
+
+### `__ERC1155URIStorage_init()`
+*internal*
+
+<a id="ERC1155URIStorageUpgradeable-__ERC1155URIStorage_init_unchained--"></a>
+
+### `__ERC1155URIStorage_init_unchained()`
+*internal*
+
+<a id="ERC1155URIStorageUpgradeable-uri-uint256-"></a>
+
+### `uri(uint256 tokenId) → string`
+*public*
+
+See [`IERC1155MetadataURI.uri`](https://docs.openzeppelin.com/contracts/api/token/ERC1155#IERC1155MetadataURI-uri).
+
+This implementation returns the concatenation of the `_baseURI`
+and the token-specific uri if the latter is set
+
+This enables the following behaviors:
+
+- if `_tokenURIs[tokenId]` is set, then the result is the concatenation
+  of `_baseURI` and `_tokenURIs[tokenId]` (keep in mind that `_baseURI`
+  is empty per default);
+
+- if `_tokenURIs[tokenId]` is NOT set then we fallback to `super.uri()`
+  which in most cases will contain `ERC1155._uri`;
+
+- if `_tokenURIs[tokenId]` is NOT set, and if the parents do not have a
+  uri value set, then the result is empty.
+
+<a id="ERC1155URIStorageUpgradeable-_setURI-uint256-string-"></a>
+
+### `_setURI(uint256 tokenId, string tokenURI)`
+*internal*
+
+Sets `tokenURI` as the tokenURI of `tokenId`.
+
+<a id="ERC1155URIStorageUpgradeable-_setBaseURI-string-"></a>
+
+### `_setBaseURI(string baseURI)`
+*internal*
+
+Sets `baseURI` as the `_baseURI` for all tokens
+
+<a id="ERC1155HolderUpgradeable"></a>
+
+## `ERC1155HolderUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC1155/utils/ERC1155HolderUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
+```
+
+Simple implementation of `IERC1155Receiver` that will allow a contract to hold ERC-1155 tokens.
+
+<Callout type='warn'>
+When inheriting this contract, you must include a way to use the received tokens, otherwise they will be
+</Callout>
+stuck.
+
+### Functions
+- [__ERC1155Holder_init()](#ERC1155HolderUpgradeable-__ERC1155Holder_init--)
+- [__ERC1155Holder_init_unchained()](#ERC1155HolderUpgradeable-__ERC1155Holder_init_unchained--)
+- [supportsInterface(interfaceId)](#ERC1155HolderUpgradeable-supportsInterface-bytes4-)
+- [onERC1155Received(, , , , )](#ERC1155HolderUpgradeable-onERC1155Received-address-address-uint256-uint256-bytes-)
+- [onERC1155BatchReceived(, , , , )](#ERC1155HolderUpgradeable-onERC1155BatchReceived-address-address-uint256---uint256---bytes-)
+
+#### IERC1155Receiver
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC165
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC1155Receiver
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+
+#### IERC1155Receiver
+
+#### ERC165Upgradeable
+
+#### IERC165
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC1155HolderUpgradeable-__ERC1155Holder_init--"></a>
+
+### `__ERC1155Holder_init()`
+*internal*
+
+<a id="ERC1155HolderUpgradeable-__ERC1155Holder_init_unchained--"></a>
+
+### `__ERC1155Holder_init_unchained()`
+*internal*
+
+<a id="ERC1155HolderUpgradeable-supportsInterface-bytes4-"></a>
+
+### `supportsInterface(bytes4 interfaceId) → bool`
+*public*
+
+Returns true if this contract implements the interface defined by
+`interfaceId`. See the corresponding
+[ERC section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+to learn more about how these ids are created.
+
+This function call must use less than 30 000 gas.
+
+<a id="ERC1155HolderUpgradeable-onERC1155Received-address-address-uint256-uint256-bytes-"></a>
+
+### `onERC1155Received(address, address, uint256, uint256, bytes) → bytes4`
+*public*
+
+<a id="ERC1155HolderUpgradeable-onERC1155BatchReceived-address-address-uint256---uint256---bytes-"></a>
+
+### `onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) → bytes4`
+*public*
+

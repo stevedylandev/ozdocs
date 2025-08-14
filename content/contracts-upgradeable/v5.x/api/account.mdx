@@ -1,0 +1,649 @@
+---
+title: "Account"
+description: "Smart contract account utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/contracts/api/account
+</Callout>
+
+This directory includes contracts to build accounts for ERC-4337. These include:
+
+* [`Account`](https://docs.openzeppelin.com/contracts/api/account#Account): An ERC-4337 smart account implementation that includes the core logic to process user operations.
+* [`AccountERC7579`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579): An extension of `Account` that implements support for ERC-7579 modules.
+* [`AccountERC7579Hooked`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579Hooked): An extension of `AccountERC7579` with support for a single hook module (type 4).
+* [`ERC7821`](https://docs.openzeppelin.com/contracts/api/token#ERC7821): Minimal batch executor implementation contracts. Useful to enable easy batch execution for smart contracts.
+* [`ERC4337Utils`](https://docs.openzeppelin.com/contracts/api/token#ERC4337Utils): Utility functions for working with ERC-4337 user operations.
+* [`ERC7579Utils`](https://docs.openzeppelin.com/contracts/api/token#ERC7579Utils): Utility functions for working with ERC-7579 modules and account modularity.
+
+## Core
+
+[`Account`](https://docs.openzeppelin.com/contracts/api/account#Account)
+
+## Extensions
+
+[`AccountERC7579`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579)
+
+[`AccountERC7579Hooked`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579Hooked)
+
+[`ERC7821`](https://docs.openzeppelin.com/contracts/api/token#ERC7821)
+
+## Utilities
+
+[`ERC4337Utils`](https://docs.openzeppelin.com/contracts/api/token#ERC4337Utils)
+
+[`ERC7579Utils`](https://docs.openzeppelin.com/contracts/api/token#ERC7579Utils)
+
+<a id="AccountERC7579HookedUpgradeable"></a>
+
+## `AccountERC7579HookedUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/extensions/draft-AccountERC7579HookedUpgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/extensions/draft-AccountERC7579HookedUpgradeable.sol";
+```
+
+Extension of [`AccountERC7579`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579) with support for a single hook module (type 4).
+
+If installed, this extension will call the hook module's [`IERC7579Hook.preCheck`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Hook-preCheck) before executing any operation
+with [`AccountERC7579HookedUpgradeable._execute`](#AccountERC7579HookedUpgradeable-_execute-Mode-bytes-) (including [`AccessManagerUpgradeable.execute`](access#AccessManagerUpgradeable-execute-address-bytes-) and [`AccountERC7579Upgradeable.executeFromExecutor`](#AccountERC7579Upgradeable-executeFromExecutor-bytes32-bytes-) by default) and [`IERC7579Hook.postCheck`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Hook-postCheck) thereafter.
+
+<Callout>
+Hook modules break the check-effect-interaction pattern. In particular, the [`IERC7579Hook.preCheck`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Hook-preCheck) hook can
+</Callout>
+lead to potentially dangerous reentrancy. Using the `withHook()` modifier is safe if no effect is performed
+before the preHook or after the postHook. That is the case on all functions here, but it may not be the case if
+functions that have this modifier are overridden. Developers should be extremely careful when implementing hook
+modules or further overriding functions that involve hooks.
+
+### Modifiers
+- [withHook()](#AccountERC7579HookedUpgradeable-withHook--)
+
+### Functions
+- [__AccountERC7579Hooked_init()](#AccountERC7579HookedUpgradeable-__AccountERC7579Hooked_init--)
+- [__AccountERC7579Hooked_init_unchained()](#AccountERC7579HookedUpgradeable-__AccountERC7579Hooked_init_unchained--)
+- [accountId()](#AccountERC7579HookedUpgradeable-accountId--)
+- [hook()](#AccountERC7579HookedUpgradeable-hook--)
+- [supportsModule(moduleTypeId)](#AccountERC7579HookedUpgradeable-supportsModule-uint256-)
+- [isModuleInstalled(moduleTypeId, module, data)](#AccountERC7579HookedUpgradeable-isModuleInstalled-uint256-address-bytes-)
+- [_installModule(moduleTypeId, module, initData)](#AccountERC7579HookedUpgradeable-_installModule-uint256-address-bytes-)
+- [_uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579HookedUpgradeable-_uninstallModule-uint256-address-bytes-)
+- [_execute(mode, executionCalldata)](#AccountERC7579HookedUpgradeable-_execute-Mode-bytes-)
+- [_fallback()](#AccountERC7579HookedUpgradeable-_fallback--)
+
+#### AccountERC7579Upgradeable
+- [__AccountERC7579_init()](#AccountERC7579Upgradeable-__AccountERC7579_init--)
+- [__AccountERC7579_init_unchained()](#AccountERC7579Upgradeable-__AccountERC7579_init_unchained--)
+- [fallback()](#AccountERC7579Upgradeable-fallback-bytes-)
+- [supportsExecutionMode(encodedMode)](#AccountERC7579Upgradeable-supportsExecutionMode-bytes32-)
+- [installModule(moduleTypeId, module, initData)](#AccountERC7579Upgradeable-installModule-uint256-address-bytes-)
+- [uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579Upgradeable-uninstallModule-uint256-address-bytes-)
+- [execute(mode, executionCalldata)](#AccountERC7579Upgradeable-execute-bytes32-bytes-)
+- [executeFromExecutor(mode, executionCalldata)](#AccountERC7579Upgradeable-executeFromExecutor-bytes32-bytes-)
+- [isValidSignature(hash, signature)](#AccountERC7579Upgradeable-isValidSignature-bytes32-bytes-)
+- [_validateUserOp(userOp, userOpHash)](#AccountERC7579Upgradeable-_validateUserOp-struct-PackedUserOperation-bytes32-)
+- [_fallbackHandler(selector)](#AccountERC7579Upgradeable-_fallbackHandler-bytes4-)
+- [_checkModule(moduleTypeId, module, additionalContext)](#AccountERC7579Upgradeable-_checkModule-uint256-address-bytes-)
+- [_extractUserOpValidator(userOp)](#AccountERC7579Upgradeable-_extractUserOpValidator-struct-PackedUserOperation-)
+- [_extractSignatureValidator(signature)](#AccountERC7579Upgradeable-_extractSignatureValidator-bytes-)
+- [_decodeFallbackData(data)](#AccountERC7579Upgradeable-_decodeFallbackData-bytes-)
+- [_rawSignatureValidation(, )](#AccountERC7579Upgradeable-_rawSignatureValidation-bytes32-bytes-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [entryPoint()](#Account-entryPoint--)
+- [getNonce()](#Account-getNonce--)
+- [getNonce(key)](#Account-getNonce-uint192-)
+- [validateUserOp(userOp, userOpHash, missingAccountFunds)](#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-)
+- [_signableUserOpHash(, userOpHash)](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-)
+- [_payPrefund(missingAccountFunds)](#Account-_payPrefund-uint256-)
+- [_checkEntryPoint()](#Account-_checkEntryPoint--)
+- [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
+- [receive()](#Account-receive--)
+
+#### IAccount
+
+#### AbstractSigner
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### AccountERC7579Upgradeable
+
+#### IERC7579ModuleConfig
+- [ModuleInstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleInstalled-uint256-address-)
+- [ModuleUninstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleUninstalled-uint256-address-)
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+
+#### IAccount
+
+#### AbstractSigner
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC7579HookModuleAlreadyPresent(hook)](#AccountERC7579HookedUpgradeable-ERC7579HookModuleAlreadyPresent-address-)
+
+#### AccountERC7579Upgradeable
+- [ERC7579MissingFallbackHandler(selector)](#AccountERC7579Upgradeable-ERC7579MissingFallbackHandler-bytes4-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
+
+#### IAccount
+
+#### AbstractSigner
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="AccountERC7579HookedUpgradeable-withHook--"></a>
+
+### `withHook()`
+
+Calls [`IERC7579Hook.preCheck`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Hook-preCheck) before executing the modified function and [`IERC7579Hook.postCheck`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Hook-postCheck)
+thereafter.
+
+<a id="AccountERC7579HookedUpgradeable-__AccountERC7579Hooked_init--"></a>
+
+### `__AccountERC7579Hooked_init()`
+*internal*
+
+<a id="AccountERC7579HookedUpgradeable-__AccountERC7579Hooked_init_unchained--"></a>
+
+### `__AccountERC7579Hooked_init_unchained()`
+*internal*
+
+<a id="AccountERC7579HookedUpgradeable-accountId--"></a>
+
+### `accountId() → string`
+*public*
+
+Returns the account id of the smart account
+
+<a id="AccountERC7579HookedUpgradeable-hook--"></a>
+
+### `hook() → address`
+*public*
+
+Returns the hook module address if installed, or `address(0)` otherwise.
+
+<a id="AccountERC7579HookedUpgradeable-supportsModule-uint256-"></a>
+
+### `supportsModule(uint256 moduleTypeId) → bool`
+*public*
+
+Supports hook modules. See [`AccountERC7579.supportsModule`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579-supportsModule)
+
+<a id="AccountERC7579HookedUpgradeable-isModuleInstalled-uint256-address-bytes-"></a>
+
+### `isModuleInstalled(uint256 moduleTypeId, address module, bytes data) → bool`
+*public*
+
+Returns whether a module is installed on the smart account
+
+<a id="AccountERC7579HookedUpgradeable-_installModule-uint256-address-bytes-"></a>
+
+### `_installModule(uint256 moduleTypeId, address module, bytes initData)`
+*internal*
+
+Installs a module with support for hook modules. See [`AccountERC7579._installModule`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579-installModule)
+
+<a id="AccountERC7579HookedUpgradeable-_uninstallModule-uint256-address-bytes-"></a>
+
+### `_uninstallModule(uint256 moduleTypeId, address module, bytes deInitData)`
+*internal*
+
+Uninstalls a module with support for hook modules. See [`AccountERC7579._uninstallModule`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579-uninstallModule)
+
+<a id="AccountERC7579HookedUpgradeable-_execute-Mode-bytes-"></a>
+
+### `_execute(Mode mode, bytes executionCalldata) → bytes[]`
+*internal*
+
+Hooked version of [`AccountERC7579._execute`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579-execute).
+
+<a id="AccountERC7579HookedUpgradeable-_fallback--"></a>
+
+### `_fallback() → bytes`
+*internal*
+
+Hooked version of [`AccountERC7579._fallback`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579-fallback).
+
+<a id="AccountERC7579HookedUpgradeable-ERC7579HookModuleAlreadyPresent-address-"></a>
+
+### `ERC7579HookModuleAlreadyPresent(address hook)`
+*error*
+
+A hook module is already present. This contract only supports one hook module.
+
+<a id="AccountERC7579Upgradeable"></a>
+
+## `AccountERC7579Upgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/account/extensions/draft-AccountERC7579Upgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/account/extensions/draft-AccountERC7579Upgradeable.sol";
+```
+
+Extension of [`Account`](https://docs.openzeppelin.com/contracts/api/account#Account) that implements support for ERC-7579 modules.
+
+To comply with the ERC-1271 support requirement, this contract defers signature validation to
+installed validator modules by calling [`IERC7579Validator.isValidSignatureWithSender`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Validator-isValidSignatureWithSender).
+
+This contract does not implement validation logic for user operations since this functionality
+is often delegated to self-contained validation modules. Developers must install a validator module
+upon initialization (or any other mechanism to enable execution from the account):
+
+```solidity
+contract MyAccountERC7579 is AccountERC7579, Initializable 
+  function initializeAccount(address validator, bytes calldata validatorData) public initializer 
+    _installModule(MODULE_TYPE_VALIDATOR, validator, validatorData);
+  
+
+```
+
+[NOTE]
+====
+* Hook support is not included. See [`AccountERC7579Hooked`](https://docs.openzeppelin.com/contracts/api/account#AccountERC7579Hooked) for a version that hooks to execution.
+* Validator selection, when verifying either ERC-1271 signature or ERC-4337 UserOperation is implemented in
+  internal virtual functions [`AccountERC7579Upgradeable._extractUserOpValidator`](#AccountERC7579Upgradeable-_extractUserOpValidator-struct-PackedUserOperation-) and [`AccountERC7579Upgradeable._extractSignatureValidator`](#AccountERC7579Upgradeable-_extractSignatureValidator-bytes-). Both are implemented
+  following common practices. However, this part is not standardized in ERC-7579 (or in any follow-up ERC). Some
+  accounts may want to override these internal functions.
+* When combined with [`ERC7739`](https://docs.openzeppelin.com/contracts/api/token#ERC7739), resolution ordering of [`AccountERC7579Upgradeable.isValidSignature`](#AccountERC7579Upgradeable-isValidSignature-bytes32-bytes-) may have an impact ([`ERC7739`](https://docs.openzeppelin.com/contracts/api/token#ERC7739) does not
+  call super). Manual resolution might be necessary.
+* Static calls (using callType `0xfe`) are currently NOT supported.
+====
+
+<Callout type='warn'>
+Removing all validator modules will render the account inoperable, as no user operations can be validated thereafter.
+</Callout>
+
+### Modifiers
+- [onlyModule(moduleTypeId, additionalContext)](#AccountERC7579Upgradeable-onlyModule-uint256-bytes-)
+
+### Functions
+- [__AccountERC7579_init()](#AccountERC7579Upgradeable-__AccountERC7579_init--)
+- [__AccountERC7579_init_unchained()](#AccountERC7579Upgradeable-__AccountERC7579_init_unchained--)
+- [fallback()](#AccountERC7579Upgradeable-fallback-bytes-)
+- [accountId()](#AccountERC7579Upgradeable-accountId--)
+- [supportsExecutionMode(encodedMode)](#AccountERC7579Upgradeable-supportsExecutionMode-bytes32-)
+- [supportsModule(moduleTypeId)](#AccountERC7579Upgradeable-supportsModule-uint256-)
+- [installModule(moduleTypeId, module, initData)](#AccountERC7579Upgradeable-installModule-uint256-address-bytes-)
+- [uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579Upgradeable-uninstallModule-uint256-address-bytes-)
+- [isModuleInstalled(moduleTypeId, module, additionalContext)](#AccountERC7579Upgradeable-isModuleInstalled-uint256-address-bytes-)
+- [execute(mode, executionCalldata)](#AccountERC7579Upgradeable-execute-bytes32-bytes-)
+- [executeFromExecutor(mode, executionCalldata)](#AccountERC7579Upgradeable-executeFromExecutor-bytes32-bytes-)
+- [isValidSignature(hash, signature)](#AccountERC7579Upgradeable-isValidSignature-bytes32-bytes-)
+- [_validateUserOp(userOp, userOpHash)](#AccountERC7579Upgradeable-_validateUserOp-struct-PackedUserOperation-bytes32-)
+- [_execute(mode, executionCalldata)](#AccountERC7579Upgradeable-_execute-Mode-bytes-)
+- [_installModule(moduleTypeId, module, initData)](#AccountERC7579Upgradeable-_installModule-uint256-address-bytes-)
+- [_uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579Upgradeable-_uninstallModule-uint256-address-bytes-)
+- [_fallback()](#AccountERC7579Upgradeable-_fallback--)
+- [_fallbackHandler(selector)](#AccountERC7579Upgradeable-_fallbackHandler-bytes4-)
+- [_checkModule(moduleTypeId, module, additionalContext)](#AccountERC7579Upgradeable-_checkModule-uint256-address-bytes-)
+- [_extractUserOpValidator(userOp)](#AccountERC7579Upgradeable-_extractUserOpValidator-struct-PackedUserOperation-)
+- [_extractSignatureValidator(signature)](#AccountERC7579Upgradeable-_extractSignatureValidator-bytes-)
+- [_decodeFallbackData(data)](#AccountERC7579Upgradeable-_decodeFallbackData-bytes-)
+- [_rawSignatureValidation(, )](#AccountERC7579Upgradeable-_rawSignatureValidation-bytes32-bytes-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [entryPoint()](#Account-entryPoint--)
+- [getNonce()](#Account-getNonce--)
+- [getNonce(key)](#Account-getNonce-uint192-)
+- [validateUserOp(userOp, userOpHash, missingAccountFunds)](#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-)
+- [_signableUserOpHash(, userOpHash)](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-)
+- [_payPrefund(missingAccountFunds)](#Account-_payPrefund-uint256-)
+- [_checkEntryPoint()](#Account-_checkEntryPoint--)
+- [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
+- [receive()](#Account-receive--)
+
+#### IAccount
+
+#### AbstractSigner
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### IERC7579ModuleConfig
+- [ModuleInstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleInstalled-uint256-address-)
+- [ModuleUninstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleUninstalled-uint256-address-)
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+
+#### IAccount
+
+#### AbstractSigner
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC7579MissingFallbackHandler(selector)](#AccountERC7579Upgradeable-ERC7579MissingFallbackHandler-bytes4-)
+
+#### IERC7579ModuleConfig
+
+#### IERC7579AccountConfig
+
+#### IERC7579Execution
+
+#### IERC1271
+
+#### Account
+- [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
+
+#### IAccount
+
+#### AbstractSigner
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="AccountERC7579Upgradeable-onlyModule-uint256-bytes-"></a>
+
+### `onlyModule(uint256 moduleTypeId, bytes additionalContext)`
+
+Modifier that checks if the caller is an installed module of the given type.
+
+<a id="AccountERC7579Upgradeable-__AccountERC7579_init--"></a>
+
+### `__AccountERC7579_init()`
+*internal*
+
+<a id="AccountERC7579Upgradeable-__AccountERC7579_init_unchained--"></a>
+
+### `__AccountERC7579_init_unchained()`
+*internal*
+
+<a id="AccountERC7579Upgradeable-fallback-bytes-"></a>
+
+### `fallback(bytes) → bytes`
+*external*
+
+See [`AccountERC7579HookedUpgradeable._fallback`](#AccountERC7579HookedUpgradeable-_fallback--).
+
+<a id="AccountERC7579Upgradeable-accountId--"></a>
+
+### `accountId() → string`
+*public*
+
+Returns the account id of the smart account
+
+<a id="AccountERC7579Upgradeable-supportsExecutionMode-bytes32-"></a>
+
+### `supportsExecutionMode(bytes32 encodedMode) → bool`
+*public*
+
+Supported call types:
+* Single (`0x00`): A single transaction execution.
+* Batch (`0x01`): A batch of transactions execution.
+* Delegate (`0xff`): A delegate call execution.
+
+Supported exec types:
+* Default (`0x00`): Default execution type (revert on failure).
+* Try (`0x01`): Try execution type (emits ERC7579TryExecuteFail on failure).
+
+<a id="AccountERC7579Upgradeable-supportsModule-uint256-"></a>
+
+### `supportsModule(uint256 moduleTypeId) → bool`
+*public*
+
+Supported module types:
+
+* Validator: A module used during the validation phase to determine if a transaction is valid and
+should be executed on the account.
+* Executor: A module that can execute transactions on behalf of the smart account via a callback.
+* Fallback Handler: A module that can extend the fallback functionality of a smart account.
+
+<a id="AccountERC7579Upgradeable-installModule-uint256-address-bytes-"></a>
+
+### `installModule(uint256 moduleTypeId, address module, bytes initData)`
+*public*
+
+Installs a Module of a certain type on the smart account
+
+<a id="AccountERC7579Upgradeable-uninstallModule-uint256-address-bytes-"></a>
+
+### `uninstallModule(uint256 moduleTypeId, address module, bytes deInitData)`
+*public*
+
+Uninstalls a Module of a certain type on the smart account
+
+<a id="AccountERC7579Upgradeable-isModuleInstalled-uint256-address-bytes-"></a>
+
+### `isModuleInstalled(uint256 moduleTypeId, address module, bytes additionalContext) → bool`
+*public*
+
+Returns whether a module is installed on the smart account
+
+<a id="AccountERC7579Upgradeable-execute-bytes32-bytes-"></a>
+
+### `execute(bytes32 mode, bytes executionCalldata)`
+*public*
+
+Executes a transaction on behalf of the account.
+
+<a id="AccountERC7579Upgradeable-executeFromExecutor-bytes32-bytes-"></a>
+
+### `executeFromExecutor(bytes32 mode, bytes executionCalldata) → bytes[] returnData`
+*public*
+
+Executes a transaction on behalf of the account.
+        This function is intended to be called by Executor Modules
+
+<a id="AccountERC7579Upgradeable-isValidSignature-bytes32-bytes-"></a>
+
+### `isValidSignature(bytes32 hash, bytes signature) → bytes4`
+*public*
+
+Implement ERC-1271 through IERC7579Validator modules. If module based validation fails, fallback to
+"native" validation by the abstract signer.
+
+<Callout>
+when combined with [`ERC7739`](https://docs.openzeppelin.com/contracts/api/token#ERC7739), resolution ordering may have an impact ([`ERC7739`](https://docs.openzeppelin.com/contracts/api/token#ERC7739) does not call super).
+</Callout>
+Manual resolution might be necessary.
+
+<a id="AccountERC7579Upgradeable-_validateUserOp-struct-PackedUserOperation-bytes32-"></a>
+
+### `_validateUserOp(struct PackedUserOperation userOp, bytes32 userOpHash) → uint256`
+*internal*
+
+Validates a user operation with _signableUserOpHash and returns the validation data
+if the module specified by the first 20 bytes of the nonce key is installed. Falls back to
+[`Account._validateUserOp`](https://docs.openzeppelin.com/contracts/api/account#Account-validateUserOp) otherwise.
+
+See [`AccountERC7579Upgradeable._extractUserOpValidator`](#AccountERC7579Upgradeable-_extractUserOpValidator-struct-PackedUserOperation-) for the module extraction logic.
+
+<a id="AccountERC7579Upgradeable-_execute-Mode-bytes-"></a>
+
+### `_execute(Mode mode, bytes executionCalldata) → bytes[] returnData`
+*internal*
+
+ERC-7579 execution logic. See [`AccountERC7579Upgradeable.supportsExecutionMode`](#AccountERC7579Upgradeable-supportsExecutionMode-bytes32-) for supported modes.
+
+Reverts if the call type is not supported.
+
+<a id="AccountERC7579Upgradeable-_installModule-uint256-address-bytes-"></a>
+
+### `_installModule(uint256 moduleTypeId, address module, bytes initData)`
+*internal*
+
+Installs a module of the given type with the given initialization data.
+
+For the fallback module type, the `initData` is expected to be the (packed) concatenation of a 4-byte
+selector and the rest of the data to be sent to the handler when calling [`IERC7579Module.onInstall`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Module-onInstall).
+
+Requirements:
+
+* Module type must be supported. See [`AccountERC7579HookedUpgradeable.supportsModule`](#AccountERC7579HookedUpgradeable-supportsModule-uint256-). Reverts with [`ERC7579Utils.ERC7579UnsupportedModuleType`](https://docs.openzeppelin.com/contracts/api/token#ERC7579Utils-ERC7579UnsupportedModuleType).
+* Module must be of the given type. Reverts with [`ERC7579Utils.ERC7579MismatchedModuleTypeId`](https://docs.openzeppelin.com/contracts/api/token#ERC7579Utils-ERC7579MismatchedModuleTypeId).
+* Module must not be already installed. Reverts with [`ERC7579Utils.ERC7579AlreadyInstalledModule`](https://docs.openzeppelin.com/contracts/api/token#ERC7579Utils-ERC7579AlreadyInstalledModule).
+
+Emits a [`IERC7579ModuleConfig.ModuleInstalled`](https://docs.openzeppelin.com/contracts/api/token#IERC7579ModuleConfig-ModuleInstalled) event.
+
+<a id="AccountERC7579Upgradeable-_uninstallModule-uint256-address-bytes-"></a>
+
+### `_uninstallModule(uint256 moduleTypeId, address module, bytes deInitData)`
+*internal*
+
+Uninstalls a module of the given type with the given de-initialization data.
+
+For the fallback module type, the `deInitData` is expected to be the (packed) concatenation of a 4-byte
+selector and the rest of the data to be sent to the handler when calling [`IERC7579Module.onUninstall`](https://docs.openzeppelin.com/contracts/api/token#IERC7579Module-onUninstall).
+
+Requirements:
+
+* Module must be already installed. Reverts with [`ERC7579Utils.ERC7579UninstalledModule`](https://docs.openzeppelin.com/contracts/api/token#ERC7579Utils-ERC7579UninstalledModule) otherwise.
+
+<a id="AccountERC7579Upgradeable-_fallback--"></a>
+
+### `_fallback() → bytes`
+*internal*
+
+Fallback function that delegates the call to the installed handler for the given selector.
+
+Reverts with [`ERC7579MissingFallbackHandler`](https://docs.openzeppelin.com/contracts/api/account#ERC7579MissingFallbackHandler) if the handler is not installed.
+
+Calls the handler with the original `msg.sender` appended at the end of the calldata following
+the ERC-2771 format.
+
+<a id="AccountERC7579Upgradeable-_fallbackHandler-bytes4-"></a>
+
+### `_fallbackHandler(bytes4 selector) → address`
+*internal*
+
+Returns the fallback handler for the given selector. Returns `address(0)` if not installed.
+
+<a id="AccountERC7579Upgradeable-_checkModule-uint256-address-bytes-"></a>
+
+### `_checkModule(uint256 moduleTypeId, address module, bytes additionalContext)`
+*internal*
+
+Checks if the module is installed. Reverts if the module is not installed.
+
+<a id="AccountERC7579Upgradeable-_extractUserOpValidator-struct-PackedUserOperation-"></a>
+
+### `_extractUserOpValidator(struct PackedUserOperation userOp) → address`
+*internal*
+
+Extracts the nonce validator from the user operation.
+
+To construct a nonce key, set nonce as follows:
+
+```
+<module address (20 bytes)> | <key (4 bytes)> | <nonce (8 bytes)>
+```
+<Callout>
+The default behavior of this function replicates the behavior of
+</Callout>
+[Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L266),
+[Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L227), and
+[ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L247).
+
+This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
+
+For example, [Biconomy's Nexus](https://github.com/bcnmy/nexus/blob/54f4e19baaff96081a8843672977caf712ef19f4/contracts/lib/NonceLib.sol#L17)
+uses a similar yet incompatible approach (the validator address is also part of the nonce, but not at the same location)
+
+<a id="AccountERC7579Upgradeable-_extractSignatureValidator-bytes-"></a>
+
+### `_extractSignatureValidator(bytes signature) → address module, bytes innerSignature`
+*internal*
+
+Extracts the signature validator from the signature.
+
+To construct a signature, set the first 20 bytes as the module address and the remaining bytes as the
+signature data:
+
+```
+<module address (20 bytes)> | <signature data>
+```
+
+<Callout>
+The default behavior of this function replicates the behavior of
+</Callout>
+[Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L350),
+[Biconomy's Nexus](https://github.com/bcnmy/nexus/blob/54f4e19baaff96081a8843672977caf712ef19f4/contracts/Nexus.sol#L239),
+[Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L252), and
+[ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L296).
+
+This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
+
+<a id="AccountERC7579Upgradeable-_decodeFallbackData-bytes-"></a>
+
+### `_decodeFallbackData(bytes data) → bytes4 selector, bytes remaining`
+*internal*
+
+Extract the function selector from initData/deInitData for MODULE_TYPE_FALLBACK
+
+<Callout>
+If we had calldata here, we could use calldata slice which are cheaper to manipulate and don't require
+</Callout>
+actual copy. However, this would require `_installModule` to get a calldata bytes object instead of a memory
+bytes object. This would prevent calling `_installModule` from a contract constructor and would force the use
+of external initializers. That may change in the future, as most accounts will probably be deployed as
+clones/proxy/ERC-7702 delegates and therefore rely on initializers anyway.
+
+<a id="AccountERC7579Upgradeable-_rawSignatureValidation-bytes32-bytes-"></a>
+
+### `_rawSignatureValidation(bytes32, bytes) → bool`
+*internal*
+
+By default, only use the modules for validation of userOp and signature. Disable raw signatures.
+
+<a id="AccountERC7579Upgradeable-ERC7579MissingFallbackHandler-bytes4-"></a>
+
+### `ERC7579MissingFallbackHandler(bytes4 selector)`
+*error*
+
+The account's [`AccountERC7579Upgradeable.fallback`](#AccountERC7579Upgradeable-fallback-bytes-) was called with a selector that doesn't have an installed handler.

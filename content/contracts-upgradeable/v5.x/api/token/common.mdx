@@ -1,0 +1,199 @@
+---
+title: "Common"
+description: "Smart contract common utilities and implementations"
+---
+
+Functionality that is common to multiple token standards.
+
+* [`ERC2981`](https://docs.openzeppelin.com/contracts/api/token/common#ERC2981): NFT Royalties compatible with both ERC-721 and ERC-1155.
+  * For ERC-721 consider [`ERC721Royalty`](https://docs.openzeppelin.com/contracts/api/token/ERC721#ERC721Royalty) which clears the royalty information from storage on burn.
+
+## Contracts
+
+[`ERC2981`](https://docs.openzeppelin.com/contracts/api/token/common#ERC2981)
+
+<a id="ERC2981Upgradeable"></a>
+
+## `ERC2981Upgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/common/ERC2981Upgradeable.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/common/ERC2981Upgradeable.sol";
+```
+
+Implementation of the NFT Royalty Standard, a standardized way to retrieve royalty payment information.
+
+Royalty information can be specified globally for all token ids via [`ERC2981Upgradeable._setDefaultRoyalty`](#ERC2981Upgradeable-_setDefaultRoyalty-address-uint96-), and/or individually for
+specific token ids via [`ERC2981Upgradeable._setTokenRoyalty`](#ERC2981Upgradeable-_setTokenRoyalty-uint256-address-uint96-). The latter takes precedence over the first.
+
+Royalty is specified as a fraction of sale price. [`ERC2981Upgradeable._feeDenominator`](#ERC2981Upgradeable-_feeDenominator--) is overridable but defaults to 10000, meaning the
+fee is specified in basis points by default.
+
+<Callout type='warn'>
+ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See
+</Callout>
+[Rationale](https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments) in the ERC. Marketplaces are expected to
+voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.
+
+### Functions
+- [__ERC2981_init()](#ERC2981Upgradeable-__ERC2981_init--)
+- [__ERC2981_init_unchained()](#ERC2981Upgradeable-__ERC2981_init_unchained--)
+- [supportsInterface(interfaceId)](#ERC2981Upgradeable-supportsInterface-bytes4-)
+- [royaltyInfo(tokenId, salePrice)](#ERC2981Upgradeable-royaltyInfo-uint256-uint256-)
+- [_feeDenominator()](#ERC2981Upgradeable-_feeDenominator--)
+- [_setDefaultRoyalty(receiver, feeNumerator)](#ERC2981Upgradeable-_setDefaultRoyalty-address-uint96-)
+- [_deleteDefaultRoyalty()](#ERC2981Upgradeable-_deleteDefaultRoyalty--)
+- [_setTokenRoyalty(tokenId, receiver, feeNumerator)](#ERC2981Upgradeable-_setTokenRoyalty-uint256-address-uint96-)
+- [_resetTokenRoyalty(tokenId)](#ERC2981Upgradeable-_resetTokenRoyalty-uint256-)
+
+#### ERC165Upgradeable
+- [__ERC165_init()](#ERC165Upgradeable-__ERC165_init--)
+- [__ERC165_init_unchained()](#ERC165Upgradeable-__ERC165_init_unchained--)
+
+#### IERC2981
+
+#### IERC165
+
+#### Initializable
+- [_checkInitializing()](#Initializable-_checkInitializing--)
+- [_disableInitializers()](#Initializable-_disableInitializers--)
+- [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
+- [_isInitializing()](#Initializable-_isInitializing--)
+- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+
+### Events
+
+#### ERC165Upgradeable
+
+#### IERC2981
+
+#### IERC165
+
+#### Initializable
+- [Initialized(version)](#Initializable-Initialized-uint64-)
+
+### Errors
+- [ERC2981InvalidDefaultRoyalty(numerator, denominator)](#ERC2981Upgradeable-ERC2981InvalidDefaultRoyalty-uint256-uint256-)
+- [ERC2981InvalidDefaultRoyaltyReceiver(receiver)](#ERC2981Upgradeable-ERC2981InvalidDefaultRoyaltyReceiver-address-)
+- [ERC2981InvalidTokenRoyalty(tokenId, numerator, denominator)](#ERC2981Upgradeable-ERC2981InvalidTokenRoyalty-uint256-uint256-uint256-)
+- [ERC2981InvalidTokenRoyaltyReceiver(tokenId, receiver)](#ERC2981Upgradeable-ERC2981InvalidTokenRoyaltyReceiver-uint256-address-)
+
+#### ERC165Upgradeable
+
+#### IERC2981
+
+#### IERC165
+
+#### Initializable
+- [InvalidInitialization()](#Initializable-InvalidInitialization--)
+- [NotInitializing()](#Initializable-NotInitializing--)
+
+<a id="ERC2981Upgradeable-__ERC2981_init--"></a>
+
+### `__ERC2981_init()`
+*internal*
+
+<a id="ERC2981Upgradeable-__ERC2981_init_unchained--"></a>
+
+### `__ERC2981_init_unchained()`
+*internal*
+
+<a id="ERC2981Upgradeable-supportsInterface-bytes4-"></a>
+
+### `supportsInterface(bytes4 interfaceId) → bool`
+*public*
+
+Returns true if this contract implements the interface defined by
+`interfaceId`. See the corresponding
+[ERC section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
+to learn more about how these ids are created.
+
+This function call must use less than 30 000 gas.
+
+<a id="ERC2981Upgradeable-royaltyInfo-uint256-uint256-"></a>
+
+### `royaltyInfo(uint256 tokenId, uint256 salePrice) → address receiver, uint256 amount`
+*public*
+
+Returns how much royalty is owed and to whom, based on a sale price that may be denominated in any unit of
+exchange. The royalty amount is denominated and should be paid in that same unit of exchange.
+
+<Callout>
+ERC-2981 allows setting the royalty to 100% of the price. In that case all the price would be sent to the
+</Callout>
+royalty receiver and 0 tokens to the seller. Contracts dealing with royalty should consider empty transfers.
+
+<a id="ERC2981Upgradeable-_feeDenominator--"></a>
+
+### `_feeDenominator() → uint96`
+*internal*
+
+The denominator with which to interpret the fee set in [`ERC2981Upgradeable._setTokenRoyalty`](#ERC2981Upgradeable-_setTokenRoyalty-uint256-address-uint96-) and [`ERC2981Upgradeable._setDefaultRoyalty`](#ERC2981Upgradeable-_setDefaultRoyalty-address-uint96-) as a
+fraction of the sale price. Defaults to 10000 so fees are expressed in basis points, but may be customized by an
+override.
+
+<a id="ERC2981Upgradeable-_setDefaultRoyalty-address-uint96-"></a>
+
+### `_setDefaultRoyalty(address receiver, uint96 feeNumerator)`
+*internal*
+
+Sets the royalty information that all ids in this contract will default to.
+
+Requirements:
+
+- `receiver` cannot be the zero address.
+- `feeNumerator` cannot be greater than the fee denominator.
+
+<a id="ERC2981Upgradeable-_deleteDefaultRoyalty--"></a>
+
+### `_deleteDefaultRoyalty()`
+*internal*
+
+Removes default royalty information.
+
+<a id="ERC2981Upgradeable-_setTokenRoyalty-uint256-address-uint96-"></a>
+
+### `_setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)`
+*internal*
+
+Sets the royalty information for a specific token id, overriding the global default.
+
+Requirements:
+
+- `receiver` cannot be the zero address.
+- `feeNumerator` cannot be greater than the fee denominator.
+
+<a id="ERC2981Upgradeable-_resetTokenRoyalty-uint256-"></a>
+
+### `_resetTokenRoyalty(uint256 tokenId)`
+*internal*
+
+Resets royalty information for the token id back to the global default.
+
+<a id="ERC2981Upgradeable-ERC2981InvalidDefaultRoyalty-uint256-uint256-"></a>
+
+### `ERC2981InvalidDefaultRoyalty(uint256 numerator, uint256 denominator)`
+*error*
+
+The default royalty set is invalid (eg. (numerator / denominator) >= 1).
+
+<a id="ERC2981Upgradeable-ERC2981InvalidDefaultRoyaltyReceiver-address-"></a>
+
+### `ERC2981InvalidDefaultRoyaltyReceiver(address receiver)`
+*error*
+
+The default royalty receiver is invalid.
+
+<a id="ERC2981Upgradeable-ERC2981InvalidTokenRoyalty-uint256-uint256-uint256-"></a>
+
+### `ERC2981InvalidTokenRoyalty(uint256 tokenId, uint256 numerator, uint256 denominator)`
+*error*
+
+The royalty set for a specific `tokenId` is invalid (eg. (numerator / denominator) >= 1).
+
+<a id="ERC2981Upgradeable-ERC2981InvalidTokenRoyaltyReceiver-uint256-address-"></a>
+
+### `ERC2981InvalidTokenRoyaltyReceiver(uint256 tokenId, address receiver)`
+*error*
+
+The royalty receiver for `tokenId` is invalid.
+
