@@ -1,0 +1,384 @@
+---
+title: "Fee"
+description: "Smart contract fee utilities and implementations"
+---
+
+<a id="BaseDynamicAfterFee"></a>
+
+## `BaseDynamicAfterFee` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/fee/BaseDynamicAfterFee.sol)
+
+```solidity
+import "@openzeppelin/src/fee/BaseDynamicAfterFee.sol";
+```
+
+Base implementation for dynamic target hook fees applied after swaps.
+
+Enables to enforce a dynamic target determined by [`BaseDynamicAfterFee._getTargetUnspecified`](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-) for the unspecified currency of the swap
+during [`BaseAsyncSwap._beforeSwap`](base#BaseAsyncSwap-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-), where if the swap outcome results better than the target, any positive difference is taken
+as a hook fee, being posteriorily handled or distributed by the hook via [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-).
+
+NOTE: In order to use this hook, the inheriting contract must implement [`BaseDynamicAfterFee._getTargetUnspecified`](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-) to determine the target,
+and [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-) to handle accumulated fees.
+
+WARNING: This is experimental software and is provided on an "as is" and "as available" basis. We do
+not give any warranties and will not be liable for any losses incurred through any use of this code
+base.
+
+_Available since v0.1.0_
+
+### Functions
+- [_transientTargetUnspecifiedAmount()](#BaseDynamicAfterFee-_transientTargetUnspecifiedAmount--)
+- [_transientApplyTarget()](#BaseDynamicAfterFee-_transientApplyTarget--)
+- [_setTransientTargetUnspecifiedAmount(value)](#BaseDynamicAfterFee-_setTransientTargetUnspecifiedAmount-uint256-)
+- [_setTransientApplyTarget(value)](#BaseDynamicAfterFee-_setTransientApplyTarget-bool-)
+- [constructor(_poolManager)](#BaseDynamicAfterFee-constructor-contract-IPoolManager-)
+- [_beforeSwap(sender, key, params, hookData)](#BaseDynamicAfterFee-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_afterSwap(sender, key, params, delta, )](#BaseDynamicAfterFee-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [_getTargetUnspecified(sender, key, params, hookData)](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_afterSwapHandler(key, params, delta, targetUnspecifiedAmount, feeAmount)](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-)
+- [getHookPermissions()](#BaseDynamicAfterFee-getHookPermissions--)
+
+#### IHookEvents
+
+#### BaseHook
+- [validateHookAddress(hook)](#BaseHook-validateHookAddress-contract-BaseHook-)
+- [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
+- [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
+- [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [_afterInitialize(, , , )](#BaseHook-_afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [beforeAddLiquidity(sender, key, params, hookData)](#BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeAddLiquidity(, , , )](#BaseHook-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [beforeRemoveLiquidity(sender, key, params, hookData)](#BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeRemoveLiquidity(, , , )](#BaseHook-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [afterAddLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterAddLiquidity(, , , , , )](#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [afterRemoveLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterRemoveLiquidity(, , , , , )](#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [beforeSwap(sender, key, params, hookData)](#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [afterSwap(sender, key, params, delta, hookData)](#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [beforeDonate(sender, key, amount0, amount1, hookData)](#BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_beforeDonate(, , , , )](#BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
+
+#### IHooks
+
+### Events
+
+#### IHookEvents
+- [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
+- [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
+- [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
+- [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
+
+#### BaseHook
+
+#### IHooks
+
+### Errors
+
+#### IHookEvents
+
+#### BaseHook
+- [NotSelf()](#BaseHook-NotSelf--)
+- [InvalidPool()](#BaseHook-InvalidPool--)
+- [HookNotImplemented()](#BaseHook-HookNotImplemented--)
+- [NotPoolManager()](#BaseHook-NotPoolManager--)
+
+#### IHooks
+
+<a id="BaseDynamicAfterFee-_transientTargetUnspecifiedAmount--"></a>
+
+### `_transientTargetUnspecifiedAmount() → uint256`
+*internal*
+
+The target unspecified amount to be enforced by the `afterSwap` hook.
+
+<a id="BaseDynamicAfterFee-_transientApplyTarget--"></a>
+
+### `_transientApplyTarget() → bool`
+*internal*
+
+Whether the target unspecified amount should be enforced by the `afterSwap` hook.
+
+<a id="BaseDynamicAfterFee-_setTransientTargetUnspecifiedAmount-uint256-"></a>
+
+### `_setTransientTargetUnspecifiedAmount(uint256 value)`
+*internal*
+
+Set the target unspecified amount to be enforced by the `afterSwap` hook.
+
+<a id="BaseDynamicAfterFee-_setTransientApplyTarget-bool-"></a>
+
+### `_setTransientApplyTarget(bool value)`
+*internal*
+
+Set the apply flag to be used in the `afterSwap` hook.
+
+<a id="BaseDynamicAfterFee-constructor-contract-IPoolManager-"></a>
+
+### `constructor(contract IPoolManager _poolManager)`
+*internal*
+
+Set the `PoolManager` address.
+
+<a id="BaseDynamicAfterFee-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `_beforeSwap(address sender, struct PoolKey key, struct SwapParams params, bytes hookData) → bytes4, BeforeSwapDelta, uint24`
+*internal*
+
+Sets the target unspecified amount and apply flag to be used in the `afterSwap` hook.
+
+NOTE: The target unspecified amount and the apply flag are reset in the `afterSwap` hook.
+
+<a id="BaseDynamicAfterFee-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-"></a>
+
+### `_afterSwap(address sender, struct PoolKey key, struct SwapParams params, BalanceDelta delta, bytes) → bytes4, int128`
+*internal*
+
+Enforce the target unspecified amount to the unspecified currency of the swap.
+
+When the swap is `exactInput` and the unspecified target is surpassed, the difference is decreased from the
+output as a hook fee. Accordingly, when the swap is `exactOutput` and the unspecified target is not reached, the
+difference is increased to the input as a hook fee. Note that the fee is always applied to the unspecified
+currency of the swap, regardless of the swap direction.
+
+The fees are minted to this hook as ERC-6909 tokens, which can then be distributed in [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-)
+
+NOTE: The target unspecified amount and the apply flag are reset on purpose to avoid state overlapping across swaps.
+
+<a id="BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `_getTargetUnspecified(address sender, struct PoolKey key, struct SwapParams params, bytes hookData) → uint256 targetUnspecifiedAmount, bool applyTarget`
+*internal*
+
+Return the target unspecified amount to be enforced by the `afterSwap` hook.
+
+<a id="BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-"></a>
+
+### `_afterSwapHandler(struct PoolKey key, struct SwapParams params, BalanceDelta delta, uint256 targetUnspecifiedAmount, uint256 feeAmount)`
+*internal*
+
+Customizable handler called after `_afterSwap` to handle or distribute the fees.
+
+<a id="BaseDynamicAfterFee-getHookPermissions--"></a>
+
+### `getHookPermissions() → struct Hooks.Permissions permissions`
+*public*
+
+Set the hook permissions, specifically [`BaseHook.beforeSwap`](base#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-), [`BaseHook.afterSwap`](base#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-) and afterSwapReturnDelta.
+
+<a id="BaseDynamicFee"></a>
+
+## `BaseDynamicFee` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/fee/BaseDynamicFee.sol)
+
+```solidity
+import "@openzeppelin/src/fee/BaseDynamicFee.sol";
+```
+
+Base implementation to apply a dynamic fee via the `PoolManager`'s `updateDynamicLPFee` function.
+
+WARNING: This is experimental software and is provided on an "as is" and "as available" basis. We do
+not give any warranties and will not be liable for any losses incurred through any use of this code
+base.
+
+_Available since v0.1.0_
+
+### Functions
+- [constructor(_poolManager)](#BaseDynamicFee-constructor-contract-IPoolManager-)
+- [_getFee(key)](#BaseDynamicFee-_getFee-struct-PoolKey-)
+- [_afterInitialize(, key, , )](#BaseDynamicFee-_afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [poke(key)](#BaseDynamicFee-poke-struct-PoolKey-)
+- [getHookPermissions()](#BaseDynamicFee-getHookPermissions--)
+
+#### BaseHook
+- [validateHookAddress(hook)](#BaseHook-validateHookAddress-contract-BaseHook-)
+- [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
+- [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
+- [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [beforeAddLiquidity(sender, key, params, hookData)](#BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeAddLiquidity(, , , )](#BaseHook-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [beforeRemoveLiquidity(sender, key, params, hookData)](#BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeRemoveLiquidity(, , , )](#BaseHook-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [afterAddLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterAddLiquidity(, , , , , )](#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [afterRemoveLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterRemoveLiquidity(, , , , , )](#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [beforeSwap(sender, key, params, hookData)](#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_beforeSwap(, , , )](#BaseHook-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [afterSwap(sender, key, params, delta, hookData)](#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [_afterSwap(, , , , )](#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [beforeDonate(sender, key, amount0, amount1, hookData)](#BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_beforeDonate(, , , , )](#BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
+
+#### IHooks
+
+### Errors
+- [NotDynamicFee()](#BaseDynamicFee-NotDynamicFee--)
+
+#### BaseHook
+- [NotSelf()](#BaseHook-NotSelf--)
+- [InvalidPool()](#BaseHook-InvalidPool--)
+- [HookNotImplemented()](#BaseHook-HookNotImplemented--)
+- [NotPoolManager()](#BaseHook-NotPoolManager--)
+
+#### IHooks
+
+<a id="BaseDynamicFee-constructor-contract-IPoolManager-"></a>
+
+### `constructor(contract IPoolManager _poolManager)`
+*internal*
+
+Set the `PoolManager` address.
+
+<a id="BaseDynamicFee-_getFee-struct-PoolKey-"></a>
+
+### `_getFee(struct PoolKey key) → uint24`
+*internal*
+
+Returns a fee, denominated in hundredths of a bip, to be applied to the pool after it is initialized.
+
+<a id="BaseDynamicFee-_afterInitialize-address-struct-PoolKey-uint160-int24-"></a>
+
+### `_afterInitialize(address, struct PoolKey key, uint160, int24) → bytes4`
+*internal*
+
+Set the fee after the pool is initialized.
+
+<a id="BaseDynamicFee-poke-struct-PoolKey-"></a>
+
+### `poke(struct PoolKey key)`
+*external*
+
+Updates the dynamic LP fee for the given pool, which must have a key
+that contains this hook's address.
+
+WARNING: This function can be called by anyone at any time. If `_getFee` implementation
+depends on external conditions (e.g., oracle prices, other pool states, token balances),
+it may be vulnerable to manipulation. An attacker could potentially:
+1. Manipulate the external conditions that `_getFee` depends on
+2. Call `poke()` to update the fee to a more favorable rate
+3. Execute trades at the manipulated fee rate
+
+Inheriting contracts should consider implementing access controls on this function,
+make the logic in `_getFee` resistant to short-term manipulation, or accept the risk
+of fee manipulation.
+
+<a id="BaseDynamicFee-getHookPermissions--"></a>
+
+### `getHookPermissions() → struct Hooks.Permissions permissions`
+*public*
+
+Set the hook permissions, specifically `afterInitialize`.
+
+<a id="BaseDynamicFee-NotDynamicFee--"></a>
+
+### `NotDynamicFee()`
+*error*
+
+The hook was attempted to be initialized with a non-dynamic fee.
+
+<a id="BaseOverrideFee"></a>
+
+## `BaseOverrideFee` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/fee/BaseOverrideFee.sol)
+
+```solidity
+import "@openzeppelin/src/fee/BaseOverrideFee.sol";
+```
+
+Base implementation for automatic dynamic fees applied before swaps.
+
+WARNING: This is experimental software and is provided on an "as is" and "as available" basis. We do
+not give any warranties and will not be liable for any losses incurred through any use of this code
+base.
+
+_Available since v0.1.0_
+
+### Functions
+- [constructor(_poolManager)](#BaseOverrideFee-constructor-contract-IPoolManager-)
+- [_afterInitialize(, key, , )](#BaseOverrideFee-_afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [_getFee(sender, key, params, hookData)](#BaseOverrideFee-_getFee-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_beforeSwap(sender, key, params, hookData)](#BaseOverrideFee-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [getHookPermissions()](#BaseOverrideFee-getHookPermissions--)
+
+#### BaseHook
+- [validateHookAddress(hook)](#BaseHook-validateHookAddress-contract-BaseHook-)
+- [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
+- [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
+- [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [beforeAddLiquidity(sender, key, params, hookData)](#BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeAddLiquidity(, , , )](#BaseHook-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [beforeRemoveLiquidity(sender, key, params, hookData)](#BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeRemoveLiquidity(, , , )](#BaseHook-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [afterAddLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterAddLiquidity(, , , , , )](#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [afterRemoveLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterRemoveLiquidity(, , , , , )](#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [beforeSwap(sender, key, params, hookData)](#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [afterSwap(sender, key, params, delta, hookData)](#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [_afterSwap(, , , , )](#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [beforeDonate(sender, key, amount0, amount1, hookData)](#BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_beforeDonate(, , , , )](#BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
+
+#### IHooks
+
+### Errors
+- [NotDynamicFee()](#BaseOverrideFee-NotDynamicFee--)
+
+#### BaseHook
+- [NotSelf()](#BaseHook-NotSelf--)
+- [InvalidPool()](#BaseHook-InvalidPool--)
+- [HookNotImplemented()](#BaseHook-HookNotImplemented--)
+- [NotPoolManager()](#BaseHook-NotPoolManager--)
+
+#### IHooks
+
+<a id="BaseOverrideFee-constructor-contract-IPoolManager-"></a>
+
+### `constructor(contract IPoolManager _poolManager)`
+*internal*
+
+Set the `PoolManager` address.
+
+<a id="BaseOverrideFee-_afterInitialize-address-struct-PoolKey-uint160-int24-"></a>
+
+### `_afterInitialize(address, struct PoolKey key, uint160, int24) → bytes4`
+*internal*
+
+Check that the pool key has a dynamic fee.
+
+<a id="BaseOverrideFee-_getFee-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `_getFee(address sender, struct PoolKey key, struct SwapParams params, bytes hookData) → uint24`
+*internal*
+
+Returns a fee, denominated in hundredths of a bip, to be applied to a swap.
+
+<a id="BaseOverrideFee-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `_beforeSwap(address sender, struct PoolKey key, struct SwapParams params, bytes hookData) → bytes4, BeforeSwapDelta, uint24`
+*internal*
+
+Set the fee before the swap is processed using the override fee flag.
+
+<a id="BaseOverrideFee-getHookPermissions--"></a>
+
+### `getHookPermissions() → struct Hooks.Permissions permissions`
+*public*
+
+Set the hook permissions, specifically `afterInitialize` and `beforeSwap`.
+
+<a id="BaseOverrideFee-NotDynamicFee--"></a>
+
+### `NotDynamicFee()`
+*error*
+
+The hook was attempted to be initialized with a non-dynamic fee.
+

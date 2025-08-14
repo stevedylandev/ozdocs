@@ -1,0 +1,850 @@
+---
+title: "Base"
+description: "Smart contract base utilities and implementations"
+---
+
+<a id="BaseAsyncSwap"></a>
+
+## `BaseAsyncSwap` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/base/BaseAsyncSwap.sol)
+
+```solidity
+import "@openzeppelin/src/base/BaseAsyncSwap.sol";
+```
+
+Base implementation for async swaps, which skip the v3-like swap implementation of the `PoolManager`
+by taking the full swap input amount and returning a delta that nets out the specified amount to 0.
+
+This base hook allows developers to implement arbitrary logic to handle swaps, including use-cases like
+asynchronous swaps and custom swap-ordering. However, given this flexibility, developers should ensure
+that any logic implemented interacts safely with the `PoolManager` and works correctly.
+
+In order to handle async swaps, the hook mints ERC-6909 claim tokens for the specified currency and amount.
+Inheriting contracts are free to handle these claim tokens as necessary, which can be redeemed for the
+underlying currency by using the `settle` function from the `CurrencySettler` library.
+
+IMPORTANT: If the hook is used for multiple pools, the ERC-6909 tokens must be separated and managed
+independently for each pool in order to prevent draining of ERC-6909 tokens from one pool to another.
+
+NOTE: The hook only supports async exact-input swaps. Exact-output swaps will be processed normally
+by the `PoolManager`.
+
+WARNING: This is experimental software and is provided on an "as is" and "as available" basis. We do
+not give any warranties and will not be liable for any losses incurred through any use of this code
+base.
+
+_Available since v0.1.0_
+
+### Functions
+- [constructor(_poolManager)](#BaseAsyncSwap-constructor-contract-IPoolManager-)
+- [_beforeSwap(sender, key, params, )](#BaseAsyncSwap-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_calculateSwapFee(key, specifiedAmount)](#BaseAsyncSwap-_calculateSwapFee-struct-PoolKey-uint256-)
+- [getHookPermissions()](#BaseAsyncSwap-getHookPermissions--)
+
+#### IHookEvents
+
+#### BaseHook
+- [validateHookAddress(hook)](#BaseHook-validateHookAddress-contract-BaseHook-)
+- [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
+- [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
+- [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [_afterInitialize(, , , )](#BaseHook-_afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [beforeAddLiquidity(sender, key, params, hookData)](#BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeAddLiquidity(, , , )](#BaseHook-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [beforeRemoveLiquidity(sender, key, params, hookData)](#BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeRemoveLiquidity(, , , )](#BaseHook-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [afterAddLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterAddLiquidity(, , , , , )](#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [afterRemoveLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterRemoveLiquidity(, , , , , )](#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [beforeSwap(sender, key, params, hookData)](#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [afterSwap(sender, key, params, delta, hookData)](#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [_afterSwap(, , , , )](#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [beforeDonate(sender, key, amount0, amount1, hookData)](#BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_beforeDonate(, , , , )](#BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
+
+#### IHooks
+
+### Events
+
+#### IHookEvents
+- [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
+- [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
+- [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
+- [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
+
+#### BaseHook
+
+#### IHooks
+
+### Errors
+
+#### IHookEvents
+
+#### BaseHook
+- [NotSelf()](#BaseHook-NotSelf--)
+- [InvalidPool()](#BaseHook-InvalidPool--)
+- [HookNotImplemented()](#BaseHook-HookNotImplemented--)
+- [NotPoolManager()](#BaseHook-NotPoolManager--)
+
+#### IHooks
+
+<a id="BaseAsyncSwap-constructor-contract-IPoolManager-"></a>
+
+### `constructor(contract IPoolManager _poolManager)`
+*internal*
+
+Set the `PoolManager` address.
+
+<a id="BaseAsyncSwap-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `_beforeSwap(address sender, struct PoolKey key, struct SwapParams params, bytes) → bytes4, BeforeSwapDelta, uint24`
+*internal*
+
+Skip the v3-like swap implementation of the `PoolManager` by returning a delta that nets out the
+specified amount to 0 to enable asynchronous swaps.
+
+<a id="BaseAsyncSwap-_calculateSwapFee-struct-PoolKey-uint256-"></a>
+
+### `_calculateSwapFee(struct PoolKey key, uint256 specifiedAmount) → uint256 feeAmount`
+*internal*
+
+Calculate the fee amount for the swap.
+
+<a id="BaseAsyncSwap-getHookPermissions--"></a>
+
+### `getHookPermissions() → struct Hooks.Permissions permissions`
+*public*
+
+Set the hook permissions, specifically `beforeSwap` and `beforeSwapReturnDelta`.
+
+<a id="BaseCustomAccounting"></a>
+
+## `BaseCustomAccounting` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/base/BaseCustomAccounting.sol)
+
+```solidity
+import "@openzeppelin/src/base/BaseCustomAccounting.sol";
+```
+
+Base implementation for custom accounting and hook-owned liquidity.
+
+To enable hook-owned liquidity, tokens must be deposited via the hook to allow control and flexibility
+over the liquidity. The implementation inheriting this hook must implement the respective functions
+to calculate the liquidity modification parameters and the amount of liquidity shares to mint or burn.
+
+Additionally, the implementer must consider that the hook is the sole owner of the liquidity and
+manage fees over liquidity shares accordingly.
+
+NOTE: This base hook is designed to work with a single pool key. If you want to use the same custom
+accounting hook for multiple pools, you must have multiple storage instances of this contract and
+initialize them via the `PoolManager` with their respective pool keys.
+
+WARNING: This is experimental software and is provided on an "as is" and "as available" basis. We do
+not give any warranties and will not be liable for any losses incurred through any use of this code
+base.
+
+_Available since v0.1.0_
+
+### Modifiers
+- [ensure(deadline)](#BaseCustomAccounting-ensure-uint256-)
+
+### Functions
+- [constructor(_poolManager)](#BaseCustomAccounting-constructor-contract-IPoolManager-)
+- [addLiquidity(params)](#BaseCustomAccounting-addLiquidity-struct-BaseCustomAccounting-AddLiquidityParams-)
+- [removeLiquidity(params)](#BaseCustomAccounting-removeLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-)
+- [_modifyLiquidity(params)](#BaseCustomAccounting-_modifyLiquidity-bytes-)
+- [unlockCallback(rawData)](#BaseCustomAccounting-unlockCallback-bytes-)
+- [_handleAccruedFees(data, callerDelta, feesAccrued)](#BaseCustomAccounting-_handleAccruedFees-struct-BaseCustomAccounting-CallbackData-BalanceDelta-BalanceDelta-)
+- [_beforeInitialize(, key, )](#BaseCustomAccounting-_beforeInitialize-address-struct-PoolKey-uint160-)
+- [_beforeAddLiquidity(, , , )](#BaseCustomAccounting-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeRemoveLiquidity(, , , )](#BaseCustomAccounting-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_getAddLiquidity(sqrtPriceX96, params)](#BaseCustomAccounting-_getAddLiquidity-uint160-struct-BaseCustomAccounting-AddLiquidityParams-)
+- [_getRemoveLiquidity(params)](#BaseCustomAccounting-_getRemoveLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-)
+- [_mint(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_mint-struct-BaseCustomAccounting-AddLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
+- [_burn(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_burn-struct-BaseCustomAccounting-RemoveLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
+- [getHookPermissions()](#BaseCustomAccounting-getHookPermissions--)
+- [poolKey()](#BaseCustomAccounting-poolKey-struct-PoolKey)
+
+#### IUnlockCallback
+
+#### IHookEvents
+
+#### BaseHook
+- [validateHookAddress(hook)](#BaseHook-validateHookAddress-contract-BaseHook-)
+- [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
+- [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [_afterInitialize(, , , )](#BaseHook-_afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [beforeAddLiquidity(sender, key, params, hookData)](#BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [beforeRemoveLiquidity(sender, key, params, hookData)](#BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [afterAddLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterAddLiquidity(, , , , , )](#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [afterRemoveLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterRemoveLiquidity(, , , , , )](#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [beforeSwap(sender, key, params, hookData)](#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_beforeSwap(, , , )](#BaseHook-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [afterSwap(sender, key, params, delta, hookData)](#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [_afterSwap(, , , , )](#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [beforeDonate(sender, key, amount0, amount1, hookData)](#BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_beforeDonate(, , , , )](#BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
+
+#### IHooks
+
+### Events
+
+#### IUnlockCallback
+
+#### IHookEvents
+- [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
+- [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
+- [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
+- [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
+
+#### BaseHook
+
+#### IHooks
+
+### Errors
+- [ExpiredPastDeadline()](#BaseCustomAccounting-ExpiredPastDeadline--)
+- [PoolNotInitialized()](#BaseCustomAccounting-PoolNotInitialized--)
+- [TooMuchSlippage()](#BaseCustomAccounting-TooMuchSlippage--)
+- [LiquidityOnlyViaHook()](#BaseCustomAccounting-LiquidityOnlyViaHook--)
+- [InvalidNativeValue()](#BaseCustomAccounting-InvalidNativeValue--)
+- [AlreadyInitialized()](#BaseCustomAccounting-AlreadyInitialized--)
+
+#### IUnlockCallback
+
+#### IHookEvents
+
+#### BaseHook
+- [NotSelf()](#BaseHook-NotSelf--)
+- [InvalidPool()](#BaseHook-InvalidPool--)
+- [HookNotImplemented()](#BaseHook-HookNotImplemented--)
+- [NotPoolManager()](#BaseHook-NotPoolManager--)
+
+#### IHooks
+
+<a id="BaseCustomAccounting-ensure-uint256-"></a>
+
+### `ensure(uint256 deadline)`
+
+Ensure the deadline of a liquidity modification request is not expired.
+
+<a id="BaseCustomAccounting-constructor-contract-IPoolManager-"></a>
+
+### `constructor(contract IPoolManager _poolManager)`
+*internal*
+
+Set the pool `PoolManager` address.
+
+<a id="BaseCustomAccounting-addLiquidity-struct-BaseCustomAccounting-AddLiquidityParams-"></a>
+
+### `addLiquidity(struct BaseCustomAccounting.AddLiquidityParams params) → BalanceDelta delta`
+*external*
+
+To cover all possible scenarios, `msg.sender` should have already given the hook an allowance
+of at least amount0Desired/amount1Desired on token0/token1. Always adds assets at the ideal ratio,
+according to the price when the transaction is executed.
+
+NOTE: The `amount0Min` and `amount1Min` parameters are relative to the principal delta, which excludes
+fees accrued from the liquidity modification delta.
+
+<a id="BaseCustomAccounting-removeLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-"></a>
+
+### `removeLiquidity(struct BaseCustomAccounting.RemoveLiquidityParams params) → BalanceDelta delta`
+*external*
+
+<a id="BaseCustomAccounting-_modifyLiquidity-bytes-"></a>
+
+### `_modifyLiquidity(bytes params) → BalanceDelta callerDelta, BalanceDelta feesAccrued`
+*internal*
+
+Calls the `PoolManager` to unlock and call back the hook's `unlockCallback` function.
+
+<a id="BaseCustomAccounting-unlockCallback-bytes-"></a>
+
+### `unlockCallback(bytes rawData) → bytes returnData`
+*external*
+
+Callback from the `PoolManager` when liquidity is modified, either adding or removing.
+
+<a id="BaseCustomAccounting-_handleAccruedFees-struct-BaseCustomAccounting-CallbackData-BalanceDelta-BalanceDelta-"></a>
+
+### `_handleAccruedFees(struct BaseCustomAccounting.CallbackData data, BalanceDelta callerDelta, BalanceDelta feesAccrued)`
+*internal*
+
+Handle any fees accrued in a liquidity position. By default, this function transfers the tokens to the
+owner of the liquidity position. However, this function can be overridden to take fees accrued in the position,
+or any other desired logic.
+
+<a id="BaseCustomAccounting-_beforeInitialize-address-struct-PoolKey-uint160-"></a>
+
+### `_beforeInitialize(address, struct PoolKey key, uint160) → bytes4`
+*internal*
+
+Initialize the hook's pool key. The stored key should act immutably so that
+it can safely be used across the hook's functions.
+
+<a id="BaseCustomAccounting-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-"></a>
+
+### `_beforeAddLiquidity(address, struct PoolKey, struct ModifyLiquidityParams, bytes) → bytes4`
+*internal*
+
+Revert when liquidity is attempted to be added via the `PoolManager`.
+
+<a id="BaseCustomAccounting-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-"></a>
+
+### `_beforeRemoveLiquidity(address, struct PoolKey, struct ModifyLiquidityParams, bytes) → bytes4`
+*internal*
+
+Revert when liquidity is attempted to be removed via the `PoolManager`.
+
+<a id="BaseCustomAccounting-_getAddLiquidity-uint160-struct-BaseCustomAccounting-AddLiquidityParams-"></a>
+
+### `_getAddLiquidity(uint160 sqrtPriceX96, struct BaseCustomAccounting.AddLiquidityParams params) → bytes modify, uint256 shares`
+*internal*
+
+Get the liquidity modification to apply for a given liquidity addition,
+and the amount of liquidity shares would be minted to the sender.
+
+<a id="BaseCustomAccounting-_getRemoveLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-"></a>
+
+### `_getRemoveLiquidity(struct BaseCustomAccounting.RemoveLiquidityParams params) → bytes modify, uint256 shares`
+*internal*
+
+Get the liquidity modification to apply for a given liquidity removal,
+and the amount of liquidity shares would be burned from the sender.
+
+<a id="BaseCustomAccounting-_mint-struct-BaseCustomAccounting-AddLiquidityParams-BalanceDelta-BalanceDelta-uint256-"></a>
+
+### `_mint(struct BaseCustomAccounting.AddLiquidityParams params, BalanceDelta callerDelta, BalanceDelta feesAccrued, uint256 shares)`
+*internal*
+
+Mint liquidity shares to the sender.
+
+<a id="BaseCustomAccounting-_burn-struct-BaseCustomAccounting-RemoveLiquidityParams-BalanceDelta-BalanceDelta-uint256-"></a>
+
+### `_burn(struct BaseCustomAccounting.RemoveLiquidityParams params, BalanceDelta callerDelta, BalanceDelta feesAccrued, uint256 shares)`
+*internal*
+
+Burn liquidity shares from the sender.
+
+<a id="BaseCustomAccounting-getHookPermissions--"></a>
+
+### `getHookPermissions() → struct Hooks.Permissions permissions`
+*public*
+
+Set the hook permissions, specifically `beforeInitialize`, `beforeAddLiquidity` and `beforeRemoveLiquidity`.
+
+<a id="BaseCustomAccounting-poolKey-struct-PoolKey"></a>
+
+### `poolKey() → struct PoolKey`
+*public*
+
+<a id="BaseCustomAccounting-ExpiredPastDeadline--"></a>
+
+### `ExpiredPastDeadline()`
+*error*
+
+A liquidity modification order was attempted to be executed after the deadline.
+
+<a id="BaseCustomAccounting-PoolNotInitialized--"></a>
+
+### `PoolNotInitialized()`
+*error*
+
+Pool was not initialized.
+
+<a id="BaseCustomAccounting-TooMuchSlippage--"></a>
+
+### `TooMuchSlippage()`
+*error*
+
+Principal delta of liquidity modification resulted in too much slippage.
+
+<a id="BaseCustomAccounting-LiquidityOnlyViaHook--"></a>
+
+### `LiquidityOnlyViaHook()`
+*error*
+
+Liquidity was attempted to be added or removed via the `PoolManager` instead of the hook.
+
+<a id="BaseCustomAccounting-InvalidNativeValue--"></a>
+
+### `InvalidNativeValue()`
+*error*
+
+Native currency was not sent with the correct amount.
+
+<a id="BaseCustomAccounting-AlreadyInitialized--"></a>
+
+### `AlreadyInitialized()`
+*error*
+
+Hook was already initialized.
+
+<a id="BaseCustomCurve"></a>
+
+## `BaseCustomCurve` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/base/BaseCustomCurve.sol)
+
+```solidity
+import "@openzeppelin/src/base/BaseCustomCurve.sol";
+```
+
+Base implementation for custom curves, inheriting from [`BaseCustomAccounting`](#BaseCustomAccounting).
+
+This hook allows to implement a custom curve (or any logic) for swaps, which overrides the default v3-like
+concentrated liquidity implementation of the `PoolManager`. During a swap, the hook calls the
+[`BaseCustomCurve._getUnspecifiedAmount`](#BaseCustomCurve-_getUnspecifiedAmount-struct-SwapParams-) function to get the amount of tokens to be sent to the receiver. The return delta
+created from this calculation is then consumed and applied by the `PoolManager`.
+
+NOTE: This hook by default does not include fee or salt mechanisms, which can be implemented by inheriting
+contracts if needed.
+
+WARNING: This is experimental software and is provided on an "as is" and "as available" basis. We do
+not give any warranties and will not be liable for any losses incurred through any use of this code
+base.
+
+_Available since v0.1.0_
+
+### Functions
+- [constructor(_poolManager)](#BaseCustomCurve-constructor-contract-IPoolManager-)
+- [_getAddLiquidity(, params)](#BaseCustomCurve-_getAddLiquidity-uint160-struct-BaseCustomAccounting-AddLiquidityParams-)
+- [_getRemoveLiquidity(params)](#BaseCustomCurve-_getRemoveLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-)
+- [_beforeSwap(sender, key, params, )](#BaseCustomCurve-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_modifyLiquidity(params)](#BaseCustomCurve-_modifyLiquidity-bytes-)
+- [unlockCallback(rawData)](#BaseCustomCurve-unlockCallback-bytes-)
+- [_getUnspecifiedAmount(params)](#BaseCustomCurve-_getUnspecifiedAmount-struct-SwapParams-)
+- [_getSwapFeeAmount(params, unspecifiedAmount)](#BaseCustomCurve-_getSwapFeeAmount-struct-SwapParams-uint256-)
+- [_getAmountOut(params)](#BaseCustomCurve-_getAmountOut-struct-BaseCustomAccounting-RemoveLiquidityParams-)
+- [_getAmountIn(params)](#BaseCustomCurve-_getAmountIn-struct-BaseCustomAccounting-AddLiquidityParams-)
+- [getHookPermissions()](#BaseCustomCurve-getHookPermissions--)
+
+#### BaseCustomAccounting
+- [addLiquidity(params)](#BaseCustomAccounting-addLiquidity-struct-BaseCustomAccounting-AddLiquidityParams-)
+- [removeLiquidity(params)](#BaseCustomAccounting-removeLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-)
+- [_handleAccruedFees(data, callerDelta, feesAccrued)](#BaseCustomAccounting-_handleAccruedFees-struct-BaseCustomAccounting-CallbackData-BalanceDelta-BalanceDelta-)
+- [_beforeInitialize(, key, )](#BaseCustomAccounting-_beforeInitialize-address-struct-PoolKey-uint160-)
+- [_beforeAddLiquidity(, , , )](#BaseCustomAccounting-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeRemoveLiquidity(, , , )](#BaseCustomAccounting-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_mint(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_mint-struct-BaseCustomAccounting-AddLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
+- [_burn(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_burn-struct-BaseCustomAccounting-RemoveLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
+- [poolKey()](#BaseCustomAccounting-poolKey-struct-PoolKey)
+
+#### IUnlockCallback
+
+#### IHookEvents
+
+#### BaseHook
+- [validateHookAddress(hook)](#BaseHook-validateHookAddress-contract-BaseHook-)
+- [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
+- [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [_afterInitialize(, , , )](#BaseHook-_afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [beforeAddLiquidity(sender, key, params, hookData)](#BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [beforeRemoveLiquidity(sender, key, params, hookData)](#BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [afterAddLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterAddLiquidity(, , , , , )](#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [afterRemoveLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterRemoveLiquidity(, , , , , )](#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [beforeSwap(sender, key, params, hookData)](#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [afterSwap(sender, key, params, delta, hookData)](#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [_afterSwap(, , , , )](#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [beforeDonate(sender, key, amount0, amount1, hookData)](#BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_beforeDonate(, , , , )](#BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
+
+#### IHooks
+
+### Events
+
+#### BaseCustomAccounting
+
+#### IUnlockCallback
+
+#### IHookEvents
+- [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
+- [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
+- [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
+- [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
+
+#### BaseHook
+
+#### IHooks
+
+### Errors
+
+#### BaseCustomAccounting
+- [ExpiredPastDeadline()](#BaseCustomAccounting-ExpiredPastDeadline--)
+- [PoolNotInitialized()](#BaseCustomAccounting-PoolNotInitialized--)
+- [TooMuchSlippage()](#BaseCustomAccounting-TooMuchSlippage--)
+- [LiquidityOnlyViaHook()](#BaseCustomAccounting-LiquidityOnlyViaHook--)
+- [InvalidNativeValue()](#BaseCustomAccounting-InvalidNativeValue--)
+- [AlreadyInitialized()](#BaseCustomAccounting-AlreadyInitialized--)
+
+#### IUnlockCallback
+
+#### IHookEvents
+
+#### BaseHook
+- [NotSelf()](#BaseHook-NotSelf--)
+- [InvalidPool()](#BaseHook-InvalidPool--)
+- [HookNotImplemented()](#BaseHook-HookNotImplemented--)
+- [NotPoolManager()](#BaseHook-NotPoolManager--)
+
+#### IHooks
+
+<a id="BaseCustomCurve-constructor-contract-IPoolManager-"></a>
+
+### `constructor(contract IPoolManager _poolManager)`
+*internal*
+
+Set the pool `PoolManager` address.
+
+<a id="BaseCustomCurve-_getAddLiquidity-uint160-struct-BaseCustomAccounting-AddLiquidityParams-"></a>
+
+### `_getAddLiquidity(uint160, struct BaseCustomAccounting.AddLiquidityParams params) → bytes, uint256`
+*internal*
+
+Defines how the liquidity modification data is encoded and returned
+for an add liquidity request.
+
+<a id="BaseCustomCurve-_getRemoveLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-"></a>
+
+### `_getRemoveLiquidity(struct BaseCustomAccounting.RemoveLiquidityParams params) → bytes, uint256`
+*internal*
+
+Defines how the liquidity modification data is encoded and returned
+for a remove liquidity request.
+
+<a id="BaseCustomCurve-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `_beforeSwap(address sender, struct PoolKey key, struct SwapParams params, bytes) → bytes4, BeforeSwapDelta, uint24`
+*internal*
+
+Overrides the default swap logic of the `PoolManager` and calls the [`BaseCustomCurve._getUnspecifiedAmount`](#BaseCustomCurve-_getUnspecifiedAmount-struct-SwapParams-)
+to get the amount of tokens to be sent to the receiver.
+
+NOTE: In order to take and settle tokens from the pool, the hook must hold the liquidity added
+via the [`BaseCustomAccounting.addLiquidity`](#BaseCustomAccounting-addLiquidity-struct-BaseCustomAccounting-AddLiquidityParams-) function.
+
+<a id="BaseCustomCurve-_modifyLiquidity-bytes-"></a>
+
+### `_modifyLiquidity(bytes params) → BalanceDelta callerDelta, BalanceDelta feesAccrued`
+*internal*
+
+Overrides the custom accounting logic to support the custom curve integer amounts.
+
+<a id="BaseCustomCurve-unlockCallback-bytes-"></a>
+
+### `unlockCallback(bytes rawData) → bytes returnData`
+*external*
+
+Decodes the callback data and applies the liquidity modifications, overriding the custom
+accounting logic to mint and burn ERC-6909 claim tokens which are used in swaps.
+
+<a id="BaseCustomCurve-_getUnspecifiedAmount-struct-SwapParams-"></a>
+
+### `_getUnspecifiedAmount(struct SwapParams params) → uint256 unspecifiedAmount`
+*internal*
+
+Calculate the amount of the unspecified currency to be taken or settled from the swapper, depending on the swap
+direction and the fee amount to be paid to LPs.
+
+<a id="BaseCustomCurve-_getSwapFeeAmount-struct-SwapParams-uint256-"></a>
+
+### `_getSwapFeeAmount(struct SwapParams params, uint256 unspecifiedAmount) → uint256 swapFeeAmount`
+*internal*
+
+Calculate the amount of fees to be paid to LPs in a swap.
+
+<a id="BaseCustomCurve-_getAmountOut-struct-BaseCustomAccounting-RemoveLiquidityParams-"></a>
+
+### `_getAmountOut(struct BaseCustomAccounting.RemoveLiquidityParams params) → uint256 amount0, uint256 amount1, uint256 shares`
+*internal*
+
+Calculate the amount of tokens to use and liquidity shares to burn for a remove liquidity request.
+
+<a id="BaseCustomCurve-_getAmountIn-struct-BaseCustomAccounting-AddLiquidityParams-"></a>
+
+### `_getAmountIn(struct BaseCustomAccounting.AddLiquidityParams params) → uint256 amount0, uint256 amount1, uint256 shares`
+*internal*
+
+Calculate the amount of tokens to use and liquidity shares to mint for an add liquidity request.
+
+<a id="BaseCustomCurve-getHookPermissions--"></a>
+
+### `getHookPermissions() → struct Hooks.Permissions permissions`
+*public*
+
+Set the hook permissions, specifically `beforeInitialize`, `beforeAddLiquidity`, `beforeRemoveLiquidity`,
+`beforeSwap`, and `beforeSwapReturnDelta`
+
+<a id="BaseHook"></a>
+
+## `BaseHook` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/base/BaseHook.sol)
+
+```solidity
+import "@openzeppelin/src/base/BaseHook.sol";
+```
+
+Base hook implementation.
+
+This contract defines all hook entry points, as well as security and permission helpers.
+Based on the [Uniswap v4 periphery implementation](https://github.com/Uniswap/v4-periphery/blob/main/src/base/hooks/BaseHook.sol).
+
+NOTE: Hook entry points must be overridden and implemented by the inheriting hook to be used. Their respective
+flags must be set to true in the `getHookPermissions` function as well.
+
+WARNING: This is experimental software and is provided on an "as is" and "as available" basis. We do
+not give any warranties and will not be liable for any losses incurred through any use of this code
+base.
+
+_Available since v0.1.0_
+
+### Modifiers
+- [onlyPoolManager()](#BaseHook-onlyPoolManager--)
+- [onlySelf()](#BaseHook-onlySelf--)
+- [onlyValidPools(hooks)](#BaseHook-onlyValidPools-contract-IHooks-)
+
+### Functions
+- [constructor(_poolManager)](#BaseHook-constructor-contract-IPoolManager-)
+- [getHookPermissions()](#BaseHook-getHookPermissions--)
+- [validateHookAddress(hook)](#BaseHook-validateHookAddress-contract-BaseHook-)
+- [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
+- [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
+- [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [_afterInitialize(, , , )](#BaseHook-_afterInitialize-address-struct-PoolKey-uint160-int24-)
+- [beforeAddLiquidity(sender, key, params, hookData)](#BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeAddLiquidity(, , , )](#BaseHook-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [beforeRemoveLiquidity(sender, key, params, hookData)](#BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [_beforeRemoveLiquidity(, , , )](#BaseHook-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
+- [afterAddLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterAddLiquidity(, , , , , )](#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [afterRemoveLiquidity(sender, key, params, delta0, delta1, hookData)](#BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [_afterRemoveLiquidity(, , , , , )](#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-)
+- [beforeSwap(sender, key, params, hookData)](#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [_beforeSwap(, , , )](#BaseHook-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
+- [afterSwap(sender, key, params, delta, hookData)](#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [_afterSwap(, , , , )](#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
+- [beforeDonate(sender, key, amount0, amount1, hookData)](#BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_beforeDonate(, , , , )](#BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
+- [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
+
+#### IHooks
+
+### Errors
+- [NotSelf()](#BaseHook-NotSelf--)
+- [InvalidPool()](#BaseHook-InvalidPool--)
+- [HookNotImplemented()](#BaseHook-HookNotImplemented--)
+- [NotPoolManager()](#BaseHook-NotPoolManager--)
+
+#### IHooks
+
+<a id="BaseHook-onlyPoolManager--"></a>
+
+### `onlyPoolManager()`
+
+<a id="BaseHook-onlySelf--"></a>
+
+### `onlySelf()`
+
+Restrict the function to only be callable by the hook itself.
+
+<a id="BaseHook-onlyValidPools-contract-IHooks-"></a>
+
+### `onlyValidPools(contract IHooks hooks)`
+
+Restrict the function to only be called for a valid pool.
+
+<a id="BaseHook-constructor-contract-IPoolManager-"></a>
+
+### `constructor(contract IPoolManager _poolManager)`
+*internal*
+
+Set the pool manager and check that the hook address matches the expected permissions and flags.
+
+<a id="BaseHook-getHookPermissions--"></a>
+
+### `getHookPermissions() → struct Hooks.Permissions permissions`
+*public*
+
+Get the hook permissions to signal which hook functions are to be implemented.
+
+Used at deployment to validate the address correctly represents the expected permissions.
+
+<a id="BaseHook-validateHookAddress-contract-BaseHook-"></a>
+
+### `validateHookAddress(contract BaseHook hook)`
+*internal*
+
+Validate the hook address against the expected permissions.
+
+<a id="BaseHook-beforeInitialize-address-struct-PoolKey-uint160-"></a>
+
+### `beforeInitialize(address sender, struct PoolKey key, uint160 sqrtPriceX96) → bytes4`
+*external*
+
+<a id="BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-"></a>
+
+### `_beforeInitialize(address, struct PoolKey, uint160) → bytes4`
+*internal*
+
+Hook implementation for `beforeInitialize`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-"></a>
+
+### `afterInitialize(address sender, struct PoolKey key, uint160 sqrtPriceX96, int24 tick) → bytes4`
+*external*
+
+<a id="BaseHook-_afterInitialize-address-struct-PoolKey-uint160-int24-"></a>
+
+### `_afterInitialize(address, struct PoolKey, uint160, int24) → bytes4`
+*internal*
+
+Hook implementation for `afterInitialize`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-"></a>
+
+### `beforeAddLiquidity(address sender, struct PoolKey key, struct ModifyLiquidityParams params, bytes hookData) → bytes4`
+*external*
+
+<a id="BaseHook-_beforeAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-"></a>
+
+### `_beforeAddLiquidity(address, struct PoolKey, struct ModifyLiquidityParams, bytes) → bytes4`
+*internal*
+
+Hook implementation for `beforeAddLiquidity`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-"></a>
+
+### `beforeRemoveLiquidity(address sender, struct PoolKey key, struct ModifyLiquidityParams params, bytes hookData) → bytes4`
+*external*
+
+<a id="BaseHook-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-"></a>
+
+### `_beforeRemoveLiquidity(address, struct PoolKey, struct ModifyLiquidityParams, bytes) → bytes4`
+*internal*
+
+Hook implementation for `beforeRemoveLiquidity`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-"></a>
+
+### `afterAddLiquidity(address sender, struct PoolKey key, struct ModifyLiquidityParams params, BalanceDelta delta0, BalanceDelta delta1, bytes hookData) → bytes4, BalanceDelta`
+*external*
+
+<a id="BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-"></a>
+
+### `_afterAddLiquidity(address, struct PoolKey, struct ModifyLiquidityParams, BalanceDelta, BalanceDelta, bytes) → bytes4, BalanceDelta`
+*internal*
+
+Hook implementation for `afterAddLiquidity`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-"></a>
+
+### `afterRemoveLiquidity(address sender, struct PoolKey key, struct ModifyLiquidityParams params, BalanceDelta delta0, BalanceDelta delta1, bytes hookData) → bytes4, BalanceDelta`
+*external*
+
+<a id="BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-"></a>
+
+### `_afterRemoveLiquidity(address, struct PoolKey, struct ModifyLiquidityParams, BalanceDelta, BalanceDelta, bytes) → bytes4, BalanceDelta`
+*internal*
+
+Hook implementation for `afterRemoveLiquidity`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `beforeSwap(address sender, struct PoolKey key, struct SwapParams params, bytes hookData) → bytes4, BeforeSwapDelta, uint24`
+*external*
+
+<a id="BaseHook-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-"></a>
+
+### `_beforeSwap(address, struct PoolKey, struct SwapParams, bytes) → bytes4, BeforeSwapDelta, uint24`
+*internal*
+
+Hook implementation for `beforeSwap`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-"></a>
+
+### `afterSwap(address sender, struct PoolKey key, struct SwapParams params, BalanceDelta delta, bytes hookData) → bytes4, int128`
+*external*
+
+<a id="BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-"></a>
+
+### `_afterSwap(address, struct PoolKey, struct SwapParams, BalanceDelta, bytes) → bytes4, int128`
+*internal*
+
+Hook implementation for `afterSwap`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-"></a>
+
+### `beforeDonate(address sender, struct PoolKey key, uint256 amount0, uint256 amount1, bytes hookData) → bytes4`
+*external*
+
+<a id="BaseHook-_beforeDonate-address-struct-PoolKey-uint256-uint256-bytes-"></a>
+
+### `_beforeDonate(address, struct PoolKey, uint256, uint256, bytes) → bytes4`
+*internal*
+
+Hook implementation for `beforeDonate`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-"></a>
+
+### `afterDonate(address sender, struct PoolKey key, uint256 amount0, uint256 amount1, bytes hookData) → bytes4`
+*external*
+
+<a id="BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-"></a>
+
+### `_afterDonate(address, struct PoolKey, uint256, uint256, bytes) → bytes4`
+*internal*
+
+Hook implementation for `afterDonate`, to be overridden by the inheriting hook. The
+flag must be set to true in the `getHookPermissions` function.
+
+<a id="BaseHook-poolManager-contract-IPoolManager"></a>
+
+### `poolManager() → contract IPoolManager`
+*public*
+
+<a id="BaseHook-NotSelf--"></a>
+
+### `NotSelf()`
+*error*
+
+The hook is not the caller.
+
+<a id="BaseHook-InvalidPool--"></a>
+
+### `InvalidPool()`
+*error*
+
+The pool is not authorized to use this hook.
+
+<a id="BaseHook-HookNotImplemented--"></a>
+
+### `HookNotImplemented()`
+*error*
+
+The hook function is not implemented.
+
+<a id="BaseHook-NotPoolManager--"></a>
+
+### `NotPoolManager()`
+*error*
+

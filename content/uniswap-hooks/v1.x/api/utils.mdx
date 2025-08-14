@@ -1,0 +1,35 @@
+---
+title: "Utils"
+description: "Smart contract utils utilities and implementations"
+---
+
+<a id="CurrencySettler"></a>
+
+## `CurrencySettler` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v1.1.0/src/utils/CurrencySettler.sol)
+
+```solidity
+import "@openzeppelin/src/utils/CurrencySettler.sol";
+```
+
+Library used to interact with the `PoolManager` to settle any open deltas.
+To settle a positive delta (a credit to the user), a user may take or mint.
+To settle a negative delta (a debt on the user), a user may transfer or burn to pay off a debt.
+
+Based on the [Uniswap v4 test utils implementation](https://github.com/Uniswap/v4-core/blob/main/test/utils/CurrencySettler.sol).
+
+NOTE: Deltas are synced before any ERC-20 transfers in [`CurrencySettler.settle`](#CurrencySettler-settle-Currency-contract-IPoolManager-address-uint256-bool-) function.
+
+### Functions
+- [settle(currency, poolManager, payer, amount, burn)](#CurrencySettler-settle-Currency-contract-IPoolManager-address-uint256-bool-)
+- [take(currency, poolManager, recipient, amount, claims)](#CurrencySettler-take-Currency-contract-IPoolManager-address-uint256-bool-)
+
+<a id="CurrencySettler-settle-Currency-contract-IPoolManager-address-uint256-bool-"></a>
+
+### `settle(Currency currency, contract IPoolManager poolManager, address payer, uint256 amount, bool burn)`
+*internal*
+
+<a id="CurrencySettler-take-Currency-contract-IPoolManager-address-uint256-bool-"></a>
+
+### `take(Currency currency, contract IPoolManager poolManager, address recipient, uint256 amount, bool claims)`
+*internal*
+
