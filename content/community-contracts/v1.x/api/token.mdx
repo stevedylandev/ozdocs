@@ -1,0 +1,801 @@
+---
+title: "Token"
+description: "Smart contract token utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/community-contracts/token
+</Callout>
+
+Set of extensions and utilities for tokens (e.g ERC-20, ERC-721, ERC-1155) and derivated ERCs (e.g. ERC-4626, ERC-1363).
+
+* [`OnTokenTransferAdapter`](#OnTokenTransferAdapter): Adapter of the ERC-1363 receiver interface to comply with Chainlink’s 667 interface.
+* [`ERC20Allowlist`](#ERC20Allowlist): Extension of ERC20 with transfers and approvals that require users to be registered into an allowlist.
+* [`ERC20Blocklist`](#ERC20Blocklist): Extension of ERC20 with transfers and approvals that can be disabled by adding users into a blocklist.
+* [`ERC20Collateral`](#ERC20Collateral): Oracle-agnostic extension of ERC20 that limits the total supply based on a collateral amount.
+* [`ERC20Custodian`](#ERC20Custodian): Extension of ERC20 that implements an access-control agnostic approach to define a custodian that can freeze user’s transfers and approvals.
+* [`ERC4626Fees`](#ERC4626Fees): ERC4626 vault with fees on entry (deposit/mint) or exit (withdraw/redeem).
+
+## General
+
+[`OnTokenTransferAdapter`](#OnTokenTransferAdapter)
+
+## ERC20
+
+[`ERC20Allowlist`](#ERC20Allowlist)
+
+[`ERC20Blocklist`](#ERC20Blocklist)
+
+[`ERC20Collateral`](#ERC20Collateral)
+
+[`ERC20Custodian`](#ERC20Custodian)
+
+[`ERC4626Fees`](#ERC4626Fees)
+
+<a id="ERC20Allowlist"></a>
+
+## `ERC20Allowlist` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/token/ERC20/extensions/ERC20Allowlist.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Allowlist.sol";
+```
+
+Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement an allowlist
+mechanism that can be managed by an authorized account with the
+[`ERC20Allowlist._disallowUser`](#ERC20Allowlist-_disallowUser-address-) and [`ERC20Allowlist._allowUser`](#ERC20Allowlist-_allowUser-address-) functions.
+
+The allowlist provides the guarantee to the contract owner
+(e.g. a DAO or a well-configured multisig) that any account won't be
+able to execute transfers or approvals to other entities to operate
+on its behalf if [`ERC20Allowlist._allowUser`](#ERC20Allowlist-_allowUser-address-) was not called with such account as an
+argument. Similarly, the account will be disallowed again if
+[`ERC20Allowlist._disallowUser`](#ERC20Allowlist-_disallowUser-address-) is called.
+
+### Functions
+- [allowed(account)](#ERC20Allowlist-allowed-address-)
+- [_allowUser(user)](#ERC20Allowlist-_allowUser-address-)
+- [_disallowUser(user)](#ERC20Allowlist-_disallowUser-address-)
+- [_update(from, to, value)](#ERC20Allowlist-_update-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Allowlist-_approve-address-address-uint256-bool-)
+
+#### ERC20
+- [name()](#ERC20-name--)
+- [symbol()](#ERC20-symbol--)
+- [decimals()](#ERC20-decimals--)
+- [totalSupply()](#ERC20-totalSupply--)
+- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, value)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+### Events
+- [UserAllowed(user)](#ERC20Allowlist-UserAllowed-address-)
+- [UserDisallowed(user)](#ERC20Allowlist-UserDisallowed-address-)
+
+#### ERC20
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+### Errors
+- [ERC20Disallowed(user)](#ERC20Allowlist-ERC20Disallowed-address-)
+
+#### ERC20
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+<a id="ERC20Allowlist-allowed-address-"></a>
+
+### `allowed(address account) → bool`
+*public*
+
+Returns the allowed status of an account.
+
+<a id="ERC20Allowlist-_allowUser-address-"></a>
+
+### `_allowUser(address user) → bool`
+*internal*
+
+Allows a user to receive and transfer tokens, including minting and burning.
+
+<a id="ERC20Allowlist-_disallowUser-address-"></a>
+
+### `_disallowUser(address user) → bool`
+*internal*
+
+Disallows a user from receiving and transferring tokens, including minting and burning.
+
+<a id="ERC20Allowlist-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+See ERC20-_update.
+
+<a id="ERC20Allowlist-_approve-address-address-uint256-bool-"></a>
+
+### `_approve(address owner, address spender, uint256 value, bool emitEvent)`
+*internal*
+
+See ERC20-_approve.
+
+<a id="ERC20Allowlist-UserAllowed-address-"></a>
+
+### `UserAllowed(address indexed user)`
+*event*
+
+Emitted when a `user` is allowed to transfer and approve.
+
+<a id="ERC20Allowlist-UserDisallowed-address-"></a>
+
+### `UserDisallowed(address indexed user)`
+*event*
+
+Emitted when a user is disallowed.
+
+<a id="ERC20Allowlist-ERC20Disallowed-address-"></a>
+
+### `ERC20Disallowed(address user)`
+*error*
+
+The operation failed because the user is not allowed.
+
+<a id="ERC20Blocklist"></a>
+
+## `ERC20Blocklist` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/token/ERC20/extensions/ERC20Blocklist.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Blocklist.sol";
+```
+
+Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement a blocklist
+mechanism that can be managed by an authorized account with the
+[`ERC20Blocklist._blockUser`](#ERC20Blocklist-_blockUser-address-) and [`ERC20Blocklist._unblockUser`](#ERC20Blocklist-_unblockUser-address-) functions.
+
+The blocklist provides the guarantee to the contract owner
+(e.g. a DAO or a well-configured multisig) that any account won't be
+able to execute transfers or approvals to other entities to operate
+on its behalf if [`ERC20Blocklist._blockUser`](#ERC20Blocklist-_blockUser-address-) was not called with such account as an
+argument. Similarly, the account will be unblocked again if
+[`ERC20Blocklist._unblockUser`](#ERC20Blocklist-_unblockUser-address-) is called.
+
+### Functions
+- [blocked(account)](#ERC20Blocklist-blocked-address-)
+- [_blockUser(user)](#ERC20Blocklist-_blockUser-address-)
+- [_unblockUser(user)](#ERC20Blocklist-_unblockUser-address-)
+- [_update(from, to, value)](#ERC20Blocklist-_update-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20Blocklist-_approve-address-address-uint256-bool-)
+
+#### ERC20
+- [name()](#ERC20-name--)
+- [symbol()](#ERC20-symbol--)
+- [decimals()](#ERC20-decimals--)
+- [totalSupply()](#ERC20-totalSupply--)
+- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, value)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+### Events
+- [UserBlocked(user)](#ERC20Blocklist-UserBlocked-address-)
+- [UserUnblocked(user)](#ERC20Blocklist-UserUnblocked-address-)
+
+#### ERC20
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+### Errors
+- [ERC20Blocked(user)](#ERC20Blocklist-ERC20Blocked-address-)
+
+#### ERC20
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+<a id="ERC20Blocklist-blocked-address-"></a>
+
+### `blocked(address account) → bool`
+*public*
+
+Returns the blocked status of an account.
+
+<a id="ERC20Blocklist-_blockUser-address-"></a>
+
+### `_blockUser(address user) → bool`
+*internal*
+
+Blocks a user from receiving and transferring tokens, including minting and burning.
+
+<a id="ERC20Blocklist-_unblockUser-address-"></a>
+
+### `_unblockUser(address user) → bool`
+*internal*
+
+Unblocks a user from receiving and transferring tokens, including minting and burning.
+
+<a id="ERC20Blocklist-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+See ERC20-_update.
+
+<a id="ERC20Blocklist-_approve-address-address-uint256-bool-"></a>
+
+### `_approve(address owner, address spender, uint256 value, bool emitEvent)`
+*internal*
+
+See ERC20-_approve.
+
+<a id="ERC20Blocklist-UserBlocked-address-"></a>
+
+### `UserBlocked(address indexed user)`
+*event*
+
+Emitted when a user is blocked.
+
+<a id="ERC20Blocklist-UserUnblocked-address-"></a>
+
+### `UserUnblocked(address indexed user)`
+*event*
+
+Emitted when a user is unblocked.
+
+<a id="ERC20Blocklist-ERC20Blocked-address-"></a>
+
+### `ERC20Blocked(address user)`
+*error*
+
+The operation failed because the user is blocked.
+
+<a id="ERC20Collateral"></a>
+
+## `ERC20Collateral` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/token/ERC20/extensions/ERC20Collateral.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Collateral.sol";
+```
+
+Extension of [`PaymasterERC20`](account#PaymasterERC20) that limits the supply of tokens based
+on a collateral amount and time-based expiration.
+
+The [`ERC20Collateral.collateral`](#ERC20Collateral-collateral--) function must be implemented to return the collateral
+data. This function can call external oracles or use any local storage.
+
+### Functions
+- [constructor(liveness_)](#ERC20Collateral-constructor-uint48-)
+- [liveness()](#ERC20Collateral-liveness--)
+- [clock()](#ERC20Collateral-clock--)
+- [CLOCK_MODE()](#ERC20Collateral-CLOCK_MODE--)
+- [collateral()](#ERC20Collateral-collateral--)
+- [_update(from, to, value)](#ERC20Collateral-_update-address-address-uint256-)
+
+#### IERC6372
+
+#### ERC20
+- [name()](#ERC20-name--)
+- [symbol()](#ERC20-symbol--)
+- [decimals()](#ERC20-decimals--)
+- [totalSupply()](#ERC20-totalSupply--)
+- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, value)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+### Events
+
+#### IERC6372
+
+#### ERC20
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+### Errors
+- [ERC20ExceededSupply(increasedSupply, cap)](#ERC20Collateral-ERC20ExceededSupply-uint256-uint256-)
+- [ERC20ExpiredCollateral(timestamp, expiration)](#ERC20Collateral-ERC20ExpiredCollateral-uint48-uint48-)
+
+#### IERC6372
+
+#### ERC20
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+<a id="ERC20Collateral-constructor-uint48-"></a>
+
+### `constructor(uint48 liveness_)`
+*internal*
+
+Sets the value of the `_liveness`. This value is immutable, it can only be
+set once during construction.
+
+<a id="ERC20Collateral-liveness--"></a>
+
+### `liveness() → uint48`
+*public*
+
+Returns the minimum liveness duration of collateral.
+
+<a id="ERC20Collateral-clock--"></a>
+
+### `clock() → uint48`
+*public*
+
+Clock used for flagging checkpoints. Can be overridden to implement timestamp based checkpoints (and voting).
+
+<a id="ERC20Collateral-CLOCK_MODE--"></a>
+
+### `CLOCK_MODE() → string`
+*public*
+
+Description of the clock
+
+<a id="ERC20Collateral-collateral--"></a>
+
+### `collateral() → uint256 amount, uint48 timestamp`
+*public*
+
+Returns the collateral data of the token.
+
+<a id="ERC20Collateral-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+See ERC20-_update.
+
+<a id="ERC20Collateral-ERC20ExceededSupply-uint256-uint256-"></a>
+
+### `ERC20ExceededSupply(uint256 increasedSupply, uint256 cap)`
+*error*
+
+Total supply cap has been exceeded.
+
+<a id="ERC20Collateral-ERC20ExpiredCollateral-uint48-uint48-"></a>
+
+### `ERC20ExpiredCollateral(uint48 timestamp, uint48 expiration)`
+*error*
+
+Collateral amount has expired.
+
+<a id="ERC20Custodian"></a>
+
+## `ERC20Custodian` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/token/ERC20/extensions/ERC20Custodian.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Custodian.sol";
+```
+
+Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement a custodian
+mechanism that can be managed by an authorized account with the
+[`ERC20Custodian.freeze`](#ERC20Custodian-freeze-address-uint256-) function.
+
+This mechanism allows a custodian (e.g. a DAO or a
+well-configured multisig) to freeze and unfreeze the balance
+of a user.
+
+The frozen balance is not available for transfers or approvals
+to other entities to operate on its behalf if. The frozen balance
+can be reduced by calling [`ERC20Custodian.freeze`](#ERC20Custodian-freeze-address-uint256-) again with a lower amount.
+
+### Modifiers
+- [onlyCustodian()](#ERC20Custodian-onlyCustodian--)
+
+### Functions
+- [frozen(user)](#ERC20Custodian-frozen-address-)
+- [freeze(user, amount)](#ERC20Custodian-freeze-address-uint256-)
+- [availableBalance(account)](#ERC20Custodian-availableBalance-address-)
+- [_isCustodian(user)](#ERC20Custodian-_isCustodian-address-)
+- [_update(from, to, value)](#ERC20Custodian-_update-address-address-uint256-)
+
+#### ERC20
+- [name()](#ERC20-name--)
+- [symbol()](#ERC20-symbol--)
+- [decimals()](#ERC20-decimals--)
+- [totalSupply()](#ERC20-totalSupply--)
+- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, value)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+### Events
+- [TokensFrozen(user, amount)](#ERC20Custodian-TokensFrozen-address-uint256-)
+- [TokensUnfrozen(user, amount)](#ERC20Custodian-TokensUnfrozen-address-uint256-)
+
+#### ERC20
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+### Errors
+- [ERC20InsufficientUnfrozenBalance(user)](#ERC20Custodian-ERC20InsufficientUnfrozenBalance-address-)
+- [ERC20InsufficientFrozenBalance(user)](#ERC20Custodian-ERC20InsufficientFrozenBalance-address-)
+- [ERC20NotCustodian()](#ERC20Custodian-ERC20NotCustodian--)
+
+#### ERC20
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+<a id="ERC20Custodian-onlyCustodian--"></a>
+
+### `onlyCustodian()`
+
+Modifier to restrict access to custodian accounts only.
+
+<a id="ERC20Custodian-frozen-address-"></a>
+
+### `frozen(address user) → uint256`
+*public*
+
+Returns the amount of tokens frozen for a user.
+
+<a id="ERC20Custodian-freeze-address-uint256-"></a>
+
+### `freeze(address user, uint256 amount)`
+*external*
+
+Adjusts the amount of tokens frozen for a user.
+
+<a id="ERC20Custodian-availableBalance-address-"></a>
+
+### `availableBalance(address account) → uint256 available`
+*public*
+
+Returns the available (unfrozen) balance of an account.
+
+<a id="ERC20Custodian-_isCustodian-address-"></a>
+
+### `_isCustodian(address user) → bool`
+*internal*
+
+Checks if the user is a custodian.
+
+<a id="ERC20Custodian-_update-address-address-uint256-"></a>
+
+### `_update(address from, address to, uint256 value)`
+*internal*
+
+Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`
+(or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
+this function.
+
+Emits a [`ERC7786OpenBridge.UnsupportedNativeTransfer`](crosschain#ERC7786OpenBridge-UnsupportedNativeTransfer--) event.
+
+<a id="ERC20Custodian-TokensFrozen-address-uint256-"></a>
+
+### `TokensFrozen(address indexed user, uint256 amount)`
+*event*
+
+Emitted when tokens are frozen for a user.
+
+<a id="ERC20Custodian-TokensUnfrozen-address-uint256-"></a>
+
+### `TokensUnfrozen(address indexed user, uint256 amount)`
+*event*
+
+Emitted when tokens are unfrozen for a user.
+
+<a id="ERC20Custodian-ERC20InsufficientUnfrozenBalance-address-"></a>
+
+### `ERC20InsufficientUnfrozenBalance(address user)`
+*error*
+
+The operation failed because the user has insufficient unfrozen balance.
+
+<a id="ERC20Custodian-ERC20InsufficientFrozenBalance-address-"></a>
+
+### `ERC20InsufficientFrozenBalance(address user)`
+*error*
+
+The operation failed because the user has insufficient frozen balance.
+
+<a id="ERC20Custodian-ERC20NotCustodian--"></a>
+
+### `ERC20NotCustodian()`
+*error*
+
+Error thrown when a non-custodian account attempts to perform a custodian-only operation.
+
+<a id="ERC4626Fees"></a>
+
+## `ERC4626Fees` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/token/ERC20/extensions/ERC4626Fees.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626Fees.sol";
+```
+
+ERC-4626 vault with entry/exit fees expressed in [basis point (bp)](https://en.wikipedia.org/wiki/Basis_point).
+
+### Functions
+- [previewDeposit(assets)](#ERC4626Fees-previewDeposit-uint256-)
+- [previewMint(shares)](#ERC4626Fees-previewMint-uint256-)
+- [previewWithdraw(assets)](#ERC4626Fees-previewWithdraw-uint256-)
+- [previewRedeem(shares)](#ERC4626Fees-previewRedeem-uint256-)
+- [_deposit(caller, receiver, assets, shares)](#ERC4626Fees-_deposit-address-address-uint256-uint256-)
+- [_withdraw(caller, receiver, owner, assets, shares)](#ERC4626Fees-_withdraw-address-address-address-uint256-uint256-)
+- [_entryFeeBasisPoints()](#ERC4626Fees-_entryFeeBasisPoints--)
+- [_exitFeeBasisPoints()](#ERC4626Fees-_exitFeeBasisPoints--)
+- [_entryFeeRecipient()](#ERC4626Fees-_entryFeeRecipient--)
+- [_exitFeeRecipient()](#ERC4626Fees-_exitFeeRecipient--)
+
+#### ERC4626
+- [decimals()](#ERC4626-decimals--)
+- [asset()](#ERC4626-asset--)
+- [totalAssets()](#ERC4626-totalAssets--)
+- [convertToShares(assets)](#ERC4626-convertToShares-uint256-)
+- [convertToAssets(shares)](#ERC4626-convertToAssets-uint256-)
+- [maxDeposit()](#ERC4626-maxDeposit-address-)
+- [maxMint()](#ERC4626-maxMint-address-)
+- [maxWithdraw(owner)](#ERC4626-maxWithdraw-address-)
+- [maxRedeem(owner)](#ERC4626-maxRedeem-address-)
+- [deposit(assets, receiver)](#ERC4626-deposit-uint256-address-)
+- [mint(shares, receiver)](#ERC4626-mint-uint256-address-)
+- [withdraw(assets, receiver, owner)](#ERC4626-withdraw-uint256-address-address-)
+- [redeem(shares, receiver, owner)](#ERC4626-redeem-uint256-address-address-)
+- [_convertToShares(assets, rounding)](#ERC4626-_convertToShares-uint256-enum-Math-Rounding-)
+- [_convertToAssets(shares, rounding)](#ERC4626-_convertToAssets-uint256-enum-Math-Rounding-)
+- [_decimalsOffset()](#ERC4626-_decimalsOffset--)
+
+#### IERC4626
+
+#### ERC20
+- [name()](#ERC20-name--)
+- [symbol()](#ERC20-symbol--)
+- [totalSupply()](#ERC20-totalSupply--)
+- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, value)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
+- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
+- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
+- [_mint(account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
+- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
+- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+
+### Events
+
+#### ERC4626
+
+#### IERC4626
+- [Deposit(sender, owner, assets, shares)](#IERC4626-Deposit-address-address-uint256-uint256-)
+- [Withdraw(sender, receiver, owner, assets, shares)](#IERC4626-Withdraw-address-address-address-uint256-uint256-)
+
+#### ERC20
+
+#### IERC20Errors
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+### Errors
+
+#### ERC4626
+- [ERC4626ExceededMaxDeposit(receiver, assets, max)](#ERC4626-ERC4626ExceededMaxDeposit-address-uint256-uint256-)
+- [ERC4626ExceededMaxMint(receiver, shares, max)](#ERC4626-ERC4626ExceededMaxMint-address-uint256-uint256-)
+- [ERC4626ExceededMaxWithdraw(owner, assets, max)](#ERC4626-ERC4626ExceededMaxWithdraw-address-uint256-uint256-)
+- [ERC4626ExceededMaxRedeem(owner, shares, max)](#ERC4626-ERC4626ExceededMaxRedeem-address-uint256-uint256-)
+
+#### IERC4626
+
+#### ERC20
+
+#### IERC20Errors
+- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
+- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
+- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
+- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
+- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
+- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+<a id="ERC4626Fees-previewDeposit-uint256-"></a>
+
+### `previewDeposit(uint256 assets) → uint256`
+*public*
+
+Preview taking an entry fee on deposit. See IERC4626-previewDeposit.
+
+<a id="ERC4626Fees-previewMint-uint256-"></a>
+
+### `previewMint(uint256 shares) → uint256`
+*public*
+
+Preview adding an entry fee on mint. See IERC4626-previewMint.
+
+<a id="ERC4626Fees-previewWithdraw-uint256-"></a>
+
+### `previewWithdraw(uint256 assets) → uint256`
+*public*
+
+Preview adding an exit fee on withdraw. See IERC4626-previewWithdraw.
+
+<a id="ERC4626Fees-previewRedeem-uint256-"></a>
+
+### `previewRedeem(uint256 shares) → uint256`
+*public*
+
+Preview taking an exit fee on redeem. See IERC4626-previewRedeem.
+
+<a id="ERC4626Fees-_deposit-address-address-uint256-uint256-"></a>
+
+### `_deposit(address caller, address receiver, uint256 assets, uint256 shares)`
+*internal*
+
+Send entry fee to [`ERC4626Fees._entryFeeRecipient`](#ERC4626Fees-_entryFeeRecipient--). See IERC4626-_deposit.
+
+<a id="ERC4626Fees-_withdraw-address-address-address-uint256-uint256-"></a>
+
+### `_withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)`
+*internal*
+
+Send exit fee to [`ERC4626Fees._exitFeeRecipient`](#ERC4626Fees-_exitFeeRecipient--). See IERC4626-_deposit.
+
+<a id="ERC4626Fees-_entryFeeBasisPoints--"></a>
+
+### `_entryFeeBasisPoints() → uint256`
+*internal*
+
+<a id="ERC4626Fees-_exitFeeBasisPoints--"></a>
+
+### `_exitFeeBasisPoints() → uint256`
+*internal*
+
+<a id="ERC4626Fees-_entryFeeRecipient--"></a>
+
+### `_entryFeeRecipient() → address`
+*internal*
+
+<a id="ERC4626Fees-_exitFeeRecipient--"></a>
+
+### `_exitFeeRecipient() → address`
+*internal*
+
+<a id="OnTokenTransferAdapter"></a>
+
+## `OnTokenTransferAdapter` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/token/OnTokenTransferAdapter.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/OnTokenTransferAdapter.sol";
+```
+
+This contract exposes the 667 `onTokenTransfer` hook on top of IERC1363Receiver-onTransferReceived.
+
+Inheriting from this adapter makes your `ERC1363Receiver` contract automatically compatible with tokens, such as
+Chainlink's Link, that implement the 667 interface for transferAndCall.
+
+### Functions
+- [onTokenTransfer(from, amount, data)](#OnTokenTransferAdapter-onTokenTransfer-address-uint256-bytes-)
+
+#### IERC1363Receiver
+- [onTransferReceived(operator, from, value, data)](#IERC1363Receiver-onTransferReceived-address-address-uint256-bytes-)
+
+<a id="OnTokenTransferAdapter-onTokenTransfer-address-uint256-bytes-"></a>
+
+### `onTokenTransfer(address from, uint256 amount, bytes data) → bool`
+*public*
+

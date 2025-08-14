@@ -1,0 +1,214 @@
+---
+title: "Access"
+description: "Smart contract access utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/community-contracts/api/access
+</Callout>
+
+This directory contains utility contracts to restrict access control in smart contracts. These include:
+
+* [`AccessManagerLight`](#AccessManagerLight): A simpler version of an AccessManager that uses `bytes8` roles to allow function calls identified by their 4-bytes selector.
+
+## AccessManager
+
+[`AccessManagerLight`](#AccessManagerLight)
+
+<a id="AccessManagerLight"></a>
+
+## `AccessManagerLight` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/access/manager/AccessManagerLight.sol)
+
+```solidity
+import "@openzeppelin/contracts/access/manager/AccessManagerLight.sol";
+```
+
+Light version of an AccessManager contract that defines `bytes8` roles
+that are stored as requirements (see [`AccessManagerLight.getRequirements`](#AccessManagerLight-getRequirements-address-bytes4-)) for each function.
+
+Each requirement is a bitmask of roles that are allowed to call a function
+identified by its `bytes4` selector. Users have their permissioned stored
+as a bitmask of roles they belong to.
+
+The admin role is a special role that has access to all functions and can
+manage the roles of other users.
+
+### Modifiers
+- [onlyRole(requirement)](#AccessManagerLight-onlyRole-Masks-Mask-)
+
+### Functions
+- [constructor(admin)](#AccessManagerLight-constructor-address-)
+- [canCall(caller, target, selector)](#AccessManagerLight-canCall-address-address-bytes4-)
+- [getGroups(user)](#AccessManagerLight-getGroups-address-)
+- [getGroupAdmins(group)](#AccessManagerLight-getGroupAdmins-uint8-)
+- [getRequirements(target, selector)](#AccessManagerLight-getRequirements-address-bytes4-)
+- [addGroup(user, group)](#AccessManagerLight-addGroup-address-uint8-)
+- [remGroup(user, group)](#AccessManagerLight-remGroup-address-uint8-)
+- [_addGroup(user, group)](#AccessManagerLight-_addGroup-address-uint8-)
+- [_remGroup(user, group)](#AccessManagerLight-_remGroup-address-uint8-)
+- [setGroupAdmins(group, admins)](#AccessManagerLight-setGroupAdmins-uint8-uint8---)
+- [_setGroupAdmins(group, admins)](#AccessManagerLight-_setGroupAdmins-uint8-Masks-Mask-)
+- [setRequirements(target, selectors, groups)](#AccessManagerLight-setRequirements-address-bytes4---uint8---)
+- [_setRequirements(target, selector, groups)](#AccessManagerLight-_setRequirements-address-bytes4-Masks-Mask-)
+- [ADMIN_ROLE()](#AccessManagerLight-ADMIN_ROLE-uint8)
+- [PUBLIC_ROLE()](#AccessManagerLight-PUBLIC_ROLE-uint8)
+- [ADMIN_MASK()](#AccessManagerLight-ADMIN_MASK-Masks-Mask)
+- [PUBLIC_MASK()](#AccessManagerLight-PUBLIC_MASK-Masks-Mask)
+
+#### IAuthority
+
+### Events
+- [GroupAdded(user, group)](#AccessManagerLight-GroupAdded-address-uint8-)
+- [GroupRemoved(user, group)](#AccessManagerLight-GroupRemoved-address-uint8-)
+- [GroupAdmins(group, admins)](#AccessManagerLight-GroupAdmins-uint8-Masks-Mask-)
+- [RequirementsSet(target, selector, groups)](#AccessManagerLight-RequirementsSet-address-bytes4-Masks-Mask-)
+
+#### IAuthority
+
+### Errors
+- [MissingPermissions(user, permissions, requirement)](#AccessManagerLight-MissingPermissions-address-Masks-Mask-Masks-Mask-)
+
+#### IAuthority
+
+<a id="AccessManagerLight-onlyRole-Masks-Mask-"></a>
+
+### `onlyRole(Masks.Mask requirement)`
+
+Throws if the specified requirement is not met by the caller's permissions (see [`AccessManagerLight.getGroups`](#AccessManagerLight-getGroups-address-)).
+
+<a id="AccessManagerLight-constructor-address-"></a>
+
+### `constructor(address admin)`
+*public*
+
+Initializes the contract with the `admin` as the first member of the admin group.
+
+<a id="AccessManagerLight-canCall-address-address-bytes4-"></a>
+
+### `canCall(address caller, address target, bytes4 selector) → bool`
+*public*
+
+Returns whether the `caller` has the required permissions to call the `target` with the `selector`.
+
+<a id="AccessManagerLight-getGroups-address-"></a>
+
+### `getGroups(address user) → Masks.Mask`
+*public*
+
+Returns the groups that the `user` belongs to.
+
+<a id="AccessManagerLight-getGroupAdmins-uint8-"></a>
+
+### `getGroupAdmins(uint8 group) → Masks.Mask`
+*public*
+
+Returns the admins of the `group`.
+
+<a id="AccessManagerLight-getRequirements-address-bytes4-"></a>
+
+### `getRequirements(address target, bytes4 selector) → Masks.Mask`
+*public*
+
+Returns the requirements for the `target` and `selector`.
+
+<a id="AccessManagerLight-addGroup-address-uint8-"></a>
+
+### `addGroup(address user, uint8 group)`
+*public*
+
+Adds the `user` to the `group`. Emits [`AccessManagerLight.GroupAdded`](#AccessManagerLight-GroupAdded-address-uint8-) event.
+
+<a id="AccessManagerLight-remGroup-address-uint8-"></a>
+
+### `remGroup(address user, uint8 group)`
+*public*
+
+Removes the `user` from the `group`. Emits [`AccessManagerLight.GroupRemoved`](#AccessManagerLight-GroupRemoved-address-uint8-) event.
+
+<a id="AccessManagerLight-_addGroup-address-uint8-"></a>
+
+### `_addGroup(address user, uint8 group)`
+*internal*
+
+Internal version of [`AccessManagerLight.addGroup`](#AccessManagerLight-addGroup-address-uint8-) without access control.
+
+<a id="AccessManagerLight-_remGroup-address-uint8-"></a>
+
+### `_remGroup(address user, uint8 group)`
+*internal*
+
+Internal version of [`AccessManagerLight.remGroup`](#AccessManagerLight-remGroup-address-uint8-) without access control.
+
+<a id="AccessManagerLight-setGroupAdmins-uint8-uint8---"></a>
+
+### `setGroupAdmins(uint8 group, uint8[] admins)`
+*public*
+
+Sets the `admins` of the `group`. Emits [`AccessManagerLight.GroupAdmins`](#AccessManagerLight-GroupAdmins-uint8-Masks-Mask-) event.
+
+<a id="AccessManagerLight-_setGroupAdmins-uint8-Masks-Mask-"></a>
+
+### `_setGroupAdmins(uint8 group, Masks.Mask admins)`
+*internal*
+
+Internal version of [`AccessManagerLight._setGroupAdmins`](#AccessManagerLight-_setGroupAdmins-uint8-Masks-Mask-) without access control.
+
+<a id="AccessManagerLight-setRequirements-address-bytes4---uint8---"></a>
+
+### `setRequirements(address target, bytes4[] selectors, uint8[] groups)`
+*public*
+
+Sets the `groups` requirements for the `selectors` of the `target`.
+
+<a id="AccessManagerLight-_setRequirements-address-bytes4-Masks-Mask-"></a>
+
+### `_setRequirements(address target, bytes4 selector, Masks.Mask groups)`
+*internal*
+
+Internal version of [`AccessManagerLight._setRequirements`](#AccessManagerLight-_setRequirements-address-bytes4-Masks-Mask-) without access control.
+
+<a id="AccessManagerLight-ADMIN_ROLE-uint8"></a>
+
+### `ADMIN_ROLE() → uint8`
+*public*
+
+<a id="AccessManagerLight-PUBLIC_ROLE-uint8"></a>
+
+### `PUBLIC_ROLE() → uint8`
+*public*
+
+<a id="AccessManagerLight-ADMIN_MASK-Masks-Mask"></a>
+
+### `ADMIN_MASK() → Masks.Mask`
+*public*
+
+<a id="AccessManagerLight-PUBLIC_MASK-Masks-Mask"></a>
+
+### `PUBLIC_MASK() → Masks.Mask`
+*public*
+
+<a id="AccessManagerLight-GroupAdded-address-uint8-"></a>
+
+### `GroupAdded(address indexed user, uint8 indexed group)`
+*event*
+
+<a id="AccessManagerLight-GroupRemoved-address-uint8-"></a>
+
+### `GroupRemoved(address indexed user, uint8 indexed group)`
+*event*
+
+<a id="AccessManagerLight-GroupAdmins-uint8-Masks-Mask-"></a>
+
+### `GroupAdmins(uint8 indexed group, Masks.Mask admins)`
+*event*
+
+<a id="AccessManagerLight-RequirementsSet-address-bytes4-Masks-Mask-"></a>
+
+### `RequirementsSet(address indexed target, bytes4 indexed selector, Masks.Mask groups)`
+*event*
+
+<a id="AccessManagerLight-MissingPermissions-address-Masks-Mask-Masks-Mask-"></a>
+
+### `MissingPermissions(address user, Masks.Mask permissions, Masks.Mask requirement)`
+*error*
+

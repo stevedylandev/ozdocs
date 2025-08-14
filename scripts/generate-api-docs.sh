@@ -3,10 +3,10 @@
 set -euo pipefail
 
 # Configuration
-CONTRACTS_REPO="${CONTRACTS_REPO:-https://github.com/stevedylandev/openzeppelin-contracts-upgradeable.git}"
-CONTRACTS_BRANCH="${CONTRACTS_BRANCH:-release-v5.4}"
+CONTRACTS_REPO="${CONTRACTS_REPO:-https://github.com/stevedylandev/openzeppelin-community-contracts.git}"
+CONTRACTS_BRANCH="${CONTRACTS_BRANCH:-master}"
 TEMP_DIR="temp-contracts"
-API_OUTPUT_DIR="content/contracts-upgradeable/v5.x/api"
+API_OUTPUT_DIR="content/community-contracts/v1.x/api"
 EXAMPLES_OUTPUT_DIR="examples"
 
 echo "🔄 Generating OpenZeppelin Contracts API documentation..."
@@ -22,13 +22,13 @@ git clone --depth 1 --branch "$CONTRACTS_BRANCH" "$CONTRACTS_REPO" "$TEMP_DIR"
 # Navigate to contracts directory and install dependencies
 echo "📚 Installing dependencies..."
 cd "$TEMP_DIR"
-bun i --silent
+npm i --silent
+rm -rf lib/@openzeppelin-contracts lib/@openzeppelin-contracts-upgradeable
+forge install
 
 # Generate markdown documentation using default templates
 echo "🏗️  Generating clean markdown documentation..."
-rm -rf lib/openzeppelin-contracts
-forge install OpenZeppelin/openzeppelin-contracts
-bun run prepare-docs
+npm run prepare-docs
 
 # Copy generated markdown files to our docs directory
 echo "📋 Copying generated documentation..."

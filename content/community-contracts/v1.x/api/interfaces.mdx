@@ -1,0 +1,299 @@
+---
+title: "Interfaces"
+description: "Smart contract interfaces utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/contracts/api/interfaces
+</Callout>
+
+## List of standardized interfaces
+
+These interfaces are available as `.sol` files. These are useful to interact with third party contracts that implement them.
+
+* [`IERC7786GatewaySource`](#IERC7786GatewaySource), [`IERC7786Receiver`](#IERC7786Receiver)
+* [`IERC7802`](#IERC7802)
+* [`IERC7821`](#IERC7821)
+* IERC7913SignatureVerifier
+* [`IERC7943`](#IERC7943)
+
+## Detailed ABI
+
+[`IERC7786GatewaySource`](#IERC7786GatewaySource)
+
+[`IERC7786Receiver`](#IERC7786Receiver)
+
+[`IERC7802`](#IERC7802)
+
+[`IERC7821`](#IERC7821)
+
+IERC7913SignatureVerifier
+
+[`IERC7943`](#IERC7943)
+
+<a id="IERC7786GatewaySource"></a>
+
+## `IERC7786GatewaySource` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/interfaces/IERC7786.sol)
+
+```solidity
+import "@openzeppelin/contracts/interfaces/IERC7786.sol";
+```
+
+Interface for ERC-7786 source gateways.
+
+See ERC-7786 for more details
+
+### Functions
+- [supportsAttribute(selector)](#IERC7786GatewaySource-supportsAttribute-bytes4-)
+- [sendMessage(recipient, payload, attributes)](#IERC7786GatewaySource-sendMessage-bytes-bytes-bytes---)
+
+### Events
+- [MessageSent(sendId, sender, receiver, payload, value, attributes)](#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---)
+
+### Errors
+- [UnsupportedAttribute(selector)](#IERC7786GatewaySource-UnsupportedAttribute-bytes4-)
+
+<a id="IERC7786GatewaySource-supportsAttribute-bytes4-"></a>
+
+### `supportsAttribute(bytes4 selector) → bool`
+*external*
+
+Getter to check whether an attribute is supported or not.
+
+<a id="IERC7786GatewaySource-sendMessage-bytes-bytes-bytes---"></a>
+
+### `sendMessage(bytes recipient, bytes payload, bytes[] attributes) → bytes32 sendId`
+*external*
+
+Endpoint for creating a new message. If the message requires further (gateway specific) processing before
+it can be sent to the destination chain, then a non-zero `outboxId` must be returned. Otherwise, the
+message MUST be sent and this function must return 0.
+
+* MUST emit a [`IERC7786GatewaySource.MessageSent`](#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---) event.
+
+If any of the `attributes` is not supported, this function SHOULD revert with an [`IERC7786GatewaySource.UnsupportedAttribute`](#IERC7786GatewaySource-UnsupportedAttribute-bytes4-) error.
+Other errors SHOULD revert with errors not specified in ERC-7786.
+
+<a id="IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---"></a>
+
+### `MessageSent(bytes32 indexed sendId, bytes sender, bytes receiver, bytes payload, uint256 value, bytes[] attributes)`
+*event*
+
+Event emitted when a message is created. If `outboxId` is zero, no further processing is necessary. If
+`outboxId` is not zero, then further (gateway specific, and non-standardized) action is required.
+
+<a id="IERC7786GatewaySource-UnsupportedAttribute-bytes4-"></a>
+
+### `UnsupportedAttribute(bytes4 selector)`
+*error*
+
+This error is thrown when a message creation fails because of an unsupported attribute being specified.
+
+<a id="IERC7786Receiver"></a>
+
+## `IERC7786Receiver` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/interfaces/IERC7786.sol)
+
+```solidity
+import "@openzeppelin/contracts/interfaces/IERC7786.sol";
+```
+
+Interface for the ERC-7786 client contract (receiver).
+
+See ERC-7786 for more details
+
+### Functions
+- [receiveMessage(receiveId, sender, payload)](#IERC7786Receiver-receiveMessage-bytes32-bytes-bytes-)
+
+<a id="IERC7786Receiver-receiveMessage-bytes32-bytes-bytes-"></a>
+
+### `receiveMessage(bytes32 receiveId, bytes sender, bytes payload) → bytes4`
+*external*
+
+Endpoint for receiving cross-chain message.
+
+This function may be called directly by the gateway.
+
+<a id="IERC7802"></a>
+
+## `IERC7802` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/interfaces/IERC7802.sol)
+
+```solidity
+import "@openzeppelin/contracts/interfaces/IERC7802.sol";
+```
+
+### Functions
+- [crosschainMint(_to, _amount)](#IERC7802-crosschainMint-address-uint256-)
+- [crosschainBurn(_from, _amount)](#IERC7802-crosschainBurn-address-uint256-)
+
+#### IERC165
+- [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
+
+### Events
+- [CrosschainMint(to, amount, sender)](#IERC7802-CrosschainMint-address-uint256-address-)
+- [CrosschainBurn(from, amount, sender)](#IERC7802-CrosschainBurn-address-uint256-address-)
+
+#### IERC165
+
+<a id="IERC7802-crosschainMint-address-uint256-"></a>
+
+### `crosschainMint(address _to, uint256 _amount)`
+*external*
+
+<a id="IERC7802-crosschainBurn-address-uint256-"></a>
+
+### `crosschainBurn(address _from, uint256 _amount)`
+*external*
+
+<a id="IERC7802-CrosschainMint-address-uint256-address-"></a>
+
+### `CrosschainMint(address indexed to, uint256 amount, address indexed sender)`
+*event*
+
+<a id="IERC7802-CrosschainBurn-address-uint256-address-"></a>
+
+### `CrosschainBurn(address indexed from, uint256 amount, address indexed sender)`
+*event*
+
+<a id="IERC7821"></a>
+
+## `IERC7821` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/interfaces/IERC7821.sol)
+
+```solidity
+import "@openzeppelin/contracts/interfaces/IERC7821.sol";
+```
+
+Interface for minimal batch executor.
+
+### Functions
+- [execute(mode, executionData)](#IERC7821-execute-bytes32-bytes-)
+- [supportsExecutionMode(mode)](#IERC7821-supportsExecutionMode-bytes32-)
+
+<a id="IERC7821-execute-bytes32-bytes-"></a>
+
+### `execute(bytes32 mode, bytes executionData)`
+*external*
+
+Executes the calls in `executionData`.
+Reverts and bubbles up error if any call fails.
+
+`executionData` encoding:
+
+* If `opData` is empty, `executionData` is simply `abi.encode(calls)`.
+* Else, `executionData` is `abi.encode(calls, opData)`.
+  See: https://eips.ethereum.org/EIPS/eip-7579
+
+Supported modes:
+
+* `bytes32(0x01000000000000000000...)`: does not support optional `opData`.
+* `bytes32(0x01000000000078210001...)`: supports optional `opData`.
+
+Authorization checks:
+
+* If `opData` is empty, the implementation SHOULD require that
+  `msg.sender == address(this)`.
+* If `opData` is not empty, the implementation SHOULD use the signature
+  encoded in `opData` to determine if the caller can perform the execution.
+
+`opData` may be used to store additional data for authentication,
+paymaster data, gas limits, etc.
+
+<a id="IERC7821-supportsExecutionMode-bytes32-"></a>
+
+### `supportsExecutionMode(bytes32 mode) → bool`
+*external*
+
+This function is provided for frontends to detect support.
+Only returns true for:
+
+* `bytes32(0x01000000000000000000...)`: does not support optional `opData`.
+* `bytes32(0x01000000000078210001...)`: supports optional `opData`.
+
+<a id="IERC7943"></a>
+
+## `IERC7943` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/interfaces/IERC7943.sol)
+
+```solidity
+import "@openzeppelin/contracts/interfaces/IERC7943.sol";
+```
+
+### Functions
+- [forceTransfer(from, to, tokenId, amount)](#IERC7943-forceTransfer-address-address-uint256-uint256-)
+- [setFrozen(user, tokenId, amount)](#IERC7943-setFrozen-address-uint256-uint256-)
+- [getFrozen(user, tokenId)](#IERC7943-getFrozen-address-uint256-)
+- [isTransferAllowed(from, to, tokenId, amount)](#IERC7943-isTransferAllowed-address-address-uint256-uint256-)
+- [isUserAllowed(user)](#IERC7943-isUserAllowed-address-)
+
+#### IERC165
+- [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
+
+### Events
+- [ForcedTransfer(from, to, tokenId, amount)](#IERC7943-ForcedTransfer-address-address-uint256-uint256-)
+- [Frozen(user, tokenId, amount)](#IERC7943-Frozen-address-uint256-uint256-)
+
+#### IERC165
+
+### Errors
+- [ERC7943NotAllowedUser(account)](#IERC7943-ERC7943NotAllowedUser-address-)
+- [ERC7943NotAllowedTransfer(from, to, tokenId, amount)](#IERC7943-ERC7943NotAllowedTransfer-address-address-uint256-uint256-)
+- [ERC7943InsufficientUnfrozenBalance(user, tokenId, amount, unfrozen)](#IERC7943-ERC7943InsufficientUnfrozenBalance-address-uint256-uint256-uint256-)
+
+#### IERC165
+
+<a id="IERC7943-forceTransfer-address-address-uint256-uint256-"></a>
+
+### `forceTransfer(address from, address to, uint256 tokenId, uint256 amount)`
+*external*
+
+Requires specific authorization. Used for regulatory compliance or recovery scenarios.
+
+<a id="IERC7943-setFrozen-address-uint256-uint256-"></a>
+
+### `setFrozen(address user, uint256 tokenId, uint256 amount)`
+*external*
+
+Requires specific authorization. Frozen tokens cannot be transferred by the user.
+
+<a id="IERC7943-getFrozen-address-uint256-"></a>
+
+### `getFrozen(address user, uint256 tokenId) → uint256 amount`
+*external*
+
+<a id="IERC7943-isTransferAllowed-address-address-uint256-uint256-"></a>
+
+### `isTransferAllowed(address from, address to, uint256 tokenId, uint256 amount) → bool allowed`
+*external*
+
+This may involve checks like allowlists, blocklists, transfer limits and other policy-defined restrictions.
+
+<a id="IERC7943-isUserAllowed-address-"></a>
+
+### `isUserAllowed(address user) → bool allowed`
+*external*
+
+This is often used for allowlist/KYC/KYB/AML checks.
+
+<a id="IERC7943-ForcedTransfer-address-address-uint256-uint256-"></a>
+
+### `ForcedTransfer(address indexed from, address indexed to, uint256 tokenId, uint256 amount)`
+*event*
+
+<a id="IERC7943-Frozen-address-uint256-uint256-"></a>
+
+### `Frozen(address indexed user, uint256 indexed tokenId, uint256 amount)`
+*event*
+
+<a id="IERC7943-ERC7943NotAllowedUser-address-"></a>
+
+### `ERC7943NotAllowedUser(address account)`
+*error*
+
+<a id="IERC7943-ERC7943NotAllowedTransfer-address-address-uint256-uint256-"></a>
+
+### `ERC7943NotAllowedTransfer(address from, address to, uint256 tokenId, uint256 amount)`
+*error*
+
+<a id="IERC7943-ERC7943InsufficientUnfrozenBalance-address-uint256-uint256-uint256-"></a>
+
+### `ERC7943InsufficientUnfrozenBalance(address user, uint256 tokenId, uint256 amount, uint256 unfrozen)`
+*error*
+

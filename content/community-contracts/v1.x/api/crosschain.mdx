@@ -1,0 +1,846 @@
+---
+title: "Crosschain"
+description: "Smart contract crosschain utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/community-contracts/api/crosschain
+</Callout>
+
+Gateways are contracts that enable cross-chain communication. These can either be a message source or a destination according to ERC-7786.
+
+* [`ERC7786Receiver`](#ERC7786Receiver): ERC-7786 cross-chain message receiver.
+* [`ERC7786OpenBridge`](#ERC7786OpenBridge): ERC-7786 "N out of M" gateway. Sends a message through M gateways and executes on the destination if N received it.
+
+Developers can access interoperability protocols through gateway adapters. The library includes the following gateway adapters:
+
+* [`AxelarGatewayBase`](#AxelarGatewayBase): Core gateway logic for the [Axelar](https://www.axelar.network/) adapter.
+* [`AxelarGatewaySource`](#AxelarGatewaySource): ERC-7786 source gateway adapter (sending side) for Axelar.
+* [`AxelarGatewayDestination`](#AxelarGatewayDestination): ERC-7786 destination gateway adapter (receiving side) for Axelar.
+* [`AxelarGatewayDuplex`](#AxelarGatewayDuplex): ERC-7786 gateway adapter that operates in both directions (i.e. send and receive messages) using the Axelar network.
+
+## Gateways
+
+[`ERC7786OpenBridge`](#ERC7786OpenBridge)
+
+## Clients
+
+[`ERC7786Receiver`](#ERC7786Receiver)
+
+## Adapters
+
+### Axelar
+
+[`AxelarGatewayBase`](#AxelarGatewayBase)
+
+[`AxelarGatewaySource`](#AxelarGatewaySource)
+
+[`AxelarGatewayDestination`](#AxelarGatewayDestination)
+
+[`AxelarGatewayDuplex`](#AxelarGatewayDuplex)
+
+<a id="ERC7786OpenBridge"></a>
+
+## `ERC7786OpenBridge` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/crosschain/ERC7786OpenBridge.sol)
+
+```solidity
+import "@openzeppelin/contracts/crosschain/ERC7786OpenBridge.sol";
+```
+
+N of M gateway: Sends your message through M independent gateways. It will be delivered to the receiver by an
+equivalent bridge on the destination chain if N of the M gateways agree.
+
+### Functions
+- [constructor(owner_, gateways_, threshold_)](#ERC7786OpenBridge-constructor-address-address---uint8-)
+- [supportsAttribute()](#ERC7786OpenBridge-supportsAttribute-bytes4-)
+- [sendMessage(recipient, payload, attributes)](#ERC7786OpenBridge-sendMessage-bytes-bytes-bytes---)
+- [receiveMessage(, sender, payload)](#ERC7786OpenBridge-receiveMessage-bytes32-bytes-bytes-)
+- [getGateways()](#ERC7786OpenBridge-getGateways--)
+- [getThreshold()](#ERC7786OpenBridge-getThreshold--)
+- [getRemoteBridge(chain)](#ERC7786OpenBridge-getRemoteBridge-bytes-)
+- [getRemoteBridge(chainType, chainReference)](#ERC7786OpenBridge-getRemoteBridge-bytes2-bytes-)
+- [addGateway(gateway)](#ERC7786OpenBridge-addGateway-address-)
+- [removeGateway(gateway)](#ERC7786OpenBridge-removeGateway-address-)
+- [setThreshold(newThreshold)](#ERC7786OpenBridge-setThreshold-uint8-)
+- [registerRemoteBridge(bridge)](#ERC7786OpenBridge-registerRemoteBridge-bytes-)
+- [pause()](#ERC7786OpenBridge-pause--)
+- [unpause()](#ERC7786OpenBridge-unpause--)
+- [sweep(to)](#ERC7786OpenBridge-sweep-address-payable-)
+- [_addGateway(gateway)](#ERC7786OpenBridge-_addGateway-address-)
+- [_removeGateway(gateway)](#ERC7786OpenBridge-_removeGateway-address-)
+- [_setThreshold(newThreshold)](#ERC7786OpenBridge-_setThreshold-uint8-)
+- [_registerRemoteBridge(bridge)](#ERC7786OpenBridge-_registerRemoteBridge-bytes-)
+
+#### Pausable
+- [paused()](#Pausable-paused--)
+- [_requireNotPaused()](#Pausable-_requireNotPaused--)
+- [_requirePaused()](#Pausable-_requirePaused--)
+- [_pause()](#Pausable-_pause--)
+- [_unpause()](#Pausable-_unpause--)
+
+#### Ownable
+- [owner()](#Ownable-owner--)
+- [_checkOwner()](#Ownable-_checkOwner--)
+- [renounceOwnership()](#Ownable-renounceOwnership--)
+- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
+
+#### IERC7786Receiver
+
+#### IERC7786GatewaySource
+
+### Events
+- [OutboxDetails(sendId, outbox)](#ERC7786OpenBridge-OutboxDetails-bytes32-struct-ERC7786OpenBridge-Outbox---)
+- [Received(receiveId, gateway)](#ERC7786OpenBridge-Received-bytes32-address-)
+- [ExecutionSuccess(receiveId)](#ERC7786OpenBridge-ExecutionSuccess-bytes32-)
+- [ExecutionFailed(receiveId)](#ERC7786OpenBridge-ExecutionFailed-bytes32-)
+- [GatewayAdded(gateway)](#ERC7786OpenBridge-GatewayAdded-address-)
+- [GatewayRemoved(gateway)](#ERC7786OpenBridge-GatewayRemoved-address-)
+- [ThresholdUpdated(threshold)](#ERC7786OpenBridge-ThresholdUpdated-uint8-)
+- [RemoteRegistered(remote)](#ERC7786OpenBridge-RemoteRegistered-bytes-)
+
+#### Pausable
+- [Paused(account)](#Pausable-Paused-address-)
+- [Unpaused(account)](#Pausable-Unpaused-address-)
+
+#### Ownable
+- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
+
+#### IERC7786Receiver
+
+#### IERC7786GatewaySource
+- [MessageSent(sendId, sender, receiver, payload, value, attributes)](#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---)
+
+### Errors
+- [UnsupportedNativeTransfer()](#ERC7786OpenBridge-UnsupportedNativeTransfer--)
+- [ERC7786OpenBridgeInvalidCrosschainSender()](#ERC7786OpenBridge-ERC7786OpenBridgeInvalidCrosschainSender--)
+- [ERC7786OpenBridgeAlreadyExecuted()](#ERC7786OpenBridge-ERC7786OpenBridgeAlreadyExecuted--)
+- [ERC7786OpenBridgeRemoteNotRegistered(chainType, chainReference)](#ERC7786OpenBridge-ERC7786OpenBridgeRemoteNotRegistered-bytes2-bytes-)
+- [ERC7786OpenBridgeGatewayAlreadyRegistered(gateway)](#ERC7786OpenBridge-ERC7786OpenBridgeGatewayAlreadyRegistered-address-)
+- [ERC7786OpenBridgeGatewayNotRegistered(gateway)](#ERC7786OpenBridge-ERC7786OpenBridgeGatewayNotRegistered-address-)
+- [ERC7786OpenBridgeThresholdViolation()](#ERC7786OpenBridge-ERC7786OpenBridgeThresholdViolation--)
+- [ERC7786OpenBridgeInvalidExecutionReturnValue()](#ERC7786OpenBridge-ERC7786OpenBridgeInvalidExecutionReturnValue--)
+- [RemoteAlreadyRegistered(remote)](#ERC7786OpenBridge-RemoteAlreadyRegistered-bytes-)
+
+#### Pausable
+- [EnforcedPause()](#Pausable-EnforcedPause--)
+- [ExpectedPause()](#Pausable-ExpectedPause--)
+
+#### Ownable
+- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
+- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
+
+#### IERC7786Receiver
+
+#### IERC7786GatewaySource
+- [UnsupportedAttribute(selector)](#IERC7786GatewaySource-UnsupportedAttribute-bytes4-)
+
+<a id="ERC7786OpenBridge-constructor-address-address---uint8-"></a>
+
+### `constructor(address owner_, address[] gateways_, uint8 threshold_)`
+*public*
+
+<a id="ERC7786OpenBridge-supportsAttribute-bytes4-"></a>
+
+### `supportsAttribute(bytes4) → bool`
+*public*
+
+Getter to check whether an attribute is supported or not.
+
+<a id="ERC7786OpenBridge-sendMessage-bytes-bytes-bytes---"></a>
+
+### `sendMessage(bytes recipient, bytes payload, bytes[] attributes) → bytes32 sendId`
+*public*
+
+Using memory instead of calldata avoids stack too deep errors
+
+<a id="ERC7786OpenBridge-receiveMessage-bytes32-bytes-bytes-"></a>
+
+### `receiveMessage(bytes32, bytes sender, bytes payload) → bytes4`
+*public*
+
+This function serves a dual purpose:
+
+It will be called by ERC-7786 gateways with message coming from the the corresponding bridge on the source
+chain. These "signals" are tracked until the threshold is reached. At that point the message is sent to the
+destination.
+
+It can also be called by anyone (including an ERC-7786 gateway) to retry the execution. This can be useful if
+the automatic execution (that is triggered when the threshold is reached) fails, and someone wants to retry it.
+
+When a message is forwarded by a known gateway, a [`ERC7786OpenBridge.Received`](#ERC7786OpenBridge-Received-bytes32-address-) event is emitted. If a known gateway calls this
+function more than once (for a given message), only the first call is counts toward the threshold and emits an
+[`ERC7786OpenBridge.Received`](#ERC7786OpenBridge-Received-bytes32-address-) event.
+
+This function revert if:
+
+* the message is not properly formatted or does not originate from the registered bridge on the source
+  chain.
+* someone tries re-execute a message that was already successfully delivered. This includes gateways that call
+  this function a second time with a message that was already executed.
+* the execution of the message (on the [`IERC7786Receiver`](interfaces#IERC7786Receiver) receiver) is successful but fails to return the
+  executed value.
+
+This function does not revert if:
+
+* A known gateway delivers a message for the first time, and that message was already executed. In that case
+  the message is NOT re-executed, and the correct "magic value" is returned.
+* The execution of the message (on the [`IERC7786Receiver`](interfaces#IERC7786Receiver) receiver) reverts. In that case a [`ERC7786OpenBridge.ExecutionFailed`](#ERC7786OpenBridge-ExecutionFailed-bytes32-)
+  event is emitted.
+
+This function emits:
+
+* [`ERC7786OpenBridge.Received`](#ERC7786OpenBridge-Received-bytes32-address-) when a known ERC-7786 gateway delivers a message for the first time.
+* [`ERC7786OpenBridge.ExecutionSuccess`](#ERC7786OpenBridge-ExecutionSuccess-bytes32-) when a message is successfully delivered to the receiver.
+* [`ERC7786OpenBridge.ExecutionFailed`](#ERC7786OpenBridge-ExecutionFailed-bytes32-) when a message delivery to the receiver reverted (for example because of OOG error).
+
+NOTE: interface requires this function to be payable. Even if we don't expect any value, a gateway may pass
+some value for unknown reason. In that case we want to register this gateway having delivered the message and
+not revert. Any value accrued that way can be recovered by the admin using the [`ERC7786OpenBridge.sweep`](#ERC7786OpenBridge-sweep-address-payable-) function.
+
+<a id="ERC7786OpenBridge-getGateways--"></a>
+
+### `getGateways() → address[]`
+*public*
+
+<a id="ERC7786OpenBridge-getThreshold--"></a>
+
+### `getThreshold() → uint8`
+*public*
+
+<a id="ERC7786OpenBridge-getRemoteBridge-bytes-"></a>
+
+### `getRemoteBridge(bytes chain) → bytes`
+*public*
+
+<a id="ERC7786OpenBridge-getRemoteBridge-bytes2-bytes-"></a>
+
+### `getRemoteBridge(bytes2 chainType, bytes chainReference) → bytes`
+*public*
+
+<a id="ERC7786OpenBridge-addGateway-address-"></a>
+
+### `addGateway(address gateway)`
+*public*
+
+<a id="ERC7786OpenBridge-removeGateway-address-"></a>
+
+### `removeGateway(address gateway)`
+*public*
+
+<a id="ERC7786OpenBridge-setThreshold-uint8-"></a>
+
+### `setThreshold(uint8 newThreshold)`
+*public*
+
+<a id="ERC7786OpenBridge-registerRemoteBridge-bytes-"></a>
+
+### `registerRemoteBridge(bytes bridge)`
+*public*
+
+<a id="ERC7786OpenBridge-pause--"></a>
+
+### `pause()`
+*public*
+
+<a id="ERC7786OpenBridge-unpause--"></a>
+
+### `unpause()`
+*public*
+
+<a id="ERC7786OpenBridge-sweep-address-payable-"></a>
+
+### `sweep(address payable to)`
+*public*
+
+Recovery method in case value is ever received through [`ERC7786OpenBridge.receiveMessage`](#ERC7786OpenBridge-receiveMessage-bytes32-bytes-bytes-)
+
+<a id="ERC7786OpenBridge-_addGateway-address-"></a>
+
+### `_addGateway(address gateway)`
+*internal*
+
+<a id="ERC7786OpenBridge-_removeGateway-address-"></a>
+
+### `_removeGateway(address gateway)`
+*internal*
+
+<a id="ERC7786OpenBridge-_setThreshold-uint8-"></a>
+
+### `_setThreshold(uint8 newThreshold)`
+*internal*
+
+<a id="ERC7786OpenBridge-_registerRemoteBridge-bytes-"></a>
+
+### `_registerRemoteBridge(bytes bridge)`
+*internal*
+
+<a id="ERC7786OpenBridge-OutboxDetails-bytes32-struct-ERC7786OpenBridge-Outbox---"></a>
+
+### `OutboxDetails(bytes32 indexed sendId, struct ERC7786OpenBridge.Outbox[] outbox)`
+*event*
+
+<a id="ERC7786OpenBridge-Received-bytes32-address-"></a>
+
+### `Received(bytes32 indexed receiveId, address gateway)`
+*event*
+
+<a id="ERC7786OpenBridge-ExecutionSuccess-bytes32-"></a>
+
+### `ExecutionSuccess(bytes32 indexed receiveId)`
+*event*
+
+<a id="ERC7786OpenBridge-ExecutionFailed-bytes32-"></a>
+
+### `ExecutionFailed(bytes32 indexed receiveId)`
+*event*
+
+<a id="ERC7786OpenBridge-GatewayAdded-address-"></a>
+
+### `GatewayAdded(address indexed gateway)`
+*event*
+
+<a id="ERC7786OpenBridge-GatewayRemoved-address-"></a>
+
+### `GatewayRemoved(address indexed gateway)`
+*event*
+
+<a id="ERC7786OpenBridge-ThresholdUpdated-uint8-"></a>
+
+### `ThresholdUpdated(uint8 threshold)`
+*event*
+
+<a id="ERC7786OpenBridge-RemoteRegistered-bytes-"></a>
+
+### `RemoteRegistered(bytes remote)`
+*event*
+
+<a id="ERC7786OpenBridge-UnsupportedNativeTransfer--"></a>
+
+### `UnsupportedNativeTransfer()`
+*error*
+
+<a id="ERC7786OpenBridge-ERC7786OpenBridgeInvalidCrosschainSender--"></a>
+
+### `ERC7786OpenBridgeInvalidCrosschainSender()`
+*error*
+
+<a id="ERC7786OpenBridge-ERC7786OpenBridgeAlreadyExecuted--"></a>
+
+### `ERC7786OpenBridgeAlreadyExecuted()`
+*error*
+
+<a id="ERC7786OpenBridge-ERC7786OpenBridgeRemoteNotRegistered-bytes2-bytes-"></a>
+
+### `ERC7786OpenBridgeRemoteNotRegistered(bytes2 chainType, bytes chainReference)`
+*error*
+
+<a id="ERC7786OpenBridge-ERC7786OpenBridgeGatewayAlreadyRegistered-address-"></a>
+
+### `ERC7786OpenBridgeGatewayAlreadyRegistered(address gateway)`
+*error*
+
+<a id="ERC7786OpenBridge-ERC7786OpenBridgeGatewayNotRegistered-address-"></a>
+
+### `ERC7786OpenBridgeGatewayNotRegistered(address gateway)`
+*error*
+
+<a id="ERC7786OpenBridge-ERC7786OpenBridgeThresholdViolation--"></a>
+
+### `ERC7786OpenBridgeThresholdViolation()`
+*error*
+
+<a id="ERC7786OpenBridge-ERC7786OpenBridgeInvalidExecutionReturnValue--"></a>
+
+### `ERC7786OpenBridgeInvalidExecutionReturnValue()`
+*error*
+
+<a id="ERC7786OpenBridge-RemoteAlreadyRegistered-bytes-"></a>
+
+### `RemoteAlreadyRegistered(bytes remote)`
+*error*
+
+<a id="AxelarGatewayBase"></a>
+
+## `AxelarGatewayBase` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/crosschain/axelar/AxelarGatewayBase.sol)
+
+```solidity
+import "@openzeppelin/contracts/crosschain/axelar/AxelarGatewayBase.sol";
+```
+
+Base implementation of a cross-chain gateway adapter for the Axelar Network.
+
+This contract allows developers to register equivalence between chains (i.e. ERC-7930 chain type and reference
+to Axelar chain identifiers) and remote gateways (i.e. gateways on other chains) to facilitate cross-chain
+communication.
+
+### Functions
+- [constructor(_gateway)](#AxelarGatewayBase-constructor-contract-IAxelarGateway-)
+- [getAxelarChain(input)](#AxelarGatewayBase-getAxelarChain-bytes-)
+- [getErc7930Chain(input)](#AxelarGatewayBase-getErc7930Chain-string-)
+- [getRemoteGateway(chain)](#AxelarGatewayBase-getRemoteGateway-bytes-)
+- [getRemoteGateway(chainType, chainReference)](#AxelarGatewayBase-getRemoteGateway-bytes2-bytes-)
+- [registerChainEquivalence(chain, axelar)](#AxelarGatewayBase-registerChainEquivalence-bytes-string-)
+- [registerRemoteGateway(remote)](#AxelarGatewayBase-registerRemoteGateway-bytes-)
+
+#### Ownable
+- [owner()](#Ownable-owner--)
+- [_checkOwner()](#Ownable-_checkOwner--)
+- [renounceOwnership()](#Ownable-renounceOwnership--)
+- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
+
+### Events
+- [RegisteredRemoteGateway(remote)](#AxelarGatewayBase-RegisteredRemoteGateway-bytes-)
+- [RegisteredChainEquivalence(erc7930binary, axelar)](#AxelarGatewayBase-RegisteredChainEquivalence-bytes-string-)
+
+#### Ownable
+- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
+
+### Errors
+- [UnsupportedERC7930Chain(erc7930binary)](#AxelarGatewayBase-UnsupportedERC7930Chain-bytes-)
+- [UnsupportedAxelarChain(axelar)](#AxelarGatewayBase-UnsupportedAxelarChain-string-)
+- [InvalidChainIdentifier(erc7930binary)](#AxelarGatewayBase-InvalidChainIdentifier-bytes-)
+- [ChainEquivalenceAlreadyRegistered(erc7930binary, axelar)](#AxelarGatewayBase-ChainEquivalenceAlreadyRegistered-bytes-string-)
+- [RemoteGatewayAlreadyRegistered(chainType, chainReference)](#AxelarGatewayBase-RemoteGatewayAlreadyRegistered-bytes2-bytes-)
+
+#### Ownable
+- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
+- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
+
+<a id="AxelarGatewayBase-constructor-contract-IAxelarGateway-"></a>
+
+### `constructor(contract IAxelarGateway _gateway)`
+*internal*
+
+Sets the local gateway address (i.e. Axelar's official gateway for the current chain).
+
+<a id="AxelarGatewayBase-getAxelarChain-bytes-"></a>
+
+### `getAxelarChain(bytes input) → string output`
+*public*
+
+Returns the equivalent chain given an id that can be either either a binary interoperable address or an Axelar network identifier.
+
+<a id="AxelarGatewayBase-getErc7930Chain-string-"></a>
+
+### `getErc7930Chain(string input) → bytes output`
+*public*
+
+<a id="AxelarGatewayBase-getRemoteGateway-bytes-"></a>
+
+### `getRemoteGateway(bytes chain) → bytes`
+*public*
+
+Returns the address of the remote gateway for a given chainType and chainReference.
+
+<a id="AxelarGatewayBase-getRemoteGateway-bytes2-bytes-"></a>
+
+### `getRemoteGateway(bytes2 chainType, bytes chainReference) → bytes`
+*public*
+
+<a id="AxelarGatewayBase-registerChainEquivalence-bytes-string-"></a>
+
+### `registerChainEquivalence(bytes chain, string axelar)`
+*public*
+
+Registers a chain equivalence between a binary interoperable address an Axelar network identifier.
+
+<a id="AxelarGatewayBase-registerRemoteGateway-bytes-"></a>
+
+### `registerRemoteGateway(bytes remote)`
+*public*
+
+Registers the address of a remote gateway.
+
+<a id="AxelarGatewayBase-RegisteredRemoteGateway-bytes-"></a>
+
+### `RegisteredRemoteGateway(bytes remote)`
+*event*
+
+A remote gateway has been registered for a chain.
+
+<a id="AxelarGatewayBase-RegisteredChainEquivalence-bytes-string-"></a>
+
+### `RegisteredChainEquivalence(bytes erc7930binary, string axelar)`
+*event*
+
+A chain equivalence has been registered.
+
+<a id="AxelarGatewayBase-UnsupportedERC7930Chain-bytes-"></a>
+
+### `UnsupportedERC7930Chain(bytes erc7930binary)`
+*error*
+
+Error emitted when an unsupported chain is queried.
+
+<a id="AxelarGatewayBase-UnsupportedAxelarChain-string-"></a>
+
+### `UnsupportedAxelarChain(string axelar)`
+*error*
+
+<a id="AxelarGatewayBase-InvalidChainIdentifier-bytes-"></a>
+
+### `InvalidChainIdentifier(bytes erc7930binary)`
+*error*
+
+<a id="AxelarGatewayBase-ChainEquivalenceAlreadyRegistered-bytes-string-"></a>
+
+### `ChainEquivalenceAlreadyRegistered(bytes erc7930binary, string axelar)`
+*error*
+
+<a id="AxelarGatewayBase-RemoteGatewayAlreadyRegistered-bytes2-bytes-"></a>
+
+### `RemoteGatewayAlreadyRegistered(bytes2 chainType, bytes chainReference)`
+*error*
+
+<a id="AxelarGatewayDestination"></a>
+
+## `AxelarGatewayDestination` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/crosschain/axelar/AxelarGatewayDestination.sol)
+
+```solidity
+import "@openzeppelin/contracts/crosschain/axelar/AxelarGatewayDestination.sol";
+```
+
+Implementation of an ERC-7786 gateway destination adapter for the Axelar Network in dual mode.
+
+The contract implements AxelarExecutable's [`ERC7579DelayedExecutor._execute`](account#ERC7579DelayedExecutor-_execute-address-bytes32-bytes32-bytes-) function to execute the message, converting Axelar's native
+workflow into the standard ERC-7786.
+
+### Functions
+- [_execute(commandId, axelarSourceChain, axelarSourceAddress, adapterPayload)](#AxelarGatewayDestination-_execute-bytes32-string-string-bytes-)
+
+#### AxelarExecutable
+- [execute(commandId, sourceChain, sourceAddress, payload)](#AxelarExecutable-execute-bytes32-string-string-bytes-)
+- [gateway()](#AxelarExecutable-gateway--)
+
+#### IAxelarExecutable
+
+#### AxelarGatewayBase
+- [getAxelarChain(input)](#AxelarGatewayBase-getAxelarChain-bytes-)
+- [getErc7930Chain(input)](#AxelarGatewayBase-getErc7930Chain-string-)
+- [getRemoteGateway(chain)](#AxelarGatewayBase-getRemoteGateway-bytes-)
+- [getRemoteGateway(chainType, chainReference)](#AxelarGatewayBase-getRemoteGateway-bytes2-bytes-)
+- [registerChainEquivalence(chain, axelar)](#AxelarGatewayBase-registerChainEquivalence-bytes-string-)
+- [registerRemoteGateway(remote)](#AxelarGatewayBase-registerRemoteGateway-bytes-)
+
+#### Ownable
+- [owner()](#Ownable-owner--)
+- [_checkOwner()](#Ownable-_checkOwner--)
+- [renounceOwnership()](#Ownable-renounceOwnership--)
+- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
+
+### Events
+
+#### AxelarExecutable
+
+#### IAxelarExecutable
+
+#### AxelarGatewayBase
+- [RegisteredRemoteGateway(remote)](#AxelarGatewayBase-RegisteredRemoteGateway-bytes-)
+- [RegisteredChainEquivalence(erc7930binary, axelar)](#AxelarGatewayBase-RegisteredChainEquivalence-bytes-string-)
+
+#### Ownable
+- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
+
+### Errors
+- [InvalidOriginGateway(axelarSourceChain, axelarSourceAddress)](#AxelarGatewayDestination-InvalidOriginGateway-string-string-)
+- [ReceiverExecutionFailed()](#AxelarGatewayDestination-ReceiverExecutionFailed--)
+
+#### AxelarExecutable
+
+#### IAxelarExecutable
+- [InvalidAddress()](#IAxelarExecutable-InvalidAddress--)
+- [NotApprovedByGateway()](#IAxelarExecutable-NotApprovedByGateway--)
+
+#### AxelarGatewayBase
+- [UnsupportedERC7930Chain(erc7930binary)](#AxelarGatewayBase-UnsupportedERC7930Chain-bytes-)
+- [UnsupportedAxelarChain(axelar)](#AxelarGatewayBase-UnsupportedAxelarChain-string-)
+- [InvalidChainIdentifier(erc7930binary)](#AxelarGatewayBase-InvalidChainIdentifier-bytes-)
+- [ChainEquivalenceAlreadyRegistered(erc7930binary, axelar)](#AxelarGatewayBase-ChainEquivalenceAlreadyRegistered-bytes-string-)
+- [RemoteGatewayAlreadyRegistered(chainType, chainReference)](#AxelarGatewayBase-RemoteGatewayAlreadyRegistered-bytes2-bytes-)
+
+#### Ownable
+- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
+- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
+
+<a id="AxelarGatewayDestination-_execute-bytes32-string-string-bytes-"></a>
+
+### `_execute(bytes32 commandId, string axelarSourceChain, string axelarSourceAddress, bytes adapterPayload)`
+*internal*
+
+Execution of a cross-chain message.
+
+In this function:
+
+- `axelarSourceChain` is in the Axelar format. It should not be expected to be a proper ERC-7930 format
+- `axelarSourceAddress` is the sender of the Axelar message. That should be the remote gateway on the chain
+  which the message originates from. It is NOT the sender of the ERC-7786 crosschain message.
+
+Proper ERC-7930 encoding of the crosschain message sender can be found in the message
+
+<a id="AxelarGatewayDestination-InvalidOriginGateway-string-string-"></a>
+
+### `InvalidOriginGateway(string axelarSourceChain, string axelarSourceAddress)`
+*error*
+
+<a id="AxelarGatewayDestination-ReceiverExecutionFailed--"></a>
+
+### `ReceiverExecutionFailed()`
+*error*
+
+<a id="AxelarGatewayDuplex"></a>
+
+## `AxelarGatewayDuplex` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/crosschain/axelar/AxelarGatewayDuplex.sol)
+
+```solidity
+import "@openzeppelin/contracts/crosschain/axelar/AxelarGatewayDuplex.sol";
+```
+
+A contract that combines the functionality of both the source and destination gateway
+adapters for the Axelar Network. Allowing to either send or receive messages across chains.
+
+### Functions
+- [constructor(gateway, initialOwner)](#AxelarGatewayDuplex-constructor-contract-IAxelarGateway-address-)
+
+#### AxelarGatewayDestination
+- [_execute(commandId, axelarSourceChain, axelarSourceAddress, adapterPayload)](#AxelarGatewayDestination-_execute-bytes32-string-string-bytes-)
+
+#### AxelarExecutable
+- [execute(commandId, sourceChain, sourceAddress, payload)](#AxelarExecutable-execute-bytes32-string-string-bytes-)
+- [gateway()](#AxelarExecutable-gateway--)
+
+#### IAxelarExecutable
+
+#### AxelarGatewaySource
+- [supportsAttribute()](#AxelarGatewaySource-supportsAttribute-bytes4-)
+- [sendMessage(recipient, payload, attributes)](#AxelarGatewaySource-sendMessage-bytes-bytes-bytes---)
+
+#### AxelarGatewayBase
+- [getAxelarChain(input)](#AxelarGatewayBase-getAxelarChain-bytes-)
+- [getErc7930Chain(input)](#AxelarGatewayBase-getErc7930Chain-string-)
+- [getRemoteGateway(chain)](#AxelarGatewayBase-getRemoteGateway-bytes-)
+- [getRemoteGateway(chainType, chainReference)](#AxelarGatewayBase-getRemoteGateway-bytes2-bytes-)
+- [registerChainEquivalence(chain, axelar)](#AxelarGatewayBase-registerChainEquivalence-bytes-string-)
+- [registerRemoteGateway(remote)](#AxelarGatewayBase-registerRemoteGateway-bytes-)
+
+#### Ownable
+- [owner()](#Ownable-owner--)
+- [_checkOwner()](#Ownable-_checkOwner--)
+- [renounceOwnership()](#Ownable-renounceOwnership--)
+- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
+
+#### IERC7786GatewaySource
+
+### Events
+
+#### AxelarGatewayDestination
+
+#### AxelarExecutable
+
+#### IAxelarExecutable
+
+#### AxelarGatewaySource
+
+#### AxelarGatewayBase
+- [RegisteredRemoteGateway(remote)](#AxelarGatewayBase-RegisteredRemoteGateway-bytes-)
+- [RegisteredChainEquivalence(erc7930binary, axelar)](#AxelarGatewayBase-RegisteredChainEquivalence-bytes-string-)
+
+#### Ownable
+- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
+
+#### IERC7786GatewaySource
+- [MessageSent(sendId, sender, receiver, payload, value, attributes)](#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---)
+
+### Errors
+
+#### AxelarGatewayDestination
+- [InvalidOriginGateway(axelarSourceChain, axelarSourceAddress)](#AxelarGatewayDestination-InvalidOriginGateway-string-string-)
+- [ReceiverExecutionFailed()](#AxelarGatewayDestination-ReceiverExecutionFailed--)
+
+#### AxelarExecutable
+
+#### IAxelarExecutable
+- [InvalidAddress()](#IAxelarExecutable-InvalidAddress--)
+- [NotApprovedByGateway()](#IAxelarExecutable-NotApprovedByGateway--)
+
+#### AxelarGatewaySource
+- [UnsupportedNativeTransfer()](#AxelarGatewaySource-UnsupportedNativeTransfer--)
+
+#### AxelarGatewayBase
+- [UnsupportedERC7930Chain(erc7930binary)](#AxelarGatewayBase-UnsupportedERC7930Chain-bytes-)
+- [UnsupportedAxelarChain(axelar)](#AxelarGatewayBase-UnsupportedAxelarChain-string-)
+- [InvalidChainIdentifier(erc7930binary)](#AxelarGatewayBase-InvalidChainIdentifier-bytes-)
+- [ChainEquivalenceAlreadyRegistered(erc7930binary, axelar)](#AxelarGatewayBase-ChainEquivalenceAlreadyRegistered-bytes-string-)
+- [RemoteGatewayAlreadyRegistered(chainType, chainReference)](#AxelarGatewayBase-RemoteGatewayAlreadyRegistered-bytes2-bytes-)
+
+#### Ownable
+- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
+- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
+
+#### IERC7786GatewaySource
+- [UnsupportedAttribute(selector)](#IERC7786GatewaySource-UnsupportedAttribute-bytes4-)
+
+<a id="AxelarGatewayDuplex-constructor-contract-IAxelarGateway-address-"></a>
+
+### `constructor(contract IAxelarGateway gateway, address initialOwner)`
+*public*
+
+Initializes the contract with the Axelar gateway and the initial owner.
+
+<a id="AxelarGatewaySource"></a>
+
+## `AxelarGatewaySource` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/crosschain/axelar/AxelarGatewaySource.sol)
+
+```solidity
+import "@openzeppelin/contracts/crosschain/axelar/AxelarGatewaySource.sol";
+```
+
+Implementation of an ERC-7786 gateway source adapter for the Axelar Network.
+
+The contract provides a way to send messages to a remote chain via the Axelar Network
+using the [`ERC7786OpenBridge.sendMessage`](#ERC7786OpenBridge-sendMessage-bytes-bytes-bytes---) function.
+
+### Functions
+- [supportsAttribute()](#AxelarGatewaySource-supportsAttribute-bytes4-)
+- [sendMessage(recipient, payload, attributes)](#AxelarGatewaySource-sendMessage-bytes-bytes-bytes---)
+
+#### AxelarGatewayBase
+- [getAxelarChain(input)](#AxelarGatewayBase-getAxelarChain-bytes-)
+- [getErc7930Chain(input)](#AxelarGatewayBase-getErc7930Chain-string-)
+- [getRemoteGateway(chain)](#AxelarGatewayBase-getRemoteGateway-bytes-)
+- [getRemoteGateway(chainType, chainReference)](#AxelarGatewayBase-getRemoteGateway-bytes2-bytes-)
+- [registerChainEquivalence(chain, axelar)](#AxelarGatewayBase-registerChainEquivalence-bytes-string-)
+- [registerRemoteGateway(remote)](#AxelarGatewayBase-registerRemoteGateway-bytes-)
+
+#### Ownable
+- [owner()](#Ownable-owner--)
+- [_checkOwner()](#Ownable-_checkOwner--)
+- [renounceOwnership()](#Ownable-renounceOwnership--)
+- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
+
+#### IERC7786GatewaySource
+
+### Events
+
+#### AxelarGatewayBase
+- [RegisteredRemoteGateway(remote)](#AxelarGatewayBase-RegisteredRemoteGateway-bytes-)
+- [RegisteredChainEquivalence(erc7930binary, axelar)](#AxelarGatewayBase-RegisteredChainEquivalence-bytes-string-)
+
+#### Ownable
+- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
+
+#### IERC7786GatewaySource
+- [MessageSent(sendId, sender, receiver, payload, value, attributes)](#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---)
+
+### Errors
+- [UnsupportedNativeTransfer()](#AxelarGatewaySource-UnsupportedNativeTransfer--)
+
+#### AxelarGatewayBase
+- [UnsupportedERC7930Chain(erc7930binary)](#AxelarGatewayBase-UnsupportedERC7930Chain-bytes-)
+- [UnsupportedAxelarChain(axelar)](#AxelarGatewayBase-UnsupportedAxelarChain-string-)
+- [InvalidChainIdentifier(erc7930binary)](#AxelarGatewayBase-InvalidChainIdentifier-bytes-)
+- [ChainEquivalenceAlreadyRegistered(erc7930binary, axelar)](#AxelarGatewayBase-ChainEquivalenceAlreadyRegistered-bytes-string-)
+- [RemoteGatewayAlreadyRegistered(chainType, chainReference)](#AxelarGatewayBase-RemoteGatewayAlreadyRegistered-bytes2-bytes-)
+
+#### Ownable
+- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
+- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
+
+#### IERC7786GatewaySource
+- [UnsupportedAttribute(selector)](#IERC7786GatewaySource-UnsupportedAttribute-bytes4-)
+
+<a id="AxelarGatewaySource-supportsAttribute-bytes4-"></a>
+
+### `supportsAttribute(bytes4) → bool`
+*public*
+
+Getter to check whether an attribute is supported or not.
+
+<a id="AxelarGatewaySource-sendMessage-bytes-bytes-bytes---"></a>
+
+### `sendMessage(bytes recipient, bytes payload, bytes[] attributes) → bytes32 sendId`
+*external*
+
+Endpoint for creating a new message. If the message requires further (gateway specific) processing before
+it can be sent to the destination chain, then a non-zero `outboxId` must be returned. Otherwise, the
+message MUST be sent and this function must return 0.
+
+* MUST emit a [`IERC7786GatewaySource.MessageSent`](interfaces#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---) event.
+
+If any of the `attributes` is not supported, this function SHOULD revert with an [`IERC7786GatewaySource.UnsupportedAttribute`](interfaces#IERC7786GatewaySource-UnsupportedAttribute-bytes4-) error.
+Other errors SHOULD revert with errors not specified in ERC-7786.
+
+<a id="AxelarGatewaySource-UnsupportedNativeTransfer--"></a>
+
+### `UnsupportedNativeTransfer()`
+*error*
+
+<a id="ERC7786Receiver"></a>
+
+## `ERC7786Receiver` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/crosschain/utils/ERC7786Receiver.sol)
+
+```solidity
+import "@openzeppelin/contracts/crosschain/utils/ERC7786Receiver.sol";
+```
+
+Base implementation of an ERC-7786 compliant cross-chain message receiver.
+
+This abstract contract exposes the `receiveMessage` function that is used for communication with (one or multiple)
+destination gateways. This contract leaves two functions unimplemented:
+
+[`ERC7786Receiver._isKnownGateway`](#ERC7786Receiver-_isKnownGateway-address-), an internal getter used to verify whether an address is recognised by the contract as a valid
+ERC-7786 destination gateway. One or multiple gateway can be supported. Note that any malicious address for which
+this function returns true would be able to impersonate any account on any other chain sending any message.
+
+[`ERC7786Receiver._processMessage`](#ERC7786Receiver-_processMessage-address-bytes32-bytes-bytes-), the internal function that will be called with any message that has been validated.
+
+### Functions
+- [receiveMessage(receiveId, sender, payload)](#ERC7786Receiver-receiveMessage-bytes32-bytes-bytes-)
+- [_isKnownGateway(instance)](#ERC7786Receiver-_isKnownGateway-address-)
+- [_processMessage(gateway, receiveId, sender, payload)](#ERC7786Receiver-_processMessage-address-bytes32-bytes-bytes-)
+
+#### IERC7786Receiver
+
+### Errors
+- [ERC7786ReceiverInvalidGateway(gateway)](#ERC7786Receiver-ERC7786ReceiverInvalidGateway-address-)
+- [ERC7786ReceivePassiveModeValue()](#ERC7786Receiver-ERC7786ReceivePassiveModeValue--)
+
+#### IERC7786Receiver
+
+<a id="ERC7786Receiver-receiveMessage-bytes32-bytes-bytes-"></a>
+
+### `receiveMessage(bytes32 receiveId, bytes sender, bytes payload) → bytes4`
+*public*
+
+Endpoint for receiving cross-chain message.
+
+This function may be called directly by the gateway.
+
+<a id="ERC7786Receiver-_isKnownGateway-address-"></a>
+
+### `_isKnownGateway(address instance) → bool`
+*internal*
+
+Virtual getter that returns whether an address is a valid ERC-7786 gateway.
+
+<a id="ERC7786Receiver-_processMessage-address-bytes32-bytes-bytes-"></a>
+
+### `_processMessage(address gateway, bytes32 receiveId, bytes sender, bytes payload)`
+*internal*
+
+Virtual function that should contain the logic to execute when a cross-chain message is received.
+
+<a id="ERC7786Receiver-ERC7786ReceiverInvalidGateway-address-"></a>
+
+### `ERC7786ReceiverInvalidGateway(address gateway)`
+*error*
+
+<a id="ERC7786Receiver-ERC7786ReceivePassiveModeValue--"></a>
+
+### `ERC7786ReceivePassiveModeValue()`
+*error*
+

@@ -1,0 +1,532 @@
+---
+title: "Utils"
+description: "Smart contract utils utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/community-contracts/utils
+</Callout>
+
+Miscellaneous contracts and libraries containing utility functions you can use to improve security, work with new data types, or safely use low-level primitives.
+
+* [`EnumerableSetExtended`](#EnumerableSetExtended) and [`EnumerableMapExtended`](#EnumerableMapExtended): Extensions of the `EnumerableSet` and `EnumerableMap` libraries with more types, including non-value types.
+* [`Masks`](#Masks): Library to handle `bytes32` masks.
+
+## Structs
+
+[`EnumerableSetExtended`](#EnumerableSetExtended)
+
+[`EnumerableMapExtended`](#EnumerableMapExtended)
+
+## Libraries
+
+[`Masks`](#Masks)
+
+<a id="Masks"></a>
+
+## `Masks` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/Masks.sol)
+
+```solidity
+import "@openzeppelin/contracts/utils/Masks.sol";
+```
+
+Library for handling bit masks
+
+### Functions
+- [toMask(group)](#Masks-toMask-uint8-)
+- [toMask(groups)](#Masks-toMask-uint8---)
+- [get(self, group)](#Masks-get-Masks-Mask-uint8-)
+- [isEmpty(self)](#Masks-isEmpty-Masks-Mask-)
+- [complement(m1)](#Masks-complement-Masks-Mask-)
+- [union(m1, m2)](#Masks-union-Masks-Mask-Masks-Mask-)
+- [intersection(m1, m2)](#Masks-intersection-Masks-Mask-Masks-Mask-)
+- [difference(m1, m2)](#Masks-difference-Masks-Mask-Masks-Mask-)
+- [symmetricDifference(m1, m2)](#Masks-symmetricDifference-Masks-Mask-Masks-Mask-)
+
+<a id="Masks-toMask-uint8-"></a>
+
+### `toMask(uint8 group) → Masks.Mask`
+*internal*
+
+Returns a new mask with the bit at `group` index set to 1.
+
+<a id="Masks-toMask-uint8---"></a>
+
+### `toMask(uint8[] groups) → Masks.Mask`
+*internal*
+
+Returns a new mask with the bits at `groups` indices set to 1.
+
+<a id="Masks-get-Masks-Mask-uint8-"></a>
+
+### `get(Masks.Mask self, uint8 group) → bool`
+*internal*
+
+Get value of the mask at `group` index
+
+<a id="Masks-isEmpty-Masks-Mask-"></a>
+
+### `isEmpty(Masks.Mask self) → bool`
+*internal*
+
+Whether the mask is `bytes32(0)`
+
+<a id="Masks-complement-Masks-Mask-"></a>
+
+### `complement(Masks.Mask m1) → Masks.Mask`
+*internal*
+
+Invert the bits of a mask
+
+<a id="Masks-union-Masks-Mask-Masks-Mask-"></a>
+
+### `union(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
+*internal*
+
+Perform a bitwise OR operation on two masks
+
+<a id="Masks-intersection-Masks-Mask-Masks-Mask-"></a>
+
+### `intersection(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
+*internal*
+
+Perform a bitwise AND operation on two masks
+
+<a id="Masks-difference-Masks-Mask-Masks-Mask-"></a>
+
+### `difference(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
+*internal*
+
+Perform a bitwise difference operation on two masks (m1 - m2)
+
+<a id="Masks-symmetricDifference-Masks-Mask-Masks-Mask-"></a>
+
+### `symmetricDifference(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
+*internal*
+
+Returns the symmetric difference (∆) of two masks, also known as disjunctive union or exclusive OR (XOR)
+
+<a id="EnumerableMapExtended"></a>
+
+## `EnumerableMapExtended` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/structs/EnumerableMapExtended.sol)
+
+```solidity
+import "@openzeppelin/contracts/utils/structs/EnumerableMapExtended.sol";
+```
+
+Library for managing an enumerable variant of Solidity's
+[`mapping`](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)
+type for non-value types as keys.
+
+Maps have the following properties:
+
+- Entries are added, removed, and checked for existence in constant time
+(O(1)).
+- Entries are enumerated in O(n). No guarantees are made on the ordering.
+- Map can be cleared (all entries removed) in O(n).
+
+```solidity
+contract Example {
+    // Add the library methods
+    using EnumerableMapExtended for EnumerableMapExtended.BytesToUintMap;
+
+    // Declare a set state variable
+    EnumerableMapExtended.BytesToUintMap private myMap;
+}
+```
+
+The following map types are supported:
+
+- `bytes -> uint256` (`BytesToUintMap`)
+- `string -> string` (`StringToStringMap`)
+
+[WARNING]
+====
+Trying to delete such a structure from storage will likely result in data corruption, rendering the structure
+unusable.
+See [ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843) for more info.
+
+In order to clean an EnumerableMap, you can either remove all elements one by one or create a fresh instance using an
+array of EnumerableMap.
+====
+
+NOTE: Extensions of openzeppelin/contracts/utils/struct/EnumerableMap.sol.
+
+### Functions
+- [set(map, key, value)](#EnumerableMapExtended-set-struct-EnumerableMapExtended-BytesToUintMap-bytes-uint256-)
+- [remove(map, key)](#EnumerableMapExtended-remove-struct-EnumerableMapExtended-BytesToUintMap-bytes-)
+- [clear(map)](#EnumerableMapExtended-clear-struct-EnumerableMapExtended-BytesToUintMap-)
+- [contains(map, key)](#EnumerableMapExtended-contains-struct-EnumerableMapExtended-BytesToUintMap-bytes-)
+- [length(map)](#EnumerableMapExtended-length-struct-EnumerableMapExtended-BytesToUintMap-)
+- [at(map, index)](#EnumerableMapExtended-at-struct-EnumerableMapExtended-BytesToUintMap-uint256-)
+- [tryGet(map, key)](#EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-BytesToUintMap-bytes-)
+- [get(map, key)](#EnumerableMapExtended-get-struct-EnumerableMapExtended-BytesToUintMap-bytes-)
+- [keys(map)](#EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-)
+- [keys(map, start, end)](#EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-uint256-uint256-)
+- [set(map, key, value)](#EnumerableMapExtended-set-struct-EnumerableMapExtended-StringToStringMap-string-string-)
+- [remove(map, key)](#EnumerableMapExtended-remove-struct-EnumerableMapExtended-StringToStringMap-string-)
+- [clear(map)](#EnumerableMapExtended-clear-struct-EnumerableMapExtended-StringToStringMap-)
+- [contains(map, key)](#EnumerableMapExtended-contains-struct-EnumerableMapExtended-StringToStringMap-string-)
+- [length(map)](#EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-)
+- [at(map, index)](#EnumerableMapExtended-at-struct-EnumerableMapExtended-StringToStringMap-uint256-)
+- [tryGet(map, key)](#EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-StringToStringMap-string-)
+- [get(map, key)](#EnumerableMapExtended-get-struct-EnumerableMapExtended-StringToStringMap-string-)
+- [keys(map)](#EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-)
+- [keys(map, start, end)](#EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-uint256-uint256-)
+
+### Errors
+- [EnumerableMapNonexistentBytesKey(key)](#EnumerableMapExtended-EnumerableMapNonexistentBytesKey-bytes-)
+- [EnumerableMapNonexistentStringKey(key)](#EnumerableMapExtended-EnumerableMapNonexistentStringKey-string-)
+
+<a id="EnumerableMapExtended-set-struct-EnumerableMapExtended-BytesToUintMap-bytes-uint256-"></a>
+
+### `set(struct EnumerableMapExtended.BytesToUintMap map, bytes key, uint256 value) → bool`
+*internal*
+
+Adds a key-value pair to a map, or updates the value for an existing
+key. O(1).
+
+Returns true if the key was added to the map, that is if it was not
+already present.
+
+<a id="EnumerableMapExtended-remove-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
+
+### `remove(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool`
+*internal*
+
+Removes a key-value pair from a map. O(1).
+
+Returns true if the key was removed from the map, that is if it was present.
+
+<a id="EnumerableMapExtended-clear-struct-EnumerableMapExtended-BytesToUintMap-"></a>
+
+### `clear(struct EnumerableMapExtended.BytesToUintMap map)`
+*internal*
+
+Removes all the entries from a map. O(n).
+
+WARNING: Developers should keep in mind that this function has an unbounded cost and using it may render the
+function uncallable if the map grows to the point where clearing it consumes too much gas to fit in a block.
+
+<a id="EnumerableMapExtended-contains-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
+
+### `contains(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool`
+*internal*
+
+Returns true if the key is in the map. O(1).
+
+<a id="EnumerableMapExtended-length-struct-EnumerableMapExtended-BytesToUintMap-"></a>
+
+### `length(struct EnumerableMapExtended.BytesToUintMap map) → uint256`
+*internal*
+
+Returns the number of key-value pairs in the map. O(1).
+
+<a id="EnumerableMapExtended-at-struct-EnumerableMapExtended-BytesToUintMap-uint256-"></a>
+
+### `at(struct EnumerableMapExtended.BytesToUintMap map, uint256 index) → bytes key, uint256 value`
+*internal*
+
+Returns the key-value pair stored at position `index` in the map. O(1).
+
+Note that there are no guarantees on the ordering of entries inside the
+array, and it may change when more entries are added or removed.
+
+Requirements:
+
+- `index` must be strictly less than [`EnumerableMapExtended.length`](#EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-).
+
+<a id="EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
+
+### `tryGet(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool exists, uint256 value`
+*internal*
+
+Tries to returns the value associated with `key`. O(1).
+Does not revert if `key` is not in the map.
+
+<a id="EnumerableMapExtended-get-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
+
+### `get(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → uint256 value`
+*internal*
+
+Returns the value associated with `key`. O(1).
+
+Requirements:
+
+- `key` must be in the map.
+
+<a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-"></a>
+
+### `keys(struct EnumerableMapExtended.BytesToUintMap map) → bytes[]`
+*internal*
+
+Returns an array containing all the keys
+
+WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
+this function has an unbounded cost, and using it as part of a state-changing function may render the function
+uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+
+<a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-uint256-uint256-"></a>
+
+### `keys(struct EnumerableMapExtended.BytesToUintMap map, uint256 start, uint256 end) → bytes[]`
+*internal*
+
+Returns an array containing a slice of the keys
+
+WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
+this function has an unbounded cost, and using it as part of a state-changing function may render the function
+uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+
+<a id="EnumerableMapExtended-set-struct-EnumerableMapExtended-StringToStringMap-string-string-"></a>
+
+### `set(struct EnumerableMapExtended.StringToStringMap map, string key, string value) → bool`
+*internal*
+
+Adds a key-value pair to a map, or updates the value for an existing
+key. O(1).
+
+Returns true if the key was added to the map, that is if it was not
+already present.
+
+<a id="EnumerableMapExtended-remove-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
+
+### `remove(struct EnumerableMapExtended.StringToStringMap map, string key) → bool`
+*internal*
+
+Removes a key-value pair from a map. O(1).
+
+Returns true if the key was removed from the map, that is if it was present.
+
+<a id="EnumerableMapExtended-clear-struct-EnumerableMapExtended-StringToStringMap-"></a>
+
+### `clear(struct EnumerableMapExtended.StringToStringMap map)`
+*internal*
+
+Removes all the entries from a map. O(n).
+
+WARNING: Developers should keep in mind that this function has an unbounded cost and using it may render the
+function uncallable if the map grows to the point where clearing it consumes too much gas to fit in a block.
+
+<a id="EnumerableMapExtended-contains-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
+
+### `contains(struct EnumerableMapExtended.StringToStringMap map, string key) → bool`
+*internal*
+
+Returns true if the key is in the map. O(1).
+
+<a id="EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-"></a>
+
+### `length(struct EnumerableMapExtended.StringToStringMap map) → uint256`
+*internal*
+
+Returns the number of key-value pairs in the map. O(1).
+
+<a id="EnumerableMapExtended-at-struct-EnumerableMapExtended-StringToStringMap-uint256-"></a>
+
+### `at(struct EnumerableMapExtended.StringToStringMap map, uint256 index) → string key, string value`
+*internal*
+
+Returns the key-value pair stored at position `index` in the map. O(1).
+
+Note that there are no guarantees on the ordering of entries inside the
+array, and it may change when more entries are added or removed.
+
+Requirements:
+
+- `index` must be strictly less than [`EnumerableMapExtended.length`](#EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-).
+
+<a id="EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
+
+### `tryGet(struct EnumerableMapExtended.StringToStringMap map, string key) → bool exists, string value`
+*internal*
+
+Tries to returns the value associated with `key`. O(1).
+Does not revert if `key` is not in the map.
+
+<a id="EnumerableMapExtended-get-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
+
+### `get(struct EnumerableMapExtended.StringToStringMap map, string key) → string value`
+*internal*
+
+Returns the value associated with `key`. O(1).
+
+Requirements:
+
+- `key` must be in the map.
+
+<a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-"></a>
+
+### `keys(struct EnumerableMapExtended.StringToStringMap map) → string[]`
+*internal*
+
+Returns an array containing all the keys
+
+WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
+this function has an unbounded cost, and using it as part of a state-changing function may render the function
+uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+
+<a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-uint256-uint256-"></a>
+
+### `keys(struct EnumerableMapExtended.StringToStringMap map, uint256 start, uint256 end) → string[]`
+*internal*
+
+Returns an array containing a slice of the keys
+
+WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
+this function has an unbounded cost, and using it as part of a state-changing function may render the function
+uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+
+<a id="EnumerableMapExtended-EnumerableMapNonexistentBytesKey-bytes-"></a>
+
+### `EnumerableMapNonexistentBytesKey(bytes key)`
+*error*
+
+Query for a nonexistent map key.
+
+<a id="EnumerableMapExtended-EnumerableMapNonexistentStringKey-string-"></a>
+
+### `EnumerableMapNonexistentStringKey(string key)`
+*error*
+
+Query for a nonexistent map key.
+
+<a id="EnumerableSetExtended"></a>
+
+## `EnumerableSetExtended` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/structs/EnumerableSetExtended.sol)
+
+```solidity
+import "@openzeppelin/contracts/utils/structs/EnumerableSetExtended.sol";
+```
+
+Library for managing
+[sets](https://en.wikipedia.org/wiki/Set_(abstract_data_type)) of non-value
+types.
+
+Sets have the following properties:
+
+- Elements are added, removed, and checked for existence in constant time
+(O(1)).
+- Elements are enumerated in O(n). No guarantees are made on the ordering.
+- Set can be cleared (all elements removed) in O(n).
+
+```solidity
+contract Example {
+    // Add the library methods
+    using EnumerableSetExtended for EnumerableSetExtended.StringSet;
+
+    // Declare a set state variable
+    EnumerableSetExtended.StringSet private mySet;
+}
+```
+
+Sets of type `string` (`StringSet`), `bytes` (`BytesSet`) and
+`bytes32[2]` (`Bytes32x2Set`) are supported.
+
+[WARNING]
+====
+Trying to delete such a structure from storage will likely result in data corruption, rendering the structure
+unusable.
+See [ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843) for more info.
+
+In order to clean an EnumerableSet, you can either remove all elements one by one or create a fresh instance using an
+array of EnumerableSet.
+====
+
+NOTE: This is an extension of openzeppelin/contracts/utils/struct/EnumerableSet.sol.
+
+### Functions
+- [add(self, value)](#EnumerableSetExtended-add-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--)
+- [remove(self, value)](#EnumerableSetExtended-remove-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--)
+- [clear(self)](#EnumerableSetExtended-clear-struct-EnumerableSetExtended-Bytes32x2Set-)
+- [contains(self, value)](#EnumerableSetExtended-contains-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--)
+- [length(self)](#EnumerableSetExtended-length-struct-EnumerableSetExtended-Bytes32x2Set-)
+- [at(self, index)](#EnumerableSetExtended-at-struct-EnumerableSetExtended-Bytes32x2Set-uint256-)
+- [values(self)](#EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-)
+- [values(set, start, end)](#EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-uint256-uint256-)
+
+<a id="EnumerableSetExtended-add-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--"></a>
+
+### `add(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool`
+*internal*
+
+Add a value to a set. O(1).
+
+Returns true if the value was added to the set, that is if it was not
+already present.
+
+<a id="EnumerableSetExtended-remove-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--"></a>
+
+### `remove(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool`
+*internal*
+
+Removes a value from a set. O(1).
+
+Returns true if the value was removed from the set, that is if it was
+present.
+
+<a id="EnumerableSetExtended-clear-struct-EnumerableSetExtended-Bytes32x2Set-"></a>
+
+### `clear(struct EnumerableSetExtended.Bytes32x2Set self)`
+*internal*
+
+Removes all the values from a set. O(n).
+
+WARNING: Developers should keep in mind that this function has an unbounded cost and using it may render the
+function uncallable if the set grows to the point where clearing it consumes too much gas to fit in a block.
+
+<a id="EnumerableSetExtended-contains-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--"></a>
+
+### `contains(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool`
+*internal*
+
+Returns true if the value is in the set. O(1).
+
+<a id="EnumerableSetExtended-length-struct-EnumerableSetExtended-Bytes32x2Set-"></a>
+
+### `length(struct EnumerableSetExtended.Bytes32x2Set self) → uint256`
+*internal*
+
+Returns the number of values on the set. O(1).
+
+<a id="EnumerableSetExtended-at-struct-EnumerableSetExtended-Bytes32x2Set-uint256-"></a>
+
+### `at(struct EnumerableSetExtended.Bytes32x2Set self, uint256 index) → bytes32[2]`
+*internal*
+
+Returns the value stored at position `index` in the set. O(1).
+
+Note that there are no guarantees on the ordering of values inside the
+array, and it may change when more values are added or removed.
+
+Requirements:
+
+- `index` must be strictly less than [`EnumerableMapExtended.length`](#EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-).
+
+<a id="EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-"></a>
+
+### `values(struct EnumerableSetExtended.Bytes32x2Set self) → bytes32[2][]`
+*internal*
+
+Return the entire set in an array
+
+WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
+this function has an unbounded cost, and using it as part of a state-changing function may render the function
+uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+
+<a id="EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-uint256-uint256-"></a>
+
+### `values(struct EnumerableSetExtended.Bytes32x2Set set, uint256 start, uint256 end) → bytes32[2][]`
+*internal*
+
+Return a slice of the set in an array
+
+WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
+this function has an unbounded cost, and using it as part of a state-changing function may render the function
+uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+
