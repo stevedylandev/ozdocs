@@ -1,0 +1,182 @@
+---
+title: Utils
+description: Utils
+---
+
+This package provides the API for all Utils modules.
+
+<Callout>
+For an overview of the module, read the [Utils guide](utils.mdx).
+</Callout>
+
+## Initializable
+
+```ts
+import "./node_modules/@openzeppelin-compact/utils/src/Initializable" prefix Initializable_;
+```
+
+### Initializable
+
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/utils/src/Initializable.compact)
+
+**Circuits:**
+
+- [`initialize()`](#initialize)
+- [`assertInitialized()`](#assertinitialized)
+- [`assertNotInitialized()`](#assertnotinitialized)
+
+#### `initialize()` → circuit
+
+Initializes the state thus ensuring the calling circuit can only be called once.
+
+Requirements:
+
+* Contract must not be initialized.
+
+Constraints:
+
+* k=10, rows=38
+
+#### `assertInitialized()` → circuit
+
+Asserts that the contract has been initialized, throwing an error if not.
+
+Requirements:
+
+* Contract must be initialized.
+
+Constraints:
+
+* k=10, rows=31
+
+#### `assertNotInitialized()` → circuit
+
+Asserts that the contract has not been initialized, throwing an error if it has.
+
+Requirements:
+
+* Contract must not be initialized.
+
+Constraints:
+
+* k=10, rows=35
+
+## Pausable
+
+```ts
+import "./node_modules/@openzeppelin-compact/utils/src/Pausable" prefix Pausable_;
+```
+
+### Pausable
+
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/utils/src/Pausable.compact)
+
+**Circuits:**
+
+- [`isPaused()`](#ispaused)
+- [`assertPaused()`](#assertpaused)
+- [`assertNotPaused()`](#assertnotpaused)
+- [`_pause()`](#_pause)
+- [`_unpause()`](#_unpause)
+
+#### `isPaused()` → Boolean (circuit)
+
+Returns true if the contract is paused, and false otherwise.
+
+Constraints:
+
+* k=10, rows=32
+
+#### `assertPaused()` → circuit
+
+Makes a circuit only callable when the contract is paused.
+
+Requirements:
+
+* Contract must be paused.
+
+Constraints:
+
+* k=10, rows=31
+
+#### `assertNotPaused()` → circuit
+
+Makes a circuit only callable when the contract is not paused.
+
+Requirements:
+
+* Contract must not be paused.
+
+Constraints:
+
+* k=10, rows=35
+
+#### `_pause()` → circuit
+
+Triggers a stopped state.
+
+Requirements:
+
+* Contract must not be paused.
+
+Constraints:
+
+* k=10, rows=38
+
+#### `_unpause()` → circuit
+
+Lifts the pause on the contract.
+
+Requirements:
+
+* Contract must be paused.
+
+Constraints:
+
+* k=10, rows=34
+
+## Utils
+
+```ts
+import "./node_modules/@openzeppelin-compact/utils/src/Utils" prefix Utils_;
+```
+
+### Utils
+
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/utils/src/Utils.compact)
+
+<Callout>
+There’s no easy way to get the constraints of pure circuits at this time so the constraints of the circuits listed below have been omitted.
+</Callout>
+
+**Circuits:**
+
+- [`isKeyOrAddressZero(keyOrAddress)`](#iskeyoraddresszero)
+- [`isKeyZero(key)`](#iskeyzero)
+- [`isKeyOrAddressEqual(keyOrAddress, other)`](#iskeyoraddressequal)
+- [`isContractAddress(keyOrAddress)`](#iscontractaddress)
+- [`emptyString()`](#emptystring)
+
+#### `isKeyOrAddressZero(keyOrAddress: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean` (circuit)
+
+Returns whether `keyOrAddress` is the zero address.
+
+<Callout>
+Midnight's burn address is represented as `left<ZswapCoinPublicKey, ContractAddress>(default<ZswapCoinPublicKey>)` in Compact, so we've chosen to represent the zero address as this structure as well.
+</Callout>
+
+#### `isKeyZero(key: ZswapCoinPublicKey) → Boolean` (circuit)
+
+Returns whether `key` is the zero address.
+
+#### `isKeyOrAddressEqual(keyOrAddress: Either<ZswapCoinPublicKey, ContractAddress>, other: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean` (circuit)
+
+Returns whether `keyOrAddress` is equal to `other`. Assumes that a `ZswapCoinPublicKey` and a `ContractAddress` can never be equal.
+
+#### `isContractAddress(keyOrAddress: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean` (circuit)
+
+Returns whether `keyOrAddress` is a `ContractAddress` type.
+
+#### `emptyString() → Opaque<"string">` (circuit)
+
+A helper function that returns the empty string: `""`.

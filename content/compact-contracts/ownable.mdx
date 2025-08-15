@@ -1,0 +1,113 @@
+---
+title: Ownable
+description: Ownable
+---
+
+An unshielded Ownable library.
+This modules provides a basic access control mechanism, where there is an owner
+that can be granted exclusive access to specific circuits.
+This approach is perfectly reasonable for contracts that have a single administrative user.
+
+The initial owner must be set by using the [initialize](api/ownable.mdx#Ownable-initialize) circuit during construction.
+This can later be changed with [transferOwnership](api/ownable.mdx#Ownable-transferOwnership).
+
+## Ownership transfers
+
+Ownership can only be transferred to `ZswapCoinPublicKeys` through the main transfer circuits ([transferOwnership](api/ownable.mdx#Ownable-transferOwnership) and [_transferOwnership](api/ownable.mdx#Ownable-_transferOwnership)).
+In other words, ownership transfers to contract addresses are disallowed through these circuits.
+This is because Compact currently does not support contract-to-contract calls which means if a contract is granted ownership, the owner contract cannot directly call the protected circuit.
+
+### Experimental features
+
+This module offers experimental circuits that allow ownership to be granted to contract addresses ([_unsafeTransferOwnership](api/ownable.mdx#Ownable-_unsafeTransferOwnership) and [_unsafeUncheckedTransferOwnership](api/ownable.mdx#Ownable-_unsafeUncheckedTransferOwnership)).
+Note that the circuit names are very explicit ("unsafe") with these experimental circuits.
+Until contract-to-contract calls are supported,
+there is no direct way for a contract to call circuits of other contracts or transfer ownership back to a user.
+
+<Callout>
+The unsafe circuits are planned to become deprecated once contract-to-contract calls become available.
+</Callout>
+
+## Usage
+
+Import the Ownable module into the implementing contract.
+It’s recommended to prefix the module with `Ownable_` to avoid circuit signature clashes.
+
+```ts
+pragma language_version >= 0.16.0;
+
+import CompactStandardLibrary;
+import "./node_modules/@openzeppelin-compact/ownable/src/Ownable" prefix Ownable_;
+
+constructor(
+  initialOwner: Either<ZswapCoinPublicKey, ContractAddress>
+) 
+  Ownable_initialize(initialOwner);
+```
+
+To protect a circuit so that only the contract owner may call it,
+insert the `assertOnlyOwner` circuit in the beginning of the circuit body like this:
+
+```ts
+export circuit mySensitiveCircuit(): [] 
+  Ownable_assertOnlyOwner();
+
+  // Do something
+```
+
+Contracts may expose [transferOwnership](api/ownable.mdx#Ownable-transferOwnership) to allow the owner to transfer ownership.
+
+```ts
+export circuit transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>): [] 
+  Ownable_transferOwnership(newOwner);
+```
+
+Here’s a complete contract showcasing how to integrate the Ownable module and protect sensitive circuits.
+
+```ts
+pragma language_version >= 0.16.0;
+
+import CompactStandardLibrary;
+import "./node_modules/@openzeppelin-compact/ownable/src/Ownable" prefix Ownable_;
+
+/**
+ * Set `initialOwner` as the owner of the contract.
+ */
+constructor(initialOwner: Either<ZswapCoinPublicKey, ContractAddress>) 
+  Ownable_initialize(initialOwner);
+
+/**
+ * The current owner of the contact.
+ */
+export circuit owner(): Either<ZswapCoinPublicKey, ContractAddress> 
+  return Ownable_owner();
+
+/**
+ * Transfers ownership of the contract.
+ * Can only be called by the current owner.
+ */
+export circuit transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>): [] 
+  Ownable_transferOwnership(newOwner);
+
+/**
+ * Leaves the contract without an owner.
+ * Can only be called by the current owner.
+ * Renouncing ownership means `mySensitiveCircuit` can never be called again.
+ */
+export circuit renounceOwnership(): [] 
+  Ownable_renounceOwnership();
+
+/**
+ * This is the protected circuit that only the current owner can call.
+ */
+export circuit mySensitiveCircuit(): [] 
+  // Protects the circuit
+  Ownable_assertOnlyOwner();
+
+  // Do something
+```
+
+<Callout>
+For more complex logic, contracts may transfer ownership to another user irrespective of the caller by leveraging [_transferOwnership](api/ownable.mdx#Ownable-_transferOwnership).
+</Callout>
+This is generally more useful when contract addresses are the owner or when a contract has a unique deployment process.
