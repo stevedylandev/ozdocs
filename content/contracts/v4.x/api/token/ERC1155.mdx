@@ -156,7 +156,7 @@ This implementation returns the same URI for *all* token types. It relies
 on the token type ID substitution mechanism
 [defined in the ERC](https://eips.ethereum.org/EIPS/eip-1155#metadata).
 
-Clients calling this function must replace the `\id\` substring with the
+Clients calling this function must replace the `\{id\}` substring with the
 actual token type ID.
 
 <a id="ERC1155-balanceOf-address-uint256-"></a>
@@ -312,11 +312,11 @@ Sets a new URI for all token types, by relying on the token type ID
 substitution mechanism
 [defined in the ERC](https://eips.ethereum.org/EIPS/eip-1155#metadata).
 
-By this mechanism, any occurrence of the `\id\` substring in either the
+By this mechanism, any occurrence of the `\{id\}` substring in either the
 URI or any of the values in the JSON file at said URI will be replaced by
 clients with the token type ID.
 
-For example, the `https://token-cdn-domain/\id\.json` URI would be
+For example, the `https://token-cdn-domain/\{id\}.json` URI would be
 interpreted by clients as
 `https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json`
 for token type ID 0x4cce0.
@@ -1094,7 +1094,7 @@ in the [ERC](https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions).
 
 Returns the URI for token type `id`.
 
-If the `\id\` substring is present in the URI, it must be replaced by
+If the `\{id\}` substring is present in the URI, it must be replaced by
 clients with the actual token type ID.
 
 <a id="ERC1155Holder"></a>

@@ -161,7 +161,7 @@ Virtual function that returns the signable hash for a user operations. Since v0.
 ### `_payPrefund(uint256 missingAccountFunds)`
 *internal*
 
-Sends the missing funds for executing the user operation to the `entrypoint`.
+Sends the missing funds for executing the user operation to the {entrypoint}.
 The `missingAccountFunds` must be defined by the entrypoint when calling [`Account.validateUserOp`](#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-).
 
 <a id="Account-_checkEntryPoint--"></a>
@@ -169,14 +169,14 @@ The `missingAccountFunds` must be defined by the entrypoint when calling [`Accou
 ### `_checkEntryPoint()`
 *internal*
 
-Ensures the caller is the entrypoint.
+Ensures the caller is the {entrypoint}.
 
 <a id="Account-_checkEntryPointOrSelf--"></a>
 
 ### `_checkEntryPointOrSelf()`
 *internal*
 
-Ensures the caller is the entrypoint or the account itself.
+Ensures the caller is the {entrypoint} or the account itself.
 
 <a id="Account-receive--"></a>
 

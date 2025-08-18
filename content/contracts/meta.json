@@ -1,0 +1,5 @@
+{
+  "title": "OpenZeppelin Contracts",
+  "root": false,
+  "pages": ["v5.x", "v4.x"]
+}

@@ -798,8 +798,8 @@ Helper library to format and parse CAIP-10 identifiers
 
 [CAIP-10](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md) defines account identifiers as:
 account_id:        chain_id + ":" + account_address
-chain_id:          [-a-z0-9]3,8:[-_a-zA-Z0-9]1,32 (See [`CAIP2`](#CAIP2))
-account_address:   [-.%a-zA-Z0-9]1,128
+chain_id:          [-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32} (See [`CAIP2`](#CAIP2))
+account_address:   [-.%a-zA-Z0-9]{1,128}
 
 WARNING: According to [CAIP-10's canonicalization section](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md#canonicalization),
 the implementation remains at the developer's discretion. Please note that case variations may introduce ambiguity.
@@ -850,8 +850,8 @@ Helper library to format and parse CAIP-2 identifiers
 
 [CAIP-2](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-2.md) defines chain identifiers as:
 chain_id:    namespace + ":" + reference
-namespace:   [-a-z0-9]3,8
-reference:   [-_a-zA-Z0-9]1,32
+namespace:   [-a-z0-9]{3,8}
+reference:   [-_a-zA-Z0-9]{1,32}
 
 WARNING: In some cases, multiple CAIP-2 identifiers may all be valid representation of a single chain.
 For EVM chains, it is recommended to use `eip155:xxx` as the canonical representation (where `xxx` is

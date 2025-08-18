@@ -1503,15 +1503,17 @@ functions, and ideally only used in `external` functions. See [`AccessManaged.re
 Restricts access to a function as defined by the connected Authority for this contract and the
 caller and selector of the function that entered the contract.
 
-<Callout type="important">
+[IMPORTANT]
+====
 In general, this modifier should only be used on `external` functions. It is okay to use it on `public`
 functions that are used as external entry points and are not called internally. Unless you know what you're
 doing, it should never be used on `internal` functions. Failure to follow these rules can have critical security
 implications! This is because the permissions are determined by the function that entered the contract, i.e. the
 function at the bottom of the call stack, and not the function where the modifier is visible in the source code.
-</Callout>
+====
 
-<Callout type="warning">
+[WARNING]
+====
 Avoid adding this modifier to the [`receive()`](https://docs.soliditylang.org/en/v0.8.20/contracts.html#receive-ether-function)
 function or the [`fallback()`](https://docs.soliditylang.org/en/v0.8.20/contracts.html#fallback-function). These
 functions are the only execution paths where a function selector cannot be unambiguously determined from the calldata
@@ -1519,7 +1521,7 @@ since the selector defaults to `0x00000000` in the `receive()` function and simi
 if no calldata is provided. (See [`AccessManaged._checkCanCall`](#AccessManaged-_checkCanCall-address-bytes-)).
 
 The `receive()` function will always panic whereas the `fallback()` may panic depending on the calldata length.
-</Callout>
+====
 
 <a id="AccessManaged-constructor-address-"></a>
 
@@ -2850,3 +2852,4 @@ Standard interface for permissioning originally defined in Dappsys.
 *external*
 
 Returns true if the caller can invoke on a target the function identified by a function selector.
+
