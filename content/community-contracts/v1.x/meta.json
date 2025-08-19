@@ -1,0 +1,12 @@
+{
+  "title": "v1.x",
+  "pages": [
+    "index",
+    "account-modules",
+    "crosschain",
+    "paymasters", 
+    "utilities",
+    "api"
+  ],
+  "root": true
+}

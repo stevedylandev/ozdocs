@@ -1,0 +1,13 @@
+{
+  "title": "v0.x",
+  "pages": [
+    "index",
+    "get-started", 
+    "access-control",
+    "ownable",
+    "tokens",
+    "utils",
+    "helpers"
+  ],
+  "root": true
+}

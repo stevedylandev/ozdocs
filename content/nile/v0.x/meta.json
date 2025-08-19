@@ -1,0 +1,15 @@
+{
+  "title": "v0.x",
+  "pages": [
+    "index",
+    "cli",
+    "nre",
+    "scripts",
+    "testing",
+    "plugins",
+    "create_plugin",
+    "snippets",
+    "strings"
+  ],
+  "root": true
+}

@@ -1,0 +1,9 @@
+{
+  "title": "v0.x", 
+  "pages": [
+    "index",
+    "token",
+    "api"
+  ],
+  "root": true
+}

@@ -6,4 +6,6 @@ export const source = loader({
 	// it assigns a URL to your pages
 	baseUrl: "/",
 	source: docs.toFumadocsSource(),
+	// Disable global versioning - each library manages its own versions
+	versioned: false,
 });

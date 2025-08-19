@@ -1,0 +1,16 @@
+{
+  "title": "v0.x",
+  "pages": [
+    "index",
+    "zkCircuits101",
+    "accessControl",
+    "ownable",
+    "fungibleToken",
+    "nonFungibleToken", 
+    "multitoken",
+    "extensibility",
+    "utils",
+    "api"
+  ],
+  "root": true
+}

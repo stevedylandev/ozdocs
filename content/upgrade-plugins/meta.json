@@ -1,0 +1,20 @@
+{
+  "title": "Upgrade Plugins",
+  "pages": [
+    "index",
+    "hardhat-upgrades",
+    "truffle-upgrades", 
+    "foundry",
+    "writing-upgradeable",
+    "proxies",
+    "migrate-from-cli",
+    "network-files",
+    "defender-deploy",
+    "foundry-defender",
+    "api-core",
+    "api-hardhat-upgrades", 
+    "api-truffle-upgrades",
+    "faq"
+  ],
+  "root": true
+}
