@@ -16,5 +16,5 @@
     "api-truffle-upgrades",
     "faq"
   ],
-  "root": true
+  "root": false
 }

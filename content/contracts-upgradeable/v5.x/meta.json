@@ -23,5 +23,5 @@
     "eoa-delegation",
     "api"
   ],
-  "root": true
+  "root": false
 }

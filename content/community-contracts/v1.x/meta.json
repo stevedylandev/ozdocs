@@ -8,5 +8,5 @@
     "utilities",
     "api"
   ],
-  "root": true
+  "root": false
 }

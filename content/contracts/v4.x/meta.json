@@ -18,5 +18,5 @@
     "extending-contracts",
     "faq"
   ],
-  "root": true
+  "root": false
 }

@@ -15,5 +15,5 @@
     "faq",
     "changelog"
   ],
-  "root": true
+  "root": false
 }

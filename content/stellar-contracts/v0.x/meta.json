@@ -9,5 +9,5 @@
     "utils",
     "helpers"
   ],
-  "root": true
+  "root": false
 }

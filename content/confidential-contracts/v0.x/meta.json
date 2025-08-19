@@ -5,5 +5,5 @@
     "token",
     "api"
   ],
-  "root": true
+  "root": false
 }

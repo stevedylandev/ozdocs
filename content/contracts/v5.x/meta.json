@@ -19,5 +19,5 @@
     "faq",
     "api"
   ],
-  "root": true
+  "root": false
 }

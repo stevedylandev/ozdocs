@@ -29,5 +29,5 @@
     "utils",
     "api"
   ],
-  "root": true
+  "root": false
 }
