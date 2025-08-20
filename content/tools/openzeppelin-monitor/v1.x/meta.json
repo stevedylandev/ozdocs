@@ -1,15 +1,15 @@
 {
-  "title": "v1.x",
-  "pages": [
-    "index",
-    "quickstart",
-    "architecture",
-    "project-structure",
-    "rpc",
-    "scripts",
-    "testing",
-    "error",
-    "contribution"
-  ],
-  "root": false
+	"title": "v1.x",
+	"pages": [
+		"index",
+		"quickstart",
+		"architecture",
+		"project-structure",
+		"rpc",
+		"scripts",
+		"testing",
+		"error",
+		"contribution"
+	],
+	"root": false
 }

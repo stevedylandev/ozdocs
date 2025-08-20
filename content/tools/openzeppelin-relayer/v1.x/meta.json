@@ -1,0 +1,15 @@
+{
+	"title": "v1.x",
+	"pages": [
+		"index",
+		"quickstart",
+		"configuration",
+		"evm",
+		"solana",
+		"stellar",
+		"structure",
+		"roadmap",
+		"plugins"
+	],
+	"root": false
+}
