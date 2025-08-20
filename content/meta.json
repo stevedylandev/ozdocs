@@ -2,6 +2,7 @@
 	"title": "Docs",
 	"root": false,
 	"pages": [
+		"---Contracts---",
 		"contracts",
 		"contracts-upgradeable",
 		"community-contracts",

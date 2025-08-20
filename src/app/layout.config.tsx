@@ -1,4 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { GithubIcon, HomeIcon } from "lucide-react";
 
 /**
  * Shared layout configurations
@@ -86,5 +87,19 @@ export const baseOptions: BaseLayoutProps = {
 		),
 	},
 	// see https://fumadocs.dev/docs/ui/navigation/links
-	links: [],
+	links: [
+		{
+			text: "Home",
+			url: "/",
+			icon: <HomeIcon />,
+			secondary: false,
+		},
+		{
+			text: "GitHub",
+			url: "https://github.com/OpenZeppelin",
+			icon: <GithubIcon />,
+			// secondary items will be displayed differently on navbar
+			secondary: false,
+		},
+	],
 };

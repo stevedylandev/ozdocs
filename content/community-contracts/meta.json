@@ -1,5 +1,6 @@
 {
 	"title": "Solidity Community Contracts",
 	"root": false,
-	"pages": ["v1.x"]
+	"icon": "HomeIcon",
+	"pages": ["...v1.x"]
 }
