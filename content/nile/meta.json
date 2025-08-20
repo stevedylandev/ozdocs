@@ -1,5 +1,5 @@
 {
-  "title": "Nile",
-  "root": false,
-  "pages": ["v0.x"]
+	"title": "Starknet Nile CLI",
+	"root": false,
+	"pages": ["v0.x"]
 }

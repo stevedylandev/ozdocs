@@ -1,5 +1,5 @@
 {
-  "title": "Uniswap Hooks",
-  "root": false,
-  "pages": ["v1.x"]
+	"title": "Solidity Uniswap Hooks",
+	"root": false,
+	"pages": ["v1.x"]
 }

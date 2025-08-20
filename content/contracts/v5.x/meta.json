@@ -1,23 +1,23 @@
 {
-  "title": "v5.x",
-  "pages": [
-    "index",
-    "wizard",
-    "tokens",
-    "erc20",
-    "erc20-supply",
-    "erc721",
-    "erc1155",
-    "erc4626",
-    "erc6909",
-    "access-control",
-    "account-abstraction",
-    "accounts",
-    "governance",
-    "upgradeable",
-    "extending-contracts",
-    "faq",
-    "api"
-  ],
-  "root": false
+	"title": "v5.x",
+	"pages": [
+		"index",
+		"wizard",
+		"tokens",
+		"erc20",
+		"erc20-supply",
+		"erc721",
+		"erc1155",
+		"erc4626",
+		"erc6909",
+		"access-control",
+		"account-abstraction",
+		"accounts",
+		"governance",
+		"upgradeable",
+		"extending-contracts",
+		"faq",
+		"api"
+	],
+	"root": false
 }

@@ -1,5 +1,5 @@
 {
-  "title": "Cairo Contracts",
-  "root": false,
-  "pages": ["v2.x"]
+	"title": "Starknet Contracts",
+	"root": false,
+	"pages": ["v2.x"]
 }

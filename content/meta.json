@@ -1,0 +1,14 @@
+{
+	"title": "Docs",
+	"root": false,
+	"pages": [
+		"contracts",
+		"contracts-upgradeable",
+		"community-contracts",
+		"upgrade-plugins",
+		"---Tools---",
+		"...tools",
+		"---Ecosystems---",
+		"..."
+	]
+}
