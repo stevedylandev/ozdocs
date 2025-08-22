@@ -1,0 +1,10 @@
+{
+	"title": "Tools",
+	"root": false,
+	"pages": [
+		"openzeppelin-monitor",
+		"openzeppelin-relayer",
+		"contracts-ui-builder",
+		"defender"
+	]
+}
