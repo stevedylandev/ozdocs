@@ -6,7 +6,7 @@ description: How to set up on-chain governance
 In this guide we will learn how OpenZeppelin’s Governor contract works, how to set it up, and how to use it to create proposals, vote for them, and execute them, using tools provided by Ethers.js and Tally.
 
 <Callout>
-Find detailed contract documentation at [Governance API](contracts/v5.x/api/governance.mdx).
+Find detailed contract documentation at [Governance API](contracts/v4.x/api/governance.mdx).
 </Callout>
 
 ## Introduction
@@ -54,11 +54,11 @@ If your project already has a live token that does not include ERC20Votes and is
 <include cwd lang='solidity'>./examples/governance/MyTokenWrapped.sol</include>
 
 <Callout>
-The only other source of voting power available in OpenZeppelin Contracts currently is [`ERC721Votes`](contracts/v5.x/api/token/ERC721.mdx#ERC721Votes). ERC721 tokens that don’t provide this functionality can be wrapped into a voting tokens using a combination of [`ERC721Votes`](contracts/v5.x/api/token/ERC721.mdx#ERC721Votes) and [`ERC721Wrapper`](contracts/v5.x/api/token/ERC721Wrapper.mdx#ERC721Wrapper).
+The only other source of voting power available in OpenZeppelin Contracts currently is [`ERC721Votes`](contracts/v4.x/api/token/ERC721.mdx#ERC721Votes). ERC721 tokens that don’t provide this functionality can be wrapped into a voting tokens using a combination of [`ERC721Votes`](contracts/v4.x/api/token/ERC721.mdx#ERC721Votes) and [`ERC721Wrapper`](contracts/v4.x/api/token/ERC721Wrapper.mdx#ERC721Wrapper).
 </Callout>
 
 <Callout>
-The internal clock used by the token to store voting balances will dictate the operating mode of the Governor contract attached to it. By default, block numbers are used. Since v4.9, developers can override the [IERC6372](contracts/v5.x/api/interfaces.mdx#IERC6372) clock to use timestamps instead of block numbers.
+The internal clock used by the token to store voting balances will dictate the operating mode of the Governor contract attached to it. By default, block numbers are used. Since v4.9, developers can override the [IERC6372](contracts/v4.x/api/interfaces.mdx#IERC6372) clock to use timestamps instead of block numbers.
 </Callout>
 
 ### Governor
@@ -191,7 +191,7 @@ Therefore, designing a timestamp based voting system starts with the token.
 
 ### Token
 
-Since v4.9, all voting contracts (including [`ERC20Votes`](contracts/v5.x/api/token/ERC20.mdx#ERC20Votes) and [`ERC721Votes`](contracts/v5.x/api/token/ERC721.mdx#ERC721Votes)) rely on [IERC6372](contracts/v5.x/api/interfaces.mdx#IERC6372) for clock management. In order to change from operating with block numbers to operating with timestamps, all that is required is to override the `clock()` and `CLOCK_MODE()` functions.
+Since v4.9, all voting contracts (including [`ERC20Votes`](contracts/v4.x/api/token/ERC20.mdx#ERC20Votes) and [`ERC721Votes`](contracts/v4.x/api/token/ERC721.mdx#ERC721Votes)) rely on [IERC6372](contracts/v4.x/api/interfaces.mdx#IERC6372) for clock management. In order to change from operating with block numbers to operating with timestamps, all that is required is to override the `clock()` and `CLOCK_MODE()` functions.
 
 <include cwd lang='solidity'>./examples/governance/MyTokenTimestampBased.sol</include>
 
