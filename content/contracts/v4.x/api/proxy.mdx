@@ -13,25 +13,25 @@ Most of the proxies below are built on an abstract base contract.
 
 * [`Proxy`](#Proxy): Abstract contract implementing the core delegation functionality.
 
-In order to avoid clashes with the storage variables of the implementation contract behind a proxy, we use [ERC-1967](https://eips.ethereum.org/EIPS/eip-1967) storage slots.
+In order to avoid clashes with the storage variables of the implementation contract behind a proxy, we use [EIP1967](https://eips.ethereum.org/EIPS/eip-1967) storage slots.
 
-* [`ERC1967Utils`](#ERC1967Utils): Internal functions to get and set the storage slots defined in ERC-1967.
-* [`ERC1967Proxy`](#ERC1967Proxy): A proxy using ERC-1967 storage slots. Not upgradeable by default.
+* [`ERC1967Upgrade`](#ERC1967Upgrade): Internal functions to get and set the storage slots defined in EIP1967.
+* [`ERC1967Proxy`](#ERC1967Proxy): A proxy using EIP1967 storage slots. Not upgradeable by default.
 
-There are two alternative ways to add upgradeability to an ERC-1967 proxy. Their differences are explained below in [Transparent vs UUPS Proxies](#transparent-vs-uups-proxies).
+There are two alternative ways to add upgradeability to an ERC1967 proxy. Their differences are explained below in [Transparent vs UUPS Proxies](#transparent-vs-uups-proxies).
 
-* [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy): A proxy with a built-in immutable admin and upgrade interface.
+* [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy): A proxy with a built in admin and upgrade interface.
 * [`UUPSUpgradeable`](#UUPSUpgradeable): An upgradeability mechanism to be included in the implementation contract.
 
 **🔥 CAUTION**\
-Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index.adoc) for Hardhat and Foundry.
+Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index.adoc) for Truffle and Hardhat.
 
 A different family of proxies are beacon proxies. This pattern, popularized by Dharma, allows multiple proxies to be upgraded to a different implementation in a single transaction.
 
 * [`BeaconProxy`](#BeaconProxy): A proxy that retrieves its implementation from a beacon contract.
 * [`UpgradeableBeacon`](#UpgradeableBeacon): A beacon contract with a built in admin that can upgrade the [`BeaconProxy`](#BeaconProxy) pointing to it.
 
-In this pattern, the proxy contract doesn’t hold the implementation address in storage like an ERC-1967 proxy. Instead, the address is stored in a separate beacon contract. The `upgrade` operations are sent to the beacon instead of to the proxy contract, and all proxies that follow that beacon are automatically upgraded.
+In this pattern, the proxy contract doesn’t hold the implementation address in storage like an ERC1967 proxy. Instead, the address is stored in a separate beacon contract. The `upgrade` operations are sent to the beacon instead of to the proxy contract, and all proxies that follow that beacon are automatically upgraded.
 
 Outside the realm of upgradeability, proxies can also be useful to make cheap contract clones, such as those created by an on-chain factory contract that creates many instances of the same contract. These instances are designed to be both cheap to deploy, and cheap to call.
 
@@ -39,7 +39,7 @@ Outside the realm of upgradeability, proxies can also be useful to make cheap co
 
 ## Transparent vs UUPS Proxies
 
-The original proxies included in OpenZeppelin followed the [Transparent Proxy Pattern](https://blog.openzeppelin.com/the-transparent-proxy-pattern/). While this pattern is still provided, our recommendation is now shifting towards UUPS proxies, which are both lightweight and versatile. The name UUPS comes from [ERC-1822](https://eips.ethereum.org/EIPS/eip-1822), which first documented the pattern.
+The original proxies included in OpenZeppelin followed the [Transparent Proxy Pattern](https://blog.openzeppelin.com/the-transparent-proxy-pattern/). While this pattern is still provided, our recommendation is now shifting towards UUPS proxies, which are both lightweight and versatile. The name UUPS comes from [EIP1822](https://eips.ethereum.org/EIPS/eip-1822), which first documented the pattern.
 
 While both of these share the same interface for upgrades, in UUPS proxies the upgrade is handled by the implementation, and can eventually be removed. Transparent proxies, on the other hand, include the upgrade and admin logic in the proxy itself. This means [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy) is more expensive to deploy than what is possible with UUPS proxies.
 
@@ -52,19 +52,19 @@ By default, the upgrade functionality included in [`UUPSUpgradeable`](#UUPSUpgra
 * Adding a flag mechanism in the implementation that will disable the upgrade function when triggered.
 * Upgrading to an implementation that features an upgrade mechanism without the additional security check, and then upgrading again to another implementation without the upgrade mechanism.
 
-The current implementation of this security mechanism uses [ERC-1822](https://eips.ethereum.org/EIPS/eip-1822) to detect the storage slot used by the implementation. A previous implementation, now deprecated, relied on a rollback check. It is possible to upgrade from a contract using the old mechanism to a new one. The inverse is however not possible, as old implementations (before version 4.5) did not include the ERC-1822 interface.
+The current implementation of this security mechanism uses [EIP1822](https://eips.ethereum.org/EIPS/eip-1822) to detect the storage slot used by the implementation. A previous implementation, now deprecated, relied on a rollback check. It is possible to upgrade from a contract using the old mechanism to a new one. The inverse is however not possible, as old implementations (before version 4.5) did not include the `ERC1822` interface.
 
 ## Core
 
 [`Proxy`](#Proxy)
 
-## ERC-1967
+## ERC1967
 
 [`IERC1967`](interfaces#IERC1967)
 
 [`ERC1967Proxy`](#ERC1967Proxy)
 
-[`ERC1967Utils`](#ERC1967Utils)
+[`ERC1967Upgrade`](#ERC1967Upgrade)
 
 ## Transparent Proxy
 
@@ -92,13 +92,13 @@ The current implementation of this security mechanism uses [ERC-1822](https://ei
 
 <a id="Clones"></a>
 
-## `Clones` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/Clones.sol)
+## `Clones` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/Clones.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/Clones.sol";
 ```
 
-[ERC-1167](https://eips.ethereum.org/EIPS/eip-1167) is a standard for
+[EIP 1167](https://eips.ethereum.org/EIPS/eip-1167) is a standard for
 deploying minimal proxy contracts, also known as "clones".
 
 > To simply and cheaply clone contract functionality in an immutable way, this standard specifies
@@ -108,195 +108,51 @@ The library includes functions to deploy a proxy using either `create` (traditio
 (salted deterministic deployment). It also includes functions to predict the addresses of clones deployed using the
 deterministic method.
 
+_Available since v3.4._
+
 ### Functions
 - [clone(implementation)](#Clones-clone-address-)
-- [clone(implementation, value)](#Clones-clone-address-uint256-)
 - [cloneDeterministic(implementation, salt)](#Clones-cloneDeterministic-address-bytes32-)
-- [cloneDeterministic(implementation, salt, value)](#Clones-cloneDeterministic-address-bytes32-uint256-)
 - [predictDeterministicAddress(implementation, salt, deployer)](#Clones-predictDeterministicAddress-address-bytes32-address-)
 - [predictDeterministicAddress(implementation, salt)](#Clones-predictDeterministicAddress-address-bytes32-)
-- [cloneWithImmutableArgs(implementation, args)](#Clones-cloneWithImmutableArgs-address-bytes-)
-- [cloneWithImmutableArgs(implementation, args, value)](#Clones-cloneWithImmutableArgs-address-bytes-uint256-)
-- [cloneDeterministicWithImmutableArgs(implementation, args, salt)](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-)
-- [cloneDeterministicWithImmutableArgs(implementation, args, salt, value)](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-)
-- [predictDeterministicAddressWithImmutableArgs(implementation, args, salt, deployer)](#Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-address-)
-- [predictDeterministicAddressWithImmutableArgs(implementation, args, salt)](#Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-)
-- [fetchCloneArgs(instance)](#Clones-fetchCloneArgs-address-)
-
-### Errors
-- [CloneArgumentsTooLong()](#Clones-CloneArgumentsTooLong--)
 
 <a id="Clones-clone-address-"></a>
 
 ### `clone(address implementation) → address instance`
 *internal*
 
-Deploys and returns the address of a clone that mimics the behavior of `implementation`.
+Deploys and returns the address of a clone that mimics the behaviour of `implementation`.
 
 This function uses the create opcode, which should never revert.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-<a id="Clones-clone-address-uint256-"></a>
-
-### `clone(address implementation, uint256 value) → address instance`
-*internal*
-
-Same as [clone](#Clones-clone-address-), but with a `value` parameter to send native currency
-to the new contract.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-to always have enough balance for new deployments. Consider exposing this function under a payable method.
 
 <a id="Clones-cloneDeterministic-address-bytes32-"></a>
 
 ### `cloneDeterministic(address implementation, bytes32 salt) → address instance`
 *internal*
 
-Deploys and returns the address of a clone that mimics the behavior of `implementation`.
+Deploys and returns the address of a clone that mimics the behaviour of `implementation`.
 
 This function uses the create2 opcode and a `salt` to deterministically deploy
-the clone. Using the same `implementation` and `salt` multiple times will revert, since
+the clone. Using the same `implementation` and `salt` multiple time will revert, since
 the clones cannot be deployed twice at the same address.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-<a id="Clones-cloneDeterministic-address-bytes32-uint256-"></a>
-
-### `cloneDeterministic(address implementation, bytes32 salt, uint256 value) → address instance`
-*internal*
-
-Same as [cloneDeterministic](#Clones-cloneDeterministic-address-bytes32-), but with
-a `value` parameter to send native currency to the new contract.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-to always have enough balance for new deployments. Consider exposing this function under a payable method.
 
 <a id="Clones-predictDeterministicAddress-address-bytes32-address-"></a>
 
 ### `predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted`
 *internal*
 
-Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-uint256-).
+Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-).
 
 <a id="Clones-predictDeterministicAddress-address-bytes32-"></a>
 
 ### `predictDeterministicAddress(address implementation, bytes32 salt) → address predicted`
 *internal*
 
-Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-uint256-).
-
-<a id="Clones-cloneWithImmutableArgs-address-bytes-"></a>
-
-### `cloneWithImmutableArgs(address implementation, bytes args) → address instance`
-*internal*
-
-Deploys and returns the address of a clone that mimics the behavior of `implementation` with custom
-immutable arguments. These are provided through `args` and cannot be changed after deployment. To
-access the arguments within the implementation, use [`Clones.fetchCloneArgs`](#Clones-fetchCloneArgs-address-).
-
-This function uses the create opcode, which should never revert.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-<a id="Clones-cloneWithImmutableArgs-address-bytes-uint256-"></a>
-
-### `cloneWithImmutableArgs(address implementation, bytes args, uint256 value) → address instance`
-*internal*
-
-Same as [cloneWithImmutableArgs](#Clones-cloneWithImmutableArgs-address-bytes-), but with a `value`
-parameter to send native currency to the new contract.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-to always have enough balance for new deployments. Consider exposing this function under a payable method.
-
-<a id="Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-"></a>
-
-### `cloneDeterministicWithImmutableArgs(address implementation, bytes args, bytes32 salt) → address instance`
-*internal*
-
-Deploys and returns the address of a clone that mimics the behavior of `implementation` with custom
-immutable arguments. These are provided through `args` and cannot be changed after deployment. To
-access the arguments within the implementation, use [`Clones.fetchCloneArgs`](#Clones-fetchCloneArgs-address-).
-
-This function uses the create2 opcode and a `salt` to deterministically deploy the clone. Using the same
-`implementation`, `args` and `salt` multiple times will revert, since the clones cannot be deployed twice
-at the same address.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-<a id="Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-"></a>
-
-### `cloneDeterministicWithImmutableArgs(address implementation, bytes args, bytes32 salt, uint256 value) → address instance`
-*internal*
-
-Same as [cloneDeterministicWithImmutableArgs](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-),
-but with a `value` parameter to send native currency to the new contract.
-
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
-without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
-have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
-
-NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-to always have enough balance for new deployments. Consider exposing this function under a payable method.
-
-<a id="Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-address-"></a>
-
-### `predictDeterministicAddressWithImmutableArgs(address implementation, bytes args, bytes32 salt, address deployer) → address predicted`
-*internal*
-
-Computes the address of a clone deployed using [`Clones.cloneDeterministicWithImmutableArgs`](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-).
-
-<a id="Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-"></a>
-
-### `predictDeterministicAddressWithImmutableArgs(address implementation, bytes args, bytes32 salt) → address predicted`
-*internal*
-
-Computes the address of a clone deployed using [`Clones.cloneDeterministicWithImmutableArgs`](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-).
-
-<a id="Clones-fetchCloneArgs-address-"></a>
-
-### `fetchCloneArgs(address instance) → bytes`
-*internal*
-
-Get the immutable args attached to a clone.
-
-- If `instance` is a clone that was deployed using `clone` or `cloneDeterministic`, this
-  function will return an empty array.
-- If `instance` is a clone that was deployed using `cloneWithImmutableArgs` or
-  `cloneDeterministicWithImmutableArgs`, this function will return the args array used at
-  creation.
-- If `instance` is NOT a clone deployed using this library, the behavior is undefined. This
-  function should only be used to check addresses that are known to be clones.
-
-<a id="Clones-CloneArgumentsTooLong--"></a>
-
-### `CloneArgumentsTooLong()`
-*error*
+Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-).
 
 <a id="ERC1967Proxy"></a>
 
-## `ERC1967Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/ERC1967/ERC1967Proxy.sol)
+## `ERC1967Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/ERC1967/ERC1967Proxy.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
@@ -304,159 +160,162 @@ import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
 This contract implements an upgradeable proxy. It is upgradeable because calls are delegated to an
 implementation address that can be changed. This address is stored in storage in the location specified by
-[ERC-1967](https://eips.ethereum.org/EIPS/eip-1967), so that it doesn't conflict with the storage layout of the
+[EIP1967](https://eips.ethereum.org/EIPS/eip-1967), so that it doesn't conflict with the storage layout of the
 implementation behind the proxy.
 
 ### Functions
-- [constructor(implementation, _data)](#ERC1967Proxy-constructor-address-bytes-)
+- [constructor(_logic, _data)](#ERC1967Proxy-constructor-address-bytes-)
 - [_implementation()](#ERC1967Proxy-_implementation--)
+
+#### ERC1967Upgrade
+- [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
+- [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
+- [_upgradeToAndCall(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-)
+- [_upgradeToAndCallUUPS(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-)
+- [_getAdmin()](#ERC1967Upgrade-_getAdmin--)
+- [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
+- [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
+- [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
+
+#### IERC1967
 
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
+- [receive()](#Proxy-receive--)
+- [_beforeFallback()](#Proxy-_beforeFallback--)
+
+### Events
+
+#### ERC1967Upgrade
+
+#### IERC1967
+- [Upgraded(implementation)](#IERC1967-Upgraded-address-)
+- [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
+- [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
+
+#### Proxy
 
 <a id="ERC1967Proxy-constructor-address-bytes-"></a>
 
-### `constructor(address implementation, bytes _data)`
+### `constructor(address _logic, bytes _data)`
 *public*
 
-Initializes the upgradeable proxy with an initial implementation specified by `implementation`.
+Initializes the upgradeable proxy with an initial implementation specified by `_logic`.
 
-If `_data` is nonempty, it's used as data in a delegate call to `implementation`. This will typically be an
-encoded function call, and allows initializing the storage of the proxy like a Solidity constructor.
-
-Requirements:
-
-- If `data` is empty, `msg.value` must be zero.
+If `_data` is nonempty, it's used as data in a delegate call to `_logic`. This will typically be an encoded
+function call, and allows initializing the storage of the proxy like a Solidity constructor.
 
 <a id="ERC1967Proxy-_implementation--"></a>
 
-### `_implementation() → address`
+### `_implementation() → address impl`
 *internal*
 
 Returns the current implementation address.
 
-TIP: To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using
-the [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
-`0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc`
+<a id="ERC1967Upgrade"></a>
 
-<a id="ERC1967Utils"></a>
-
-## `ERC1967Utils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/ERC1967/ERC1967Utils.sol)
+## `ERC1967Upgrade` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/ERC1967/ERC1967Upgrade.sol)
 
 ```solidity
-import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
+import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol";
 ```
 
-This library provides getters and event emitting update functions for
-[ERC-1967](https://eips.ethereum.org/EIPS/eip-1967) slots.
+This abstract contract provides getters and event emitting update functions for
+[EIP1967](https://eips.ethereum.org/EIPS/eip-1967) slots.
+
+_Available since v4.1._
 
 ### Functions
-- [getImplementation()](#ERC1967Utils-getImplementation--)
-- [upgradeToAndCall(newImplementation, data)](#ERC1967Utils-upgradeToAndCall-address-bytes-)
-- [getAdmin()](#ERC1967Utils-getAdmin--)
-- [changeAdmin(newAdmin)](#ERC1967Utils-changeAdmin-address-)
-- [getBeacon()](#ERC1967Utils-getBeacon--)
-- [upgradeBeaconToAndCall(newBeacon, data)](#ERC1967Utils-upgradeBeaconToAndCall-address-bytes-)
+- [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
+- [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
+- [_upgradeToAndCall(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-)
+- [_upgradeToAndCallUUPS(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-)
+- [_getAdmin()](#ERC1967Upgrade-_getAdmin--)
+- [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
+- [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
+- [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
 
-### Errors
-- [ERC1967InvalidImplementation(implementation)](#ERC1967Utils-ERC1967InvalidImplementation-address-)
-- [ERC1967InvalidAdmin(admin)](#ERC1967Utils-ERC1967InvalidAdmin-address-)
-- [ERC1967InvalidBeacon(beacon)](#ERC1967Utils-ERC1967InvalidBeacon-address-)
-- [ERC1967NonPayable()](#ERC1967Utils-ERC1967NonPayable--)
+#### IERC1967
 
-<a id="ERC1967Utils-getImplementation--"></a>
+### Events
 
-### `getImplementation() → address`
+#### IERC1967
+- [Upgraded(implementation)](#IERC1967-Upgraded-address-)
+- [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
+- [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
+
+<a id="ERC1967Upgrade-_getImplementation--"></a>
+
+### `_getImplementation() → address`
 *internal*
 
 Returns the current implementation address.
 
-<a id="ERC1967Utils-upgradeToAndCall-address-bytes-"></a>
+<a id="ERC1967Upgrade-_upgradeTo-address-"></a>
 
-### `upgradeToAndCall(address newImplementation, bytes data)`
+### `_upgradeTo(address newImplementation)`
 *internal*
 
-Performs implementation upgrade with additional setup call if data is nonempty.
-This function is payable only if the setup call is performed, otherwise `msg.value` is rejected
-to avoid stuck value in the contract.
+Perform implementation upgrade
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
-<a id="ERC1967Utils-getAdmin--"></a>
+<a id="ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-"></a>
 
-### `getAdmin() → address`
+### `_upgradeToAndCall(address newImplementation, bytes data, bool forceCall)`
+*internal*
+
+Perform implementation upgrade with additional setup call.
+
+Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+
+<a id="ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-"></a>
+
+### `_upgradeToAndCallUUPS(address newImplementation, bytes data, bool forceCall)`
+*internal*
+
+Perform implementation upgrade with security checks for UUPS proxies, and additional setup call.
+
+Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+
+<a id="ERC1967Upgrade-_getAdmin--"></a>
+
+### `_getAdmin() → address`
 *internal*
 
 Returns the current admin.
 
-TIP: To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using
-the [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
-`0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`
+<a id="ERC1967Upgrade-_changeAdmin-address-"></a>
 
-<a id="ERC1967Utils-changeAdmin-address-"></a>
-
-### `changeAdmin(address newAdmin)`
+### `_changeAdmin(address newAdmin)`
 *internal*
 
 Changes the admin of the proxy.
 
 Emits an [`IERC1967.AdminChanged`](interfaces#IERC1967-AdminChanged-address-address-) event.
 
-<a id="ERC1967Utils-getBeacon--"></a>
+<a id="ERC1967Upgrade-_getBeacon--"></a>
 
-### `getBeacon() → address`
+### `_getBeacon() → address`
 *internal*
 
 Returns the current beacon.
 
-<a id="ERC1967Utils-upgradeBeaconToAndCall-address-bytes-"></a>
+<a id="ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-"></a>
 
-### `upgradeBeaconToAndCall(address newBeacon, bytes data)`
+### `_upgradeBeaconToAndCall(address newBeacon, bytes data, bool forceCall)`
 *internal*
 
-Change the beacon and trigger a setup call if data is nonempty.
-This function is payable only if the setup call is performed, otherwise `msg.value` is rejected
-to avoid stuck value in the contract.
+Perform beacon upgrade with additional setup call. Note: This upgrades the address of the beacon, it does
+not upgrade the implementation contained in the beacon (see [`UpgradeableBeacon._setImplementation`](#UpgradeableBeacon-_setImplementation-address-) for that).
 
-Emits an [`IERC1967.BeaconUpgraded`](interfaces#IERC1967-BeaconUpgraded-address-) event.
-
-CAUTION: Invoking this function has no effect on an instance of [`BeaconProxy`](#BeaconProxy) since v5, since
-it uses an immutable beacon without looking at the value of the ERC-1967 beacon slot for
-efficiency.
-
-<a id="ERC1967Utils-ERC1967InvalidImplementation-address-"></a>
-
-### `ERC1967InvalidImplementation(address implementation)`
-*error*
-
-The `implementation` of the proxy is invalid.
-
-<a id="ERC1967Utils-ERC1967InvalidAdmin-address-"></a>
-
-### `ERC1967InvalidAdmin(address admin)`
-*error*
-
-The `admin` of the proxy is invalid.
-
-<a id="ERC1967Utils-ERC1967InvalidBeacon-address-"></a>
-
-### `ERC1967InvalidBeacon(address beacon)`
-*error*
-
-The `beacon` of the proxy is invalid.
-
-<a id="ERC1967Utils-ERC1967NonPayable--"></a>
-
-### `ERC1967NonPayable()`
-*error*
-
-An upgrade function sees `msg.value > 0` that may be lost.
+Emits a [`IERC1967.BeaconUpgraded`](interfaces#IERC1967-BeaconUpgraded-address-) event.
 
 <a id="Proxy"></a>
 
-## `Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/Proxy.sol)
+## `Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/Proxy.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/Proxy.sol";
@@ -466,7 +325,7 @@ This abstract contract provides a fallback function that delegates all calls to 
 instruction `delegatecall`. We refer to the second contract as the _implementation_ behind the proxy, and it has to
 be specified by overriding the virtual [`ERC1967Proxy._implementation`](#ERC1967Proxy-_implementation--) function.
 
-Additionally, delegation to the implementation can be triggered manually through the [`AccountERC7579._fallback`](account#AccountERC7579-_fallback--) function, or to a
+Additionally, delegation to the implementation can be triggered manually through the [`Proxy._fallback`](#Proxy-_fallback--) function, or to a
 different contract through the [`Votes._delegate`](governance#Votes-_delegate-address-address-) function.
 
 The success and return data of the delegated call will be returned back to the caller of the proxy.
@@ -476,6 +335,8 @@ The success and return data of the delegated call will be returned back to the c
 - [_implementation()](#Proxy-_implementation--)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
+- [receive()](#Proxy-receive--)
+- [_beforeFallback()](#Proxy-_beforeFallback--)
 
 <a id="Proxy-_delegate-address-"></a>
 
@@ -491,8 +352,8 @@ This function does not return to its internal call site, it will return directly
 ### `_implementation() → address`
 *internal*
 
-This is a virtual function that should be overridden so it returns the address to which the fallback
-function and [`AccountERC7579._fallback`](account#AccountERC7579-_fallback--) should delegate.
+This is a virtual function that should be overridden so it returns the address to which the fallback function
+and [`Proxy._fallback`](#Proxy-_fallback--) should delegate.
 
 <a id="Proxy-_fallback--"></a>
 
@@ -511,9 +372,27 @@ This function does not return to its internal call site, it will return directly
 Fallback function that delegates calls to the address returned by `_implementation()`. Will run if no other
 function in the contract matches the call data.
 
+<a id="Proxy-receive--"></a>
+
+### `receive()`
+*external*
+
+Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data
+is empty.
+
+<a id="Proxy-_beforeFallback--"></a>
+
+### `_beforeFallback()`
+*internal*
+
+Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`
+call, or as part of the Solidity `fallback` or `receive` functions.
+
+If overridden should call `super._beforeFallback()`.
+
 <a id="BeaconProxy"></a>
 
-## `BeaconProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/BeaconProxy.sol)
+## `BeaconProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/BeaconProxy.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
@@ -521,25 +400,46 @@ import "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
 
 This contract implements a proxy that gets the implementation address for each call from an [`UpgradeableBeacon`](#UpgradeableBeacon).
 
-The beacon address can only be set once during construction, and cannot be changed afterwards. It is stored in an
-immutable variable to avoid unnecessary storage reads, and also in the beacon storage slot specified by
-[ERC-1967](https://eips.ethereum.org/EIPS/eip-1967) so that it can be accessed externally.
+The beacon address is stored in storage slot `uint256(keccak256('eip1967.proxy.beacon')) - 1`, so that it doesn't
+conflict with the storage layout of the implementation behind the proxy.
 
-CAUTION: Since the beacon address can never be changed, you must ensure that you either control the beacon, or trust
-the beacon to not upgrade the implementation maliciously.
-
-IMPORTANT: Do not use the implementation logic to modify the beacon storage slot. Doing so would leave the proxy in
-an inconsistent state where the beacon storage slot does not match the beacon address.
+_Available since v3.4._
 
 ### Functions
 - [constructor(beacon, data)](#BeaconProxy-constructor-address-bytes-)
+- [_beacon()](#BeaconProxy-_beacon--)
 - [_implementation()](#BeaconProxy-_implementation--)
-- [_getBeacon()](#BeaconProxy-_getBeacon--)
+- [_setBeacon(beacon, data)](#BeaconProxy-_setBeacon-address-bytes-)
+
+#### ERC1967Upgrade
+- [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
+- [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
+- [_upgradeToAndCall(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-)
+- [_upgradeToAndCallUUPS(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-)
+- [_getAdmin()](#ERC1967Upgrade-_getAdmin--)
+- [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
+- [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
+- [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
+
+#### IERC1967
 
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
+- [receive()](#Proxy-receive--)
+- [_beforeFallback()](#Proxy-_beforeFallback--)
+
+### Events
+
+#### ERC1967Upgrade
+
+#### IERC1967
+- [Upgraded(implementation)](#IERC1967-Upgraded-address-)
+- [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
+- [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
+
+#### Proxy
 
 <a id="BeaconProxy-constructor-address-bytes-"></a>
 
@@ -555,7 +455,13 @@ constructor.
 Requirements:
 
 - `beacon` must be a contract with the interface [`IBeacon`](#IBeacon).
-- If `data` is empty, `msg.value` must be zero.
+
+<a id="BeaconProxy-_beacon--"></a>
+
+### `_beacon() → address`
+*internal*
+
+Returns the current beacon address.
 
 <a id="BeaconProxy-_implementation--"></a>
 
@@ -564,16 +470,23 @@ Requirements:
 
 Returns the current implementation address of the associated beacon.
 
-<a id="BeaconProxy-_getBeacon--"></a>
+<a id="BeaconProxy-_setBeacon-address-bytes-"></a>
 
-### `_getBeacon() → address`
+### `_setBeacon(address beacon, bytes data)`
 *internal*
 
-Returns the beacon.
+Changes the proxy to use a new beacon. Deprecated: see [`ERC1967Upgrade._upgradeBeaconToAndCall`](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-).
+
+If `data` is nonempty, it's used as data in a delegate call to the implementation returned by the beacon.
+
+Requirements:
+
+- `beacon` must be a contract.
+- The implementation returned by `beacon` must be a contract.
 
 <a id="IBeacon"></a>
 
-## `IBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/IBeacon.sol)
+## `IBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/IBeacon.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
@@ -591,11 +504,11 @@ This is the interface that [`BeaconProxy`](#BeaconProxy) expects of its beacon.
 
 Must return an address that can be used as a delegate call target.
 
-[`UpgradeableBeacon`](#UpgradeableBeacon) will check that this address is a contract.
+[`BeaconProxy`](#BeaconProxy) will check that this address is a contract.
 
 <a id="UpgradeableBeacon"></a>
 
-## `UpgradeableBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/UpgradeableBeacon.sol)
+## `UpgradeableBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/UpgradeableBeacon.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
@@ -607,7 +520,7 @@ implementation contract, which is where they will delegate all function calls.
 An owner is able to change the implementation the beacon points to, thus upgrading the proxies that use this beacon.
 
 ### Functions
-- [constructor(implementation_, initialOwner)](#UpgradeableBeacon-constructor-address-address-)
+- [constructor(implementation_)](#UpgradeableBeacon-constructor-address-)
 - [implementation()](#UpgradeableBeacon-implementation--)
 - [upgradeTo(newImplementation)](#UpgradeableBeacon-upgradeTo-address-)
 
@@ -628,21 +541,13 @@ An owner is able to change the implementation the beacon points to, thus upgradi
 
 #### IBeacon
 
-### Errors
-- [BeaconInvalidImplementation(implementation)](#UpgradeableBeacon-BeaconInvalidImplementation-address-)
+<a id="UpgradeableBeacon-constructor-address-"></a>
 
-#### Ownable
-- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
-- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
-
-#### IBeacon
-
-<a id="UpgradeableBeacon-constructor-address-address-"></a>
-
-### `constructor(address implementation_, address initialOwner)`
+### `constructor(address implementation_)`
 *public*
 
-Sets the address of the initial implementation, and the initial owner who can upgrade the beacon.
+Sets the address of the initial implementation, and the deployer account as the owner who can upgrade the
+beacon.
 
 <a id="UpgradeableBeacon-implementation--"></a>
 
@@ -672,16 +577,9 @@ Requirements:
 
 Emitted when the implementation returned by the beacon is changed.
 
-<a id="UpgradeableBeacon-BeaconInvalidImplementation-address-"></a>
-
-### `BeaconInvalidImplementation(address implementation)`
-*error*
-
-The `implementation` of the beacon is invalid.
-
 <a id="ProxyAdmin"></a>
 
-## `ProxyAdmin` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/ProxyAdmin.sol)
+## `ProxyAdmin` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/ProxyAdmin.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
@@ -691,9 +589,11 @@ This is an auxiliary contract meant to be assigned as the admin of a [`Transpare
 explanation of why you would want to use this see the documentation for [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy).
 
 ### Functions
-- [constructor(initialOwner)](#ProxyAdmin-constructor-address-)
+- [getProxyImplementation(proxy)](#ProxyAdmin-getProxyImplementation-contract-ITransparentUpgradeableProxy-)
+- [getProxyAdmin(proxy)](#ProxyAdmin-getProxyAdmin-contract-ITransparentUpgradeableProxy-)
+- [changeProxyAdmin(proxy, newAdmin)](#ProxyAdmin-changeProxyAdmin-contract-ITransparentUpgradeableProxy-address-)
+- [upgrade(proxy, implementation)](#ProxyAdmin-upgrade-contract-ITransparentUpgradeableProxy-address-)
 - [upgradeAndCall(proxy, implementation, data)](#ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-)
-- [UPGRADE_INTERFACE_VERSION()](#ProxyAdmin-UPGRADE_INTERFACE_VERSION-string)
 
 #### Ownable
 - [owner()](#Ownable-owner--)
@@ -707,59 +607,81 @@ explanation of why you would want to use this see the documentation for [`Transp
 #### Ownable
 - [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
 
-### Errors
+<a id="ProxyAdmin-getProxyImplementation-contract-ITransparentUpgradeableProxy-"></a>
 
-#### Ownable
-- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
-- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
-
-<a id="ProxyAdmin-constructor-address-"></a>
-
-### `constructor(address initialOwner)`
+### `getProxyImplementation(contract ITransparentUpgradeableProxy proxy) → address`
 *public*
 
-Sets the initial owner who can perform upgrades.
+Returns the current implementation of `proxy`.
+
+Requirements:
+
+- This contract must be the admin of `proxy`.
+
+<a id="ProxyAdmin-getProxyAdmin-contract-ITransparentUpgradeableProxy-"></a>
+
+### `getProxyAdmin(contract ITransparentUpgradeableProxy proxy) → address`
+*public*
+
+Returns the current admin of `proxy`.
+
+Requirements:
+
+- This contract must be the admin of `proxy`.
+
+<a id="ProxyAdmin-changeProxyAdmin-contract-ITransparentUpgradeableProxy-address-"></a>
+
+### `changeProxyAdmin(contract ITransparentUpgradeableProxy proxy, address newAdmin)`
+*public*
+
+Changes the admin of `proxy` to `newAdmin`.
+
+Requirements:
+
+- This contract must be the current admin of `proxy`.
+
+<a id="ProxyAdmin-upgrade-contract-ITransparentUpgradeableProxy-address-"></a>
+
+### `upgrade(contract ITransparentUpgradeableProxy proxy, address implementation)`
+*public*
+
+Upgrades `proxy` to `implementation`. See [`ITransparentUpgradeableProxy.upgradeTo`](#ITransparentUpgradeableProxy-upgradeTo-address-).
+
+Requirements:
+
+- This contract must be the admin of `proxy`.
 
 <a id="ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-"></a>
 
 ### `upgradeAndCall(contract ITransparentUpgradeableProxy proxy, address implementation, bytes data)`
 *public*
 
-Upgrades `proxy` to `implementation` and calls a function on the new implementation.
-See [`TransparentUpgradeableProxy._dispatchUpgradeToAndCall`](#TransparentUpgradeableProxy-_dispatchUpgradeToAndCall--).
+Upgrades `proxy` to `implementation` and calls a function on the new implementation. See
+[`ITransparentUpgradeableProxy.upgradeToAndCall`](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-).
 
 Requirements:
 
 - This contract must be the admin of `proxy`.
-- If `data` is empty, `msg.value` must be zero.
-
-<a id="ProxyAdmin-UPGRADE_INTERFACE_VERSION-string"></a>
-
-### `UPGRADE_INTERFACE_VERSION() → string`
-*public*
-
-The version of the upgrade interface of the contract. If this getter is missing, both `upgrade(address,address)`
-and `upgradeAndCall(address,address,bytes)` are present, and `upgrade` must be used if no function should be called,
-while `upgradeAndCall` will invoke the `receive` function if the third argument is the empty byte string.
-If the getter returns `"5.0.0"`, only `upgradeAndCall(address,address,bytes)` is present, and the third argument must
-be the empty byte string if no function should be called, making it impossible to invoke the `receive` function
-during an upgrade.
 
 <a id="ITransparentUpgradeableProxy"></a>
 
-## `ITransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
+## `ITransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
 ```
 
 Interface for [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy). In order to implement transparency, [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy)
-does not implement this interface directly, and its upgradeability mechanism is implemented by an internal dispatch
+does not implement this interface directly, and some of its functions are implemented by an internal dispatch
 mechanism. The compiler is unaware that these functions are implemented by [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy) and will not
 include them in the ABI so this interface must be used to interact with it.
 
 ### Functions
-- [upgradeToAndCall(newImplementation, data)](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-)
+- [admin()](#ITransparentUpgradeableProxy-admin--)
+- [implementation()](#ITransparentUpgradeableProxy-implementation--)
+- [changeAdmin()](#ITransparentUpgradeableProxy-changeAdmin-address-)
+- [upgradeTo()](#ITransparentUpgradeableProxy-upgradeTo-address-)
+- [upgradeToAndCall(, )](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-)
 
 #### IERC1967
 
@@ -770,22 +692,40 @@ include them in the ABI so this interface must be used to interact with it.
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
 
-<a id="ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-"></a>
+<a id="ITransparentUpgradeableProxy-admin--"></a>
 
-### `upgradeToAndCall(address newImplementation, bytes data)`
+### `admin() → address`
 *external*
 
-See [`UUPSUpgradeable.upgradeToAndCall`](#UUPSUpgradeable-upgradeToAndCall-address-bytes-)
+<a id="ITransparentUpgradeableProxy-implementation--"></a>
+
+### `implementation() → address`
+*external*
+
+<a id="ITransparentUpgradeableProxy-changeAdmin-address-"></a>
+
+### `changeAdmin(address)`
+*external*
+
+<a id="ITransparentUpgradeableProxy-upgradeTo-address-"></a>
+
+### `upgradeTo(address)`
+*external*
+
+<a id="ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-"></a>
+
+### `upgradeToAndCall(address, bytes)`
+*external*
 
 <a id="TransparentUpgradeableProxy"></a>
 
-## `TransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
+## `TransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
 ```
 
-This contract implements a proxy that is upgradeable through an associated [`ProxyAdmin`](#ProxyAdmin) instance.
+This contract implements a proxy that is upgradeable by an admin.
 
 To avoid [proxy selector
 clashing](https://medium.com/nomic-labs-blog/malicious-backdoors-in-ethereum-proxies-62629adf3357), which can potentially be used in an attack, this contract uses the
@@ -793,89 +733,107 @@ clashing](https://medium.com/nomic-labs-blog/malicious-backdoors-in-ethereum-pro
 things that go hand in hand:
 
 1. If any account other than the admin calls the proxy, the call will be forwarded to the implementation, even if
-that call matches the [`ITransparentUpgradeableProxy.upgradeToAndCall`](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-) function exposed by the proxy itself.
-2. If the admin calls the proxy, it can call the `upgradeToAndCall` function but any other call won't be forwarded to
-the implementation. If the admin tries to call a function on the implementation it will fail with an error indicating
-the proxy admin cannot fallback to the target implementation.
+that call matches one of the admin functions exposed by the proxy itself.
+2. If the admin calls the proxy, it can access the admin functions, but its calls will never be forwarded to the
+implementation. If the admin tries to call a function on the implementation it will fail with an error that says
+"admin cannot fallback to proxy target".
 
-These properties mean that the admin account can only be used for upgrading the proxy, so it's best if it's a
-dedicated account that is not used for anything else. This will avoid headaches due to sudden errors when trying to
-call a function from the proxy implementation. For this reason, the proxy deploys an instance of [`ProxyAdmin`](#ProxyAdmin) and
-allows upgrades only if they come through it. You should think of the `ProxyAdmin` instance as the administrative
-interface of the proxy, including the ability to change who can trigger upgrades by transferring ownership.
+These properties mean that the admin account can only be used for admin actions like upgrading the proxy or changing
+the admin, so it's best if it's a dedicated account that is not used for anything else. This will avoid headaches due
+to sudden errors when trying to call a function from the proxy implementation.
+
+Our recommendation is for the dedicated account to be an instance of the [`ProxyAdmin`](#ProxyAdmin) contract. If set up this way,
+you should think of the `ProxyAdmin` instance as the real administrative interface of your proxy.
 
 NOTE: The real interface of this proxy is that defined in `ITransparentUpgradeableProxy`. This contract does not
-inherit from that interface, and instead `upgradeToAndCall` is implicitly implemented using a custom dispatch
+inherit from that interface, and instead the admin functions are implicitly implemented using a custom dispatch
 mechanism in `_fallback`. Consequently, the compiler will not produce an ABI for this contract. This is necessary to
 fully implement transparency without decoding reverts caused by selector clashes between the proxy and the
 implementation.
 
-NOTE: This proxy does not inherit from [`Context`](utils#Context) deliberately. The [`ProxyAdmin`](#ProxyAdmin) of this contract won't send a
-meta-transaction in any way, and any other meta-transaction setup should be made in the implementation contract.
+WARNING: It is not recommended to extend this contract to add additional external functions. If you do so, the compiler
+will not check that there are no selector conflicts, due to the note above. A selector clash between any new function
+and the functions declared in [`ITransparentUpgradeableProxy`](#ITransparentUpgradeableProxy) will be resolved in favor of the new one. This could
+render the admin operations inaccessible, which could prevent upgradeability. Transparency may also be compromised.
 
-IMPORTANT: This contract avoids unnecessary storage reads by setting the admin only during construction as an
-immutable variable, preventing any changes thereafter. However, the admin slot defined in ERC-1967 can still be
-overwritten by the implementation logic pointed to by this proxy. In such cases, the contract may end up in an
-undesirable state where the admin slot is different from the actual admin. Relying on the value of the admin slot
-is generally fine if the implementation is trusted.
-
-WARNING: It is not recommended to extend this contract to add additional external functions. If you do so, the
-compiler will not check that there are no selector conflicts, due to the note above. A selector clash between any new
-function and the functions declared in [`ITransparentUpgradeableProxy`](#ITransparentUpgradeableProxy) will be resolved in favor of the new one. This
-could render the `upgradeToAndCall` function inaccessible, preventing upgradeability and compromising transparency.
+### Modifiers
+- [ifAdmin()](#TransparentUpgradeableProxy-ifAdmin--)
 
 ### Functions
-- [constructor(_logic, initialOwner, _data)](#TransparentUpgradeableProxy-constructor-address-address-bytes-)
-- [_proxyAdmin()](#TransparentUpgradeableProxy-_proxyAdmin--)
+- [constructor(_logic, admin_, _data)](#TransparentUpgradeableProxy-constructor-address-address-bytes-)
 - [_fallback()](#TransparentUpgradeableProxy-_fallback--)
+- [_admin()](#TransparentUpgradeableProxy-_admin--)
 
 #### ERC1967Proxy
 - [_implementation()](#ERC1967Proxy-_implementation--)
 
+#### ERC1967Upgrade
+- [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
+- [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
+- [_upgradeToAndCall(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-)
+- [_upgradeToAndCallUUPS(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-)
+- [_getAdmin()](#ERC1967Upgrade-_getAdmin--)
+- [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
+- [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
+- [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
+
+#### IERC1967
+
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [fallback()](#Proxy-fallback--)
+- [receive()](#Proxy-receive--)
+- [_beforeFallback()](#Proxy-_beforeFallback--)
 
-### Errors
-- [ProxyDeniedAdminAccess()](#TransparentUpgradeableProxy-ProxyDeniedAdminAccess--)
+### Events
 
 #### ERC1967Proxy
 
+#### ERC1967Upgrade
+
+#### IERC1967
+- [Upgraded(implementation)](#IERC1967-Upgraded-address-)
+- [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
+- [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
+
 #### Proxy
+
+<a id="TransparentUpgradeableProxy-ifAdmin--"></a>
+
+### `ifAdmin()`
+
+Modifier used internally that will delegate the call to the implementation unless the sender is the admin.
+
+CAUTION: This modifier is deprecated, as it could cause issues if the modified function has arguments, and the
+implementation provides a function with the same selector.
 
 <a id="TransparentUpgradeableProxy-constructor-address-address-bytes-"></a>
 
-### `constructor(address _logic, address initialOwner, bytes _data)`
+### `constructor(address _logic, address admin_, bytes _data)`
 *public*
 
-Initializes an upgradeable proxy managed by an instance of a [`ProxyAdmin`](#ProxyAdmin) with an `initialOwner`,
-backed by the implementation at `_logic`, and optionally initialized with `_data` as explained in
-[`ERC1967Proxy.constructor`](#ERC1967Proxy-constructor-address-bytes-).
-
-<a id="TransparentUpgradeableProxy-_proxyAdmin--"></a>
-
-### `_proxyAdmin() → address`
-*internal*
-
-Returns the admin of this proxy.
+Initializes an upgradeable proxy managed by `_admin`, backed by the implementation at `_logic`, and
+optionally initialized with `_data` as explained in [`ERC1967Proxy.constructor`](#ERC1967Proxy-constructor-address-bytes-).
 
 <a id="TransparentUpgradeableProxy-_fallback--"></a>
 
 ### `_fallback()`
 *internal*
 
-If caller is the admin process the call internally, otherwise transparently fallback to the proxy behavior.
+If caller is the admin process the call internally, otherwise transparently fallback to the proxy behavior
 
-<a id="TransparentUpgradeableProxy-ProxyDeniedAdminAccess--"></a>
+<a id="TransparentUpgradeableProxy-_admin--"></a>
 
-### `ProxyDeniedAdminAccess()`
-*error*
+### `_admin() → address`
+*internal*
 
-The proxy caller is the current admin, and can't fallback to the proxy target.
+Returns the current admin.
+
+CAUTION: This function is deprecated. Use [`ERC1967Upgrade._getAdmin`](#ERC1967Upgrade-_getAdmin--) instead.
 
 <a id="Initializable"></a>
 
-## `Initializable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/utils/Initializable.sol)
+## `Initializable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/utils/Initializable.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
@@ -932,22 +890,16 @@ constructor() {
 
 ### Modifiers
 - [initializer()](#Initializable-initializer--)
-- [reinitializer(version)](#Initializable-reinitializer-uint64-)
+- [reinitializer(version)](#Initializable-reinitializer-uint8-)
 - [onlyInitializing()](#Initializable-onlyInitializing--)
 
 ### Functions
-- [_checkInitializing()](#Initializable-_checkInitializing--)
 - [_disableInitializers()](#Initializable-_disableInitializers--)
 - [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
 - [_isInitializing()](#Initializable-_isInitializing--)
-- [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
 
 ### Events
-- [Initialized(version)](#Initializable-Initialized-uint64-)
-
-### Errors
-- [InvalidInitialization()](#Initializable-InvalidInitialization--)
-- [NotInitializing()](#Initializable-NotInitializing--)
+- [Initialized(version)](#Initializable-Initialized-uint8-)
 
 <a id="Initializable-initializer--"></a>
 
@@ -956,15 +908,14 @@ constructor() {
 A modifier that defines a protected initializer function that can be invoked at most once. In its scope,
 `onlyInitializing` functions can be used to initialize parent contracts.
 
-Similar to `reinitializer(1)`, except that in the context of a constructor an `initializer` may be invoked any
-number of times. This behavior in the constructor can be useful during testing and is not expected to be used in
-production.
+Similar to `reinitializer(1)`, except that functions marked with `initializer` can be nested in the context of a
+constructor.
 
-Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint64-) event.
+Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint8-) event.
 
-<a id="Initializable-reinitializer-uint64-"></a>
+<a id="Initializable-reinitializer-uint8-"></a>
 
-### `reinitializer(uint64 version)`
+### `reinitializer(uint8 version)`
 
 A modifier that defines a protected reinitializer function that can be invoked at most once, and only if the
 contract hasn't been initialized to a greater version before. In its scope, `onlyInitializing` functions can be
@@ -979,23 +930,16 @@ cannot be nested. If one is invoked in the context of another, execution will re
 Note that versions can jump in increments greater than 1; this implies that if multiple reinitializers coexist in
 a contract, executing them in the right order is up to the developer or operator.
 
-WARNING: Setting the version to 2**64 - 1 will prevent any future reinitialization.
+WARNING: setting the version to 255 will prevent any future reinitialization.
 
-Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint64-) event.
+Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint8-) event.
 
 <a id="Initializable-onlyInitializing--"></a>
 
 ### `onlyInitializing()`
 
 Modifier to protect an initialization function so that it can only be invoked by functions with the
-[`Initializable.initializer`](#Initializable-initializer--) and [`Initializable.reinitializer`](#Initializable-reinitializer-uint64-) modifiers, directly or indirectly.
-
-<a id="Initializable-_checkInitializing--"></a>
-
-### `_checkInitializing()`
-*internal*
-
-Reverts if the contract is not in an initializing state. See [`Initializable.onlyInitializing`](#Initializable-onlyInitializing--).
+[`Initializable.initializer`](#Initializable-initializer--) and [`Initializable.reinitializer`](#Initializable-reinitializer-uint8-) modifiers, directly or indirectly.
 
 <a id="Initializable-_disableInitializers--"></a>
 
@@ -1007,14 +951,14 @@ Calling this in the constructor of a contract will prevent that contract from be
 to any version. It is recommended to use this to lock implementation contracts that are designed to be called
 through proxies.
 
-Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint64-) event the first time it is successfully executed.
+Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint8-) event the first time it is successfully executed.
 
 <a id="Initializable-_getInitializedVersion--"></a>
 
-### `_getInitializedVersion() → uint64`
+### `_getInitializedVersion() → uint8`
 *internal*
 
-Returns the highest version that has been initialized. See [`Initializable.reinitializer`](#Initializable-reinitializer-uint64-).
+Returns the highest version that has been initialized. See [`Initializable.reinitializer`](#Initializable-reinitializer-uint8-).
 
 <a id="Initializable-_isInitializing--"></a>
 
@@ -1023,39 +967,16 @@ Returns the highest version that has been initialized. See [`Initializable.reini
 
 Returns `true` if the contract is currently initializing. See [`Initializable.onlyInitializing`](#Initializable-onlyInitializing--).
 
-<a id="Initializable-_initializableStorageSlot--"></a>
+<a id="Initializable-Initialized-uint8-"></a>
 
-### `_initializableStorageSlot() → bytes32`
-*internal*
-
-Pointer to storage slot. Allows integrators to override it with a custom storage location.
-
-NOTE: Consider following the ERC-7201 formula to derive storage locations.
-
-<a id="Initializable-Initialized-uint64-"></a>
-
-### `Initialized(uint64 version)`
+### `Initialized(uint8 version)`
 *event*
 
 Triggered when the contract has been initialized or reinitialized.
 
-<a id="Initializable-InvalidInitialization--"></a>
-
-### `InvalidInitialization()`
-*error*
-
-The contract is already initialized.
-
-<a id="Initializable-NotInitializing--"></a>
-
-### `NotInitializing()`
-*error*
-
-The contract is not initializing.
-
 <a id="UUPSUpgradeable"></a>
 
-## `UUPSUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/utils/UUPSUpgradeable.sol)
+## `UUPSUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/utils/UUPSUpgradeable.sol)
 
 ```solidity
 import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
@@ -1070,23 +991,40 @@ reinstated if the upgrade retains upgradeability but removes the security mechan
 
 The [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-address-) function must be overridden to include access restriction to the upgrade mechanism.
 
+_Available since v4.1._
+
 ### Modifiers
 - [onlyProxy()](#UUPSUpgradeable-onlyProxy--)
 - [notDelegated()](#UUPSUpgradeable-notDelegated--)
 
 ### Functions
 - [proxiableUUID()](#UUPSUpgradeable-proxiableUUID--)
+- [upgradeTo(newImplementation)](#UUPSUpgradeable-upgradeTo-address-)
 - [upgradeToAndCall(newImplementation, data)](#UUPSUpgradeable-upgradeToAndCall-address-bytes-)
-- [_checkProxy()](#UUPSUpgradeable-_checkProxy--)
-- [_checkNotDelegated()](#UUPSUpgradeable-_checkNotDelegated--)
 - [_authorizeUpgrade(newImplementation)](#UUPSUpgradeable-_authorizeUpgrade-address-)
-- [UPGRADE_INTERFACE_VERSION()](#UUPSUpgradeable-UPGRADE_INTERFACE_VERSION-string)
+
+#### ERC1967Upgrade
+- [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
+- [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
+- [_upgradeToAndCall(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-)
+- [_upgradeToAndCallUUPS(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-)
+- [_getAdmin()](#ERC1967Upgrade-_getAdmin--)
+- [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
+- [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
+- [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
+
+#### IERC1967
 
 #### IERC1822Proxiable
 
-### Errors
-- [UUPSUnauthorizedCallContext()](#UUPSUpgradeable-UUPSUnauthorizedCallContext--)
-- [UUPSUnsupportedProxiableUUID(slot)](#UUPSUpgradeable-UUPSUnsupportedProxiableUUID-bytes32-)
+### Events
+
+#### ERC1967Upgrade
+
+#### IERC1967
+- [Upgraded(implementation)](#IERC1967-Upgraded-address-)
+- [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
+- [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
 
 #### IERC1822Proxiable
 
@@ -1095,9 +1033,9 @@ The [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-add
 ### `onlyProxy()`
 
 Check that the execution is being performed through a delegatecall call and that the execution context is
-a proxy contract with an implementation (as defined in ERC-1967) pointing to self. This should only be the case
+a proxy contract with an implementation (as defined in ERC1967) pointing to self. This should only be the case
 for UUPS and transparent proxies that are using the current contract as their implementation. Execution of a
-function through ERC-1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to
+function through ERC1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to
 fail.
 
 <a id="UUPSUpgradeable-notDelegated--"></a>
@@ -1112,12 +1050,23 @@ callable on the implementing contract but not through proxies.
 ### `proxiableUUID() → bytes32`
 *external*
 
-Implementation of the ERC-1822 [`IERC1822Proxiable.proxiableUUID`](interfaces#IERC1822Proxiable-proxiableUUID--) function. This returns the storage slot used by the
+Implementation of the ERC1822 [`IERC1822Proxiable.proxiableUUID`](interfaces#IERC1822Proxiable-proxiableUUID--) function. This returns the storage slot used by the
 implementation. It is used to validate the implementation's compatibility when performing an upgrade.
 
 IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
 bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this
 function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier.
+
+<a id="UUPSUpgradeable-upgradeTo-address-"></a>
+
+### `upgradeTo(address newImplementation)`
+*public*
+
+Upgrade the implementation of the proxy to `newImplementation`.
+
+Calls [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-address-).
+
+Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
 <a id="UUPSUpgradeable-upgradeToAndCall-address-bytes-"></a>
 
@@ -1131,59 +1080,17 @@ Calls [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-a
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
-<a id="UUPSUpgradeable-_checkProxy--"></a>
-
-### `_checkProxy()`
-*internal*
-
-Reverts if the execution is not performed via delegatecall or the execution
-context is not of a proxy with an ERC-1967 compliant implementation pointing to self.
-
-<a id="UUPSUpgradeable-_checkNotDelegated--"></a>
-
-### `_checkNotDelegated()`
-*internal*
-
-Reverts if the execution is performed via delegatecall.
-See [`UUPSUpgradeable.notDelegated`](#UUPSUpgradeable-notDelegated--).
-
 <a id="UUPSUpgradeable-_authorizeUpgrade-address-"></a>
 
 ### `_authorizeUpgrade(address newImplementation)`
 *internal*
 
 Function that should revert when `msg.sender` is not authorized to upgrade the contract. Called by
-[`ERC1967Utils.upgradeToAndCall`](#ERC1967Utils-upgradeToAndCall-address-bytes-).
+[`UpgradeableBeacon.upgradeTo`](#UpgradeableBeacon-upgradeTo-address-) and [`ITransparentUpgradeableProxy.upgradeToAndCall`](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-).
 
 Normally, this function will use an xref:access.adoc[access control] modifier such as [`Ownable.onlyOwner`](access#Ownable-onlyOwner--).
 
 ```solidity
-function _authorizeUpgrade(address) internal onlyOwner {}
+function _authorizeUpgrade(address) internal override onlyOwner {}
 ```
-
-<a id="UUPSUpgradeable-UPGRADE_INTERFACE_VERSION-string"></a>
-
-### `UPGRADE_INTERFACE_VERSION() → string`
-*public*
-
-The version of the upgrade interface of the contract. If this getter is missing, both `upgradeTo(address)`
-and `upgradeToAndCall(address,bytes)` are present, and `upgradeTo` must be used if no function should be called,
-while `upgradeToAndCall` will invoke the `receive` function if the second argument is the empty byte string.
-If the getter returns `"5.0.0"`, only `upgradeToAndCall(address,bytes)` is present, and the second argument must
-be the empty byte string if no function should be called, making it impossible to invoke the `receive` function
-during an upgrade.
-
-<a id="UUPSUpgradeable-UUPSUnauthorizedCallContext--"></a>
-
-### `UUPSUnauthorizedCallContext()`
-*error*
-
-The call is from an unauthorized context.
-
-<a id="UUPSUpgradeable-UUPSUnsupportedProxiableUUID-bytes32-"></a>
-
-### `UUPSUnsupportedProxiableUUID(bytes32 slot)`
-*error*
-
-The storage `slot` is unsupported as a UUID.
 

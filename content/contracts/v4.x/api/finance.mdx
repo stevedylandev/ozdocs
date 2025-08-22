@@ -9,51 +9,213 @@ This document is better viewed at https://docs.openzeppelin.com/contracts/api/fi
 
 This directory includes primitives for financial systems:
 
-* [`VestingWallet`](#VestingWallet) handles the vesting of Ether and ERC-20 tokens for a given beneficiary. Custody of multiple tokens can
+* [`PaymentSplitter`](#PaymentSplitter) allows to split Ether and ERC20 payments among a group of accounts. The sender does not need to be
+  aware that the assets will be split in this way, since it is handled transparently by the contract. The split can be
+  in equal parts or in any other arbitrary proportion.
+* [`VestingWallet`](#VestingWallet) handles the vesting of Ether and ERC20 tokens for a given beneficiary. Custody of multiple tokens can
   be given to this contract, which will release the token to the beneficiary following a given, customizable, vesting
   schedule.
 
 ## Contracts
 
+[`PaymentSplitter`](#PaymentSplitter)
+
 [`VestingWallet`](#VestingWallet)
+
+<a id="PaymentSplitter"></a>
+
+## `PaymentSplitter` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/finance/PaymentSplitter.sol)
+
+```solidity
+import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
+```
+
+This contract allows to split Ether payments among a group of accounts. The sender does not need to be aware
+that the Ether will be split in this way, since it is handled transparently by the contract.
+
+The split can be in equal parts or in any other arbitrary proportion. The way this is specified is by assigning each
+account to a number of shares. Of all the Ether that this contract receives, each account will then be able to claim
+an amount proportional to the percentage of total shares they were assigned. The distribution of shares is set at the
+time of contract deployment and can't be updated thereafter.
+
+`PaymentSplitter` follows a _pull payment_ model. This means that payments are not automatically forwarded to the
+accounts but kept in this contract, and the actual transfer is triggered as a separate step by calling the [`PaymentSplitter.release`](#PaymentSplitter-release-contract-IERC20-address-)
+function.
+
+NOTE: This contract assumes that ERC20 tokens will behave similarly to native tokens (Ether). Rebasing tokens, and
+tokens that apply fees during transfers, are likely to not be supported as expected. If in doubt, we encourage you
+to run tests before sending real value to this contract.
+
+### Functions
+- [constructor(payees, shares_)](#PaymentSplitter-constructor-address---uint256---)
+- [receive()](#PaymentSplitter-receive--)
+- [totalShares()](#PaymentSplitter-totalShares--)
+- [totalReleased()](#PaymentSplitter-totalReleased--)
+- [totalReleased(token)](#PaymentSplitter-totalReleased-contract-IERC20-)
+- [shares(account)](#PaymentSplitter-shares-address-)
+- [released(account)](#PaymentSplitter-released-address-)
+- [released(token, account)](#PaymentSplitter-released-contract-IERC20-address-)
+- [payee(index)](#PaymentSplitter-payee-uint256-)
+- [releasable(account)](#PaymentSplitter-releasable-address-)
+- [releasable(token, account)](#PaymentSplitter-releasable-contract-IERC20-address-)
+- [release(account)](#PaymentSplitter-release-address-payable-)
+- [release(token, account)](#PaymentSplitter-release-contract-IERC20-address-)
+
+### Events
+- [PayeeAdded(account, shares)](#PaymentSplitter-PayeeAdded-address-uint256-)
+- [PaymentReleased(to, amount)](#PaymentSplitter-PaymentReleased-address-uint256-)
+- [ERC20PaymentReleased(token, to, amount)](#PaymentSplitter-ERC20PaymentReleased-contract-IERC20-address-uint256-)
+- [PaymentReceived(from, amount)](#PaymentSplitter-PaymentReceived-address-uint256-)
+
+<a id="PaymentSplitter-constructor-address---uint256---"></a>
+
+### `constructor(address[] payees, uint256[] shares_)`
+*public*
+
+Creates an instance of `PaymentSplitter` where each account in `payees` is assigned the number of shares at
+the matching position in the `shares` array.
+
+All addresses in `payees` must be non-zero. Both arrays must have the same non-zero length, and there must be no
+duplicates in `payees`.
+
+<a id="PaymentSplitter-receive--"></a>
+
+### `receive()`
+*external*
+
+The Ether received will be logged with [`PaymentSplitter.PaymentReceived`](#PaymentSplitter-PaymentReceived-address-uint256-) events. Note that these events are not fully
+reliable: it's possible for a contract to receive Ether without triggering this function. This only affects the
+reliability of the events, and not the actual splitting of Ether.
+
+To learn more about this see the Solidity documentation for
+[fallback
+functions](https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function).
+
+<a id="PaymentSplitter-totalShares--"></a>
+
+### `totalShares() → uint256`
+*public*
+
+Getter for the total shares held by payees.
+
+<a id="PaymentSplitter-totalReleased--"></a>
+
+### `totalReleased() → uint256`
+*public*
+
+Getter for the total amount of Ether already released.
+
+<a id="PaymentSplitter-totalReleased-contract-IERC20-"></a>
+
+### `totalReleased(contract IERC20 token) → uint256`
+*public*
+
+Getter for the total amount of `token` already released. `token` should be the address of an IERC20
+contract.
+
+<a id="PaymentSplitter-shares-address-"></a>
+
+### `shares(address account) → uint256`
+*public*
+
+Getter for the amount of shares held by an account.
+
+<a id="PaymentSplitter-released-address-"></a>
+
+### `released(address account) → uint256`
+*public*
+
+Getter for the amount of Ether already released to a payee.
+
+<a id="PaymentSplitter-released-contract-IERC20-address-"></a>
+
+### `released(contract IERC20 token, address account) → uint256`
+*public*
+
+Getter for the amount of `token` tokens already released to a payee. `token` should be the address of an
+IERC20 contract.
+
+<a id="PaymentSplitter-payee-uint256-"></a>
+
+### `payee(uint256 index) → address`
+*public*
+
+Getter for the address of the payee number `index`.
+
+<a id="PaymentSplitter-releasable-address-"></a>
+
+### `releasable(address account) → uint256`
+*public*
+
+Getter for the amount of payee's releasable Ether.
+
+<a id="PaymentSplitter-releasable-contract-IERC20-address-"></a>
+
+### `releasable(contract IERC20 token, address account) → uint256`
+*public*
+
+Getter for the amount of payee's releasable `token` tokens. `token` should be the address of an
+IERC20 contract.
+
+<a id="PaymentSplitter-release-address-payable-"></a>
+
+### `release(address payable account)`
+*public*
+
+Triggers a transfer to `account` of the amount of Ether they are owed, according to their percentage of the
+total shares and their previous withdrawals.
+
+<a id="PaymentSplitter-release-contract-IERC20-address-"></a>
+
+### `release(contract IERC20 token, address account)`
+*public*
+
+Triggers a transfer to `account` of the amount of `token` tokens they are owed, according to their
+percentage of the total shares and their previous withdrawals. `token` must be the address of an IERC20
+contract.
+
+<a id="PaymentSplitter-PayeeAdded-address-uint256-"></a>
+
+### `PayeeAdded(address account, uint256 shares)`
+*event*
+
+<a id="PaymentSplitter-PaymentReleased-address-uint256-"></a>
+
+### `PaymentReleased(address to, uint256 amount)`
+*event*
+
+<a id="PaymentSplitter-ERC20PaymentReleased-contract-IERC20-address-uint256-"></a>
+
+### `ERC20PaymentReleased(contract IERC20 indexed token, address to, uint256 amount)`
+*event*
+
+<a id="PaymentSplitter-PaymentReceived-address-uint256-"></a>
+
+### `PaymentReceived(address from, uint256 amount)`
+*event*
 
 <a id="VestingWallet"></a>
 
-## `VestingWallet` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/finance/VestingWallet.sol)
+## `VestingWallet` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/finance/VestingWallet.sol)
 
 ```solidity
 import "@openzeppelin/contracts/finance/VestingWallet.sol";
 ```
 
-A vesting wallet is an ownable contract that can receive native currency and ERC-20 tokens, and release these
-assets to the wallet owner, also referred to as "beneficiary", according to a vesting schedule.
+This contract handles the vesting of Eth and ERC20 tokens for a given beneficiary. Custody of multiple tokens
+can be given to this contract, which will release the token to the beneficiary following a given vesting schedule.
+The vesting schedule is customizable through the [`VestingWallet.vestedAmount`](#VestingWallet-vestedAmount-address-uint64-) function.
 
-Any assets transferred to this contract will follow the vesting schedule as if they were locked from the beginning.
+Any token transferred to this contract will follow the vesting schedule as if they were locked from the beginning.
 Consequently, if the vesting has already started, any amount of tokens sent to this contract will (at least partly)
 be immediately releasable.
 
-By setting the duration to 0, one can configure this contract to behave like an asset timelock that holds tokens for
-a beneficiary until a specified time.
-
-NOTE: Since the wallet is [`Ownable`](access#Ownable), and ownership can be transferred, it is possible to sell unvested tokens.
-Preventing this in a smart contract is difficult, considering that: 1) a beneficiary address could be a
-counterfactually deployed contract, 2) there is likely to be a migration path for EOAs to become contracts in the
-near future.
-
-NOTE: When using this contract with any token whose balance is adjusted automatically (i.e. a rebase token), make
-sure to account the supply/balance adjustment in the vesting schedule to ensure the vested amount is as intended.
-
-NOTE: Chains with support for native ERC20s may allow the vesting wallet to withdraw the underlying asset as both an
-ERC20 and as native currency. For example, if chain C supports token A and the wallet gets deposited 100 A, then
-at 50% of the vesting period, the beneficiary can withdraw 50 A as ERC20 and 25 A as native currency (totaling 75 A).
-Consider disabling one of the withdrawal methods.
-
 ### Functions
-- [constructor(beneficiary, startTimestamp, durationSeconds)](#VestingWallet-constructor-address-uint64-uint64-)
+- [constructor(beneficiaryAddress, startTimestamp, durationSeconds)](#VestingWallet-constructor-address-uint64-uint64-)
 - [receive()](#VestingWallet-receive--)
+- [beneficiary()](#VestingWallet-beneficiary--)
 - [start()](#VestingWallet-start--)
 - [duration()](#VestingWallet-duration--)
-- [end()](#VestingWallet-end--)
 - [released()](#VestingWallet-released--)
 - [released(token)](#VestingWallet-released-address-)
 - [releasable()](#VestingWallet-releasable--)
@@ -64,33 +226,16 @@ Consider disabling one of the withdrawal methods.
 - [vestedAmount(token, timestamp)](#VestingWallet-vestedAmount-address-uint64-)
 - [_vestingSchedule(totalAllocation, timestamp)](#VestingWallet-_vestingSchedule-uint256-uint64-)
 
-#### Ownable
-- [owner()](#Ownable-owner--)
-- [_checkOwner()](#Ownable-_checkOwner--)
-- [renounceOwnership()](#Ownable-renounceOwnership--)
-- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
-- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
-
 ### Events
 - [EtherReleased(amount)](#VestingWallet-EtherReleased-uint256-)
 - [ERC20Released(token, amount)](#VestingWallet-ERC20Released-address-uint256-)
 
-#### Ownable
-- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
-
-### Errors
-
-#### Ownable
-- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
-- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
-
 <a id="VestingWallet-constructor-address-uint64-uint64-"></a>
 
-### `constructor(address beneficiary, uint64 startTimestamp, uint64 durationSeconds)`
+### `constructor(address beneficiaryAddress, uint64 startTimestamp, uint64 durationSeconds)`
 *public*
 
-Sets the beneficiary (owner), the start timestamp and the vesting duration (in seconds) of the vesting
-wallet.
+Set the beneficiary, start timestamp and vesting duration of the vesting wallet.
 
 <a id="VestingWallet-receive--"></a>
 
@@ -98,6 +243,13 @@ wallet.
 *external*
 
 The contract should be able to receive Eth.
+
+<a id="VestingWallet-beneficiary--"></a>
+
+### `beneficiary() → address`
+*public*
+
+Getter for the beneficiary address.
 
 <a id="VestingWallet-start--"></a>
 
@@ -112,13 +264,6 @@ Getter for the start timestamp.
 *public*
 
 Getter for the vesting duration.
-
-<a id="VestingWallet-end--"></a>
-
-### `end() → uint256`
-*public*
-
-Getter for the end timestamp.
 
 <a id="VestingWallet-released--"></a>
 
@@ -147,7 +292,7 @@ Getter for the amount of releasable eth.
 *public*
 
 Getter for the amount of releasable `token` tokens. `token` should be the address of an
-[`IERC20`](token/ERC20#IERC20) contract.
+IERC20 contract.
 
 <a id="VestingWallet-release--"></a>
 
@@ -198,94 +343,4 @@ an asset given its total historical allocation.
 
 ### `ERC20Released(address indexed token, uint256 amount)`
 *event*
-
-<a id="VestingWalletCliff"></a>
-
-## `VestingWalletCliff` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/finance/VestingWalletCliff.sol)
-
-```solidity
-import "@openzeppelin/contracts/finance/VestingWalletCliff.sol";
-```
-
-Extension of [`VestingWallet`](#VestingWallet) that adds a cliff to the vesting schedule.
-
-_Available since v5.1._
-
-### Functions
-- [constructor(cliffSeconds)](#VestingWalletCliff-constructor-uint64-)
-- [cliff()](#VestingWalletCliff-cliff--)
-- [_vestingSchedule(totalAllocation, timestamp)](#VestingWalletCliff-_vestingSchedule-uint256-uint64-)
-
-#### VestingWallet
-- [receive()](#VestingWallet-receive--)
-- [start()](#VestingWallet-start--)
-- [duration()](#VestingWallet-duration--)
-- [end()](#VestingWallet-end--)
-- [released()](#VestingWallet-released--)
-- [released(token)](#VestingWallet-released-address-)
-- [releasable()](#VestingWallet-releasable--)
-- [releasable(token)](#VestingWallet-releasable-address-)
-- [release()](#VestingWallet-release--)
-- [release(token)](#VestingWallet-release-address-)
-- [vestedAmount(timestamp)](#VestingWallet-vestedAmount-uint64-)
-- [vestedAmount(token, timestamp)](#VestingWallet-vestedAmount-address-uint64-)
-
-#### Ownable
-- [owner()](#Ownable-owner--)
-- [_checkOwner()](#Ownable-_checkOwner--)
-- [renounceOwnership()](#Ownable-renounceOwnership--)
-- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
-- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
-
-### Events
-
-#### VestingWallet
-- [EtherReleased(amount)](#VestingWallet-EtherReleased-uint256-)
-- [ERC20Released(token, amount)](#VestingWallet-ERC20Released-address-uint256-)
-
-#### Ownable
-- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
-
-### Errors
-- [InvalidCliffDuration(cliffSeconds, durationSeconds)](#VestingWalletCliff-InvalidCliffDuration-uint64-uint64-)
-
-#### VestingWallet
-
-#### Ownable
-- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
-- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
-
-<a id="VestingWalletCliff-constructor-uint64-"></a>
-
-### `constructor(uint64 cliffSeconds)`
-*internal*
-
-Set the duration of the cliff, in seconds. The cliff starts vesting schedule (see [`VestingWallet`](#VestingWallet)'s
-constructor) and ends `cliffSeconds` later.
-
-<a id="VestingWalletCliff-cliff--"></a>
-
-### `cliff() → uint256`
-*public*
-
-Getter for the cliff timestamp.
-
-<a id="VestingWalletCliff-_vestingSchedule-uint256-uint64-"></a>
-
-### `_vestingSchedule(uint256 totalAllocation, uint64 timestamp) → uint256`
-*internal*
-
-Virtual implementation of the vesting formula. This returns the amount vested, as a function of time, for
-an asset given its total historical allocation. Returns 0 if the [`VestingWalletCliff.cliff`](#VestingWalletCliff-cliff--) timestamp is not met.
-
-IMPORTANT: The cliff not only makes the schedule return 0, but it also ignores every possible side
-effect from calling the inherited implementation (i.e. `super._vestingSchedule`). Carefully consider
-this caveat if the overridden implementation of this function has any (e.g. writing to memory or reverting).
-
-<a id="VestingWalletCliff-InvalidCliffDuration-uint64-uint64-"></a>
-
-### `InvalidCliffDuration(uint64 cliffSeconds, uint64 durationSeconds)`
-*error*
-
-The specified cliff duration is larger than the vesting duration.
 

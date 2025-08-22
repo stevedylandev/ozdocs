@@ -7,42 +7,38 @@ description: "Smart contract ERC20 utilities and implementations"
 This document is better viewed at https://docs.openzeppelin.com/contracts/api/token/erc20
 </Callout>
 
-This set of interfaces, contracts, and utilities are all related to the [ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
+This set of interfaces, contracts, and utilities are all related to the [ERC20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
 
 <Callout>
-For an overview of ERC-20 tokens and a walk through on how to create a token contract read our [ERC-20 guide](ROOT:erc20.adoc).
+For an overview of ERC20 tokens and a walk through on how to create a token contract read our [ERC20 guide](ROOT:erc20.adoc).
 </Callout>
 
-There are a few core contracts that implement the behavior specified in the ERC-20 standard:
+There are a few core contracts that implement the behavior specified in the EIP:
 
-* [`IERC20`](#IERC20): the interface all ERC-20 implementations should conform to.
-* [`IERC20Metadata`](#IERC20Metadata): the extended ERC-20 interface including the [`name`](#ERC20-name--), [`symbol`](#ERC20-symbol--) and [`decimals`](#ERC20-decimals--) functions.
-* [`ERC20`](#ERC20): the implementation of the ERC-20 interface, including the [`name`](#ERC20-name--), [`symbol`](#ERC20-symbol--) and [`decimals`](#ERC20-decimals--) optional extensions to the standard interface.
+* [`IERC20`](#IERC20): the interface all ERC20 implementations should conform to.
+* [`IERC20Metadata`](#IERC20Metadata): the extended ERC20 interface including the [`name`](#ERC20-name), [`symbol`](#ERC20-symbol) and [`decimals`](#ERC20-decimals) functions.
+* [`ERC20`](#ERC20): the implementation of the ERC20 interface, including the [`name`](#ERC20-name), [`symbol`](#ERC20-symbol) and [`decimals`](#ERC20-decimals) optional standard extension to the base interface.
 
 Additionally there are multiple custom extensions, including:
 
-* [`ERC20Permit`](#ERC20Permit): gasless approval of tokens (standardized as ERC-2612).
-* [`ERC20Bridgeable`](#ERC20Bridgeable): compatibility with crosschain bridges through ERC-7802.
+* [`ERC20Permit`](#ERC20Permit): gasless approval of tokens (standardized as ERC2612).
 * [`ERC20Burnable`](#ERC20Burnable): destruction of own tokens.
 * [`ERC20Capped`](#ERC20Capped): enforcement of a cap to the total supply when minting tokens.
 * [`ERC20Pausable`](#ERC20Pausable): ability to pause token transfers.
-* [`ERC20FlashMint`](#ERC20FlashMint): token level support for flash loans through the minting and burning of ephemeral tokens (standardized as ERC-3156).
+* [`ERC20Snapshot`](#ERC20Snapshot): efficient storage of past token balances to be later queried at any point in time.
+* [`ERC20FlashMint`](#ERC20FlashMint): token level support for flash loans through the minting and burning of ephemeral tokens (standardized as ERC3156).
 * [`ERC20Votes`](#ERC20Votes): support for voting and vote delegation.
-* [`ERC20Wrapper`](#ERC20Wrapper): wrapper to create an ERC-20 backed by another ERC-20, with deposit and withdraw methods. Useful in conjunction with [`ERC20Votes`](#ERC20Votes).
-* [`ERC20TemporaryApproval`](#ERC20TemporaryApproval): support for approvals lasting for only one transaction, as defined in ERC-7674.
-* [`ERC1363`](#ERC1363): support for calling the target of a transfer or approval, enabling code execution on the receiver within a single transaction.
-* [`ERC4626`](#ERC4626): tokenized vault that manages shares (represented as ERC-20) that are backed by assets (another ERC-20).
+* [`ERC20VotesComp`](#ERC20VotesComp): support for voting and vote delegation (compatible with Compound’s token, with uint96 restrictions).
+* [`ERC20Wrapper`](#ERC20Wrapper): wrapper to create an ERC20 backed by another ERC20, with deposit and withdraw methods. Useful in conjunction with [`ERC20Votes`](#ERC20Votes).
+* [`ERC4626`](#ERC4626): tokenized vault that manages shares (represented as ERC20) that are backed by assets (another ERC20).
 
-Finally, there are some utilities to interact with ERC-20 contracts in various ways:
+Finally, there are some utilities to interact with ERC20 contracts in various ways.
 
 * [`SafeERC20`](#SafeERC20): a wrapper around the interface that eliminates the need to handle boolean return values.
-
-Other utilities that support ERC-20 assets can be found in the codebase:
-
-* ERC-20 tokens can be timelocked (held for a beneficiary until a specified time) or vested (released following a given schedule) using a [`VestingWallet`](../finance#VestingWallet).
+* [`TokenTimelock`](#TokenTimelock): hold tokens for a beneficiary until a specified time.
 
 <Callout>
-This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC-20 (such as [`_mint`](#ERC20-_mint-address-uint256-)) and expose them as external functions in the way they prefer.
+This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC20 (such as [`_mint`](#ERC20-_mint-address-uint256-)) and expose them as external functions in the way they prefer. On the other hand, [ERC20 Presets](ROOT:erc20.adoc#Presets) (such as [`ERC20PresetMinterPauser`](#ERC20PresetMinterPauser)) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
 </Callout>
 
 ## Core
@@ -59,35 +55,41 @@ This core set of contracts is designed to be unopinionated, allowing developers 
 
 [`ERC20Permit`](#ERC20Permit)
 
-[`ERC20Bridgeable`](#ERC20Bridgeable)
-
 [`ERC20Burnable`](#ERC20Burnable)
 
 [`ERC20Capped`](#ERC20Capped)
 
 [`ERC20Pausable`](#ERC20Pausable)
 
+[`ERC20Snapshot`](#ERC20Snapshot)
+
 [`ERC20Votes`](#ERC20Votes)
+
+[`ERC20VotesComp`](#ERC20VotesComp)
 
 [`ERC20Wrapper`](#ERC20Wrapper)
 
 [`ERC20FlashMint`](#ERC20FlashMint)
 
-[`ERC20TemporaryApproval`](#ERC20TemporaryApproval)
-
-[`ERC1363`](#ERC1363)
-
 [`ERC4626`](#ERC4626)
+
+## Presets
+
+These contracts are preconfigured combinations of the above features. They can be used through inheritance or as models to copy and paste their source code.
+
+[`ERC20PresetMinterPauser`](#ERC20PresetMinterPauser)
+
+[`ERC20PresetFixedSupply`](#ERC20PresetFixedSupply)
 
 ## Utilities
 
 [`SafeERC20`](#SafeERC20)
 
-[`ERC1363Utils`](#ERC1363Utils)
+[`TokenTimelock`](#TokenTimelock)
 
 <a id="ERC20"></a>
 
-## `ERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/ERC20.sol)
+## `ERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/ERC20.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -97,18 +99,28 @@ Implementation of the [`IERC20`](#IERC20) interface.
 
 This implementation is agnostic to the way tokens are created. This means
 that a supply mechanism has to be added in a derived contract using [`ERC1155._mint`](ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-).
+For a generic mechanism see [`ERC20PresetMinterPauser`](#ERC20PresetMinterPauser).
 
 TIP: For a detailed writeup see our guide
 [How
 to implement supply mechanisms](https://forum.openzeppelin.com/t/how-to-implement-erc20-supply-mechanisms/226).
 
-The default value of [`IERC6909Metadata.decimals`](../interfaces#IERC6909Metadata-decimals-uint256-) is 18. To change this, you should override
+The default value of [`ERC20.decimals`](#ERC20-decimals--) is 18. To change this, you should override
 this function so it returns a different value.
 
 We have followed general OpenZeppelin Contracts guidelines: functions revert
 instead returning `false` on failure. This behavior is nonetheless
-conventional and does not conflict with the expectations of ERC-20
+conventional and does not conflict with the expectations of ERC20
 applications.
+
+Additionally, an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event is emitted on calls to [`ERC20.transferFrom`](#ERC20-transferFrom-address-address-uint256-).
+This allows applications to reconstruct the allowance for all accounts just
+by listening to said events. Other implementations of the EIP may not emit
+these events, as it isn't required by the specification.
+
+Finally, the non-standard [`ERC20.decreaseAllowance`](#ERC20-decreaseAllowance-address-uint256-) and [`ERC20.increaseAllowance`](#ERC20-increaseAllowance-address-uint256-)
+functions have been added to mitigate the well-known issues around setting
+allowances. See [`IERC20.approve`](#IERC20-approve-address-uint256-).
 
 ### Functions
 - [constructor(name_, symbol_)](#ERC20-constructor-string-string-)
@@ -117,19 +129,19 @@ applications.
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -137,36 +149,21 @@ applications.
 
 ### Events
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
-
 <a id="ERC20-constructor-string-string-"></a>
 
 ### `constructor(string name_, string symbol_)`
-*internal*
+*public*
 
-Sets the values for [`Governor.name`](../governance#Governor-name--) and [`IERC777.symbol`](../interfaces#IERC777-symbol--).
+Sets the values for [`Governor.name`](../governance#Governor-name--) and [`ERC20.symbol`](#ERC20-symbol--).
 
-Both values are immutable: they can only be set once during construction.
+All two of these values are immutable: they can only be set once during
+construction.
 
 <a id="ERC20-name--"></a>
 
@@ -205,18 +202,18 @@ no way affects any of the arithmetic of the contract, including
 ### `totalSupply() → uint256`
 *public*
 
-Returns the value of tokens in existence.
+See [`IERC20.totalSupply`](#IERC20-totalSupply--).
 
 <a id="ERC20-balanceOf-address-"></a>
 
 ### `balanceOf(address account) → uint256`
 *public*
 
-Returns the value of tokens owned by `account`.
+See [`IERC20.balanceOf`](#IERC20-balanceOf-address-).
 
 <a id="ERC20-transfer-address-uint256-"></a>
 
-### `transfer(address to, uint256 value) → bool`
+### `transfer(address to, uint256 amount) → bool`
 *public*
 
 See [`IERC20.transfer`](#IERC20-transfer-address-uint256-).
@@ -224,27 +221,23 @@ See [`IERC20.transfer`](#IERC20-transfer-address-uint256-).
 Requirements:
 
 - `to` cannot be the zero address.
-- the caller must have a balance of at least `value`.
+- the caller must have a balance of at least `amount`.
 
 <a id="ERC20-allowance-address-address-"></a>
 
 ### `allowance(address owner, address spender) → uint256`
 *public*
 
-Returns the remaining number of tokens that `spender` will be
-allowed to spend on behalf of `owner` through [`IERC6909.transferFrom`](../interfaces#IERC6909-transferFrom-address-address-uint256-uint256-). This is
-zero by default.
-
-This value changes when [`IERC6909.approve`](../interfaces#IERC6909-approve-address-uint256-uint256-) or [`IERC6909.transferFrom`](../interfaces#IERC6909-transferFrom-address-address-uint256-uint256-) are called.
+See [`IERC20.allowance`](#IERC20-allowance-address-address-).
 
 <a id="ERC20-approve-address-uint256-"></a>
 
-### `approve(address spender, uint256 value) → bool`
+### `approve(address spender, uint256 amount) → bool`
 *public*
 
 See [`IERC20.approve`](#IERC20-approve-address-uint256-).
 
-NOTE: If `value` is the maximum `uint256`, the allowance is not updated on
+NOTE: If `amount` is the maximum `uint256`, the allowance is not updated on
 `transferFrom`. This is semantically equivalent to an infinite approval.
 
 Requirements:
@@ -253,13 +246,13 @@ Requirements:
 
 <a id="ERC20-transferFrom-address-address-uint256-"></a>
 
-### `transferFrom(address from, address to, uint256 value) → bool`
+### `transferFrom(address from, address to, uint256 amount) → bool`
 *public*
 
 See [`IERC20.transferFrom`](#IERC20-transferFrom-address-address-uint256-).
 
-Skips emitting an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event indicating an allowance update. This is not
-required by the ERC. See [_approve](#ERC20-_approve-address-address-uint256-bool-).
+Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event indicating the updated allowance. This is not
+required by the EIP. See the note at the beginning of [`ERC20`](#ERC20).
 
 NOTE: Does not update the allowance if the current allowance
 is the maximum `uint256`.
@@ -267,129 +260,173 @@ is the maximum `uint256`.
 Requirements:
 
 - `from` and `to` cannot be the zero address.
-- `from` must have a balance of at least `value`.
+- `from` must have a balance of at least `amount`.
 - the caller must have allowance for ``from``'s tokens of at least
-`value`.
+`amount`.
+
+<a id="ERC20-increaseAllowance-address-uint256-"></a>
+
+### `increaseAllowance(address spender, uint256 addedValue) → bool`
+*public*
+
+Atomically increases the allowance granted to `spender` by the caller.
+
+This is an alternative to [`ERC20.approve`](#ERC20-approve-address-uint256-) that can be used as a mitigation for
+problems described in [`IERC20.approve`](#IERC20-approve-address-uint256-).
+
+Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event indicating the updated allowance.
+
+Requirements:
+
+- `spender` cannot be the zero address.
+
+<a id="ERC20-decreaseAllowance-address-uint256-"></a>
+
+### `decreaseAllowance(address spender, uint256 subtractedValue) → bool`
+*public*
+
+Atomically decreases the allowance granted to `spender` by the caller.
+
+This is an alternative to [`ERC20.approve`](#ERC20-approve-address-uint256-) that can be used as a mitigation for
+problems described in [`IERC20.approve`](#IERC20-approve-address-uint256-).
+
+Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event indicating the updated allowance.
+
+Requirements:
+
+- `spender` cannot be the zero address.
+- `spender` must have allowance for the caller of at least
+`subtractedValue`.
 
 <a id="ERC20-_transfer-address-address-uint256-"></a>
 
-### `_transfer(address from, address to, uint256 value)`
+### `_transfer(address from, address to, uint256 amount)`
 *internal*
 
-Moves a `value` amount of tokens from `from` to `to`.
+Moves `amount` of tokens from `from` to `to`.
 
-This internal function is equivalent to [`IERC6909.transfer`](../interfaces#IERC6909-transfer-address-uint256-uint256-), and can be used to
+This internal function is equivalent to [`ERC20.transfer`](#ERC20-transfer-address-uint256-), and can be used to
 e.g. implement automatic token fees, slashing mechanisms, etc.
 
-Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
+Emits a [`IERC20.Transfer`](#IERC20-Transfer-address-address-uint256-) event.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+Requirements:
 
-<a id="ERC20-_update-address-address-uint256-"></a>
-
-### `_update(address from, address to, uint256 value)`
-*internal*
-
-Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`
-(or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
-this function.
-
-Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
+- `from` cannot be the zero address.
+- `to` cannot be the zero address.
+- `from` must have a balance of at least `amount`.
 
 <a id="ERC20-_mint-address-uint256-"></a>
 
-### `_mint(address account, uint256 value)`
+### `_mint(address account, uint256 amount)`
 *internal*
 
-Creates a `value` amount of tokens and assigns them to `account`, by transferring it from address(0).
-Relies on the `_update` mechanism
+Creates `amount` tokens and assigns them to `account`, increasing
+the total supply.
 
-Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event with `from` set to the zero address.
+Emits a [`IERC20.Transfer`](#IERC20-Transfer-address-address-uint256-) event with `from` set to the zero address.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+Requirements:
+
+- `account` cannot be the zero address.
 
 <a id="ERC20-_burn-address-uint256-"></a>
 
-### `_burn(address account, uint256 value)`
+### `_burn(address account, uint256 amount)`
 *internal*
 
-Destroys a `value` amount of tokens from `account`, lowering the total supply.
-Relies on the `_update` mechanism.
+Destroys `amount` tokens from `account`, reducing the
+total supply.
 
-Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event with `to` set to the zero address.
+Emits a [`IERC20.Transfer`](#IERC20-Transfer-address-address-uint256-) event with `to` set to the zero address.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead
+Requirements:
+
+- `account` cannot be the zero address.
+- `account` must have at least `amount` tokens.
 
 <a id="ERC20-_approve-address-address-uint256-"></a>
 
-### `_approve(address owner, address spender, uint256 value)`
+### `_approve(address owner, address spender, uint256 amount)`
 *internal*
 
-Sets `value` as the allowance of `spender` over the `owner`'s tokens.
+Sets `amount` as the allowance of `spender` over the `owner` s tokens.
 
 This internal function is equivalent to `approve`, and can be used to
 e.g. set automatic allowances for certain subsystems, etc.
 
-Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
+Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
 Requirements:
 
 - `owner` cannot be the zero address.
 - `spender` cannot be the zero address.
 
-Overrides to this logic should be done to the variant with an additional `bool emitEvent` argument.
-
-<a id="ERC20-_approve-address-address-uint256-bool-"></a>
-
-### `_approve(address owner, address spender, uint256 value, bool emitEvent)`
-*internal*
-
-Variant of [`ERC20._approve`](#ERC20-_approve-address-address-uint256-bool-) with an optional flag to enable or disable the [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
-
-By default (when calling [`ERC20._approve`](#ERC20-_approve-address-address-uint256-bool-)) the flag is set to true. On the other hand, approval changes made by
-`_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any
-`Approval` event during `transferFrom` operations.
-
-Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to
-true using the following override:
-
-```solidity
-function _approve(address owner, address spender, uint256 value, bool) internal virtual override {
-    super._approve(owner, spender, value, true);
-}
-```
-
-Requirements are the same as [`ERC20._approve`](#ERC20-_approve-address-address-uint256-bool-).
-
 <a id="ERC20-_spendAllowance-address-address-uint256-"></a>
 
-### `_spendAllowance(address owner, address spender, uint256 value)`
+### `_spendAllowance(address owner, address spender, uint256 amount)`
 *internal*
 
-Updates `owner`'s allowance for `spender` based on spent `value`.
+Updates `owner` s allowance for `spender` based on spent `amount`.
 
-Does not update the allowance value in case of infinite allowance.
+Does not update the allowance amount in case of infinite allowance.
 Revert if not enough allowance is available.
 
-Does not emit an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
+Might emit an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
+
+<a id="ERC20-_beforeTokenTransfer-address-address-uint256-"></a>
+
+### `_beforeTokenTransfer(address from, address to, uint256 amount)`
+*internal*
+
+Hook that is called before any transfer of tokens. This includes
+minting and burning.
+
+Calling conditions:
+
+- when `from` and `to` are both non-zero, `amount` of ``from``'s tokens
+will be transferred to `to`.
+- when `from` is zero, `amount` tokens will be minted for `to`.
+- when `to` is zero, `amount` of ``from``'s tokens will be burned.
+- `from` and `to` are never both zero.
+
+To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
+
+<a id="ERC20-_afterTokenTransfer-address-address-uint256-"></a>
+
+### `_afterTokenTransfer(address from, address to, uint256 amount)`
+*internal*
+
+Hook that is called after any transfer of tokens. This includes
+minting and burning.
+
+Calling conditions:
+
+- when `from` and `to` are both non-zero, `amount` of ``from``'s tokens
+has been transferred to `to`.
+- when `from` is zero, `amount` tokens have been minted for `to`.
+- when `to` is zero, `amount` of ``from``'s tokens have been burned.
+- `from` and `to` are never both zero.
+
+To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
 
 <a id="IERC20"></a>
 
-## `IERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/IERC20.sol)
+## `IERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/IERC20.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 ```
 
-Interface of the ERC-20 standard as defined in the ERC.
+Interface of the ERC20 standard as defined in the EIP.
 
 ### Functions
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
-- [transfer(to, value)](#IERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#IERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#IERC20-allowance-address-address-)
-- [approve(spender, value)](#IERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#IERC20-transferFrom-address-address-uint256-)
+- [approve(spender, amount)](#IERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#IERC20-transferFrom-address-address-uint256-)
 
 ### Events
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
@@ -400,25 +437,25 @@ Interface of the ERC-20 standard as defined in the ERC.
 ### `totalSupply() → uint256`
 *external*
 
-Returns the value of tokens in existence.
+Returns the amount of tokens in existence.
 
 <a id="IERC20-balanceOf-address-"></a>
 
 ### `balanceOf(address account) → uint256`
 *external*
 
-Returns the value of tokens owned by `account`.
+Returns the amount of tokens owned by `account`.
 
 <a id="IERC20-transfer-address-uint256-"></a>
 
-### `transfer(address to, uint256 value) → bool`
+### `transfer(address to, uint256 amount) → bool`
 *external*
 
-Moves a `value` amount of tokens from the caller's account to `to`.
+Moves `amount` tokens from the caller's account to `to`.
 
 Returns a boolean value indicating whether the operation succeeded.
 
-Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
+Emits a [`IERC20.Transfer`](#IERC20-Transfer-address-address-uint256-) event.
 
 <a id="IERC20-allowance-address-address-"></a>
 
@@ -426,18 +463,17 @@ Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-ad
 *external*
 
 Returns the remaining number of tokens that `spender` will be
-allowed to spend on behalf of `owner` through [`IERC6909.transferFrom`](../interfaces#IERC6909-transferFrom-address-address-uint256-uint256-). This is
+allowed to spend on behalf of `owner` through [`ERC20.transferFrom`](#ERC20-transferFrom-address-address-uint256-). This is
 zero by default.
 
-This value changes when [`IERC6909.approve`](../interfaces#IERC6909-approve-address-uint256-uint256-) or [`IERC6909.transferFrom`](../interfaces#IERC6909-transferFrom-address-address-uint256-uint256-) are called.
+This value changes when [`ERC20.approve`](#ERC20-approve-address-uint256-) or [`ERC20.transferFrom`](#ERC20-transferFrom-address-address-uint256-) are called.
 
 <a id="IERC20-approve-address-uint256-"></a>
 
-### `approve(address spender, uint256 value) → bool`
+### `approve(address spender, uint256 amount) → bool`
 *external*
 
-Sets a `value` amount of tokens as the allowance of `spender` over the
-caller's tokens.
+Sets `amount` as the allowance of `spender` over the caller's tokens.
 
 Returns a boolean value indicating whether the operation succeeded.
 
@@ -448,20 +484,20 @@ condition is to first reduce the spender's allowance to 0 and set the
 desired value afterwards:
 https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 
-Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
+Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
 <a id="IERC20-transferFrom-address-address-uint256-"></a>
 
-### `transferFrom(address from, address to, uint256 value) → bool`
+### `transferFrom(address from, address to, uint256 amount) → bool`
 *external*
 
-Moves a `value` amount of tokens from `from` to `to` using the
-allowance mechanism. `value` is then deducted from the caller's
+Moves `amount` tokens from `from` to `to` using the
+allowance mechanism. `amount` is then deducted from the caller's
 allowance.
 
 Returns a boolean value indicating whether the operation succeeded.
 
-Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
+Emits a [`IERC20.Transfer`](#IERC20-Transfer-address-address-uint256-) event.
 
 <a id="IERC20-Transfer-address-address-uint256-"></a>
 
@@ -479,212 +515,11 @@ Note that `value` may be zero.
 *event*
 
 Emitted when the allowance of a `spender` for an `owner` is set by
-a call to [`IERC6909.approve`](../interfaces#IERC6909-approve-address-uint256-uint256-). `value` is the new allowance.
-
-<a id="ERC1363"></a>
-
-## `ERC1363` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC1363.sol)
-
-```solidity
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC1363.sol";
-```
-
-Extension of [`ERC20`](#ERC20) tokens that adds support for code execution after transfers and approvals
-on recipient contracts. Calls after transfers are enabled through the [`ERC1363.transferAndCall`](#ERC1363-transferAndCall-address-uint256-bytes-) and
-[`ERC1363.transferFromAndCall`](#ERC1363-transferFromAndCall-address-address-uint256-bytes-) methods while calls after approvals can be made with [`ERC1363.approveAndCall`](#ERC1363-approveAndCall-address-uint256-bytes-)
-
-_Available since v5.1._
-
-### Functions
-- [supportsInterface(interfaceId)](#ERC1363-supportsInterface-bytes4-)
-- [transferAndCall(to, value)](#ERC1363-transferAndCall-address-uint256-)
-- [transferAndCall(to, value, data)](#ERC1363-transferAndCall-address-uint256-bytes-)
-- [transferFromAndCall(from, to, value)](#ERC1363-transferFromAndCall-address-address-uint256-)
-- [transferFromAndCall(from, to, value, data)](#ERC1363-transferFromAndCall-address-address-uint256-bytes-)
-- [approveAndCall(spender, value)](#ERC1363-approveAndCall-address-uint256-)
-- [approveAndCall(spender, value, data)](#ERC1363-approveAndCall-address-uint256-bytes-)
-
-#### IERC1363
-
-#### ERC165
-
-#### IERC165
-
-#### ERC20
-- [name()](#ERC20-name--)
-- [symbol()](#ERC20-symbol--)
-- [decimals()](#ERC20-decimals--)
-- [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
-- [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
-
-#### IERC20Metadata
-
-#### IERC20
-
-### Events
-
-#### IERC1363
-
-#### ERC165
-
-#### IERC165
-
-#### ERC20
-
-#### IERC20Errors
-
-#### IERC20Metadata
-
-#### IERC20
-- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
-- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
-
-### Errors
-- [ERC1363TransferFailed(receiver, value)](#ERC1363-ERC1363TransferFailed-address-uint256-)
-- [ERC1363TransferFromFailed(sender, receiver, value)](#ERC1363-ERC1363TransferFromFailed-address-address-uint256-)
-- [ERC1363ApproveFailed(spender, value)](#ERC1363-ERC1363ApproveFailed-address-uint256-)
-
-#### IERC1363
-
-#### ERC165
-
-#### IERC165
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
-
-<a id="ERC1363-supportsInterface-bytes4-"></a>
-
-### `supportsInterface(bytes4 interfaceId) → bool`
-*public*
-
-Returns true if this contract implements the interface defined by
-`interfaceId`. See the corresponding
-[ERC section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
-to learn more about how these ids are created.
-
-This function call must use less than 30 000 gas.
-
-<a id="ERC1363-transferAndCall-address-uint256-"></a>
-
-### `transferAndCall(address to, uint256 value) → bool`
-*public*
-
-Moves a `value` amount of tokens from the caller's account to `to`
-and then calls [`IERC1363Receiver.onTransferReceived`](../interfaces#IERC1363Receiver-onTransferReceived-address-address-uint256-bytes-) on `to`. Returns a flag that indicates
-if the call succeeded.
-
-Requirements:
-
-- The target has code (i.e. is a contract).
-- The target `to` must implement the [`IERC1363Receiver`](../interfaces#IERC1363Receiver) interface.
-- The target must return the [`IERC1363Receiver.onTransferReceived`](../interfaces#IERC1363Receiver-onTransferReceived-address-address-uint256-bytes-) selector to accept the transfer.
-- The internal [`IERC6909.transfer`](../interfaces#IERC6909-transfer-address-uint256-uint256-) must succeed (returned `true`).
-
-<a id="ERC1363-transferAndCall-address-uint256-bytes-"></a>
-
-### `transferAndCall(address to, uint256 value, bytes data) → bool`
-*public*
-
-Variant of [`IERC1363.transferAndCall`](../interfaces#IERC1363-transferAndCall-address-uint256-bytes-) that accepts an additional `data` parameter with
-no specified format.
-
-<a id="ERC1363-transferFromAndCall-address-address-uint256-"></a>
-
-### `transferFromAndCall(address from, address to, uint256 value) → bool`
-*public*
-
-Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism
-and then calls [`IERC1363Receiver.onTransferReceived`](../interfaces#IERC1363Receiver-onTransferReceived-address-address-uint256-bytes-) on `to`. Returns a flag that indicates
-if the call succeeded.
-
-Requirements:
-
-- The target has code (i.e. is a contract).
-- The target `to` must implement the [`IERC1363Receiver`](../interfaces#IERC1363Receiver) interface.
-- The target must return the [`IERC1363Receiver.onTransferReceived`](../interfaces#IERC1363Receiver-onTransferReceived-address-address-uint256-bytes-) selector to accept the transfer.
-- The internal [`IERC6909.transferFrom`](../interfaces#IERC6909-transferFrom-address-address-uint256-uint256-) must succeed (returned `true`).
-
-<a id="ERC1363-transferFromAndCall-address-address-uint256-bytes-"></a>
-
-### `transferFromAndCall(address from, address to, uint256 value, bytes data) → bool`
-*public*
-
-Variant of [`IERC1363.transferFromAndCall`](../interfaces#IERC1363-transferFromAndCall-address-address-uint256-bytes-) that accepts an additional `data` parameter with
-no specified format.
-
-<a id="ERC1363-approveAndCall-address-uint256-"></a>
-
-### `approveAndCall(address spender, uint256 value) → bool`
-*public*
-
-Sets a `value` amount of tokens as the allowance of `spender` over the
-caller's tokens and then calls [`IERC1363Spender.onApprovalReceived`](../interfaces#IERC1363Spender-onApprovalReceived-address-uint256-bytes-) on `spender`.
-Returns a flag that indicates if the call succeeded.
-
-Requirements:
-
-- The target has code (i.e. is a contract).
-- The target `spender` must implement the [`IERC1363Spender`](../interfaces#IERC1363Spender) interface.
-- The target must return the [`IERC1363Spender.onApprovalReceived`](../interfaces#IERC1363Spender-onApprovalReceived-address-uint256-bytes-) selector to accept the approval.
-- The internal [`IERC6909.approve`](../interfaces#IERC6909-approve-address-uint256-uint256-) must succeed (returned `true`).
-
-<a id="ERC1363-approveAndCall-address-uint256-bytes-"></a>
-
-### `approveAndCall(address spender, uint256 value, bytes data) → bool`
-*public*
-
-Variant of [`IERC1363.approveAndCall`](../interfaces#IERC1363-approveAndCall-address-uint256-bytes-) that accepts an additional `data` parameter with
-no specified format.
-
-<a id="ERC1363-ERC1363TransferFailed-address-uint256-"></a>
-
-### `ERC1363TransferFailed(address receiver, uint256 value)`
-*error*
-
-Indicates a failure within the [`IERC6909.transfer`](../interfaces#IERC6909-transfer-address-uint256-uint256-) part of a transferAndCall operation.
-
-<a id="ERC1363-ERC1363TransferFromFailed-address-address-uint256-"></a>
-
-### `ERC1363TransferFromFailed(address sender, address receiver, uint256 value)`
-*error*
-
-Indicates a failure within the [`IERC6909.transferFrom`](../interfaces#IERC6909-transferFrom-address-address-uint256-uint256-) part of a transferFromAndCall operation.
-
-<a id="ERC1363-ERC1363ApproveFailed-address-uint256-"></a>
-
-### `ERC1363ApproveFailed(address spender, uint256 value)`
-*error*
-
-Indicates a failure within the [`IERC6909.approve`](../interfaces#IERC6909-approve-address-uint256-uint256-) part of a approveAndCall operation.
+a call to [`ERC20.approve`](#ERC20-approve-address-uint256-). `value` is the new allowance.
 
 <a id="ERC20Burnable"></a>
 
-## `ERC20Burnable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Burnable.sol)
+## `ERC20Burnable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Burnable.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
@@ -695,8 +530,8 @@ tokens and those that they have an allowance for, in a way that can be
 recognized off-chain (via event analysis).
 
 ### Functions
-- [burn(value)](#ERC20Burnable-burn-uint256-)
-- [burnFrom(account, value)](#ERC20Burnable-burnFrom-address-uint256-)
+- [burn(amount)](#ERC20Burnable-burn-uint256-)
+- [burnFrom(account, amount)](#ERC20Burnable-burnFrom-address-uint256-)
 
 #### ERC20
 - [name()](#ERC20-name--)
@@ -704,19 +539,19 @@ recognized off-chain (via event analysis).
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -726,57 +561,39 @@ recognized off-chain (via event analysis).
 
 #### ERC20
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
-
 <a id="ERC20Burnable-burn-uint256-"></a>
 
-### `burn(uint256 value)`
+### `burn(uint256 amount)`
 *public*
 
-Destroys a `value` amount of tokens from the caller.
+Destroys `amount` tokens from the caller.
 
 See [`ERC20._burn`](#ERC20-_burn-address-uint256-).
 
 <a id="ERC20Burnable-burnFrom-address-uint256-"></a>
 
-### `burnFrom(address account, uint256 value)`
+### `burnFrom(address account, uint256 amount)`
 *public*
 
-Destroys a `value` amount of tokens from `account`, deducting from
-the caller's allowance.
+Destroys `amount` tokens from `account`, deducting from the caller's
+allowance.
 
 See [`ERC20._burn`](#ERC20-_burn-address-uint256-) and [`ERC20.allowance`](#ERC20-allowance-address-address-).
 
 Requirements:
 
 - the caller must have allowance for ``accounts``'s tokens of at least
-`value`.
+`amount`.
 
 <a id="ERC20Capped"></a>
 
-## `ERC20Capped` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Capped.sol)
+## `ERC20Capped` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Capped.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
@@ -787,7 +604,7 @@ Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 ### Functions
 - [constructor(cap_)](#ERC20Capped-constructor-uint256-)
 - [cap()](#ERC20Capped-cap--)
-- [_update(from, to, value)](#ERC20Capped-_update-address-address-uint256-)
+- [_mint(account, amount)](#ERC20Capped-_mint-address-uint256-)
 
 #### ERC20
 - [name()](#ERC20-name--)
@@ -795,18 +612,18 @@ Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -816,31 +633,11 @@ Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 
 #### ERC20
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
-
-### Errors
-- [ERC20ExceededCap(increasedSupply, cap)](#ERC20Capped-ERC20ExceededCap-uint256-uint256-)
-- [ERC20InvalidCap(cap)](#ERC20Capped-ERC20InvalidCap-uint256-)
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
 
 <a id="ERC20Capped-constructor-uint256-"></a>
 
@@ -857,55 +654,35 @@ set once during construction.
 
 Returns the cap on the token's total supply.
 
-<a id="ERC20Capped-_update-address-address-uint256-"></a>
+<a id="ERC20Capped-_mint-address-uint256-"></a>
 
-### `_update(address from, address to, uint256 value)`
+### `_mint(address account, uint256 amount)`
 *internal*
 
-Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`
-(or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
-this function.
-
-Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
-
-<a id="ERC20Capped-ERC20ExceededCap-uint256-uint256-"></a>
-
-### `ERC20ExceededCap(uint256 increasedSupply, uint256 cap)`
-*error*
-
-Total supply cap has been exceeded.
-
-<a id="ERC20Capped-ERC20InvalidCap-uint256-"></a>
-
-### `ERC20InvalidCap(uint256 cap)`
-*error*
-
-The supplied cap is not a valid cap.
+See [`ERC20._mint`](#ERC20-_mint-address-uint256-).
 
 <a id="ERC20FlashMint"></a>
 
-## `ERC20FlashMint` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20FlashMint.sol)
+## `ERC20FlashMint` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20FlashMint.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol";
 ```
 
-Implementation of the ERC-3156 Flash loans extension, as defined in
+Implementation of the ERC3156 Flash loans extension, as defined in
 [ERC-3156](https://eips.ethereum.org/EIPS/eip-3156).
 
 Adds the [`IERC3156FlashLender.flashLoan`](../interfaces#IERC3156FlashLender-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-) method, which provides flash loan support at the token
 level. By default there is no fee, but this can be changed by overriding [`IERC3156FlashLender.flashFee`](../interfaces#IERC3156FlashLender-flashFee-address-uint256-).
 
-NOTE: When this extension is used along with the [`ERC20Capped`](#ERC20Capped) or [`ERC20Votes`](#ERC20Votes) extensions,
-[`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLender-maxFlashLoan-address-) will not correctly reflect the maximum that can be flash minted. We recommend
-overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLender-maxFlashLoan-address-) so that it correctly reflects the supply cap.
+_Available since v4.1._
 
 ### Functions
 - [maxFlashLoan(token)](#ERC20FlashMint-maxFlashLoan-address-)
-- [flashFee(token, value)](#ERC20FlashMint-flashFee-address-uint256-)
-- [_flashFee(token, value)](#ERC20FlashMint-_flashFee-address-uint256-)
+- [flashFee(token, amount)](#ERC20FlashMint-flashFee-address-uint256-)
+- [_flashFee(token, amount)](#ERC20FlashMint-_flashFee-address-uint256-)
 - [_flashFeeReceiver()](#ERC20FlashMint-_flashFeeReceiver--)
-- [flashLoan(receiver, token, value, data)](#ERC20FlashMint-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-)
+- [flashLoan(receiver, token, amount, data)](#ERC20FlashMint-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-)
 
 #### IERC3156FlashLender
 
@@ -915,19 +692,19 @@ overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLende
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -939,34 +716,11 @@ overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLende
 
 #### ERC20
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
-
-### Errors
-- [ERC3156UnsupportedToken(token)](#ERC20FlashMint-ERC3156UnsupportedToken-address-)
-- [ERC3156ExceededMaxLoan(maxLoan)](#ERC20FlashMint-ERC3156ExceededMaxLoan-uint256-)
-- [ERC3156InvalidReceiver(receiver)](#ERC20FlashMint-ERC3156InvalidReceiver-address-)
-
-#### IERC3156FlashLender
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
 
 <a id="ERC20FlashMint-maxFlashLoan-address-"></a>
 
@@ -977,7 +731,7 @@ Returns the maximum amount of tokens available for loan.
 
 <a id="ERC20FlashMint-flashFee-address-uint256-"></a>
 
-### `flashFee(address token, uint256 value) → uint256`
+### `flashFee(address token, uint256 amount) → uint256`
 *public*
 
 Returns the fee applied when doing flash loans. This function calls
@@ -986,7 +740,7 @@ loans.
 
 <a id="ERC20FlashMint-_flashFee-address-uint256-"></a>
 
-### `_flashFee(address token, uint256 value) → uint256`
+### `_flashFee(address token, uint256 amount) → uint256`
 *internal*
 
 Returns the fee applied when doing flash loans. By default this
@@ -1004,45 +758,24 @@ This function can be overloaded to change the fee receiver.
 
 <a id="ERC20FlashMint-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-"></a>
 
-### `flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 value, bytes data) → bool`
+### `flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool`
 *public*
 
 Performs a flash loan. New tokens are minted and sent to the
 `receiver`, who is required to implement the [`IERC3156FlashBorrower`](../interfaces#IERC3156FlashBorrower)
 interface. By the end of the flash loan, the receiver is expected to own
-value + fee tokens and have them approved back to the token contract itself so
+amount + fee tokens and have them approved back to the token contract itself so
 they can be burned.
-
-<a id="ERC20FlashMint-ERC3156UnsupportedToken-address-"></a>
-
-### `ERC3156UnsupportedToken(address token)`
-*error*
-
-The loan token is not valid.
-
-<a id="ERC20FlashMint-ERC3156ExceededMaxLoan-uint256-"></a>
-
-### `ERC3156ExceededMaxLoan(uint256 maxLoan)`
-*error*
-
-The requested loan exceeds the max loan value for `token`.
-
-<a id="ERC20FlashMint-ERC3156InvalidReceiver-address-"></a>
-
-### `ERC3156InvalidReceiver(address receiver)`
-*error*
-
-The receiver of a flashloan is not a valid [`IERC3156FlashBorrower.onFlashLoan`](../interfaces#IERC3156FlashBorrower-onFlashLoan-address-address-uint256-uint256-bytes-) implementer.
 
 <a id="ERC20Pausable"></a>
 
-## `ERC20Pausable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Pausable.sol)
+## `ERC20Pausable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Pausable.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 ```
 
-ERC-20 token with pausable token transfers, minting and burning.
+ERC20 token with pausable token transfers, minting and burning.
 
 Useful for scenarios such as preventing trades until the end of an evaluation
 period, or having an emergency switch for freezing all token transfers in the
@@ -1050,12 +783,12 @@ event of a large bug.
 
 IMPORTANT: This contract does not include public pause and unpause functions. In
 addition to inheriting this contract, you must define both functions, invoking the
-[`Pausable._pause`](../utils#Pausable-_pause--) and [`Pausable._unpause`](../utils#Pausable-_unpause--) internal functions, with appropriate
+[`Pausable._pause`](../security#Pausable-_pause--) and [`Pausable._unpause`](../security#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
-make the contract pause mechanism of the contract unreachable, and thus unusable.
+make the contract unpausable.
 
 ### Functions
-- [_update(from, to, value)](#ERC20Pausable-_update-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20Pausable-_beforeTokenTransfer-address-address-uint256-)
 
 #### Pausable
 - [paused()](#Pausable-paused--)
@@ -1070,18 +803,18 @@ make the contract pause mechanism of the contract unreachable, and thus unusable
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -1095,40 +828,18 @@ make the contract pause mechanism of the contract unreachable, and thus unusable
 
 #### ERC20
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
+<a id="ERC20Pausable-_beforeTokenTransfer-address-address-uint256-"></a>
 
-#### Pausable
-- [EnforcedPause()](#Pausable-EnforcedPause--)
-- [ExpectedPause()](#Pausable-ExpectedPause--)
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
-
-<a id="ERC20Pausable-_update-address-address-uint256-"></a>
-
-### `_update(address from, address to, uint256 value)`
+### `_beforeTokenTransfer(address from, address to, uint256 amount)`
 *internal*
 
-See [`ERC20._update`](#ERC20-_update-address-address-uint256-).
+See [`ERC20._beforeTokenTransfer`](#ERC20-_beforeTokenTransfer-address-address-uint256-).
 
 Requirements:
 
@@ -1136,35 +847,32 @@ Requirements:
 
 <a id="ERC20Permit"></a>
 
-## `ERC20Permit` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Permit.sol)
+## `ERC20Permit` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Permit.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 ```
 
-Implementation of the ERC-20 Permit extension allowing approvals to be made via signatures, as defined in
-[ERC-2612](https://eips.ethereum.org/EIPS/eip-2612).
+Implementation of the ERC20 Permit extension allowing approvals to be made via signatures, as defined in
+[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612).
 
-Adds the [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) method, which can be used to change an account's ERC-20 allowance (see [`IERC20.allowance`](#IERC20-allowance-address-address-)) by
+Adds the [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) method, which can be used to change an account's ERC20 allowance (see [`IERC20.allowance`](#IERC20-allowance-address-address-)) by
 presenting a message signed by the account. By not relying on `[`IERC20.approve`](#IERC20-approve-address-uint256-)`, the token holder account doesn't
 need to send a transaction, and thus is not required to hold Ether at all.
+
+_Available since v3.4._
 
 ### Functions
 - [constructor(name)](#ERC20Permit-constructor-string-)
 - [permit(owner, spender, value, deadline, v, r, s)](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 - [nonces(owner)](#ERC20Permit-nonces-address-)
 - [DOMAIN_SEPARATOR()](#ERC20Permit-DOMAIN_SEPARATOR--)
-
-#### Nonces
-- [_useNonce(owner)](#Nonces-_useNonce-address-)
-- [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
+- [_useNonce(owner)](#ERC20Permit-_useNonce-address-)
 
 #### EIP712
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
-- [_EIP712Name()](#EIP712-_EIP712Name--)
-- [_EIP712Version()](#EIP712-_EIP712Version--)
 
 #### IERC5267
 
@@ -1176,27 +884,25 @@ need to send a transaction, and thus is not required to hold Ether at all.
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
 #### IERC20
 
 ### Events
-
-#### Nonces
 
 #### EIP712
 
@@ -1207,49 +913,20 @@ need to send a transaction, and thus is not required to hold Ether at all.
 
 #### ERC20
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
-- [ERC2612ExpiredSignature(deadline)](#ERC20Permit-ERC2612ExpiredSignature-uint256-)
-- [ERC2612InvalidSigner(signer, owner)](#ERC20Permit-ERC2612InvalidSigner-address-address-)
-
-#### Nonces
-- [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
-
-#### EIP712
-
-#### IERC5267
-
-#### IERC20Permit
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
-
 <a id="ERC20Permit-constructor-string-"></a>
 
 ### `constructor(string name)`
 *internal*
 
-Initializes the [`EIP712`](../utils/cryptography#EIP712) domain separator using the `name` parameter, and setting `version` to `"1"`.
+Initializes the [`EIP712`](../utils#EIP712) domain separator using the `name` parameter, and setting `version` to `"1"`.
 
-It's a good idea to use the same `name` that is defined as the ERC-20 token name.
+It's a good idea to use the same `name` that is defined as the ERC20 token name.
 
 <a id="ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
 
@@ -1262,7 +939,7 @@ given ``owner``'s signed approval.
 IMPORTANT: The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
 ordering also apply here.
 
-Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
+Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
 Requirements:
 
@@ -1270,7 +947,7 @@ Requirements:
 - `deadline` must be a timestamp in the future.
 - `v`, `r` and `s` must be a valid `secp256k1` signature from `owner`
 over the EIP712-formatted function arguments.
-- the signature must use ``owner``'s current nonce (see [`ERC20Permit.nonces`](#ERC20Permit-nonces-address-)).
+- the signature must use ``owner``'s current nonce (see [`Votes.nonces`](../governance#Votes-nonces-address-)).
 
 For more information on the signature format, see the
 [relevant EIP
@@ -1294,85 +971,61 @@ prevents a signature from being used multiple times.
 ### `DOMAIN_SEPARATOR() → bytes32`
 *external*
 
-Returns the domain separator used in the encoding of the signature for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-), as defined by [`EIP712`](../utils/cryptography#EIP712).
+Returns the domain separator used in the encoding of the signature for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-), as defined by [`EIP712`](../utils#EIP712).
 
-<a id="ERC20Permit-ERC2612ExpiredSignature-uint256-"></a>
+<a id="ERC20Permit-_useNonce-address-"></a>
 
-### `ERC2612ExpiredSignature(uint256 deadline)`
-*error*
+### `_useNonce(address owner) → uint256 current`
+*internal*
 
-Permit deadline has expired.
+"Consume a nonce": return the current value and increment.
 
-<a id="ERC20Permit-ERC2612InvalidSigner-address-address-"></a>
+_Available since v4.1._
 
-### `ERC2612InvalidSigner(address signer, address owner)`
-*error*
+<a id="ERC20Snapshot"></a>
 
-Mismatched signature.
-
-<a id="ERC20Votes"></a>
-
-## `ERC20Votes` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Votes.sol)
+## `ERC20Snapshot` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Snapshot.sol)
 
 ```solidity
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
 ```
 
-Extension of ERC-20 to support Compound-like voting and delegation. This version is more generic than Compound's,
-and supports token supply up to 2^208^ - 1, while COMP is limited to 2^96^ - 1.
+This contract extends an ERC20 token with a snapshot mechanism. When a snapshot is created, the balances and
+total supply at the time are recorded for later access.
 
-NOTE: This contract does not provide interface compatibility with Compound's COMP token.
+This can be used to safely create mechanisms based on token balances such as trustless dividends or weighted voting.
+In naive implementations it's possible to perform a "double spend" attack by reusing the same balance from different
+accounts. By using snapshots to calculate dividends or voting power, those attacks no longer apply. It can also be
+used to create an efficient ERC20 forking mechanism.
 
-This extension keeps a history (checkpoints) of each account's vote power. Vote power can be delegated either
-by calling the [`Votes.delegate`](../governance#Votes-delegate-address-) function directly, or by providing a signature to be used with [`Votes.delegateBySig`](../governance#Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-). Voting
-power can be queried through the public accessors [`Votes.getVotes`](../governance#Votes-getVotes-address-) and [`Votes.getPastVotes`](../governance#Votes-getPastVotes-address-uint256-).
+Snapshots are created by the internal [`ERC20Snapshot._snapshot`](#ERC20Snapshot-_snapshot--) function, which will emit the [`ERC20Snapshot.Snapshot`](#ERC20Snapshot-Snapshot-uint256-) event and return a
+snapshot id. To get the total supply at the time of a snapshot, call the function [`ERC20Snapshot.totalSupplyAt`](#ERC20Snapshot-totalSupplyAt-uint256-) with the snapshot
+id. To get the balance of an account at the time of a snapshot, call the [`ERC20Snapshot.balanceOfAt`](#ERC20Snapshot-balanceOfAt-address-uint256-) function with the snapshot id
+and the account address.
 
-By default, token balance does not account for voting power. This makes transfers cheaper. The downside is that it
-requires users to delegate to themselves in order to activate checkpoints and have their voting power tracked.
+NOTE: Snapshot policy can be customized by overriding the [`ERC20Snapshot._getCurrentSnapshotId`](#ERC20Snapshot-_getCurrentSnapshotId--) method. For example, having it
+return `block.number` will trigger the creation of snapshot at the beginning of each new block. When overriding this
+function, be careful about the monotonicity of its result. Non-monotonic snapshot ids will break the contract.
+
+Implementing snapshots for every block using this method will incur significant gas costs. For a gas-efficient
+alternative consider [`ERC20Votes`](#ERC20Votes).
+
+==== Gas Costs
+
+Snapshots are efficient. Snapshot creation is _O(1)_. Retrieval of balances or total supply from a snapshot is _O(log
+n)_ in the number of snapshots that have been created, although _n_ for a specific account will generally be much
+smaller since identical balances in subsequent snapshots are stored as a single entry.
+
+There is a constant overhead for normal ERC20 transfers due to the additional snapshot bookkeeping. This overhead is
+only significant for the first transfer that immediately follows a snapshot for a particular account. Subsequent
+transfers will have normal cost until the next snapshot, and so on.
 
 ### Functions
-- [_maxSupply()](#ERC20Votes-_maxSupply--)
-- [_update(from, to, value)](#ERC20Votes-_update-address-address-uint256-)
-- [_getVotingUnits(account)](#ERC20Votes-_getVotingUnits-address-)
-- [numCheckpoints(account)](#ERC20Votes-numCheckpoints-address-)
-- [checkpoints(account, pos)](#ERC20Votes-checkpoints-address-uint32-)
-
-#### Votes
-- [clock()](#Votes-clock--)
-- [CLOCK_MODE()](#Votes-CLOCK_MODE--)
-- [_validateTimepoint(timepoint)](#Votes-_validateTimepoint-uint256-)
-- [getVotes(account)](#Votes-getVotes-address-)
-- [getPastVotes(account, timepoint)](#Votes-getPastVotes-address-uint256-)
-- [getPastTotalSupply(timepoint)](#Votes-getPastTotalSupply-uint256-)
-- [_getTotalSupply()](#Votes-_getTotalSupply--)
-- [delegates(account)](#Votes-delegates-address-)
-- [delegate(delegatee)](#Votes-delegate-address-)
-- [delegateBySig(delegatee, nonce, expiry, v, r, s)](#Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-)
-- [_delegate(account, delegatee)](#Votes-_delegate-address-address-)
-- [_transferVotingUnits(from, to, amount)](#Votes-_transferVotingUnits-address-address-uint256-)
-- [_moveDelegateVotes(from, to, amount)](#Votes-_moveDelegateVotes-address-address-uint256-)
-- [_numCheckpoints(account)](#Votes-_numCheckpoints-address-)
-- [_checkpoints(account, pos)](#Votes-_checkpoints-address-uint32-)
-
-#### IERC5805
-
-#### IVotes
-
-#### IERC6372
-
-#### Nonces
-- [nonces(owner)](#Nonces-nonces-address-)
-- [_useNonce(owner)](#Nonces-_useNonce-address-)
-- [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
-
-#### EIP712
-- [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
-- [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
-- [eip712Domain()](#EIP712-eip712Domain--)
-- [_EIP712Name()](#EIP712-_EIP712Name--)
-- [_EIP712Version()](#EIP712-_EIP712Version--)
-
-#### IERC5267
+- [_snapshot()](#ERC20Snapshot-_snapshot--)
+- [_getCurrentSnapshotId()](#ERC20Snapshot-_getCurrentSnapshotId--)
+- [balanceOfAt(account, snapshotId)](#ERC20Snapshot-balanceOfAt-address-uint256-)
+- [totalSupplyAt(snapshotId)](#ERC20Snapshot-totalSupplyAt-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20Snapshot-_beforeTokenTransfer-address-address-uint256-)
 
 #### ERC20
 - [name()](#ERC20-name--)
@@ -1380,45 +1033,27 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
 #### IERC20
 
 ### Events
-
-#### Votes
-
-#### IERC5805
-
-#### IVotes
-- [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
-- [DelegateVotesChanged(delegate, previousVotes, newVotes)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
-
-#### IERC6372
-
-#### Nonces
-
-#### EIP712
-
-#### IERC5267
-- [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
+- [Snapshot(id)](#ERC20Snapshot-Snapshot-uint256-)
 
 #### ERC20
-
-#### IERC20Errors
 
 #### IERC20Metadata
 
@@ -1426,73 +1061,205 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
-- [ERC20ExceededSafeSupply(increasedSupply, cap)](#ERC20Votes-ERC20ExceededSafeSupply-uint256-uint256-)
+<a id="ERC20Snapshot-_snapshot--"></a>
 
-#### Votes
-- [ERC6372InconsistentClock()](#Votes-ERC6372InconsistentClock--)
-- [ERC5805FutureLookup(timepoint, clock)](#Votes-ERC5805FutureLookup-uint256-uint48-)
+### `_snapshot() → uint256`
+*internal*
+
+Creates a new snapshot and returns its snapshot id.
+
+Emits a [`ERC20Snapshot.Snapshot`](#ERC20Snapshot-Snapshot-uint256-) event that contains the same id.
+
+[`ERC20Snapshot._snapshot`](#ERC20Snapshot-_snapshot--) is `internal` and you have to decide how to expose it externally. Its usage may be restricted to a
+set of accounts, for example using [`AccessControl`](../access#AccessControl), or it may be open to the public.
+
+[WARNING]
+====
+While an open way of calling [`ERC20Snapshot._snapshot`](#ERC20Snapshot-_snapshot--) is required for certain trust minimization mechanisms such as forking,
+you must consider that it can potentially be used by attackers in two ways.
+
+First, it can be used to increase the cost of retrieval of values from snapshots, although it will grow
+logarithmically thus rendering this attack ineffective in the long term. Second, it can be used to target
+specific accounts and increase the cost of ERC20 transfers for them, in the ways specified in the Gas Costs
+section above.
+
+We haven't measured the actual numbers; if this is something you're interested in please reach out to us.
+====
+
+<a id="ERC20Snapshot-_getCurrentSnapshotId--"></a>
+
+### `_getCurrentSnapshotId() → uint256`
+*internal*
+
+Get the current snapshotId
+
+<a id="ERC20Snapshot-balanceOfAt-address-uint256-"></a>
+
+### `balanceOfAt(address account, uint256 snapshotId) → uint256`
+*public*
+
+Retrieves the balance of `account` at the time `snapshotId` was created.
+
+<a id="ERC20Snapshot-totalSupplyAt-uint256-"></a>
+
+### `totalSupplyAt(uint256 snapshotId) → uint256`
+*public*
+
+Retrieves the total supply at the time `snapshotId` was created.
+
+<a id="ERC20Snapshot-_beforeTokenTransfer-address-address-uint256-"></a>
+
+### `_beforeTokenTransfer(address from, address to, uint256 amount)`
+*internal*
+
+Hook that is called before any transfer of tokens. This includes
+minting and burning.
+
+Calling conditions:
+
+- when `from` and `to` are both non-zero, `amount` of ``from``'s tokens
+will be transferred to `to`.
+- when `from` is zero, `amount` tokens will be minted for `to`.
+- when `to` is zero, `amount` of ``from``'s tokens will be burned.
+- `from` and `to` are never both zero.
+
+To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
+
+<a id="ERC20Snapshot-Snapshot-uint256-"></a>
+
+### `Snapshot(uint256 id)`
+*event*
+
+Emitted by [`ERC20Snapshot._snapshot`](#ERC20Snapshot-_snapshot--) when a snapshot identified by `id` is created.
+
+<a id="ERC20Votes"></a>
+
+## `ERC20Votes` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Votes.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+```
+
+Extension of ERC20 to support Compound-like voting and delegation. This version is more generic than Compound's,
+and supports token supply up to 2^224^ - 1, while COMP is limited to 2^96^ - 1.
+
+NOTE: If exact COMP compatibility is required, use the [`ERC20VotesComp`](#ERC20VotesComp) variant of this module.
+
+This extension keeps a history (checkpoints) of each account's vote power. Vote power can be delegated either
+by calling the [`IVotes.delegate`](../governance#IVotes-delegate-address-) function directly, or by providing a signature to be used with [`IVotes.delegateBySig`](../governance#IVotes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-). Voting
+power can be queried through the public accessors [`Governor.getVotes`](../governance#Governor-getVotes-address-uint256-) and [`IVotes.getPastVotes`](../governance#IVotes-getPastVotes-address-uint256-).
+
+By default, token balance does not account for voting power. This makes transfers cheaper. The downside is that it
+requires users to delegate to themselves in order to activate checkpoints and have their voting power tracked.
+
+_Available since v4.2._
+
+### Functions
+- [clock()](#ERC20Votes-clock--)
+- [CLOCK_MODE()](#ERC20Votes-CLOCK_MODE--)
+- [checkpoints(account, pos)](#ERC20Votes-checkpoints-address-uint32-)
+- [numCheckpoints(account)](#ERC20Votes-numCheckpoints-address-)
+- [delegates(account)](#ERC20Votes-delegates-address-)
+- [getVotes(account)](#ERC20Votes-getVotes-address-)
+- [getPastVotes(account, timepoint)](#ERC20Votes-getPastVotes-address-uint256-)
+- [getPastTotalSupply(timepoint)](#ERC20Votes-getPastTotalSupply-uint256-)
+- [delegate(delegatee)](#ERC20Votes-delegate-address-)
+- [delegateBySig(delegatee, nonce, expiry, v, r, s)](#ERC20Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-)
+- [_maxSupply()](#ERC20Votes-_maxSupply--)
+- [_mint(account, amount)](#ERC20Votes-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20Votes-_burn-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20Votes-_afterTokenTransfer-address-address-uint256-)
+- [_delegate(delegator, delegatee)](#ERC20Votes-_delegate-address-address-)
 
 #### IERC5805
 
 #### IVotes
-- [VotesExpiredSignature(expiry)](#IVotes-VotesExpiredSignature-uint256-)
 
 #### IERC6372
 
-#### Nonces
-- [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
+#### ERC20Permit
+- [permit(owner, spender, value, deadline, v, r, s)](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
+- [nonces(owner)](#ERC20Permit-nonces-address-)
+- [DOMAIN_SEPARATOR()](#ERC20Permit-DOMAIN_SEPARATOR--)
+- [_useNonce(owner)](#ERC20Permit-_useNonce-address-)
 
 #### EIP712
+- [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
+- [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
+- [eip712Domain()](#EIP712-eip712Domain--)
 
 #### IERC5267
 
-#### ERC20
+#### IERC20Permit
 
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+#### ERC20
+- [name()](#ERC20-name--)
+- [symbol()](#ERC20-symbol--)
+- [decimals()](#ERC20-decimals--)
+- [totalSupply()](#ERC20-totalSupply--)
+- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
 #### IERC20
 
-<a id="ERC20Votes-_maxSupply--"></a>
+### Events
 
-### `_maxSupply() → uint256`
-*internal*
+#### IERC5805
 
-Maximum token supply. Defaults to `type(uint208).max` (2^208^ - 1).
+#### IVotes
+- [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
+- [DelegateVotesChanged(delegate, previousBalance, newBalance)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
 
-This maximum is enforced in [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---). It limits the total supply of the token, which is otherwise a uint256,
-so that checkpoints can be stored in the Trace208 structure used by [`Votes`](../governance#Votes). Increasing this value will not
-remove the underlying limitation, and will cause [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) to fail because of a math overflow in
-[`Votes._transferVotingUnits`](../governance#Votes-_transferVotingUnits-address-address-uint256-). An override could be used to further restrict the total supply (to a lower value) if
-additional logic requires it. When resolving override conflicts on this function, the minimum should be
-returned.
+#### IERC6372
 
-<a id="ERC20Votes-_update-address-address-uint256-"></a>
+#### ERC20Permit
 
-### `_update(address from, address to, uint256 value)`
-*internal*
+#### EIP712
 
-Move voting power when tokens are transferred.
+#### IERC5267
+- [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
 
-Emits a [`IVotes.DelegateVotesChanged`](../governance#IVotes-DelegateVotesChanged-address-uint256-uint256-) event.
+#### IERC20Permit
 
-<a id="ERC20Votes-_getVotingUnits-address-"></a>
+#### ERC20
 
-### `_getVotingUnits(address account) → uint256`
-*internal*
+#### IERC20Metadata
 
-Returns the voting units of an `account`.
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-WARNING: Overriding this function may compromise the internal vote accounting.
-`ERC20Votes` assumes tokens map to voting units 1:1 and this is not easy to change.
+<a id="ERC20Votes-clock--"></a>
+
+### `clock() → uint48`
+*public*
+
+Clock used for flagging checkpoints. Can be overridden to implement timestamp based checkpoints (and voting).
+
+<a id="ERC20Votes-CLOCK_MODE--"></a>
+
+### `CLOCK_MODE() → string`
+*public*
+
+Description of the clock
+
+<a id="ERC20Votes-checkpoints-address-uint32-"></a>
+
+### `checkpoints(address account, uint32 pos) → struct ERC20Votes.Checkpoint`
+*public*
+
+Get the `pos`-th checkpoint for `account`.
 
 <a id="ERC20Votes-numCheckpoints-address-"></a>
 
@@ -1501,45 +1268,255 @@ WARNING: Overriding this function may compromise the internal vote accounting.
 
 Get number of checkpoints for `account`.
 
-<a id="ERC20Votes-checkpoints-address-uint32-"></a>
+<a id="ERC20Votes-delegates-address-"></a>
 
-### `checkpoints(address account, uint32 pos) → struct Checkpoints.Checkpoint208`
+### `delegates(address account) → address`
 *public*
 
-Get the `pos`-th checkpoint for `account`.
+Get the address `account` is currently delegating to.
 
-<a id="ERC20Votes-ERC20ExceededSafeSupply-uint256-uint256-"></a>
+<a id="ERC20Votes-getVotes-address-"></a>
 
-### `ERC20ExceededSafeSupply(uint256 increasedSupply, uint256 cap)`
-*error*
+### `getVotes(address account) → uint256`
+*public*
 
-Total supply cap has been exceeded, introducing a risk of votes overflowing.
+Gets the current votes balance for `account`
+
+<a id="ERC20Votes-getPastVotes-address-uint256-"></a>
+
+### `getPastVotes(address account, uint256 timepoint) → uint256`
+*public*
+
+Retrieve the number of votes for `account` at the end of `timepoint`.
+
+Requirements:
+
+- `timepoint` must be in the past
+
+<a id="ERC20Votes-getPastTotalSupply-uint256-"></a>
+
+### `getPastTotalSupply(uint256 timepoint) → uint256`
+*public*
+
+Retrieve the `totalSupply` at the end of `timepoint`. Note, this value is the sum of all balances.
+It is NOT the sum of all the delegated votes!
+
+Requirements:
+
+- `timepoint` must be in the past
+
+<a id="ERC20Votes-delegate-address-"></a>
+
+### `delegate(address delegatee)`
+*public*
+
+Delegate votes from the sender to `delegatee`.
+
+<a id="ERC20Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
+
+### `delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)`
+*public*
+
+Delegates votes from signer to `delegatee`
+
+<a id="ERC20Votes-_maxSupply--"></a>
+
+### `_maxSupply() → uint224`
+*internal*
+
+Maximum token supply. Defaults to `type(uint224).max` (2^224^ - 1).
+
+<a id="ERC20Votes-_mint-address-uint256-"></a>
+
+### `_mint(address account, uint256 amount)`
+*internal*
+
+Snapshots the totalSupply after it has been increased.
+
+<a id="ERC20Votes-_burn-address-uint256-"></a>
+
+### `_burn(address account, uint256 amount)`
+*internal*
+
+Snapshots the totalSupply after it has been decreased.
+
+<a id="ERC20Votes-_afterTokenTransfer-address-address-uint256-"></a>
+
+### `_afterTokenTransfer(address from, address to, uint256 amount)`
+*internal*
+
+Move voting power when tokens are transferred.
+
+Emits a [`IVotes.DelegateVotesChanged`](../governance#IVotes-DelegateVotesChanged-address-uint256-uint256-) event.
+
+<a id="ERC20Votes-_delegate-address-address-"></a>
+
+### `_delegate(address delegator, address delegatee)`
+*internal*
+
+Change delegation for `delegator` to `delegatee`.
+
+Emits events [`IVotes.DelegateChanged`](../governance#IVotes-DelegateChanged-address-address-address-) and [`IVotes.DelegateVotesChanged`](../governance#IVotes-DelegateVotesChanged-address-uint256-uint256-).
+
+<a id="ERC20VotesComp"></a>
+
+## `ERC20VotesComp` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20VotesComp.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesComp.sol";
+```
+
+Extension of ERC20 to support Compound's voting and delegation. This version exactly matches Compound's
+interface, with the drawback of only supporting supply up to (2^96^ - 1).
+
+NOTE: You should use this contract if you need exact compatibility with COMP (for example in order to use your token
+with Governor Alpha or Bravo) and if you are sure the supply cap of 2^96^ is enough for you. Otherwise, use the
+[`ERC20Votes`](#ERC20Votes) variant of this module.
+
+This extension keeps a history (checkpoints) of each account's vote power. Vote power can be delegated either
+by calling the [`IVotes.delegate`](../governance#IVotes-delegate-address-) function directly, or by providing a signature to be used with [`IVotes.delegateBySig`](../governance#IVotes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-). Voting
+power can be queried through the public accessors [`ERC20VotesComp.getCurrentVotes`](#ERC20VotesComp-getCurrentVotes-address-) and [`ERC20VotesComp.getPriorVotes`](#ERC20VotesComp-getPriorVotes-address-uint256-).
+
+By default, token balance does not account for voting power. This makes transfers cheaper. The downside is that it
+requires users to delegate to themselves in order to activate checkpoints and have their voting power tracked.
+
+_Available since v4.2._
+
+### Functions
+- [getCurrentVotes(account)](#ERC20VotesComp-getCurrentVotes-address-)
+- [getPriorVotes(account, blockNumber)](#ERC20VotesComp-getPriorVotes-address-uint256-)
+- [_maxSupply()](#ERC20VotesComp-_maxSupply--)
+
+#### ERC20Votes
+- [clock()](#ERC20Votes-clock--)
+- [CLOCK_MODE()](#ERC20Votes-CLOCK_MODE--)
+- [checkpoints(account, pos)](#ERC20Votes-checkpoints-address-uint32-)
+- [numCheckpoints(account)](#ERC20Votes-numCheckpoints-address-)
+- [delegates(account)](#ERC20Votes-delegates-address-)
+- [getVotes(account)](#ERC20Votes-getVotes-address-)
+- [getPastVotes(account, timepoint)](#ERC20Votes-getPastVotes-address-uint256-)
+- [getPastTotalSupply(timepoint)](#ERC20Votes-getPastTotalSupply-uint256-)
+- [delegate(delegatee)](#ERC20Votes-delegate-address-)
+- [delegateBySig(delegatee, nonce, expiry, v, r, s)](#ERC20Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-)
+- [_mint(account, amount)](#ERC20Votes-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20Votes-_burn-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20Votes-_afterTokenTransfer-address-address-uint256-)
+- [_delegate(delegator, delegatee)](#ERC20Votes-_delegate-address-address-)
+
+#### IERC5805
+
+#### IVotes
+
+#### IERC6372
+
+#### ERC20Permit
+- [permit(owner, spender, value, deadline, v, r, s)](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
+- [nonces(owner)](#ERC20Permit-nonces-address-)
+- [DOMAIN_SEPARATOR()](#ERC20Permit-DOMAIN_SEPARATOR--)
+- [_useNonce(owner)](#ERC20Permit-_useNonce-address-)
+
+#### EIP712
+- [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
+- [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
+- [eip712Domain()](#EIP712-eip712Domain--)
+
+#### IERC5267
+
+#### IERC20Permit
+
+#### ERC20
+- [name()](#ERC20-name--)
+- [symbol()](#ERC20-symbol--)
+- [decimals()](#ERC20-decimals--)
+- [totalSupply()](#ERC20-totalSupply--)
+- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+
+#### IERC20Metadata
+
+#### IERC20
+
+### Events
+
+#### ERC20Votes
+
+#### IERC5805
+
+#### IVotes
+- [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
+- [DelegateVotesChanged(delegate, previousBalance, newBalance)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
+
+#### IERC6372
+
+#### ERC20Permit
+
+#### EIP712
+
+#### IERC5267
+- [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
+
+#### IERC20Permit
+
+#### ERC20
+
+#### IERC20Metadata
+
+#### IERC20
+- [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
+- [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+
+<a id="ERC20VotesComp-getCurrentVotes-address-"></a>
+
+### `getCurrentVotes(address account) → uint96`
+*external*
+
+Comp version of the [`Governor.getVotes`](../governance#Governor-getVotes-address-uint256-) accessor, with `uint96` return type.
+
+<a id="ERC20VotesComp-getPriorVotes-address-uint256-"></a>
+
+### `getPriorVotes(address account, uint256 blockNumber) → uint96`
+*external*
+
+Comp version of the [`IVotes.getPastVotes`](../governance#IVotes-getPastVotes-address-uint256-) accessor, with `uint96` return type.
+
+<a id="ERC20VotesComp-_maxSupply--"></a>
+
+### `_maxSupply() → uint224`
+*internal*
+
+Maximum token supply. Reduced to `type(uint96).max` (2^96^ - 1) to fit COMP interface.
 
 <a id="ERC20Wrapper"></a>
 
-## `ERC20Wrapper` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Wrapper.sol)
+## `ERC20Wrapper` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Wrapper.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Wrapper.sol";
 ```
 
-Extension of the ERC-20 token contract to support token wrapping.
+Extension of the ERC20 token contract to support token wrapping.
 
 Users can deposit and withdraw "underlying tokens" and receive a matching number of "wrapped tokens". This is useful
 in conjunction with other modules. For example, combining this wrapping mechanism with [`ERC20Votes`](#ERC20Votes) will allow the
-wrapping of an existing "basic" ERC-20 into a governance token.
+wrapping of an existing "basic" ERC20 into a governance token.
 
-WARNING: Any mechanism in which the underlying token changes the [`IERC777.balanceOf`](../interfaces#IERC777-balanceOf-address-) of an account without an explicit transfer
-may desynchronize this contract's supply and its underlying balance. Please exercise caution when wrapping tokens that
-may undercollateralize the wrapper (i.e. wrapper's total supply is higher than its underlying balance). See [`ERC20Wrapper._recover`](#ERC20Wrapper-_recover-address-)
-for recovering value accrued to the wrapper.
+_Available since v4.2._
 
 ### Functions
 - [constructor(underlyingToken)](#ERC20Wrapper-constructor-contract-IERC20-)
 - [decimals()](#ERC20Wrapper-decimals--)
 - [underlying()](#ERC20Wrapper-underlying--)
-- [depositFor(account, value)](#ERC20Wrapper-depositFor-address-uint256-)
-- [withdrawTo(account, value)](#ERC20Wrapper-withdrawTo-address-uint256-)
+- [depositFor(account, amount)](#ERC20Wrapper-depositFor-address-uint256-)
+- [withdrawTo(account, amount)](#ERC20Wrapper-withdrawTo-address-uint256-)
 - [_recover(account)](#ERC20Wrapper-_recover-address-)
 
 #### ERC20
@@ -1547,19 +1524,19 @@ for recovering value accrued to the wrapper.
 - [symbol()](#ERC20-symbol--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -1569,30 +1546,11 @@ for recovering value accrued to the wrapper.
 
 #### ERC20
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
-
-### Errors
-- [ERC20InvalidUnderlying(token)](#ERC20Wrapper-ERC20InvalidUnderlying-address-)
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
 
 <a id="ERC20Wrapper-constructor-contract-IERC20-"></a>
 
@@ -1604,6 +1562,8 @@ for recovering value accrued to the wrapper.
 ### `decimals() → uint8`
 *public*
 
+See [`ERC20.decimals`](#ERC20-decimals--).
+
 <a id="ERC20Wrapper-underlying--"></a>
 
 ### `underlying() → contract IERC20`
@@ -1613,14 +1573,14 @@ Returns the address of the underlying ERC-20 token that is being wrapped.
 
 <a id="ERC20Wrapper-depositFor-address-uint256-"></a>
 
-### `depositFor(address account, uint256 value) → bool`
+### `depositFor(address account, uint256 amount) → bool`
 *public*
 
 Allow a user to deposit underlying tokens and mint the corresponding number of wrapped tokens.
 
 <a id="ERC20Wrapper-withdrawTo-address-uint256-"></a>
 
-### `withdrawTo(address account, uint256 value) → bool`
+### `withdrawTo(address account, uint256 amount) → bool`
 *public*
 
 Allow a user to burn a number of wrapped tokens and withdraw the corresponding number of underlying tokens.
@@ -1630,30 +1590,23 @@ Allow a user to burn a number of wrapped tokens and withdraw the corresponding n
 ### `_recover(address account) → uint256`
 *internal*
 
-Mint wrapped token to cover any underlyingTokens that would have been transferred by mistake or acquired from
-rebasing mechanisms. Internal function that can be exposed with access control if desired.
-
-<a id="ERC20Wrapper-ERC20InvalidUnderlying-address-"></a>
-
-### `ERC20InvalidUnderlying(address token)`
-*error*
-
-The underlying token couldn't be wrapped.
+Mint wrapped token to cover any underlyingTokens that would have been transferred by mistake. Internal
+function that can be exposed with access control if desired.
 
 <a id="ERC4626"></a>
 
-## `ERC4626` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC4626.sol)
+## `ERC4626` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC4626.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
 ```
 
-Implementation of the ERC-4626 "Tokenized Vault Standard" as defined in
-[ERC-4626](https://eips.ethereum.org/EIPS/eip-4626).
+Implementation of the ERC4626 "Tokenized Vault Standard" as defined in
+[EIP-4626](https://eips.ethereum.org/EIPS/eip-4626).
 
-This extension allows the minting and burning of "shares" (represented using the ERC-20 inheritance) in exchange for
-underlying "assets" through standardized [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-), [`IERC4626.mint`](../interfaces#IERC4626-mint-uint256-address-), [`IERC4626.redeem`](../interfaces#IERC4626-redeem-uint256-address-address-) and [`IERC777.burn`](../interfaces#IERC777-burn-uint256-bytes-) workflows. This contract extends
-the ERC-20 standard. Any additional extensions included along it would affect the "shares" token represented by this
+This extension allows the minting and burning of "shares" (represented using the ERC20 inheritance) in exchange for
+underlying "assets" through standardized [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-), [`IERC4626.mint`](../interfaces#IERC4626-mint-uint256-address-), [`IERC4626.redeem`](../interfaces#IERC4626-redeem-uint256-address-address-) and [`ERC1155Burnable.burn`](ERC1155#ERC1155Burnable-burn-address-uint256-uint256-) workflows. This contract extends
+the ERC20 standard. Any additional extensions included along it would affect the "shares" token represented by this
 contract and not the "assets" token which is an independent contract.
 
 [CAUTION]
@@ -1666,14 +1619,14 @@ similarly be affected by slippage. Users can protect against this attack as well
 verifying the amount received is as expected, using a wrapper that performs these checks such as
 [ERC4626Router](https://github.com/fei-protocol/ERC4626#erc4626router-and-base).
 
-Since v4.9, this implementation introduces configurable virtual assets and shares to help developers mitigate that risk.
-The `_decimalsOffset()` corresponds to an offset in the decimal representation between the underlying asset's decimals
-and the vault decimals. This offset also determines the rate of virtual shares to virtual assets in the vault, which
-itself determines the initial exchange rate. While not fully preventing the attack, analysis shows that the default
-offset (0) makes it non-profitable even if an attacker is able to capture value from multiple user deposits, as a result
-of the value being captured by the virtual shares (out of the attacker's donation) matching the attacker's expected gains.
-With a larger offset, the attack becomes orders of magnitude more expensive than it is profitable. More details about the
-underlying math can be found xref:ROOT:erc4626.adoc#inflation-attack[here].
+Since v4.9, this implementation uses virtual assets and shares to mitigate that risk. The `_decimalsOffset()`
+corresponds to an offset in the decimal representation between the underlying asset's decimals and the vault
+decimals. This offset also determines the rate of virtual shares to virtual assets in the vault, which itself
+determines the initial exchange rate. While not fully preventing the attack, analysis shows that the default offset
+(0) makes it non-profitable, as a result of the value being captured by the virtual shares (out of the attacker's
+donation) matching the attacker's expected gains. With a larger offset, the attack becomes orders of magnitude more
+expensive than it is profitable. More details about the underlying math can be found
+xref:erc4626.adoc#inflation-attack[here].
 
 The drawback of this approach is that the virtual shares do capture (a very small) part of the value being accrued
 to the vault. Also, if the vault experiences losses, the users try to exit the vault, the virtual shares and assets
@@ -1683,6 +1636,8 @@ bigger losses. Developers willing to revert back to the pre-v4.9 behavior just n
 
 To learn more, check out our xref:ROOT:erc4626.adoc[ERC-4626 guide].
 ====
+
+_Available since v4.7._
 
 ### Functions
 - [constructor(asset_)](#ERC4626-constructor-contract-IERC20-)
@@ -1716,19 +1671,19 @@ To learn more, check out our xref:ROOT:erc4626.adoc[ERC-4626 guide].
 - [symbol()](#ERC20-symbol--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -1742,42 +1697,18 @@ To learn more, check out our xref:ROOT:erc4626.adoc[ERC-4626 guide].
 
 #### ERC20
 
-#### IERC20Errors
-
 #### IERC20Metadata
 
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
-- [ERC4626ExceededMaxDeposit(receiver, assets, max)](#ERC4626-ERC4626ExceededMaxDeposit-address-uint256-uint256-)
-- [ERC4626ExceededMaxMint(receiver, shares, max)](#ERC4626-ERC4626ExceededMaxMint-address-uint256-uint256-)
-- [ERC4626ExceededMaxWithdraw(owner, assets, max)](#ERC4626-ERC4626ExceededMaxWithdraw-address-uint256-uint256-)
-- [ERC4626ExceededMaxRedeem(owner, shares, max)](#ERC4626-ERC4626ExceededMaxRedeem-address-uint256-uint256-)
-
-#### IERC4626
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
-
 <a id="ERC4626-constructor-contract-IERC20-"></a>
 
 ### `constructor(contract IERC20 asset_)`
 *internal*
 
-Set the underlying asset contract. This must be an ERC20-compatible contract (ERC-20 or ERC-777).
+Set the underlying asset contract. This must be an ERC20-compatible contract (ERC20 or ERC777).
 
 <a id="ERC4626-decimals--"></a>
 
@@ -1795,239 +1726,115 @@ See [`IERC20Metadata.decimals`](#IERC20Metadata-decimals--).
 ### `asset() → address`
 *public*
 
-Returns the address of the underlying token used for the Vault for accounting, depositing, and withdrawing.
-
-- MUST be an ERC-20 token contract.
-- MUST NOT revert.
+See [`IERC4626.asset`](../interfaces#IERC4626-asset--).
 
 <a id="ERC4626-totalAssets--"></a>
 
 ### `totalAssets() → uint256`
 *public*
 
-Returns the total amount of the underlying asset that is “managed” by Vault.
-
-- SHOULD include any compounding that occurs from yield.
-- MUST be inclusive of any fees that are charged against assets in the Vault.
-- MUST NOT revert.
+See [`IERC4626.totalAssets`](../interfaces#IERC4626-totalAssets--).
 
 <a id="ERC4626-convertToShares-uint256-"></a>
 
 ### `convertToShares(uint256 assets) → uint256`
 *public*
 
-Returns the amount of shares that the Vault would exchange for the amount of assets provided, in an ideal
-scenario where all the conditions are met.
-
-- MUST NOT be inclusive of any fees that are charged against assets in the Vault.
-- MUST NOT show any variations depending on the caller.
-- MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
-- MUST NOT revert.
-
-NOTE: This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
-“average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
-from.
+See [`IERC4626.convertToShares`](../interfaces#IERC4626-convertToShares-uint256-).
 
 <a id="ERC4626-convertToAssets-uint256-"></a>
 
 ### `convertToAssets(uint256 shares) → uint256`
 *public*
 
-Returns the amount of assets that the Vault would exchange for the amount of shares provided, in an ideal
-scenario where all the conditions are met.
-
-- MUST NOT be inclusive of any fees that are charged against assets in the Vault.
-- MUST NOT show any variations depending on the caller.
-- MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
-- MUST NOT revert.
-
-NOTE: This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
-“average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
-from.
+See [`IERC4626.convertToAssets`](../interfaces#IERC4626-convertToAssets-uint256-).
 
 <a id="ERC4626-maxDeposit-address-"></a>
 
 ### `maxDeposit(address) → uint256`
 *public*
 
-Returns the maximum amount of the underlying asset that can be deposited into the Vault for the receiver,
-through a deposit call.
-
-- MUST return a limited value if receiver is subject to some deposit limit.
-- MUST return 2 ** 256 - 1 if there is no limit on the maximum amount of assets that may be deposited.
-- MUST NOT revert.
+See [`IERC4626.maxDeposit`](../interfaces#IERC4626-maxDeposit-address-).
 
 <a id="ERC4626-maxMint-address-"></a>
 
 ### `maxMint(address) → uint256`
 *public*
 
-Returns the maximum amount of the Vault shares that can be minted for the receiver, through a mint call.
-- MUST return a limited value if receiver is subject to some mint limit.
-- MUST return 2 ** 256 - 1 if there is no limit on the maximum amount of shares that may be minted.
-- MUST NOT revert.
+See [`IERC4626.maxMint`](../interfaces#IERC4626-maxMint-address-).
 
 <a id="ERC4626-maxWithdraw-address-"></a>
 
 ### `maxWithdraw(address owner) → uint256`
 *public*
 
-Returns the maximum amount of the underlying asset that can be withdrawn from the owner balance in the
-Vault, through a withdraw call.
-
-- MUST return a limited value if owner is subject to some withdrawal limit or timelock.
-- MUST NOT revert.
+See [`IERC4626.maxWithdraw`](../interfaces#IERC4626-maxWithdraw-address-).
 
 <a id="ERC4626-maxRedeem-address-"></a>
 
 ### `maxRedeem(address owner) → uint256`
 *public*
 
-Returns the maximum amount of Vault shares that can be redeemed from the owner balance in the Vault,
-through a redeem call.
-
-- MUST return a limited value if owner is subject to some withdrawal limit or timelock.
-- MUST return balanceOf(owner) if owner is not subject to any withdrawal limit or timelock.
-- MUST NOT revert.
+See [`IERC4626.maxRedeem`](../interfaces#IERC4626-maxRedeem-address-).
 
 <a id="ERC4626-previewDeposit-uint256-"></a>
 
 ### `previewDeposit(uint256 assets) → uint256`
 *public*
 
-Allows an on-chain or off-chain user to simulate the effects of their deposit at the current block, given
-current on-chain conditions.
-
-- MUST return as close to and no more than the exact amount of Vault shares that would be minted in a deposit
-  call in the same transaction. I.e. deposit should return the same or more shares as previewDeposit if called
-  in the same transaction.
-- MUST NOT account for deposit limits like those returned from maxDeposit and should always act as though the
-  deposit would be accepted, regardless if the user has enough tokens approved, etc.
-- MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
-- MUST NOT revert.
-
-NOTE: any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
-share price or some other type of condition, meaning the depositor will lose assets by depositing.
+See [`IERC4626.previewDeposit`](../interfaces#IERC4626-previewDeposit-uint256-).
 
 <a id="ERC4626-previewMint-uint256-"></a>
 
 ### `previewMint(uint256 shares) → uint256`
 *public*
 
-Allows an on-chain or off-chain user to simulate the effects of their mint at the current block, given
-current on-chain conditions.
-
-- MUST return as close to and no fewer than the exact amount of assets that would be deposited in a mint call
-  in the same transaction. I.e. mint should return the same or fewer assets as previewMint if called in the
-  same transaction.
-- MUST NOT account for mint limits like those returned from maxMint and should always act as though the mint
-  would be accepted, regardless if the user has enough tokens approved, etc.
-- MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
-- MUST NOT revert.
-
-NOTE: any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
-share price or some other type of condition, meaning the depositor will lose assets by minting.
+See [`IERC4626.previewMint`](../interfaces#IERC4626-previewMint-uint256-).
 
 <a id="ERC4626-previewWithdraw-uint256-"></a>
 
 ### `previewWithdraw(uint256 assets) → uint256`
 *public*
 
-Allows an on-chain or off-chain user to simulate the effects of their withdrawal at the current block,
-given current on-chain conditions.
-
-- MUST return as close to and no fewer than the exact amount of Vault shares that would be burned in a withdraw
-  call in the same transaction. I.e. withdraw should return the same or fewer shares as previewWithdraw if
-  called
-  in the same transaction.
-- MUST NOT account for withdrawal limits like those returned from maxWithdraw and should always act as though
-  the withdrawal would be accepted, regardless if the user has enough shares, etc.
-- MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
-- MUST NOT revert.
-
-NOTE: any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
-share price or some other type of condition, meaning the depositor will lose assets by depositing.
+See [`IERC4626.previewWithdraw`](../interfaces#IERC4626-previewWithdraw-uint256-).
 
 <a id="ERC4626-previewRedeem-uint256-"></a>
 
 ### `previewRedeem(uint256 shares) → uint256`
 *public*
 
-Allows an on-chain or off-chain user to simulate the effects of their redemption at the current block,
-given current on-chain conditions.
-
-- MUST return as close to and no more than the exact amount of assets that would be withdrawn in a redeem call
-  in the same transaction. I.e. redeem should return the same or more assets as previewRedeem if called in the
-  same transaction.
-- MUST NOT account for redemption limits like those returned from maxRedeem and should always act as though the
-  redemption would be accepted, regardless if the user has enough shares, etc.
-- MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
-- MUST NOT revert.
-
-NOTE: any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
-share price or some other type of condition, meaning the depositor will lose assets by redeeming.
+See [`IERC4626.previewRedeem`](../interfaces#IERC4626-previewRedeem-uint256-).
 
 <a id="ERC4626-deposit-uint256-address-"></a>
 
 ### `deposit(uint256 assets, address receiver) → uint256`
 *public*
 
-Mints shares Vault shares to receiver by depositing exactly amount of underlying tokens.
-
-- MUST emit the Deposit event.
-- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the
-  deposit execution, and are accounted for during deposit.
-- MUST revert if all of assets cannot be deposited (due to deposit limit being reached, slippage, the user not
-  approving enough underlying tokens to the Vault contract, etc).
-
-NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+See [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-).
 
 <a id="ERC4626-mint-uint256-address-"></a>
 
 ### `mint(uint256 shares, address receiver) → uint256`
 *public*
 
-Mints exactly shares Vault shares to receiver by depositing amount of underlying tokens.
+See [`IERC4626.mint`](../interfaces#IERC4626-mint-uint256-address-).
 
-- MUST emit the Deposit event.
-- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the mint
-  execution, and are accounted for during mint.
-- MUST revert if all of shares cannot be minted (due to deposit limit being reached, slippage, the user not
-  approving enough underlying tokens to the Vault contract, etc).
-
-NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+As opposed to [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-), minting is allowed even if the vault is in a state where the price of a share is zero.
+In this case, the shares will be minted without requiring any assets to be deposited.
 
 <a id="ERC4626-withdraw-uint256-address-address-"></a>
 
 ### `withdraw(uint256 assets, address receiver, address owner) → uint256`
 *public*
 
-Burns shares from owner and sends exactly assets of underlying tokens to receiver.
-
-- MUST emit the Withdraw event.
-- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the
-  withdraw execution, and are accounted for during withdraw.
-- MUST revert if all of assets cannot be withdrawn (due to withdrawal limit being reached, slippage, the owner
-  not having enough shares, etc).
-
-Note that some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
-Those methods should be performed separately.
+See [`IERC4626.withdraw`](../interfaces#IERC4626-withdraw-uint256-address-address-).
 
 <a id="ERC4626-redeem-uint256-address-address-"></a>
 
 ### `redeem(uint256 shares, address receiver, address owner) → uint256`
 *public*
 
-Burns exactly shares from owner and sends assets of underlying tokens to receiver.
-
-- MUST emit the Withdraw event.
-- MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the
-  redeem execution, and are accounted for during redeem.
-- MUST revert if all of shares cannot be redeemed (due to withdrawal limit being reached, slippage, the owner
-  not having enough shares, etc).
-
-NOTE: some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
-Those methods should be performed separately.
+See [`IERC4626.redeem`](../interfaces#IERC4626-redeem-uint256-address-address-).
 
 <a id="ERC4626-_convertToShares-uint256-enum-Math-Rounding-"></a>
 
@@ -2062,43 +1869,17 @@ Withdraw/redeem common workflow.
 ### `_decimalsOffset() → uint8`
 *internal*
 
-<a id="ERC4626-ERC4626ExceededMaxDeposit-address-uint256-uint256-"></a>
-
-### `ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)`
-*error*
-
-Attempted to deposit more assets than the max amount for `receiver`.
-
-<a id="ERC4626-ERC4626ExceededMaxMint-address-uint256-uint256-"></a>
-
-### `ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)`
-*error*
-
-Attempted to mint more shares than the max amount for `receiver`.
-
-<a id="ERC4626-ERC4626ExceededMaxWithdraw-address-uint256-uint256-"></a>
-
-### `ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)`
-*error*
-
-Attempted to withdraw more assets than the max amount for `receiver`.
-
-<a id="ERC4626-ERC4626ExceededMaxRedeem-address-uint256-uint256-"></a>
-
-### `ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)`
-*error*
-
-Attempted to redeem more shares than the max amount for `receiver`.
-
 <a id="IERC20Metadata"></a>
 
-## `IERC20Metadata` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/IERC20Metadata.sol)
+## `IERC20Metadata` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/IERC20Metadata.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 ```
 
-Interface for the optional metadata functions from the ERC-20 standard.
+Interface for the optional metadata functions from the ERC20 standard.
+
+_Available since v4.1._
 
 ### Functions
 - [name()](#IERC20Metadata-name--)
@@ -2108,10 +1889,10 @@ Interface for the optional metadata functions from the ERC-20 standard.
 #### IERC20
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
-- [transfer(to, value)](#IERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#IERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#IERC20-allowance-address-address-)
-- [approve(spender, value)](#IERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#IERC20-transferFrom-address-address-uint256-)
+- [approve(spender, amount)](#IERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#IERC20-transferFrom-address-address-uint256-)
 
 ### Events
 
@@ -2142,16 +1923,16 @@ Returns the decimals places of the token.
 
 <a id="IERC20Permit"></a>
 
-## `IERC20Permit` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/IERC20Permit.sol)
+## `IERC20Permit` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/IERC20Permit.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol";
 ```
 
-Interface of the ERC-20 Permit extension allowing approvals to be made via signatures, as defined in
-[ERC-2612](https://eips.ethereum.org/EIPS/eip-2612).
+Interface of the ERC20 Permit extension allowing approvals to be made via signatures, as defined in
+[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612).
 
-Adds the [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) method, which can be used to change an account's ERC-20 allowance (see [`IERC20.allowance`](#IERC20-allowance-address-address-)) by
+Adds the [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) method, which can be used to change an account's ERC20 allowance (see [`IERC20.allowance`](#IERC20-allowance-address-address-)) by
 presenting a message signed by the account. By not relying on [`IERC20.approve`](#IERC20-approve-address-uint256-), the token holder account doesn't
 need to send a transaction, and thus is not required to hold Ether at all.
 
@@ -2199,7 +1980,7 @@ given ``owner``'s signed approval.
 IMPORTANT: The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
 ordering also apply here.
 
-Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
+Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
 Requirements:
 
@@ -2207,7 +1988,7 @@ Requirements:
 - `deadline` must be a timestamp in the future.
 - `v`, `r` and `s` must be a valid `secp256k1` signature from `owner`
 over the EIP712-formatted function arguments.
-- the signature must use ``owner``'s current nonce (see [`ERC20Permit.nonces`](#ERC20Permit-nonces-address-)).
+- the signature must use ``owner``'s current nonce (see [`Votes.nonces`](../governance#Votes-nonces-address-)).
 
 For more information on the signature format, see the
 [relevant EIP
@@ -2231,33 +2012,35 @@ prevents a signature from being used multiple times.
 ### `DOMAIN_SEPARATOR() → bytes32`
 *external*
 
-Returns the domain separator used in the encoding of the signature for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-), as defined by [`EIP712`](../utils/cryptography#EIP712).
+Returns the domain separator used in the encoding of the signature for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-), as defined by [`EIP712`](../utils#EIP712).
 
-<a id="ERC20Bridgeable"></a>
+<a id="ERC20PresetFixedSupply"></a>
 
-## `ERC20Bridgeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/draft-ERC20Bridgeable.sol)
+## `ERC20PresetFixedSupply` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol)
 
 ```solidity
-import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Bridgeable.sol";
+import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
 ```
 
-ERC20 extension that implements the standard token interface according to
-[ERC-7802](https://eips.ethereum.org/EIPS/eip-7802).
+[`ERC20`](#ERC20) token, including:
 
-### Modifiers
-- [onlyTokenBridge()](#ERC20Bridgeable-onlyTokenBridge--)
+ - Preminted initial supply
+ - Ability for holders to burn (destroy) their tokens
+ - No access control mechanism (for minting/pausing) and hence no governance
+
+This contract uses [`ERC20Burnable`](#ERC20Burnable) to include burn capabilities - head to
+its documentation for details.
+
+_Available since v3.4._
+
+_Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 
 ### Functions
-- [supportsInterface(interfaceId)](#ERC20Bridgeable-supportsInterface-bytes4-)
-- [crosschainMint(to, value)](#ERC20Bridgeable-crosschainMint-address-uint256-)
-- [crosschainBurn(from, value)](#ERC20Bridgeable-crosschainBurn-address-uint256-)
-- [_checkTokenBridge(caller)](#ERC20Bridgeable-_checkTokenBridge-address-)
+- [constructor(name, symbol, initialSupply, owner)](#ERC20PresetFixedSupply-constructor-string-string-uint256-address-)
 
-#### IERC7802
-
-#### ERC165
-
-#### IERC165
+#### ERC20Burnable
+- [burn(amount)](#ERC20Burnable-burn-uint256-)
+- [burnFrom(account, amount)](#ERC20Burnable-burnFrom-address-uint256-)
 
 #### ERC20
 - [name()](#ERC20-name--)
@@ -2265,19 +2048,19 @@ ERC20 extension that implements the standard token interface according to
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-- [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-
-#### IERC20Errors
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
@@ -2285,17 +2068,9 @@ ERC20 extension that implements the standard token interface according to
 
 ### Events
 
-#### IERC7802
-- [CrosschainMint(to, amount, sender)](#IERC7802-CrosschainMint-address-uint256-address-)
-- [CrosschainBurn(from, amount, sender)](#IERC7802-CrosschainBurn-address-uint256-address-)
-
-#### ERC165
-
-#### IERC165
+#### ERC20Burnable
 
 #### ERC20
-
-#### IERC20Errors
 
 #### IERC20Metadata
 
@@ -2303,92 +2078,59 @@ ERC20 extension that implements the standard token interface according to
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
+<a id="ERC20PresetFixedSupply-constructor-string-string-uint256-address-"></a>
 
-#### IERC7802
-
-#### ERC165
-
-#### IERC165
-
-#### ERC20
-
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-
-#### IERC20Metadata
-
-#### IERC20
-
-<a id="ERC20Bridgeable-onlyTokenBridge--"></a>
-
-### `onlyTokenBridge()`
-
-Modifier to restrict access to the token bridge.
-
-<a id="ERC20Bridgeable-supportsInterface-bytes4-"></a>
-
-### `supportsInterface(bytes4 interfaceId) → bool`
+### `constructor(string name, string symbol, uint256 initialSupply, address owner)`
 *public*
 
-Returns true if this contract implements the interface defined by
-`interfaceId`. See the corresponding
-[ERC section](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)
-to learn more about how these ids are created.
+Mints `initialSupply` amount of token and transfers them to `owner`.
 
-This function call must use less than 30 000 gas.
+See [`ERC20.constructor`](#ERC20-constructor-string-string-).
 
-<a id="ERC20Bridgeable-crosschainMint-address-uint256-"></a>
+<a id="ERC20PresetMinterPauser"></a>
 
-### `crosschainMint(address to, uint256 value)`
-*public*
-
-See [`IERC7802.crosschainMint`](../interfaces#IERC7802-crosschainMint-address-uint256-). Emits a [`IERC7802.CrosschainMint`](../interfaces#IERC7802-CrosschainMint-address-uint256-address-) event.
-
-<a id="ERC20Bridgeable-crosschainBurn-address-uint256-"></a>
-
-### `crosschainBurn(address from, uint256 value)`
-*public*
-
-See [`IERC7802.crosschainBurn`](../interfaces#IERC7802-crosschainBurn-address-uint256-). Emits a [`IERC7802.CrosschainBurn`](../interfaces#IERC7802-CrosschainBurn-address-uint256-address-) event.
-
-<a id="ERC20Bridgeable-_checkTokenBridge-address-"></a>
-
-### `_checkTokenBridge(address caller)`
-*internal*
-
-Checks if the caller is a trusted token bridge. MUST revert otherwise.
-
-Developers should implement this function using an access control mechanism that allows
-customizing the list of allowed senders. Consider using [`AccessControl`](../access#AccessControl) or [`AccessManaged`](../access#AccessManaged).
-
-<a id="ERC20TemporaryApproval"></a>
-
-## `ERC20TemporaryApproval` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/draft-ERC20TemporaryApproval.sol)
+## `ERC20PresetMinterPauser` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol)
 
 ```solidity
-import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20TemporaryApproval.sol";
+import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol";
 ```
 
-Extension of [`ERC20`](#ERC20) that adds support for temporary allowances following ERC-7674.
+[`ERC20`](#ERC20) token, including:
 
-WARNING: This is a draft contract. The corresponding ERC is still subject to changes.
+ - ability for holders to burn (destroy) their tokens
+ - a minter role that allows for token minting (creation)
+ - a pauser role that allows to stop all token transfers
 
-_Available since v5.1._
+This contract uses [`AccessControl`](../access#AccessControl) to lock permissioned functions using the
+different roles - head to its documentation for details.
+
+The account that deploys the contract will be granted the minter and pauser
+roles, as well as the default admin role, which will let it grant both minter
+and pauser roles to other accounts.
+
+_Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 
 ### Functions
-- [allowance(owner, spender)](#ERC20TemporaryApproval-allowance-address-address-)
-- [_temporaryAllowance(owner, spender)](#ERC20TemporaryApproval-_temporaryAllowance-address-address-)
-- [temporaryApprove(spender, value)](#ERC20TemporaryApproval-temporaryApprove-address-uint256-)
-- [_temporaryApprove(owner, spender, value)](#ERC20TemporaryApproval-_temporaryApprove-address-address-uint256-)
-- [_spendAllowance(owner, spender, value)](#ERC20TemporaryApproval-_spendAllowance-address-address-uint256-)
+- [constructor(name, symbol)](#ERC20PresetMinterPauser-constructor-string-string-)
+- [mint(to, amount)](#ERC20PresetMinterPauser-mint-address-uint256-)
+- [pause()](#ERC20PresetMinterPauser-pause--)
+- [unpause()](#ERC20PresetMinterPauser-unpause--)
+- [_beforeTokenTransfer(from, to, amount)](#ERC20PresetMinterPauser-_beforeTokenTransfer-address-address-uint256-)
+- [MINTER_ROLE()](#ERC20PresetMinterPauser-MINTER_ROLE-bytes32)
+- [PAUSER_ROLE()](#ERC20PresetMinterPauser-PAUSER_ROLE-bytes32)
 
-#### IERC7674
+#### ERC20Pausable
+
+#### Pausable
+- [paused()](#Pausable-paused--)
+- [_requireNotPaused()](#Pausable-_requireNotPaused--)
+- [_requirePaused()](#Pausable-_requirePaused--)
+- [_pause()](#Pausable-_pause--)
+- [_unpause()](#Pausable-_unpause--)
+
+#### ERC20Burnable
+- [burn(amount)](#ERC20Burnable-burn-uint256-)
+- [burnFrom(account, amount)](#ERC20Burnable-burnFrom-address-uint256-)
 
 #### ERC20
 - [name()](#ERC20-name--)
@@ -2396,29 +2138,61 @@ _Available since v5.1._
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
 - [balanceOf(account)](#ERC20-balanceOf-address-)
-- [transfer(to, value)](#ERC20-transfer-address-uint256-)
-- [approve(spender, value)](#ERC20-approve-address-uint256-)
-- [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
-- [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
-- [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
-- [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-
-#### IERC20Errors
+- [transfer(to, amount)](#ERC20-transfer-address-uint256-)
+- [allowance(owner, spender)](#ERC20-allowance-address-address-)
+- [approve(spender, amount)](#ERC20-approve-address-uint256-)
+- [transferFrom(from, to, amount)](#ERC20-transferFrom-address-address-uint256-)
+- [increaseAllowance(spender, addedValue)](#ERC20-increaseAllowance-address-uint256-)
+- [decreaseAllowance(spender, subtractedValue)](#ERC20-decreaseAllowance-address-uint256-)
+- [_transfer(from, to, amount)](#ERC20-_transfer-address-address-uint256-)
+- [_mint(account, amount)](#ERC20-_mint-address-uint256-)
+- [_burn(account, amount)](#ERC20-_burn-address-uint256-)
+- [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
+- [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
+- [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
 
 #### IERC20Metadata
 
 #### IERC20
 
+#### AccessControlEnumerable
+- [supportsInterface(interfaceId)](#AccessControlEnumerable-supportsInterface-bytes4-)
+- [getRoleMember(role, index)](#AccessControlEnumerable-getRoleMember-bytes32-uint256-)
+- [getRoleMemberCount(role)](#AccessControlEnumerable-getRoleMemberCount-bytes32-)
+- [_grantRole(role, account)](#AccessControlEnumerable-_grantRole-bytes32-address-)
+- [_revokeRole(role, account)](#AccessControlEnumerable-_revokeRole-bytes32-address-)
+
+#### AccessControl
+- [hasRole(role, account)](#AccessControl-hasRole-bytes32-address-)
+- [_checkRole(role)](#AccessControl-_checkRole-bytes32-)
+- [_checkRole(role, account)](#AccessControl-_checkRole-bytes32-address-)
+- [getRoleAdmin(role)](#AccessControl-getRoleAdmin-bytes32-)
+- [grantRole(role, account)](#AccessControl-grantRole-bytes32-address-)
+- [revokeRole(role, account)](#AccessControl-revokeRole-bytes32-address-)
+- [renounceRole(role, account)](#AccessControl-renounceRole-bytes32-address-)
+- [_setupRole(role, account)](#AccessControl-_setupRole-bytes32-address-)
+- [_setRoleAdmin(role, adminRole)](#AccessControl-_setRoleAdmin-bytes32-bytes32-)
+- [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
+
+#### ERC165
+
+#### IERC165
+
+#### IAccessControlEnumerable
+
+#### IAccessControl
+
 ### Events
 
-#### IERC7674
+#### ERC20Pausable
+
+#### Pausable
+- [Paused(account)](#Pausable-Paused-address-)
+- [Unpaused(account)](#Pausable-Unpaused-address-)
+
+#### ERC20Burnable
 
 #### ERC20
-
-#### IERC20Errors
 
 #### IERC20Metadata
 
@@ -2426,149 +2200,94 @@ _Available since v5.1._
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 
-### Errors
+#### AccessControlEnumerable
 
-#### IERC7674
+#### AccessControl
 
-#### ERC20
+#### ERC165
 
-#### IERC20Errors
-- [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
-- [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
-- [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
-- [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
-- [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
-- [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
+#### IERC165
 
-#### IERC20Metadata
+#### IAccessControlEnumerable
 
-#### IERC20
+#### IAccessControl
+- [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
+- [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
+- [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
 
-<a id="ERC20TemporaryApproval-allowance-address-address-"></a>
+<a id="ERC20PresetMinterPauser-constructor-string-string-"></a>
 
-### `allowance(address owner, address spender) → uint256`
+### `constructor(string name, string symbol)`
 *public*
 
-[`IERC6909.allowance`](../interfaces#IERC6909-allowance-address-address-uint256-) override that includes the temporary allowance when looking up the current allowance. If
-adding up the persistent and the temporary allowances result in an overflow, type(uint256).max is returned.
+Grants `DEFAULT_ADMIN_ROLE`, `MINTER_ROLE` and `PAUSER_ROLE` to the
+account that deploys the contract.
 
-<a id="ERC20TemporaryApproval-_temporaryAllowance-address-address-"></a>
+See [`ERC20.constructor`](#ERC20-constructor-string-string-).
 
-### `_temporaryAllowance(address owner, address spender) → uint256`
-*internal*
+<a id="ERC20PresetMinterPauser-mint-address-uint256-"></a>
 
-Internal getter for the current temporary allowance that `spender` has over `owner` tokens.
-
-<a id="ERC20TemporaryApproval-temporaryApprove-address-uint256-"></a>
-
-### `temporaryApprove(address spender, uint256 value) → bool`
+### `mint(address to, uint256 amount)`
 *public*
 
-Alternative to [`IERC6909.approve`](../interfaces#IERC6909-approve-address-uint256-uint256-) that sets a `value` amount of tokens as the temporary allowance of `spender` over
-the caller's tokens.
+Creates `amount` new tokens for `to`.
 
-Returns a boolean value indicating whether the operation succeeded.
-
-Requirements:
-- `spender` cannot be the zero address.
-
-Does NOT emit an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
-
-<a id="ERC20TemporaryApproval-_temporaryApprove-address-address-uint256-"></a>
-
-### `_temporaryApprove(address owner, address spender, uint256 value)`
-*internal*
-
-Sets `value` as the temporary allowance of `spender` over the `owner`'s tokens.
-
-This internal function is equivalent to `temporaryApprove`, and can be used to e.g. set automatic allowances
-for certain subsystems, etc.
-
-Requirements:
-- `owner` cannot be the zero address.
-- `spender` cannot be the zero address.
-
-Does NOT emit an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
-
-<a id="ERC20TemporaryApproval-_spendAllowance-address-address-uint256-"></a>
-
-### `_spendAllowance(address owner, address spender, uint256 value)`
-*internal*
-
-[`ERC20._spendAllowance`](#ERC20-_spendAllowance-address-address-uint256-) override that consumes the temporary allowance (if any) before eventually falling back
-to consuming the persistent allowance.
-NOTE: This function skips calling `super._spendAllowance` if the temporary allowance
-is enough to cover the spending.
-
-<a id="ERC1363Utils"></a>
-
-## `ERC1363Utils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/utils/ERC1363Utils.sol)
-
-```solidity
-import "@openzeppelin/contracts/token/ERC20/utils/ERC1363Utils.sol";
-```
-
-Library that provides common ERC-1363 utility functions.
-
-See [ERC-1363](https://eips.ethereum.org/EIPS/eip-1363).
-
-### Functions
-- [checkOnERC1363TransferReceived(operator, from, to, value, data)](#ERC1363Utils-checkOnERC1363TransferReceived-address-address-address-uint256-bytes-)
-- [checkOnERC1363ApprovalReceived(operator, spender, value, data)](#ERC1363Utils-checkOnERC1363ApprovalReceived-address-address-uint256-bytes-)
-
-### Errors
-- [ERC1363InvalidReceiver(receiver)](#ERC1363Utils-ERC1363InvalidReceiver-address-)
-- [ERC1363InvalidSpender(spender)](#ERC1363Utils-ERC1363InvalidSpender-address-)
-
-<a id="ERC1363Utils-checkOnERC1363TransferReceived-address-address-address-uint256-bytes-"></a>
-
-### `checkOnERC1363TransferReceived(address operator, address from, address to, uint256 value, bytes data)`
-*internal*
-
-Performs a call to [`IERC1363Receiver.onTransferReceived`](../interfaces#IERC1363Receiver-onTransferReceived-address-address-uint256-bytes-) on a target address.
+See [`ERC20._mint`](#ERC20-_mint-address-uint256-).
 
 Requirements:
 
-- The target has code (i.e. is a contract).
-- The target `to` must implement the [`IERC1363Receiver`](../interfaces#IERC1363Receiver) interface.
-- The target must return the [`IERC1363Receiver.onTransferReceived`](../interfaces#IERC1363Receiver-onTransferReceived-address-address-uint256-bytes-) selector to accept the transfer.
+- the caller must have the `MINTER_ROLE`.
 
-<a id="ERC1363Utils-checkOnERC1363ApprovalReceived-address-address-uint256-bytes-"></a>
+<a id="ERC20PresetMinterPauser-pause--"></a>
 
-### `checkOnERC1363ApprovalReceived(address operator, address spender, uint256 value, bytes data)`
-*internal*
+### `pause()`
+*public*
 
-Performs a call to [`IERC1363Spender.onApprovalReceived`](../interfaces#IERC1363Spender-onApprovalReceived-address-uint256-bytes-) on a target address.
+Pauses all token transfers.
+
+See [`ERC20Pausable`](#ERC20Pausable) and [`Pausable._pause`](../security#Pausable-_pause--).
 
 Requirements:
 
-- The target has code (i.e. is a contract).
-- The target `spender` must implement the [`IERC1363Spender`](../interfaces#IERC1363Spender) interface.
-- The target must return the [`IERC1363Spender.onApprovalReceived`](../interfaces#IERC1363Spender-onApprovalReceived-address-uint256-bytes-) selector to accept the approval.
+- the caller must have the `PAUSER_ROLE`.
 
-<a id="ERC1363Utils-ERC1363InvalidReceiver-address-"></a>
+<a id="ERC20PresetMinterPauser-unpause--"></a>
 
-### `ERC1363InvalidReceiver(address receiver)`
-*error*
+### `unpause()`
+*public*
 
-Indicates a failure with the token `receiver`. Used in transfers.
+Unpauses all token transfers.
 
-<a id="ERC1363Utils-ERC1363InvalidSpender-address-"></a>
+See [`ERC20Pausable`](#ERC20Pausable) and [`Pausable._unpause`](../security#Pausable-_unpause--).
 
-### `ERC1363InvalidSpender(address spender)`
-*error*
+Requirements:
 
-Indicates a failure with the token `spender`. Used in approvals.
+- the caller must have the `PAUSER_ROLE`.
+
+<a id="ERC20PresetMinterPauser-_beforeTokenTransfer-address-address-uint256-"></a>
+
+### `_beforeTokenTransfer(address from, address to, uint256 amount)`
+*internal*
+
+<a id="ERC20PresetMinterPauser-MINTER_ROLE-bytes32"></a>
+
+### `MINTER_ROLE() → bytes32`
+*public*
+
+<a id="ERC20PresetMinterPauser-PAUSER_ROLE-bytes32"></a>
+
+### `PAUSER_ROLE() → bytes32`
+*public*
 
 <a id="SafeERC20"></a>
 
-## `SafeERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/utils/SafeERC20.sol)
+## `SafeERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/utils/SafeERC20.sol)
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 ```
 
-Wrappers around ERC-20 operations that throw on failure (when the token
+Wrappers around ERC20 operations that throw on failure (when the token
 contract returns false). Tokens that return no value (and instead revert or
 throw on failure) are also supported, non-reverting calls are assumed to be
 successful.
@@ -2578,18 +2297,11 @@ which allows you to call the safe operations as `token.safeTransfer(...)`, etc.
 ### Functions
 - [safeTransfer(token, to, value)](#SafeERC20-safeTransfer-contract-IERC20-address-uint256-)
 - [safeTransferFrom(token, from, to, value)](#SafeERC20-safeTransferFrom-contract-IERC20-address-address-uint256-)
-- [trySafeTransfer(token, to, value)](#SafeERC20-trySafeTransfer-contract-IERC20-address-uint256-)
-- [trySafeTransferFrom(token, from, to, value)](#SafeERC20-trySafeTransferFrom-contract-IERC20-address-address-uint256-)
+- [safeApprove(token, spender, value)](#SafeERC20-safeApprove-contract-IERC20-address-uint256-)
 - [safeIncreaseAllowance(token, spender, value)](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-)
-- [safeDecreaseAllowance(token, spender, requestedDecrease)](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-)
+- [safeDecreaseAllowance(token, spender, value)](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-)
 - [forceApprove(token, spender, value)](#SafeERC20-forceApprove-contract-IERC20-address-uint256-)
-- [transferAndCallRelaxed(token, to, value, data)](#SafeERC20-transferAndCallRelaxed-contract-IERC1363-address-uint256-bytes-)
-- [transferFromAndCallRelaxed(token, from, to, value, data)](#SafeERC20-transferFromAndCallRelaxed-contract-IERC1363-address-address-uint256-bytes-)
-- [approveAndCallRelaxed(token, to, value, data)](#SafeERC20-approveAndCallRelaxed-contract-IERC1363-address-uint256-bytes-)
-
-### Errors
-- [SafeERC20FailedOperation(token)](#SafeERC20-SafeERC20FailedOperation-address-)
-- [SafeERC20FailedDecreaseAllowance(spender, currentAllowance, requestedDecrease)](#SafeERC20-SafeERC20FailedDecreaseAllowance-address-uint256-uint256-)
+- [safePermit(token, owner, spender, value, deadline, v, r, s)](#SafeERC20-safePermit-contract-IERC20Permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 
 <a id="SafeERC20-safeTransfer-contract-IERC20-address-uint256-"></a>
 
@@ -2607,19 +2319,16 @@ non-reverting calls are assumed to be successful.
 Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the
 calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.
 
-<a id="SafeERC20-trySafeTransfer-contract-IERC20-address-uint256-"></a>
+<a id="SafeERC20-safeApprove-contract-IERC20-address-uint256-"></a>
 
-### `trySafeTransfer(contract IERC20 token, address to, uint256 value) → bool`
+### `safeApprove(contract IERC20 token, address spender, uint256 value)`
 *internal*
 
-Variant of [`SafeERC20.safeTransfer`](#SafeERC20-safeTransfer-contract-IERC20-address-uint256-) that returns a bool instead of reverting if the operation is not successful.
+Deprecated. This function has issues similar to the ones found in
+[`IERC20.approve`](#IERC20-approve-address-uint256-), and its usage is discouraged.
 
-<a id="SafeERC20-trySafeTransferFrom-contract-IERC20-address-address-uint256-"></a>
-
-### `trySafeTransferFrom(contract IERC20 token, address from, address to, uint256 value) → bool`
-*internal*
-
-Variant of [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) that returns a bool instead of reverting if the operation is not successful.
+Whenever possible, use [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) and
+[`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) instead.
 
 <a id="SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-"></a>
 
@@ -2629,23 +2338,13 @@ Variant of [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address
 Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,
 non-reverting calls are assumed to be successful.
 
-IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
-this function. Performing a [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) or [`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) operation on a token contract
-that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
-
 <a id="SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-"></a>
 
-### `safeDecreaseAllowance(contract IERC20 token, address spender, uint256 requestedDecrease)`
+### `safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)`
 *internal*
 
-Decrease the calling contract's allowance toward `spender` by `requestedDecrease`. If `token` returns no
-value, non-reverting calls are assumed to be successful.
-
-IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
-this function. Performing a [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) or [`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) operation on a token contract
-that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,
+non-reverting calls are assumed to be successful.
 
 <a id="SafeERC20-forceApprove-contract-IERC20-address-uint256-"></a>
 
@@ -2656,58 +2355,70 @@ Set the calling contract's allowance toward `spender` to `value`. If `token` ret
 non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval
 to be set to zero before setting it to a non-zero value, such as USDT.
 
-NOTE: If the token implements ERC-7674, this function will not modify any temporary allowance. This function
-only sets the "standard" allowance. Any temporary allowance will remain active, in addition to the value being
-set here.
+<a id="SafeERC20-safePermit-contract-IERC20Permit-address-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
 
-<a id="SafeERC20-transferAndCallRelaxed-contract-IERC1363-address-uint256-bytes-"></a>
-
-### `transferAndCallRelaxed(contract IERC1363 token, address to, uint256 value, bytes data)`
+### `safePermit(contract IERC20Permit token, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)`
 *internal*
 
-Performs an [`ERC1363`](#ERC1363) transferAndCall, with a fallback to the simple [`ERC20`](#ERC20) transfer if the target has no
-code. This can be used to implement an [`ERC721`](ERC721#ERC721)-like safe transfer that rely on [`ERC1363`](#ERC1363) checks when
-targeting contracts.
+Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.
+Revert on invalid signature.
 
-Reverts if the returned value is other than `true`.
+<a id="TokenTimelock"></a>
 
-<a id="SafeERC20-transferFromAndCallRelaxed-contract-IERC1363-address-address-uint256-bytes-"></a>
+## `TokenTimelock` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/utils/TokenTimelock.sol)
 
-### `transferFromAndCallRelaxed(contract IERC1363 token, address from, address to, uint256 value, bytes data)`
-*internal*
+```solidity
+import "@openzeppelin/contracts/token/ERC20/utils/TokenTimelock.sol";
+```
 
-Performs an [`ERC1363`](#ERC1363) transferFromAndCall, with a fallback to the simple [`ERC20`](#ERC20) transferFrom if the target
-has no code. This can be used to implement an [`ERC721`](ERC721#ERC721)-like safe transfer that rely on [`ERC1363`](#ERC1363) checks when
-targeting contracts.
+A token holder contract that will allow a beneficiary to extract the
+tokens after a given release time.
 
-Reverts if the returned value is other than `true`.
+Useful for simple vesting schedules like "advisors get all of their tokens
+after 1 year".
 
-<a id="SafeERC20-approveAndCallRelaxed-contract-IERC1363-address-uint256-bytes-"></a>
+### Functions
+- [constructor(token_, beneficiary_, releaseTime_)](#TokenTimelock-constructor-contract-IERC20-address-uint256-)
+- [token()](#TokenTimelock-token--)
+- [beneficiary()](#TokenTimelock-beneficiary--)
+- [releaseTime()](#TokenTimelock-releaseTime--)
+- [release()](#TokenTimelock-release--)
 
-### `approveAndCallRelaxed(contract IERC1363 token, address to, uint256 value, bytes data)`
-*internal*
+<a id="TokenTimelock-constructor-contract-IERC20-address-uint256-"></a>
 
-Performs an [`ERC1363`](#ERC1363) approveAndCall, with a fallback to the simple [`ERC20`](#ERC20) approve if the target has no
-code. This can be used to implement an [`ERC721`](ERC721#ERC721)-like safe transfer that rely on [`ERC1363`](#ERC1363) checks when
-targeting contracts.
+### `constructor(contract IERC20 token_, address beneficiary_, uint256 releaseTime_)`
+*public*
 
-NOTE: When the recipient address (`to`) has no code (i.e. is an EOA), this function behaves as [`SafeERC20.forceApprove`](#SafeERC20-forceApprove-contract-IERC20-address-uint256-).
-Opposedly, when the recipient address (`to`) has code, this function only attempts to call [`ERC1363.approveAndCall`](#ERC1363-approveAndCall-address-uint256-bytes-)
-once without retrying, and relies on the returned value to be true.
+Deploys a timelock instance that is able to hold the token specified, and will only release it to
+`beneficiary_` when [`PaymentSplitter.release`](../finance#PaymentSplitter-release-contract-IERC20-address-) is invoked after `releaseTime_`. The release time is specified as a Unix timestamp
+(in seconds).
 
-Reverts if the returned value is other than `true`.
+<a id="TokenTimelock-token--"></a>
 
-<a id="SafeERC20-SafeERC20FailedOperation-address-"></a>
+### `token() → contract IERC20`
+*public*
 
-### `SafeERC20FailedOperation(address token)`
-*error*
+Returns the token being held.
 
-An operation with an ERC-20 token failed.
+<a id="TokenTimelock-beneficiary--"></a>
 
-<a id="SafeERC20-SafeERC20FailedDecreaseAllowance-address-uint256-uint256-"></a>
+### `beneficiary() → address`
+*public*
 
-### `SafeERC20FailedDecreaseAllowance(address spender, uint256 currentAllowance, uint256 requestedDecrease)`
-*error*
+Returns the beneficiary that will receive the tokens.
 
-Indicates a failed `decreaseAllowance` request.
+<a id="TokenTimelock-releaseTime--"></a>
+
+### `releaseTime() → uint256`
+*public*
+
+Returns the time when the tokens are released in seconds since Unix epoch (i.e. Unix timestamp).
+
+<a id="TokenTimelock-release--"></a>
+
+### `release()`
+*public*
+
+Transfers tokens held by the timelock to the beneficiary. Will only succeed if invoked after the release
+time.
 

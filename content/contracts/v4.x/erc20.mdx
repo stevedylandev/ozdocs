@@ -1,24 +1,36 @@
 ---
-title: ERC-20
-description: ERC-20
+title: ERC20
+description: ERC20
 ---
 
-An ERC-20 token contract keeps track of [_fungible_ tokens](tokens.adoc#different-kinds-of-tokens): any one token is exactly equal to any other token; no tokens have special rights or behavior associated with them. This makes ERC-20 tokens useful for things like a **medium of exchange currency**, **voting rights**, **staking**, and more.
+An ERC20 token contract keeps track of [_fungible_ tokens](tokens.mdx#different-kinds-of-tokens): any one token is exactly equal to any other token; no tokens have special rights or behavior associated with them. This makes ERC20 tokens useful for things like a **medium of exchange currency**, **voting rights**, **staking**, and more.
 
 OpenZeppelin Contracts provides many ERC20-related contracts. On the [`API reference`](contracts/v5.x/api/token/ERC20.mdx) you’ll find detailed information on their properties and usage.
 
-## Constructing an ERC-20 Token Contract
+## Constructing an ERC20 Token Contract
 
-Using Contracts, we can easily create our own ERC-20 token contract, which will be used to track _Gold_ (GLD), an internal currency in a hypothetical game.
+Using Contracts, we can easily create our own ERC20 token contract, which will be used to track _Gold_ (GLD), an internal currency in a hypothetical game.
 
 Here’s what our GLD token might look like.
 
-<include cwd lang='solidity'>./examples/token/ERC20/GLDToken.sol</include>
+```solidity
+// contracts/GLDToken.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract GLDToken is ERC20 
+    constructor(uint256 initialSupply) ERC20("Gold", "GLD") {
+        _mint(msg.sender, initialSupply);
+    
+}
+```
 
 Our contracts are often used via [inheritance](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance), and here we’re reusing [`ERC20`](contracts/v5.x/api/token/ERC20.mdx#erc20) for both the basic standard implementation and the [`name`](contracts/v5.x/api/token/ERC20.mdx#ERC20-name--), [`symbol`](contracts/v5.x/api/token/ERC20.mdx#ERC20-symbol--), and [`decimals`](contracts/v5.x/api/token/ERC20.mdx#ERC20-decimals--) optional extensions. Additionally, we’re creating an `initialSupply` of tokens, which will be assigned to the address that deploys the contract.
 
 <Callout>
-For a more complete discussion of ERC-20 supply mechanisms, see [Creating ERC-20 Supply](erc20-supply.adoc).
+For a more complete discussion of ERC20 supply mechanisms, see [Creating ERC20 Supply](erc20-supply.mdx).
 </Callout>
 
 That’s it! Once deployed, we will be able to query the deployer’s balance:
@@ -48,16 +60,16 @@ How can this be achieved? It’s actually very simple: a token contract can use 
 
 It is important to understand that `decimals` is _only used for display purposes_. All arithmetic inside the contract is still performed on integers, and it is the different user interfaces (wallets, exchanges, etc.) that must adjust the displayed values according to `decimals`. The total token supply and balance of each account are not specified in `GLD`: you need to divide by `10 ** decimals` to get the actual `GLD` amount.
 
-You’ll probably want to use a `decimals` value of `18`, just like Ether and most ERC-20 token contracts in use, unless you have a very special reason not to. When minting tokens or transferring them around, you will be actually sending the number `num GLD * (10 ** decimals)`.
+You’ll probably want to use a `decimals` value of `18`, just like Ether and most ERC20 token contracts in use, unless you have a very special reason not to. When minting tokens or transferring them around, you will be actually sending the number `num GLD * (10 ** decimals)`.
 
 <Callout>
 By default, `ERC20` uses a value of `18` for `decimals`. To use a different value, you will need to override the `decimals()` function in your contract.
 </Callout>
 
 ```solidity
-function decimals() public view virtual override returns (uint8) {
+function decimals() public view virtual override returns (uint8) 
   return 16;
-}
+
 ```
 
 So if you want to send `5` tokens using a token contract with 18 decimals, the method to call will actually be:
@@ -65,3 +77,12 @@ So if you want to send `5` tokens using a token contract with 18 decimals, the m
 ```solidity
 transfer(recipient, 5 * (10 ** 18));
 ```
+
+## Preset ERC20 contract
+A preset ERC20 is available, [`ERC20PresetMinterPauser`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.7/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol). It is preset to allow for token minting (create), stop all token transfers (pause) and allow holders to burn (destroy) their tokens. The contract uses [Access Control](access-control.mdx) to control access to the minting and pausing functionality.  The account that deploys the contract will be granted the minter and pauser roles, as well as the default admin role.
+
+This contract is ready to deploy without having to write any Solidity code.  It can be used as-is for quick prototyping and testing, but is also suitable for production environments.
+
+<Callout>
+Contract presets are now deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com) as a more powerful alternative.
+</Callout>

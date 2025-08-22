@@ -1,0 +1,264 @@
+---
+title: "Security"
+description: "Smart contract security utilities and implementations"
+---
+
+<Callout>
+This document is better viewed at https://docs.openzeppelin.com/contracts/api/security
+</Callout>
+
+These contracts aim to cover common security practices.
+
+* [`PullPayment`](#PullPayment): A pattern that can be used to avoid reentrancy attacks.
+* [`ReentrancyGuard`](#ReentrancyGuard): A modifier that can prevent reentrancy during certain functions.
+* [`Pausable`](#Pausable): A common emergency response mechanism that can pause functionality while a remediation is pending.
+
+<Callout>
+For an overview on reentrancy and the possible mechanisms to prevent it, read our article [Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
+</Callout>
+
+## Contracts
+
+[`PullPayment`](#PullPayment)
+
+[`ReentrancyGuard`](#ReentrancyGuard)
+
+[`Pausable`](#Pausable)
+
+<a id="Pausable"></a>
+
+## `Pausable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/security/Pausable.sol)
+
+```solidity
+import "@openzeppelin/contracts/security/Pausable.sol";
+```
+
+Contract module which allows children to implement an emergency stop
+mechanism that can be triggered by an authorized account.
+
+This module is used through inheritance. It will make available the
+modifiers `whenNotPaused` and `whenPaused`, which can be applied to
+the functions of your contract. Note that they will not be pausable by
+simply including this module, only once the modifiers are put in place.
+
+### Modifiers
+- [whenNotPaused()](#Pausable-whenNotPaused--)
+- [whenPaused()](#Pausable-whenPaused--)
+
+### Functions
+- [constructor()](#Pausable-constructor--)
+- [paused()](#Pausable-paused--)
+- [_requireNotPaused()](#Pausable-_requireNotPaused--)
+- [_requirePaused()](#Pausable-_requirePaused--)
+- [_pause()](#Pausable-_pause--)
+- [_unpause()](#Pausable-_unpause--)
+
+### Events
+- [Paused(account)](#Pausable-Paused-address-)
+- [Unpaused(account)](#Pausable-Unpaused-address-)
+
+<a id="Pausable-whenNotPaused--"></a>
+
+### `whenNotPaused()`
+
+Modifier to make a function callable only when the contract is not paused.
+
+Requirements:
+
+- The contract must not be paused.
+
+<a id="Pausable-whenPaused--"></a>
+
+### `whenPaused()`
+
+Modifier to make a function callable only when the contract is paused.
+
+Requirements:
+
+- The contract must be paused.
+
+<a id="Pausable-constructor--"></a>
+
+### `constructor()`
+*internal*
+
+Initializes the contract in unpaused state.
+
+<a id="Pausable-paused--"></a>
+
+### `paused() → bool`
+*public*
+
+Returns true if the contract is paused, and false otherwise.
+
+<a id="Pausable-_requireNotPaused--"></a>
+
+### `_requireNotPaused()`
+*internal*
+
+Throws if the contract is paused.
+
+<a id="Pausable-_requirePaused--"></a>
+
+### `_requirePaused()`
+*internal*
+
+Throws if the contract is not paused.
+
+<a id="Pausable-_pause--"></a>
+
+### `_pause()`
+*internal*
+
+Triggers stopped state.
+
+Requirements:
+
+- The contract must not be paused.
+
+<a id="Pausable-_unpause--"></a>
+
+### `_unpause()`
+*internal*
+
+Returns to normal state.
+
+Requirements:
+
+- The contract must be paused.
+
+<a id="Pausable-Paused-address-"></a>
+
+### `Paused(address account)`
+*event*
+
+Emitted when the pause is triggered by `account`.
+
+<a id="Pausable-Unpaused-address-"></a>
+
+### `Unpaused(address account)`
+*event*
+
+Emitted when the pause is lifted by `account`.
+
+<a id="PullPayment"></a>
+
+## `PullPayment` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/security/PullPayment.sol)
+
+```solidity
+import "@openzeppelin/contracts/security/PullPayment.sol";
+```
+
+Simple implementation of a
+[pull-payment](https://consensys.github.io/smart-contract-best-practices/development-recommendations/general/external-calls/#favor-pull-over-push-for-external-calls)
+strategy, where the paying contract doesn't interact directly with the
+receiver account, which must withdraw its payments itself.
+
+Pull-payments are often considered the best practice when it comes to sending
+Ether, security-wise. It prevents recipients from blocking execution, and
+eliminates reentrancy concerns.
+
+TIP: If you would like to learn more about reentrancy and alternative ways
+to protect against it, check out our blog post
+[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
+
+To use, derive from the `PullPayment` contract, and use [`PullPayment._asyncTransfer`](#PullPayment-_asyncTransfer-address-uint256-)
+instead of Solidity's `transfer` function. Payees can query their due
+payments with [`PullPayment.payments`](#PullPayment-payments-address-), and retrieve them with [`PullPayment.withdrawPayments`](#PullPayment-withdrawPayments-address-payable-).
+
+### Functions
+- [constructor()](#PullPayment-constructor--)
+- [withdrawPayments(payee)](#PullPayment-withdrawPayments-address-payable-)
+- [payments(dest)](#PullPayment-payments-address-)
+- [_asyncTransfer(dest, amount)](#PullPayment-_asyncTransfer-address-uint256-)
+
+<a id="PullPayment-constructor--"></a>
+
+### `constructor()`
+*internal*
+
+<a id="PullPayment-withdrawPayments-address-payable-"></a>
+
+### `withdrawPayments(address payable payee)`
+*public*
+
+Withdraw accumulated payments, forwarding all gas to the recipient.
+
+Note that _any_ account can call this function, not just the `payee`.
+This means that contracts unaware of the `PullPayment` protocol can still
+receive funds this way, by having a separate account call
+[`PullPayment.withdrawPayments`](#PullPayment-withdrawPayments-address-payable-).
+
+WARNING: Forwarding all gas opens the door to reentrancy vulnerabilities.
+Make sure you trust the recipient, or are either following the
+checks-effects-interactions pattern or using [`ReentrancyGuard`](#ReentrancyGuard).
+
+<a id="PullPayment-payments-address-"></a>
+
+### `payments(address dest) → uint256`
+*public*
+
+Returns the payments owed to an address.
+
+<a id="PullPayment-_asyncTransfer-address-uint256-"></a>
+
+### `_asyncTransfer(address dest, uint256 amount)`
+*internal*
+
+Called by the payer to store the sent amount as credit to be pulled.
+Funds sent in this way are stored in an intermediate [`Escrow`](utils#Escrow) contract, so
+there is no danger of them being spent before withdrawal.
+
+<a id="ReentrancyGuard"></a>
+
+## `ReentrancyGuard` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/security/ReentrancyGuard.sol)
+
+```solidity
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+```
+
+Contract module that helps prevent reentrant calls to a function.
+
+Inheriting from `ReentrancyGuard` will make the [`ReentrancyGuard.nonReentrant`](#ReentrancyGuard-nonReentrant--) modifier
+available, which can be applied to functions to make sure there are no nested
+(reentrant) calls to them.
+
+Note that because there is a single `nonReentrant` guard, functions marked as
+`nonReentrant` may not call one another. This can be worked around by making
+those functions `private`, and then adding `external` `nonReentrant` entry
+points to them.
+
+TIP: If you would like to learn more about reentrancy and alternative ways
+to protect against it, check out our blog post
+[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
+
+### Modifiers
+- [nonReentrant()](#ReentrancyGuard-nonReentrant--)
+
+### Functions
+- [constructor()](#ReentrancyGuard-constructor--)
+- [_reentrancyGuardEntered()](#ReentrancyGuard-_reentrancyGuardEntered--)
+
+<a id="ReentrancyGuard-nonReentrant--"></a>
+
+### `nonReentrant()`
+
+Prevents a contract from calling itself, directly or indirectly.
+Calling a `nonReentrant` function from another `nonReentrant`
+function is not supported. It is possible to prevent this from happening
+by making the `nonReentrant` function external, and making it call a
+`private` function that does the actual work.
+
+<a id="ReentrancyGuard-constructor--"></a>
+
+### `constructor()`
+*internal*
+
+<a id="ReentrancyGuard-_reentrancyGuardEntered--"></a>
+
+### `_reentrancyGuardEntered() → bool`
+*internal*
+
+Returns true if the reentrancy guard is currently set to "entered", which indicates there is a
+`nonReentrant` function in the call stack.
+

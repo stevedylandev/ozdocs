@@ -16,7 +16,8 @@
 		"governance",
 		"upgradeable",
 		"extending-contracts",
-		"faq"
+		"faq",
+		"api"
 	],
 	"root": false
 }

@@ -9,12 +9,10 @@ This document is better viewed at https://docs.openzeppelin.com/contracts/api/ac
 
 This directory provides ways to restrict who can access the functions of a contract or when they can do it.
 
-* [`AccessManager`](#AccessManager) is a full-fledged access control solution for smart contract systems. Allows creating and assigning multiple hierarchical roles with execution delays for each account across various contracts.
-* [`AccessManaged`](#AccessManaged) delegates its access control to an authority that dictates the permissions of the managed contract. It’s compatible with an AccessManager as an authority.
-* [`AccessControl`](#AccessControl) provides a per-contract role based access control mechanism. Multiple hierarchical roles can be created and assigned each to multiple accounts within the same instance.
+* [`AccessControl`](#AccessControl) provides a general role based access control mechanism. Multiple hierarchical roles can be created and assigned each to multiple accounts.
 * [`Ownable`](#Ownable) is a simpler mechanism with a single owner "role" that can be assigned to a single account. This simpler mechanism can be useful for quick tests but projects with production concerns are likely to outgrow it.
 
-## Core
+## Authorization
 
 [`Ownable`](#Ownable)
 
@@ -24,33 +22,17 @@ This directory provides ways to restrict who can access the functions of a contr
 
 [`AccessControl`](#AccessControl)
 
-## Extensions
+[`AccessControlCrossChain`](#AccessControlCrossChain)
 
 [`IAccessControlEnumerable`](#IAccessControlEnumerable)
 
 [`AccessControlEnumerable`](#AccessControlEnumerable)
 
-[`IAccessControlDefaultAdminRules`](#IAccessControlDefaultAdminRules)
-
 [`AccessControlDefaultAdminRules`](#AccessControlDefaultAdminRules)
-
-## AccessManager
-
-[`IAuthority`](#IAuthority)
-
-[`IAccessManager`](#IAccessManager)
-
-[`AccessManager`](#AccessManager)
-
-[`IAccessManaged`](#IAccessManaged)
-
-[`AccessManaged`](#AccessManaged)
-
-[`AuthorityUtils`](#AuthorityUtils)
 
 <a id="AccessControl"></a>
 
-## `AccessControl` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/AccessControl.sol)
+## `AccessControl` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/AccessControl.sol)
 
 ```solidity
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -105,7 +87,8 @@ to enforce additional security measures for this role.
 - [getRoleAdmin(role)](#AccessControl-getRoleAdmin-bytes32-)
 - [grantRole(role, account)](#AccessControl-grantRole-bytes32-address-)
 - [revokeRole(role, account)](#AccessControl-revokeRole-bytes32-address-)
-- [renounceRole(role, callerConfirmation)](#AccessControl-renounceRole-bytes32-address-)
+- [renounceRole(role, account)](#AccessControl-renounceRole-bytes32-address-)
+- [_setupRole(role, account)](#AccessControl-_setupRole-bytes32-address-)
 - [_setRoleAdmin(role, adminRole)](#AccessControl-_setRoleAdmin-bytes32-bytes32-)
 - [_grantRole(role, account)](#AccessControl-_grantRole-bytes32-address-)
 - [_revokeRole(role, account)](#AccessControl-_revokeRole-bytes32-address-)
@@ -128,27 +111,25 @@ to enforce additional security measures for this role.
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
 
-### Errors
-
-#### ERC165
-
-#### IERC165
-
-#### IAccessControl
-- [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
-- [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
-
 <a id="AccessControl-onlyRole-bytes32-"></a>
 
 ### `onlyRole(bytes32 role)`
 
 Modifier that checks that an account has a specific role. Reverts
-with an [`IAccessControl.AccessControlUnauthorizedAccount`](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-) error including the required role.
+with a standardized message including the required role.
+
+The format of the revert reason is given by the following regular expression:
+
+ /^AccessControl: account (0x[0-9a-f][`SafeCast.toUint240`](utils#SafeCast-toUint240-uint256-)) is missing role (0x[0-9a-f][`Base64`](utils#Base64))$/
+
+_Available since v4.1._
 
 <a id="AccessControl-supportsInterface-bytes4-"></a>
 
 ### `supportsInterface(bytes4 interfaceId) → bool`
 *public*
+
+See [`IERC165.supportsInterface`](utils#IERC165-supportsInterface-bytes4-).
 
 <a id="AccessControl-hasRole-bytes32-address-"></a>
 
@@ -162,16 +143,23 @@ Returns `true` if `account` has been granted `role`.
 ### `_checkRole(bytes32 role)`
 *internal*
 
-Reverts with an [`IAccessControl.AccessControlUnauthorizedAccount`](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-) error if `_msgSender()`
-is missing `role`. Overriding this function changes the behavior of the [`AccessControl.onlyRole`](#AccessControl-onlyRole-bytes32-) modifier.
+Revert with a standard message if `_msgSender()` is missing `role`.
+Overriding this function changes the behavior of the [`AccessControl.onlyRole`](#AccessControl-onlyRole-bytes32-) modifier.
+
+Format of the revert message is described in [`AccessControl._checkRole`](#AccessControl-_checkRole-bytes32-address-).
+
+_Available since v4.6._
 
 <a id="AccessControl-_checkRole-bytes32-address-"></a>
 
 ### `_checkRole(bytes32 role, address account)`
 *internal*
 
-Reverts with an [`IAccessControl.AccessControlUnauthorizedAccount`](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-) error if `account`
-is missing `role`.
+Revert with a standard message if `account` is missing `role`.
+
+The format of the revert reason is given by the following regular expression:
+
+ /^AccessControl: account (0x[0-9a-f][`SafeCast.toUint240`](utils#SafeCast-toUint240-uint256-)) is missing role (0x[0-9a-f][`Base64`](utils#Base64))$/
 
 <a id="AccessControl-getRoleAdmin-bytes32-"></a>
 
@@ -216,7 +204,7 @@ May emit a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-ad
 
 <a id="AccessControl-renounceRole-bytes32-address-"></a>
 
-### `renounceRole(bytes32 role, address callerConfirmation)`
+### `renounceRole(bytes32 role, address account)`
 *public*
 
 Revokes `role` from the calling account.
@@ -230,9 +218,33 @@ event.
 
 Requirements:
 
-- the caller must be `callerConfirmation`.
+- the caller must be `account`.
 
 May emit a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event.
+
+<a id="AccessControl-_setupRole-bytes32-address-"></a>
+
+### `_setupRole(bytes32 role, address account)`
+*internal*
+
+Grants `role` to `account`.
+
+If `account` had not been already granted `role`, emits a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-address-address-)
+event. Note that unlike [`AccessControl.grantRole`](#AccessControl-grantRole-bytes32-address-), this function doesn't perform any
+checks on the calling account.
+
+May emit a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-address-address-) event.
+
+[WARNING]
+====
+This function should only be called from the constructor when setting
+up the initial roles for the system.
+
+Using this function in any other way is effectively circumventing the admin
+system imposed by [`AccessControl`](#AccessControl).
+====
+
+NOTE: This function is deprecated in favor of [`AccessControl._grantRole`](#AccessControl-_grantRole-bytes32-address-).
 
 <a id="AccessControl-_setRoleAdmin-bytes32-bytes32-"></a>
 
@@ -245,10 +257,10 @@ Emits a [`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-byt
 
 <a id="AccessControl-_grantRole-bytes32-address-"></a>
 
-### `_grantRole(bytes32 role, address account) → bool`
+### `_grantRole(bytes32 role, address account)`
 *internal*
 
-Attempts to grant `role` to `account` and returns a boolean indicating if `role` was granted.
+Grants `role` to `account`.
 
 Internal function without access restriction.
 
@@ -256,10 +268,10 @@ May emit a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-ad
 
 <a id="AccessControl-_revokeRole-bytes32-address-"></a>
 
-### `_revokeRole(bytes32 role, address account) → bool`
+### `_revokeRole(bytes32 role, address account)`
 *internal*
 
-Attempts to revoke `role` from `account` and returns a boolean indicating if `role` was revoked.
+Revokes `role` from `account`.
 
 Internal function without access restriction.
 
@@ -270,341 +282,98 @@ May emit a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-ad
 ### `DEFAULT_ADMIN_ROLE() → bytes32`
 *public*
 
-<a id="IAccessControl"></a>
+<a id="AccessControlCrossChain"></a>
 
-## `IAccessControl` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/IAccessControl.sol)
+## `AccessControlCrossChain` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/AccessControlCrossChain.sol)
 
 ```solidity
-import "@openzeppelin/contracts/access/IAccessControl.sol";
+import "@openzeppelin/contracts/access/AccessControlCrossChain.sol";
 ```
 
-External interface of AccessControl declared to support ERC-165 detection.
+An extension to [`AccessControl`](#AccessControl) with support for cross-chain access management.
+For each role, is extension implements an equivalent "aliased" role that is used for
+restricting calls originating from other chains.
+
+For example, if a function `myFunction` is protected by `onlyRole(SOME_ROLE)`, and
+if an address `x` has role `SOME_ROLE`, it would be able to call `myFunction` directly.
+A wallet or contract at the same address on another chain would however not be able
+to call this function. In order to do so, it would require to have the role
+`_crossChainRoleAlias(SOME_ROLE)`.
+
+This aliasing is required to protect against multiple contracts living at the same
+address on different chains but controlled by conflicting entities.
+
+_Available since v4.6._
 
 ### Functions
-- [hasRole(role, account)](#IAccessControl-hasRole-bytes32-address-)
-- [getRoleAdmin(role)](#IAccessControl-getRoleAdmin-bytes32-)
-- [grantRole(role, account)](#IAccessControl-grantRole-bytes32-address-)
-- [revokeRole(role, account)](#IAccessControl-revokeRole-bytes32-address-)
-- [renounceRole(role, callerConfirmation)](#IAccessControl-renounceRole-bytes32-address-)
+- [_checkRole(role)](#AccessControlCrossChain-_checkRole-bytes32-)
+- [_crossChainRoleAlias(role)](#AccessControlCrossChain-_crossChainRoleAlias-bytes32-)
+- [CROSSCHAIN_ALIAS()](#AccessControlCrossChain-CROSSCHAIN_ALIAS-bytes32)
+
+#### CrossChainEnabled
+- [_isCrossChain()](#CrossChainEnabled-_isCrossChain--)
+- [_crossChainSender()](#CrossChainEnabled-_crossChainSender--)
+
+#### AccessControl
+- [supportsInterface(interfaceId)](#AccessControl-supportsInterface-bytes4-)
+- [hasRole(role, account)](#AccessControl-hasRole-bytes32-address-)
+- [_checkRole(role, account)](#AccessControl-_checkRole-bytes32-address-)
+- [getRoleAdmin(role)](#AccessControl-getRoleAdmin-bytes32-)
+- [grantRole(role, account)](#AccessControl-grantRole-bytes32-address-)
+- [revokeRole(role, account)](#AccessControl-revokeRole-bytes32-address-)
+- [renounceRole(role, account)](#AccessControl-renounceRole-bytes32-address-)
+- [_setupRole(role, account)](#AccessControl-_setupRole-bytes32-address-)
+- [_setRoleAdmin(role, adminRole)](#AccessControl-_setRoleAdmin-bytes32-bytes32-)
+- [_grantRole(role, account)](#AccessControl-_grantRole-bytes32-address-)
+- [_revokeRole(role, account)](#AccessControl-_revokeRole-bytes32-address-)
+- [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
+
+#### ERC165
+
+#### IERC165
+
+#### IAccessControl
 
 ### Events
+
+#### CrossChainEnabled
+
+#### AccessControl
+
+#### ERC165
+
+#### IERC165
+
+#### IAccessControl
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
 
-### Errors
-- [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
-- [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
+<a id="AccessControlCrossChain-_checkRole-bytes32-"></a>
 
-<a id="IAccessControl-hasRole-bytes32-address-"></a>
-
-### `hasRole(bytes32 role, address account) → bool`
-*external*
-
-Returns `true` if `account` has been granted `role`.
-
-<a id="IAccessControl-getRoleAdmin-bytes32-"></a>
-
-### `getRoleAdmin(bytes32 role) → bytes32`
-*external*
-
-Returns the admin role that controls `role`. See [`AccessControl.grantRole`](#AccessControl-grantRole-bytes32-address-) and
-[`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-).
-
-To change a role's admin, use [`AccessControl._setRoleAdmin`](#AccessControl-_setRoleAdmin-bytes32-bytes32-).
-
-<a id="IAccessControl-grantRole-bytes32-address-"></a>
-
-### `grantRole(bytes32 role, address account)`
-*external*
-
-Grants `role` to `account`.
-
-If `account` had not been already granted `role`, emits a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-address-address-)
-event.
-
-Requirements:
-
-- the caller must have ``role``'s admin role.
-
-<a id="IAccessControl-revokeRole-bytes32-address-"></a>
-
-### `revokeRole(bytes32 role, address account)`
-*external*
-
-Revokes `role` from `account`.
-
-If `account` had been granted `role`, emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event.
-
-Requirements:
-
-- the caller must have ``role``'s admin role.
-
-<a id="IAccessControl-renounceRole-bytes32-address-"></a>
-
-### `renounceRole(bytes32 role, address callerConfirmation)`
-*external*
-
-Revokes `role` from the calling account.
-
-Roles are often managed via [`AccessControl.grantRole`](#AccessControl-grantRole-bytes32-address-) and [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-): this function's
-purpose is to provide a mechanism for accounts to lose their privileges
-if they are compromised (such as when a trusted device is misplaced).
-
-If the calling account had been granted `role`, emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-)
-event.
-
-Requirements:
-
-- the caller must be `callerConfirmation`.
-
-<a id="IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-"></a>
-
-### `RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)`
-*event*
-
-Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`
-
-`DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite
-[`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-) not being emitted to signal this.
-
-<a id="IAccessControl-RoleGranted-bytes32-address-address-"></a>
-
-### `RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)`
-*event*
-
-Emitted when `account` is granted `role`.
-
-`sender` is the account that originated the contract call. This account bears the admin role (for the granted role).
-Expected in cases where the role was granted using the internal [`AccessControl._grantRole`](#AccessControl-_grantRole-bytes32-address-).
-
-<a id="IAccessControl-RoleRevoked-bytes32-address-address-"></a>
-
-### `RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)`
-*event*
-
-Emitted when `account` is revoked `role`.
-
-`sender` is the account that originated the contract call:
-  - if using `revokeRole`, it is the admin role bearer
-  - if using `renounceRole`, it is the role bearer (i.e. `account`)
-
-<a id="IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-"></a>
-
-### `AccessControlUnauthorizedAccount(address account, bytes32 neededRole)`
-*error*
-
-The `account` is missing a role.
-
-<a id="IAccessControl-AccessControlBadConfirmation--"></a>
-
-### `AccessControlBadConfirmation()`
-*error*
-
-The caller of a function is not the expected one.
-
-NOTE: Don't confuse with [`IAccessControl.AccessControlUnauthorizedAccount`](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-).
-
-<a id="Ownable"></a>
-
-## `Ownable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/Ownable.sol)
-
-```solidity
-import "@openzeppelin/contracts/access/Ownable.sol";
-```
-
-Contract module which provides a basic access control mechanism, where
-there is an account (an owner) that can be granted exclusive access to
-specific functions.
-
-The initial owner is set to the address provided by the deployer. This can
-later be changed with [`Ownable.transferOwnership`](#Ownable-transferOwnership-address-).
-
-This module is used through inheritance. It will make available the modifier
-`onlyOwner`, which can be applied to your functions to restrict their use to
-the owner.
-
-### Modifiers
-- [onlyOwner()](#Ownable-onlyOwner--)
-
-### Functions
-- [constructor(initialOwner)](#Ownable-constructor-address-)
-- [owner()](#Ownable-owner--)
-- [_checkOwner()](#Ownable-_checkOwner--)
-- [renounceOwnership()](#Ownable-renounceOwnership--)
-- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
-- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
-
-### Events
-- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
-
-### Errors
-- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
-- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
-
-<a id="Ownable-onlyOwner--"></a>
-
-### `onlyOwner()`
-
-Throws if called by any account other than the owner.
-
-<a id="Ownable-constructor-address-"></a>
-
-### `constructor(address initialOwner)`
+### `_checkRole(bytes32 role)`
 *internal*
 
-Initializes the contract setting the address provided by the deployer as the initial owner.
+See [`AccessControl._checkRole`](#AccessControl-_checkRole-bytes32-address-).
 
-<a id="Ownable-owner--"></a>
+<a id="AccessControlCrossChain-_crossChainRoleAlias-bytes32-"></a>
 
-### `owner() → address`
-*public*
-
-Returns the address of the current owner.
-
-<a id="Ownable-_checkOwner--"></a>
-
-### `_checkOwner()`
+### `_crossChainRoleAlias(bytes32 role) → bytes32`
 *internal*
 
-Throws if the sender is not the owner.
+Returns the aliased role corresponding to `role`.
 
-<a id="Ownable-renounceOwnership--"></a>
+<a id="AccessControlCrossChain-CROSSCHAIN_ALIAS-bytes32"></a>
 
-### `renounceOwnership()`
+### `CROSSCHAIN_ALIAS() → bytes32`
 *public*
-
-Leaves the contract without owner. It will not be possible to call
-`onlyOwner` functions. Can only be called by the current owner.
-
-NOTE: Renouncing ownership will leave the contract without an owner,
-thereby disabling any functionality that is only available to the owner.
-
-<a id="Ownable-transferOwnership-address-"></a>
-
-### `transferOwnership(address newOwner)`
-*public*
-
-Transfers ownership of the contract to a new account (`newOwner`).
-Can only be called by the current owner.
-
-<a id="Ownable-_transferOwnership-address-"></a>
-
-### `_transferOwnership(address newOwner)`
-*internal*
-
-Transfers ownership of the contract to a new account (`newOwner`).
-Internal function without access restriction.
-
-<a id="Ownable-OwnershipTransferred-address-address-"></a>
-
-### `OwnershipTransferred(address indexed previousOwner, address indexed newOwner)`
-*event*
-
-<a id="Ownable-OwnableUnauthorizedAccount-address-"></a>
-
-### `OwnableUnauthorizedAccount(address account)`
-*error*
-
-The caller account is not authorized to perform an operation.
-
-<a id="Ownable-OwnableInvalidOwner-address-"></a>
-
-### `OwnableInvalidOwner(address owner)`
-*error*
-
-The owner is not a valid owner account. (eg. `address(0)`)
-
-<a id="Ownable2Step"></a>
-
-## `Ownable2Step` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/Ownable2Step.sol)
-
-```solidity
-import "@openzeppelin/contracts/access/Ownable2Step.sol";
-```
-
-Contract module which provides access control mechanism, where
-there is an account (an owner) that can be granted exclusive access to
-specific functions.
-
-This extension of the [`Ownable`](#Ownable) contract includes a two-step mechanism to transfer
-ownership, where the new owner must call [`Ownable2Step.acceptOwnership`](#Ownable2Step-acceptOwnership--) in order to replace the
-old one. This can help prevent common mistakes, such as transfers of ownership to
-incorrect accounts, or to contracts that are unable to interact with the
-permission system.
-
-The initial owner is specified at deployment time in the constructor for `Ownable`. This
-can later be changed with [`Ownable.transferOwnership`](#Ownable-transferOwnership-address-) and [`Ownable2Step.acceptOwnership`](#Ownable2Step-acceptOwnership--).
-
-This module is used through inheritance. It will make available all functions
-from parent (Ownable).
-
-### Functions
-- [pendingOwner()](#Ownable2Step-pendingOwner--)
-- [transferOwnership(newOwner)](#Ownable2Step-transferOwnership-address-)
-- [_transferOwnership(newOwner)](#Ownable2Step-_transferOwnership-address-)
-- [acceptOwnership()](#Ownable2Step-acceptOwnership--)
-
-#### Ownable
-- [owner()](#Ownable-owner--)
-- [_checkOwner()](#Ownable-_checkOwner--)
-- [renounceOwnership()](#Ownable-renounceOwnership--)
-
-### Events
-- [OwnershipTransferStarted(previousOwner, newOwner)](#Ownable2Step-OwnershipTransferStarted-address-address-)
-
-#### Ownable
-- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
-
-### Errors
-
-#### Ownable
-- [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
-- [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
-
-<a id="Ownable2Step-pendingOwner--"></a>
-
-### `pendingOwner() → address`
-*public*
-
-Returns the address of the pending owner.
-
-<a id="Ownable2Step-transferOwnership-address-"></a>
-
-### `transferOwnership(address newOwner)`
-*public*
-
-Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one.
-Can only be called by the current owner.
-
-Setting `newOwner` to the zero address is allowed; this can be used to cancel an initiated ownership transfer.
-
-<a id="Ownable2Step-_transferOwnership-address-"></a>
-
-### `_transferOwnership(address newOwner)`
-*internal*
-
-Transfers ownership of the contract to a new account (`newOwner`) and deletes any pending owner.
-Internal function without access restriction.
-
-<a id="Ownable2Step-acceptOwnership--"></a>
-
-### `acceptOwnership()`
-*public*
-
-The new owner accepts the ownership transfer.
-
-<a id="Ownable2Step-OwnershipTransferStarted-address-address-"></a>
-
-### `OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)`
-*event*
 
 <a id="AccessControlDefaultAdminRules"></a>
 
-## `AccessControlDefaultAdminRules` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/extensions/AccessControlDefaultAdminRules.sol)
+## `AccessControlDefaultAdminRules` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/AccessControlDefaultAdminRules.sol)
 
 ```solidity
-import "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol";
+import "@openzeppelin/contracts/access/AccessControlDefaultAdminRules.sol";
 ```
 
 Extension of [`AccessControl`](#AccessControl) that allows specifying special rules to manage
@@ -620,7 +389,6 @@ This contract implements the following risk mitigations on top of [`AccessContro
 * Enforces a 2-step process to transfer the `DEFAULT_ADMIN_ROLE` to another account.
 * Enforces a configurable delay between the two steps, with the ability to cancel before the transfer is accepted.
 * The delay can be changed by scheduling, see [`AccessControlDefaultAdminRules.changeDefaultAdminDelay`](#AccessControlDefaultAdminRules-changeDefaultAdminDelay-uint48-).
-* Role transfers must wait at least one block after scheduling before it can be accepted.
 * It is not possible to use another role to manage the `DEFAULT_ADMIN_ROLE`.
 
 Example usage:
@@ -633,6 +401,8 @@ contract MyToken is AccessControlDefaultAdminRules {
    ) {}
 }
 ```
+
+_Available since v4.9._
 
 ### Functions
 - [constructor(initialDelay, initialDefaultAdmin)](#AccessControlDefaultAdminRules-constructor-uint48-address-)
@@ -666,6 +436,7 @@ contract MyToken is AccessControlDefaultAdminRules {
 - [_checkRole(role)](#AccessControl-_checkRole-bytes32-)
 - [_checkRole(role, account)](#AccessControl-_checkRole-bytes32-address-)
 - [getRoleAdmin(role)](#AccessControl-getRoleAdmin-bytes32-)
+- [_setupRole(role, account)](#AccessControl-_setupRole-bytes32-address-)
 - [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
 
 #### ERC165
@@ -699,25 +470,6 @@ contract MyToken is AccessControlDefaultAdminRules {
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
 
-### Errors
-
-#### AccessControl
-
-#### ERC165
-
-#### IERC165
-
-#### IERC5313
-
-#### IAccessControlDefaultAdminRules
-- [AccessControlInvalidDefaultAdmin(defaultAdmin)](#IAccessControlDefaultAdminRules-AccessControlInvalidDefaultAdmin-address-)
-- [AccessControlEnforcedDefaultAdminRules()](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminRules--)
-- [AccessControlEnforcedDefaultAdminDelay(schedule)](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminDelay-uint48-)
-
-#### IAccessControl
-- [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
-- [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
-
 <a id="AccessControlDefaultAdminRules-constructor-uint48-address-"></a>
 
 ### `constructor(uint48 initialDelay, address initialDefaultAdmin)`
@@ -730,12 +482,14 @@ Sets the initial values for [`AccessControlDefaultAdminRules.defaultAdminDelay`]
 ### `supportsInterface(bytes4 interfaceId) → bool`
 *public*
 
+See [`IERC165.supportsInterface`](utils#IERC165-supportsInterface-bytes4-).
+
 <a id="AccessControlDefaultAdminRules-owner--"></a>
 
 ### `owner() → address`
 *public*
 
-Gets the address of the owner.
+See [`IERC5313.owner`](interfaces#IERC5313-owner--).
 
 <a id="AccessControlDefaultAdminRules-grantRole-bytes32-address-"></a>
 
@@ -770,7 +524,7 @@ non-administrated role.
 
 <a id="AccessControlDefaultAdminRules-_grantRole-bytes32-address-"></a>
 
-### `_grantRole(bytes32 role, address account) → bool`
+### `_grantRole(bytes32 role, address account)`
 *internal*
 
 See [`AccessControl._grantRole`](#AccessControl-_grantRole-bytes32-address-).
@@ -783,14 +537,10 @@ assignable again. Make sure to guarantee this is the expected behavior in your i
 
 <a id="AccessControlDefaultAdminRules-_revokeRole-bytes32-address-"></a>
 
-### `_revokeRole(bytes32 role, address account) → bool`
+### `_revokeRole(bytes32 role, address account)`
 *internal*
 
-Attempts to revoke `role` from `account` and returns a boolean indicating if `role` was revoked.
-
-Internal function without access restriction.
-
-May emit a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event.
+See [`AccessControl._revokeRole`](#AccessControl-_revokeRole-bytes32-address-).
 
 <a id="AccessControlDefaultAdminRules-_setRoleAdmin-bytes32-bytes32-"></a>
 
@@ -1015,10 +765,10 @@ See [`AccessControlDefaultAdminRules.defaultAdminDelayIncreaseWait`](#AccessCont
 
 <a id="AccessControlEnumerable"></a>
 
-## `AccessControlEnumerable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/extensions/AccessControlEnumerable.sol)
+## `AccessControlEnumerable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/AccessControlEnumerable.sol)
 
 ```solidity
-import "@openzeppelin/contracts/access/extensions/AccessControlEnumerable.sol";
+import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 ```
 
 Extension of [`AccessControl`](#AccessControl) that allows enumerating the members of each role.
@@ -1027,7 +777,6 @@ Extension of [`AccessControl`](#AccessControl) that allows enumerating the membe
 - [supportsInterface(interfaceId)](#AccessControlEnumerable-supportsInterface-bytes4-)
 - [getRoleMember(role, index)](#AccessControlEnumerable-getRoleMember-bytes32-uint256-)
 - [getRoleMemberCount(role)](#AccessControlEnumerable-getRoleMemberCount-bytes32-)
-- [getRoleMembers(role)](#AccessControlEnumerable-getRoleMembers-bytes32-)
 - [_grantRole(role, account)](#AccessControlEnumerable-_grantRole-bytes32-address-)
 - [_revokeRole(role, account)](#AccessControlEnumerable-_revokeRole-bytes32-address-)
 
@@ -1038,7 +787,8 @@ Extension of [`AccessControl`](#AccessControl) that allows enumerating the membe
 - [getRoleAdmin(role)](#AccessControl-getRoleAdmin-bytes32-)
 - [grantRole(role, account)](#AccessControl-grantRole-bytes32-address-)
 - [revokeRole(role, account)](#AccessControl-revokeRole-bytes32-address-)
-- [renounceRole(role, callerConfirmation)](#AccessControl-renounceRole-bytes32-address-)
+- [renounceRole(role, account)](#AccessControl-renounceRole-bytes32-address-)
+- [_setupRole(role, account)](#AccessControl-_setupRole-bytes32-address-)
 - [_setRoleAdmin(role, adminRole)](#AccessControl-_setRoleAdmin-bytes32-bytes32-)
 - [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
 
@@ -1065,24 +815,12 @@ Extension of [`AccessControl`](#AccessControl) that allows enumerating the membe
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
 
-### Errors
-
-#### AccessControl
-
-#### ERC165
-
-#### IERC165
-
-#### IAccessControlEnumerable
-
-#### IAccessControl
-- [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
-- [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
-
 <a id="AccessControlEnumerable-supportsInterface-bytes4-"></a>
 
 ### `supportsInterface(bytes4 interfaceId) → bool`
 *public*
+
+See [`IERC165.supportsInterface`](utils#IERC165-supportsInterface-bytes4-).
 
 <a id="AccessControlEnumerable-getRoleMember-bytes32-uint256-"></a>
 
@@ -1108,41 +846,148 @@ for more information.
 Returns the number of accounts that have `role`. Can be used
 together with [`AccessControlEnumerable.getRoleMember`](#AccessControlEnumerable-getRoleMember-bytes32-uint256-) to enumerate all bearers of a role.
 
-<a id="AccessControlEnumerable-getRoleMembers-bytes32-"></a>
-
-### `getRoleMembers(bytes32 role) → address[]`
-*public*
-
-Return all accounts that have `role`
-
-WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
-this function has an unbounded cost, and using it as part of a state-changing function may render the function
-uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
-
 <a id="AccessControlEnumerable-_grantRole-bytes32-address-"></a>
 
-### `_grantRole(bytes32 role, address account) → bool`
+### `_grantRole(bytes32 role, address account)`
 *internal*
 
 Overload [`AccessControl._grantRole`](#AccessControl-_grantRole-bytes32-address-) to track enumerable memberships
 
 <a id="AccessControlEnumerable-_revokeRole-bytes32-address-"></a>
 
-### `_revokeRole(bytes32 role, address account) → bool`
+### `_revokeRole(bytes32 role, address account)`
 *internal*
 
 Overload [`AccessControl._revokeRole`](#AccessControl-_revokeRole-bytes32-address-) to track enumerable memberships
 
-<a id="IAccessControlDefaultAdminRules"></a>
+<a id="IAccessControl"></a>
 
-## `IAccessControlDefaultAdminRules` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/extensions/IAccessControlDefaultAdminRules.sol)
+## `IAccessControl` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/IAccessControl.sol)
 
 ```solidity
-import "@openzeppelin/contracts/access/extensions/IAccessControlDefaultAdminRules.sol";
+import "@openzeppelin/contracts/access/IAccessControl.sol";
 ```
 
-External interface of AccessControlDefaultAdminRules declared to support ERC-165 detection.
+External interface of AccessControl declared to support ERC165 detection.
+
+### Functions
+- [hasRole(role, account)](#IAccessControl-hasRole-bytes32-address-)
+- [getRoleAdmin(role)](#IAccessControl-getRoleAdmin-bytes32-)
+- [grantRole(role, account)](#IAccessControl-grantRole-bytes32-address-)
+- [revokeRole(role, account)](#IAccessControl-revokeRole-bytes32-address-)
+- [renounceRole(role, account)](#IAccessControl-renounceRole-bytes32-address-)
+
+### Events
+- [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
+- [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
+- [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
+
+<a id="IAccessControl-hasRole-bytes32-address-"></a>
+
+### `hasRole(bytes32 role, address account) → bool`
+*external*
+
+Returns `true` if `account` has been granted `role`.
+
+<a id="IAccessControl-getRoleAdmin-bytes32-"></a>
+
+### `getRoleAdmin(bytes32 role) → bytes32`
+*external*
+
+Returns the admin role that controls `role`. See [`AccessControl.grantRole`](#AccessControl-grantRole-bytes32-address-) and
+[`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-).
+
+To change a role's admin, use [`AccessControl._setRoleAdmin`](#AccessControl-_setRoleAdmin-bytes32-bytes32-).
+
+<a id="IAccessControl-grantRole-bytes32-address-"></a>
+
+### `grantRole(bytes32 role, address account)`
+*external*
+
+Grants `role` to `account`.
+
+If `account` had not been already granted `role`, emits a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-address-address-)
+event.
+
+Requirements:
+
+- the caller must have ``role``'s admin role.
+
+<a id="IAccessControl-revokeRole-bytes32-address-"></a>
+
+### `revokeRole(bytes32 role, address account)`
+*external*
+
+Revokes `role` from `account`.
+
+If `account` had been granted `role`, emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event.
+
+Requirements:
+
+- the caller must have ``role``'s admin role.
+
+<a id="IAccessControl-renounceRole-bytes32-address-"></a>
+
+### `renounceRole(bytes32 role, address account)`
+*external*
+
+Revokes `role` from the calling account.
+
+Roles are often managed via [`AccessControl.grantRole`](#AccessControl-grantRole-bytes32-address-) and [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-): this function's
+purpose is to provide a mechanism for accounts to lose their privileges
+if they are compromised (such as when a trusted device is misplaced).
+
+If the calling account had been granted `role`, emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-)
+event.
+
+Requirements:
+
+- the caller must be `account`.
+
+<a id="IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-"></a>
+
+### `RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)`
+*event*
+
+Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`
+
+`DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite
+[`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-) not being emitted signaling this.
+
+_Available since v3.1._
+
+<a id="IAccessControl-RoleGranted-bytes32-address-address-"></a>
+
+### `RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)`
+*event*
+
+Emitted when `account` is granted `role`.
+
+`sender` is the account that originated the contract call, an admin role
+bearer except when using [`AccessControl._setupRole`](#AccessControl-_setupRole-bytes32-address-).
+
+<a id="IAccessControl-RoleRevoked-bytes32-address-address-"></a>
+
+### `RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)`
+*event*
+
+Emitted when `account` is revoked `role`.
+
+`sender` is the account that originated the contract call:
+  - if using `revokeRole`, it is the admin role bearer
+  - if using `renounceRole`, it is the role bearer (i.e. `account`)
+
+<a id="IAccessControlDefaultAdminRules"></a>
+
+## `IAccessControlDefaultAdminRules` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/IAccessControlDefaultAdminRules.sol)
+
+```solidity
+import "@openzeppelin/contracts/access/IAccessControlDefaultAdminRules.sol";
+```
+
+External interface of AccessControlDefaultAdminRules declared to support ERC165 detection.
+
+_Available since v4.9._
 
 ### Functions
 - [defaultAdmin()](#IAccessControlDefaultAdminRules-defaultAdmin--)
@@ -1161,7 +1006,7 @@ External interface of AccessControlDefaultAdminRules declared to support ERC-165
 - [getRoleAdmin(role)](#IAccessControl-getRoleAdmin-bytes32-)
 - [grantRole(role, account)](#IAccessControl-grantRole-bytes32-address-)
 - [revokeRole(role, account)](#IAccessControl-revokeRole-bytes32-address-)
-- [renounceRole(role, callerConfirmation)](#IAccessControl-renounceRole-bytes32-address-)
+- [renounceRole(role, account)](#IAccessControl-renounceRole-bytes32-address-)
 
 ### Events
 - [DefaultAdminTransferScheduled(newAdmin, acceptSchedule)](#IAccessControlDefaultAdminRules-DefaultAdminTransferScheduled-address-uint48-)
@@ -1173,15 +1018,6 @@ External interface of AccessControlDefaultAdminRules declared to support ERC-165
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
-
-### Errors
-- [AccessControlInvalidDefaultAdmin(defaultAdmin)](#IAccessControlDefaultAdminRules-AccessControlInvalidDefaultAdmin-address-)
-- [AccessControlEnforcedDefaultAdminRules()](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminRules--)
-- [AccessControlEnforcedDefaultAdminDelay(schedule)](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminDelay-uint48-)
-
-#### IAccessControl
-- [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
-- [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
 
 <a id="IAccessControlDefaultAdminRules-defaultAdmin--"></a>
 
@@ -1370,43 +1206,15 @@ delay to be applied between default admin transfer after `effectSchedule` has pa
 
 Emitted when a [`AccessControlDefaultAdminRules.pendingDefaultAdminDelay`](#AccessControlDefaultAdminRules-pendingDefaultAdminDelay--) is reset if its schedule didn't pass.
 
-<a id="IAccessControlDefaultAdminRules-AccessControlInvalidDefaultAdmin-address-"></a>
-
-### `AccessControlInvalidDefaultAdmin(address defaultAdmin)`
-*error*
-
-The new default admin is not a valid default admin.
-
-<a id="IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminRules--"></a>
-
-### `AccessControlEnforcedDefaultAdminRules()`
-*error*
-
-At least one of the following rules was violated:
-
-- The `DEFAULT_ADMIN_ROLE` must only be managed by itself.
-- The `DEFAULT_ADMIN_ROLE` must only be held by one account at the time.
-- Any `DEFAULT_ADMIN_ROLE` transfer must be in two delayed steps.
-
-<a id="IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminDelay-uint48-"></a>
-
-### `AccessControlEnforcedDefaultAdminDelay(uint48 schedule)`
-*error*
-
-The delay for transferring the default admin delay is enforced and
-the operation must wait until `schedule`.
-
-NOTE: `schedule` can be 0 indicating there's no transfer scheduled.
-
 <a id="IAccessControlEnumerable"></a>
 
-## `IAccessControlEnumerable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/extensions/IAccessControlEnumerable.sol)
+## `IAccessControlEnumerable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/IAccessControlEnumerable.sol)
 
 ```solidity
-import "@openzeppelin/contracts/access/extensions/IAccessControlEnumerable.sol";
+import "@openzeppelin/contracts/access/IAccessControlEnumerable.sol";
 ```
 
-External interface of AccessControlEnumerable declared to support ERC-165 detection.
+External interface of AccessControlEnumerable declared to support ERC165 detection.
 
 ### Functions
 - [getRoleMember(role, index)](#IAccessControlEnumerable-getRoleMember-bytes32-uint256-)
@@ -1417,7 +1225,7 @@ External interface of AccessControlEnumerable declared to support ERC-165 detect
 - [getRoleAdmin(role)](#IAccessControl-getRoleAdmin-bytes32-)
 - [grantRole(role, account)](#IAccessControl-grantRole-bytes32-address-)
 - [revokeRole(role, account)](#IAccessControl-revokeRole-bytes32-address-)
-- [renounceRole(role, callerConfirmation)](#IAccessControl-renounceRole-bytes32-address-)
+- [renounceRole(role, account)](#IAccessControl-renounceRole-bytes32-address-)
 
 ### Events
 
@@ -1425,12 +1233,6 @@ External interface of AccessControlEnumerable declared to support ERC-165 detect
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
-
-### Errors
-
-#### IAccessControl
-- [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
-- [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
 
 <a id="IAccessControlEnumerable-getRoleMember-bytes32-uint256-"></a>
 
@@ -1456,1400 +1258,165 @@ for more information.
 Returns the number of accounts that have `role`. Can be used
 together with [`AccessControlEnumerable.getRoleMember`](#AccessControlEnumerable-getRoleMember-bytes32-uint256-) to enumerate all bearers of a role.
 
-<a id="AccessManaged"></a>
+<a id="Ownable"></a>
 
-## `AccessManaged` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/manager/AccessManaged.sol)
+## `Ownable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/Ownable.sol)
 
 ```solidity
-import "@openzeppelin/contracts/access/manager/AccessManaged.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 ```
 
-This contract module makes available a [`AccessManaged.restricted`](#AccessManaged-restricted--) modifier. Functions decorated with this modifier will be
-permissioned according to an "authority": a contract like [`AccessManager`](#AccessManager) that follows the [`IAuthority`](#IAuthority) interface,
-implementing a policy that allows certain callers to access certain functions.
+Contract module which provides a basic access control mechanism, where
+there is an account (an owner) that can be granted exclusive access to
+specific functions.
 
-IMPORTANT: The `restricted` modifier should never be used on `internal` functions, judiciously used in `public`
-functions, and ideally only used in `external` functions. See [`AccessManaged.restricted`](#AccessManaged-restricted--).
+By default, the owner account will be the one that deploys the contract. This
+can later be changed with [`Ownable.transferOwnership`](#Ownable-transferOwnership-address-).
+
+This module is used through inheritance. It will make available the modifier
+`onlyOwner`, which can be applied to your functions to restrict their use to
+the owner.
 
 ### Modifiers
-- [restricted()](#AccessManaged-restricted--)
+- [onlyOwner()](#Ownable-onlyOwner--)
 
 ### Functions
-- [constructor(initialAuthority)](#AccessManaged-constructor-address-)
-- [authority()](#AccessManaged-authority--)
-- [setAuthority(newAuthority)](#AccessManaged-setAuthority-address-)
-- [isConsumingScheduledOp()](#AccessManaged-isConsumingScheduledOp--)
-- [_setAuthority(newAuthority)](#AccessManaged-_setAuthority-address-)
-- [_checkCanCall(caller, data)](#AccessManaged-_checkCanCall-address-bytes-)
-
-#### IAccessManaged
+- [constructor()](#Ownable-constructor--)
+- [owner()](#Ownable-owner--)
+- [_checkOwner()](#Ownable-_checkOwner--)
+- [renounceOwnership()](#Ownable-renounceOwnership--)
+- [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
 
 ### Events
+- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
 
-#### IAccessManaged
-- [AuthorityUpdated(authority)](#IAccessManaged-AuthorityUpdated-address-)
+<a id="Ownable-onlyOwner--"></a>
 
-### Errors
+### `onlyOwner()`
 
-#### IAccessManaged
-- [AccessManagedUnauthorized(caller)](#IAccessManaged-AccessManagedUnauthorized-address-)
-- [AccessManagedRequiredDelay(caller, delay)](#IAccessManaged-AccessManagedRequiredDelay-address-uint32-)
-- [AccessManagedInvalidAuthority(authority)](#IAccessManaged-AccessManagedInvalidAuthority-address-)
+Throws if called by any account other than the owner.
 
-<a id="AccessManaged-restricted--"></a>
+<a id="Ownable-constructor--"></a>
 
-### `restricted()`
-
-Restricts access to a function as defined by the connected Authority for this contract and the
-caller and selector of the function that entered the contract.
-
-[IMPORTANT]
-====
-In general, this modifier should only be used on `external` functions. It is okay to use it on `public`
-functions that are used as external entry points and are not called internally. Unless you know what you're
-doing, it should never be used on `internal` functions. Failure to follow these rules can have critical security
-implications! This is because the permissions are determined by the function that entered the contract, i.e. the
-function at the bottom of the call stack, and not the function where the modifier is visible in the source code.
-====
-
-[WARNING]
-====
-Avoid adding this modifier to the [`receive()`](https://docs.soliditylang.org/en/v0.8.20/contracts.html#receive-ether-function)
-function or the [`fallback()`](https://docs.soliditylang.org/en/v0.8.20/contracts.html#fallback-function). These
-functions are the only execution paths where a function selector cannot be unambiguously determined from the calldata
-since the selector defaults to `0x00000000` in the `receive()` function and similarly in the `fallback()` function
-if no calldata is provided. (See [`AccessManaged._checkCanCall`](#AccessManaged-_checkCanCall-address-bytes-)).
-
-The `receive()` function will always panic whereas the `fallback()` may panic depending on the calldata length.
-====
-
-<a id="AccessManaged-constructor-address-"></a>
-
-### `constructor(address initialAuthority)`
+### `constructor()`
 *internal*
 
-Initializes the contract connected to an initial authority.
+Initializes the contract setting the deployer as the initial owner.
 
-<a id="AccessManaged-authority--"></a>
+<a id="Ownable-owner--"></a>
 
-### `authority() → address`
+### `owner() → address`
 *public*
 
-Returns the current authority.
+Returns the address of the current owner.
 
-<a id="AccessManaged-setAuthority-address-"></a>
+<a id="Ownable-_checkOwner--"></a>
 
-### `setAuthority(address newAuthority)`
-*public*
-
-Transfers control to a new authority. The caller must be the current authority.
-
-<a id="AccessManaged-isConsumingScheduledOp--"></a>
-
-### `isConsumingScheduledOp() → bytes4`
-*public*
-
-Returns true only in the context of a delayed restricted call, at the moment that the scheduled operation is
-being consumed. Prevents denial of service for delayed restricted calls in the case that the contract performs
-attacker controlled calls.
-
-<a id="AccessManaged-_setAuthority-address-"></a>
-
-### `_setAuthority(address newAuthority)`
+### `_checkOwner()`
 *internal*
 
-Transfers control to a new authority. Internal function with no access restriction. Allows bypassing the
-permissions set by the current authority.
+Throws if the sender is not the owner.
 
-<a id="AccessManaged-_checkCanCall-address-bytes-"></a>
+<a id="Ownable-renounceOwnership--"></a>
 
-### `_checkCanCall(address caller, bytes data)`
+### `renounceOwnership()`
+*public*
+
+Leaves the contract without owner. It will not be possible to call
+`onlyOwner` functions. Can only be called by the current owner.
+
+NOTE: Renouncing ownership will leave the contract without an owner,
+thereby disabling any functionality that is only available to the owner.
+
+<a id="Ownable-transferOwnership-address-"></a>
+
+### `transferOwnership(address newOwner)`
+*public*
+
+Transfers ownership of the contract to a new account (`newOwner`).
+Can only be called by the current owner.
+
+<a id="Ownable-_transferOwnership-address-"></a>
+
+### `_transferOwnership(address newOwner)`
 *internal*
 
-Reverts if the caller is not allowed to call the function identified by a selector. Panics if the calldata
-is less than 4 bytes long.
+Transfers ownership of the contract to a new account (`newOwner`).
+Internal function without access restriction.
 
-<a id="AccessManager"></a>
+<a id="Ownable-OwnershipTransferred-address-address-"></a>
 
-## `AccessManager` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/manager/AccessManager.sol)
+### `OwnershipTransferred(address indexed previousOwner, address indexed newOwner)`
+*event*
+
+<a id="Ownable2Step"></a>
+
+## `Ownable2Step` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/access/Ownable2Step.sol)
 
 ```solidity
-import "@openzeppelin/contracts/access/manager/AccessManager.sol";
+import "@openzeppelin/contracts/access/Ownable2Step.sol";
 ```
 
-AccessManager is a central contract to store the permissions of a system.
+Contract module which provides access control mechanism, where
+there is an account (an owner) that can be granted exclusive access to
+specific functions.
 
-A smart contract under the control of an AccessManager instance is known as a target, and will inherit from the
-[`AccessManaged`](#AccessManaged) contract, be connected to this contract as its manager and implement the [`AccessManaged.restricted`](#AccessManaged-restricted--)
-modifier on a set of functions selected to be permissioned. Note that any function without this setup won't be
-effectively restricted.
+By default, the owner account will be the one that deploys the contract. This
+can later be changed with [`Ownable.transferOwnership`](#Ownable-transferOwnership-address-) and [`Ownable2Step.acceptOwnership`](#Ownable2Step-acceptOwnership--).
 
-The restriction rules for such functions are defined in terms of "roles" identified by an `uint64` and scoped
-by target (`address`) and function selectors (`bytes4`). These roles are stored in this contract and can be
-configured by admins (`ADMIN_ROLE` members) after a delay (see [`AccessManager.getTargetAdminDelay`](#AccessManager-getTargetAdminDelay-address-)).
-
-For each target contract, admins can configure the following without any delay:
-
-* The target's [`AccessManaged.authority`](#AccessManaged-authority--) via [`AccessManager.updateAuthority`](#AccessManager-updateAuthority-address-address-).
-* Close or open a target via [`AccessManager.setTargetClosed`](#AccessManager-setTargetClosed-address-bool-) keeping the permissions intact.
-* The roles that are allowed (or disallowed) to call a given function (identified by its selector) through [`AccessManager.setTargetFunctionRole`](#AccessManager-setTargetFunctionRole-address-bytes4---uint64-).
-
-By default every address is member of the `PUBLIC_ROLE` and every target function is restricted to the `ADMIN_ROLE` until configured otherwise.
-Additionally, each role has the following configuration options restricted to this manager's admins:
-
-* A role's admin role via [`AccessManager.setRoleAdmin`](#AccessManager-setRoleAdmin-uint64-uint64-) who can grant or revoke roles.
-* A role's guardian role via [`AccessManager.setRoleGuardian`](#AccessManager-setRoleGuardian-uint64-uint64-) who's allowed to cancel operations.
-* A delay in which a role takes effect after being granted through [`AccessManager.setGrantDelay`](#AccessManager-setGrantDelay-uint64-uint32-).
-* A delay of any target's admin action via [`AccessManager.setTargetAdminDelay`](#AccessManager-setTargetAdminDelay-address-uint32-).
-* A role label for discoverability purposes with [`AccessManager.labelRole`](#AccessManager-labelRole-uint64-string-).
-
-Any account can be added and removed into any number of these roles by using the [`AccessControl.grantRole`](#AccessControl-grantRole-bytes32-address-) and [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) functions
-restricted to each role's admin (see [`AccessControl.getRoleAdmin`](#AccessControl-getRoleAdmin-bytes32-)).
-
-Since all the permissions of the managed system can be modified by the admins of this instance, it is expected that
-they will be highly secured (e.g., a multisig or a well-configured DAO).
-
-NOTE: This contract implements a form of the [`IAuthority`](#IAuthority) interface, but [`AccessManager.canCall`](#AccessManager-canCall-address-address-bytes4-) has additional return data so it
-doesn't inherit `IAuthority`. It is however compatible with the `IAuthority` interface since the first 32 bytes of
-the return data are a boolean as expected by that interface.
-
-NOTE: Systems that implement other access control mechanisms (for example using [`Ownable`](#Ownable)) can be paired with an
-[`AccessManager`](#AccessManager) by transferring permissions (ownership in the case of [`Ownable`](#Ownable)) directly to the [`AccessManager`](#AccessManager).
-Users will be able to interact with these contracts through the [`AccessManager.execute`](#AccessManager-execute-address-bytes-) function, following the access rules
-registered in the [`AccessManager`](#AccessManager). Keep in mind that in that context, the msg.sender seen by restricted functions
-will be [`AccessManager`](#AccessManager) itself.
-
-WARNING: When granting permissions over an [`Ownable`](#Ownable) or [`AccessControl`](#AccessControl) contract to an [`AccessManager`](#AccessManager), be very
-mindful of the danger associated with functions such as [`Ownable.renounceOwnership`](#Ownable-renounceOwnership--) or
-[`AccessControl.renounceRole`](#AccessControl-renounceRole-bytes32-address-).
-
-### Modifiers
-- [onlyAuthorized()](#AccessManager-onlyAuthorized--)
+This module is used through inheritance. It will make available all functions
+from parent (Ownable).
 
 ### Functions
-- [constructor(initialAdmin)](#AccessManager-constructor-address-)
-- [canCall(caller, target, selector)](#AccessManager-canCall-address-address-bytes4-)
-- [expiration()](#AccessManager-expiration--)
-- [minSetback()](#AccessManager-minSetback--)
-- [isTargetClosed(target)](#AccessManager-isTargetClosed-address-)
-- [getTargetFunctionRole(target, selector)](#AccessManager-getTargetFunctionRole-address-bytes4-)
-- [getTargetAdminDelay(target)](#AccessManager-getTargetAdminDelay-address-)
-- [getRoleAdmin(roleId)](#AccessManager-getRoleAdmin-uint64-)
-- [getRoleGuardian(roleId)](#AccessManager-getRoleGuardian-uint64-)
-- [getRoleGrantDelay(roleId)](#AccessManager-getRoleGrantDelay-uint64-)
-- [getAccess(roleId, account)](#AccessManager-getAccess-uint64-address-)
-- [hasRole(roleId, account)](#AccessManager-hasRole-uint64-address-)
-- [labelRole(roleId, label)](#AccessManager-labelRole-uint64-string-)
-- [grantRole(roleId, account, executionDelay)](#AccessManager-grantRole-uint64-address-uint32-)
-- [revokeRole(roleId, account)](#AccessManager-revokeRole-uint64-address-)
-- [renounceRole(roleId, callerConfirmation)](#AccessManager-renounceRole-uint64-address-)
-- [setRoleAdmin(roleId, admin)](#AccessManager-setRoleAdmin-uint64-uint64-)
-- [setRoleGuardian(roleId, guardian)](#AccessManager-setRoleGuardian-uint64-uint64-)
-- [setGrantDelay(roleId, newDelay)](#AccessManager-setGrantDelay-uint64-uint32-)
-- [_grantRole(roleId, account, grantDelay, executionDelay)](#AccessManager-_grantRole-uint64-address-uint32-uint32-)
-- [_revokeRole(roleId, account)](#AccessManager-_revokeRole-uint64-address-)
-- [_setRoleAdmin(roleId, admin)](#AccessManager-_setRoleAdmin-uint64-uint64-)
-- [_setRoleGuardian(roleId, guardian)](#AccessManager-_setRoleGuardian-uint64-uint64-)
-- [_setGrantDelay(roleId, newDelay)](#AccessManager-_setGrantDelay-uint64-uint32-)
-- [setTargetFunctionRole(target, selectors, roleId)](#AccessManager-setTargetFunctionRole-address-bytes4---uint64-)
-- [_setTargetFunctionRole(target, selector, roleId)](#AccessManager-_setTargetFunctionRole-address-bytes4-uint64-)
-- [setTargetAdminDelay(target, newDelay)](#AccessManager-setTargetAdminDelay-address-uint32-)
-- [_setTargetAdminDelay(target, newDelay)](#AccessManager-_setTargetAdminDelay-address-uint32-)
-- [setTargetClosed(target, closed)](#AccessManager-setTargetClosed-address-bool-)
-- [_setTargetClosed(target, closed)](#AccessManager-_setTargetClosed-address-bool-)
-- [getSchedule(id)](#AccessManager-getSchedule-bytes32-)
-- [getNonce(id)](#AccessManager-getNonce-bytes32-)
-- [schedule(target, data, when)](#AccessManager-schedule-address-bytes-uint48-)
-- [execute(target, data)](#AccessManager-execute-address-bytes-)
-- [cancel(caller, target, data)](#AccessManager-cancel-address-address-bytes-)
-- [consumeScheduledOp(caller, data)](#AccessManager-consumeScheduledOp-address-bytes-)
-- [_consumeScheduledOp(operationId)](#AccessManager-_consumeScheduledOp-bytes32-)
-- [hashOperation(caller, target, data)](#AccessManager-hashOperation-address-address-bytes-)
-- [updateAuthority(target, newAuthority)](#AccessManager-updateAuthority-address-address-)
-- [ADMIN_ROLE()](#AccessManager-ADMIN_ROLE-uint64)
-- [PUBLIC_ROLE()](#AccessManager-PUBLIC_ROLE-uint64)
+- [pendingOwner()](#Ownable2Step-pendingOwner--)
+- [transferOwnership(newOwner)](#Ownable2Step-transferOwnership-address-)
+- [_transferOwnership(newOwner)](#Ownable2Step-_transferOwnership-address-)
+- [acceptOwnership()](#Ownable2Step-acceptOwnership--)
 
-#### IAccessManager
-
-#### Multicall
-- [multicall(data)](#Multicall-multicall-bytes---)
+#### Ownable
+- [owner()](#Ownable-owner--)
+- [_checkOwner()](#Ownable-_checkOwner--)
+- [renounceOwnership()](#Ownable-renounceOwnership--)
 
 ### Events
+- [OwnershipTransferStarted(previousOwner, newOwner)](#Ownable2Step-OwnershipTransferStarted-address-address-)
 
-#### IAccessManager
-- [OperationScheduled(operationId, nonce, schedule, caller, target, data)](#IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-)
-- [OperationExecuted(operationId, nonce)](#IAccessManager-OperationExecuted-bytes32-uint32-)
-- [OperationCanceled(operationId, nonce)](#IAccessManager-OperationCanceled-bytes32-uint32-)
-- [RoleLabel(roleId, label)](#IAccessManager-RoleLabel-uint64-string-)
-- [RoleGranted(roleId, account, delay, since, newMember)](#IAccessManager-RoleGranted-uint64-address-uint32-uint48-bool-)
-- [RoleRevoked(roleId, account)](#IAccessManager-RoleRevoked-uint64-address-)
-- [RoleAdminChanged(roleId, admin)](#IAccessManager-RoleAdminChanged-uint64-uint64-)
-- [RoleGuardianChanged(roleId, guardian)](#IAccessManager-RoleGuardianChanged-uint64-uint64-)
-- [RoleGrantDelayChanged(roleId, delay, since)](#IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-)
-- [TargetClosed(target, closed)](#IAccessManager-TargetClosed-address-bool-)
-- [TargetFunctionRoleUpdated(target, selector, roleId)](#IAccessManager-TargetFunctionRoleUpdated-address-bytes4-uint64-)
-- [TargetAdminDelayUpdated(target, delay, since)](#IAccessManager-TargetAdminDelayUpdated-address-uint32-uint48-)
+#### Ownable
+- [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
 
-#### Multicall
+<a id="Ownable2Step-pendingOwner--"></a>
 
-### Errors
-
-#### IAccessManager
-- [AccessManagerAlreadyScheduled(operationId)](#IAccessManager-AccessManagerAlreadyScheduled-bytes32-)
-- [AccessManagerNotScheduled(operationId)](#IAccessManager-AccessManagerNotScheduled-bytes32-)
-- [AccessManagerNotReady(operationId)](#IAccessManager-AccessManagerNotReady-bytes32-)
-- [AccessManagerExpired(operationId)](#IAccessManager-AccessManagerExpired-bytes32-)
-- [AccessManagerLockedRole(roleId)](#IAccessManager-AccessManagerLockedRole-uint64-)
-- [AccessManagerBadConfirmation()](#IAccessManager-AccessManagerBadConfirmation--)
-- [AccessManagerUnauthorizedAccount(msgsender, roleId)](#IAccessManager-AccessManagerUnauthorizedAccount-address-uint64-)
-- [AccessManagerUnauthorizedCall(caller, target, selector)](#IAccessManager-AccessManagerUnauthorizedCall-address-address-bytes4-)
-- [AccessManagerUnauthorizedConsume(target)](#IAccessManager-AccessManagerUnauthorizedConsume-address-)
-- [AccessManagerUnauthorizedCancel(msgsender, caller, target, selector)](#IAccessManager-AccessManagerUnauthorizedCancel-address-address-address-bytes4-)
-- [AccessManagerInvalidInitialAdmin(initialAdmin)](#IAccessManager-AccessManagerInvalidInitialAdmin-address-)
-
-#### Multicall
-
-<a id="AccessManager-onlyAuthorized--"></a>
-
-### `onlyAuthorized()`
-
-Check that the caller is authorized to perform the operation.
-See [`AccessManager`](#AccessManager) description for a detailed breakdown of the authorization logic.
-
-<a id="AccessManager-constructor-address-"></a>
-
-### `constructor(address initialAdmin)`
+### `pendingOwner() → address`
 *public*
 
-<a id="AccessManager-canCall-address-address-bytes4-"></a>
+Returns the address of the pending owner.
 
-### `canCall(address caller, address target, bytes4 selector) → bool immediate, uint32 delay`
+<a id="Ownable2Step-transferOwnership-address-"></a>
+
+### `transferOwnership(address newOwner)`
 *public*
 
-Check if an address (`caller`) is authorised to call a given function on a given contract directly (with
-no restriction). Additionally, it returns the delay needed to perform the call indirectly through the [`AccessManager.schedule`](#AccessManager-schedule-address-bytes-uint48-)
-& [`AccessManager.execute`](#AccessManager-execute-address-bytes-) workflow.
+Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one.
+Can only be called by the current owner.
 
-This function is usually called by the targeted contract to control immediate execution of restricted functions.
-Therefore we only return true if the call can be performed without any delay. If the call is subject to a
-previously set delay (not zero), then the function should return false and the caller should schedule the operation
-for future execution.
+<a id="Ownable2Step-_transferOwnership-address-"></a>
 
-If `allowed` is true, the delay can be disregarded and the operation can be immediately executed, otherwise
-the operation can be executed if and only if delay is greater than 0.
-
-NOTE: The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
-is backward compatible. Some contracts may thus ignore the second return argument. In that case they will fail
-to identify the indirect workflow, and will consider calls that require a delay to be forbidden.
-
-NOTE: This function does not report the permissions of the admin functions in the manager itself. These are defined by the
-[`AccessManager`](#AccessManager) documentation.
-
-<a id="AccessManager-expiration--"></a>
-
-### `expiration() → uint32`
-*public*
-
-Expiration delay for scheduled proposals. Defaults to 1 week.
-
-IMPORTANT: Avoid overriding the expiration with 0. Otherwise every contract proposal will be expired immediately,
-disabling any scheduling usage.
-
-<a id="AccessManager-minSetback--"></a>
-
-### `minSetback() → uint32`
-*public*
-
-Minimum setback for all delay updates, with the exception of execution delays. It
-can be increased without setback (and reset via [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) in the case event of an
-accidental increase). Defaults to 5 days.
-
-<a id="AccessManager-isTargetClosed-address-"></a>
-
-### `isTargetClosed(address target) → bool`
-*public*
-
-Get whether the contract is closed disabling any access. Otherwise role permissions are applied.
-
-NOTE: When the manager itself is closed, admin functions are still accessible to avoid locking the contract.
-
-<a id="AccessManager-getTargetFunctionRole-address-bytes4-"></a>
-
-### `getTargetFunctionRole(address target, bytes4 selector) → uint64`
-*public*
-
-Get the role required to call a function.
-
-<a id="AccessManager-getTargetAdminDelay-address-"></a>
-
-### `getTargetAdminDelay(address target) → uint32`
-*public*
-
-Get the admin delay for a target contract. Changes to contract configuration are subject to this delay.
-
-<a id="AccessManager-getRoleAdmin-uint64-"></a>
-
-### `getRoleAdmin(uint64 roleId) → uint64`
-*public*
-
-Get the id of the role that acts as an admin for the given role.
-
-The admin permission is required to grant the role, revoke the role and update the execution delay to execute
-an operation that is restricted to this role.
-
-<a id="AccessManager-getRoleGuardian-uint64-"></a>
-
-### `getRoleGuardian(uint64 roleId) → uint64`
-*public*
-
-Get the role that acts as a guardian for a given role.
-
-The guardian permission allows canceling operations that have been scheduled under the role.
-
-<a id="AccessManager-getRoleGrantDelay-uint64-"></a>
-
-### `getRoleGrantDelay(uint64 roleId) → uint32`
-*public*
-
-Get the role current grant delay.
-
-Its value may change at any point without an event emitted following a call to [`AccessManager.setGrantDelay`](#AccessManager-setGrantDelay-uint64-uint32-).
-Changes to this value, including effect timepoint are notified in advance by the [`IAccessManager.RoleGrantDelayChanged`](#IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-) event.
-
-<a id="AccessManager-getAccess-uint64-address-"></a>
-
-### `getAccess(uint64 roleId, address account) → uint48 since, uint32 currentDelay, uint32 pendingDelay, uint48 effect`
-*public*
-
-Get the access details for a given account for a given role. These details include the timepoint at which
-membership becomes active, and the delay applied to all operation by this user that requires this permission
-level.
-
-Returns:
-[0] Timestamp at which the account membership becomes valid. 0 means role is not granted.
-[1] Current execution delay for the account.
-[2] Pending execution delay for the account.
-[3] Timestamp at which the pending execution delay will become active. 0 means no delay update is scheduled.
-
-<a id="AccessManager-hasRole-uint64-address-"></a>
-
-### `hasRole(uint64 roleId, address account) → bool isMember, uint32 executionDelay`
-*public*
-
-Check if a given account currently has the permission level corresponding to a given role. Note that this
-permission might be associated with an execution delay. [`AccessManager.getAccess`](#AccessManager-getAccess-uint64-address-) can provide more details.
-
-<a id="AccessManager-labelRole-uint64-string-"></a>
-
-### `labelRole(uint64 roleId, string label)`
-*public*
-
-Give a label to a role, for improved role discoverability by UIs.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.RoleLabel`](#IAccessManager-RoleLabel-uint64-string-) event.
-
-<a id="AccessManager-grantRole-uint64-address-uint32-"></a>
-
-### `grantRole(uint64 roleId, address account, uint32 executionDelay)`
-*public*
-
-Add `account` to `roleId`, or change its execution delay.
-
-This gives the account the authorization to call any function that is restricted to this role. An optional
-execution delay (in seconds) can be set. If that delay is non 0, the user is required to schedule any operation
-that is restricted to members of this role. The user will only be able to execute the operation after the delay has
-passed, before it has expired. During this period, admin and guardians can cancel the operation (see [`AccessManager.cancel`](#AccessManager-cancel-address-address-bytes-)).
-
-If the account has already been granted this role, the execution delay will be updated. This update is not
-immediate and follows the delay rules. For example, if a user currently has a delay of 3 hours, and this is
-called to reduce that delay to 1 hour, the new delay will take some time to take effect, enforcing that any
-operation executed in the 3 hours that follows this update was indeed scheduled before this update.
-
-Requirements:
-
-- the caller must be an admin for the role (see [`AccessControl.getRoleAdmin`](#AccessControl-getRoleAdmin-bytes32-))
-- granted role must not be the `PUBLIC_ROLE`
-
-Emits a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-address-address-) event.
-
-<a id="AccessManager-revokeRole-uint64-address-"></a>
-
-### `revokeRole(uint64 roleId, address account)`
-*public*
-
-Remove an account from a role, with immediate effect. If the account does not have the role, this call has
-no effect.
-
-Requirements:
-
-- the caller must be an admin for the role (see [`AccessControl.getRoleAdmin`](#AccessControl-getRoleAdmin-bytes32-))
-- revoked role must not be the `PUBLIC_ROLE`
-
-Emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event if the account had the role.
-
-<a id="AccessManager-renounceRole-uint64-address-"></a>
-
-### `renounceRole(uint64 roleId, address callerConfirmation)`
-*public*
-
-Renounce role permissions for the calling account with immediate effect. If the sender is not in
-the role this call has no effect.
-
-Requirements:
-
-- the caller must be `callerConfirmation`.
-
-Emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event if the account had the role.
-
-<a id="AccessManager-setRoleAdmin-uint64-uint64-"></a>
-
-### `setRoleAdmin(uint64 roleId, uint64 admin)`
-*public*
-
-Change admin role for a given role.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-) event
-
-<a id="AccessManager-setRoleGuardian-uint64-uint64-"></a>
-
-### `setRoleGuardian(uint64 roleId, uint64 guardian)`
-*public*
-
-Change guardian role for a given role.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.RoleGuardianChanged`](#IAccessManager-RoleGuardianChanged-uint64-uint64-) event
-
-<a id="AccessManager-setGrantDelay-uint64-uint32-"></a>
-
-### `setGrantDelay(uint64 roleId, uint32 newDelay)`
-*public*
-
-Update the delay for granting a `roleId`.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.RoleGrantDelayChanged`](#IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-) event.
-
-<a id="AccessManager-_grantRole-uint64-address-uint32-uint32-"></a>
-
-### `_grantRole(uint64 roleId, address account, uint32 grantDelay, uint32 executionDelay) → bool`
+### `_transferOwnership(address newOwner)`
 *internal*
 
-Internal version of [`AccessControl.grantRole`](#AccessControl-grantRole-bytes32-address-) without access control. Returns true if the role was newly granted.
+Transfers ownership of the contract to a new account (`newOwner`) and deletes any pending owner.
+Internal function without access restriction.
 
-Emits a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-address-address-) event.
+<a id="Ownable2Step-acceptOwnership--"></a>
 
-<a id="AccessManager-_revokeRole-uint64-address-"></a>
-
-### `_revokeRole(uint64 roleId, address account) → bool`
-*internal*
-
-Internal version of [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) without access control. This logic is also used by [`AccessControl.renounceRole`](#AccessControl-renounceRole-bytes32-address-).
-Returns true if the role was previously granted.
-
-Emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event if the account had the role.
-
-<a id="AccessManager-_setRoleAdmin-uint64-uint64-"></a>
-
-### `_setRoleAdmin(uint64 roleId, uint64 admin)`
-*internal*
-
-Internal version of [`AccessManager.setRoleAdmin`](#AccessManager-setRoleAdmin-uint64-uint64-) without access control.
-
-Emits a [`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-) event.
-
-NOTE: Setting the admin role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
-anyone to set grant or revoke such role.
-
-<a id="AccessManager-_setRoleGuardian-uint64-uint64-"></a>
-
-### `_setRoleGuardian(uint64 roleId, uint64 guardian)`
-*internal*
-
-Internal version of [`AccessManager.setRoleGuardian`](#AccessManager-setRoleGuardian-uint64-uint64-) without access control.
-
-Emits a [`IAccessManager.RoleGuardianChanged`](#IAccessManager-RoleGuardianChanged-uint64-uint64-) event.
-
-NOTE: Setting the guardian role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
-anyone to cancel any scheduled operation for such role.
-
-<a id="AccessManager-_setGrantDelay-uint64-uint32-"></a>
-
-### `_setGrantDelay(uint64 roleId, uint32 newDelay)`
-*internal*
-
-Internal version of [`AccessManager.setGrantDelay`](#AccessManager-setGrantDelay-uint64-uint32-) without access control.
-
-Emits a [`IAccessManager.RoleGrantDelayChanged`](#IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-) event.
-
-<a id="AccessManager-setTargetFunctionRole-address-bytes4---uint64-"></a>
-
-### `setTargetFunctionRole(address target, bytes4[] selectors, uint64 roleId)`
+### `acceptOwnership()`
 *public*
 
-Set the role required to call functions identified by the `selectors` in the `target` contract.
+The new owner accepts the ownership transfer.
 
-Requirements:
+<a id="Ownable2Step-OwnershipTransferStarted-address-address-"></a>
 
-- the caller must be a global admin
-
-Emits a [`IAccessManager.TargetFunctionRoleUpdated`](#IAccessManager-TargetFunctionRoleUpdated-address-bytes4-uint64-) event per selector.
-
-<a id="AccessManager-_setTargetFunctionRole-address-bytes4-uint64-"></a>
-
-### `_setTargetFunctionRole(address target, bytes4 selector, uint64 roleId)`
-*internal*
-
-Internal version of [`AccessManager.setTargetFunctionRole`](#AccessManager-setTargetFunctionRole-address-bytes4---uint64-) without access control.
-
-Emits a [`IAccessManager.TargetFunctionRoleUpdated`](#IAccessManager-TargetFunctionRoleUpdated-address-bytes4-uint64-) event.
-
-<a id="AccessManager-setTargetAdminDelay-address-uint32-"></a>
-
-### `setTargetAdminDelay(address target, uint32 newDelay)`
-*public*
-
-Set the delay for changing the configuration of a given target contract.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.TargetAdminDelayUpdated`](#IAccessManager-TargetAdminDelayUpdated-address-uint32-uint48-) event.
-
-<a id="AccessManager-_setTargetAdminDelay-address-uint32-"></a>
-
-### `_setTargetAdminDelay(address target, uint32 newDelay)`
-*internal*
-
-Internal version of [`AccessManager.setTargetAdminDelay`](#AccessManager-setTargetAdminDelay-address-uint32-) without access control.
-
-Emits a [`IAccessManager.TargetAdminDelayUpdated`](#IAccessManager-TargetAdminDelayUpdated-address-uint32-uint48-) event.
-
-<a id="AccessManager-setTargetClosed-address-bool-"></a>
-
-### `setTargetClosed(address target, bool closed)`
-*public*
-
-Set the closed flag for a contract.
-
-Closing the manager itself won't disable access to admin methods to avoid locking the contract.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.TargetClosed`](#IAccessManager-TargetClosed-address-bool-) event.
-
-<a id="AccessManager-_setTargetClosed-address-bool-"></a>
-
-### `_setTargetClosed(address target, bool closed)`
-*internal*
-
-Set the closed flag for a contract. This is an internal setter with no access restrictions.
-
-Emits a [`IAccessManager.TargetClosed`](#IAccessManager-TargetClosed-address-bool-) event.
-
-<a id="AccessManager-getSchedule-bytes32-"></a>
-
-### `getSchedule(bytes32 id) → uint48`
-*public*
-
-Return the timepoint at which a scheduled operation will be ready for execution. This returns 0 if the
-operation is not yet scheduled, has expired, was executed, or was canceled.
-
-<a id="AccessManager-getNonce-bytes32-"></a>
-
-### `getNonce(bytes32 id) → uint32`
-*public*
-
-Return the nonce for the latest scheduled operation with a given id. Returns 0 if the operation has never
-been scheduled.
-
-<a id="AccessManager-schedule-address-bytes-uint48-"></a>
-
-### `schedule(address target, bytes data, uint48 when) → bytes32 operationId, uint32 nonce`
-*public*
-
-Schedule a delayed operation for future execution, and return the operation identifier. It is possible to
-choose the timestamp at which the operation becomes executable as long as it satisfies the execution delays
-required for the caller. The special value zero will automatically set the earliest possible time.
-
-Returns the `operationId` that was scheduled. Since this value is a hash of the parameters, it can reoccur when
-the same parameters are used; if this is relevant, the returned `nonce` can be used to uniquely identify this
-scheduled operation from other occurrences of the same `operationId` in invocations of [`AccessManager.execute`](#AccessManager-execute-address-bytes-) and [`AccessManager.cancel`](#AccessManager-cancel-address-address-bytes-).
-
-Emits a [`IAccessManager.OperationScheduled`](#IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-) event.
-
-NOTE: It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
-this is necessary, a random byte can be appended to `data` to act as a salt that will be ignored by the target
-contract if it is using standard Solidity ABI encoding.
-
-<a id="AccessManager-execute-address-bytes-"></a>
-
-### `execute(address target, bytes data) → uint32`
-*public*
-
-Execute a function that is delay restricted, provided it was properly scheduled beforehand, or the
-execution delay is 0.
-
-Returns the nonce that identifies the previously scheduled operation that is executed, or 0 if the
-operation wasn't previously scheduled (if the caller doesn't have an execution delay).
-
-Emits an [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event only if the call was scheduled and delayed.
-
-<a id="AccessManager-cancel-address-address-bytes-"></a>
-
-### `cancel(address caller, address target, bytes data) → uint32`
-*public*
-
-Cancel a scheduled (delayed) operation. Returns the nonce that identifies the previously scheduled
-operation that is cancelled.
-
-Requirements:
-
-- the caller must be the proposer, a guardian of the targeted function, or a global admin
-
-Emits a [`IAccessManager.OperationCanceled`](#IAccessManager-OperationCanceled-bytes32-uint32-) event.
-
-<a id="AccessManager-consumeScheduledOp-address-bytes-"></a>
-
-### `consumeScheduledOp(address caller, bytes data)`
-*public*
-
-Consume a scheduled operation targeting the caller. If such an operation exists, mark it as consumed
-(emit an [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event and clean the state). Otherwise, throw an error.
-
-This is useful for contract that want to enforce that calls targeting them were scheduled on the manager,
-with all the verifications that it implies.
-
-Emit a [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event.
-
-<a id="AccessManager-_consumeScheduledOp-bytes32-"></a>
-
-### `_consumeScheduledOp(bytes32 operationId) → uint32`
-*internal*
-
-Internal variant of [`AccessManager.consumeScheduledOp`](#AccessManager-consumeScheduledOp-address-bytes-) that operates on bytes32 operationId.
-
-Returns the nonce of the scheduled operation that is consumed.
-
-<a id="AccessManager-hashOperation-address-address-bytes-"></a>
-
-### `hashOperation(address caller, address target, bytes data) → bytes32`
-*public*
-
-Hashing function for delayed operations.
-
-<a id="AccessManager-updateAuthority-address-address-"></a>
-
-### `updateAuthority(address target, address newAuthority)`
-*public*
-
-Changes the authority of a target managed by this manager instance.
-
-Requirements:
-
-- the caller must be a global admin
-
-<a id="AccessManager-ADMIN_ROLE-uint64"></a>
-
-### `ADMIN_ROLE() → uint64`
-*public*
-
-The identifier of the admin role. Required to perform most configuration operations including
-other roles' management and target restrictions.
-
-<a id="AccessManager-PUBLIC_ROLE-uint64"></a>
-
-### `PUBLIC_ROLE() → uint64`
-*public*
-
-The identifier of the public role. Automatically granted to all addresses with no delay.
-
-<a id="AuthorityUtils"></a>
-
-## `AuthorityUtils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/manager/AuthorityUtils.sol)
-
-```solidity
-import "@openzeppelin/contracts/access/manager/AuthorityUtils.sol";
-```
-
-### Functions
-- [canCallWithDelay(authority, caller, target, selector)](#AuthorityUtils-canCallWithDelay-address-address-address-bytes4-)
-
-<a id="AuthorityUtils-canCallWithDelay-address-address-address-bytes4-"></a>
-
-### `canCallWithDelay(address authority, address caller, address target, bytes4 selector) → bool immediate, uint32 delay`
-*internal*
-
-Since `AccessManager` implements an extended IAuthority interface, invoking `canCall` with backwards compatibility
-for the preexisting `IAuthority` interface requires special care to avoid reverting on insufficient return data.
-This helper function takes care of invoking `canCall` in a backwards compatible way without reverting.
-
-<a id="IAccessManaged"></a>
-
-## `IAccessManaged` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/manager/IAccessManaged.sol)
-
-```solidity
-import "@openzeppelin/contracts/access/manager/IAccessManaged.sol";
-```
-
-### Functions
-- [authority()](#IAccessManaged-authority--)
-- [setAuthority()](#IAccessManaged-setAuthority-address-)
-- [isConsumingScheduledOp()](#IAccessManaged-isConsumingScheduledOp--)
-
-### Events
-- [AuthorityUpdated(authority)](#IAccessManaged-AuthorityUpdated-address-)
-
-### Errors
-- [AccessManagedUnauthorized(caller)](#IAccessManaged-AccessManagedUnauthorized-address-)
-- [AccessManagedRequiredDelay(caller, delay)](#IAccessManaged-AccessManagedRequiredDelay-address-uint32-)
-- [AccessManagedInvalidAuthority(authority)](#IAccessManaged-AccessManagedInvalidAuthority-address-)
-
-<a id="IAccessManaged-authority--"></a>
-
-### `authority() → address`
-*external*
-
-Returns the current authority.
-
-<a id="IAccessManaged-setAuthority-address-"></a>
-
-### `setAuthority(address)`
-*external*
-
-Transfers control to a new authority. The caller must be the current authority.
-
-<a id="IAccessManaged-isConsumingScheduledOp--"></a>
-
-### `isConsumingScheduledOp() → bytes4`
-*external*
-
-Returns true only in the context of a delayed restricted call, at the moment that the scheduled operation is
-being consumed. Prevents denial of service for delayed restricted calls in the case that the contract performs
-attacker controlled calls.
-
-<a id="IAccessManaged-AuthorityUpdated-address-"></a>
-
-### `AuthorityUpdated(address authority)`
+### `OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)`
 *event*
-
-Authority that manages this contract was updated.
-
-<a id="IAccessManaged-AccessManagedUnauthorized-address-"></a>
-
-### `AccessManagedUnauthorized(address caller)`
-*error*
-
-<a id="IAccessManaged-AccessManagedRequiredDelay-address-uint32-"></a>
-
-### `AccessManagedRequiredDelay(address caller, uint32 delay)`
-*error*
-
-<a id="IAccessManaged-AccessManagedInvalidAuthority-address-"></a>
-
-### `AccessManagedInvalidAuthority(address authority)`
-*error*
-
-<a id="IAccessManager"></a>
-
-## `IAccessManager` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/manager/IAccessManager.sol)
-
-```solidity
-import "@openzeppelin/contracts/access/manager/IAccessManager.sol";
-```
-
-### Functions
-- [canCall(caller, target, selector)](#IAccessManager-canCall-address-address-bytes4-)
-- [expiration()](#IAccessManager-expiration--)
-- [minSetback()](#IAccessManager-minSetback--)
-- [isTargetClosed(target)](#IAccessManager-isTargetClosed-address-)
-- [getTargetFunctionRole(target, selector)](#IAccessManager-getTargetFunctionRole-address-bytes4-)
-- [getTargetAdminDelay(target)](#IAccessManager-getTargetAdminDelay-address-)
-- [getRoleAdmin(roleId)](#IAccessManager-getRoleAdmin-uint64-)
-- [getRoleGuardian(roleId)](#IAccessManager-getRoleGuardian-uint64-)
-- [getRoleGrantDelay(roleId)](#IAccessManager-getRoleGrantDelay-uint64-)
-- [getAccess(roleId, account)](#IAccessManager-getAccess-uint64-address-)
-- [hasRole(roleId, account)](#IAccessManager-hasRole-uint64-address-)
-- [labelRole(roleId, label)](#IAccessManager-labelRole-uint64-string-)
-- [grantRole(roleId, account, executionDelay)](#IAccessManager-grantRole-uint64-address-uint32-)
-- [revokeRole(roleId, account)](#IAccessManager-revokeRole-uint64-address-)
-- [renounceRole(roleId, callerConfirmation)](#IAccessManager-renounceRole-uint64-address-)
-- [setRoleAdmin(roleId, admin)](#IAccessManager-setRoleAdmin-uint64-uint64-)
-- [setRoleGuardian(roleId, guardian)](#IAccessManager-setRoleGuardian-uint64-uint64-)
-- [setGrantDelay(roleId, newDelay)](#IAccessManager-setGrantDelay-uint64-uint32-)
-- [setTargetFunctionRole(target, selectors, roleId)](#IAccessManager-setTargetFunctionRole-address-bytes4---uint64-)
-- [setTargetAdminDelay(target, newDelay)](#IAccessManager-setTargetAdminDelay-address-uint32-)
-- [setTargetClosed(target, closed)](#IAccessManager-setTargetClosed-address-bool-)
-- [getSchedule(id)](#IAccessManager-getSchedule-bytes32-)
-- [getNonce(id)](#IAccessManager-getNonce-bytes32-)
-- [schedule(target, data, when)](#IAccessManager-schedule-address-bytes-uint48-)
-- [execute(target, data)](#IAccessManager-execute-address-bytes-)
-- [cancel(caller, target, data)](#IAccessManager-cancel-address-address-bytes-)
-- [consumeScheduledOp(caller, data)](#IAccessManager-consumeScheduledOp-address-bytes-)
-- [hashOperation(caller, target, data)](#IAccessManager-hashOperation-address-address-bytes-)
-- [updateAuthority(target, newAuthority)](#IAccessManager-updateAuthority-address-address-)
-
-### Events
-- [OperationScheduled(operationId, nonce, schedule, caller, target, data)](#IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-)
-- [OperationExecuted(operationId, nonce)](#IAccessManager-OperationExecuted-bytes32-uint32-)
-- [OperationCanceled(operationId, nonce)](#IAccessManager-OperationCanceled-bytes32-uint32-)
-- [RoleLabel(roleId, label)](#IAccessManager-RoleLabel-uint64-string-)
-- [RoleGranted(roleId, account, delay, since, newMember)](#IAccessManager-RoleGranted-uint64-address-uint32-uint48-bool-)
-- [RoleRevoked(roleId, account)](#IAccessManager-RoleRevoked-uint64-address-)
-- [RoleAdminChanged(roleId, admin)](#IAccessManager-RoleAdminChanged-uint64-uint64-)
-- [RoleGuardianChanged(roleId, guardian)](#IAccessManager-RoleGuardianChanged-uint64-uint64-)
-- [RoleGrantDelayChanged(roleId, delay, since)](#IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-)
-- [TargetClosed(target, closed)](#IAccessManager-TargetClosed-address-bool-)
-- [TargetFunctionRoleUpdated(target, selector, roleId)](#IAccessManager-TargetFunctionRoleUpdated-address-bytes4-uint64-)
-- [TargetAdminDelayUpdated(target, delay, since)](#IAccessManager-TargetAdminDelayUpdated-address-uint32-uint48-)
-
-### Errors
-- [AccessManagerAlreadyScheduled(operationId)](#IAccessManager-AccessManagerAlreadyScheduled-bytes32-)
-- [AccessManagerNotScheduled(operationId)](#IAccessManager-AccessManagerNotScheduled-bytes32-)
-- [AccessManagerNotReady(operationId)](#IAccessManager-AccessManagerNotReady-bytes32-)
-- [AccessManagerExpired(operationId)](#IAccessManager-AccessManagerExpired-bytes32-)
-- [AccessManagerLockedRole(roleId)](#IAccessManager-AccessManagerLockedRole-uint64-)
-- [AccessManagerBadConfirmation()](#IAccessManager-AccessManagerBadConfirmation--)
-- [AccessManagerUnauthorizedAccount(msgsender, roleId)](#IAccessManager-AccessManagerUnauthorizedAccount-address-uint64-)
-- [AccessManagerUnauthorizedCall(caller, target, selector)](#IAccessManager-AccessManagerUnauthorizedCall-address-address-bytes4-)
-- [AccessManagerUnauthorizedConsume(target)](#IAccessManager-AccessManagerUnauthorizedConsume-address-)
-- [AccessManagerUnauthorizedCancel(msgsender, caller, target, selector)](#IAccessManager-AccessManagerUnauthorizedCancel-address-address-address-bytes4-)
-- [AccessManagerInvalidInitialAdmin(initialAdmin)](#IAccessManager-AccessManagerInvalidInitialAdmin-address-)
-
-<a id="IAccessManager-canCall-address-address-bytes4-"></a>
-
-### `canCall(address caller, address target, bytes4 selector) → bool allowed, uint32 delay`
-*external*
-
-Check if an address (`caller`) is authorised to call a given function on a given contract directly (with
-no restriction). Additionally, it returns the delay needed to perform the call indirectly through the [`AccessManager.schedule`](#AccessManager-schedule-address-bytes-uint48-)
-& [`AccessManager.execute`](#AccessManager-execute-address-bytes-) workflow.
-
-This function is usually called by the targeted contract to control immediate execution of restricted functions.
-Therefore we only return true if the call can be performed without any delay. If the call is subject to a
-previously set delay (not zero), then the function should return false and the caller should schedule the operation
-for future execution.
-
-If `allowed` is true, the delay can be disregarded and the operation can be immediately executed, otherwise
-the operation can be executed if and only if delay is greater than 0.
-
-NOTE: The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
-is backward compatible. Some contracts may thus ignore the second return argument. In that case they will fail
-to identify the indirect workflow, and will consider calls that require a delay to be forbidden.
-
-NOTE: This function does not report the permissions of the admin functions in the manager itself. These are defined by the
-[`AccessManager`](#AccessManager) documentation.
-
-<a id="IAccessManager-expiration--"></a>
-
-### `expiration() → uint32`
-*external*
-
-Expiration delay for scheduled proposals. Defaults to 1 week.
-
-IMPORTANT: Avoid overriding the expiration with 0. Otherwise every contract proposal will be expired immediately,
-disabling any scheduling usage.
-
-<a id="IAccessManager-minSetback--"></a>
-
-### `minSetback() → uint32`
-*external*
-
-Minimum setback for all delay updates, with the exception of execution delays. It
-can be increased without setback (and reset via [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) in the case event of an
-accidental increase). Defaults to 5 days.
-
-<a id="IAccessManager-isTargetClosed-address-"></a>
-
-### `isTargetClosed(address target) → bool`
-*external*
-
-Get whether the contract is closed disabling any access. Otherwise role permissions are applied.
-
-NOTE: When the manager itself is closed, admin functions are still accessible to avoid locking the contract.
-
-<a id="IAccessManager-getTargetFunctionRole-address-bytes4-"></a>
-
-### `getTargetFunctionRole(address target, bytes4 selector) → uint64`
-*external*
-
-Get the role required to call a function.
-
-<a id="IAccessManager-getTargetAdminDelay-address-"></a>
-
-### `getTargetAdminDelay(address target) → uint32`
-*external*
-
-Get the admin delay for a target contract. Changes to contract configuration are subject to this delay.
-
-<a id="IAccessManager-getRoleAdmin-uint64-"></a>
-
-### `getRoleAdmin(uint64 roleId) → uint64`
-*external*
-
-Get the id of the role that acts as an admin for the given role.
-
-The admin permission is required to grant the role, revoke the role and update the execution delay to execute
-an operation that is restricted to this role.
-
-<a id="IAccessManager-getRoleGuardian-uint64-"></a>
-
-### `getRoleGuardian(uint64 roleId) → uint64`
-*external*
-
-Get the role that acts as a guardian for a given role.
-
-The guardian permission allows canceling operations that have been scheduled under the role.
-
-<a id="IAccessManager-getRoleGrantDelay-uint64-"></a>
-
-### `getRoleGrantDelay(uint64 roleId) → uint32`
-*external*
-
-Get the role current grant delay.
-
-Its value may change at any point without an event emitted following a call to [`AccessManager.setGrantDelay`](#AccessManager-setGrantDelay-uint64-uint32-).
-Changes to this value, including effect timepoint are notified in advance by the [`IAccessManager.RoleGrantDelayChanged`](#IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-) event.
-
-<a id="IAccessManager-getAccess-uint64-address-"></a>
-
-### `getAccess(uint64 roleId, address account) → uint48 since, uint32 currentDelay, uint32 pendingDelay, uint48 effect`
-*external*
-
-Get the access details for a given account for a given role. These details include the timepoint at which
-membership becomes active, and the delay applied to all operation by this user that requires this permission
-level.
-
-Returns:
-[0] Timestamp at which the account membership becomes valid. 0 means role is not granted.
-[1] Current execution delay for the account.
-[2] Pending execution delay for the account.
-[3] Timestamp at which the pending execution delay will become active. 0 means no delay update is scheduled.
-
-<a id="IAccessManager-hasRole-uint64-address-"></a>
-
-### `hasRole(uint64 roleId, address account) → bool isMember, uint32 executionDelay`
-*external*
-
-Check if a given account currently has the permission level corresponding to a given role. Note that this
-permission might be associated with an execution delay. [`AccessManager.getAccess`](#AccessManager-getAccess-uint64-address-) can provide more details.
-
-<a id="IAccessManager-labelRole-uint64-string-"></a>
-
-### `labelRole(uint64 roleId, string label)`
-*external*
-
-Give a label to a role, for improved role discoverability by UIs.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.RoleLabel`](#IAccessManager-RoleLabel-uint64-string-) event.
-
-<a id="IAccessManager-grantRole-uint64-address-uint32-"></a>
-
-### `grantRole(uint64 roleId, address account, uint32 executionDelay)`
-*external*
-
-Add `account` to `roleId`, or change its execution delay.
-
-This gives the account the authorization to call any function that is restricted to this role. An optional
-execution delay (in seconds) can be set. If that delay is non 0, the user is required to schedule any operation
-that is restricted to members of this role. The user will only be able to execute the operation after the delay has
-passed, before it has expired. During this period, admin and guardians can cancel the operation (see [`AccessManager.cancel`](#AccessManager-cancel-address-address-bytes-)).
-
-If the account has already been granted this role, the execution delay will be updated. This update is not
-immediate and follows the delay rules. For example, if a user currently has a delay of 3 hours, and this is
-called to reduce that delay to 1 hour, the new delay will take some time to take effect, enforcing that any
-operation executed in the 3 hours that follows this update was indeed scheduled before this update.
-
-Requirements:
-
-- the caller must be an admin for the role (see [`AccessControl.getRoleAdmin`](#AccessControl-getRoleAdmin-bytes32-))
-- granted role must not be the `PUBLIC_ROLE`
-
-Emits a [`IAccessControl.RoleGranted`](#IAccessControl-RoleGranted-bytes32-address-address-) event.
-
-<a id="IAccessManager-revokeRole-uint64-address-"></a>
-
-### `revokeRole(uint64 roleId, address account)`
-*external*
-
-Remove an account from a role, with immediate effect. If the account does not have the role, this call has
-no effect.
-
-Requirements:
-
-- the caller must be an admin for the role (see [`AccessControl.getRoleAdmin`](#AccessControl-getRoleAdmin-bytes32-))
-- revoked role must not be the `PUBLIC_ROLE`
-
-Emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event if the account had the role.
-
-<a id="IAccessManager-renounceRole-uint64-address-"></a>
-
-### `renounceRole(uint64 roleId, address callerConfirmation)`
-*external*
-
-Renounce role permissions for the calling account with immediate effect. If the sender is not in
-the role this call has no effect.
-
-Requirements:
-
-- the caller must be `callerConfirmation`.
-
-Emits a [`IAccessControl.RoleRevoked`](#IAccessControl-RoleRevoked-bytes32-address-address-) event if the account had the role.
-
-<a id="IAccessManager-setRoleAdmin-uint64-uint64-"></a>
-
-### `setRoleAdmin(uint64 roleId, uint64 admin)`
-*external*
-
-Change admin role for a given role.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-) event
-
-<a id="IAccessManager-setRoleGuardian-uint64-uint64-"></a>
-
-### `setRoleGuardian(uint64 roleId, uint64 guardian)`
-*external*
-
-Change guardian role for a given role.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.RoleGuardianChanged`](#IAccessManager-RoleGuardianChanged-uint64-uint64-) event
-
-<a id="IAccessManager-setGrantDelay-uint64-uint32-"></a>
-
-### `setGrantDelay(uint64 roleId, uint32 newDelay)`
-*external*
-
-Update the delay for granting a `roleId`.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.RoleGrantDelayChanged`](#IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-) event.
-
-<a id="IAccessManager-setTargetFunctionRole-address-bytes4---uint64-"></a>
-
-### `setTargetFunctionRole(address target, bytes4[] selectors, uint64 roleId)`
-*external*
-
-Set the role required to call functions identified by the `selectors` in the `target` contract.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.TargetFunctionRoleUpdated`](#IAccessManager-TargetFunctionRoleUpdated-address-bytes4-uint64-) event per selector.
-
-<a id="IAccessManager-setTargetAdminDelay-address-uint32-"></a>
-
-### `setTargetAdminDelay(address target, uint32 newDelay)`
-*external*
-
-Set the delay for changing the configuration of a given target contract.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.TargetAdminDelayUpdated`](#IAccessManager-TargetAdminDelayUpdated-address-uint32-uint48-) event.
-
-<a id="IAccessManager-setTargetClosed-address-bool-"></a>
-
-### `setTargetClosed(address target, bool closed)`
-*external*
-
-Set the closed flag for a contract.
-
-Closing the manager itself won't disable access to admin methods to avoid locking the contract.
-
-Requirements:
-
-- the caller must be a global admin
-
-Emits a [`IAccessManager.TargetClosed`](#IAccessManager-TargetClosed-address-bool-) event.
-
-<a id="IAccessManager-getSchedule-bytes32-"></a>
-
-### `getSchedule(bytes32 id) → uint48`
-*external*
-
-Return the timepoint at which a scheduled operation will be ready for execution. This returns 0 if the
-operation is not yet scheduled, has expired, was executed, or was canceled.
-
-<a id="IAccessManager-getNonce-bytes32-"></a>
-
-### `getNonce(bytes32 id) → uint32`
-*external*
-
-Return the nonce for the latest scheduled operation with a given id. Returns 0 if the operation has never
-been scheduled.
-
-<a id="IAccessManager-schedule-address-bytes-uint48-"></a>
-
-### `schedule(address target, bytes data, uint48 when) → bytes32 operationId, uint32 nonce`
-*external*
-
-Schedule a delayed operation for future execution, and return the operation identifier. It is possible to
-choose the timestamp at which the operation becomes executable as long as it satisfies the execution delays
-required for the caller. The special value zero will automatically set the earliest possible time.
-
-Returns the `operationId` that was scheduled. Since this value is a hash of the parameters, it can reoccur when
-the same parameters are used; if this is relevant, the returned `nonce` can be used to uniquely identify this
-scheduled operation from other occurrences of the same `operationId` in invocations of [`AccessManager.execute`](#AccessManager-execute-address-bytes-) and [`AccessManager.cancel`](#AccessManager-cancel-address-address-bytes-).
-
-Emits a [`IAccessManager.OperationScheduled`](#IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-) event.
-
-NOTE: It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
-this is necessary, a random byte can be appended to `data` to act as a salt that will be ignored by the target
-contract if it is using standard Solidity ABI encoding.
-
-<a id="IAccessManager-execute-address-bytes-"></a>
-
-### `execute(address target, bytes data) → uint32`
-*external*
-
-Execute a function that is delay restricted, provided it was properly scheduled beforehand, or the
-execution delay is 0.
-
-Returns the nonce that identifies the previously scheduled operation that is executed, or 0 if the
-operation wasn't previously scheduled (if the caller doesn't have an execution delay).
-
-Emits an [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event only if the call was scheduled and delayed.
-
-<a id="IAccessManager-cancel-address-address-bytes-"></a>
-
-### `cancel(address caller, address target, bytes data) → uint32`
-*external*
-
-Cancel a scheduled (delayed) operation. Returns the nonce that identifies the previously scheduled
-operation that is cancelled.
-
-Requirements:
-
-- the caller must be the proposer, a guardian of the targeted function, or a global admin
-
-Emits a [`IAccessManager.OperationCanceled`](#IAccessManager-OperationCanceled-bytes32-uint32-) event.
-
-<a id="IAccessManager-consumeScheduledOp-address-bytes-"></a>
-
-### `consumeScheduledOp(address caller, bytes data)`
-*external*
-
-Consume a scheduled operation targeting the caller. If such an operation exists, mark it as consumed
-(emit an [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event and clean the state). Otherwise, throw an error.
-
-This is useful for contract that want to enforce that calls targeting them were scheduled on the manager,
-with all the verifications that it implies.
-
-Emit a [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event.
-
-<a id="IAccessManager-hashOperation-address-address-bytes-"></a>
-
-### `hashOperation(address caller, address target, bytes data) → bytes32`
-*external*
-
-Hashing function for delayed operations.
-
-<a id="IAccessManager-updateAuthority-address-address-"></a>
-
-### `updateAuthority(address target, address newAuthority)`
-*external*
-
-Changes the authority of a target managed by this manager instance.
-
-Requirements:
-
-- the caller must be a global admin
-
-<a id="IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-"></a>
-
-### `OperationScheduled(bytes32 indexed operationId, uint32 indexed nonce, uint48 schedule, address caller, address target, bytes data)`
-*event*
-
-A delayed operation was scheduled.
-
-<a id="IAccessManager-OperationExecuted-bytes32-uint32-"></a>
-
-### `OperationExecuted(bytes32 indexed operationId, uint32 indexed nonce)`
-*event*
-
-A scheduled operation was executed.
-
-<a id="IAccessManager-OperationCanceled-bytes32-uint32-"></a>
-
-### `OperationCanceled(bytes32 indexed operationId, uint32 indexed nonce)`
-*event*
-
-A scheduled operation was canceled.
-
-<a id="IAccessManager-RoleLabel-uint64-string-"></a>
-
-### `RoleLabel(uint64 indexed roleId, string label)`
-*event*
-
-Informational labelling for a roleId.
-
-<a id="IAccessManager-RoleGranted-uint64-address-uint32-uint48-bool-"></a>
-
-### `RoleGranted(uint64 indexed roleId, address indexed account, uint32 delay, uint48 since, bool newMember)`
-*event*
-
-Emitted when `account` is granted `roleId`.
-
-NOTE: The meaning of the `since` argument depends on the `newMember` argument.
-If the role is granted to a new member, the `since` argument indicates when the account becomes a member of the role,
-otherwise it indicates the execution delay for this account and roleId is updated.
-
-<a id="IAccessManager-RoleRevoked-uint64-address-"></a>
-
-### `RoleRevoked(uint64 indexed roleId, address indexed account)`
-*event*
-
-Emitted when `account` membership or `roleId` is revoked. Unlike granting, revoking is instantaneous.
-
-<a id="IAccessManager-RoleAdminChanged-uint64-uint64-"></a>
-
-### `RoleAdminChanged(uint64 indexed roleId, uint64 indexed admin)`
-*event*
-
-Role acting as admin over a given `roleId` is updated.
-
-<a id="IAccessManager-RoleGuardianChanged-uint64-uint64-"></a>
-
-### `RoleGuardianChanged(uint64 indexed roleId, uint64 indexed guardian)`
-*event*
-
-Role acting as guardian over a given `roleId` is updated.
-
-<a id="IAccessManager-RoleGrantDelayChanged-uint64-uint32-uint48-"></a>
-
-### `RoleGrantDelayChanged(uint64 indexed roleId, uint32 delay, uint48 since)`
-*event*
-
-Grant delay for a given `roleId` will be updated to `delay` when `since` is reached.
-
-<a id="IAccessManager-TargetClosed-address-bool-"></a>
-
-### `TargetClosed(address indexed target, bool closed)`
-*event*
-
-Target mode is updated (true = closed, false = open).
-
-<a id="IAccessManager-TargetFunctionRoleUpdated-address-bytes4-uint64-"></a>
-
-### `TargetFunctionRoleUpdated(address indexed target, bytes4 selector, uint64 indexed roleId)`
-*event*
-
-Role required to invoke `selector` on `target` is updated to `roleId`.
-
-<a id="IAccessManager-TargetAdminDelayUpdated-address-uint32-uint48-"></a>
-
-### `TargetAdminDelayUpdated(address indexed target, uint32 delay, uint48 since)`
-*event*
-
-Admin delay for a given `target` will be updated to `delay` when `since` is reached.
-
-<a id="IAccessManager-AccessManagerAlreadyScheduled-bytes32-"></a>
-
-### `AccessManagerAlreadyScheduled(bytes32 operationId)`
-*error*
-
-<a id="IAccessManager-AccessManagerNotScheduled-bytes32-"></a>
-
-### `AccessManagerNotScheduled(bytes32 operationId)`
-*error*
-
-<a id="IAccessManager-AccessManagerNotReady-bytes32-"></a>
-
-### `AccessManagerNotReady(bytes32 operationId)`
-*error*
-
-<a id="IAccessManager-AccessManagerExpired-bytes32-"></a>
-
-### `AccessManagerExpired(bytes32 operationId)`
-*error*
-
-<a id="IAccessManager-AccessManagerLockedRole-uint64-"></a>
-
-### `AccessManagerLockedRole(uint64 roleId)`
-*error*
-
-<a id="IAccessManager-AccessManagerBadConfirmation--"></a>
-
-### `AccessManagerBadConfirmation()`
-*error*
-
-<a id="IAccessManager-AccessManagerUnauthorizedAccount-address-uint64-"></a>
-
-### `AccessManagerUnauthorizedAccount(address msgsender, uint64 roleId)`
-*error*
-
-<a id="IAccessManager-AccessManagerUnauthorizedCall-address-address-bytes4-"></a>
-
-### `AccessManagerUnauthorizedCall(address caller, address target, bytes4 selector)`
-*error*
-
-<a id="IAccessManager-AccessManagerUnauthorizedConsume-address-"></a>
-
-### `AccessManagerUnauthorizedConsume(address target)`
-*error*
-
-<a id="IAccessManager-AccessManagerUnauthorizedCancel-address-address-address-bytes4-"></a>
-
-### `AccessManagerUnauthorizedCancel(address msgsender, address caller, address target, bytes4 selector)`
-*error*
-
-<a id="IAccessManager-AccessManagerInvalidInitialAdmin-address-"></a>
-
-### `AccessManagerInvalidInitialAdmin(address initialAdmin)`
-*error*
-
-<a id="IAuthority"></a>
-
-## `IAuthority` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/access/manager/IAuthority.sol)
-
-```solidity
-import "@openzeppelin/contracts/access/manager/IAuthority.sol";
-```
-
-Standard interface for permissioning originally defined in Dappsys.
-
-### Functions
-- [canCall(caller, target, selector)](#IAuthority-canCall-address-address-bytes4-)
-
-<a id="IAuthority-canCall-address-address-bytes4-"></a>
-
-### `canCall(address caller, address target, bytes4 selector) → bool allowed`
-*external*
-
-Returns true if the caller can invoke on a target the function identified by a function selector.
 
