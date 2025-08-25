@@ -2,6 +2,7 @@
 	"title": "Tools",
 	"root": false,
 	"pages": [
+		"wizard",
 		"openzeppelin-monitor",
 		"openzeppelin-relayer",
 		"contracts-ui-builder",
