@@ -17,6 +17,7 @@
 		"upgradeable",
 		"extending-contracts",
 		"faq",
+		"changelog",
 		"api"
 	],
 	"root": false
