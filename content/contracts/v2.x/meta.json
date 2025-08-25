@@ -1,0 +1,14 @@
+{
+	"title": "v2.x",
+	"pages": [
+		"index",
+		"tokens",
+		"erc20",
+		"erc20-supply",
+		"erc721",
+		"erc1155",
+		"access-control",
+		"api"
+	],
+	"root": false
+}
