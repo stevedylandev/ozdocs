@@ -1,9 +1,5 @@
 {
-  "title": "v0.x", 
-  "pages": [
-    "index",
-    "token",
-    "api"
-  ],
-  "root": false
+	"title": "v0.x",
+	"pages": ["index", "token", "changelog", "api"],
+	"root": false
 }
