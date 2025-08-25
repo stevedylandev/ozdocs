@@ -9,7 +9,8 @@
 		"scripts",
 		"testing",
 		"error",
-		"contribution"
+		"contribution",
+		"changelog"
 	],
 	"root": false
 }

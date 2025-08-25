@@ -9,7 +9,8 @@
 		"stellar",
 		"structure",
 		"roadmap",
-		"plugins"
+		"plugins",
+		"changelog"
 	],
 	"root": false
 }
