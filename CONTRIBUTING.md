@@ -44,7 +44,7 @@ cd docs
 bun install
 ```
 
-3. Run the `dev` server to see a live preview and have your changes reflected
+3. Run the `dev` server to see a live preview and have your changes reflected at `http://localhost:3000`
 
 ```bash
 bun dev
