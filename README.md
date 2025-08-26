@@ -9,13 +9,13 @@ This is a Next.js application generated with
 
 To start local development follow the steps below
 
-### 1. Make sure [Bun](https://bun.sh) is installed
+**1. Make sure [Bun](https://bun.sh) is installed**
 
 ```bash
 bun --version
 ```
 
-### 2. Clone the repo and install dependencies
+**2. Clone the repo and install dependencies**
 
 ```bash
 git clone https://github.com/OpenZeppelin/docs
@@ -23,7 +23,7 @@ cd docs
 bun install
 ```
 
-### 3. Run the `dev` server to see a live preview and have your changes reflected at `http://localhost:3000`
+**3. Run the `dev` server to see a live preview and have your changes reflected at `http://localhost:3000`**
 
 ```bash
 bun dev
