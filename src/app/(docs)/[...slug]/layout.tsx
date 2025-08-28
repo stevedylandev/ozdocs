@@ -1402,12 +1402,82 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Stellar Contracts',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/stellar-contracts',
-      },
-      children: [],
+      children: [
+        {
+          type: 'page' as const,
+          name: 'Overview',
+          url: '/stellar-contracts/v0.x/'
+        },
+        {
+          type: 'page' as const,
+          name: 'Get Started',
+          url: '/stellar-contracts/v0.x/get-started',
+        },
+        {
+          type: 'folder' as const,
+          name: 'Tokens',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Fungible Tokens',
+              url: '/stellar-contracts/v0.x/tokens/fungible/fungible',
+            },
+            {
+              type: 'page' as const,
+              name: 'Non-Fungible Tokens',
+              url: '/stellar-contracts/v0.x/tokens/non-fungible/non-fungible',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Access',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Access Control',
+              url: '/stellar-contracts/v0.x/access/access-control',
+            },
+            {
+              type: 'page' as const,
+              name: 'Ownable',
+              url: '/stellar-contracts/v0.x/access/ownable',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Utilities',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Pausable',
+              url: '/stellar-contracts/v0.x/utils/pausable',
+            },
+            {
+              type: 'page' as const,
+              name: 'Upgradeable',
+              url: '/stellar-contracts/v0.x/utils/upgradeable',
+            },
+            {
+              type: 'page' as const,
+              name: 'Cryptography',
+              url: '/stellar-contracts/v0.x/utils/crypto',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Helpers',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Default Implementation Macro',
+              url: '/stellar-contracts/v0.x/helpers/default-impl-macro',
+            },
+          ],
+        },
+      ],
     },
     {
       type: 'folder' as const,
