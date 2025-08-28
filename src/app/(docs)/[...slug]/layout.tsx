@@ -604,56 +604,69 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'OpenZeppelin Monitor',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/tools/openzeppelin-monitor',
-      },
       children: [
         {
-          type: 'page' as const,
-          name: 'Quickstart',
-          url: '/tools/openzeppelin-monitor/v1.x/quickstart',
+          type: 'folder' as const,
+          name: 'User Documentation',
+          index: {
+            type: 'page' as const,
+            name: 'Overview',
+            url: '/tools/openzeppelin-monitor/v1.x',
+          },
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Quickstart',
+              url: '/tools/openzeppelin-monitor/v1.x/quickstart',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Developer Documentation',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Architecture Guide',
+              url: '/tools/openzeppelin-monitor/v1.x/architecture',
+            },
+            {
+              type: 'page' as const,
+              name: 'Project Structure',
+              url: '/tools/openzeppelin-monitor/v1.x/project-structure',
+            },
+            {
+              type: 'page' as const,
+              name: 'RPC Client',
+              url: '/tools/openzeppelin-monitor/v1.x/rpc',
+            },
+            {
+              type: 'page' as const,
+              name: 'Custom scripts',
+              url: '/tools/openzeppelin-monitor/v1.x/scripts',
+            },
+            {
+              type: 'page' as const,
+              name: 'Error Handling',
+              url: '/tools/openzeppelin-monitor/v1.x/error',
+            },
+            {
+              type: 'page' as const,
+              name: 'Testing',
+              url: '/tools/openzeppelin-monitor/v1.x/testing',
+            },
+            {
+              type: 'page' as const,
+              name: 'Contribution guidelines',
+              url: '/tools/openzeppelin-monitor/v1.x/contribution',
+            },
+          ],
         },
         {
           type: 'page' as const,
-          name: 'Architecture',
-          url: '/tools/openzeppelin-monitor/v1.x/architecture',
-        },
-        {
-          type: 'page' as const,
-          name: 'Project Structure',
-          url: '/tools/openzeppelin-monitor/v1.x/project-structure',
-        },
-        {
-          type: 'page' as const,
-          name: 'Scripts',
-          url: '/tools/openzeppelin-monitor/v1.x/scripts',
-        },
-        {
-          type: 'page' as const,
-          name: 'Testing',
-          url: '/tools/openzeppelin-monitor/v1.x/testing',
-        },
-        {
-          type: 'page' as const,
-          name: 'RPC',
-          url: '/tools/openzeppelin-monitor/v1.x/rpc',
-        },
-        {
-          type: 'page' as const,
-          name: 'Error',
-          url: '/tools/openzeppelin-monitor/v1.x/error',
-        },
-        {
-          type: 'page' as const,
-          name: 'Contribution',
-          url: '/tools/openzeppelin-monitor/v1.x/contribution',
-        },
-        {
-          type: 'page' as const,
-          name: 'Changelog',
-          url: '/tools/openzeppelin-monitor/v1.x/changelog',
+          name: 'Technical Rust Documentation',
+          url: 'https://release-v1-0-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/',
+          external: true,
         },
       ],
     },
