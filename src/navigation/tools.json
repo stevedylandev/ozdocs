@@ -1,0 +1,420 @@
+[
+  {
+    "type": "separator",
+    "name": "Tools"
+  },
+  {
+    "type": "page",
+    "name": "Wizard",
+    "url": "/tools/wizard"
+  },
+  {
+    "type": "folder",
+    "name": "Contracts UI Builder",
+    "children": [
+      {
+        "type": "page",
+        "name": "Quickstart",
+        "url": "/tools/contracts-ui-builder"
+      },
+      {
+        "type": "page",
+        "name": "Networks",
+        "url": "/tools/contracts-ui-builder/networks"
+      },
+      {
+        "type": "page",
+        "name": "Loading Contracts",
+        "url": "/tools/contracts-ui-builder/loading-contracts"
+      },
+      {
+        "type": "page",
+        "name": "Functions",
+        "url": "/tools/contracts-ui-builder/functions"
+      },
+      {
+        "type": "page",
+        "name": "Customization",
+        "url": "/tools/contracts-ui-builder/customization"
+      },
+      {
+        "type": "page",
+        "name": "Exporting and History",
+        "url": "/tools/contracts-ui-builder/exporting-and-history"
+      },
+      {
+        "type": "page",
+        "name": "Building Adapters",
+        "url": "/tools/contracts-ui-builder/building-adapters"
+      },
+      {
+        "type": "page",
+        "name": "Changelog",
+        "url": "/tools/contracts-ui-builder/changelog"
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "Defender",
+    "children": [
+      {
+        "type": "page",
+        "name": "Overview",
+        "url": "/tools/defender"
+      },
+      {
+        "type": "folder",
+        "name": "Modules",
+        "children": [
+          {
+            "type": "page",
+            "name": "Code Inspector",
+            "url": "/tools/defender/module/code"
+          },
+          {
+            "type": "page",
+            "name": "Audit",
+            "url": "/tools/defender/module/audit"
+          },
+          {
+            "type": "page",
+            "name": "Deploy",
+            "url": "/tools/defender/module/deploy"
+          },
+          {
+            "type": "page",
+            "name": "Relayers",
+            "url": "/tools/defender/module/relayers"
+          },
+          {
+            "type": "page",
+            "name": "Monitor",
+            "url": "/tools/defender/module/monitor"
+          },
+          {
+            "type": "page",
+            "name": "Actions",
+            "url": "/tools/defender/module/actions"
+          },
+          {
+            "type": "page",
+            "name": "Transaction Proposals",
+            "url": "/tools/defender/module/transaction-proposals"
+          },
+          {
+            "type": "page",
+            "name": "Address Book",
+            "url": "/tools/defender/module/address-book"
+          },
+          {
+            "type": "page",
+            "name": "Access Control",
+            "url": "/tools/defender/module/access-control"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "Settings",
+        "index": {
+          "type": "page",
+          "name": "Overview",
+          "url": "/tools/defender/settings"
+        },
+        "children": [
+          {
+            "type": "page",
+            "name": "Logs",
+            "url": "/tools/defender/logs"
+          },
+          {
+            "type": "page",
+            "name": "Notifications",
+            "url": "/tools/defender/settings/notifications"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "Tutorials",
+        "children": [
+          {
+            "type": "page",
+            "name": "Deploy",
+            "url": "/tools/defender/tutorial/deploy"
+          },
+          {
+            "type": "page",
+            "name": "Relayer",
+            "url": "/tools/defender/tutorial/relayer"
+          },
+          {
+            "type": "page",
+            "name": "Monitor",
+            "url": "/tools/defender/tutorial/monitor"
+          },
+          {
+            "type": "page",
+            "name": "Actions",
+            "url": "/tools/defender/tutorial/actions"
+          },
+          {
+            "type": "page",
+            "name": "Access Control",
+            "url": "/tools/defender/tutorial/access-control"
+          },
+          {
+            "type": "page",
+            "name": "Workflows",
+            "url": "/tools/defender/tutorial/workflows"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "Guides",
+        "children": [
+          {
+            "type": "page",
+            "name": "Deploy a smart contract on a forked network",
+            "url": "/tools/defender/guide/forked-network"
+          },
+          {
+            "type": "page",
+            "name": "Adding a complete private network",
+            "url": "/tools/defender/guide/private-network"
+          },
+          {
+            "type": "page",
+            "name": "Relaying gasless meta-transactions",
+            "url": "/tools/defender/guide/meta-tx"
+          },
+          {
+            "type": "page",
+            "name": "Automatic monitoring for factory clones",
+            "url": "/tools/defender/guide/factory-monitor"
+          },
+          {
+            "type": "page",
+            "name": "Managing roles of a TimelockController",
+            "url": "/tools/defender/guide/timelock-roles"
+          },
+          {
+            "type": "page",
+            "name": "Managing usage notifications",
+            "url": "/tools/defender/guide/usage-notification"
+          },
+          {
+            "type": "page",
+            "name": "Setup Fireblocks integrations within Defender",
+            "url": "/tools/defender/guide/fireblock-defender-integration"
+          },
+          {
+            "type": "page",
+            "name": "Upgrading actions dependencies",
+            "url": "/tools/defender/guide/upgrade-actions-dependencies"
+          }
+        ]
+      },
+      {
+        "type": "page",
+        "name": "Defender as Code",
+        "url": "/tools/defender/dac"
+      },
+      {
+        "type": "page",
+        "name": "Remix Plugin",
+        "url": "/tools/defender/remix-plugin"
+      },
+      {
+        "type": "page",
+        "name": "Contracts Wizard Plugin",
+        "url": "/tools/defender/wizard-plugin"
+      },
+      {
+        "type": "page",
+        "name": "SDK and API",
+        "url": "/tools/defender/sdk"
+      },
+      {
+        "type": "page",
+        "name": "Integrations",
+        "url": "/tools/defender/integrations"
+      },
+      {
+        "type": "page",
+        "name": "FAQ",
+        "url": "/tools/defender/faq"
+      },
+      {
+        "type": "page",
+        "name": "Changelog",
+        "url": "/tools/defender/changelog"
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "Monitor",
+    "children": [
+      {
+        "type": "folder",
+        "name": "User Documentation",
+        "index": {
+          "type": "page",
+          "name": "Overview",
+          "url": "/tools/openzeppelin-monitor/v1.x"
+        },
+        "children": [
+          {
+            "type": "page",
+            "name": "Quickstart",
+            "url": "/tools/openzeppelin-monitor/v1.x/quickstart"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "Developer Documentation",
+        "children": [
+          {
+            "type": "page",
+            "name": "Architecture Guide",
+            "url": "/tools/openzeppelin-monitor/v1.x/architecture"
+          },
+          {
+            "type": "page",
+            "name": "Project Structure",
+            "url": "/tools/openzeppelin-monitor/v1.x/project-structure"
+          },
+          {
+            "type": "page",
+            "name": "RPC Client",
+            "url": "/tools/openzeppelin-monitor/v1.x/rpc"
+          },
+          {
+            "type": "page",
+            "name": "Custom scripts",
+            "url": "/tools/openzeppelin-monitor/v1.x/scripts"
+          },
+          {
+            "type": "page",
+            "name": "Error Handling",
+            "url": "/tools/openzeppelin-monitor/v1.x/error"
+          },
+          {
+            "type": "page",
+            "name": "Testing",
+            "url": "/tools/openzeppelin-monitor/v1.x/testing"
+          },
+          {
+            "type": "page",
+            "name": "Contribution guidelines",
+            "url": "/tools/openzeppelin-monitor/v1.x/contribution"
+          }
+        ]
+      },
+      {
+        "type": "page",
+        "name": "Changelog",
+        "url": "/tools/openzeppelin-monitor/v1.x/changelog"
+      },
+      {
+        "type": "page",
+        "name": "Technical Rust Documentation",
+        "url": "https://release-v1-0-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/",
+        "external": true
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "Relayer",
+    "children": [
+      {
+        "type": "page",
+        "name": "Overview",
+        "url": "/tools/openzeppelin-relayer/v1.x"
+      },
+      {
+        "type": "page",
+        "name": "Quickstart",
+        "url": "/tools/openzeppelin-relayer/v1.x/quickstart"
+      },
+      {
+        "type": "folder",
+        "name": "Configuration",
+        "index": {
+          "type": "page",
+          "name": "Overview",
+          "url": "/tools/openzeppelin-relayer/v1.x/configuration"
+        },
+        "children": [
+          {
+            "type": "page",
+            "name": "Signers",
+            "url": "/tools/openzeppelin-relayer/v1.x/configuration/signers"
+          },
+          {
+            "type": "page",
+            "name": "Network Configuration",
+            "url": "/tools/openzeppelin-relayer/v1.x/network_configuration"
+          },
+          {
+            "type": "page",
+            "name": "Storage Configuration",
+            "url": "/tools/openzeppelin-relayer/v1.x/configuration/storage"
+          }
+        ]
+      },
+      {
+        "type": "page",
+        "name": "EVM Integration",
+        "url": "/tools/openzeppelin-relayer/v1.x/evm"
+      },
+      {
+        "type": "page",
+        "name": "Solana Integration",
+        "url": "/tools/openzeppelin-relayer/v1.x/solana"
+      },
+      {
+        "type": "page",
+        "name": "Stellar Integration",
+        "url": "/tools/openzeppelin-relayer/v1.x/stellar"
+      },
+      {
+        "type": "page",
+        "name": "API Reference",
+        "url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/api_docs.html",
+        "external": true
+      },
+      {
+        "type": "page",
+        "name": "Project Structure",
+        "url": "/tools/openzeppelin-relayer/v1.x/structure"
+      },
+      {
+        "type": "page",
+        "name": "Project Roadmap",
+        "url": "/tools/openzeppelin-relayer/v1.x/roadmap"
+      },
+      {
+        "type": "page",
+        "name": "Plugins",
+        "url": "/tools/openzeppelin-relayer/v1.x/plugins"
+      },
+      {
+        "type": "page",
+        "name": "Changelog",
+        "url": "/tools/openzeppelin-relayer/v1.x/changelog"
+      },
+      {
+        "type": "page",
+        "name": "Technical Rust Documentation",
+        "url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/openzeppelin_relayer/",
+        "external": true
+      }
+    ]
+  }
+]
