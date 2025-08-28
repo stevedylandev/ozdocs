@@ -243,23 +243,45 @@ const manualTree = {
       index: {
         type: 'page' as const,
         name: 'Overview',
-        url: '/community-contracts',
+        url: '/community-contracts/v1.x',
       },
       children: [
         {
-          type: 'page' as const,
-          name: 'Account Modules',
-          url: '/community-contracts/v1.x/account-modules',
+          type: 'folder' as const,
+          name: 'Account Abstraction',
+          index: {
+            type: 'page' as const,
+            name: 'Overview',
+            url: '/contracts/v5.x/account-abstraction',
+          },
+          children: [
+            {
+              type: 'folder' as const,
+              name: 'Accounts',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/contracts/v5.x/accounts',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'Modules',
+                  url: '/community-contracts/v1.x/account-modules',
+                },
+              ],
+            },
+            {
+              type: 'page' as const,
+              name: 'Paymasters',
+              url: '/community-contracts/v1.x/paymasters',
+            },
+          ],
         },
         {
           type: 'page' as const,
           name: 'Crosschain',
           url: '/community-contracts/v1.x/crosschain',
-        },
-        {
-          type: 'page' as const,
-          name: 'Paymasters',
-          url: '/community-contracts/v1.x/paymasters',
         },
         {
           type: 'page' as const,
