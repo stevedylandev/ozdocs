@@ -1,11 +1,28 @@
 # AGENTS.md - OpenZeppelin Docs Codebase Guide
 
 ## Build/Lint/Test Commands
-- `npm run build` - Build the Next.js application
-- `npm run dev` - Start development server with turbo
-- `npm run start` - Start production server
-- `npm run postinstall` - Process MDX files with fumadocs-mdx
+- `bun run build` - Build the Next.js application
+- `bun run dev` - Start development server with turbo
+- `bun run start` - Start production server
+- `bun run postinstall` - Process MDX files with fumadocs-mdx
 - No explicit lint/test commands configured - this is a documentation site
+
+## Navigation Management
+The site uses a **modular JSON navigation system** instead of fumadocs meta.json files:
+
+### Navigation Structure
+- `src/navigation/` - Modular navigation configuration
+  - `types.ts` - TypeScript interfaces for navigation
+  - `contracts.json` - All contract-related navigation
+  - `tools.json` - Tools section navigation
+  - `ecosystems.json` - Ecosystem-specific sections
+  - `index.ts` - Combines all sections into navigationTree
+
+### Editing Navigation
+- **Add new pages**: Edit the relevant JSON file (contracts/tools/ecosystems)
+- **Reorder sections**: Modify array order in respective JSON files
+- **Add new sections**: Create new JSON file and import in `index.ts`
+- **Do NOT use meta.json files** - they have been removed and are not supported
 
 ## Code Style Guidelines
 
@@ -21,6 +38,7 @@
 - Documentation content in `content/` with nested version folders (v2.x, v3.x, etc.)
 - Examples in `examples/` directory organized by feature
 - Public assets in `public/` directory
+- Navigation config in `src/navigation/` directory
 
 ### Naming Conventions
 - PascalCase for React components and interfaces
