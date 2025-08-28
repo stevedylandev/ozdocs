@@ -138,6 +138,11 @@ const manualTree = {
           url: '/contracts/v5.x/faq',
         },
         {
+          type: 'page' as const,
+          name: 'Changelog',
+          url: '/contracts/v5.x/changelog',
+        },
+        {
           type: 'folder' as const,
           name: 'API Reference',
           index: {
@@ -398,6 +403,11 @@ const manualTree = {
           type: 'page' as const,
           name: 'Building Adapters',
           url: '/tools/contracts-ui-builder/building-adapters',
+        },
+        {
+          type: 'page' as const,
+          name: 'Changelog',
+          url: '/tools/contracts-ui-builder/changelog',
         },
       ],
     },
@@ -664,6 +674,11 @@ const manualTree = {
         },
         {
           type: 'page' as const,
+          name: 'Changelog',
+          url: '/tools/openzeppelin-monitor/v1.x/changelog',
+        },
+        {
+          type: 'page' as const,
           name: 'Technical Rust Documentation',
           url: 'https://release-v1-0-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/',
           external: true,
@@ -745,6 +760,11 @@ const manualTree = {
           type: 'page' as const,
           name: 'Plugins',
           url: '/tools/openzeppelin-relayer/v1.x/plugins',
+        },
+        {
+          type: 'page' as const,
+          name: 'Changelog',
+          url: '/tools/openzeppelin-relayer/v1.x/changelog',
         },
         {
           type: 'page' as const,
@@ -1205,11 +1225,16 @@ const manualTree = {
                       type: 'page' as const,
                       name: 'API Reference',
                       url: '/compact-contracts/v0.x/api/multitoken',
-                    },
-                  ],
-                },
-              ],
             },
+          ],
+        },
+        {
+          type: 'page' as const,
+          name: 'Changelog',
+          url: '/stellar-contracts/v0.x/changelog',
+        },
+      ],
+    },
             {
               type: 'folder' as const,
               name: 'Utils',
@@ -1244,6 +1269,11 @@ const manualTree = {
               name: 'Token',
               url: '/confidential-contracts/v0.x/token',
             },
+        {
+          type: 'page' as const,
+          name: 'Changelog',
+          url: '/confidential-contracts/v0.x/changelog',
+        },
         {
           type: 'folder' as const,
           name: 'API Reference',
@@ -1396,6 +1426,11 @@ const manualTree = {
           type: 'page' as const,
           name: 'Utilities',
           url: '/contracts-stylus/v0.x/utilities',
+        },
+        {
+          type: 'page' as const,
+          name: 'Changelog',
+          url: '/contracts-stylus/v0.x/changelog',
         },
       ],
     },
@@ -1654,19 +1689,24 @@ const manualTree = {
             },
           ],
         },
-        {
-          type: 'folder' as const,
-          name: 'Appendix',
-          children: [
-            {
-              type: 'page' as const,
-              name: 'Glossary',
-              url: '/substrate-runtimes/v3.x/glossary',
-            },
-          ],
-        },
-      ],
-    },
+         {
+           type: 'folder' as const,
+           name: 'Appendix',
+           children: [
+             {
+               type: 'page' as const,
+               name: 'Glossary',
+               url: '/substrate-runtimes/v3.x/glossary',
+             },
+           ],
+         },
+         {
+           type: 'page' as const,
+           name: 'Changelog',
+           url: '/substrate-runtimes/v3.x/changelog',
+         },
+       ],
+     },
     {
       type: 'folder' as const,
       name: 'Uniswap Hooks',
