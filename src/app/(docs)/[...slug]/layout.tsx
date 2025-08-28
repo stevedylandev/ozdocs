@@ -1233,12 +1233,55 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Confidential Contracts',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/confidential-contracts',
-      },
-      children: [],
+      children: [
+        {
+          type: 'page' as const,
+          name: 'Overview',
+          url: '/confidential-contracts/v0.x',
+        },
+            {
+              type: 'page' as const,
+              name: 'Token',
+              url: '/confidential-contracts/v0.x/token',
+            },
+        {
+          type: 'folder' as const,
+          name: 'API Reference',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Overview',
+              url: '/confidential-contracts/v0.x/api',
+            },
+
+            {
+              type: 'page' as const,
+              name: 'Finance',
+              url: '/confidential-contracts/v0.x/api/finance',
+            },
+            {
+              type: 'page' as const,
+              name: 'Governance',
+              url: '/confidential-contracts/v0.x/api/governance',
+            },
+            {
+              type: 'page' as const,
+              name: 'Interfaces',
+              url: '/confidential-contracts/v0.x/api/interfaces',
+            },
+            {
+              type: 'page' as const,
+              name: 'Token',
+              url: '/confidential-contracts/v0.x/api/token',
+            },
+            {
+              type: 'page' as const,
+              name: 'Utils',
+              url: '/confidential-contracts/v0.x/api/utils',
+            },
+          ],
+        },
+      ],
     },
     {
       type: 'folder' as const,
