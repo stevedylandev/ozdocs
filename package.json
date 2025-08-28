@@ -6,7 +6,13 @@
 		"build": "next build",
 		"dev": "next dev --turbo",
 		"start": "next start",
-		"postinstall": "fumadocs-mdx"
+		"postinstall": "fumadocs-mdx",
+		"lint": "biome lint src/",
+		"lint:fix": "biome lint --write src/",
+		"format": "biome format src/",
+		"format:fix": "biome format --write src/",
+		"check": "biome check src/",
+		"check:fix": "biome check --write src/"
 	},
 	"dependencies": {
 		"class-variance-authority": "^0.7.1",
@@ -24,6 +30,7 @@
 		"tailwind-merge": "^3.3.1"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^2.2.2",
 		"@tailwindcss/postcss": "^4.1.11",
 		"@types/mdx": "^2.0.13",
 		"@types/node": "24.1.0",

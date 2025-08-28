@@ -1,22 +1,6 @@
+import { Card } from "fumadocs-ui/components/card";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions } from "./layout.config";
-import { Cards, Card } from "fumadocs-ui/components/card";
-import {
-	FileTextIcon,
-	UsersIcon,
-	ShieldIcon,
-	CodeIcon,
-	MonitorIcon,
-	PyramidIcon,
-	StarIcon,
-	LayersIcon,
-	WrenchIcon,
-	ServerIcon,
-	AnchorIcon,
-	ShieldCheckIcon,
-	RefreshCwIcon,
-	PlugIcon,
-} from "lucide-react";
 
 export default function HomePage() {
 	return (

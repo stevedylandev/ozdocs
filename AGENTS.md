@@ -5,7 +5,13 @@
 - `bun run dev` - Start development server with turbo
 - `bun run start` - Start production server
 - `bun run postinstall` - Process MDX files with fumadocs-mdx
-- No explicit lint/test commands configured - this is a documentation site
+- `bun run lint` - Lint code with Biome
+- `bun run lint:fix` - Lint and auto-fix issues with Biome
+- `bun run format` - Check code formatting with Biome
+- `bun run format:fix` - Format code with Biome
+- `bun run check` - Run both linting and formatting checks
+- `bun run check:fix` - Run both linting and formatting with auto-fix
+- No test commands configured - this is a documentation site
 
 ## Navigation Management
 The site uses a **modular JSON navigation system** instead of fumadocs meta.json files:

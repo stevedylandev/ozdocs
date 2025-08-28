@@ -1,25 +1,28 @@
 export interface NavigationPage {
-  type: 'page';
-  name: string;
-  url: string;
-  external?: boolean;
+	type: "page";
+	name: string;
+	url: string;
+	external?: boolean;
 }
 
 export interface NavigationFolder {
-  type: 'folder';
-  name: string;
-  index?: NavigationPage;
-  children: NavigationNode[];
+	type: "folder";
+	name: string;
+	index?: NavigationPage;
+	children: NavigationNode[];
 }
 
 export interface NavigationSeparator {
-  type: 'separator';
-  name: string;
+	type: "separator";
+	name: string;
 }
 
-export type NavigationNode = NavigationPage | NavigationFolder | NavigationSeparator;
+export type NavigationNode =
+	| NavigationPage
+	| NavigationFolder
+	| NavigationSeparator;
 
 export interface NavigationTree {
-  name: string;
-  children: NavigationNode[];
+	name: string;
+	children: NavigationNode[];
 }

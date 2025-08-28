@@ -1,210 +1,210 @@
 [
-  {
-    "type": "separator",
-    "name": "Ecosystems"
-  },
-  {
-    "type": "folder",
-    "name": "Starknet Contracts",
-    "children": [
-      {
-        "type": "page",
-        "name": "Overview",
-        "url": "/cairo-contracts/v3.x"
-      },
-      {
-        "type": "page",
-        "name": "Wizard",
-        "url": "/cairo-contracts/v3.x/wizard"
-      },
-      {
-        "type": "folder",
-        "name": "Learn",
-        "children": [
-          {
-            "type": "page",
-            "name": "Components",
-            "url": "/cairo-contracts/v3.x/components"
-          },
-          {
-            "type": "page",
-            "name": "Presets",
-            "url": "/cairo-contracts/v3.x/presets"
-          },
-          {
-            "type": "page",
-            "name": "Interfaces and Dispatchers",
-            "url": "/cairo-contracts/v3.x/guides/interfaces-and-dispatchers"
-          },
-          {
-            "type": "page",
-            "name": "Counterfactual Deployments",
-            "url": "/cairo-contracts/v3.x/guides/deployment"
-          },
-          {
-            "type": "page",
-            "name": "SNIP12 and Typed Messages",
-            "url": "/cairo-contracts/v3.x/guides/snip12"
-          }
-        ]
-      },
-      {
-        "type": "page",
-        "name": "Backwards Compatibility",
-        "url": "/cairo-contracts/v3.x/backwards-compatibility"
-      }
-    ]
-  },
-  {
-    "type": "folder",
-    "name": "Midnight Contracts",
-    "children": [
-      {
-        "type": "page",
-        "name": "Overview",
-        "url": "/compact-contracts/v0.x"
-      },
-      {
-        "type": "folder",
-        "name": "Learn",
-        "children": [
-          {
-            "type": "page",
-            "name": "ZK Circuits 101",
-            "url": "/compact-contracts/v0.x/zkCircuits101"
-          },
-          {
-            "type": "page",
-            "name": "Extensibility",
-            "url": "/compact-contracts/v0.x/extensibility"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type": "folder",
-    "name": "Zama Contracts",
-    "children": [
-      {
-        "type": "page",
-        "name": "Overview",
-        "url": "/confidential-contracts/v0.x"
-      },
-      {
-        "type": "page",
-        "name": "Token",
-        "url": "/confidential-contracts/v0.x/token"
-      },
-      {
-        "type": "page",
-        "name": "Changelog",
-        "url": "/confidential-contracts/v0.x/changelog"
-      }
-    ]
-  },
-  {
-    "type": "folder",
-    "name": "Arbitrum Stylus Contracts",
-    "children": [
-      {
-        "type": "page",
-        "name": "Overview",
-        "url": "/contracts-stylus/v0.x"
-      },
-      {
-        "type": "page",
-        "name": "Access Control",
-        "url": "/contracts-stylus/v0.x/access-control"
-      },
-      {
-        "type": "page",
-        "name": "Cryptography",
-        "url": "/contracts-stylus/v0.x/crypto"
-      },
-      {
-        "type": "page",
-        "name": "Finance",
-        "url": "/contracts-stylus/v0.x/finance"
-      },
-      {
-        "type": "page",
-        "name": "Utilities",
-        "url": "/contracts-stylus/v0.x/utilities"
-      },
-      {
-        "type": "page",
-        "name": "Changelog",
-        "url": "/contracts-stylus/v0.x/changelog"
-      }
-    ]
-  },
-  {
-    "type": "folder",
-    "name": "Stellar Contracts",
-    "children": [
-      {
-        "type": "page",
-        "name": "Overview",
-        "url": "/stellar-contracts/v0.x/"
-      },
-      {
-        "type": "page",
-        "name": "Get Started",
-        "url": "/stellar-contracts/v0.x/get-started"
-      },
-      {
-        "type": "page",
-        "name": "Changelog",
-        "url": "/stellar-contracts/v0.x/changelog"
-      }
-    ]
-  },
-  {
-    "type": "folder",
-    "name": "Polkadot Substrate Runtimes",
-    "children": [
-      {
-        "type": "page",
-        "name": "Overview",
-        "url": "/substrate-runtimes"
-      },
-      {
-        "type": "page",
-        "name": "Changelog",
-        "url": "/substrate-runtimes/v3.x/changelog"
-      }
-    ]
-  },
-  {
-    "type": "folder",
-    "name": "Solidity Uniswap Hooks",
-    "index": {
-      "type": "page",
-      "name": "Overview",
-      "url": "/uniswap-hooks"
-    },
-    "children": [
-      {
-        "type": "page",
-        "name": "Base",
-        "url": "/uniswap-hooks/v1.x/base"
-      },
-      {
-        "type": "page",
-        "name": "Fee",
-        "url": "/uniswap-hooks/v1.x/fee"
-      },
-      {
-        "type": "page",
-        "name": "Utilities",
-        "url": "/uniswap-hooks/v1.x/utilities"
-      },
-      {
-        "type": "page",
-        "name": "Changelog",
-        "url": "/uniswap-hooks/v1.x/changelog"
-      }
-    ]
-  }
+	{
+		"type": "separator",
+		"name": "Ecosystems"
+	},
+	{
+		"type": "folder",
+		"name": "Starknet Contracts",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/cairo-contracts/v3.x"
+			},
+			{
+				"type": "page",
+				"name": "Wizard",
+				"url": "/cairo-contracts/v3.x/wizard"
+			},
+			{
+				"type": "folder",
+				"name": "Learn",
+				"children": [
+					{
+						"type": "page",
+						"name": "Components",
+						"url": "/cairo-contracts/v3.x/components"
+					},
+					{
+						"type": "page",
+						"name": "Presets",
+						"url": "/cairo-contracts/v3.x/presets"
+					},
+					{
+						"type": "page",
+						"name": "Interfaces and Dispatchers",
+						"url": "/cairo-contracts/v3.x/guides/interfaces-and-dispatchers"
+					},
+					{
+						"type": "page",
+						"name": "Counterfactual Deployments",
+						"url": "/cairo-contracts/v3.x/guides/deployment"
+					},
+					{
+						"type": "page",
+						"name": "SNIP12 and Typed Messages",
+						"url": "/cairo-contracts/v3.x/guides/snip12"
+					}
+				]
+			},
+			{
+				"type": "page",
+				"name": "Backwards Compatibility",
+				"url": "/cairo-contracts/v3.x/backwards-compatibility"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Midnight Contracts",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/compact-contracts/v0.x"
+			},
+			{
+				"type": "folder",
+				"name": "Learn",
+				"children": [
+					{
+						"type": "page",
+						"name": "ZK Circuits 101",
+						"url": "/compact-contracts/v0.x/zkCircuits101"
+					},
+					{
+						"type": "page",
+						"name": "Extensibility",
+						"url": "/compact-contracts/v0.x/extensibility"
+					}
+				]
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Zama Contracts",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/confidential-contracts/v0.x"
+			},
+			{
+				"type": "page",
+				"name": "Token",
+				"url": "/confidential-contracts/v0.x/token"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/confidential-contracts/v0.x/changelog"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Arbitrum Stylus Contracts",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/contracts-stylus/v0.x"
+			},
+			{
+				"type": "page",
+				"name": "Access Control",
+				"url": "/contracts-stylus/v0.x/access-control"
+			},
+			{
+				"type": "page",
+				"name": "Cryptography",
+				"url": "/contracts-stylus/v0.x/crypto"
+			},
+			{
+				"type": "page",
+				"name": "Finance",
+				"url": "/contracts-stylus/v0.x/finance"
+			},
+			{
+				"type": "page",
+				"name": "Utilities",
+				"url": "/contracts-stylus/v0.x/utilities"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/contracts-stylus/v0.x/changelog"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Stellar Contracts",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/stellar-contracts/v0.x/"
+			},
+			{
+				"type": "page",
+				"name": "Get Started",
+				"url": "/stellar-contracts/v0.x/get-started"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/stellar-contracts/v0.x/changelog"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Polkadot Substrate Runtimes",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/substrate-runtimes"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/substrate-runtimes/v3.x/changelog"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Solidity Uniswap Hooks",
+		"index": {
+			"type": "page",
+			"name": "Overview",
+			"url": "/uniswap-hooks"
+		},
+		"children": [
+			{
+				"type": "page",
+				"name": "Base",
+				"url": "/uniswap-hooks/v1.x/base"
+			},
+			{
+				"type": "page",
+				"name": "Fee",
+				"url": "/uniswap-hooks/v1.x/fee"
+			},
+			{
+				"type": "page",
+				"name": "Utilities",
+				"url": "/uniswap-hooks/v1.x/utilities"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/uniswap-hooks/v1.x/changelog"
+			}
+		]
+	}
 ]
