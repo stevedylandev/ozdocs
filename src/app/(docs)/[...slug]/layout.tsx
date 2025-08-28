@@ -761,12 +761,339 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Cairo Contracts',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/cairo-contracts',
-      },
-      children: [],
+      children: [
+        {
+          type: 'page' as const,
+          name: 'Overview',
+          url: '/cairo-contracts/v3.x',
+        },
+        {
+          type: 'page' as const,
+          name: 'Wizard',
+          url: '/cairo-contracts/v3.x/wizard',
+        },
+        {
+          type: 'folder' as const,
+          name: 'Learn',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Components',
+              url: '/cairo-contracts/v3.x/components',
+            },
+            {
+              type: 'page' as const,
+              name: 'Presets',
+              url: '/cairo-contracts/v3.x/presets',
+            },
+            {
+              type: 'page' as const,
+              name: 'Interfaces and Dispatchers',
+              url: '/cairo-contracts/v3.x/guides/interfaces-and-dispatchers',
+            },
+            {
+              type: 'page' as const,
+              name: 'Counterfactual Deployments',
+              url: '/cairo-contracts/v3.x/guides/deployment',
+            },
+            {
+              type: 'page' as const,
+              name: 'SNIP12 and Typed Messages',
+              url: '/cairo-contracts/v3.x/guides/snip12',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Modules',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Interfaces',
+              url: '/cairo-contracts/v3.x/interfaces',
+            },
+            {
+              type: 'folder' as const,
+              name: 'Access',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/access',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/access',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Accounts',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/accounts',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/account',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Finance',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/finance',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/finance',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Governance',
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'Governor',
+                  url: '/cairo-contracts/v3.x/governance/governor',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'Multisig',
+                  url: '/cairo-contracts/v3.x/governance/multisig',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'Timelock Controller',
+                  url: '/cairo-contracts/v3.x/governance/timelock',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'Votes',
+                  url: '/cairo-contracts/v3.x/governance/votes',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/governance',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Introspection',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/introspection',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'Migrating ERC165 to SRC5',
+                  url: '/cairo-contracts/v3.x/guides/src5-migration',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/introspection',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Macros',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/macros',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'with_components',
+                  url: '/cairo-contracts/v3.x/macros/with_components',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'type_hash',
+                  url: '/cairo-contracts/v3.x/macros/type_hash',
+                },
+              ],
+            },
+            {
+              type: 'page' as const,
+              name: 'Merkle Tree',
+              url: '/cairo-contracts/v3.x/api/merkle-tree',
+            },
+            {
+              type: 'folder' as const,
+              name: 'Security',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/security',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/security',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Tokens',
+              children: [
+                {
+                  type: 'folder' as const,
+                  name: 'ERC20',
+                  index: {
+                    type: 'page' as const,
+                    name: 'Overview',
+                    url: '/cairo-contracts/v3.x/erc20',
+                  },
+                  children: [
+                    {
+                      type: 'page' as const,
+                      name: 'Creating Supply',
+                      url: '/cairo-contracts/v3.x/guides/erc20-supply',
+                    },
+                    {
+                      type: 'page' as const,
+                      name: 'ERC20Permit',
+                      url: '/cairo-contracts/v3.x/guides/erc20-permit',
+                    },
+                    {
+                      type: 'page' as const,
+                      name: 'API Reference',
+                      url: '/cairo-contracts/v3.x/api/erc20',
+                    },
+                  ],
+                },
+                {
+                  type: 'folder' as const,
+                  name: 'ERC721',
+                  index: {
+                    type: 'page' as const,
+                    name: 'Overview',
+                    url: '/cairo-contracts/v3.x/erc721',
+                  },
+                  children: [
+                    {
+                      type: 'page' as const,
+                      name: 'API Reference',
+                      url: '/cairo-contracts/v3.x/api/erc721',
+                    },
+                  ],
+                },
+                {
+                  type: 'folder' as const,
+                  name: 'ERC1155',
+                  index: {
+                    type: 'page' as const,
+                    name: 'Overview',
+                    url: '/cairo-contracts/v3.x/erc1155',
+                  },
+                  children: [
+                    {
+                      type: 'page' as const,
+                      name: 'API Reference',
+                      url: '/cairo-contracts/v3.x/api/erc1155',
+                    },
+                  ],
+                },
+                {
+                  type: 'folder' as const,
+                  name: 'ERC4626',
+                  index: {
+                    type: 'page' as const,
+                    name: 'Overview',
+                    url: '/cairo-contracts/v3.x/erc4626',
+                  },
+                  children: [
+                    {
+                      type: 'page' as const,
+                      name: 'API Reference',
+                      url: '/cairo-contracts/v3.x/api/erc20#ERC4626Component',
+                    },
+                  ],
+                },
+                {
+                  type: 'page' as const,
+                  name: 'Common',
+                  url: '/cairo-contracts/v3.x/api/token_common',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Universal Deployer Contract',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/udc',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'UDC Appchain Deployment',
+                  url: '/cairo-contracts/v3.x/guides/deploy-udc',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/udc',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Upgrades',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/cairo-contracts/v3.x/upgrades',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/cairo-contracts/v3.x/api/upgrades',
+                },
+              ],
+            },
+            {
+              type: 'page' as const,
+              name: 'Utilities',
+              url: '/cairo-contracts/v3.x/api/utilities',
+            },
+            {
+              type: 'page' as const,
+              name: 'Test Utilities',
+              url: '/cairo-contracts/v3.x/api/testing',
+            },
+          ],
+        },
+        {
+          type: 'page' as const,
+          name: 'Backwards Compatibility',
+          url: '/cairo-contracts/v3.x/backwards-compatibility',
+        },
+      ],
     },
     {
       type: 'folder' as const,
