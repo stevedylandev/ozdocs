@@ -12,11 +12,6 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Contracts',
-      index: {
-        type: 'page' as const,
-        name: 'v5.x',
-        url: '/contracts/v5.x',
-      },
       children: [
         {
           type: 'page' as const,
@@ -409,35 +404,169 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Defender',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/tools/defender',
-      },
       children: [
         {
           type: 'page' as const,
-          name: 'SDK',
-          url: '/tools/defender/sdk',
+          name: 'Overview',
+          url: '/tools/defender',
         },
         {
-          type: 'page' as const,
+          type: 'folder' as const,
+          name: 'Modules',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Code Inspector',
+              url: '/tools/defender/module/code',
+            },
+            {
+              type: 'page' as const,
+              name: 'Audit',
+              url: '/tools/defender/module/audit',
+            },
+            {
+              type: 'page' as const,
+              name: 'Deploy',
+              url: '/tools/defender/module/deploy',
+            },
+            {
+              type: 'page' as const,
+              name: 'Relayers',
+              url: '/tools/defender/module/relayers',
+            },
+            {
+              type: 'page' as const,
+              name: 'Monitor',
+              url: '/tools/defender/module/monitor',
+            },
+            {
+              type: 'page' as const,
+              name: 'Actions',
+              url: '/tools/defender/module/actions',
+            },
+            {
+              type: 'page' as const,
+              name: 'Transaction Proposals',
+              url: '/tools/defender/module/transaction-proposals',
+            },
+            {
+              type: 'page' as const,
+              name: 'Address Book',
+              url: '/tools/defender/module/address-book',
+            },
+            {
+              type: 'page' as const,
+              name: 'Access Control',
+              url: '/tools/defender/module/access-control',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
           name: 'Settings',
-          url: '/tools/defender/settings',
+          index: {
+            type: 'page' as const,
+            name: 'Overview',
+            url: '/tools/defender/settings',
+          },
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Logs',
+              url: '/tools/defender/logs',
+            },
+            {
+              type: 'page' as const,
+              name: 'Notifications',
+              url: '/tools/defender/settings/notifications',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Tutorials',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Deploy',
+              url: '/tools/defender/tutorial/deploy',
+            },
+            {
+              type: 'page' as const,
+              name: 'Relayer',
+              url: '/tools/defender/tutorial/relayer',
+            },
+            {
+              type: 'page' as const,
+              name: 'Monitor',
+              url: '/tools/defender/tutorial/monitor',
+            },
+            {
+              type: 'page' as const,
+              name: 'Actions',
+              url: '/tools/defender/tutorial/actions',
+            },
+            {
+              type: 'page' as const,
+              name: 'Access Control',
+              url: '/tools/defender/tutorial/access-control',
+            },
+            {
+              type: 'page' as const,
+              name: 'Workflows',
+              url: '/tools/defender/tutorial/workflows',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Guides',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Deploy a smart contract on a forked network',
+              url: '/tools/defender/guide/forked-network',
+            },
+            {
+              type: 'page' as const,
+              name: 'Adding a complete private network',
+              url: '/tools/defender/guide/private-network',
+            },
+            {
+              type: 'page' as const,
+              name: 'Relaying gasless meta-transactions',
+              url: '/tools/defender/guide/meta-tx',
+            },
+            {
+              type: 'page' as const,
+              name: 'Automatic monitoring for factory clones',
+              url: '/tools/defender/guide/factory-monitor',
+            },
+            {
+              type: 'page' as const,
+              name: 'Managing roles of a TimelockController',
+              url: '/tools/defender/guide/timelock-roles',
+            },
+            {
+              type: 'page' as const,
+              name: 'Managing usage notifications',
+              url: '/tools/defender/guide/usage-notification',
+            },
+            {
+              type: 'page' as const,
+              name: 'Setup Fireblocks integrations within Defender',
+              url: '/tools/defender/guide/fireblock-defender-integration',
+            },
+            {
+              type: 'page' as const,
+              name: 'Upgrading actions dependencies',
+              url: '/tools/defender/guide/upgrade-actions-dependencies',
+            },
+          ],
         },
         {
           type: 'page' as const,
-          name: 'Logs',
-          url: '/tools/defender/logs',
-        },
-        {
-          type: 'page' as const,
-          name: 'Integrations',
-          url: '/tools/defender/integrations',
-        },
-        {
-          type: 'page' as const,
-          name: 'DAC',
+          name: 'Defender as Code',
           url: '/tools/defender/dac',
         },
         {
@@ -447,8 +576,18 @@ const manualTree = {
         },
         {
           type: 'page' as const,
-          name: 'Wizard Plugin',
+          name: 'Contracts Wizard Plugin',
           url: '/tools/defender/wizard-plugin',
+        },
+        {
+          type: 'page' as const,
+          name: 'SDK and API',
+          url: '/tools/defender/sdk',
+        },
+        {
+          type: 'page' as const,
+          name: 'Integrations',
+          url: '/tools/defender/integrations',
         },
         {
           type: 'page' as const,
