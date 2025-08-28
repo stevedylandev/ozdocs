@@ -673,21 +673,16 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'OpenZeppelin Relayer',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/tools/openzeppelin-relayer',
-      },
       children: [
+        {
+          type: 'page' as const,
+          name: 'Overview',
+          url: '/tools/openzeppelin-relayer/v1.x',
+        },
         {
           type: 'page' as const,
           name: 'Quickstart',
           url: '/tools/openzeppelin-relayer/v1.x/quickstart',
-        },
-        {
-          type: 'page' as const,
-          name: 'Structure',
-          url: '/tools/openzeppelin-relayer/v1.x/structure',
         },
         {
           type: 'folder' as const,
@@ -705,15 +700,46 @@ const manualTree = {
             },
             {
               type: 'page' as const,
-              name: 'Storage',
+              name: 'Network Configuration',
+              url: '/tools/openzeppelin-relayer/v1.x/network_configuration',
+            },
+            {
+              type: 'page' as const,
+              name: 'Storage Configuration',
               url: '/tools/openzeppelin-relayer/v1.x/configuration/storage',
             },
           ],
         },
         {
           type: 'page' as const,
-          name: 'Network Configuration',
-          url: '/tools/openzeppelin-relayer/v1.x/network_configuration',
+          name: 'EVM Integration',
+          url: '/tools/openzeppelin-relayer/v1.x/evm',
+        },
+        {
+          type: 'page' as const,
+          name: 'Solana Integration',
+          url: '/tools/openzeppelin-relayer/v1.x/solana',
+        },
+        {
+          type: 'page' as const,
+          name: 'Stellar Integration',
+          url: '/tools/openzeppelin-relayer/v1.x/stellar',
+        },
+        {
+          type: 'page' as const,
+          name: 'API Reference',
+          url: 'https://release-v1-1-0--openzeppelin-relayer.netlify.app/api_docs.html',
+          external: true,
+        },
+        {
+          type: 'page' as const,
+          name: 'Project Structure',
+          url: '/tools/openzeppelin-relayer/v1.x/structure',
+        },
+        {
+          type: 'page' as const,
+          name: 'Project Roadmap',
+          url: '/tools/openzeppelin-relayer/v1.x/roadmap',
         },
         {
           type: 'page' as const,
@@ -722,28 +748,9 @@ const manualTree = {
         },
         {
           type: 'page' as const,
-          name: 'EVM',
-          url: '/tools/openzeppelin-relayer/v1.x/evm',
-        },
-        {
-          type: 'page' as const,
-          name: 'Solana',
-          url: '/tools/openzeppelin-relayer/v1.x/solana',
-        },
-        {
-          type: 'page' as const,
-          name: 'Stellar',
-          url: '/tools/openzeppelin-relayer/v1.x/stellar',
-        },
-        {
-          type: 'page' as const,
-          name: 'Roadmap',
-          url: '/tools/openzeppelin-relayer/v1.x/roadmap',
-        },
-        {
-          type: 'page' as const,
-          name: 'Changelog',
-          url: '/tools/openzeppelin-relayer/v1.x/changelog',
+          name: 'Technical Rust Documentation',
+          url: 'https://release-v1-1-0--openzeppelin-relayer.netlify.app/openzeppelin_relayer/',
+          external: true,
         },
       ],
     },
