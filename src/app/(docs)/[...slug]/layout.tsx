@@ -11,7 +11,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Contracts',
+      name: 'Solidity Contracts',
       children: [
         {
           type: 'page' as const,
@@ -239,7 +239,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Community Contracts',
+      name: 'Solidity Community Contracts',
       index: {
         type: 'page' as const,
         name: 'Overview',
@@ -292,7 +292,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Upgrade Plugins',
+      name: 'Solidity Upgrade Plugins',
       index: {
         type: 'page' as const,
         name: 'Overview',
@@ -613,7 +613,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'OpenZeppelin Monitor',
+      name: 'Monitor',
       children: [
         {
           type: 'folder' as const,
@@ -687,7 +687,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'OpenZeppelin Relayer',
+      name: 'Relayer',
       children: [
         {
           type: 'page' as const,
@@ -780,7 +780,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Cairo Contracts',
+      name: 'Starknet Contracts',
       children: [
         {
           type: 'page' as const,
@@ -1257,7 +1257,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Confidential Contracts',
+      name: 'Zama Contracts',
       children: [
         {
           type: 'page' as const,
@@ -1315,7 +1315,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Contracts Stylus',
+      name: 'Arbitrum Stylus Contracts',
       children: [
         {
           type: 'page' as const,
@@ -1516,7 +1516,7 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Substrate Runtimes',
+      name: 'Polkadot Substrate Runtimes',
       children: [
         {
                 type: 'page' as const,
@@ -1709,7 +1709,7 @@ const manualTree = {
      },
     {
       type: 'folder' as const,
-      name: 'Uniswap Hooks',
+      name: 'Solidity Uniswap Hooks',
       index: {
         type: 'page' as const,
         name: 'Overview',
