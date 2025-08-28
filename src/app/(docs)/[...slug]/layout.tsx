@@ -1286,12 +1286,118 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Contracts Stylus',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/contracts-stylus',
-      },
-      children: [],
+      children: [
+        {
+          type: 'page' as const,
+          name: 'Overview',
+          url: '/contracts-stylus/v0.x',
+        },
+        {
+          type: 'page' as const,
+          name: 'Access Control',
+          url: '/contracts-stylus/v0.x/access-control',
+        },
+        {
+          type: 'page' as const,
+          name: 'Cryptography',
+          url: '/contracts-stylus/v0.x/crypto',
+        },
+        {
+          type: 'page' as const,
+          name: 'Finance',
+          url: '/contracts-stylus/v0.x/finance',
+        },
+        {
+          type: 'folder' as const,
+          name: 'Tokens',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Overview',
+              url: '/contracts-stylus/v0.x/tokens',
+            },
+            {
+              type: 'folder' as const,
+              name: 'ERC-20',
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'Overview',
+                  url: '/contracts-stylus/v0.x/erc20',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'Extensions',
+                  url: '/contracts-stylus/v0.x/erc20#erc20-token-extensions',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'ERC-721',
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'Overview',
+                  url: '/contracts-stylus/v0.x/erc721',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'Extensions',
+                  url: '/contracts-stylus/v0.x/erc721#erc721-token-extensions',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'ERC-1155',
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'Overview',
+                  url: '/contracts-stylus/v0.x/erc1155',
+                },
+                {
+                  type: 'page' as const,
+                  name: 'Extensions',
+                  url: '/contracts-stylus/v0.x/erc1155#erc1155-token-extensions',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Proxy Patterns',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Overview',
+              url: '/contracts-stylus/v0.x/proxy',
+            },
+            {
+              type: 'page' as const,
+              name: 'ERC-1967 Proxy',
+              url: '/contracts-stylus/v0.x/erc1967',
+            },
+            {
+              type: 'page' as const,
+              name: 'Beacon Proxy',
+              url: '/contracts-stylus/v0.x/beacon-proxy',
+            },
+            {
+              type: 'page' as const,
+              name: 'UUPS Proxy',
+              url: '/contracts-stylus/v0.x/uups-proxy',
+            },
+          ],
+        },
+        {
+          type: 'page' as const,
+          name: 'Utilities',
+          url: '/contracts-stylus/v0.x/utilities',
+        },
+      ],
     },
     {
       type: 'folder' as const,
