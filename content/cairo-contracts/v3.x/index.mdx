@@ -1,84 +1,160 @@
 ---
-title: OpenZeppelin Contracts for Stylus
-description: OpenZeppelin Contracts for Stylus
+title: Contracts for Cairo
+description: Contracts for Cairo
 ---
 
-**A secure, modular smart contract library for [Stylus](https://docs.arbitrum.io/stylus/gentle-introduction), written in Rust.**
+**A library for secure smart contract development** written in Cairo for [Starknet](https://starkware.co/product/starknet/). This library consists of a set of [reusable components](components.mdx) to build custom smart contracts, as well as
+ready-to-deploy [presets](presets.mdx). You can also find other [utilities](/api/utilities.mdx) including [interfaces and dispatchers](interfaces.mdx) and [test utilities](/api/testing.mdx)
+that facilitate testing with Starknet Foundry.
 
-OpenZeppelin Contracts for Stylus brings time-tested smart contract patterns to Arbitrum’s WASM-based execution environment. This library provides `no_std`-compatible modules for building secure, reusable contracts in [Stylus](https://docs.arbitrum.io/stylus/gentle-introduction).
+<Callout type='warn'>
+This repo contains highly experimental code. Expect rapid iteration. **Use at your own risk.**
+</Callout>
 
-## Features
+<Callout>
+You can track our roadmap and future milestones in our [Github Project](https://github.com/orgs/OpenZeppelin/projects/29/).
+</Callout>
 
-* ✨ Security-first contracts ported from [`openzeppelin-contracts`](https://github.com/OpenZeppelin/openzeppelin-contracts).
-* 📦 Written in Rust with full `no_std` support.
-* 🧪 Tested with both unit and integration tests.
-* 🚧 Actively developed.
+## Installation
 
-## Quick Start
+The library is available as a [Scarb](https://docs.swmansion.com/scarb) package. Follow [this guide](https://docs.swmansion.com/scarb/download.html) for installing Cairo and Scarb on your machine
+before proceeding, and run the following command to check that the installation was successful:
 
-Add the dependency to your `Cargo.toml`:
+```bash
+$ scarb --version
 
-```toml
+scarb 2.12.0 (639d0a65e 2025-08-04)
+cairo: 2.12.0 (https://crates.io/crates/cairo-lang-compiler/2.12.0)
+sierra: 1.7.0
+```
+
+### Set up your project
+
+Create an empty directory, and `cd` into it:
+
+```bash
+mkdir my_project/ && cd my_project/
+```
+
+Initialize a new Scarb project:
+
+```bash
+scarb init
+```
+
+The contents of `my_project/` should now look like this:
+
+```bash
+$ ls
+
+Scarb.toml src
+```
+
+### Install the library
+
+<Callout type='warn'>
+
+
+The `openzeppelin` package is an umbrella package that includes all the packages in the library.
+Before version `3.x.x`, the `openzeppelin` and its sub-packages
+were versioned together meaning that the version of the `openzeppelin`
+package was the same as the version of the sub-packages.
+
+Starting from version `3.x.x`, with the introduction of the `openzeppelin_interfaces` package,
+the `openzeppelin` package is versioned independently from the sub-packages.
+
+See the [Versioning of the sub-packages](index.mdx#versioning_of_the_sub_packages) section for more information.
+
+</Callout>
+
+Install the library by declaring it as a dependency in the project’s `Scarb.toml` file:
+
+```javascript
 [dependencies]
-openzeppelin-stylus = "=0.2.0"
+openzeppelin = "3.0.0-alpha.1"
 ```
 
-Enable the ABI export feature:
+The previous example would import the entire library. We can also add each package as a separate dependency to
+improve the building time by not including modules that won’t be used:
 
-```toml
-[features]
-export-abi = ["openzeppelin-stylus/export-abi"]
+```javascript
+[dependencies]
+openzeppelin_access = "3.0.0-alpha.1"
+openzeppelin_token = "3.0.0-alpha.1"
+openzeppelin_interfaces = "1.0.0"
 ```
 
-## Usage Example
+## Versioning of the sub-packages
 
-A minimal ERC-20 implementation using the library:
+Here you can find a reference of the versioning of the sub-packages for this umbrella version:
+
+```javascript
+[dependencies]
+openzeppelin_access = "3.0.0-alpha.1"
+openzeppelin_token = "3.0.0-alpha.1"
+openzeppelin_access = "3.0.0-alpha.1"
+openzeppelin_account = "3.0.0-alpha.1"
+openzeppelin_finance = "3.0.0-alpha.1"
+openzeppelin_interfaces = "1.0.0"
+openzeppelin_governance = "3.0.0-alpha.1"
+openzeppelin_introspection = "3.0.0-alpha.1"
+openzeppelin_merkle_tree = "3.0.0-alpha.1"
+openzeppelin_presets = "3.0.0-alpha.1"
+openzeppelin_security = "3.0.0-alpha.1"
+openzeppelin_token = "3.0.0-alpha.1"
+openzeppelin_upgrades = "3.0.0-alpha.1"
+openzeppelin_utils = "3.0.0-alpha.1"
+```
+
+## Basic usage
+
+This is how it looks to build an ERC20 contract using the [ERC20 component](erc20.mdx).
+Copy the code into `src/lib.cairo`.
 
 ```rust
-use openzeppelin_stylus::token::erc20::self, Erc20, IErc20;
-use stylus_sdk::
-    alloy_primitives::{Address, U256,
-    prelude::*,
-};
+#[starknet::contract]
+mod MyERC20Token 
+    // NOTE: If you added the entire library as a dependency,
+    // use `openzeppelin::token` instead.
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use starknet::ContractAddress;
 
-#[entrypoint]
-#[storage]
-struct Erc20Example 
-    erc20: Erc20,
+    component!(path: ERC20Component, storage: erc20, event: ERC20Event);
 
+    // ERC20 Mixin
+    #[abi(embed_v0)]
+    impl ERC20MixinImpl = ERC20Component::ERC20MixinImpl<ContractState>;
+    impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
-#[public]
-#[implements(IErc20<Error = erc20::Error>)]
-impl Erc20Example {}
+    #[storage]
+    struct Storage 
+        #[substorage(v0)]
+        erc20: ERC20Component::Storage
+    
 
-#[public]
-impl IErc20 for Erc20Example 
-    // ERC-20 logic implementation...
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event 
+        #[flat]
+        ERC20Event: ERC20Component::Event
+    
 
+    #[constructor]
+    fn constructor(
+        ref self: ContractState,
+        name: ByteArray,
+        symbol: ByteArray,
+        fixed_supply: u256,
+        recipient: ContractAddress
+    ) 
+        self.erc20.initializer(name, symbol);
+        self.erc20.mint(recipient, fixed_supply);
+    
+}
 ```
 
-Explore more examples in the [`examples` directory](https://github.com/OpenZeppelin/rust-contracts-stylus/tree/main/examples).
+You can now compile it:
 
-## Compatibility
-
-This library is designed to work with `no_std`. To keep your contracts compatible, disable default features for any dependencies that pull in the standard library:
-
-```toml
-[dependencies]
-alloy-primitives =  version = "=0.8.20", default-features = false 
-stylus-sdk = "=0.9.0"
+```bash
+scarb build
 ```
-
-## Roadmap & Contributing
-
-See what’s planned or in development in our [roadmap](https://github.com/orgs/OpenZeppelin/projects/35).
-
-Interested in contributing? Read the [contribution guide](https://github.com/OpenZeppelin/rust-contracts-stylus/blob/main/CONTRIBUTING.md).
-
-## Security
-
-While this library is under active development, security remains a top priority. For past audits and security reports, see the [`audits` directory](https://github.com/OpenZeppelin/rust-contracts-stylus/tree/main/audits).
-
-## License
-
-Released under the [MIT License](https://github.com/OpenZeppelin/rust-contracts-stylus/blob/main/LICENSE).

@@ -1,176 +1,214 @@
 ---
-title: ERC-721
-description: ERC-721
+title: ERC721
+description: ERC721
 ---
 
-We’ve discussed how you can make a _fungible_ token using [ERC-20](erc20.mdx), but what if not all tokens are alike?
-This comes up in situations like **real estate**, **voting rights**, or **collectibles**, where some items are valued more than others, due to their usefulness, rarity, etc.
-ERC-721 is a standard for representing ownership of [_non-fungible_ tokens](tokens.mdx#different-kinds-of-tokens), that is, where each token is unique.
+The ERC721 token standard is a specification for [non-fungible tokens](https://docs.openzeppelin.com/contracts/5.x/tokens#different-kinds-of-tokens), or more colloquially: NFTs.
+`token::erc721::ERC721Component` provides an approximation of [EIP-721](https://eips.ethereum.org/EIPS/eip-721) in Cairo for Starknet.
 
-ERC-721 is a more complex standard than ERC-20, with multiple optional extensions, and is split across a number of contracts.
-The OpenZeppelin Contracts provide flexibility regarding how these are combined, along with custom useful extensions.
-Check out the [`API reference`](https://docs.rs/openzeppelin-stylus/0.3.0-rc.1/openzeppelin_stylus/token/erc721/struct.Erc721.html) to learn more about these.
+## Usage
 
-## Constructing an ERC-721 Token Contract
-
-We’ll use ERC-721 to track items in our game, which will each have their own unique attributes.
-Whenever one is to be awarded to a player, it will be minted and sent to them.
-Players are free to keep their token or trade it with other people as they see fit, as they would any other asset on the blockchain!
-Please note any account can call `awardItem` to mint items.
-To restrict what accounts can be minted per item.
-We can use an [Access Control](access-control.mdx) extension.
-
-Here’s what a contract for tokenized items might look like:
+Using Contracts for Cairo, constructing an ERC721 contract requires integrating both `ERC721Component` and `SRC5Component`.
+The contract should also set up the constructor to initialize the token’s name, symbol, and interface support.
+Here’s an example of a basic contract:
 
 ```rust
-use openzeppelin_stylus::
-    token::erc721::{
-        self,
-        extensions::{Erc721Metadata, IErc721Metadata,
-        Erc721, IErc721,
-    },
-    utils::introspection::erc165::IErc165,
-};
+#[starknet::contract]
+mod MyNFT 
+    use openzeppelin_introspection::src5::SRC5Component;
+    use openzeppelin_token::erc721::{ERC721Component, ERC721HooksEmptyImpl;
+    use starknet::ContractAddress;
 
-#[entrypoint]
-#[storage]
-struct GameItem 
-    erc721: Erc721,
-    metadata: Erc721Metadata,
-    next_token_id: StorageU256,
+    component!(path: ERC721Component, storage: erc721, event: ERC721Event);
+    component!(path: SRC5Component, storage: src5, event: SRC5Event);
 
+    // ERC721 Mixin
+    #[abi(embed_v0)]
+    impl ERC721MixinImpl = ERC721Component::ERC721MixinImpl<ContractState>;
+    impl ERC721InternalImpl = ERC721Component::InternalImpl<ContractState>;
 
-#[public]
-#[implements(IErc721<Error = Error>, IErc721Metadata<Error = erc721::Error>, IErc165)]
-impl GameItem 
+    #[storage]
+    struct Storage 
+        #[substorage(v0)]
+        erc721: ERC721Component::Storage,
+        #[substorage(v0)]
+        src5: SRC5Component::Storage
+    
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event 
+        #[flat]
+        ERC721Event: ERC721Component::Event,
+        #[flat]
+        SRC5Event: SRC5Component::Event
+    
+
     #[constructor]
-    fn constructor(&mut self, name: String, symbol: String, base_uri: String) {
-        self.metadata.constructor(name, symbol);
-        self.metadata.base_uri.set_str(base_uri);
-    
+    fn constructor(
+        ref self: ContractState,
+        recipient: ContractAddress
+    ) 
+        let name = "MyNFT";
+        let symbol = "NFT";
+        let base_uri = "https://api.example.com/v1/";
+        let token_id = 1;
 
-    fn award_item(&mut self, player: Address) -> Result<U256, erc721::Error> 
-        let token_id = self.next_token_id.get() + uint!(1_U256);
-        self.next_token_id.set(token_id);
-
-        self.erc721._mint(player, token_id)?;
-
-        Ok(token_id)
-    
-}
-
-#[public]
-impl IErc721 for GameItem 
-    type Error = erc721::Error;
-
-    fn balance_of(&self, owner: Address) -> Result<U256, Self::Error> {
-        self.erc721.balance_of(owner)
-    
-
-    fn owner_of(&self, token_id: U256) -> Result<Address, Self::Error> 
-        self.erc721.owner_of(token_id)
-    
-
-    fn safe_transfer_from(
-        &mut self,
-        from: Address,
-        to: Address,
-        token_id: U256,
-    ) -> Result<(), Self::Error> 
-        self.erc721.safe_transfer_from(from, to, token_id)
-    
-
-    fn safe_transfer_from_with_data(
-        &mut self,
-        from: Address,
-        to: Address,
-        token_id: U256,
-        data: Bytes,
-    ) -> Result<(), Self::Error> 
-        self.erc721.safe_transfer_from_with_data(from, to, token_id, data)
-    
-
-    fn transfer_from(
-        &mut self,
-        from: Address,
-        to: Address,
-        token_id: U256,
-    ) -> Result<(), Self::Error> 
-        self.erc721.transfer_from(from, to, token_id)
-    
-
-    fn approve(
-        &mut self,
-        to: Address,
-        token_id: U256,
-    ) -> Result<(), Self::Error> 
-        self.erc721.approve(to, token_id)
-    
-
-    fn set_approval_for_all(
-        &mut self,
-        to: Address,
-        approved: bool,
-    ) -> Result<(), Self::Error> 
-        self.erc721.set_approval_for_all(to, approved)
-    
-
-    fn get_approved(&self, token_id: U256) -> Result<Address, Self::Error> 
-        self.erc721.get_approved(token_id)
-    
-
-    fn is_approved_for_all(&self, owner: Address, operator: Address) -> bool 
-        self.erc721.is_approved_for_all(owner, operator)
-    
-}
-
-#[public]
-impl IErc721Metadata for GameItem 
-    type Error = erc721::Error;
-
-    fn name(&self) -> String {
-        self.metadata.name()
-    
-
-    fn symbol(&self) -> String 
-        self.metadata.symbol()
-    
-
-    #[selector(name = "tokenURI")]
-    fn token_uri(&self, token_id: U256) -> Result<String, Self::Error> 
-        self.metadata.token_uri(token_id, &self.erc721)
-    
-}
-
-#[public]
-impl IErc165 for GameItem 
-    fn supports_interface(&self, interface_id: B32) -> bool {
-        self.erc721.supports_interface(interface_id)
-            || <Self as IErc721Metadata>::interface_id() == interface_id
+        self.erc721.initializer(name, symbol, base_uri);
+        self.erc721.mint(recipient, token_id);
     
 }
 ```
 
-The [`Erc721Metadata`](https://docs.rs/openzeppelin-stylus/0.3.0-rc.1/openzeppelin_stylus/token/erc721/extensions/metadata/struct.Erc721Metadata.html) contract is an extension contract of ERC-721.
-It extends the contract itself with the name, symbol and base uri for the token.
+## Interface
 
-Also note that, unlike ERC-20, ERC-721 lacks a `decimals` field, since each token is distinct and cannot be partitioned.
+The following interface represents the full ABI of the Contracts for Cairo [ERC721Component](/api/erc721.mdx#ERC721Component).
+The interface includes the [IERC721](/api/erc721.mdx#IERC721) standard interface and the optional [IERC721Metadata](/api/erc721.mdx#IERC721Metadata) interface.
 
-For more information about erc721 schema, check out the [ERC-721 specification](https://eips.ethereum.org/EIPS/eip-721).
+To support older token deployments, as mentioned in [Dual interfaces](interfaces.mdx#dual_interfaces), the component also includes implementations of the interface written in camelCase.
+
+```rust
+#[starknet::interface]
+pub trait ERC721ABI 
+    // IERC721
+    fn balance_of(account: ContractAddress) -> u256;
+    fn owner_of(token_id: u256) -> ContractAddress;
+    fn safe_transfer_from(
+        from: ContractAddress,
+        to: ContractAddress,
+        token_id: u256,
+        data: Span<felt252>
+    );
+    fn transfer_from(from: ContractAddress, to: ContractAddress, token_id: u256);
+    fn approve(to: ContractAddress, token_id: u256);
+    fn set_approval_for_all(operator: ContractAddress, approved: bool);
+    fn get_approved(token_id: u256) -> ContractAddress;
+    fn is_approved_for_all(owner: ContractAddress, operator: ContractAddress) -> bool;
+
+    // IERC721Metadata
+    fn name() -> ByteArray;
+    fn symbol() -> ByteArray;
+    fn token_uri(token_id: u256) -> ByteArray;
+
+    // IERC721CamelOnly
+    fn balanceOf(account: ContractAddress) -> u256;
+    fn ownerOf(tokenId: u256) -> ContractAddress;
+    fn safeTransferFrom(
+        from: ContractAddress,
+        to: ContractAddress,
+        tokenId: u256,
+        data: Span<felt252>
+    );
+    fn transferFrom(from: ContractAddress, to: ContractAddress, tokenId: u256);
+    fn setApprovalForAll(operator: ContractAddress, approved: bool);
+    fn getApproved(tokenId: u256) -> ContractAddress;
+    fn isApprovedForAll(owner: ContractAddress, operator: ContractAddress) -> bool;
+
+    // IERC721MetadataCamelOnly
+    fn tokenURI(tokenId: u256) -> ByteArray;
+
+```
+
+## ERC721 compatibility
+
+Although Starknet is not EVM compatible, this implementation aims to be as close as possible to the ERC721 standard.
+This implementation does, however, include a few notable differences such as:
+
+* ``interface_id``s are hardcoded and initialized by the constructor.
+The hardcoded values derive from Starknet’s selector calculations.
+See the [Introspection](introspection.mdx) docs.
+* `safe_transfer_from` can only be expressed as a single function in Cairo as opposed to the two functions declared in EIP721, because function overloading is currently not possible in Cairo.
+The difference between both functions consists of accepting `data` as an argument.
+`safe_transfer_from` by default accepts the `data` argument which is interpreted as `Span<felt252>`.
+If `data` is not used, simply pass an empty array.
+* ERC721 utilizes [SRC5](introspection.mdx#src5) to declare and query interface support on Starknet as opposed to Ethereum’s [EIP165](https://eips.ethereum.org/EIPS/eip-165).
+The design for `SRC5` is similar to OpenZeppelin’s [ERC165Storage](https://docs.openzeppelin.com/contracts/4.x/api/utils#ERC165Storage).
+* `IERC721Receiver` compliant contracts return a hardcoded interface ID according to Starknet selectors (as opposed to selector calculation in Solidity).
+
+## Token transfers
+
+This library includes [transfer_from](api/erc721.mdx#IERC721-transfer_from) and [safe_transfer_from](api/erc721.mdx#IERC721-safe_transfer_from) to transfer NFTs.
+If using `transfer_from`, **the caller is responsible to confirm that the recipient is capable of receiving NFTs or else they may be permanently lost.**
+The `safe_transfer_from` method mitigates this risk by querying the recipient contract’s interface support.
+
+<Callout type='warn'>
+Usage of `safe_transfer_from` prevents loss, though the caller must understand this adds an external call which potentially creates a reentrancy vulnerability.
+</Callout>
+
+## Receiving tokens
+
+In order to be sure a non-account contract can safely accept ERC721 tokens, said contract must implement the `IERC721Receiver` interface.
+The recipient contract must also implement the [SRC5](introspection.mdx#src5) interface which, as described earlier, supports interface introspection.
+
+### IERC721Receiver
+
+```rust
+#[starknet::interface]
+pub trait IERC721Receiver 
+    fn on_erc721_received(
+        operator: ContractAddress,
+        from: ContractAddress,
+        token_id: u256,
+        data: Span<felt252>
+    ) -> felt252;
+
+```
+
+Implementing the `IERC721Receiver` interface exposes the [on_erc721_received](api/erc721.mdx#IERC721Receiver-on_erc721_received) method.
+When safe methods such as [safe_transfer_from](api/erc721.mdx#IERC721-safe_transfer_from) and [safe_mint](api/erc721.mdx#ERC721-safe_mint) are called, they invoke the recipient contract’s `on_erc721_received` method which **must** return the [IERC721Receiver interface ID](/api/erc721.mdx#IERC721Receiver).
+Otherwise, the transaction will fail.
 
 <Callout>
-You’ll notice that the item’s information is included in the metadata, but that information isn’t on-chain!
+For information on how to calculate interface IDs, see [Computing the interface ID](introspection.mdx#computing_the_interface_id).
 </Callout>
-So a game developer could change the underlying metadata, changing the rules of the game!
 
-## Extensions
+### Creating a token receiver contract
 
-Additionally, there are multiple custom extensions, including:
+The Contracts for Cairo `IERC721ReceiverImpl` already returns the correct interface ID for safe token transfers.
+To integrate the `IERC721Receiver` interface into a contract, simply include the ABI embed directive to the implementation and add the `initializer` in the contract’s constructor.
+Here’s an example of a simple token receiver contract:
 
-* [ERC-721 Burnable](erc721-burnable.mdx): A way for token holders to burn their own tokens.
-* [ERC-721 Consecutive](erc721-consecutive.mdx): An implementation of [ERC2309](https://eips.ethereum.org/EIPS/eip-2309) for minting batches of tokens during construction, in accordance with ERC721.
-* [ERC-721 Enumerable](erc721-enumerable.mdx): Optional extension that allows enumerating the tokens on chain, often not included since it requires large gas overhead.
-* [ERC-721 Metadata](erc721-metadata.mdx): Optional extension that adds name, symbol, and token URI, almost always included.
-* [ERC-721 Pausable](erc721-pausable.mdx): A primitive to pause contract operation.
-* [ERC-721 Uri Storage](erc721-uri-storage.mdx): A more flexible but more expensive way of storing metadata.
-* [ERC-721 Wrapper](erc721-wrapper.mdx): Wrapper to create an ERC-721 backed by another ERC-721, with deposit and withdraw methods.
+```rust
+#[starknet::contract]
+mod MyTokenReceiver 
+    use openzeppelin_introspection::src5::SRC5Component;
+    use openzeppelin_token::erc721::ERC721ReceiverComponent;
+    use starknet::ContractAddress;
+
+    component!(path: ERC721ReceiverComponent, storage: erc721_receiver, event: ERC721ReceiverEvent);
+    component!(path: SRC5Component, storage: src5, event: SRC5Event);
+
+    // ERC721Receiver Mixin
+    #[abi(embed_v0)]
+    impl ERC721ReceiverMixinImpl = ERC721ReceiverComponent::ERC721ReceiverMixinImpl<ContractState>;
+    impl ERC721ReceiverInternalImpl = ERC721ReceiverComponent::InternalImpl<ContractState>;
+
+    #[storage]
+    struct Storage {
+        #[substorage(v0)]
+        erc721_receiver: ERC721ReceiverComponent::Storage,
+        #[substorage(v0)]
+        src5: SRC5Component::Storage
+    
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event 
+        #[flat]
+        ERC721ReceiverEvent: ERC721ReceiverComponent::Event,
+        #[flat]
+        SRC5Event: SRC5Component::Event
+    
+
+    #[constructor]
+    fn constructor(ref self: ContractState) 
+        self.erc721_receiver.initializer();
+    
+}
+```
+
+## Storing ERC721 URIs
+
+Token URIs were previously stored as single field elements prior to Cairo v0.2.5.
+ERC721Component now stores only the base URI as a `ByteArray` and the full token URI is returned as the `ByteArray` concatenation of the base URI and the token ID through the [token_uri](/api/erc721.mdx#IERC721Metadata-token_uri) method.
+This design mirrors OpenZeppelin’s default [Solidity implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/932fddf69a699a9a80fd2396fd1a2ab91cdda123/contracts/token/ERC721/ERC721.sol#L85-L93) for ERC721.

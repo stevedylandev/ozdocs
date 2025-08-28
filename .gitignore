@@ -29,3 +29,6 @@ next-env.d.ts
 old-docs
 .claude
 TODO.md
+
+# Local Netlify folder
+.netlify

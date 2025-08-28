@@ -1,160 +1,253 @@
 ---
-title: ERC-20
-description: ERC-20
+title: ERC20
+description: ERC20
 ---
 
-An ERC-20 token contract keeps track of [_fungible_ tokens](tokens.mdx#different-kinds-of-tokens): any token is exactly equal to any other token; no token has a special right or behavior associated with them.
-This makes ERC-20 tokens useful for things like a **medium of exchange currency**, **voting rights**, **staking**, and more.
+The ERC20 token standard is a specification for [fungible tokens](https://docs.openzeppelin.com/contracts/4.x/tokens#different-kinds-of-tokens), a type of token where all the units are exactly equal to each other.
+`token::erc20::ERC20Component` provides an approximation of [EIP-20](https://eips.ethereum.org/EIPS/eip-20) in Cairo for Starknet.
 
-OpenZeppelin Contracts provide many ERC20-related contracts for Arbitrum Stylus.
-On the [`API reference`](https://docs.rs/openzeppelin-stylus/0.3.0-rc.1/openzeppelin_stylus/token/erc20/struct.Erc20.html) you’ll find detailed information on their properties and usage.
+<Callout type='warn'>
+Prior to [Contracts v0.7.0](https://github.com/OpenZeppelin/cairo-contracts/releases/tag/v0.7.0), ERC20 contracts store and read `decimals` from storage; however, this implementation returns a static `18`.
+</Callout>
+If upgrading an older ERC20 contract that has a decimals value other than `18`, the upgraded contract **must** use a custom `decimals` implementation.
+See the [Customizing decimals](/erc20.mdx#customizing_decimals) guide.
 
-## Constructing an ERC-20 Token Contract
+## Usage
 
-Using Contracts, we can easily create our own ERC-20 token contract, which will be used to track _Gold_ (GLD), an internal currency in a hypothetical game.
-
-Here’s what our GLD token might look like.
+Using Contracts for Cairo, constructing an ERC20 contract requires setting up the constructor and instantiating the token implementation.
+Here’s what that looks like:
 
 ```rust
-use openzeppelin_stylus::
-    token::erc20::{
-        self,
-        extensions::{Erc20Metadata, IErc20Metadata,
-        Erc20, IErc20,
-    },
-};
+#[starknet::contract]
+mod MyToken 
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use starknet::ContractAddress;
 
-#[entrypoint]
-#[storage]
-struct GLDToken 
-    erc20: Erc20,
-    metadata: Erc20Metadata,
+    component!(path: ERC20Component, storage: erc20, event: ERC20Event);
 
+    // ERC20 Mixin
+    #[abi(embed_v0)]
+    impl ERC20MixinImpl = ERC20Component::ERC20MixinImpl<ContractState>;
+    impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
-#[public]
-#[implements(IErc20<Error = erc20::Error>, IErc20Metadata, IErc165)]
-impl GLDToken 
+    #[storage]
+    struct Storage 
+        #[substorage(v0)]
+        erc20: ERC20Component::Storage
+    
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event 
+        #[flat]
+        ERC20Event: ERC20Component::Event
+    
+
     #[constructor]
-    fn constructor(&mut self, name: String, symbol: String) {
-        self.metadata.constructor(name, symbol);
-    
+    fn constructor(
+        ref self: ContractState,
+        initial_supply: u256,
+        recipient: ContractAddress
+    ) 
+        let name = "MyToken";
+        let symbol = "MTK";
 
-    // ...
-}
-
-#[public]
-impl IErc20 for GLDToken 
-    type Error = erc20::Error;
-
-    fn total_supply(&self) -> U256 {
-        self.erc20.total_supply()
-    
-
-    fn balance_of(&self, account: Address) -> U256 
-        self.erc20.balance_of(account)
-    
-
-    fn transfer(
-        &mut self,
-        to: Address,
-        value: U256,
-    ) -> Result<bool, Self::Error> 
-        self.erc20.transfer(to, value)
-    
-
-    fn allowance(&self, owner: Address, spender: Address) -> U256 
-        self.erc20.allowance(owner, spender)
-    
-
-    fn approve(
-        &mut self,
-        spender: Address,
-        value: U256,
-    ) -> Result<bool, Self::Error> 
-        self.erc20.approve(spender, value)
-    
-
-    fn transfer_from(
-        &mut self,
-        from: Address,
-        to: Address,
-        value: U256,
-    ) -> Result<bool, Self::Error> 
-        self.erc20.transfer_from(from, to, value)
-    
-}
-
-#[public]
-impl IErc20Metadata for GLDToken 
-    fn name(&self) -> String {
-        self.metadata.name()
-    
-
-    fn symbol(&self) -> String 
-        self.metadata.symbol()
-    
-
-    fn decimals(&self) -> U8 
-        self.metadata.decimals()
-    
-}
-
-#[public]
-impl IErc165 for GLDToken 
-    fn supports_interface(&self, interface_id: B32) -> bool {
-        self.erc20.supports_interface(interface_id)
-            || self.metadata.supports_interface(interface_id)
+        self.erc20.initializer(name, symbol);
+        self.erc20.mint(recipient, initial_supply);
     
 }
 ```
 
-Our contracts are often used via stylus-sdk [inheritance](https://docs.arbitrum.io/stylus/reference/rust-sdk-guide#inheritance-inherit-and-borrow), and here we’re reusing [`ERC20`](https://docs.rs/openzeppelin-stylus/0.3.0-rc.1/openzeppelin_stylus/token/erc20/struct.Erc20.html) for both the basic standard implementation and with optional extensions.
-
-## A Note on `decimals`
-
-Often, you’ll want to be able to divide your tokens into arbitrary amounts: say, if you own `5 GLD`, you may want to send `1.5 GLD` to a friend, and keep `3.5 GLD` to yourself.
-Unfortunately, Solidity and the EVM do not support this behavior: only integer (whole) numbers can be used, which poses an issue.
-You may send `1` or `2` tokens, but not `1.5`.
-
-To work around this, ERC20 provides a [`decimals`](https://docs.rs/openzeppelin-stylus/0.3.0-rc.1/openzeppelin_stylus/token/erc20/extensions/metadata/trait.IErc20Metadata.html#tymethod.decimals) field, which is used to specify how many decimal places a token has.
-To be able to transfer `1.5 GLD`, `decimals` must be at least `1`, since that number has a single decimal place.
-
-How can this be achieved?
-It’s actually very simple: a token contract can use larger integer values, so that a balance of `50` will represent `5 GLD`, a transfer of `15` will correspond to `1.5 GLD` being sent, and so on.
-
-It is important to understand that `decimals` is _only used for display purposes_.
-All arithmetic inside the contract is still performed on integers, and it is the different user interfaces (wallets, exchanges, etc.) that must adjust the displayed values according to `decimals`.
-The total token supply and balance of each account are not specified in `GLD`: you need to divide by `10 ** decimals` to get the actual `GLD` amount.
-
-You’ll probably want to use a `decimals` value of `18`, just like Ether and most ERC-20 token contracts in use, unless you have an exceptional reason not to.
-When minting tokens or transferring them around, you will be actually sending the number `GLD * (10 ** decimals)`.
+`MyToken` integrates both the `ERC20Impl` and `ERC20MetadataImpl` with the embed directive which marks the implementations as external in the contract.
+While the `ERC20MetadataImpl` is optional, it’s generally recommended to include it because the vast majority of ERC20 tokens provide the metadata methods.
+The above example also includes the `ERC20InternalImpl` instance.
+This allows the contract’s constructor to initialize the contract and create an initial supply of tokens.
 
 <Callout>
-By default, `ERC20` uses a value of `18` for `decimals`.
+For a more complete guide on ERC20 token mechanisms, see [Creating ERC20 Supply](/guides/erc20-supply.mdx).
 </Callout>
 
-To use a different value, you will need to override the `decimals()` function in your contract. For example, to use `16` decimals, you would do:
+## Interface
+
+The following interface represents the full ABI of the Contracts for Cairo [ERC20Component](/api/erc20.mdx#ERC20Component).
+The interface includes the [IERC20](/api/erc20.mdx#IERC20) standard interface as well as the optional [IERC20Metadata](/api/erc20.mdx#IERC20Metadata).
+
+To support older token deployments, as mentioned in [Dual interfaces](/interfaces.mdx#dual_interfaces), the component also includes an implementation of the interface written in camelCase.
 
 ```rust
-fn decimals(&self) -> U8 
-    U8::from(16)
+#[starknet::interface]
+pub trait ERC20ABI 
+    // IERC20
+    fn total_supply() -> u256;
+    fn balance_of(account: ContractAddress) -> u256;
+    fn allowance(owner: ContractAddress, spender: ContractAddress) -> u256;
+    fn transfer(recipient: ContractAddress, amount: u256) -> bool;
+    fn transfer_from(
+        sender: ContractAddress, recipient: ContractAddress, amount: u256
+    ) -> bool;
+    fn approve(spender: ContractAddress, amount: u256) -> bool;
+
+    // IERC20Metadata
+    fn name() -> ByteArray;
+    fn symbol() -> ByteArray;
+    fn decimals() -> u8;
+
+    // IERC20Camel
+    fn totalSupply() -> u256;
+    fn balanceOf(account: ContractAddress) -> u256;
+    fn transferFrom(
+        sender: ContractAddress, recipient: ContractAddress, amount: u256
+    ) -> bool;
 
 ```
 
-So if you want to send `5` tokens using a token contract with `18` decimals, the method to call will actually be:
+## ERC20 compatibility
+
+Although Starknet is not EVM compatible, this component aims to be as close as possible to the ERC20 token standard.
+Some notable differences, however, can still be found, such as:
+
+* The `ByteArray` type is used to represent strings in Cairo.
+* The component offers a [dual interface](/interfaces.mdx#dual_interfaces) which supports both snake_case and camelCase methods, as opposed to just camelCase in Solidity.
+* `transfer`, `transfer_from` and `approve` will never return anything different from `true` because they will revert on any error.
+* Function selectors are calculated differently between [Cairo](https://github.com/starkware-libs/cairo/blob/7dd34f6c57b7baf5cd5a30c15e00af39cb26f7e1/crates/cairo-lang-starknet/src/contract.rs#L39-L48) and [Solidity](https://solidity-by-example.org/function-selector/).
+
+## Customizing decimals
+
+Cairo, like Solidity, does not support [floating-point numbers](https://en.wikipedia.org//wiki/Floating-point_arithmetic).
+To get around this limitation, ERC20 token contracts may offer a `decimals` field which communicates to outside interfaces (wallets, exchanges, etc.) how the token should be displayed.
+For instance, suppose a token had a `decimals` value of `3` and the total token supply was `1234`.
+An outside interface would display the token supply as `1.234`.
+In the actual contract, however, the supply would still be the integer `1234`.
+In other words, **the decimals field in no way changes the actual arithmetic** because all operations are still performed on integers.
+
+Most contracts use `18` decimals and this was even proposed to be compulsory (see the [EIP discussion](https://github.com/ethereum/EIPs/issues/724)).
+
+### The static approach (SRC-107)
+
+The Contracts for Cairo `ERC20` component leverages SRC-107 to allow for a static and configurable number of decimals.
+To use the default `18` decimals, you can use the `DefaultConfig` implementation by just importing it:
 
 ```rust
-token.transfer(recipient, 5 * uint!(10_U256).pow(uint!(18_U256)));
+#[starknet::contract]
+mod MyToken 
+    // Importing the DefaultConfig implementation would make decimals 18 by default.
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use starknet::ContractAddress;
+
+    component!(path: ERC20Component, storage: erc20, event: ERC20Event);
+
+    #[abi(embed_v0)]
+    impl ERC20Impl = ERC20Component::ERC20Impl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC20CamelOnlyImpl = ERC20Component::ERC20CamelOnlyImpl<ContractState>;
+    impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
+
+    (...)
+}
 ```
 
-## Extensions
-Additionally, there are multiple custom extensions, including:
+To customize this value, you can implement the ImmutableConfig trait locally in the contract.
+The following example shows how to set the decimals to `6`:
 
-* [ERC-20 Burnable](erc20-burnable.mdx): destruction of own tokens.
-* [ERC-20 Capped](erc20-capped.mdx): enforcement of a cap to the total supply when minting tokens.
-* [ERC-20 Metadata](erc20-metadata.mdx): the extended ERC20 interface including the name, symbol, and decimals functions.
-* [ERC-20 Pausable](erc20-pausable.mdx): ability to pause token transfers.
-* [ERC-20 Permit](erc20-permit.mdx): gasless approval of tokens (standardized as [`EIP-2612`](https://eips.ethereum.org/EIPS/eip-2612)).
-* [ERC-4626](erc4626.mdx): tokenized vault that manages shares (represented as ERC-20) that are backed by assets (another ERC-20).
-* [ERC-20 Flash-Mint](erc20-flash-mint.mdx): token level support for flash loans through the minting and burning of ephemeral tokens (standardized as [`EIP-3156`](https://eips.ethereum.org/EIPS/eip-3156)).
-* [ERC-20 Wrapper](erc20-wrapper.mdx): wrapper to create an ERC-20 backed by another ERC-20, with deposit and withdraw methods.
+```rust
+mod MyToken 
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl;
+    use starknet::ContractAddress;
+
+    component!(path: ERC20Component, storage: erc20, event: ERC20Event);
+
+    #[abi(embed_v0)]
+    impl ERC20Impl = ERC20Component::ERC20Impl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC20CamelOnlyImpl = ERC20Component::ERC20CamelOnlyImpl<ContractState>;
+    impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
+
+    (...)
+
+    // Custom implementation of the ERC20Component ImmutableConfig.
+    impl ERC20ImmutableConfig of ERC20Component::ImmutableConfig 
+        const DECIMALS: u8 = 6;
+    
+}
+```
+
+### The storage approach
+
+For more complex scenarios, such as a factory deploying multiple tokens with differing values for decimals, a flexible solution might be appropriate.
+
+<Callout>
+Note that we are not using the MixinImpl or the DefaultConfig in this case, since we need to customize the IERC20Metadata implementation.
+</Callout>
+
+```rust
+#[starknet::contract]
+mod MyToken 
+    use openzeppelin_interfaces::erc20 as interface;
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl;
+    use starknet::ContractAddress;
+
+    component!(path: ERC20Component, storage: erc20, event: ERC20Event);
+
+    #[abi(embed_v0)]
+    impl ERC20Impl = ERC20Component::ERC20Impl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC20CamelOnlyImpl = ERC20Component::ERC20CamelOnlyImpl<ContractState>;
+    impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
+
+    #[storage]
+    struct Storage 
+        #[substorage(v0)]
+        erc20: ERC20Component::Storage,
+        // The decimals value is stored locally
+        decimals: u8,
+    
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event 
+        #[flat]
+        ERC20Event: ERC20Component::Event,
+    
+
+    #[constructor]
+    fn constructor(
+        ref self: ContractState, decimals: u8, initial_supply: u256, recipient: ContractAddress,
+    ) 
+        // Call the internal function that writes decimals to storage
+        self._set_decimals(decimals);
+
+        // Initialize ERC20
+        let name = "MyToken";
+        let symbol = "MTK";
+
+        self.erc20.initializer(name, symbol);
+        self.erc20.mint(recipient, initial_supply);
+    
+
+    #[abi(embed_v0)]
+    impl ERC20CustomMetadataImpl of interface::IERC20Metadata<ContractState> 
+        fn name(self: @ContractState) -> ByteArray {
+            self.erc20.ERC20_name.read()
+        
+
+        fn symbol(self: @ContractState) -> ByteArray 
+            self.erc20.ERC20_symbol.read()
+        
+
+        fn decimals(self: @ContractState) -> u8 
+            self.decimals.read()
+        
+    }
+
+    #[generate_trait]
+    impl InternalImpl of InternalTrait 
+        fn _set_decimals(ref self: ContractState, decimals: u8) {
+            self.decimals.write(decimals);
+        
+    }
+}
+```
+
+This contract expects a `decimals` argument in the constructor and uses an internal function to write the decimals to storage.
+Note that the `decimals` state variable must be defined in the contract’s storage because this variable does not exist in the component offered by OpenZeppelin Contracts for Cairo.
+It’s important to include a custom ERC20 metadata implementation and NOT use the Contracts for Cairo `ERC20MetadataImpl` in this specific case since the `decimals` method will always return `18`.
