@@ -300,60 +300,59 @@ const manualTree = {
       },
       children: [
         {
-          type: 'page' as const,
-          name: 'Hardhat Upgrades',
-          url: '/upgrade-plugins/hardhat-upgrades',
-        },
-        {
-          type: 'page' as const,
-          name: 'Truffle Upgrades',
-          url: '/upgrade-plugins/truffle-upgrades',
-        },
-        {
           type: 'folder' as const,
-          name: 'Foundry',
+          name: 'Using with Hardhat',
+          index: {
+            type: 'page' as const,
+            name: 'Overview',
+            url: '/upgrade-plugins/hardhat-upgrades',
+          },
           children: [
             {
               type: 'page' as const,
-              name: 'Foundry Upgrades',
-              url: '/upgrade-plugins/foundry/foundry-upgrades',
-            },
-            {
-              type: 'page' as const,
-              name: 'Foundry Defender',
-              url: '/upgrade-plugins/foundry/foundry-defender',
+              name: 'Network Files',
+              url: '/upgrade-plugins/network-files',
             },
           ],
         },
         {
           type: 'page' as const,
-          name: 'Defender Deploy',
-          url: '/upgrade-plugins/defender-deploy',
+          name: 'Using with Foundry',
+          url: '/upgrade-plugins/foundry/foundry-upgrades',
         },
         {
           type: 'page' as const,
-          name: 'Writing Upgradeable',
+          name: 'Writing Upgradeable Contracts',
           url: '/upgrade-plugins/writing-upgradeable',
         },
         {
           type: 'page' as const,
-          name: 'Proxies',
+          name: 'Proxy Upgrade Pattern',
           url: '/upgrade-plugins/proxies',
         },
         {
           type: 'page' as const,
-          name: 'Network Files',
-          url: '/upgrade-plugins/network-files',
-        },
-        {
-          type: 'page' as const,
-          name: 'Migrate from CLI',
-          url: '/upgrade-plugins/migrate-from-cli',
-        },
-        {
-          type: 'page' as const,
-          name: 'FAQ',
+          name: 'Frequently Asked Questions',
           url: '/upgrade-plugins/faq',
+        },
+        {
+          type: 'separator' as const,
+          name: 'API Reference',
+        },
+        {
+          type: 'page' as const,
+          name: 'Hardhat Upgrades API',
+          url: '/upgrade-plugins/api-hardhat-upgrades',
+        },
+        {
+          type: 'page' as const,
+          name: 'Foundry Upgrades API',
+          url: '/upgrade-plugins/foundry/api/api-foundry-upgrades',
+        },
+        {
+          type: 'page' as const,
+          name: 'Upgrades Core & CLI',
+          url: '/upgrade-plugins/api-core',
         },
       ],
     },
