@@ -368,12 +368,17 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Contracts UI Builder',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/tools/contracts-ui-builder',
-      },
       children: [
+        {
+          type: 'page' as const,
+          name: 'Quickstart',
+          url: '/tools/contracts-ui-builder',
+        },
+        {
+          type: 'page' as const,
+          name: 'Networks',
+          url: '/tools/contracts-ui-builder/networks',
+        },
         {
           type: 'page' as const,
           name: 'Loading Contracts',
@@ -391,23 +396,13 @@ const manualTree = {
         },
         {
           type: 'page' as const,
-          name: 'Networks',
-          url: '/tools/contracts-ui-builder/networks',
-        },
-        {
-          type: 'page' as const,
-          name: 'Building Adapters',
-          url: '/tools/contracts-ui-builder/building-adapters',
-        },
-        {
-          type: 'page' as const,
           name: 'Exporting and History',
           url: '/tools/contracts-ui-builder/exporting-and-history',
         },
         {
           type: 'page' as const,
-          name: 'Changelog',
-          url: '/tools/contracts-ui-builder/changelog',
+          name: 'Building Adapters',
+          url: '/tools/contracts-ui-builder/building-adapters',
         },
       ],
     },
