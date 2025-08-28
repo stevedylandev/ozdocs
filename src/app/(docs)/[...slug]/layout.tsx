@@ -1097,13 +1097,138 @@ const manualTree = {
     },
     {
       type: 'folder' as const,
-      name: 'Compact Contracts',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/compact-contracts',
-      },
-      children: [],
+      name: 'Midnight Contracts',
+      children: [
+        {
+          type: 'page' as const,
+          name: 'Overview',
+          url: '/compact-contracts/v0.x',
+        },
+        {
+          type: 'folder' as const,
+          name: 'Learn',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'ZK Circuits 101',
+              url: '/compact-contracts/v0.x/zkCircuits101',
+            },
+            {
+              type: 'page' as const,
+              name: 'Extensibility',
+              url: '/compact-contracts/v0.x/extensibility',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Modules',
+          children: [
+            {
+              type: 'folder' as const,
+              name: 'Access',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/compact-contracts/v0.x/access',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/compact-contracts/v0.x/api/access',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Security',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/compact-contracts/v0.x/security',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/compact-contracts/v0.x/api/security',
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Tokens',
+              children: [
+                {
+                  type: 'folder' as const,
+                  name: 'FungibleToken',
+                  index: {
+                    type: 'page' as const,
+                    name: 'Overview',
+                    url: '/compact-contracts/v0.x/fungibleToken',
+                  },
+                  children: [
+                    {
+                      type: 'page' as const,
+                      name: 'API Reference',
+                      url: '/compact-contracts/v0.x/api/fungibleToken',
+                    },
+                  ],
+                },
+                {
+                  type: 'folder' as const,
+                  name: 'NonFungibleToken',
+                  index: {
+                    type: 'page' as const,
+                    name: 'Overview',
+                    url: '/compact-contracts/v0.x/nonFungibleToken',
+                  },
+                  children: [
+                    {
+                      type: 'page' as const,
+                      name: 'API Reference',
+                      url: '/compact-contracts/v0.x/api/nonFungibleToken',
+                    },
+                  ],
+                },
+                {
+                  type: 'folder' as const,
+                  name: 'MultiToken',
+                  index: {
+                    type: 'page' as const,
+                    name: 'Overview',
+                    url: '/compact-contracts/v0.x/multitoken',
+                  },
+                  children: [
+                    {
+                      type: 'page' as const,
+                      name: 'API Reference',
+                      url: '/compact-contracts/v0.x/api/multitoken',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'folder' as const,
+              name: 'Utils',
+              index: {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/compact-contracts/v0.x/utils',
+              },
+              children: [
+                {
+                  type: 'page' as const,
+                  name: 'API Reference',
+                  url: '/compact-contracts/v0.x/api/utils',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       type: 'folder' as const,
