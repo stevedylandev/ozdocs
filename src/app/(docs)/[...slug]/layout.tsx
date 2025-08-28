@@ -1675,7 +1675,64 @@ const manualTree = {
         name: 'Overview',
         url: '/uniswap-hooks',
       },
-      children: [],
+      children: [
+        {
+          type: 'page' as const,
+          name: 'Base',
+          url: '/uniswap-hooks/v1.x/base',
+        },
+        {
+          type: 'page' as const,
+          name: 'Fee',
+          url: '/uniswap-hooks/v1.x/fee',
+        },
+        {
+          type: 'page' as const,
+          name: 'Utilities',
+          url: '/uniswap-hooks/v1.x/utilities',
+        },
+        {
+          type: 'page' as const,
+          name: 'Changelog',
+          url: '/uniswap-hooks/v1.x/changelog',
+        },
+        {
+          type: 'folder' as const,
+          name: 'API',
+          index: {
+            type: 'page' as const,
+            name: 'Overview',
+            url: '/uniswap-hooks/v1.x/api',
+          },
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Base',
+              url: '/uniswap-hooks/v1.x/api/base',
+            },
+            {
+              type: 'page' as const,
+              name: 'Fee',
+              url: '/uniswap-hooks/v1.x/api/fee',
+            },
+            {
+              type: 'page' as const,
+              name: 'General',
+              url: '/uniswap-hooks/v1.x/api/general',
+            },
+            {
+              type: 'page' as const,
+              name: 'Interfaces',
+              url: '/uniswap-hooks/v1.x/api/interfaces',
+            },
+            {
+              type: 'page' as const,
+              name: 'Utils',
+              url: '/uniswap-hooks/v1.x/api/utils',
+            },
+          ],
+        },
+      ],
     },
   ],
 };
