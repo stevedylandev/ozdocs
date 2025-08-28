@@ -3,22 +3,32 @@
 	"pages": [
 		"index",
 		"wizard",
-		"tokens",
-		"erc20",
-		"erc20-supply",
-		"erc721",
-		"erc1155",
-		"erc4626",
-		"erc6909",
+		"extending-contracts",
+		"upgradeable",
+		"backwards-compatibility",
 		"access-control",
 		"account-abstraction",
-		"accounts",
+		{
+			"title": "Accounts",
+			"pages": ["accounts", "eoa-delegation", "multisig"]
+		},
+		{
+			"title": "Tokens",
+			"pages": [
+				"tokens",
+				{
+					"title": "ERC-20",
+					"pages": ["erc20", "erc20-supply"]
+				},
+				"erc721",
+				"erc1155",
+				"erc4626",
+				"erc6909"
+			]
+		},
 		"governance",
-		"upgradeable",
-		"extending-contracts",
-		"faq",
-		"changelog",
-		"api"
+		"utilities",
+		"faq"
 	],
 	"root": false
 }
