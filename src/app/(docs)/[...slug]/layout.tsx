@@ -1482,12 +1482,190 @@ const manualTree = {
     {
       type: 'folder' as const,
       name: 'Substrate Runtimes',
-      index: {
-        type: 'page' as const,
-        name: 'Overview',
-        url: '/substrate-runtimes',
-      },
-      children: [],
+      children: [
+        {
+                type: 'page' as const,
+                name: 'Overview',
+                url: '/substrate-runtimes',
+              },
+        {
+          type: 'folder' as const,
+          name: 'General Guides',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Quick Start',
+              url: '/substrate-runtimes/v3.x/guides/quick_start',
+            },
+            {
+              type: 'page' as const,
+              name: 'Weights & Fees',
+              url: '/substrate-runtimes/v3.x/guides/weights_fees',
+            },
+            {
+              type: 'page' as const,
+              name: 'Async Backing',
+              url: '/substrate-runtimes/v3.x/guides/async_backing',
+            },
+            {
+              type: 'page' as const,
+              name: 'Sending XCM between Parachains',
+              url: '/substrate-runtimes/v3.x/guides/hrmp_channels',
+            },
+            {
+              type: 'page' as const,
+              name: 'OpenZeppelin Pallet Abstractions',
+              url: '/substrate-runtimes/v3.x/guides/pallet_abstractions',
+            },
+            {
+              type: 'page' as const,
+              name: 'Pay DOT as a Fee',
+              url: '/substrate-runtimes/v3.x/guides/pay_dot_as_a_fee',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'EVM Template Guides',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Contract Migration',
+              url: '/substrate-runtimes/v3.x/guides/contract_migration',
+            },
+            {
+              type: 'page' as const,
+              name: 'Predeployed Contracts',
+              url: '/substrate-runtimes/v3.x/guides/predeployed_contracts',
+            },
+            {
+              type: 'page' as const,
+              name: 'Testing with Zombienet',
+              url: '/substrate-runtimes/v3.x/guides/testing_with_zombienet',
+            },
+            {
+              type: 'page' as const,
+              name: 'RPC Differences',
+              url: '/substrate-runtimes/v3.x/guides/rpc_differences',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Runtimes',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Generic Runtime',
+              url: '/substrate-runtimes/v3.x/runtimes/generic',
+            },
+            {
+              type: 'page' as const,
+              name: 'EVM Runtime',
+              url: '/substrate-runtimes/v3.x/runtimes/evm',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Runtime Descriptions',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'XCM Executor',
+              url: '/substrate-runtimes/v3.x/runtime/xcm_executor',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Pallet Specifications',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'cumulus_pallet_aura_ext',
+              url: '/substrate-runtimes/v3.x/pallets/aura_ext',
+            },
+            {
+              type: 'page' as const,
+              name: 'cumulus_pallet_parachain_system',
+              url: '/substrate-runtimes/v3.x/pallets/parachain-system',
+            },
+            {
+              type: 'page' as const,
+              name: 'cumulus_pallet_xcmp_queue',
+              url: '/substrate-runtimes/v3.x/pallets/xcmp-queue',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_assets',
+              url: '/substrate-runtimes/v3.x/pallets/assets',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_balances',
+              url: '/substrate-runtimes/v3.x/pallets/balances',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_collator_selection',
+              url: '/substrate-runtimes/v3.x/pallets/collator-selection',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_message_queue',
+              url: '/substrate-runtimes/v3.x/pallets/message-queue',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_multisig',
+              url: '/substrate-runtimes/v3.x/pallets/multisig',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_proxy',
+              url: '/substrate-runtimes/v3.x/pallets/proxy',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_transaction_payment',
+              url: '/substrate-runtimes/v3.x/pallets/transaction_payment',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_treasury',
+              url: '/substrate-runtimes/v3.x/pallets/treasury',
+            },
+            {
+              type: 'page' as const,
+              name: 'pallet_xcm',
+              url: '/substrate-runtimes/v3.x/pallets/xcm',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Misc',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Multisig Accounts',
+              url: '/substrate-runtimes/v3.x/misc/multisig-accounts',
+            },
+          ],
+        },
+        {
+          type: 'folder' as const,
+          name: 'Appendix',
+          children: [
+            {
+              type: 'page' as const,
+              name: 'Glossary',
+              url: '/substrate-runtimes/v3.x/glossary',
+            },
+          ],
+        },
+      ],
     },
     {
       type: 'folder' as const,
