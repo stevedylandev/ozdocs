@@ -1,5 +1,0 @@
-{
-	"title": "v1.x",
-	"pages": ["index", "base", "fee", "utilities", "changelog", "api"],
-	"root": false
-}
