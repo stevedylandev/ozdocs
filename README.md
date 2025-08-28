@@ -1,5 +1,7 @@
 # OpenZeppelin Docs
 
+![cover](public/social.png)
+
 Welcome to the OpenZeppelin Docs repo! Before opening an issue or creating a PR please consult our [contribution guide](CONTRIBUTING.md)
 
 ## Development
