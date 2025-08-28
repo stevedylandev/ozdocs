@@ -1,16 +1,16 @@
 # AGENTS.md - OpenZeppelin Docs Codebase Guide
 
 ## Build/Lint/Test Commands
-- `bun run build` - Build the Next.js application
-- `bun run dev` - Start development server with turbo
-- `bun run start` - Start production server
-- `bun run postinstall` - Process MDX files with fumadocs-mdx
-- `bun run lint` - Lint code with Biome
-- `bun run lint:fix` - Lint and auto-fix issues with Biome
-- `bun run format` - Check code formatting with Biome
-- `bun run format:fix` - Format code with Biome
-- `bun run check` - Run both linting and formatting checks
-- `bun run check:fix` - Run both linting and formatting with auto-fix
+- `pnpm run build` - Build the Next.js application
+- `pnpm run dev` - Start development server with turbo
+- `pnpm run start` - Start production server
+- `pnpm run postinstall` - Process MDX files with fumadocs-mdx
+- `pnpm run lint` - Lint code with Biome
+- `pnpm run lint:fix` - Lint and auto-fix issues with Biome
+- `pnpm run format` - Check code formatting with Biome
+- `pnpm run format:fix` - Format code with Biome
+- `pnpm run check` - Run both linting and formatting checks
+- `pnpm run check:fix` - Run both linting and formatting with auto-fix
 - No test commands configured - this is a documentation site
 
 ## Navigation Management

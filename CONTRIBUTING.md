@@ -30,10 +30,10 @@ If you find a bug or have a suggestion for improvement:
 
 ### Development Setup
 
-1. Make sure [Bun](https://bun.sh) is installed
+1. Make sure [pnpm](https://pnpm.io) is installed
 
 ```bash
-bun --version
+pnpm --version
 ```
 
 2. Clone the repo and install dependencies
@@ -41,13 +41,13 @@ bun --version
 ```bash
 git clone https://github.com/OpenZeppelin/docs
 cd docs
-bun install
+pnpm install
 ```
 
 3. Run the `dev` server to see a live preview and have your changes reflected at `http://localhost:3000`
 
 ```bash
-bun dev
+pnpm dev
 ```
 
 ## Code of Conduct
