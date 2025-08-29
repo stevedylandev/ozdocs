@@ -167,7 +167,184 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/substrate-runtimes"
+				"url": "/substrate-runtimes/v3.x/"
+			},
+			{
+				"type": "folder",
+				"name": "General Guides",
+				"children": [
+					{
+						"type": "page",
+						"name": "Quick Start",
+						"url": "/substrate-runtimes/v3.x/guides/quick_start"
+					},
+					{
+						"type": "page",
+						"name": "Weights & Fees",
+						"url": "/substrate-runtimes/v3.x/guides/weights_fees"
+					},
+					{
+						"type": "page",
+						"name": "Async Backing",
+						"url": "/substrate-runtimes/v3.x/guides/async_backing"
+					},
+					{
+						"type": "page",
+						"name": "Sending XCM between Parachains",
+						"url": "/substrate-runtimes/v3.x/guides/hrmp_channels"
+					},
+					{
+						"type": "page",
+						"name": "OpenZeppelin Pallet Abstractions",
+						"url": "/substrate-runtimes/v3.x/guides/pallet_abstractions"
+					},
+					{
+						"type": "page",
+						"name": "Pay DOT as a Fee",
+						"url": "/substrate-runtimes/v3.x/guides/pay_dot_as_a_fee"
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "EVM Template Guides",
+				"children": [
+					{
+						"type": "page",
+						"name": "Contract Migration",
+						"url": "/substrate-runtimes/v3.x/guides/contract_migration"
+					},
+					{
+						"type": "page",
+						"name": "Predeployed Contracts",
+						"url": "/substrate-runtimes/v3.x/guides/predeployed_contracts"
+					},
+					{
+						"type": "page",
+						"name": "Testing with Zombienet",
+						"url": "/substrate-runtimes/v3.x/guides/testing_with_zombienet"
+					},
+					{
+						"type": "page",
+						"name": "RPC Differences",
+						"url": "/substrate-runtimes/v3.x/guides/rpc_differences"
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "Runtimes",
+				"children": [
+					{
+						"type": "page",
+						"name": "Generic Runtime",
+						"url": "/substrate-runtimes/v3.x/runtimes/generic"
+					},
+					{
+						"type": "page",
+						"name": "EVM Runtime",
+						"url": "/substrate-runtimes/v3.x/runtimes/evm"
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "Runtime Descriptions",
+				"children": [
+					{
+						"type": "page",
+						"name": "XCM Executor",
+						"url": "/substrate-runtimes/v3.x/runtime/xcm_executor"
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "Pallet Specifications",
+				"children": [
+					{
+						"type": "page",
+						"name": "cumulus_pallet_aura_ext",
+						"url": "/substrate-runtimes/v3.x/pallets/aura_ext"
+					},
+					{
+						"type": "page",
+						"name": "cumulus_pallet_parachain_system",
+						"url": "/substrate-runtimes/v3.x/pallets/parachain-system"
+					},
+					{
+						"type": "page",
+						"name": "cumulus_pallet_xcmp_queue",
+						"url": "/substrate-runtimes/v3.x/pallets/xcmp-queue"
+					},
+					{
+						"type": "page",
+						"name": "pallet_assets",
+						"url": "/substrate-runtimes/v3.x/pallets/assets"
+					},
+					{
+						"type": "page",
+						"name": "pallet_balances",
+						"url": "/substrate-runtimes/v3.x/pallets/balances"
+					},
+					{
+						"type": "page",
+						"name": "pallet_collator_selection",
+						"url": "/substrate-runtimes/v3.x/pallets/collator-selection"
+					},
+					{
+						"type": "page",
+						"name": "pallet_message_queue",
+						"url": "/substrate-runtimes/v3.x/pallets/message-queue"
+					},
+					{
+						"type": "page",
+						"name": "pallet_multisig",
+						"url": "/substrate-runtimes/v3.x/pallets/multisig"
+					},
+					{
+						"type": "page",
+						"name": "pallet_proxy",
+						"url": "/substrate-runtimes/v3.x/pallets/proxy"
+					},
+					{
+						"type": "page",
+						"name": "pallet_transaction_payment",
+						"url": "/substrate-runtimes/v3.x/pallets/transaction_payment"
+					},
+					{
+						"type": "page",
+						"name": "pallet_treasury",
+						"url": "/substrate-runtimes/v3.x/pallets/treasury"
+					},
+					{
+						"type": "page",
+						"name": "pallet_xcm",
+						"url": "/substrate-runtimes/v3.x/pallets/xcm"
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "Misc",
+				"children": [
+					{
+						"type": "page",
+						"name": "Multisig Accounts",
+						"url": "/substrate-runtimes/v3.x/misc/multisig-accounts"
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "Appendix",
+				"children": [
+					{
+						"type": "page",
+						"name": "Glossary",
+						"url": "/substrate-runtimes/v3.x/glossary"
+					}
+				]
 			},
 			{
 				"type": "page",
