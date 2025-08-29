@@ -1,7 +1,5 @@
-import { HomeLayout } from "fumadocs-ui/layouts/home";
-import { baseOptions } from "./layout.config";
 import { Card, Cards } from "fumadocs-ui/components/card";
-import { SmallCard } from "@/components/ui/small-card";
+import { HomeLayout } from "fumadocs-ui/layouts/home";
 import {
 	ActivityIcon,
 	AnvilIcon,
@@ -18,6 +16,8 @@ import {
 	WandSparklesIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { SmallCard } from "@/components/ui/small-card";
+import { baseOptions } from "./layout.config";
 
 export default function HomePage() {
 	return (
