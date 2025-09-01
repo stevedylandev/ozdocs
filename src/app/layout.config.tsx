@@ -1,10 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import {
-	GithubIcon,
-	GlobeIcon,
-	HomeIcon,
-	MessagesSquareIcon,
-} from "lucide-react";
+import { GlobeIcon, HomeIcon, MessagesSquareIcon } from "lucide-react";
 
 /**
  * Shared layout configurations
