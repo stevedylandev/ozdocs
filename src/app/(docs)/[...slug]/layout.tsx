@@ -7,12 +7,14 @@ import { EthereumIcon } from "@/components/icons/ethereum-icon";
 import { MidnightIcon } from "@/components/icons/midnight-icon";
 import { StarknetIcon } from "@/components/icons/starknet-icon";
 import { StellarIcon } from "@/components/icons/stellar-icon";
+import { ZamaIcon } from "@/components/icons/zama-icon";
 import {
 	arbitrumStylusTree,
 	ethereumEvmTree,
 	midnightTree,
 	starknetTree,
 	stellarTree,
+	zamaTree,
 } from "@/navigation";
 
 export default async function Layout({
@@ -37,6 +39,8 @@ export default async function Layout({
 		currentTree = stellarTree;
 	} else if (pathname.startsWith("/compact-contracts")) {
 		currentTree = midnightTree;
+	} else if (pathname.startsWith("/confidential-contracts")) {
+		currentTree = zamaTree;
 	}
 
 	return (
@@ -76,6 +80,13 @@ export default async function Layout({
 						url: "/compact-contracts/v0.x",
 						icon: (
 							<MidnightIcon className="w-4 h-4 flex items-centered justify-center" />
+						),
+					},
+					{
+						title: "Zama",
+						url: "/confidential-contracts/v0.x",
+						icon: (
+							<ZamaIcon className="w-4 h-4 flex items-centered justify-center" />
 						),
 					},
 				],

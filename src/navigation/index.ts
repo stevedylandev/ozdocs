@@ -4,6 +4,7 @@ import midnightData from "./midnight.json";
 import starknetData from "./starknet.json";
 import stellarData from "./stellar.json";
 import type { NavigationNode, NavigationTree } from "./types";
+import zamaData from "./zama.json";
 
 // Type-safe imports with proper typing
 const ethereumEvm = ethereumEvmData as NavigationNode[];
@@ -11,6 +12,7 @@ const arbitrumStylus = arbitrumStylusData as NavigationNode[];
 const stellar = stellarData as NavigationNode[];
 const midnight = midnightData as NavigationNode[];
 const starknet = starknetData as NavigationNode[];
+const zama = zamaData as NavigationNode[];
 
 // Create separate navigation trees for each blockchain
 export const ethereumEvmTree: NavigationTree = {
@@ -36,6 +38,11 @@ export const midnightTree: NavigationTree = {
 export const starknetTree: NavigationTree = {
 	name: "Starknet",
 	children: starknet,
+};
+
+export const zamaTree: NavigationTree = {
+	name: "Zama",
+	children: zama,
 };
 
 export * from "./types";

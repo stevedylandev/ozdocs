@@ -2,7 +2,6 @@
 	{
 		"type": "folder",
 		"name": "Contracts",
-		"icon": "PyramidIcon",
 		"children": [
 			{
 				"type": "folder",
@@ -348,79 +347,6 @@
 						"type": "page",
 						"name": "Upgrades Core & CLI",
 						"url": "/upgrade-plugins/api-core"
-					}
-				]
-			},
-			{
-				"type": "folder",
-				"name": "Starknet Contracts",
-				"children": [
-					{
-						"type": "page",
-						"name": "Overview",
-						"url": "/cairo-contracts/v3.x"
-					},
-					{
-						"type": "page",
-						"name": "Wizard",
-						"url": "/cairo-contracts/v3.x/wizard"
-					},
-					{
-						"type": "folder",
-						"name": "Learn",
-						"children": [
-							{
-								"type": "page",
-								"name": "Components",
-								"url": "/cairo-contracts/v3.x/components"
-							},
-							{
-								"type": "page",
-								"name": "Presets",
-								"url": "/cairo-contracts/v3.x/presets"
-							},
-							{
-								"type": "page",
-								"name": "Interfaces and Dispatchers",
-								"url": "/cairo-contracts/v3.x/guides/interfaces-and-dispatchers"
-							},
-							{
-								"type": "page",
-								"name": "Counterfactual Deployments",
-								"url": "/cairo-contracts/v3.x/guides/deployment"
-							},
-							{
-								"type": "page",
-								"name": "SNIP12 and Typed Messages",
-								"url": "/cairo-contracts/v3.x/guides/snip12"
-							}
-						]
-					},
-					{
-						"type": "page",
-						"name": "Backwards Compatibility",
-						"url": "/cairo-contracts/v3.x/backwards-compatibility"
-					}
-				]
-			},
-			{
-				"type": "folder",
-				"name": "Zama Contracts",
-				"children": [
-					{
-						"type": "page",
-						"name": "Overview",
-						"url": "/confidential-contracts/v0.x"
-					},
-					{
-						"type": "page",
-						"name": "Token",
-						"url": "/confidential-contracts/v0.x/token"
-					},
-					{
-						"type": "page",
-						"name": "Changelog",
-						"url": "/confidential-contracts/v0.x/changelog"
 					}
 				]
 			},
