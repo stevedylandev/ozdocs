@@ -2,46 +2,58 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import type { ReactNode } from "react";
 
 import { baseOptions } from "@/app/layout.config";
-import { ArbitrumIcon } from "@/components/icons/arbitrum-icon";
-import { EthereumIcon } from "@/components/icons/ethereum-icon";
-import { MidnightIcon } from "@/components/icons/midnight-icon";
-import { StarknetIcon } from "@/components/icons/starknet-icon";
-import { StellarIcon } from "@/components/icons/stellar-icon";
-import { ZamaIcon } from "@/components/icons/zama-icon";
+import {
+	ArbitrumIcon,
+	EthereumIcon,
+	MidnightIcon,
+	StarknetIcon,
+	StellarIcon,
+	ZamaIcon,
+	UniswapIcon,
+	PolkadotIcon,
+} from "@/components/icons";
 import {
 	arbitrumStylusTree,
 	ethereumEvmTree,
 	midnightTree,
+	polkadotTree,
 	starknetTree,
 	stellarTree,
+	uniswapTree,
 	zamaTree,
 } from "@/navigation";
 
 export default async function Layout({
-	children,
-	params,
+  children,
+  params,
 }: {
-	children: ReactNode;
-	params: Promise<{ slug?: string[] }>;
+  children: ReactNode;
+  params: Promise<{ slug?: string[] }>;
 }) {
-	// Determine which navigation tree to use based on the current path
-	const resolvedParams = await params;
-	const slug = resolvedParams.slug || [];
-	const pathname = `/${slug.join("/")}`;
+  // Determine which navigation tree to use based on the current path
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug || [];
+  const pathname = `/${slug.join("/")}`;
 
-	let currentTree = ethereumEvmTree;
+  let currentTree = ethereumEvmTree;
 
-	if (pathname.startsWith("/contracts-stylus")) {
-		currentTree = arbitrumStylusTree;
-	} else if (pathname.startsWith("/cairo-contracts")) {
-		currentTree = starknetTree;
-	} else if (pathname.startsWith("/stellar-contracts")) {
-		currentTree = stellarTree;
-	} else if (pathname.startsWith("/compact-contracts")) {
-		currentTree = midnightTree;
-	} else if (pathname.startsWith("/confidential-contracts")) {
-		currentTree = zamaTree;
-	}
+  if (pathname.startsWith("/contracts-stylus")) {
+    currentTree = arbitrumStylusTree;
+  } else if (pathname.startsWith("/cairo-contracts")) {
+    currentTree = starknetTree;
+  } else if (pathname.startsWith("/stellar-contracts")) {
+    currentTree = stellarTree;
+  } else if (pathname.startsWith("/compact-contracts")) {
+    currentTree = midnightTree;
+  } else if (pathname.startsWith("/confidential-contracts")) {
+    currentTree = zamaTree;
+  } else if (pathname.startsWith("/uniswap-hooks")) {
+    currentTree = uniswapTree;
+  } else if (pathname.startsWith("/substrate-runtimes")) {
+    currentTree = polkadotTree;
+  } else if (pathname.startsWith("/tools")){
+    currentTree = ethereumEvmTree
+  }
 
 	return (
 		<DocsLayout
@@ -80,6 +92,20 @@ export default async function Layout({
 						url: "/compact-contracts/v0.x",
 						icon: (
 							<MidnightIcon className="w-4 h-4 flex items-centered justify-center" />
+						),
+					},
+					{
+						title: "Polkadot",
+						url: "/substrate-runtimes/v3.x",
+						icon: (
+							<PolkadotIcon className="w-4 h-4 flex items-centered justify-center" />
+						),
+					},
+					{
+						title: "Uniswap",
+						url: "/uniswap-hooks/v1.x",
+						icon: (
+							<UniswapIcon className="w-4 h-4 flex items-centered justify-center" />
 						),
 					},
 					{

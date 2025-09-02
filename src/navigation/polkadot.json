@@ -1,0 +1,185 @@
+[
+	{
+		"type": "separator",
+		"name": "Substrate Runtimes"
+	},
+	{
+		"type": "folder",
+		"name": "Getting Started",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/substrate-runtimes/v3.x/"
+			},
+			{
+				"type": "page",
+				"name": "Quick Start",
+				"url": "/substrate-runtimes/v3.x/guides/quick_start"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Guides",
+		"children": [
+			{
+				"type": "page",
+				"name": "Async Backing",
+				"url": "/substrate-runtimes/v3.x/guides/async_backing"
+			},
+			{
+				"type": "page",
+				"name": "Contract Migration",
+				"url": "/substrate-runtimes/v3.x/guides/contract_migration"
+			},
+			{
+				"type": "page",
+				"name": "HRMP Channels",
+				"url": "/substrate-runtimes/v3.x/guides/hrmp_channels"
+			},
+			{
+				"type": "page",
+				"name": "Pallet Abstractions",
+				"url": "/substrate-runtimes/v3.x/guides/pallet_abstractions"
+			},
+			{
+				"type": "page",
+				"name": "Pay DOT as a Fee",
+				"url": "/substrate-runtimes/v3.x/guides/pay_dot_as_a_fee"
+			},
+			{
+				"type": "page",
+				"name": "Predeployed Contracts",
+				"url": "/substrate-runtimes/v3.x/guides/predeployed_contracts"
+			},
+			{
+				"type": "page",
+				"name": "RPC Differences",
+				"url": "/substrate-runtimes/v3.x/guides/rpc_differences"
+			},
+			{
+				"type": "page",
+				"name": "Testing with Zombienet",
+				"url": "/substrate-runtimes/v3.x/guides/testing_with_zombienet"
+			},
+			{
+				"type": "page",
+				"name": "Weights & Fees",
+				"url": "/substrate-runtimes/v3.x/guides/weights_fees"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Pallets",
+		"children": [
+			{
+				"type": "page",
+				"name": "Assets",
+				"url": "/substrate-runtimes/v3.x/pallets/assets"
+			},
+			{
+				"type": "page",
+				"name": "Aura Ext",
+				"url": "/substrate-runtimes/v3.x/pallets/aura_ext"
+			},
+			{
+				"type": "page",
+				"name": "Balances",
+				"url": "/substrate-runtimes/v3.x/pallets/balances"
+			},
+			{
+				"type": "page",
+				"name": "Collator Selection",
+				"url": "/substrate-runtimes/v3.x/pallets/collator-selection"
+			},
+			{
+				"type": "page",
+				"name": "Message Queue",
+				"url": "/substrate-runtimes/v3.x/pallets/message-queue"
+			},
+			{
+				"type": "page",
+				"name": "Multisig",
+				"url": "/substrate-runtimes/v3.x/pallets/multisig"
+			},
+			{
+				"type": "page",
+				"name": "Parachain System",
+				"url": "/substrate-runtimes/v3.x/pallets/parachain-system"
+			},
+			{
+				"type": "page",
+				"name": "Proxy",
+				"url": "/substrate-runtimes/v3.x/pallets/proxy"
+			},
+			{
+				"type": "page",
+				"name": "Transaction Payment",
+				"url": "/substrate-runtimes/v3.x/pallets/transaction_payment"
+			},
+			{
+				"type": "page",
+				"name": "Treasury",
+				"url": "/substrate-runtimes/v3.x/pallets/treasury"
+			},
+			{
+				"type": "page",
+				"name": "XCM",
+				"url": "/substrate-runtimes/v3.x/pallets/xcm"
+			},
+			{
+				"type": "page",
+				"name": "XCMP Queue",
+				"url": "/substrate-runtimes/v3.x/pallets/xcmp-queue"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Runtimes",
+		"children": [
+			{
+				"type": "page",
+				"name": "EVM",
+				"url": "/substrate-runtimes/v3.x/runtimes/evm"
+			},
+			{
+				"type": "page",
+				"name": "Generic",
+				"url": "/substrate-runtimes/v3.x/runtimes/generic"
+			},
+			{
+				"type": "page",
+				"name": "XCM Executor",
+				"url": "/substrate-runtimes/v3.x/runtime/xcm_executor"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Miscellaneous",
+		"children": [
+			{
+				"type": "page",
+				"name": "Multisig Accounts",
+				"url": "/substrate-runtimes/v3.x/misc/multisig-accounts"
+			}
+		]
+	},
+	{
+		"type": "separator",
+		"name": "Resources"
+	},
+	{
+		"type": "page",
+		"name": "Glossary",
+		"url": "/substrate-runtimes/v3.x/glossary"
+	},
+	{
+		"type": "page",
+		"name": "Changelog",
+		"url": "/substrate-runtimes/v3.x/changelog"
+	}
+]

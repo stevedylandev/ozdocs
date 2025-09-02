@@ -1,0 +1,78 @@
+[
+	{
+		"type": "separator",
+		"name": "Uniswap Hooks"
+	},
+	{
+		"type": "folder",
+		"name": "Getting Started",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/uniswap-hooks/v1.x/"
+			},
+			{
+				"type": "page",
+				"name": "Base",
+				"url": "/uniswap-hooks/v1.x/base"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "API Reference",
+		"children": [
+			{
+				"type": "page",
+				"name": "General",
+				"url": "/uniswap-hooks/v1.x/api/general"
+			},
+			{
+				"type": "page",
+				"name": "Base",
+				"url": "/uniswap-hooks/v1.x/api/base"
+			},
+			{
+				"type": "page",
+				"name": "Fee",
+				"url": "/uniswap-hooks/v1.x/api/fee"
+			},
+			{
+				"type": "page",
+				"name": "Interfaces",
+				"url": "/uniswap-hooks/v1.x/api/interfaces"
+			},
+			{
+				"type": "page",
+				"name": "Utils",
+				"url": "/uniswap-hooks/v1.x/api/utils"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Features",
+		"children": [
+			{
+				"type": "page",
+				"name": "Fee Management",
+				"url": "/uniswap-hooks/v1.x/fee"
+			},
+			{
+				"type": "page",
+				"name": "Utilities",
+				"url": "/uniswap-hooks/v1.x/utilities"
+			}
+		]
+	},
+	{
+		"type": "separator",
+		"name": "Resources"
+	},
+	{
+		"type": "page",
+		"name": "Changelog",
+		"url": "/uniswap-hooks/v1.x/changelog"
+	}
+]
