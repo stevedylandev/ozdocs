@@ -1,0 +1,71 @@
+[
+	{
+		"type": "folder",
+		"name": "Contracts",
+		"children": [
+			{
+				"type": "folder",
+				"name": "Arbitrum Stylus Contracts",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts-stylus/v0.x"
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts-stylus/v0.x/access-control"
+					},
+					{
+						"type": "page",
+						"name": "Cryptography",
+						"url": "/contracts-stylus/v0.x/crypto"
+					},
+					{
+						"type": "page",
+						"name": "Finance",
+						"url": "/contracts-stylus/v0.x/finance"
+					},
+					{
+						"type": "page",
+						"name": "Utilities",
+						"url": "/contracts-stylus/v0.x/utilities"
+					},
+					{
+						"type": "page",
+						"name": "Changelog",
+						"url": "/contracts-stylus/v0.x/changelog"
+					}
+				]
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Tools",
+		"children": [
+			{
+				"type": "page",
+				"name": "Stylus SDK",
+				"url": "/contracts-stylus/v0.x"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Guides",
+		"children": [
+			{
+				"type": "page",
+				"name": "Getting Started with Stylus",
+				"url": "/contracts-stylus/v0.x"
+			},
+			{
+				"type": "page",
+				"name": "Deploying to Arbitrum",
+				"url": "/contracts-stylus/v0.x"
+			}
+		]
+	}
+]

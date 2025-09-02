@@ -1,0 +1,61 @@
+[
+	{
+		"type": "folder",
+		"name": "Contracts",
+		"children": [
+			{
+				"type": "folder",
+				"name": "Stellar Contracts",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/stellar-contracts/v0.x/"
+					},
+					{
+						"type": "page",
+						"name": "Get Started",
+						"url": "/stellar-contracts/v0.x/get-started"
+					},
+					{
+						"type": "page",
+						"name": "Changelog",
+						"url": "/stellar-contracts/v0.x/changelog"
+					}
+				]
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Tools",
+		"children": [
+			{
+				"type": "page",
+				"name": "Stellar CLI",
+				"url": "/stellar-contracts/v0.x/"
+			},
+			{
+				"type": "page",
+				"name": "Stellar SDK",
+				"url": "/stellar-contracts/v0.x/"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Guides",
+		"children": [
+			{
+				"type": "page",
+				"name": "Deploying to Stellar",
+				"url": "/stellar-contracts/v0.x/"
+			},
+			{
+				"type": "page",
+				"name": "Stellar Smart Contracts 101",
+				"url": "/stellar-contracts/v0.x/"
+			}
+		]
+	}
+]

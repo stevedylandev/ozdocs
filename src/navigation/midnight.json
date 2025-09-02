@@ -1,0 +1,72 @@
+[
+	{
+		"type": "folder",
+		"name": "Contracts",
+		"children": [
+			{
+				"type": "folder",
+				"name": "Midnight Contracts",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/compact-contracts/v0.x"
+					},
+					{
+						"type": "folder",
+						"name": "Learn",
+						"children": [
+							{
+								"type": "page",
+								"name": "ZK Circuits 101",
+								"url": "/compact-contracts/v0.x/zkCircuits101"
+							},
+							{
+								"type": "page",
+								"name": "Extensibility",
+								"url": "/compact-contracts/v0.x/extensibility"
+							}
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Tools",
+		"children": [
+			{
+				"type": "page",
+				"name": "Midnight SDK",
+				"url": "/compact-contracts/v0.x"
+			},
+			{
+				"type": "page",
+				"name": "ZK Circuit Compiler",
+				"url": "/compact-contracts/v0.x"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Guides",
+		"children": [
+			{
+				"type": "page",
+				"name": "Zero-Knowledge Proofs",
+				"url": "/compact-contracts/v0.x/zkCircuits101"
+			},
+			{
+				"type": "page",
+				"name": "Building ZK Applications",
+				"url": "/compact-contracts/v0.x/extensibility"
+			},
+			{
+				"type": "page",
+				"name": "Deploying to Midnight",
+				"url": "/compact-contracts/v0.x"
+			}
+		]
+	}
+]
