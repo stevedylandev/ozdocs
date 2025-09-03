@@ -4,71 +4,14 @@
 		"name": "Substrate Runtimes"
 	},
 	{
-		"type": "folder",
-		"name": "Getting Started",
-		"children": [
-			{
-				"type": "page",
-				"name": "Overview",
-				"url": "/substrate-runtimes/v3.x/"
-			},
-			{
-				"type": "page",
-				"name": "Quick Start",
-				"url": "/substrate-runtimes/v3.x/guides/quick_start"
-			}
-		]
+		"type": "page",
+		"name": "Overview",
+		"url": "/substrate-runtimes/v3.x/"
 	},
 	{
-		"type": "folder",
-		"name": "Guides",
-		"children": [
-			{
-				"type": "page",
-				"name": "Async Backing",
-				"url": "/substrate-runtimes/v3.x/guides/async_backing"
-			},
-			{
-				"type": "page",
-				"name": "Contract Migration",
-				"url": "/substrate-runtimes/v3.x/guides/contract_migration"
-			},
-			{
-				"type": "page",
-				"name": "HRMP Channels",
-				"url": "/substrate-runtimes/v3.x/guides/hrmp_channels"
-			},
-			{
-				"type": "page",
-				"name": "Pallet Abstractions",
-				"url": "/substrate-runtimes/v3.x/guides/pallet_abstractions"
-			},
-			{
-				"type": "page",
-				"name": "Pay DOT as a Fee",
-				"url": "/substrate-runtimes/v3.x/guides/pay_dot_as_a_fee"
-			},
-			{
-				"type": "page",
-				"name": "Predeployed Contracts",
-				"url": "/substrate-runtimes/v3.x/guides/predeployed_contracts"
-			},
-			{
-				"type": "page",
-				"name": "RPC Differences",
-				"url": "/substrate-runtimes/v3.x/guides/rpc_differences"
-			},
-			{
-				"type": "page",
-				"name": "Testing with Zombienet",
-				"url": "/substrate-runtimes/v3.x/guides/testing_with_zombienet"
-			},
-			{
-				"type": "page",
-				"name": "Weights & Fees",
-				"url": "/substrate-runtimes/v3.x/guides/weights_fees"
-			}
-		]
+		"type": "page",
+		"name": "Quick Start",
+		"url": "/substrate-runtimes/v3.x/guides/quick_start"
 	},
 	{
 		"type": "folder",
@@ -169,10 +112,6 @@
 		]
 	},
 	{
-		"type": "separator",
-		"name": "Resources"
-	},
-	{
 		"type": "page",
 		"name": "Glossary",
 		"url": "/substrate-runtimes/v3.x/glossary"
@@ -181,5 +120,54 @@
 		"type": "page",
 		"name": "Changelog",
 		"url": "/substrate-runtimes/v3.x/changelog"
+	},
+	{
+		"type": "separator",
+		"name": "Guides"
+	},
+	{
+		"type": "page",
+		"name": "Async Backing",
+		"url": "/substrate-runtimes/v3.x/guides/async_backing"
+	},
+	{
+		"type": "page",
+		"name": "Contract Migration",
+		"url": "/substrate-runtimes/v3.x/guides/contract_migration"
+	},
+	{
+		"type": "page",
+		"name": "HRMP Channels",
+		"url": "/substrate-runtimes/v3.x/guides/hrmp_channels"
+	},
+	{
+		"type": "page",
+		"name": "Pallet Abstractions",
+		"url": "/substrate-runtimes/v3.x/guides/pallet_abstractions"
+	},
+	{
+		"type": "page",
+		"name": "Pay DOT as a Fee",
+		"url": "/substrate-runtimes/v3.x/guides/pay_dot_as_a_fee"
+	},
+	{
+		"type": "page",
+		"name": "Predeployed Contracts",
+		"url": "/substrate-runtimes/v3.x/guides/predeployed_contracts"
+	},
+	{
+		"type": "page",
+		"name": "RPC Differences",
+		"url": "/substrate-runtimes/v3.x/guides/rpc_differences"
+	},
+	{
+		"type": "page",
+		"name": "Testing with Zombienet",
+		"url": "/substrate-runtimes/v3.x/guides/testing_with_zombienet"
+	},
+	{
+		"type": "page",
+		"name": "Weights & Fees",
+		"url": "/substrate-runtimes/v3.x/guides/weights_fees"
 	}
 ]
