@@ -24,36 +24,36 @@ import {
 } from "@/navigation";
 
 export default async function Layout({
-  children,
-  params,
+	children,
+	params,
 }: {
-  children: ReactNode;
-  params: Promise<{ slug?: string[] }>;
+	children: ReactNode;
+	params: Promise<{ slug?: string[] }>;
 }) {
-  // Determine which navigation tree to use based on the current path
-  const resolvedParams = await params;
-  const slug = resolvedParams.slug || [];
-  const pathname = `/${slug.join("/")}`;
+	// Determine which navigation tree to use based on the current path
+	const resolvedParams = await params;
+	const slug = resolvedParams.slug || [];
+	const pathname = `/${slug.join("/")}`;
 
-  let currentTree = ethereumEvmTree;
+	let currentTree = ethereumEvmTree;
 
-  if (pathname.startsWith("/contracts-stylus")) {
-    currentTree = arbitrumStylusTree;
-  } else if (pathname.startsWith("/cairo-contracts")) {
-    currentTree = starknetTree;
-  } else if (pathname.startsWith("/stellar-contracts")) {
-    currentTree = stellarTree;
-  } else if (pathname.startsWith("/contracts-compact")) {
-    currentTree = midnightTree;
-  } else if (pathname.startsWith("/confidential-contracts")) {
-    currentTree = zamaTree;
-  } else if (pathname.startsWith("/uniswap-hooks")) {
-    currentTree = uniswapTree;
-  } else if (pathname.startsWith("/substrate-runtimes")) {
-    currentTree = polkadotTree;
-  } else if (pathname.startsWith("/tools")){
-    currentTree = ethereumEvmTree
-  }
+	if (pathname.startsWith("/contracts-stylus")) {
+		currentTree = arbitrumStylusTree;
+	} else if (pathname.startsWith("/cairo-contracts")) {
+		currentTree = starknetTree;
+	} else if (pathname.startsWith("/stellar-contracts")) {
+		currentTree = stellarTree;
+	} else if (pathname.startsWith("/contracts-compact")) {
+		currentTree = midnightTree;
+	} else if (pathname.startsWith("/confidential-contracts")) {
+		currentTree = zamaTree;
+	} else if (pathname.startsWith("/uniswap-hooks")) {
+		currentTree = uniswapTree;
+	} else if (pathname.startsWith("/substrate-runtimes")) {
+		currentTree = polkadotTree;
+	} else if (pathname.startsWith("/tools")) {
+		currentTree = ethereumEvmTree;
+	}
 
 	return (
 		<DocsLayout
@@ -69,51 +69,37 @@ export default async function Layout({
 					{
 						title: "Arbitrum Stylus",
 						url: "/contracts-stylus/v0.x",
-						icon: (
-							<ArbitrumIcon className="w-5 h-5 flex items-center justify-center" />
-						),
+						icon: <ArbitrumIcon className="w-5 h-5" />,
 					},
 					{
 						title: "Starknet",
 						url: "/cairo-contracts/v3.x",
-						icon: (
-							<StarknetIcon className="w-5 h-5 flex items-center justify-center" />
-						),
+						icon: <StarknetIcon className="w-5 h-5" />,
 					},
 					{
 						title: "Stellar",
 						url: "/stellar-contracts/v0.x/",
-						icon: (
-							<StellarIcon className="w-4 h-4 flex items-centered justify-center" />
-						),
+						icon: <StellarIcon className="w-5 h-5" />,
 					},
 					{
 						title: "Midnight",
 						url: "/contracts-compact/v0.x",
-						icon: (
-							<MidnightIcon className="w-4 h-4 flex items-centered justify-center" />
-						),
+						icon: <MidnightIcon className="w-5 h-5" />,
 					},
 					{
 						title: "Polkadot",
 						url: "/substrate-runtimes/v3.x",
-						icon: (
-							<PolkadotIcon className="w-5 h-5 flex items-centered justify-center" />
-						),
+						icon: <PolkadotIcon className="w-5 h-5" />,
 					},
 					{
 						title: "Uniswap",
 						url: "/uniswap-hooks/v1.x",
-						icon: (
-							<UniswapIcon className="w-5 h-5 flex items-centered justify-center" />
-						),
+						icon: <UniswapIcon className="w-5 h-5" />,
 					},
 					{
 						title: "Zama",
 						url: "/confidential-contracts/v0.x",
-						icon: (
-							<ZamaIcon className="w-4 h-4" />
-						),
+						icon: <ZamaIcon className="w-5 h-5" />,
 					},
 				],
 			}}
