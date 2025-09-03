@@ -1,4 +1,10 @@
+import { useId } from "react";
+
 export function ZamaIcon({ className }: { className: string }) {
+	const mask0Id = useId();
+	const mask1Id = useId();
+	const mask2Id = useId();
+
 	return (
 		<svg
 			width="1em"
@@ -11,7 +17,7 @@ export function ZamaIcon({ className }: { className: string }) {
 			<title>Zama Icon</title>
 			<rect width="100" height="100" fill="white" />
 			<mask
-				id="mask0_3_61"
+				id={mask0Id}
 				maskUnits="userSpaceOnUse"
 				x="17"
 				y="17"
@@ -23,14 +29,14 @@ export function ZamaIcon({ className }: { className: string }) {
 					fill="currentColor"
 				/>
 			</mask>
-			<g mask="url(#mask0_3_61)">
+			<g mask={`url(#${mask0Id})`}>
 				<path
 					d="M18.4735 17.3854H82.6754V28.315H18.4735V17.3854Z"
 					fill="black"
 				/>
 			</g>
 			<mask
-				id="mask1_3_61"
+				id={mask1Id}
 				maskUnits="userSpaceOnUse"
 				x="16"
 				y="71"
@@ -42,11 +48,11 @@ export function ZamaIcon({ className }: { className: string }) {
 					fill="currentColor"
 				/>
 			</mask>
-			<g mask="url(#mask1_3_61)">
+			<g mask={`url(#${mask1Id})`}>
 				<path d="M17.0049 72.7954H83.7904V83H17.0049V72.7954Z" fill="black" />
 			</g>
 			<mask
-				id="mask2_3_61"
+				id={mask2Id}
 				maskUnits="userSpaceOnUse"
 				x="16"
 				y="24"
@@ -58,7 +64,7 @@ export function ZamaIcon({ className }: { className: string }) {
 					fill="white"
 				/>
 			</mask>
-			<g mask="url(#mask2_3_61)">
+			<g mask={`url(#${mask2Id})`}>
 				<path
 					d="M17.0049 72.7953L82.6752 28.315V41.5123L37.0424 72.7953H17.0049Z"
 					fill="black"

@@ -6,11 +6,11 @@ import {
 	ArbitrumIcon,
 	EthereumIcon,
 	MidnightIcon,
+	PolkadotIcon,
 	StarknetIcon,
 	StellarIcon,
-	ZamaIcon,
 	UniswapIcon,
-	PolkadotIcon,
+	ZamaIcon,
 } from "@/components/icons";
 import {
 	arbitrumStylusTree,
