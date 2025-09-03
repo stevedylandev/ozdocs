@@ -1,0 +1,85 @@
+[
+	{
+		"type": "separator",
+		"name": "Contracts"
+	},
+	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/stellar-contracts/v0.x/"
+	},
+	{
+		"type": "page",
+		"name": "Get Started",
+		"url": "/stellar-contracts/v0.x/get-started"
+	},
+	{
+		"type": "folder",
+		"name": "Tokens",
+		"children": [
+			{
+				"type": "page",
+				"name": "Fungible Tokens",
+				"url": "/stellar-contracts/v0.x/tokens/fungible/fungible"
+			},
+			{
+				"type": "page",
+				"name": "Non-Fungible Tokens",
+				"url": "/stellar-contracts/v0.x/tokens/non-fungible/non-fungible"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Access",
+		"children": [
+			{
+				"type": "page",
+				"name": "Access Control",
+				"url": "/stellar-contracts/v0.x/access-control"
+			},
+			{
+				"type": "page",
+				"name": "Ownable",
+				"url": "/stellar-contracts/v0.x/ownable"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Utilities",
+		"children": [
+			{
+				"type": "page",
+				"name": "Pausable",
+				"url": "/stellar-contracts/v0.x/utils/pausable"
+			},
+			{
+				"type": "page",
+				"name": "Upgradeable",
+				"url": "/stellar-contracts/v0.x/utils/upgradeable"
+			},
+			{
+				"type": "page",
+				"name": "Cryptography",
+				"url": "/stellar-contracts/v0.x/utils/crypto"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Helpers",
+		"children": [
+			{
+				"type": "page",
+				"name": "Default Implementation Macro",
+				"url": "/stellar-contracts/v0.x/helpers/default-impl-macro"
+			}
+		]
+	},
+	{
+		"type": "page",
+		"name": "Changelog",
+		"url": "/stellar-contracts/v0.x/changelog"
+	}
+]

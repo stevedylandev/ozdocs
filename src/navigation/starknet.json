@@ -1,0 +1,196 @@
+[
+	{
+		"type": "separator",
+		"name": "Contracts"
+	},
+	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/cairo-contracts/v3.x"
+	},
+	{
+		"type": "page",
+		"name": "Wizard",
+		"url": "/cairo-contracts/v3.x/wizard"
+	},
+	{
+		"type": "folder",
+		"name": "Learn",
+		"children": [
+			{
+				"type": "page",
+				"name": "Components",
+				"url": "/cairo-contracts/v3.x/components"
+			},
+			{
+				"type": "page",
+				"name": "Presets",
+				"url": "/cairo-contracts/v3.x/presets"
+			},
+			{
+				"type": "page",
+				"name": "Interfaces and Dispatchers",
+				"url": "/cairo-contracts/v3.x/guides/interfaces-and-dispatchers"
+			},
+			{
+				"type": "page",
+				"name": "Counterfactual Deployments",
+				"url": "/cairo-contracts/v3.x/guides/deployment"
+			},
+			{
+				"type": "page",
+				"name": "SNIP12 and Typed Messages",
+				"url": "/cairo-contracts/v3.x/guides/snip12"
+			},
+			{
+				"type": "page",
+				"name": "ERC20 Permit",
+				"url": "/cairo-contracts/v3.x/guides/erc20-permit"
+			},
+			{
+				"type": "page",
+				"name": "ERC20 Supply",
+				"url": "/cairo-contracts/v3.x/guides/erc20-supply"
+			},
+			{
+				"type": "page",
+				"name": "SRC5 Migration",
+				"url": "/cairo-contracts/v3.x/guides/src5-migration"
+			}
+		]
+	},
+	{
+		"type": "page",
+		"name": "Backwards Compatibility",
+		"url": "/cairo-contracts/v3.x/backwards-compatibility"
+	},
+	{
+		"type": "folder",
+		"name": "Tokens",
+		"children": [
+			{
+				"type": "page",
+				"name": "ERC-20",
+				"url": "/cairo-contracts/v3.x/erc20"
+			},
+			{
+				"type": "page",
+				"name": "ERC-721",
+				"url": "/cairo-contracts/v3.x/erc721"
+			},
+			{
+				"type": "page",
+				"name": "ERC-1155",
+				"url": "/cairo-contracts/v3.x/erc1155"
+			},
+			{
+				"type": "page",
+				"name": "ERC-4626",
+				"url": "/cairo-contracts/v3.x/erc4626"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Governance",
+		"children": [
+			{
+				"type": "page",
+				"name": "Governor",
+				"url": "/cairo-contracts/v3.x/governance/governor"
+			},
+			{
+				"type": "page",
+				"name": "Multisig",
+				"url": "/cairo-contracts/v3.x/governance/multisig"
+			},
+			{
+				"type": "page",
+				"name": "Timelock",
+				"url": "/cairo-contracts/v3.x/governance/timelock"
+			},
+			{
+				"type": "page",
+				"name": "Votes",
+				"url": "/cairo-contracts/v3.x/governance/votes"
+			}
+		]
+	},
+	{
+		"type": "page",
+		"name": "Access Control",
+		"url": "/cairo-contracts/v3.x/access"
+	},
+	{
+		"type": "page",
+		"name": "Accounts",
+		"url": "/cairo-contracts/v3.x/accounts"
+	},
+	{
+		"type": "page",
+		"name": "Finance",
+		"url": "/cairo-contracts/v3.x/finance"
+	},
+	{
+		"type": "page",
+		"name": "Interfaces",
+		"url": "/cairo-contracts/v3.x/interfaces"
+	},
+	{
+		"type": "page",
+		"name": "Introspection",
+		"url": "/cairo-contracts/v3.x/introspection"
+	},
+	{
+		"type": "page",
+		"name": "Security",
+		"url": "/cairo-contracts/v3.x/security"
+	},
+	{
+		"type": "page",
+		"name": "Upgrades",
+		"url": "/cairo-contracts/v3.x/upgrades"
+	},
+	{
+		"type": "page",
+		"name": "Universal Deployer Contract",
+		"url": "/cairo-contracts/v3.x/udc"
+	},
+	{
+		"type": "folder",
+		"name": "Macros",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/cairo-contracts/v3.x/macros"
+			},
+			{
+				"type": "page",
+				"name": "Type Hash",
+				"url": "/cairo-contracts/v3.x/macros/type_hash"
+			},
+			{
+				"type": "page",
+				"name": "With Components",
+				"url": "/cairo-contracts/v3.x/macros/with_components"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Utils",
+		"children": [
+			{
+				"type": "page",
+				"name": "Common",
+				"url": "/cairo-contracts/v3.x/utils/_common"
+			},
+			{
+				"type": "page",
+				"name": "Class Hashes",
+				"url": "/cairo-contracts/v3.x/utils/_class_hashes"
+			}
+		]
+	}
+]

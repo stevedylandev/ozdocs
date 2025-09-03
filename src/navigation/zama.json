@@ -1,0 +1,57 @@
+[
+	{
+		"type": "separator",
+		"name": "Contracts"
+	},
+	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/confidential-contracts/v0.x"
+	},
+	{
+		"type": "page",
+		"name": "Token",
+		"url": "/confidential-contracts/v0.x/token"
+	},
+	{
+		"type": "page",
+		"name": "Changelog",
+		"url": "/confidential-contracts/v0.x/changelog"
+	},
+	{
+		"type": "folder",
+		"name": "API Reference",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/confidential-contracts/v0.x/api"
+			},
+			{
+				"type": "page",
+				"name": "Finance",
+				"url": "/confidential-contracts/v0.x/api/finance"
+			},
+			{
+				"type": "page",
+				"name": "Governance",
+				"url": "/confidential-contracts/v0.x/api/governance"
+			},
+			{
+				"type": "page",
+				"name": "Interfaces",
+				"url": "/confidential-contracts/v0.x/api/interfaces"
+			},
+			{
+				"type": "page",
+				"name": "Token",
+				"url": "/confidential-contracts/v0.x/api/token"
+			},
+			{
+				"type": "page",
+				"name": "Utils",
+				"url": "/confidential-contracts/v0.x/api/utils"
+			}
+		]
+	}
+]

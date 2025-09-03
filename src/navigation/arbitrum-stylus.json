@@ -1,0 +1,36 @@
+[
+	{
+		"type": "separator",
+		"name": "Contracts"
+	},
+	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/contracts-stylus/v0.x"
+	},
+	{
+		"type": "page",
+		"name": "Access Control",
+		"url": "/contracts-stylus/v0.x/access-control"
+	},
+	{
+		"type": "page",
+		"name": "Cryptography",
+		"url": "/contracts-stylus/v0.x/crypto"
+	},
+	{
+		"type": "page",
+		"name": "Finance",
+		"url": "/contracts-stylus/v0.x/finance"
+	},
+	{
+		"type": "page",
+		"name": "Utilities",
+		"url": "/contracts-stylus/v0.x/utilities"
+	},
+	{
+		"type": "page",
+		"name": "Changelog",
+		"url": "/contracts-stylus/v0.x/changelog"
+	}
+]
