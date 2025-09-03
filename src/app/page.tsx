@@ -2,26 +2,18 @@ import { Card } from "fumadocs-ui/components/card";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import {
 	ActivityIcon,
-	ArrowRightLeftIcon,
 	ArrowUpIcon,
 	ExternalLinkIcon,
 	GamepadIcon,
 	LibraryIcon,
 	MessageCircleIcon,
-	MoonStarIcon,
-	PlayIcon,
-	RocketIcon,
 	SatelliteDishIcon,
 	SendIcon,
 	ShieldIcon,
-	SquareAsteriskIcon,
-	StarsIcon,
-	TriangleIcon,
 	WallpaperIcon,
 	WandSparklesIcon,
 	WrenchIcon,
 } from "lucide-react";
-import { baseOptions } from "./layout.config";
 import {
 	ArbitrumIcon,
 	EthereumIcon,
@@ -32,6 +24,7 @@ import {
 	UniswapIcon,
 	ZamaIcon,
 } from "@/components/icons";
+import { baseOptions } from "./layout.config";
 
 export default function HomePage() {
 	return (
