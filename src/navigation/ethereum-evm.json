@@ -774,17 +774,42 @@
 	},
 	{
 		"type": "page",
-		"name": "Getting Started",
-		"url": "/contracts/v5.x"
+		"name": "Overview",
+		"url": "/contracts/v5.x/learn"
 	},
 	{
 		"type": "page",
-		"name": "Security Best Practices",
-		"url": "/contracts/v5.x/access-control"
+		"name": "Setting up a Node project",
+		"url": "/contracts/v5.x/learn/setting-up-a-node-project"
 	},
 	{
 		"type": "page",
-		"name": "Upgradeable Contracts",
-		"url": "/contracts/v5.x/upgradeable"
+		"name": "Developing smart contracts",
+		"url": "/contracts/v5.x/learn/developing-smart-contracts"
+	},
+	{
+		"type": "page",
+		"name": "Deploying and interacting",
+		"url": "/contracts/v5.x/learn/deploying-and-interacting"
+	},
+	{
+		"type": "page",
+		"name": "Writing automated tests",
+		"url": "/contracts/v5.x/learn/writing-automated-tests"
+	},
+	{
+		"type": "page",
+		"name": "Connecting to public test networks",
+		"url": "/contracts/v5.x/learn/connecting-to-public-test-networks"
+	},
+	{
+		"type": "page",
+		"name": "Upgrading smart contracts",
+		"url": "/contracts/v5.x/learn/upgrading-smart-contracts"
+	},
+	{
+		"type": "page",
+		"name": "Preparing for mainnet",
+		"url": "/contracts/v5.x/learn/preparing-for-mainnet"
 	}
 ]
