@@ -98,21 +98,21 @@ export default async function Layout({
 						title: "Polkadot",
 						url: "/substrate-runtimes/v3.x",
 						icon: (
-							<PolkadotIcon className="w-4 h-4 flex items-centered justify-center" />
+							<PolkadotIcon className="w-5 h-5 flex items-centered justify-center" />
 						),
 					},
 					{
 						title: "Uniswap",
 						url: "/uniswap-hooks/v1.x",
 						icon: (
-							<UniswapIcon className="w-4 h-4 flex items-centered justify-center" />
+							<UniswapIcon className="w-5 h-5 flex items-centered justify-center" />
 						),
 					},
 					{
 						title: "Zama",
 						url: "/confidential-contracts/v0.x",
 						icon: (
-							<ZamaIcon className="w-4 h-4 flex items-centered justify-center" />
+							<ZamaIcon className="w-4 h-4" />
 						),
 					},
 				],

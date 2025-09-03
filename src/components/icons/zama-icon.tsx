@@ -1,30 +1,69 @@
 export function ZamaIcon({ className }: { className: string }) {
 	return (
 		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			xmlnsXlink="http://www.w3.org/1999/xlink"
 			width="1em"
 			height="1em"
-			viewBox="0 0 73.5 73.5"
+			viewBox="0 0 100 100"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
 			className={className}
 		>
 			<title>Zama Icon</title>
-			<defs>
-				<mask id="textMask">
-					<rect width="100%" height="100%" fill="white" />
-					<g fill="black" transform="translate(11, -5) scale(3, 3)">
-						<path d="M 1.269531 7.558594 L 14.761719 7.558594 L 14.761719 9.855469 L 1.269531 9.855469 Z M 1.269531 7.558594" />
-						<path d="M 0.960938 19.203125 L 14.996094 19.203125 L 14.996094 21.347656 L 0.960938 21.347656 Z M 0.960938 19.203125" />
-						<path d="M 0.960938 19.203125 L 14.761719 9.855469 L 14.761719 12.628906 L 5.171875 19.203125 Z M 0.960938 19.203125" />
-					</g>
-				</mask>
-			</defs>
-			<rect
-				width="100%"
-				height="100%"
-				fill="currentColor"
-				mask="url(#textMask)"
-			/>
+			<rect width="100" height="100" fill="white" />
+			<mask
+				id="mask0_3_61"
+				maskUnits="userSpaceOnUse"
+				x="17"
+				y="17"
+				width="67"
+				height="13"
+			>
+				<path
+					d="M17.1909 17.3854H83.8092V29.0027H17.1909V17.3854Z"
+					fill="currentColor"
+				/>
+			</mask>
+			<g mask="url(#mask0_3_61)">
+				<path
+					d="M18.4735 17.3854H82.6754V28.315H18.4735V17.3854Z"
+					fill="black"
+				/>
+			</g>
+			<mask
+				id="mask1_3_61"
+				maskUnits="userSpaceOnUse"
+				x="16"
+				y="71"
+				width="68"
+				height="12"
+			>
+				<path
+					d="M16.9304 71.8288H83.8089V83H16.9304V71.8288Z"
+					fill="currentColor"
+				/>
+			</mask>
+			<g mask="url(#mask1_3_61)">
+				<path d="M17.0049 72.7954H83.7904V83H17.0049V72.7954Z" fill="black" />
+			</g>
+			<mask
+				id="mask2_3_61"
+				maskUnits="userSpaceOnUse"
+				x="16"
+				y="24"
+				width="68"
+				height="53"
+			>
+				<path
+					d="M16.9304 24.2443H83.8089V76.5872H16.9304V24.2443Z"
+					fill="white"
+				/>
+			</mask>
+			<g mask="url(#mask2_3_61)">
+				<path
+					d="M17.0049 72.7953L82.6752 28.315V41.5123L37.0424 72.7953H17.0049Z"
+					fill="black"
+				/>
+			</g>
 		</svg>
 	);
 }
