@@ -8,222 +8,768 @@
 		"name": "Solidity Contracts",
 		"children": [
 			{
-				"type": "page",
-				"name": "Overview",
-				"url": "/contracts/v5.x"
-			},
-			{
-				"type": "page",
-				"name": "Wizard",
-				"url": "/contracts/v5.x/wizard"
-			},
-			{
-				"type": "page",
-				"name": "Extending Contracts",
-				"url": "/contracts/v5.x/extending-contracts"
-			},
-			{
-				"type": "page",
-				"name": "Using with Upgrades",
-				"url": "/contracts/v5.x/upgradeable"
-			},
-			{
-				"type": "page",
-				"name": "Backwards Compatibility",
-				"url": "/contracts/v5.x/backwards-compatibility"
-			},
-			{
-				"type": "page",
-				"name": "Access Control",
-				"url": "/contracts/v5.x/access-control"
-			},
-			{
 				"type": "folder",
-				"name": "Account Abstraction",
-				"index": {
-					"type": "page",
-					"name": "Overview",
-					"url": "/contracts/v5.x/account-abstraction"
-				},
+				"name": "v5",
 				"children": [
 					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts/v5.x"
+					},
+					{
+						"type": "page",
+						"name": "Wizard",
+						"url": "/contracts/v5.x/wizard"
+					},
+					{
+						"type": "page",
+						"name": "Extending Contracts",
+						"url": "/contracts/v5.x/extending-contracts"
+					},
+					{
+						"type": "page",
+						"name": "Using with Upgrades",
+						"url": "/contracts/v5.x/upgradeable"
+					},
+					{
+						"type": "page",
+						"name": "Backwards Compatibility",
+						"url": "/contracts/v5.x/backwards-compatibility"
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts/v5.x/access-control"
+					},
+					{
 						"type": "folder",
-						"name": "Accounts",
+						"name": "Account Abstraction",
 						"index": {
 							"type": "page",
 							"name": "Overview",
-							"url": "/contracts/v5.x/accounts"
+							"url": "/contracts/v5.x/account-abstraction"
 						},
 						"children": [
 							{
-								"type": "page",
-								"name": "EOA Delegation",
-								"url": "/contracts/v5.x/eoa-delegation"
+								"type": "folder",
+								"name": "Accounts",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/v5.x/accounts"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "EOA Delegation",
+										"url": "/contracts/v5.x/eoa-delegation"
+									},
+									{
+										"type": "page",
+										"name": "Multisig",
+										"url": "/contracts/v5.x/multisig"
+									}
+								]
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Tokens",
+						"index": {
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts/v5.x/tokens"
+						},
+						"children": [
+							{
+								"type": "folder",
+								"name": "ERC-20",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/v5.x/erc20"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "Creating Supply",
+										"url": "/contracts/v5.x/erc20-supply"
+									}
+								]
 							},
 							{
 								"type": "page",
-								"name": "Multisig",
-								"url": "/contracts/v5.x/multisig"
-							}
-						]
-					}
-				]
-			},
-			{
-				"type": "folder",
-				"name": "Tokens",
-				"index": {
-					"type": "page",
-					"name": "Overview",
-					"url": "/contracts/v5.x/tokens"
-				},
-				"children": [
-					{
-						"type": "folder",
-						"name": "ERC-20",
-						"index": {
-							"type": "page",
-							"name": "Overview",
-							"url": "/contracts/v5.x/erc20"
-						},
-						"children": [
+								"name": "ERC-721",
+								"url": "/contracts/v5.x/erc721"
+							},
 							{
 								"type": "page",
-								"name": "Creating Supply",
-								"url": "/contracts/v5.x/erc20-supply"
+								"name": "ERC-1155",
+								"url": "/contracts/v5.x/erc1155"
+							},
+							{
+								"type": "page",
+								"name": "ERC-4626",
+								"url": "/contracts/v5.x/erc4626"
+							},
+							{
+								"type": "page",
+								"name": "ERC-6909",
+								"url": "/contracts/v5.x/erc6909"
 							}
 						]
-					},
-					{
-						"type": "page",
-						"name": "ERC-721",
-						"url": "/contracts/v5.x/erc721"
-					},
-					{
-						"type": "page",
-						"name": "ERC-1155",
-						"url": "/contracts/v5.x/erc1155"
-					},
-					{
-						"type": "page",
-						"name": "ERC-4626",
-						"url": "/contracts/v5.x/erc4626"
-					},
-					{
-						"type": "page",
-						"name": "ERC-6909",
-						"url": "/contracts/v5.x/erc6909"
-					}
-				]
-			},
-			{
-				"type": "page",
-				"name": "Governance",
-				"url": "/contracts/v5.x/governance"
-			},
-			{
-				"type": "page",
-				"name": "Utilities",
-				"url": "/contracts/v5.x/utilities"
-			},
-			{
-				"type": "page",
-				"name": "FAQ",
-				"url": "/contracts/v5.x/faq"
-			},
-			{
-				"type": "page",
-				"name": "Changelog",
-				"url": "/contracts/v5.x/changelog"
-			},
-			{
-				"type": "folder",
-				"name": "API Reference",
-				"index": {
-					"type": "page",
-					"name": "Overview",
-					"url": "/contracts/v5.x/api"
-				},
-				"children": [
-					{
-						"type": "page",
-						"name": "Access",
-						"url": "/contracts/v5.x/api/access"
-					},
-					{
-						"type": "page",
-						"name": "Account",
-						"url": "/contracts/v5.x/api/account"
-					},
-					{
-						"type": "page",
-						"name": "Finance",
-						"url": "/contracts/v5.x/api/finance"
 					},
 					{
 						"type": "page",
 						"name": "Governance",
-						"url": "/contracts/v5.x/api/governance"
+						"url": "/contracts/v5.x/governance"
 					},
 					{
 						"type": "page",
-						"name": "Interfaces",
-						"url": "/contracts/v5.x/api/interfaces"
+						"name": "Utilities",
+						"url": "/contracts/v5.x/utilities"
 					},
 					{
 						"type": "page",
-						"name": "Meta Transactions",
-						"url": "/contracts/v5.x/api/metatx"
+						"name": "FAQ",
+						"url": "/contracts/v5.x/faq"
 					},
 					{
 						"type": "page",
-						"name": "Proxy",
-						"url": "/contracts/v5.x/api/proxy"
+						"name": "Changelog",
+						"url": "/contracts/v5.x/changelog"
 					},
 					{
 						"type": "folder",
-						"name": "Token",
-						"children": [
-							{
-								"type": "page",
-								"name": "Common",
-								"url": "/contracts/v5.x/api/token/common"
-							},
-							{
-								"type": "page",
-								"name": "ERC20",
-								"url": "/contracts/v5.x/api/token/ERC20"
-							},
-							{
-								"type": "page",
-								"name": "ERC721",
-								"url": "/contracts/v5.x/api/token/ERC721"
-							},
-							{
-								"type": "page",
-								"name": "ERC1155",
-								"url": "/contracts/v5.x/api/token/ERC1155"
-							},
-							{
-								"type": "page",
-								"name": "ERC6909",
-								"url": "/contracts/v5.x/api/token/ERC6909"
-							}
-						]
-					},
-					{
-						"type": "folder",
-						"name": "Utils",
+						"name": "API Reference",
 						"index": {
 							"type": "page",
 							"name": "Overview",
-							"url": "/contracts/v5.x/api/utils"
+							"url": "/contracts/v5.x/api"
 						},
 						"children": [
 							{
 								"type": "page",
+								"name": "Access",
+								"url": "/contracts/v5.x/api/access"
+							},
+							{
+								"type": "page",
+								"name": "Account",
+								"url": "/contracts/v5.x/api/account"
+							},
+							{
+								"type": "page",
+								"name": "Finance",
+								"url": "/contracts/v5.x/api/finance"
+							},
+							{
+								"type": "page",
+								"name": "Governance",
+								"url": "/contracts/v5.x/api/governance"
+							},
+							{
+								"type": "page",
+								"name": "Interfaces",
+								"url": "/contracts/v5.x/api/interfaces"
+							},
+							{
+								"type": "page",
+								"name": "Meta Transactions",
+								"url": "/contracts/v5.x/api/metatx"
+							},
+							{
+								"type": "page",
+								"name": "Proxy",
+								"url": "/contracts/v5.x/api/proxy"
+							},
+							{
+								"type": "folder",
+								"name": "Token",
+								"children": [
+									{
+										"type": "page",
+										"name": "Common",
+										"url": "/contracts/v5.x/api/token/common"
+									},
+									{
+										"type": "page",
+										"name": "ERC20",
+										"url": "/contracts/v5.x/api/token/ERC20"
+									},
+									{
+										"type": "page",
+										"name": "ERC721",
+										"url": "/contracts/v5.x/api/token/ERC721"
+									},
+									{
+										"type": "page",
+										"name": "ERC1155",
+										"url": "/contracts/v5.x/api/token/ERC1155"
+									},
+									{
+										"type": "page",
+										"name": "ERC6909",
+										"url": "/contracts/v5.x/api/token/ERC6909"
+									}
+								]
+							},
+							{
+								"type": "folder",
+								"name": "Utils",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/v5.x/api/utils"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "Cryptography",
+										"url": "/contracts/v5.x/api/utils/cryptography"
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "v4",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts/v4.x"
+					},
+					{
+						"type": "page",
+						"name": "Extending Contracts",
+						"url": "/contracts/v4.x/extending-contracts"
+					},
+					{
+						"type": "page",
+						"name": "Using with Upgrades",
+						"url": "/contracts/v4.x/upgradeable"
+					},
+					{
+						"type": "page",
+						"name": "Releases & Stability",
+						"url": "/contracts/v4.x/releases-stability"
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts/v4.x/access-control"
+					},
+					{
+						"type": "folder",
+						"name": "Tokens",
+						"index": {
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts/v4.x/tokens"
+						},
+						"children": [
+							{
+								"type": "folder",
+								"name": "ERC-20",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/v4.x/erc20"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "Creating Supply",
+										"url": "/contracts/v4.x/erc20-supply"
+									}
+								]
+							},
+							{
+								"type": "page",
+								"name": "ERC-721",
+								"url": "/contracts/v4.x/erc721"
+							},
+							{
+								"type": "page",
+								"name": "ERC-777",
+								"url": "/contracts/v4.x/erc777"
+							},
+							{
+								"type": "page",
+								"name": "ERC-1155",
+								"url": "/contracts/v4.x/erc1155"
+							},
+							{
+								"type": "page",
+								"name": "ERC-4626",
+								"url": "/contracts/v4.x/erc4626"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Crosschain",
+						"url": "/contracts/v4.x/crosschain"
+					},
+					{
+						"type": "page",
+						"name": "Governance",
+						"url": "/contracts/v4.x/governance"
+					},
+					{
+						"type": "page",
+						"name": "Utilities",
+						"url": "/contracts/v4.x/utilities"
+					},
+					{
+						"type": "page",
+						"name": "Drafts",
+						"url": "/contracts/v4.x/drafts"
+					},
+					{
+						"type": "page",
+						"name": "Crowdsales (Legacy)",
+						"url": "/contracts/v4.x/crowdsales"
+					},
+					{
+						"type": "folder",
+						"name": "API Reference",
+						"index": {
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts/v4.x/api"
+						},
+						"children": [
+							{
+								"type": "page",
+								"name": "Access",
+								"url": "/contracts/v4.x/api/access"
+							},
+							{
+								"type": "page",
+								"name": "Crosschain",
+								"url": "/contracts/v4.x/api/crosschain"
+							},
+							{
+								"type": "page",
+								"name": "Finance",
+								"url": "/contracts/v4.x/api/finance"
+							},
+							{
+								"type": "page",
+								"name": "Governance",
+								"url": "/contracts/v4.x/api/governance"
+							},
+							{
+								"type": "page",
+								"name": "Interfaces",
+								"url": "/contracts/v4.x/api/interfaces"
+							},
+							{
+								"type": "page",
+								"name": "Meta Transactions",
+								"url": "/contracts/v4.x/api/metatx"
+							},
+							{
+								"type": "page",
+								"name": "Proxy",
+								"url": "/contracts/v4.x/api/proxy"
+							},
+							{
+								"type": "page",
+								"name": "Security",
+								"url": "/contracts/v4.x/api/security"
+							},
+							{
+								"type": "folder",
+								"name": "Token",
+								"children": [
+									{
+										"type": "page",
+										"name": "Common",
+										"url": "/contracts/v4.x/api/token/common"
+									},
+									{
+										"type": "page",
+										"name": "ERC20",
+										"url": "/contracts/v4.x/api/token/ERC20"
+									},
+									{
+										"type": "page",
+										"name": "ERC721",
+										"url": "/contracts/v4.x/api/token/ERC721"
+									},
+									{
+										"type": "page",
+										"name": "ERC777",
+										"url": "/contracts/v4.x/api/token/ERC777"
+									},
+									{
+										"type": "page",
+										"name": "ERC1155",
+										"url": "/contracts/v4.x/api/token/ERC1155"
+									}
+								]
+							},
+							{
+								"type": "page",
+								"name": "Utils",
+								"url": "/contracts/v4.x/api/utils"
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "v3",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts/v3.x"
+					},
+					{
+						"type": "page",
+						"name": "Extending Contracts",
+						"url": "/contracts/v3.x/extending-contracts"
+					},
+					{
+						"type": "page",
+						"name": "Using with Upgrades",
+						"url": "/contracts/v3.x/upgradeable"
+					},
+					{
+						"type": "page",
+						"name": "Releases & Stability",
+						"url": "/contracts/v3.x/releases-stability"
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts/v3.x/access-control"
+					},
+					{
+						"type": "folder",
+						"name": "Tokens",
+						"index": {
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts/v3.x/tokens"
+						},
+						"children": [
+							{
+								"type": "folder",
+								"name": "ERC-20",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/v3.x/erc20"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "Creating Supply",
+										"url": "/contracts/v3.x/erc20-supply"
+									}
+								]
+							},
+							{
+								"type": "page",
+								"name": "ERC-721",
+								"url": "/contracts/v3.x/erc721"
+							},
+							{
+								"type": "page",
+								"name": "ERC-777",
+								"url": "/contracts/v3.x/erc777"
+							},
+							{
+								"type": "page",
+								"name": "ERC-1155",
+								"url": "/contracts/v3.x/erc1155"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Governance",
+						"url": "/contracts/v3.x/governance"
+					},
+					{
+						"type": "page",
+						"name": "Utilities",
+						"url": "/contracts/v3.x/utilities"
+					},
+					{
+						"type": "page",
+						"name": "Gas Station Network",
+						"url": "/contracts/v3.x/gsn"
+					},
+					{
+						"type": "page",
+						"name": "GSN Strategies",
+						"url": "/contracts/v3.x/gsn-strategies"
+					},
+					{
+						"type": "page",
+						"name": "Drafts",
+						"url": "/contracts/v3.x/drafts"
+					},
+					{
+						"type": "page",
+						"name": "Crowdsales (Legacy)",
+						"url": "/contracts/v3.x/crowdsales"
+					},
+					{
+						"type": "folder",
+						"name": "API Reference",
+						"index": {
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts/v3.x/api"
+						},
+						"children": [
+							{
+								"type": "page",
+								"name": "Access",
+								"url": "/contracts/v3.x/api/access"
+							},
+							{
+								"type": "page",
 								"name": "Cryptography",
-								"url": "/contracts/v5.x/api/utils/cryptography"
+								"url": "/contracts/v3.x/api/cryptography"
+							},
+							{
+								"type": "page",
+								"name": "Drafts",
+								"url": "/contracts/v3.x/api/drafts"
+							},
+							{
+								"type": "page",
+								"name": "Gas Station Network",
+								"url": "/contracts/v3.x/api/GSN"
+							},
+							{
+								"type": "page",
+								"name": "Introspection",
+								"url": "/contracts/v3.x/api/introspection"
+							},
+							{
+								"type": "page",
+								"name": "Math",
+								"url": "/contracts/v3.x/api/math"
+							},
+							{
+								"type": "page",
+								"name": "Payment",
+								"url": "/contracts/v3.x/api/payment"
+							},
+							{
+								"type": "page",
+								"name": "Presets",
+								"url": "/contracts/v3.x/api/presets"
+							},
+							{
+								"type": "page",
+								"name": "Proxy",
+								"url": "/contracts/v3.x/api/proxy"
+							},
+							{
+								"type": "folder",
+								"name": "Token",
+								"children": [
+									{
+										"type": "page",
+										"name": "ERC20",
+										"url": "/contracts/v3.x/api/token/ERC20"
+									},
+									{
+										"type": "page",
+										"name": "ERC721",
+										"url": "/contracts/v3.x/api/token/ERC721"
+									},
+									{
+										"type": "page",
+										"name": "ERC777",
+										"url": "/contracts/v3.x/api/token/ERC777"
+									},
+									{
+										"type": "page",
+										"name": "ERC1155",
+										"url": "/contracts/v3.x/api/token/ERC1155"
+									}
+								]
+							},
+							{
+								"type": "page",
+								"name": "Utils",
+								"url": "/contracts/v3.x/api/utils"
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "v2",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts/v2.x"
+					},
+					{
+						"type": "page",
+						"name": "Releases & Stability",
+						"url": "/contracts/v2.x/releases-stability"
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts/v2.x/access-control"
+					},
+					{
+						"type": "folder",
+						"name": "Tokens",
+						"index": {
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts/v2.x/tokens"
+						},
+						"children": [
+							{
+								"type": "folder",
+								"name": "ERC-20",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/v2.x/erc20"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "Creating Supply",
+										"url": "/contracts/v2.x/erc20-supply"
+									}
+								]
+							},
+							{
+								"type": "page",
+								"name": "ERC-721",
+								"url": "/contracts/v2.x/erc721"
+							},
+							{
+								"type": "page",
+								"name": "ERC-777",
+								"url": "/contracts/v2.x/erc777"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Utilities",
+						"url": "/contracts/v2.x/utilities"
+					},
+					{
+						"type": "page",
+						"name": "Gas Station Network",
+						"url": "/contracts/v2.x/gsn"
+					},
+					{
+						"type": "page",
+						"name": "GSN Strategies",
+						"url": "/contracts/v2.x/gsn-strategies"
+					},
+					{
+						"type": "page",
+						"name": "Crowdsales (Legacy)",
+						"url": "/contracts/v2.x/crowdsales"
+					},
+					{
+						"type": "folder",
+						"name": "API Reference",
+						"children": [
+							{
+								"type": "page",
+								"name": "Access",
+								"url": "/contracts/v2.x/api/access"
+							},
+							{
+								"type": "page",
+								"name": "Cryptography",
+								"url": "/contracts/v2.x/api/cryptography"
+							},
+							{
+								"type": "page",
+								"name": "Drafts",
+								"url": "/contracts/v2.x/api/drafts"
+							},
+							{
+								"type": "page",
+								"name": "Gas Station Network",
+								"url": "/contracts/v2.x/api/GSN"
+							},
+							{
+								"type": "page",
+								"name": "Introspection",
+								"url": "/contracts/v2.x/api/introspection"
+							},
+							{
+								"type": "page",
+								"name": "Math",
+								"url": "/contracts/v2.x/api/math"
+							},
+							{
+								"type": "page",
+								"name": "Payment",
+								"url": "/contracts/v2.x/api/payment"
+							},
+							{
+								"type": "page",
+								"name": "Presets",
+								"url": "/contracts/v2.x/api/presets"
+							},
+							{
+								"type": "page",
+								"name": "Proxy",
+								"url": "/contracts/v2.x/api/proxy"
+							},
+							{
+								"type": "folder",
+								"name": "Token",
+								"children": [
+									{
+										"type": "page",
+										"name": "ERC20",
+										"url": "/contracts/v2.x/api/token/ERC20"
+									},
+									{
+										"type": "page",
+										"name": "ERC721",
+										"url": "/contracts/v2.x/api/token/ERC721"
+									},
+									{
+										"type": "page",
+										"name": "ERC777",
+										"url": "/contracts/v2.x/api/token/ERC777"
+									},
+									{
+										"type": "page",
+										"name": "ERC1155",
+										"url": "/contracts/v2.x/api/token/ERC1155"
+									}
+								]
+							},
+							{
+								"type": "page",
+								"name": "Utils",
+								"url": "/contracts/v2.x/api/utils"
 							}
 						]
 					}
