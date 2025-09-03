@@ -4,45 +4,81 @@
 		"name": "Contracts"
 	},
 	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/contracts-compact/v0.x/"
+	},
+	{
+		"type": "page",
+		"name": "Access",
+		"url": "/contracts-compact/v0.x/access"
+	},
+	{
+		"type": "page",
+		"name": "Ownable",
+		"url": "/contracts-compact/v0.x/ownable"
+	},
+	{
 		"type": "folder",
-		"name": "Midnight Contracts",
+		"name": "Tokens",
 		"children": [
 			{
 				"type": "page",
-				"name": "Overview",
-				"url": "/compact-contracts/v0.x"
+				"name": "FungibleToken",
+				"url": "/contracts-compact/v0.x/fungibleToken"
 			},
 			{
-				"type": "folder",
-				"name": "Learn",
-				"children": [
-					{
-						"type": "page",
-						"name": "ZK Circuits 101",
-						"url": "/compact-contracts/v0.x/zkCircuits101"
-					},
-					{
-						"type": "page",
-						"name": "Extensibility",
-						"url": "/compact-contracts/v0.x/extensibility"
-					}
-				]
+				"type": "page",
+				"name": "NonFungibleToken",
+				"url": "/contracts-compact/v0.x/nonFungibleToken"
+			},
+			{
+				"type": "page",
+				"name": "MultiToken",
+				"url": "/contracts-compact/v0.x/multitoken"
 			}
 		]
 	},
 	{
-		"type": "separator",
-		"name": "Tools"
+		"type": "page",
+		"name": "Utils",
+		"url": "/contracts-compact/v0.x/utils"
 	},
 	{
-		"type": "page",
-		"name": "Midnight SDK",
-		"url": "/compact-contracts/v0.x"
-	},
-	{
-		"type": "page",
-		"name": "ZK Circuit Compiler",
-		"url": "/compact-contracts/v0.x"
+		"type": "folder",
+		"name": "API Reference",
+		"children": [
+			{
+				"type": "page",
+				"name": "Access API",
+				"url": "/contracts-compact/v0.x/api/access"
+			},
+			{
+				"type": "page",
+				"name": "FungibleToken API",
+				"url": "/contracts-compact/v0.x/api/fungibleToken"
+			},
+			{
+				"type": "page",
+				"name": "MultiToken API",
+				"url": "/contracts-compact/v0.x/api/multitoken"
+			},
+			{
+				"type": "page",
+				"name": "NonFungibleToken API",
+				"url": "/contracts-compact/v0.x/api/nonFungibleToken"
+			},
+			{
+				"type": "page",
+				"name": "Ownable API",
+				"url": "/contracts-compact/v0.x/api/ownable"
+			},
+			{
+				"type": "page",
+				"name": "Utils API",
+				"url": "/contracts-compact/v0.x/api/utils"
+			}
+		]
 	},
 	{
 		"type": "separator",
@@ -50,17 +86,12 @@
 	},
 	{
 		"type": "page",
-		"name": "Zero-Knowledge Proofs",
-		"url": "/compact-contracts/v0.x/zkCircuits101"
+		"name": "ZK Circuits 101",
+		"url": "/contracts-compact/v0.x/zkCircuits101"
 	},
 	{
 		"type": "page",
-		"name": "Building ZK Applications",
-		"url": "/compact-contracts/v0.x/extensibility"
-	},
-	{
-		"type": "page",
-		"name": "Deploying to Midnight",
-		"url": "/compact-contracts/v0.x"
+		"name": "Extensibility",
+		"url": "/contracts-compact/v0.x/extensibility"
 	}
 ]

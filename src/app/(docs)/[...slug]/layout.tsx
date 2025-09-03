@@ -43,7 +43,7 @@ export default async function Layout({
     currentTree = starknetTree;
   } else if (pathname.startsWith("/stellar-contracts")) {
     currentTree = stellarTree;
-  } else if (pathname.startsWith("/compact-contracts")) {
+  } else if (pathname.startsWith("/contracts-compact")) {
     currentTree = midnightTree;
   } else if (pathname.startsWith("/confidential-contracts")) {
     currentTree = zamaTree;
@@ -89,7 +89,7 @@ export default async function Layout({
 					},
 					{
 						title: "Midnight",
-						url: "/compact-contracts/v0.x",
+						url: "/contracts-compact/v0.x",
 						icon: (
 							<MidnightIcon className="w-4 h-4 flex items-centered justify-center" />
 						),
