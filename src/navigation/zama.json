@@ -4,93 +4,54 @@
 		"name": "Contracts"
 	},
 	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/confidential-contracts/v0.x"
+	},
+	{
+		"type": "page",
+		"name": "Token",
+		"url": "/confidential-contracts/v0.x/token"
+	},
+	{
+		"type": "page",
+		"name": "Changelog",
+		"url": "/confidential-contracts/v0.x/changelog"
+	},
+	{
 		"type": "folder",
-		"name": "Confidential Contracts",
+		"name": "API Reference",
 		"children": [
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/confidential-contracts/v0.x"
+				"url": "/confidential-contracts/v0.x/api"
+			},
+			{
+				"type": "page",
+				"name": "Finance",
+				"url": "/confidential-contracts/v0.x/api/finance"
+			},
+			{
+				"type": "page",
+				"name": "Governance",
+				"url": "/confidential-contracts/v0.x/api/governance"
+			},
+			{
+				"type": "page",
+				"name": "Interfaces",
+				"url": "/confidential-contracts/v0.x/api/interfaces"
 			},
 			{
 				"type": "page",
 				"name": "Token",
-				"url": "/confidential-contracts/v0.x/token"
+				"url": "/confidential-contracts/v0.x/api/token"
 			},
 			{
 				"type": "page",
-				"name": "Changelog",
-				"url": "/confidential-contracts/v0.x/changelog"
-			},
-			{
-				"type": "folder",
-				"name": "API Reference",
-				"children": [
-					{
-						"type": "page",
-						"name": "Overview",
-						"url": "/confidential-contracts/v0.x/api"
-					},
-					{
-						"type": "page",
-						"name": "Finance",
-						"url": "/confidential-contracts/v0.x/api/finance"
-					},
-					{
-						"type": "page",
-						"name": "Governance",
-						"url": "/confidential-contracts/v0.x/api/governance"
-					},
-					{
-						"type": "page",
-						"name": "Interfaces",
-						"url": "/confidential-contracts/v0.x/api/interfaces"
-					},
-					{
-						"type": "page",
-						"name": "Token",
-						"url": "/confidential-contracts/v0.x/api/token"
-					},
-					{
-						"type": "page",
-						"name": "Utils",
-						"url": "/confidential-contracts/v0.x/api/utils"
-					}
-				]
+				"name": "Utils",
+				"url": "/confidential-contracts/v0.x/api/utils"
 			}
 		]
-	},
-	{
-		"type": "separator",
-		"name": "Tools"
-	},
-	{
-		"type": "page",
-		"name": "Zama CLI",
-		"url": "/confidential-contracts/v0.x"
-	},
-	{
-		"type": "page",
-		"name": "Zama SDK",
-		"url": "/confidential-contracts/v0.x"
-	},
-	{
-		"type": "separator",
-		"name": "Guides"
-	},
-	{
-		"type": "page",
-		"name": "Getting Started with Confidential Computing",
-		"url": "/confidential-contracts/v0.x"
-	},
-	{
-		"type": "page",
-		"name": "Privacy-Preserving Smart Contracts",
-		"url": "/confidential-contracts/v0.x"
-	},
-	{
-		"type": "page",
-		"name": "Deploying Confidential Contracts",
-		"url": "/confidential-contracts/v0.x"
 	}
 ]
