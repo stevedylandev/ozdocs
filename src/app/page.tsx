@@ -133,7 +133,7 @@ export default function HomePage() {
 						</div>
 						<div className="grid grid-cols-2 gap-3">
 							<a
-								href="/tools/openzeppelin-relayer/v1.x"
+								href="/tools/openzeppelin-relayer"
 								className="group flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-accent transition-colors"
 							>
 								<div className="w-7 h-7 bg-muted rounded flex items-center justify-center flex-shrink-0">
