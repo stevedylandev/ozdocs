@@ -1204,12 +1204,12 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/openzeppelin-relayer/v1.x"
+				"url": "/openzeppelin-relayer"
 			},
 			{
 				"type": "page",
 				"name": "Quickstart",
-				"url": "/openzeppelin-relayer/v1.x/quickstart"
+				"url": "/openzeppelin-relayer/quickstart"
 			},
 			{
 				"type": "folder",
@@ -1217,40 +1217,40 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/openzeppelin-relayer/v1.x/configuration"
+					"url": "/openzeppelin-relayer/configuration"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Signers",
-						"url": "/openzeppelin-relayer/v1.x/configuration/signers"
+						"url": "/openzeppelin-relayer/configuration/signers"
 					},
 					{
 						"type": "page",
 						"name": "Network Configuration",
-						"url": "/openzeppelin-relayer/v1.x/network_configuration"
+						"url": "/openzeppelin-relayer/network_configuration"
 					},
 					{
 						"type": "page",
 						"name": "Storage Configuration",
-						"url": "/openzeppelin-relayer/v1.x/configuration/storage"
+						"url": "/openzeppelin-relayer/configuration/storage"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "EVM Integration",
-				"url": "/openzeppelin-relayer/v1.x/evm"
+				"url": "/openzeppelin-relayer/evm"
 			},
 			{
 				"type": "page",
 				"name": "Solana Integration",
-				"url": "/openzeppelin-relayer/v1.x/solana"
+				"url": "/openzeppelin-relayer/solana"
 			},
 			{
 				"type": "page",
 				"name": "Stellar Integration",
-				"url": "/openzeppelin-relayer/v1.x/stellar"
+				"url": "/openzeppelin-relayer/stellar"
 			},
 			{
 				"type": "page",
@@ -1261,22 +1261,22 @@
 			{
 				"type": "page",
 				"name": "Project Structure",
-				"url": "/openzeppelin-relayer/v1.x/structure"
+				"url": "/openzeppelin-relayer/structure"
 			},
 			{
 				"type": "page",
 				"name": "Project Roadmap",
-				"url": "/openzeppelin-relayer/v1.x/roadmap"
+				"url": "/openzeppelin-relayer/roadmap"
 			},
 			{
 				"type": "page",
 				"name": "Plugins",
-				"url": "/openzeppelin-relayer/v1.x/plugins"
+				"url": "/openzeppelin-relayer/plugins"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/openzeppelin-relayer/v1.x/changelog"
+				"url": "/openzeppelin-relayer/changelog"
 			},
 			{
 				"type": "page",
