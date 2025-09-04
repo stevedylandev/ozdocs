@@ -3,8 +3,6 @@ import { type NextRequest, NextResponse } from "next/server";
 // Version mappings for redirects
 const VERSION_REDIRECTS: Record<string, string> = {
 	contracts: "contracts/v5.x",
-	nile: "nile/v0.x",
-	"tools/openzeppelin-monitor": "tools/openzeppelin-monitor/v1.x",
 };
 
 export function middleware(request: NextRequest) {
