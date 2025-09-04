@@ -783,7 +783,7 @@
 		"index": {
 			"type": "page",
 			"name": "Overview",
-			"url": "/community-contracts/v1.x"
+			"url": "/community-contracts"
 		},
 		"children": [
 			{
@@ -792,41 +792,30 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/community-contracts/v1.x/account-abstraction"
+					"url": "/contracts/v5.x/account-abstraction"
 				},
 				"children": [
 					{
-						"type": "folder",
-						"name": "Accounts",
-						"index": {
-							"type": "page",
-							"name": "Overview",
-							"url": "/community-contracts/v1.x/accounts"
-						},
-						"children": [
-							{
-								"type": "page",
-								"name": "Modules",
-								"url": "/community-contracts/v1.x/account-modules"
-							}
-						]
+						"type": "page",
+						"name": "Modules",
+						"url": "/community-contracts/account-modules"
 					},
 					{
 						"type": "page",
 						"name": "Paymasters",
-						"url": "/community-contracts/v1.x/paymasters"
+						"url": "/community-contracts/paymasters"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Crosschain",
-				"url": "/community-contracts/v1.x/crosschain"
+				"url": "/community-contracts/crosschain"
 			},
 			{
 				"type": "page",
 				"name": "Utilities",
-				"url": "/community-contracts/v1.x/utilities"
+				"url": "/community-contracts/utilities"
 			}
 		]
 	},

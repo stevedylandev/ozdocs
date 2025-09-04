@@ -6,17 +6,17 @@
 	{
 		"type": "page",
 		"name": "Overview",
-		"url": "/confidential-contracts/v0.x"
+		"url": "/confidential-contracts"
 	},
 	{
 		"type": "page",
 		"name": "Token",
-		"url": "/confidential-contracts/v0.x/token"
+		"url": "/confidential-contracts/token"
 	},
 	{
 		"type": "page",
 		"name": "Changelog",
-		"url": "/confidential-contracts/v0.x/changelog"
+		"url": "/confidential-contracts/changelog"
 	},
 	{
 		"type": "folder",
@@ -25,32 +25,32 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/confidential-contracts/v0.x/api"
+				"url": "/confidential-contracts/api"
 			},
 			{
 				"type": "page",
 				"name": "Finance",
-				"url": "/confidential-contracts/v0.x/api/finance"
+				"url": "/confidential-contracts/api/finance"
 			},
 			{
 				"type": "page",
 				"name": "Governance",
-				"url": "/confidential-contracts/v0.x/api/governance"
+				"url": "/confidential-contracts/api/governance"
 			},
 			{
 				"type": "page",
 				"name": "Interfaces",
-				"url": "/confidential-contracts/v0.x/api/interfaces"
+				"url": "/confidential-contracts/api/interfaces"
 			},
 			{
 				"type": "page",
 				"name": "Token",
-				"url": "/confidential-contracts/v0.x/api/token"
+				"url": "/confidential-contracts/api/token"
 			},
 			{
 				"type": "page",
 				"name": "Utils",
-				"url": "/confidential-contracts/v0.x/api/utils"
+				"url": "/confidential-contracts/api/utils"
 			}
 		]
 	}

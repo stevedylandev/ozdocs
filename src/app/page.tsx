@@ -216,49 +216,49 @@ export default function HomePage() {
 							className="relative overflow-hidden hover:border-blue-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-blue-600 before:to-blue-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/cairo-contracts/v3.x"
+							href="/cairo-contracts"
 							title="Starknet"
 							description="Essential contracts library written in Cairo for Starknet"
 							icon={<StarknetIcon className="w-4 h-4" />}
 							className="relative overflow-hidden hover:border-orange-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-orange-600 before:to-orange-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/contracts-stylus/v0.x"
+							href="/contracts-stylus"
 							title="Arbitrum Stylus"
 							description="Essential contracts library for Arbitrum Stylus written in Rust"
 							icon={<ArbitrumIcon className="w-4 h-4" />}
 							className="relative overflow-hidden hover:border-red-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-red-600 before:to-red-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/uniswap-hooks/v1.x"
+							href="/uniswap-hooks"
 							title="Uniswap Hooks"
 							description="Advanced Uniswap V4 hooks in Solidity"
 							icon={<UniswapIcon className="h-4 w-4" />}
 							className="relative overflow-hidden hover:border-blue-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-blue-600 before:to-blue-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/confidential-contracts/v0.x"
+							href="/confidential-contracts"
 							title="Zama FHEVM"
 							description="Fully homomorphic encryption contracts for confidential smart contracts"
 							icon={<ZamaIcon className="w-4 h-4" />}
 							className="relative overflow-hidden hover:border-yellow-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-yellow-600 before:to-yellow-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/stellar-contracts/v0.x"
+							href="/stellar-contracts"
 							title="Stellar"
 							description="Soroban contracts library for Stellar"
 							icon={<StellarIcon className="h-4 w-4" />}
 							className="relative overflow-hidden hover:border-cyan-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-cyan-600 before:to-cyan-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/compact-contracts/v0.x"
+							href="/compact-contracts"
 							title="Midnight"
 							description="Privacy-preserving smart contracts for Midnight blockchain"
 							icon={<MidnightIcon className="h-4 w-4" />}
 							className="relative overflow-hidden hover:border-purple-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-purple-600 before:to-purple-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/substrate-runtimes/v3.x"
+							href="/substrate-runtimes"
 							title="Polkadot"
 							description="ink! smart contracts for Polkadot and Substrate chains"
 							icon={<PolkadotIcon className="w-4 h-4" />}

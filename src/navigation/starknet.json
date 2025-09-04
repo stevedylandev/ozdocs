@@ -6,12 +6,12 @@
 	{
 		"type": "page",
 		"name": "Overview",
-		"url": "/cairo-contracts/v3.x"
+		"url": "/cairo-contracts"
 	},
 	{
 		"type": "page",
 		"name": "Wizard",
-		"url": "/cairo-contracts/v3.x/wizard"
+		"url": "/cairo-contracts/wizard"
 	},
 	{
 		"type": "folder",
@@ -20,49 +20,49 @@
 			{
 				"type": "page",
 				"name": "Components",
-				"url": "/cairo-contracts/v3.x/components"
+				"url": "/cairo-contracts/components"
 			},
 			{
 				"type": "page",
 				"name": "Presets",
-				"url": "/cairo-contracts/v3.x/presets"
+				"url": "/cairo-contracts/presets"
 			},
 			{
 				"type": "page",
 				"name": "Interfaces and Dispatchers",
-				"url": "/cairo-contracts/v3.x/guides/interfaces-and-dispatchers"
+				"url": "/cairo-contracts/guides/interfaces-and-dispatchers"
 			},
 			{
 				"type": "page",
 				"name": "Counterfactual Deployments",
-				"url": "/cairo-contracts/v3.x/guides/deployment"
+				"url": "/cairo-contracts/guides/deployment"
 			},
 			{
 				"type": "page",
 				"name": "SNIP12 and Typed Messages",
-				"url": "/cairo-contracts/v3.x/guides/snip12"
+				"url": "/cairo-contracts/guides/snip12"
 			},
 			{
 				"type": "page",
 				"name": "ERC20 Permit",
-				"url": "/cairo-contracts/v3.x/guides/erc20-permit"
+				"url": "/cairo-contracts/guides/erc20-permit"
 			},
 			{
 				"type": "page",
 				"name": "ERC20 Supply",
-				"url": "/cairo-contracts/v3.x/guides/erc20-supply"
+				"url": "/cairo-contracts/guides/erc20-supply"
 			},
 			{
 				"type": "page",
 				"name": "SRC5 Migration",
-				"url": "/cairo-contracts/v3.x/guides/src5-migration"
+				"url": "/cairo-contracts/guides/src5-migration"
 			}
 		]
 	},
 	{
 		"type": "page",
 		"name": "Backwards Compatibility",
-		"url": "/cairo-contracts/v3.x/backwards-compatibility"
+		"url": "/cairo-contracts/backwards-compatibility"
 	},
 	{
 		"type": "folder",
@@ -71,22 +71,22 @@
 			{
 				"type": "page",
 				"name": "ERC-20",
-				"url": "/cairo-contracts/v3.x/erc20"
+				"url": "/cairo-contracts/erc20"
 			},
 			{
 				"type": "page",
 				"name": "ERC-721",
-				"url": "/cairo-contracts/v3.x/erc721"
+				"url": "/cairo-contracts/erc721"
 			},
 			{
 				"type": "page",
 				"name": "ERC-1155",
-				"url": "/cairo-contracts/v3.x/erc1155"
+				"url": "/cairo-contracts/erc1155"
 			},
 			{
 				"type": "page",
 				"name": "ERC-4626",
-				"url": "/cairo-contracts/v3.x/erc4626"
+				"url": "/cairo-contracts/erc4626"
 			}
 		]
 	},
@@ -97,64 +97,64 @@
 			{
 				"type": "page",
 				"name": "Governor",
-				"url": "/cairo-contracts/v3.x/governance/governor"
+				"url": "/cairo-contracts/governance/governor"
 			},
 			{
 				"type": "page",
 				"name": "Multisig",
-				"url": "/cairo-contracts/v3.x/governance/multisig"
+				"url": "/cairo-contracts/governance/multisig"
 			},
 			{
 				"type": "page",
 				"name": "Timelock",
-				"url": "/cairo-contracts/v3.x/governance/timelock"
+				"url": "/cairo-contracts/governance/timelock"
 			},
 			{
 				"type": "page",
 				"name": "Votes",
-				"url": "/cairo-contracts/v3.x/governance/votes"
+				"url": "/cairo-contracts/governance/votes"
 			}
 		]
 	},
 	{
 		"type": "page",
 		"name": "Access Control",
-		"url": "/cairo-contracts/v3.x/access"
+		"url": "/cairo-contracts/access"
 	},
 	{
 		"type": "page",
 		"name": "Accounts",
-		"url": "/cairo-contracts/v3.x/accounts"
+		"url": "/cairo-contracts/accounts"
 	},
 	{
 		"type": "page",
 		"name": "Finance",
-		"url": "/cairo-contracts/v3.x/finance"
+		"url": "/cairo-contracts/finance"
 	},
 	{
 		"type": "page",
 		"name": "Interfaces",
-		"url": "/cairo-contracts/v3.x/interfaces"
+		"url": "/cairo-contracts/interfaces"
 	},
 	{
 		"type": "page",
 		"name": "Introspection",
-		"url": "/cairo-contracts/v3.x/introspection"
+		"url": "/cairo-contracts/introspection"
 	},
 	{
 		"type": "page",
 		"name": "Security",
-		"url": "/cairo-contracts/v3.x/security"
+		"url": "/cairo-contracts/security"
 	},
 	{
 		"type": "page",
 		"name": "Upgrades",
-		"url": "/cairo-contracts/v3.x/upgrades"
+		"url": "/cairo-contracts/upgrades"
 	},
 	{
 		"type": "page",
 		"name": "Universal Deployer Contract",
-		"url": "/cairo-contracts/v3.x/udc"
+		"url": "/cairo-contracts/udc"
 	},
 	{
 		"type": "folder",
@@ -163,17 +163,17 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/cairo-contracts/v3.x/macros"
+				"url": "/cairo-contracts/macros"
 			},
 			{
 				"type": "page",
 				"name": "Type Hash",
-				"url": "/cairo-contracts/v3.x/macros/type_hash"
+				"url": "/cairo-contracts/macros/type_hash"
 			},
 			{
 				"type": "page",
 				"name": "With Components",
-				"url": "/cairo-contracts/v3.x/macros/with_components"
+				"url": "/cairo-contracts/macros/with_components"
 			}
 		]
 	},
@@ -184,12 +184,12 @@
 			{
 				"type": "page",
 				"name": "Common",
-				"url": "/cairo-contracts/v3.x/utils/_common"
+				"url": "/cairo-contracts/utils/_common"
 			},
 			{
 				"type": "page",
 				"name": "Class Hashes",
-				"url": "/cairo-contracts/v3.x/utils/_class_hashes"
+				"url": "/cairo-contracts/utils/_class_hashes"
 			}
 		]
 	}
