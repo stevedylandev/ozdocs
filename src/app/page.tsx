@@ -82,7 +82,7 @@ export default function HomePage() {
 								</div>
 							</a>
 							<a
-								href="/tools/wizard"
+								href="/wizard"
 								className="group flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-accent transition-colors"
 							>
 								<div className="w-7 h-7 bg-muted rounded flex items-center justify-center flex-shrink-0">
@@ -133,7 +133,7 @@ export default function HomePage() {
 						</div>
 						<div className="grid grid-cols-2 gap-3">
 							<a
-								href="/tools/openzeppelin-relayer"
+								href="/openzeppelin-relayer"
 								className="group flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-accent transition-colors"
 							>
 								<div className="w-7 h-7 bg-muted rounded flex items-center justify-center flex-shrink-0">
@@ -147,7 +147,7 @@ export default function HomePage() {
 								</div>
 							</a>
 							<a
-								href="/tools/openzeppelin-monitor"
+								href="/openzeppelin-monitor"
 								className="group flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-accent transition-colors"
 							>
 								<div className="w-7 h-7 bg-muted rounded flex items-center justify-center flex-shrink-0">
@@ -161,7 +161,7 @@ export default function HomePage() {
 								</div>
 							</a>
 							<a
-								href="/tools/contracts-ui-builder"
+								href="/contracts-ui-builder"
 								className="group flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-accent transition-colors"
 							>
 								<div className="w-7 h-7 bg-muted rounded flex items-center justify-center flex-shrink-0">
@@ -175,7 +175,7 @@ export default function HomePage() {
 								</div>
 							</a>
 							<a
-								href="/tools/defender"
+								href="/defender"
 								className="group flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-accent transition-colors"
 							>
 								<div className="w-7 h-7 bg-muted rounded flex items-center justify-center flex-shrink-0">
