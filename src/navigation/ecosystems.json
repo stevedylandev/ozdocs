@@ -5,17 +5,17 @@
 	},
 	{
 		"type": "folder",
-		"name": "Starknet Contracts",
+		"name": "Cairo Contracts",
 		"children": [
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/cairo-contracts/v3.x"
+				"url": "/cairo-contracts"
 			},
 			{
 				"type": "page",
 				"name": "Wizard",
-				"url": "/cairo-contracts/v3.x/wizard"
+				"url": "/cairo-contracts/wizard"
 			},
 			{
 				"type": "folder",
@@ -24,45 +24,45 @@
 					{
 						"type": "page",
 						"name": "Components",
-						"url": "/cairo-contracts/v3.x/components"
+						"url": "/cairo-contracts/components"
 					},
 					{
 						"type": "page",
 						"name": "Presets",
-						"url": "/cairo-contracts/v3.x/presets"
+						"url": "/cairo-contracts/presets"
 					},
 					{
 						"type": "page",
 						"name": "Interfaces and Dispatchers",
-						"url": "/cairo-contracts/v3.x/guides/interfaces-and-dispatchers"
+						"url": "/cairo-contracts/guides/interfaces-and-dispatchers"
 					},
 					{
 						"type": "page",
 						"name": "Counterfactual Deployments",
-						"url": "/cairo-contracts/v3.x/guides/deployment"
+						"url": "/cairo-contracts/guides/deployment"
 					},
 					{
 						"type": "page",
 						"name": "SNIP12 and Typed Messages",
-						"url": "/cairo-contracts/v3.x/guides/snip12"
+						"url": "/cairo-contracts/guides/snip12"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Backwards Compatibility",
-				"url": "/cairo-contracts/v3.x/backwards-compatibility"
+				"url": "/cairo-contracts/backwards-compatibility"
 			}
 		]
 	},
 	{
 		"type": "folder",
-		"name": "Midnight Contracts",
+		"name": "Contracts Compact",
 		"children": [
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/compact-contracts/v0.x"
+				"url": "/contracts-compact"
 			},
 			{
 				"type": "folder",
@@ -71,12 +71,12 @@
 					{
 						"type": "page",
 						"name": "ZK Circuits 101",
-						"url": "/compact-contracts/v0.x/zkCircuits101"
+						"url": "/contracts-compact/zkCircuits101"
 					},
 					{
 						"type": "page",
 						"name": "Extensibility",
-						"url": "/compact-contracts/v0.x/extensibility"
+						"url": "/contracts-compact/extensibility"
 					}
 				]
 			}
@@ -84,58 +84,58 @@
 	},
 	{
 		"type": "folder",
-		"name": "Zama Contracts",
+		"name": "Confidential Contracts",
 		"children": [
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/confidential-contracts/v0.x"
+				"url": "/confidential-contracts"
 			},
 			{
 				"type": "page",
 				"name": "Token",
-				"url": "/confidential-contracts/v0.x/token"
+				"url": "/confidential-contracts/token"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/confidential-contracts/v0.x/changelog"
+				"url": "/confidential-contracts/changelog"
 			}
 		]
 	},
 	{
 		"type": "folder",
-		"name": "Arbitrum Stylus Contracts",
+		"name": "Contracts Stylus",
 		"children": [
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/contracts-stylus/v0.x"
+				"url": "/contracts-stylus"
 			},
 			{
 				"type": "page",
 				"name": "Access Control",
-				"url": "/contracts-stylus/v0.x/access-control"
+				"url": "/contracts-stylus/access-control"
 			},
 			{
 				"type": "page",
 				"name": "Cryptography",
-				"url": "/contracts-stylus/v0.x/crypto"
+				"url": "/contracts-stylus/crypto"
 			},
 			{
 				"type": "page",
 				"name": "Finance",
-				"url": "/contracts-stylus/v0.x/finance"
+				"url": "/contracts-stylus/finance"
 			},
 			{
 				"type": "page",
 				"name": "Utilities",
-				"url": "/contracts-stylus/v0.x/utilities"
+				"url": "/contracts-stylus/utilities"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/contracts-stylus/v0.x/changelog"
+				"url": "/contracts-stylus/changelog"
 			}
 		]
 	},
@@ -146,28 +146,28 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/stellar-contracts/v0.x/"
+				"url": "/stellar-contracts"
 			},
 			{
 				"type": "page",
 				"name": "Get Started",
-				"url": "/stellar-contracts/v0.x/get-started"
+				"url": "/stellar-contracts/get-started"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/stellar-contracts/v0.x/changelog"
+				"url": "/stellar-contracts/changelog"
 			}
 		]
 	},
 	{
 		"type": "folder",
-		"name": "Polkadot Substrate Runtimes",
+		"name": "Substrate Runtimes",
 		"children": [
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/substrate-runtimes/v3.x/"
+				"url": "/substrate-runtimes"
 			},
 			{
 				"type": "folder",
@@ -176,32 +176,32 @@
 					{
 						"type": "page",
 						"name": "Quick Start",
-						"url": "/substrate-runtimes/v3.x/guides/quick_start"
+						"url": "/substrate-runtimes/guides/quick_start"
 					},
 					{
 						"type": "page",
 						"name": "Weights & Fees",
-						"url": "/substrate-runtimes/v3.x/guides/weights_fees"
+						"url": "/substrate-runtimes/guides/weights_fees"
 					},
 					{
 						"type": "page",
 						"name": "Async Backing",
-						"url": "/substrate-runtimes/v3.x/guides/async_backing"
+						"url": "/substrate-runtimes/guides/async_backing"
 					},
 					{
 						"type": "page",
 						"name": "Sending XCM between Parachains",
-						"url": "/substrate-runtimes/v3.x/guides/hrmp_channels"
+						"url": "/substrate-runtimes/guides/hrmp_channels"
 					},
 					{
 						"type": "page",
 						"name": "OpenZeppelin Pallet Abstractions",
-						"url": "/substrate-runtimes/v3.x/guides/pallet_abstractions"
+						"url": "/substrate-runtimes/guides/pallet_abstractions"
 					},
 					{
 						"type": "page",
 						"name": "Pay DOT as a Fee",
-						"url": "/substrate-runtimes/v3.x/guides/pay_dot_as_a_fee"
+						"url": "/substrate-runtimes/guides/pay_dot_as_a_fee"
 					}
 				]
 			},
@@ -212,22 +212,22 @@
 					{
 						"type": "page",
 						"name": "Contract Migration",
-						"url": "/substrate-runtimes/v3.x/guides/contract_migration"
+						"url": "/substrate-runtimes/guides/contract_migration"
 					},
 					{
 						"type": "page",
 						"name": "Predeployed Contracts",
-						"url": "/substrate-runtimes/v3.x/guides/predeployed_contracts"
+						"url": "/substrate-runtimes/guides/predeployed_contracts"
 					},
 					{
 						"type": "page",
 						"name": "Testing with Zombienet",
-						"url": "/substrate-runtimes/v3.x/guides/testing_with_zombienet"
+						"url": "/substrate-runtimes/guides/testing_with_zombienet"
 					},
 					{
 						"type": "page",
 						"name": "RPC Differences",
-						"url": "/substrate-runtimes/v3.x/guides/rpc_differences"
+						"url": "/substrate-runtimes/guides/rpc_differences"
 					}
 				]
 			},
@@ -238,12 +238,12 @@
 					{
 						"type": "page",
 						"name": "Generic Runtime",
-						"url": "/substrate-runtimes/v3.x/runtimes/generic"
+						"url": "/substrate-runtimes/runtimes/generic"
 					},
 					{
 						"type": "page",
 						"name": "EVM Runtime",
-						"url": "/substrate-runtimes/v3.x/runtimes/evm"
+						"url": "/substrate-runtimes/runtimes/evm"
 					}
 				]
 			},
@@ -254,7 +254,7 @@
 					{
 						"type": "page",
 						"name": "XCM Executor",
-						"url": "/substrate-runtimes/v3.x/runtime/xcm_executor"
+						"url": "/substrate-runtimes/runtime/xcm_executor"
 					}
 				]
 			},
@@ -265,62 +265,62 @@
 					{
 						"type": "page",
 						"name": "cumulus_pallet_aura_ext",
-						"url": "/substrate-runtimes/v3.x/pallets/aura_ext"
+						"url": "/substrate-runtimes/pallets/aura_ext"
 					},
 					{
 						"type": "page",
 						"name": "cumulus_pallet_parachain_system",
-						"url": "/substrate-runtimes/v3.x/pallets/parachain-system"
+						"url": "/substrate-runtimes/pallets/parachain-system"
 					},
 					{
 						"type": "page",
 						"name": "cumulus_pallet_xcmp_queue",
-						"url": "/substrate-runtimes/v3.x/pallets/xcmp-queue"
+						"url": "/substrate-runtimes/pallets/xcmp-queue"
 					},
 					{
 						"type": "page",
 						"name": "pallet_assets",
-						"url": "/substrate-runtimes/v3.x/pallets/assets"
+						"url": "/substrate-runtimes/pallets/assets"
 					},
 					{
 						"type": "page",
 						"name": "pallet_balances",
-						"url": "/substrate-runtimes/v3.x/pallets/balances"
+						"url": "/substrate-runtimes/pallets/balances"
 					},
 					{
 						"type": "page",
 						"name": "pallet_collator_selection",
-						"url": "/substrate-runtimes/v3.x/pallets/collator-selection"
+						"url": "/substrate-runtimes/pallets/collator-selection"
 					},
 					{
 						"type": "page",
 						"name": "pallet_message_queue",
-						"url": "/substrate-runtimes/v3.x/pallets/message-queue"
+						"url": "/substrate-runtimes/pallets/message-queue"
 					},
 					{
 						"type": "page",
 						"name": "pallet_multisig",
-						"url": "/substrate-runtimes/v3.x/pallets/multisig"
+						"url": "/substrate-runtimes/pallets/multisig"
 					},
 					{
 						"type": "page",
 						"name": "pallet_proxy",
-						"url": "/substrate-runtimes/v3.x/pallets/proxy"
+						"url": "/substrate-runtimes/pallets/proxy"
 					},
 					{
 						"type": "page",
 						"name": "pallet_transaction_payment",
-						"url": "/substrate-runtimes/v3.x/pallets/transaction_payment"
+						"url": "/substrate-runtimes/pallets/transaction_payment"
 					},
 					{
 						"type": "page",
 						"name": "pallet_treasury",
-						"url": "/substrate-runtimes/v3.x/pallets/treasury"
+						"url": "/substrate-runtimes/pallets/treasury"
 					},
 					{
 						"type": "page",
 						"name": "pallet_xcm",
-						"url": "/substrate-runtimes/v3.x/pallets/xcm"
+						"url": "/substrate-runtimes/pallets/xcm"
 					}
 				]
 			},
@@ -331,7 +331,7 @@
 					{
 						"type": "page",
 						"name": "Multisig Accounts",
-						"url": "/substrate-runtimes/v3.x/misc/multisig-accounts"
+						"url": "/substrate-runtimes/misc/multisig-accounts"
 					}
 				]
 			},
@@ -342,20 +342,20 @@
 					{
 						"type": "page",
 						"name": "Glossary",
-						"url": "/substrate-runtimes/v3.x/glossary"
+						"url": "/substrate-runtimes/glossary"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/substrate-runtimes/v3.x/changelog"
+				"url": "/substrate-runtimes/changelog"
 			}
 		]
 	},
 	{
 		"type": "folder",
-		"name": "Solidity Uniswap Hooks",
+		"name": "Uniswap Hooks",
 		"index": {
 			"type": "page",
 			"name": "Overview",
@@ -365,22 +365,22 @@
 			{
 				"type": "page",
 				"name": "Base",
-				"url": "/uniswap-hooks/v1.x/base"
+				"url": "/uniswap-hooks/base"
 			},
 			{
 				"type": "page",
 				"name": "Fee",
-				"url": "/uniswap-hooks/v1.x/fee"
+				"url": "/uniswap-hooks/fee"
 			},
 			{
 				"type": "page",
 				"name": "Utilities",
-				"url": "/uniswap-hooks/v1.x/utilities"
+				"url": "/uniswap-hooks/utilities"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/uniswap-hooks/v1.x/changelog"
+				"url": "/uniswap-hooks/changelog"
 			}
 		]
 	}

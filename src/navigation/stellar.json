@@ -1,17 +1,33 @@
 [
 	{
 		"type": "separator",
-		"name": "Contracts"
+		"name": "Stellar Contracts"
 	},
 	{
 		"type": "page",
 		"name": "Overview",
-		"url": "/stellar-contracts/v0.x/"
+		"url": "/stellar-contracts"
 	},
 	{
 		"type": "page",
 		"name": "Get Started",
-		"url": "/stellar-contracts/v0.x/get-started"
+		"url": "/stellar-contracts/get-started"
+	},
+	{
+		"type": "folder",
+		"name": "Access Control",
+		"children": [
+			{
+				"type": "page",
+				"name": "Access Control",
+				"url": "/stellar-contracts/access-control"
+			},
+			{
+				"type": "page",
+				"name": "Ownable",
+				"url": "/stellar-contracts/ownable"
+			}
+		]
 	},
 	{
 		"type": "folder",
@@ -20,28 +36,12 @@
 			{
 				"type": "page",
 				"name": "Fungible Tokens",
-				"url": "/stellar-contracts/v0.x/tokens/fungible/fungible"
+				"url": "/stellar-contracts/tokens/fungible/fungible"
 			},
 			{
 				"type": "page",
 				"name": "Non-Fungible Tokens",
-				"url": "/stellar-contracts/v0.x/tokens/non-fungible/non-fungible"
-			}
-		]
-	},
-	{
-		"type": "folder",
-		"name": "Access",
-		"children": [
-			{
-				"type": "page",
-				"name": "Access Control",
-				"url": "/stellar-contracts/v0.x/access-control"
-			},
-			{
-				"type": "page",
-				"name": "Ownable",
-				"url": "/stellar-contracts/v0.x/ownable"
+				"url": "/stellar-contracts/tokens/non-fungible/non-fungible"
 			}
 		]
 	},
@@ -51,35 +51,24 @@
 		"children": [
 			{
 				"type": "page",
+				"name": "Cryptography",
+				"url": "/stellar-contracts/utils/crypto"
+			},
+			{
+				"type": "page",
 				"name": "Pausable",
-				"url": "/stellar-contracts/v0.x/utils/pausable"
+				"url": "/stellar-contracts/utils/pausable"
 			},
 			{
 				"type": "page",
 				"name": "Upgradeable",
-				"url": "/stellar-contracts/v0.x/utils/upgradeable"
-			},
-			{
-				"type": "page",
-				"name": "Cryptography",
-				"url": "/stellar-contracts/v0.x/utils/crypto"
-			}
-		]
-	},
-	{
-		"type": "folder",
-		"name": "Helpers",
-		"children": [
-			{
-				"type": "page",
-				"name": "Default Implementation Macro",
-				"url": "/stellar-contracts/v0.x/helpers/default-impl-macro"
+				"url": "/stellar-contracts/utils/upgradeable"
 			}
 		]
 	},
 	{
 		"type": "page",
 		"name": "Changelog",
-		"url": "/stellar-contracts/v0.x/changelog"
+		"url": "/stellar-contracts/changelog"
 	}
 ]

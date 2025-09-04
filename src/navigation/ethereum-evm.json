@@ -783,7 +783,7 @@
 		"index": {
 			"type": "page",
 			"name": "Overview",
-			"url": "/community-contracts/v1.x"
+			"url": "/community-contracts"
 		},
 		"children": [
 			{
@@ -792,41 +792,30 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/community-contracts/v1.x/account-abstraction"
+					"url": "/contracts/v5.x/account-abstraction"
 				},
 				"children": [
 					{
-						"type": "folder",
-						"name": "Accounts",
-						"index": {
-							"type": "page",
-							"name": "Overview",
-							"url": "/community-contracts/v1.x/accounts"
-						},
-						"children": [
-							{
-								"type": "page",
-								"name": "Modules",
-								"url": "/community-contracts/v1.x/account-modules"
-							}
-						]
+						"type": "page",
+						"name": "Modules",
+						"url": "/community-contracts/account-modules"
 					},
 					{
 						"type": "page",
 						"name": "Paymasters",
-						"url": "/community-contracts/v1.x/paymasters"
+						"url": "/community-contracts/paymasters"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Crosschain",
-				"url": "/community-contracts/v1.x/crosschain"
+				"url": "/community-contracts/crosschain"
 			},
 			{
 				"type": "page",
 				"name": "Utilities",
-				"url": "/community-contracts/v1.x/utilities"
+				"url": "/community-contracts/utilities"
 			}
 		]
 	},
@@ -903,7 +892,7 @@
 	{
 		"type": "page",
 		"name": "Wizard",
-		"url": "/tools/wizard"
+		"url": "/wizard"
 	},
 	{
 		"type": "folder",
@@ -912,42 +901,42 @@
 			{
 				"type": "page",
 				"name": "Quickstart",
-				"url": "/tools/contracts-ui-builder"
+				"url": "/contracts-ui-builder"
 			},
 			{
 				"type": "page",
 				"name": "Networks",
-				"url": "/tools/contracts-ui-builder/networks"
+				"url": "/contracts-ui-builder/networks"
 			},
 			{
 				"type": "page",
 				"name": "Loading Contracts",
-				"url": "/tools/contracts-ui-builder/loading-contracts"
+				"url": "/contracts-ui-builder/loading-contracts"
 			},
 			{
 				"type": "page",
 				"name": "Functions",
-				"url": "/tools/contracts-ui-builder/functions"
+				"url": "/contracts-ui-builder/functions"
 			},
 			{
 				"type": "page",
 				"name": "Customization",
-				"url": "/tools/contracts-ui-builder/customization"
+				"url": "/contracts-ui-builder/customization"
 			},
 			{
 				"type": "page",
 				"name": "Exporting and History",
-				"url": "/tools/contracts-ui-builder/exporting-and-history"
+				"url": "/contracts-ui-builder/exporting-and-history"
 			},
 			{
 				"type": "page",
 				"name": "Building Adapters",
-				"url": "/tools/contracts-ui-builder/building-adapters"
+				"url": "/contracts-ui-builder/building-adapters"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/tools/contracts-ui-builder/changelog"
+				"url": "/contracts-ui-builder/changelog"
 			}
 		]
 	},
@@ -958,7 +947,7 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/tools/defender"
+				"url": "/defender"
 			},
 			{
 				"type": "folder",
@@ -967,47 +956,47 @@
 					{
 						"type": "page",
 						"name": "Code Inspector",
-						"url": "/tools/defender/module/code"
+						"url": "/defender/module/code"
 					},
 					{
 						"type": "page",
 						"name": "Audit",
-						"url": "/tools/defender/module/audit"
+						"url": "/defender/module/audit"
 					},
 					{
 						"type": "page",
 						"name": "Deploy",
-						"url": "/tools/defender/module/deploy"
+						"url": "/defender/module/deploy"
 					},
 					{
 						"type": "page",
 						"name": "Relayers",
-						"url": "/tools/defender/module/relayers"
+						"url": "/defender/module/relayers"
 					},
 					{
 						"type": "page",
 						"name": "Monitor",
-						"url": "/tools/defender/module/monitor"
+						"url": "/defender/module/monitor"
 					},
 					{
 						"type": "page",
 						"name": "Actions",
-						"url": "/tools/defender/module/actions"
+						"url": "/defender/module/actions"
 					},
 					{
 						"type": "page",
 						"name": "Transaction Proposals",
-						"url": "/tools/defender/module/transaction-proposals"
+						"url": "/defender/module/transaction-proposals"
 					},
 					{
 						"type": "page",
 						"name": "Address Book",
-						"url": "/tools/defender/module/address-book"
+						"url": "/defender/module/address-book"
 					},
 					{
 						"type": "page",
 						"name": "Access Control",
-						"url": "/tools/defender/module/access-control"
+						"url": "/defender/module/access-control"
 					}
 				]
 			},
@@ -1017,18 +1006,18 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/tools/defender/settings"
+					"url": "/defender/settings"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Logs",
-						"url": "/tools/defender/logs"
+						"url": "/defender/logs"
 					},
 					{
 						"type": "page",
 						"name": "Notifications",
-						"url": "/tools/defender/settings/notifications"
+						"url": "/defender/settings/notifications"
 					}
 				]
 			},
@@ -1039,32 +1028,32 @@
 					{
 						"type": "page",
 						"name": "Deploy",
-						"url": "/tools/defender/tutorial/deploy"
+						"url": "/defender/tutorial/deploy"
 					},
 					{
 						"type": "page",
 						"name": "Relayer",
-						"url": "/tools/defender/tutorial/relayer"
+						"url": "/defender/tutorial/relayer"
 					},
 					{
 						"type": "page",
 						"name": "Monitor",
-						"url": "/tools/defender/tutorial/monitor"
+						"url": "/defender/tutorial/monitor"
 					},
 					{
 						"type": "page",
 						"name": "Actions",
-						"url": "/tools/defender/tutorial/actions"
+						"url": "/defender/tutorial/actions"
 					},
 					{
 						"type": "page",
 						"name": "Access Control",
-						"url": "/tools/defender/tutorial/access-control"
+						"url": "/defender/tutorial/access-control"
 					},
 					{
 						"type": "page",
 						"name": "Workflows",
-						"url": "/tools/defender/tutorial/workflows"
+						"url": "/defender/tutorial/workflows"
 					}
 				]
 			},
@@ -1075,79 +1064,79 @@
 					{
 						"type": "page",
 						"name": "Deploy a smart contract on a forked network",
-						"url": "/tools/defender/guide/forked-network"
+						"url": "/defender/guide/forked-network"
 					},
 					{
 						"type": "page",
 						"name": "Adding a complete private network",
-						"url": "/tools/defender/guide/private-network"
+						"url": "/defender/guide/private-network"
 					},
 					{
 						"type": "page",
 						"name": "Relaying gasless meta-transactions",
-						"url": "/tools/defender/guide/meta-tx"
+						"url": "/defender/guide/meta-tx"
 					},
 					{
 						"type": "page",
 						"name": "Automatic monitoring for factory clones",
-						"url": "/tools/defender/guide/factory-monitor"
+						"url": "/defender/guide/factory-monitor"
 					},
 					{
 						"type": "page",
 						"name": "Managing roles of a TimelockController",
-						"url": "/tools/defender/guide/timelock-roles"
+						"url": "/defender/guide/timelock-roles"
 					},
 					{
 						"type": "page",
 						"name": "Managing usage notifications",
-						"url": "/tools/defender/guide/usage-notification"
+						"url": "/defender/guide/usage-notification"
 					},
 					{
 						"type": "page",
 						"name": "Setup Fireblocks integrations within Defender",
-						"url": "/tools/defender/guide/fireblock-defender-integration"
+						"url": "/defender/guide/fireblock-defender-integration"
 					},
 					{
 						"type": "page",
 						"name": "Upgrading actions dependencies",
-						"url": "/tools/defender/guide/upgrade-actions-dependencies"
+						"url": "/defender/guide/upgrade-actions-dependencies"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Defender as Code",
-				"url": "/tools/defender/dac"
+				"url": "/defender/dac"
 			},
 			{
 				"type": "page",
 				"name": "Remix Plugin",
-				"url": "/tools/defender/remix-plugin"
+				"url": "/defender/remix-plugin"
 			},
 			{
 				"type": "page",
 				"name": "Contracts Wizard Plugin",
-				"url": "/tools/defender/wizard-plugin"
+				"url": "/defender/wizard-plugin"
 			},
 			{
 				"type": "page",
 				"name": "SDK and API",
-				"url": "/tools/defender/sdk"
+				"url": "/defender/sdk"
 			},
 			{
 				"type": "page",
 				"name": "Integrations",
-				"url": "/tools/defender/integrations"
+				"url": "/defender/integrations"
 			},
 			{
 				"type": "page",
 				"name": "FAQ",
-				"url": "/tools/defender/faq"
+				"url": "/defender/faq"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/tools/defender/changelog"
+				"url": "/defender/changelog"
 			}
 		]
 	},
@@ -1156,66 +1145,49 @@
 		"name": "Monitor",
 		"children": [
 			{
-				"type": "folder",
-				"name": "User Documentation",
-				"index": {
-					"type": "page",
-					"name": "Overview",
-					"url": "/tools/openzeppelin-monitor/v1.x"
-				},
-				"children": [
-					{
-						"type": "page",
-						"name": "Quickstart",
-						"url": "/tools/openzeppelin-monitor/v1.x/quickstart"
-					}
-				]
+				"type": "page",
+				"name": "Quickstart",
+				"url": "/openzeppelin-monitor/quickstart"
 			},
 			{
-				"type": "folder",
-				"name": "Developer Documentation",
-				"children": [
-					{
-						"type": "page",
-						"name": "Architecture Guide",
-						"url": "/tools/openzeppelin-monitor/v1.x/architecture"
-					},
-					{
-						"type": "page",
-						"name": "Project Structure",
-						"url": "/tools/openzeppelin-monitor/v1.x/project-structure"
-					},
-					{
-						"type": "page",
-						"name": "RPC Client",
-						"url": "/tools/openzeppelin-monitor/v1.x/rpc"
-					},
-					{
-						"type": "page",
-						"name": "Custom scripts",
-						"url": "/tools/openzeppelin-monitor/v1.x/scripts"
-					},
-					{
-						"type": "page",
-						"name": "Error Handling",
-						"url": "/tools/openzeppelin-monitor/v1.x/error"
-					},
-					{
-						"type": "page",
-						"name": "Testing",
-						"url": "/tools/openzeppelin-monitor/v1.x/testing"
-					},
-					{
-						"type": "page",
-						"name": "Contribution guidelines",
-						"url": "/tools/openzeppelin-monitor/v1.x/contribution"
-					}
-				]
+				"type": "page",
+				"name": "Architecture Guide",
+				"url": "/openzeppelin-monitor/architecture"
+			},
+			{
+				"type": "page",
+				"name": "Project Structure",
+				"url": "/openzeppelin-monitor/project-structure"
+			},
+			{
+				"type": "page",
+				"name": "RPC Client",
+				"url": "/openzeppelin-monitor/rpc"
+			},
+			{
+				"type": "page",
+				"name": "Custom scripts",
+				"url": "/openzeppelin-monitor/scripts"
+			},
+			{
+				"type": "page",
+				"name": "Error Handling",
+				"url": "/openzeppelin-monitor/error"
+			},
+			{
+				"type": "page",
+				"name": "Testing",
+				"url": "/openzeppelin-monitor/testing"
+			},
+			{
+				"type": "page",
+				"name": "Contribution guidelines",
+				"url": "/openzeppelin-monitor/contribution"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/tools/openzeppelin-monitor/v1.x/changelog"
+				"url": "/openzeppelin-monitor/changelog"
 			},
 			{
 				"type": "page",
@@ -1232,12 +1204,12 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/tools/openzeppelin-relayer/v1.x"
+				"url": "/openzeppelin-relayer/v1.x"
 			},
 			{
 				"type": "page",
 				"name": "Quickstart",
-				"url": "/tools/openzeppelin-relayer/v1.x/quickstart"
+				"url": "/openzeppelin-relayer/v1.x/quickstart"
 			},
 			{
 				"type": "folder",
@@ -1245,40 +1217,40 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/tools/openzeppelin-relayer/v1.x/configuration"
+					"url": "/openzeppelin-relayer/v1.x/configuration"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Signers",
-						"url": "/tools/openzeppelin-relayer/v1.x/configuration/signers"
+						"url": "/openzeppelin-relayer/v1.x/configuration/signers"
 					},
 					{
 						"type": "page",
 						"name": "Network Configuration",
-						"url": "/tools/openzeppelin-relayer/v1.x/network_configuration"
+						"url": "/openzeppelin-relayer/v1.x/network_configuration"
 					},
 					{
 						"type": "page",
 						"name": "Storage Configuration",
-						"url": "/tools/openzeppelin-relayer/v1.x/configuration/storage"
+						"url": "/openzeppelin-relayer/v1.x/configuration/storage"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "EVM Integration",
-				"url": "/tools/openzeppelin-relayer/v1.x/evm"
+				"url": "/openzeppelin-relayer/v1.x/evm"
 			},
 			{
 				"type": "page",
 				"name": "Solana Integration",
-				"url": "/tools/openzeppelin-relayer/v1.x/solana"
+				"url": "/openzeppelin-relayer/v1.x/solana"
 			},
 			{
 				"type": "page",
 				"name": "Stellar Integration",
-				"url": "/tools/openzeppelin-relayer/v1.x/stellar"
+				"url": "/openzeppelin-relayer/v1.x/stellar"
 			},
 			{
 				"type": "page",
@@ -1289,22 +1261,22 @@
 			{
 				"type": "page",
 				"name": "Project Structure",
-				"url": "/tools/openzeppelin-relayer/v1.x/structure"
+				"url": "/openzeppelin-relayer/v1.x/structure"
 			},
 			{
 				"type": "page",
 				"name": "Project Roadmap",
-				"url": "/tools/openzeppelin-relayer/v1.x/roadmap"
+				"url": "/openzeppelin-relayer/v1.x/roadmap"
 			},
 			{
 				"type": "page",
 				"name": "Plugins",
-				"url": "/tools/openzeppelin-relayer/v1.x/plugins"
+				"url": "/openzeppelin-relayer/v1.x/plugins"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/tools/openzeppelin-relayer/v1.x/changelog"
+				"url": "/openzeppelin-relayer/v1.x/changelog"
 			},
 			{
 				"type": "page",

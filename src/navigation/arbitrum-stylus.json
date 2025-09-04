@@ -1,36 +1,92 @@
 [
 	{
 		"type": "separator",
-		"name": "Contracts"
+		"name": "Contracts Stylus"
 	},
 	{
 		"type": "page",
 		"name": "Overview",
-		"url": "/contracts-stylus/v0.x"
+		"url": "/contracts-stylus"
 	},
 	{
 		"type": "page",
 		"name": "Access Control",
-		"url": "/contracts-stylus/v0.x/access-control"
+		"url": "/contracts-stylus/access-control"
+	},
+	{
+		"type": "page",
+		"name": "Beacon Proxy",
+		"url": "/contracts-stylus/beacon-proxy"
+	},
+	{
+		"type": "page",
+		"name": "Common",
+		"url": "/contracts-stylus/common"
 	},
 	{
 		"type": "page",
 		"name": "Cryptography",
-		"url": "/contracts-stylus/v0.x/crypto"
+		"url": "/contracts-stylus/crypto"
+	},
+	{
+		"type": "folder",
+		"name": "ERC Standards",
+		"children": [
+			{
+				"type": "page",
+				"name": "ERC-20",
+				"url": "/contracts-stylus/erc20"
+			},
+			{
+				"type": "page",
+				"name": "ERC-721",
+				"url": "/contracts-stylus/erc721"
+			},
+			{
+				"type": "page",
+				"name": "ERC-1155",
+				"url": "/contracts-stylus/erc1155"
+			},
+			{
+				"type": "page",
+				"name": "ERC-4626",
+				"url": "/contracts-stylus/erc4626"
+			}
+		]
 	},
 	{
 		"type": "page",
 		"name": "Finance",
-		"url": "/contracts-stylus/v0.x/finance"
+		"url": "/contracts-stylus/finance"
+	},
+	{
+		"type": "page",
+		"name": "Proxy",
+		"url": "/contracts-stylus/proxy"
+	},
+	{
+		"type": "page",
+		"name": "Tokens",
+		"url": "/contracts-stylus/tokens"
 	},
 	{
 		"type": "page",
 		"name": "Utilities",
-		"url": "/contracts-stylus/v0.x/utilities"
+		"url": "/contracts-stylus/utilities"
+	},
+	{
+		"type": "page",
+		"name": "UUPS Proxy",
+		"url": "/contracts-stylus/uups-proxy"
+	},
+	{
+		"type": "page",
+		"name": "Vesting Wallet",
+		"url": "/contracts-stylus/vesting-wallet"
 	},
 	{
 		"type": "page",
 		"name": "Changelog",
-		"url": "/contracts-stylus/v0.x/changelog"
+		"url": "/contracts-stylus/changelog"
 	}
 ]

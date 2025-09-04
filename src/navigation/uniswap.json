@@ -6,57 +6,26 @@
 	{
 		"type": "page",
 		"name": "Overview",
-		"url": "/uniswap-hooks/v1.x/"
+		"url": "/uniswap-hooks"
 	},
 	{
 		"type": "page",
 		"name": "Base",
-		"url": "/uniswap-hooks/v1.x/base"
+		"url": "/uniswap-hooks/base"
 	},
 	{
 		"type": "page",
 		"name": "Fee",
-		"url": "/uniswap-hooks/v1.x/fee"
+		"url": "/uniswap-hooks/fee"
 	},
 	{
 		"type": "page",
 		"name": "Utilities",
-		"url": "/uniswap-hooks/v1.x/utilities"
-	},
-	{
-		"type": "folder",
-		"name": "API Reference",
-		"children": [
-			{
-				"type": "page",
-				"name": "General",
-				"url": "/uniswap-hooks/v1.x/api/general"
-			},
-			{
-				"type": "page",
-				"name": "Base",
-				"url": "/uniswap-hooks/v1.x/api/base"
-			},
-			{
-				"type": "page",
-				"name": "Fee",
-				"url": "/uniswap-hooks/v1.x/api/fee"
-			},
-			{
-				"type": "page",
-				"name": "Interfaces",
-				"url": "/uniswap-hooks/v1.x/api/interfaces"
-			},
-			{
-				"type": "page",
-				"name": "Utils",
-				"url": "/uniswap-hooks/v1.x/api/utils"
-			}
-		]
+		"url": "/uniswap-hooks/utilities"
 	},
 	{
 		"type": "page",
 		"name": "Changelog",
-		"url": "/uniswap-hooks/v1.x/changelog"
+		"url": "/uniswap-hooks/changelog"
 	}
 ]

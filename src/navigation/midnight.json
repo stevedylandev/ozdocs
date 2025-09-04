@@ -6,17 +6,17 @@
 	{
 		"type": "page",
 		"name": "Overview",
-		"url": "/contracts-compact/v0.x/"
+		"url": "/contracts-compact"
 	},
 	{
 		"type": "page",
 		"name": "Access",
-		"url": "/contracts-compact/v0.x/access"
+		"url": "/contracts-compact/access"
 	},
 	{
 		"type": "page",
 		"name": "Ownable",
-		"url": "/contracts-compact/v0.x/ownable"
+		"url": "/contracts-compact/ownable"
 	},
 	{
 		"type": "folder",
@@ -25,24 +25,24 @@
 			{
 				"type": "page",
 				"name": "FungibleToken",
-				"url": "/contracts-compact/v0.x/fungibleToken"
+				"url": "/contracts-compact/fungibleToken"
 			},
 			{
 				"type": "page",
 				"name": "NonFungibleToken",
-				"url": "/contracts-compact/v0.x/nonFungibleToken"
+				"url": "/contracts-compact/nonFungibleToken"
 			},
 			{
 				"type": "page",
 				"name": "MultiToken",
-				"url": "/contracts-compact/v0.x/multitoken"
+				"url": "/contracts-compact/multitoken"
 			}
 		]
 	},
 	{
 		"type": "page",
 		"name": "Utils",
-		"url": "/contracts-compact/v0.x/utils"
+		"url": "/contracts-compact/utils"
 	},
 	{
 		"type": "folder",
@@ -51,32 +51,32 @@
 			{
 				"type": "page",
 				"name": "Access API",
-				"url": "/contracts-compact/v0.x/api/access"
+				"url": "/contracts-compact/api/access"
 			},
 			{
 				"type": "page",
 				"name": "FungibleToken API",
-				"url": "/contracts-compact/v0.x/api/fungibleToken"
+				"url": "/contracts-compact/api/fungibleToken"
 			},
 			{
 				"type": "page",
 				"name": "MultiToken API",
-				"url": "/contracts-compact/v0.x/api/multitoken"
+				"url": "/contracts-compact/api/multitoken"
 			},
 			{
 				"type": "page",
 				"name": "NonFungibleToken API",
-				"url": "/contracts-compact/v0.x/api/nonFungibleToken"
+				"url": "/contracts-compact/api/nonFungibleToken"
 			},
 			{
 				"type": "page",
 				"name": "Ownable API",
-				"url": "/contracts-compact/v0.x/api/ownable"
+				"url": "/contracts-compact/api/ownable"
 			},
 			{
 				"type": "page",
 				"name": "Utils API",
-				"url": "/contracts-compact/v0.x/api/utils"
+				"url": "/contracts-compact/api/utils"
 			}
 		]
 	},
@@ -87,11 +87,11 @@
 	{
 		"type": "page",
 		"name": "ZK Circuits 101",
-		"url": "/contracts-compact/v0.x/zkCircuits101"
+		"url": "/contracts-compact/zkCircuits101"
 	},
 	{
 		"type": "page",
 		"name": "Extensibility",
-		"url": "/contracts-compact/v0.x/extensibility"
+		"url": "/contracts-compact/extensibility"
 	}
 ]
