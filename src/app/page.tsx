@@ -445,7 +445,7 @@ export default function HomePage() {
 						</a>
 
 						<a
-							href="https://t.me/openzeppelin"
+							href="https://t.me/openzeppelin_tg"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="group block p-7 bg-gradient-to-br from-card to-card/50 border rounded-xl hover:border-primary hover:shadow-sm hover:-translate-y-0.5 transition-all"
