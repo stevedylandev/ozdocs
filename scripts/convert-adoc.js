@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs").promises;
+const fsSync = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 const { glob } = require("glob");
@@ -61,7 +62,7 @@ async function convertAdocFiles(directory) {
 			await fs.writeFile(tempFile, content, "utf8");
 
 			// Run downdoc
-			execSync(`bunx downdoc "${tempFile}"`, { stdio: "pipe" });
+			execSync(`pnpm dlx downdoc "${tempFile}"`, { stdio: "pipe" });
 
 			// Find the generated .md file
 			const tempMdFile = path.join(dir, `temp_${filename}.md`);
@@ -91,70 +92,67 @@ async function convertAdocFiles(directory) {
 			// Fix xref: links - remove xref: and convert .adoc to .mdx
 			mdContent = mdContent.replace(
 				/xref:\[([^\]]+)\]\(([^)]+)\)/g,
-				"[$1]($2)"
+				"[$1]($2)",
 			);
 
 			// Fix .adoc internal links to .mdx
 			mdContent = mdContent.replace(
 				/\]\(([^)]+)\.adoc([^)]*)\)/g,
-				"]($1.mdx$2)"
+				"]($1.mdx$2)",
 			);
 
 			// Fix curly bracket file references {filename} -> filename
-			mdContent = mdContent.replace(
-				/\{([^}]+)\}/g,
-				"$1"
-			);
+			mdContent = mdContent.replace(/\{([^}]+)\}/g, "$1");
 
 			// Fix HTML-style callouts <dl><dt><strong>📌 NOTE</strong></dt><dd> ... </dd></dl>
 			// Handle multi-line callouts by using a more permissive pattern
 			mdContent = mdContent.replace(
-				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>([\s\S]*?)<\/dd><\/dl>/g,
-				"<Callout>\n$2\n</Callout>"
+				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>([\s\S]*?)<\/dd><\/dl>/gu,
+				"<Callout>\n$2\n</Callout>",
 			);
 
 			mdContent = mdContent.replace(
 				/<dl><dt><strong>[⚠️🚨❗]\s*(WARNING|IMPORTANT|CAUTION|DANGER)<\/strong><\/dt><dd>([\s\S]*?)<\/dd><\/dl>/g,
-				"<Callout type='warn'>\n$2\n</Callout>"
+				"<Callout type='warn'>\n$2\n</Callout>",
 			);
 
 			// Handle cases where </dd></dl> might be missing or malformed
 			mdContent = mdContent.replace(
-				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>([\s\S]*?)(?=\n\n|<dl>|$)/g,
-				"<Callout>\n$2\n</Callout>"
+				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>([\s\S]*?)(?=\n\n|<dl>|$)/gu,
+				"<Callout>\n$2\n</Callout>",
 			);
 
 			mdContent = mdContent.replace(
 				/<dl><dt><strong>[⚠️🚨❗]\s*(WARNING|IMPORTANT|CAUTION|DANGER)<\/strong><\/dt><dd>([\s\S]*?)(?=\n\n|<dl>|$)/g,
-				"<Callout type='warn'>\n$2\n</Callout>"
+				"<Callout type='warn'>\n$2\n</Callout>",
 			);
 
 			// Fix xref patterns with complex anchors like xref:#ISRC6-\\__execute__[...]
 			mdContent = mdContent.replace(
 				/xref:#([^[\]]+)\[([^\]]+)\]/g,
-				"[$2](#$1)"
+				"[$2](#$1)",
 			);
 
 			// Fix simple xref patterns
-			mdContent = mdContent.replace(
-				/xref:([^[\s]+)\[([^\]]+)\]/g,
-				"[$2]($1)"
-			);
+			mdContent = mdContent.replace(/xref:([^[\s]+)\[([^\]]+)\]/g, "[$2]($1)");
 
 			// Clean up orphaned HTML tags from malformed callouts
 			// Handle orphaned <dl><dt><strong>EMOJI TYPE</strong></dt><dd> without closing tags
 			mdContent = mdContent.replace(
-				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>\s*\n([\s\S]*?)(?=\n\n|<dl>|$)/g,
-				"<Callout>\n$2\n</Callout>"
+				/<dl><dt><strong>[📌🔔ℹ️]\s*(NOTE|TIP|INFO)<\/strong><\/dt><dd>\s*\n([\s\S]*?)(?=\n\n|<dl>|$)/gu,
+				"<Callout>\n$2\n</Callout>",
 			);
 
 			mdContent = mdContent.replace(
 				/<dl><dt><strong>[⚠️🚨❗]\s*(WARNING|IMPORTANT|CAUTION|DANGER)<\/strong><\/dt><dd>\s*\n([\s\S]*?)(?=\n\n|<dl>|$)/g,
-				"<Callout type='warn'>\n$2\n</Callout>"
+				"<Callout type='warn'>\n$2\n</Callout>",
 			);
 
 			// Clean up any remaining orphaned HTML tags
-			mdContent = mdContent.replace(/<dl><dt><strong>.*?<\/strong><\/dt><dd>/g, "");
+			mdContent = mdContent.replace(
+				/<dl><dt><strong>.*?<\/strong><\/dt><dd>/g,
+				"",
+			);
 			mdContent = mdContent.replace(/<\/dd><\/dl>/g, "");
 			mdContent = mdContent.replace(/<dd>/g, "");
 			mdContent = mdContent.replace(/<\/dd>/g, "");
@@ -172,12 +170,13 @@ async function convertAdocFiles(directory) {
 			const title = headerMatch ? headerMatch[1].trim() : filename;
 
 			// Remove the first H1 from content
-			const contentWithoutFirstH1 = mdContent.replace(/^#+\s+.+$/m, '').replace(/^\n+/, '');
+			const contentWithoutFirstH1 = mdContent
+				.replace(/^#+\s+.+$/m, "")
+				.replace(/^\n+/, "");
 
 			// Create MDX with frontmatter
 			const mdxContent = `---
 title: ${title}
-description: ${title}
 ---
 
 ${contentWithoutFirstH1}`;
@@ -196,5 +195,43 @@ ${contentWithoutFirstH1}`;
 	}
 }
 
+// Process files to remove curly brackets after conversion
+function processFile(filePath) {
+	try {
+		const content = fsSync.readFileSync(filePath, "utf8");
+		// Preserve brackets inside code fences (```...```)
+		const modifiedContent = content.replace(/```[\s\S]*?```|[{}]/g, (match) => {
+			// If match contains newlines or starts with ```, it's a code block - preserve it
+			return match.includes("\n") || match.startsWith("```") ? match : "";
+		});
+		fsSync.writeFileSync(filePath, modifiedContent, "utf8");
+		console.log(`Processed: ${filePath}`);
+	} catch (error) {
+		console.error(`Error processing ${filePath}: ${error.message}`);
+	}
+}
+
+function crawlDirectory(dirPath) {
+	try {
+		const items = fsSync.readdirSync(dirPath);
+
+		for (const item of items) {
+			const itemPath = path.join(dirPath, item);
+			const stats = fsSync.statSync(itemPath);
+
+			if (stats.isDirectory()) {
+				crawlDirectory(itemPath);
+			} else if (stats.isFile()) {
+				processFile(itemPath);
+			}
+		}
+	} catch (error) {
+		console.error(`Error crawling directory ${dirPath}: ${error.message}`);
+	}
+}
+
 const directory = process.argv[2];
 convertAdocFiles(directory).catch(console.error);
+
+// Run bracket processing after conversion
+crawlDirectory(directory);
