@@ -149,7 +149,7 @@ export default function HomePage() {
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 						<EcosystemCard
 							href="/contracts"
-							icon={<EthereumIcon className="w-5 h-5" />}
+							icon={<EthereumIcon color className="w-5 h-5" />}
 							title="Ethereum & EVM"
 							description="Solidity smart contracts for Ethereum and EVM-compatible chains"
 							glowColor="evm"
@@ -157,7 +157,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/cairo-contracts"
-							icon={<StarknetIcon className="w-5 h-5" />}
+							icon={<StarknetIcon color className="w-5 h-5" />}
 							title="Starknet"
 							description="Essential contracts library written in Cairo for Starknet"
 							glowColor="starknet"
@@ -165,7 +165,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/contracts-stylus"
-							icon={<ArbitrumIcon className="w-5 h-5" />}
+							icon={<ArbitrumIcon color className="w-5 h-5" />}
 							title="Arbitrum Stylus"
 							description="Essential contracts library for Arbitrum Stylus written in Rust"
 							glowColor="rust"
@@ -173,7 +173,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/uniswap-hooks"
-							icon={<UniswapIcon className="w-5 h-5" />}
+							icon={<UniswapIcon color className="w-5 h-5" />}
 							title="Uniswap Hooks"
 							description="Advanced Uniswap V4 hooks in Solidity"
 							glowColor="uniswap"
@@ -197,7 +197,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/substrate-runtimes"
-							icon={<PolkadotIcon className="w-5 h-5" />}
+							icon={<PolkadotIcon color className="w-5 h-5" />}
 							title="Polkadot"
 							description="ink! smart contracts for Polkadot and Substrate chains"
 							glowColor="polkadot"
@@ -205,7 +205,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/confidential-contracts"
-							icon={<ZamaIcon className="w-5 h-5" />}
+							icon={<ZamaIcon color className="w-5 h-5" />}
 							title="Zama FHEVM"
 							description="Fully homomorphic encryption contracts for confidential smart contracts"
 							glowColor="zama"
