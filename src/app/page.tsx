@@ -251,7 +251,7 @@ export default function HomePage() {
 							className="relative overflow-hidden hover:border-cyan-500 transition-colors before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-cyan-600 before:to-cyan-400 before:opacity-0 hover:before:opacity-100 before:transition-opacity"
 						/>
 						<Card
-							href="/compact-contracts"
+							href="/contracts-compact"
 							title="Midnight"
 							description="Privacy-preserving smart contracts for Midnight blockchain"
 							icon={<MidnightIcon className="h-4 w-4" />}

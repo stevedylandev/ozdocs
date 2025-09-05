@@ -1,11 +1,11 @@
 [
 	{
 		"type": "separator",
-		"name": "Contracts"
+		"name": "Solidity Contracts"
 	},
 	{
 		"type": "folder",
-		"name": "Solidity Contracts",
+		"name": "OpenZeppelin Contracts",
 		"children": [
 			{
 				"type": "page",
@@ -779,7 +779,7 @@
 	},
 	{
 		"type": "folder",
-		"name": "Solidity Community Contracts",
+		"name": "Community Contracts",
 		"index": {
 			"type": "page",
 			"name": "Overview",
@@ -821,7 +821,7 @@
 	},
 	{
 		"type": "folder",
-		"name": "Solidity Upgrade Plugins",
+		"name": "Upgrade Plugins",
 		"index": {
 			"type": "page",
 			"name": "Overview",
