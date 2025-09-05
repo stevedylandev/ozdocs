@@ -18,14 +18,6 @@ This decoupling is achieved through the `ContractAdapter` interface, defined in 
 * **Network-Aware Adapters**: An adapter instance is not generic; it is **instantiated with a specific `NetworkConfig` object**. This makes the instance aware of its target network (e.g., Ethereum Mainnet vs. Sepolia Testnet), including its RPC endpoints, explorer URLs, and chain identifiers. The adapter stores this `networkConfig` internally and uses it for all network-dependent operations.
 
 ```mermaid
-%%init: {
-    'theme': 'base',
-    'themeVariables': {
-        'background': '#ffffff',
-        'mainBkg': '#ffffff',
-        'primaryBorderColor': '#cccccc'
-    
-}}%%
 graph TB
     subgraph "Chain-Agnostic Core"
         Builder["Builder Package<br/>(Main Application)"]
@@ -245,16 +237,8 @@ The functions `resolveRpcUrl` and `resolveExplorerConfig` in the EVM adapter pro
 6. **Build and Test**: Build your new package and the main builder app. Add unit and integration tests to ensure your adapter functions correctly within the larger system.
 
 ```mermaid
-%%init: {
-    'theme': 'base',
-    'themeVariables': {
-        'background': '#ffffff',
-        'mainBkg': '#ffffff',
-        'primaryBorderColor': '#cccccc'
-    
-}}%%
 graph TD
-    A[Start: Add Support for New Chain] --> BCreate New Package: packages/adapter-name
+    A[Start: Add Support for New Chain] --> B[Create New Package: packages/adapter-name]
     B --> C[Define NetworkConfig Objects in src/networks]
     C --> D[Implement the ContractAdapter Interface in src/adapter.ts]
 
@@ -272,13 +256,10 @@ graph TD
     D --> D4
     D --> D5
 
-    D5 --> ERegister Adapter in Builder: packages/builder/src/core/ecosystemManager.ts
+    D5 --> E[Register Adapter in Builder: packages/builder/src/core/ecosystemManager.ts]
     E --> F[Add to ecosystemRegistry]
     E --> G[Add dynamic import to loadAdapterPackageModule]
 
     G --> H[Build and Test]
     H --> I[End: New Adapter Integrated]
-
-    style A fill:#000,stroke:#333,stroke-width:2px
-    style I fill:#000,stroke:#333,stroke-width:2px
 ```
