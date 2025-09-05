@@ -886,13 +886,205 @@
 		]
 	},
 	{
+		"type": "page",
+		"name": "Wizard",
+		"url": "/wizard"
+	},
+	{
+		"type": "folder",
+		"name": "Learn",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/contracts/v5.x/learn"
+			},
+			{
+				"type": "page",
+				"name": "Setting up a Node project",
+				"url": "/contracts/v5.x/learn/setting-up-a-node-project"
+			},
+			{
+				"type": "page",
+				"name": "Developing smart contracts",
+				"url": "/contracts/v5.x/learn/developing-smart-contracts"
+			},
+			{
+				"type": "page",
+				"name": "Deploying and interacting",
+				"url": "/contracts/v5.x/learn/deploying-and-interacting"
+			},
+			{
+				"type": "page",
+				"name": "Writing automated tests",
+				"url": "/contracts/v5.x/learn/writing-automated-tests"
+			},
+			{
+				"type": "page",
+				"name": "Connecting to public test networks",
+				"url": "/contracts/v5.x/learn/connecting-to-public-test-networks"
+			},
+			{
+				"type": "page",
+				"name": "Upgrading smart contracts",
+				"url": "/contracts/v5.x/learn/upgrading-smart-contracts"
+			},
+			{
+				"type": "page",
+				"name": "Preparing for mainnet",
+				"url": "/contracts/v5.x/learn/preparing-for-mainnet"
+			}
+		]
+	},
+	{
 		"type": "separator",
 		"name": "Tools"
 	},
 	{
-		"type": "page",
-		"name": "Wizard",
-		"url": "/wizard"
+		"type": "folder",
+		"name": "Relayer",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/openzeppelin-relayer"
+			},
+			{
+				"type": "page",
+				"name": "Quickstart",
+				"url": "/openzeppelin-relayer/quickstart"
+			},
+			{
+				"type": "folder",
+				"name": "Configuration",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/openzeppelin-relayer/configuration"
+				},
+				"children": [
+					{
+						"type": "page",
+						"name": "Signers",
+						"url": "/openzeppelin-relayer/configuration/signers"
+					},
+					{
+						"type": "page",
+						"name": "Network Configuration",
+						"url": "/openzeppelin-relayer/network_configuration"
+					},
+					{
+						"type": "page",
+						"name": "Storage Configuration",
+						"url": "/openzeppelin-relayer/configuration/storage"
+					}
+				]
+			},
+			{
+				"type": "page",
+				"name": "EVM Integration",
+				"url": "/openzeppelin-relayer/evm"
+			},
+			{
+				"type": "page",
+				"name": "Solana Integration",
+				"url": "/openzeppelin-relayer/solana"
+			},
+			{
+				"type": "page",
+				"name": "Stellar Integration",
+				"url": "/openzeppelin-relayer/stellar"
+			},
+			{
+				"type": "page",
+				"name": "API Reference",
+				"url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/api_docs.html",
+				"external": true
+			},
+			{
+				"type": "page",
+				"name": "Project Structure",
+				"url": "/openzeppelin-relayer/structure"
+			},
+			{
+				"type": "page",
+				"name": "Project Roadmap",
+				"url": "/openzeppelin-relayer/roadmap"
+			},
+			{
+				"type": "page",
+				"name": "Plugins",
+				"url": "/openzeppelin-relayer/plugins"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/openzeppelin-relayer/changelog"
+			},
+			{
+				"type": "page",
+				"name": "Technical Rust Documentation",
+				"url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/openzeppelin_relayer/",
+				"external": true
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Monitor",
+		"children": [
+			{
+				"type": "page",
+				"name": "Quickstart",
+				"url": "/openzeppelin-monitor/quickstart"
+			},
+			{
+				"type": "page",
+				"name": "Architecture Guide",
+				"url": "/openzeppelin-monitor/architecture"
+			},
+			{
+				"type": "page",
+				"name": "Project Structure",
+				"url": "/openzeppelin-monitor/project-structure"
+			},
+			{
+				"type": "page",
+				"name": "RPC Client",
+				"url": "/openzeppelin-monitor/rpc"
+			},
+			{
+				"type": "page",
+				"name": "Custom scripts",
+				"url": "/openzeppelin-monitor/scripts"
+			},
+			{
+				"type": "page",
+				"name": "Error Handling",
+				"url": "/openzeppelin-monitor/error"
+			},
+			{
+				"type": "page",
+				"name": "Testing",
+				"url": "/openzeppelin-monitor/testing"
+			},
+			{
+				"type": "page",
+				"name": "Contribution guidelines",
+				"url": "/openzeppelin-monitor/contribution"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/openzeppelin-monitor/changelog"
+			},
+			{
+				"type": "page",
+				"name": "Technical Rust Documentation",
+				"url": "https://release-v1-0-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/",
+				"external": true
+			}
+		]
 	},
 	{
 		"type": "folder",
@@ -1139,195 +1331,5 @@
 				"url": "/defender/changelog"
 			}
 		]
-	},
-	{
-		"type": "folder",
-		"name": "Monitor",
-		"children": [
-			{
-				"type": "page",
-				"name": "Quickstart",
-				"url": "/openzeppelin-monitor/quickstart"
-			},
-			{
-				"type": "page",
-				"name": "Architecture Guide",
-				"url": "/openzeppelin-monitor/architecture"
-			},
-			{
-				"type": "page",
-				"name": "Project Structure",
-				"url": "/openzeppelin-monitor/project-structure"
-			},
-			{
-				"type": "page",
-				"name": "RPC Client",
-				"url": "/openzeppelin-monitor/rpc"
-			},
-			{
-				"type": "page",
-				"name": "Custom scripts",
-				"url": "/openzeppelin-monitor/scripts"
-			},
-			{
-				"type": "page",
-				"name": "Error Handling",
-				"url": "/openzeppelin-monitor/error"
-			},
-			{
-				"type": "page",
-				"name": "Testing",
-				"url": "/openzeppelin-monitor/testing"
-			},
-			{
-				"type": "page",
-				"name": "Contribution guidelines",
-				"url": "/openzeppelin-monitor/contribution"
-			},
-			{
-				"type": "page",
-				"name": "Changelog",
-				"url": "/openzeppelin-monitor/changelog"
-			},
-			{
-				"type": "page",
-				"name": "Technical Rust Documentation",
-				"url": "https://release-v1-0-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/",
-				"external": true
-			}
-		]
-	},
-	{
-		"type": "folder",
-		"name": "Relayer",
-		"children": [
-			{
-				"type": "page",
-				"name": "Overview",
-				"url": "/openzeppelin-relayer"
-			},
-			{
-				"type": "page",
-				"name": "Quickstart",
-				"url": "/openzeppelin-relayer/quickstart"
-			},
-			{
-				"type": "folder",
-				"name": "Configuration",
-				"index": {
-					"type": "page",
-					"name": "Overview",
-					"url": "/openzeppelin-relayer/configuration"
-				},
-				"children": [
-					{
-						"type": "page",
-						"name": "Signers",
-						"url": "/openzeppelin-relayer/configuration/signers"
-					},
-					{
-						"type": "page",
-						"name": "Network Configuration",
-						"url": "/openzeppelin-relayer/network_configuration"
-					},
-					{
-						"type": "page",
-						"name": "Storage Configuration",
-						"url": "/openzeppelin-relayer/configuration/storage"
-					}
-				]
-			},
-			{
-				"type": "page",
-				"name": "EVM Integration",
-				"url": "/openzeppelin-relayer/evm"
-			},
-			{
-				"type": "page",
-				"name": "Solana Integration",
-				"url": "/openzeppelin-relayer/solana"
-			},
-			{
-				"type": "page",
-				"name": "Stellar Integration",
-				"url": "/openzeppelin-relayer/stellar"
-			},
-			{
-				"type": "page",
-				"name": "API Reference",
-				"url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/api_docs.html",
-				"external": true
-			},
-			{
-				"type": "page",
-				"name": "Project Structure",
-				"url": "/openzeppelin-relayer/structure"
-			},
-			{
-				"type": "page",
-				"name": "Project Roadmap",
-				"url": "/openzeppelin-relayer/roadmap"
-			},
-			{
-				"type": "page",
-				"name": "Plugins",
-				"url": "/openzeppelin-relayer/plugins"
-			},
-			{
-				"type": "page",
-				"name": "Changelog",
-				"url": "/openzeppelin-relayer/changelog"
-			},
-			{
-				"type": "page",
-				"name": "Technical Rust Documentation",
-				"url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/openzeppelin_relayer/",
-				"external": true
-			}
-		]
-	},
-	{
-		"type": "separator",
-		"name": "Guides"
-	},
-	{
-		"type": "page",
-		"name": "Overview",
-		"url": "/contracts/v5.x/learn"
-	},
-	{
-		"type": "page",
-		"name": "Setting up a Node project",
-		"url": "/contracts/v5.x/learn/setting-up-a-node-project"
-	},
-	{
-		"type": "page",
-		"name": "Developing smart contracts",
-		"url": "/contracts/v5.x/learn/developing-smart-contracts"
-	},
-	{
-		"type": "page",
-		"name": "Deploying and interacting",
-		"url": "/contracts/v5.x/learn/deploying-and-interacting"
-	},
-	{
-		"type": "page",
-		"name": "Writing automated tests",
-		"url": "/contracts/v5.x/learn/writing-automated-tests"
-	},
-	{
-		"type": "page",
-		"name": "Connecting to public test networks",
-		"url": "/contracts/v5.x/learn/connecting-to-public-test-networks"
-	},
-	{
-		"type": "page",
-		"name": "Upgrading smart contracts",
-		"url": "/contracts/v5.x/learn/upgrading-smart-contracts"
-	},
-	{
-		"type": "page",
-		"name": "Preparing for mainnet",
-		"url": "/contracts/v5.x/learn/preparing-for-mainnet"
 	}
 ]
