@@ -21,6 +21,15 @@ import {
 	StellarIcon,
 	UniswapIcon,
 	ZamaIcon,
+	ContractsLibraryIcon,
+	ContractsMcpIcon,
+	ContractsUpgradesIcon,
+	ContractsWizardIcon,
+	EthernautIcon,
+	MonitorIcon,
+	RelayersIcon,
+	TransactionProposalIcon,
+	AnnotationDotsIcon,
 } from "@/components/icons";
 import {
 	HeroCard,
@@ -54,7 +63,7 @@ export default function HomePage() {
 					{/* Primary Hero: OpenZeppelin Contracts */}
 					<HeroCard
 						href="/contracts"
-						icon={<LibraryIcon size={32} />}
+						icon={<ContractsLibraryIcon className="h-12 w-12" />}
 						title="OpenZeppelin Solidity Contracts"
 						description="The world's most popular library of Solidity contracts for Ethereum and EVM blockchains. Battle-tested, community-reviewed, and trusted by thousands of projects worldwide."
 					/>
@@ -63,21 +72,21 @@ export default function HomePage() {
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 						<FeatureCard
 							href="/upgrade-plugins"
-							icon={<ArrowUpIcon size={20} />}
+							icon={<ContractsUpgradesIcon className="h-8 w-8" />}
 							title="Upgrades Plugins"
 							description="Deploy and manage upgradeable contracts with built-in safety checks and best practices"
 						/>
 
 						<FeatureCard
 							href="/wizard"
-							icon={<WandSparklesIcon size={20} />}
+							icon={<ContractsWizardIcon className="h-8 w-8" />}
 							title="Contracts Wizard"
 							description="Interactive smart contract generator with security best practices built-in"
 						/>
 
 						<FeatureCard
 							href="https://mcp.openzeppelin.com"
-							icon={<WrenchIcon size={20} />}
+							icon={<ContractsMcpIcon className="h-8 w-8" />}
 							title="Contracts MCP"
 							description="AI-powered assistant for smart contract development and security analysis"
 						/>
@@ -98,7 +107,7 @@ export default function HomePage() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
 						<FeatureCard
 							href="/openzeppelin-relayer"
-							icon={<SatelliteDishIcon size={20} />}
+							icon={<RelayersIcon className="h-8 w-8" />}
 							title="Relayer"
 							description="Enable gasless transactions and automate smart contract operations. Build better user experiences with meta-transactions and scheduled executions."
 							glowColor="tools"
@@ -106,7 +115,7 @@ export default function HomePage() {
 
 						<FeatureCard
 							href="/openzeppelin-monitor"
-							icon={<ActivityIcon size={20} />}
+							icon={<MonitorIcon className="h-8 w-8" />}
 							title="Monitor"
 							description="Real-time monitoring and alerting for your smart contracts. Get notified about important events, transactions, and state changes across multiple chains."
 							glowColor="tools"
@@ -117,7 +126,7 @@ export default function HomePage() {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<FeatureCard
 							href="/contracts-ui-builder"
-							icon={<WallpaperIcon size={20} />}
+							icon={<TransactionProposalIcon className="h-8 w-8" />}
 							title="UI Builder"
 							description="Create user interfaces for deployed contracts"
 						/>
@@ -149,7 +158,7 @@ export default function HomePage() {
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 						<EcosystemCard
 							href="/contracts"
-							icon={<EthereumIcon color className="w-5 h-5" />}
+							icon={<EthereumIcon color className="w-6 h-6" />}
 							title="Ethereum & EVM"
 							description="Solidity smart contracts for Ethereum and EVM-compatible chains"
 							glowColor="evm"
@@ -157,7 +166,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/cairo-contracts"
-							icon={<StarknetIcon color className="w-5 h-5" />}
+							icon={<StarknetIcon color className="w-7 h-7" />}
 							title="Starknet"
 							description="Essential contracts library written in Cairo for Starknet"
 							glowColor="starknet"
@@ -165,7 +174,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/contracts-stylus"
-							icon={<ArbitrumIcon color className="w-5 h-5" />}
+							icon={<ArbitrumIcon color className="w-7 h-7" />}
 							title="Arbitrum Stylus"
 							description="Essential contracts library for Arbitrum Stylus written in Rust"
 							glowColor="rust"
@@ -173,7 +182,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/uniswap-hooks"
-							icon={<UniswapIcon color className="w-5 h-5" />}
+							icon={<UniswapIcon color className="w-7 h-7" />}
 							title="Uniswap Hooks"
 							description="Advanced Uniswap V4 hooks in Solidity"
 							glowColor="uniswap"
@@ -197,7 +206,7 @@ export default function HomePage() {
 
 						<EcosystemCard
 							href="/substrate-runtimes"
-							icon={<PolkadotIcon color className="w-5 h-5" />}
+							icon={<PolkadotIcon color className="w-7 h-7" />}
 							title="Polkadot"
 							description="ink! smart contracts for Polkadot and Substrate chains"
 							glowColor="polkadot"
@@ -225,7 +234,7 @@ export default function HomePage() {
 					{/* Ethernaut CTF as standalone */}
 					<BannerCard
 						href="https://ethernaut.openzeppelin.com/"
-						icon={<GamepadIcon size={32} />}
+						icon={<EthernautIcon className="h-12 w-12" />}
 						title="Ethernaut CTF"
 						description="Learn smart contract security by hacking! A Web3/Solidity based capture-the-flag game where each level is a smart contract that needs to be 'hacked'. Perfect for learning vulnerabilities and security best practices through hands-on challenges."
 						badge="Interactive Learning"
@@ -246,7 +255,7 @@ export default function HomePage() {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 						<CommunityCard
 							href="https://forum.openzeppelin.com/"
-							icon={<MessageCircleIcon size={24} />}
+							icon={<AnnotationDotsIcon className="h-8 w-8" />}
 							title="Forum"
 							description="Deep technical discussions, architectural questions, and detailed support. Best place for in-depth conversations about smart contract development, security patterns, and implementation details."
 						/>

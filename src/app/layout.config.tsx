@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { GlobeIcon, HomeIcon, MessagesSquareIcon } from "lucide-react";
+import { GlobeIcon, HomeIcon, MessageSquareMoreIcon } from "lucide-react";
 
 /**
  * Shared layout configurations
@@ -104,7 +104,7 @@ export const baseOptions: BaseLayoutProps = {
 		{
 			text: "Forum",
 			url: "https://forum.openzeppelin.com",
-			icon: <MessagesSquareIcon />,
+			icon: <MessageSquareMoreIcon />,
 		},
 		{
 			text: "Website",
