@@ -1,17 +1,5 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
-import {
-	ActivityIcon,
-	ArrowUpIcon,
-	GamepadIcon,
-	LibraryIcon,
-	MessageCircleIcon,
-	SatelliteDishIcon,
-	SendIcon,
-	ShieldIcon,
-	WallpaperIcon,
-	WandSparklesIcon,
-	WrenchIcon,
-} from "lucide-react";
+import { ShieldIcon, WrenchIcon, SendIcon } from "lucide-react";
 import {
 	ArbitrumIcon,
 	EthereumIcon,
