@@ -1,19 +1,40 @@
-export function ZamaIcon({ className }: { className: string }) {
-	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="1em"
-			height="1em"
-			viewBox="0 0 24 24"
-			className={className}
-		>
-			<title>Zama Icon</title>
-			<path d="M0.64 0.09h18.71v3.18H0.64V0.09Z" fill="currentColor" />
-			<path d="M0.21 16.23h19.46v2.97H0.21v-2.97Z" fill="currentColor" />
-			<path
-				d="M0.21 16.23L19.34 3.27v3.84L6.05 16.23H0.21Z"
-				fill="currentColor"
-			/>
-		</svg>
-	);
+export function ZamaIcon({
+	className,
+	color,
+}: {
+	className: string;
+	color?: boolean;
+}) {
+	if (color) {
+		return (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="1em"
+				height="1em"
+				viewBox="0 0 24 24"
+				className={className}
+			>
+				<title>Zama Icon</title>
+				<rect width="24" height="24" fill="#FFD205" />
+				<path d="M4 4L21 4.03174V7H4V4Z" fill="#2D2D2A" />
+				<path d="M4 18H21V20.7016H4V18Z" fill="#2D2D2A" />
+				<path d="M4 18L21 7V10.2369L9.52734 18H4Z" fill="#2D2D2A" />
+			</svg>
+		);
+	} else {
+		return (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="1em"
+				height="1em"
+				viewBox="0 0 24 24"
+				className={className}
+			>
+				<title>Zama Icon</title>
+				<path d="M4 4L21 4.03174V7H4V4Z" fill="currentColor" />
+				<path d="M4 18H21V20.7016H4V18Z" fill="currentColor" />
+				<path d="M4 18L21 7V10.2369L9.52734 18H4Z" fill="currentColor" />
+			</svg>
+		);
+	}
 }
