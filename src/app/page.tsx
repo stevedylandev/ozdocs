@@ -27,6 +27,7 @@ import {
 	BannerCard,
 } from "@/components/home-cards";
 import { baseOptions } from "./layout.config";
+import { Footer } from "@/components/footer";
 
 export default function HomePage() {
 	return (
@@ -257,6 +258,7 @@ export default function HomePage() {
 					</div>
 				</div>
 			</main>
+			<Footer />
 		</HomeLayout>
 	);
 }
