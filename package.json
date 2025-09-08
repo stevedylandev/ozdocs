@@ -22,6 +22,7 @@
 		"clsx": "^2.1.1",
 		"fumadocs-core": "15.7.7",
 		"fumadocs-mdx": "11.8.2",
+		"fumadocs-openapi": "^9.3.7",
 		"fumadocs-ui": "15.7.7",
 		"glob": "^11.0.3",
 		"katex": "^0.16.22",

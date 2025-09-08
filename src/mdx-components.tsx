@@ -18,6 +18,8 @@ import {
 import type { MDXComponents } from "mdx/types";
 import { Mermaid } from "@/components/mdx/mermaid";
 import OZWizard from "./components/oz-wizard";
+import { APIPage } from "fumadocs-openapi/ui";
+import { openapi } from "@/lib/openapi";
 
 // use this function to get MDX components, you will need it for rendering MDX
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
@@ -39,6 +41,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
 		RefreshCwIcon,
 		PlugIcon,
 		Mermaid,
+		APIPage: (props) => <APIPage {...openapi.getAPIPageProps(props)} />,
 		...components,
 	};
 }
