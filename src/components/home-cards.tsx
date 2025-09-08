@@ -116,7 +116,7 @@ function FeatureCard({
 			href={href}
 			className={cn(
 				"group block p-6 bg-card border rounded-xl hover:shadow-sm hover:-translate-y-0.5 transition-all relative overflow-hidden hover:border-accent before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5",
-				`${glowClasses[glowColor as keyof typeof glowClasses] || glowClasses["tools"]} before:opacity-0 hover:before:opacity-100 before:transition-opacity`,
+				`${glowClasses[glowColor as keyof typeof glowClasses] || glowClasses.tools} before:opacity-0 hover:before:opacity-100 before:transition-opacity`,
 				className,
 			)}
 		>
@@ -162,7 +162,7 @@ function EcosystemCard({
 			href={href}
 			className={cn(
 				"group block p-6 bg-card border rounded-xl hover:shadow-sm hover:-translate-y-0.5 transition-all relative overflow-hidden hover:border-accent before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5",
-				`${glowClasses[glowColor as keyof typeof glowClasses] || glowClasses["evm"]} before:opacity-0 hover:before:opacity-100 before:transition-opacity`,
+				`${glowClasses[glowColor as keyof typeof glowClasses] || glowClasses.evm} before:opacity-0 hover:before:opacity-100 before:transition-opacity`,
 				className,
 			)}
 		>

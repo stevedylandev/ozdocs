@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 export function StarknetIcon({
 	className,
 	color,
@@ -5,6 +7,7 @@ export function StarknetIcon({
 	className: string;
 	color?: boolean;
 }) {
+	const gradientId = useId();
 	if (color) {
 		return (
 			<svg
@@ -29,7 +32,7 @@ export function StarknetIcon({
 						clipRule="evenodd"
 					/>
 					<path
-						fill="url(#tokenBrandedStarknet0)"
+						fill={`url(#${gradientId})`}
 						fillRule="evenodd"
 						d="M18.931 9.481c-.284-.318-.728-.497-1.16-.57a4 4 0 0 0-1.32.012c-.868.147-1.657.507-2.346.95c-.357.218-.662.47-.978.727c-.152.13-.29.268-.435.404l-.395.393a16 16 0 0 1-1.26 1.195c-.411.337-.795.593-1.174.771c-.378.18-.783.286-1.31.303c-.523.018-1.142-.076-1.803-.232c-.665-.155-1.364-.376-2.145-.566a6.4 6.4 0 0 0 1.21 2.034c.532.6 1.198 1.146 2.052 1.506a4.97 4.97 0 0 0 2.89.3c.993-.191 1.864-.65 2.568-1.181a9.2 9.2 0 0 0 1.758-1.783c.133-.176.203-.274.299-.411l.266-.394c.184-.244.353-.52.535-.762c.359-.505.712-1.01 1.123-1.475c.206-.236.424-.461.681-.678c.129-.106.268-.21.421-.303c.156-.1.32-.18.523-.24"
 						clipRule="evenodd"
@@ -48,7 +51,7 @@ export function StarknetIcon({
 					/>
 					<defs>
 						<linearGradient
-							id="tokenBrandedStarknet0"
+							id={gradientId}
 							x1="20.903"
 							x2="-13.607"
 							y1="3.792"

@@ -1,33 +1,33 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
-import { ShieldIcon, WrenchIcon, SendIcon } from "lucide-react";
+import { SendIcon, ShieldIcon, WrenchIcon } from "lucide-react";
+import { Footer } from "@/components/footer";
 import {
+	BannerCard,
+	CommunityCard,
+	EcosystemCard,
+	FeatureCard,
+	HeroCard,
+} from "@/components/home-cards";
+import {
+	AnnotationDotsIcon,
 	ArbitrumIcon,
-	EthereumIcon,
-	MidnightIcon,
-	PolkadotIcon,
-	StarknetIcon,
-	StellarIcon,
-	UniswapIcon,
-	ZamaIcon,
 	ContractsLibraryIcon,
 	ContractsMcpIcon,
 	ContractsUpgradesIcon,
 	ContractsWizardIcon,
+	EthereumIcon,
 	EthernautIcon,
+	MidnightIcon,
 	MonitorIcon,
+	PolkadotIcon,
 	RelayersIcon,
+	StarknetIcon,
+	StellarIcon,
 	TransactionProposalIcon,
-	AnnotationDotsIcon,
+	UniswapIcon,
+	ZamaIcon,
 } from "@/components/icons";
-import {
-	HeroCard,
-	FeatureCard,
-	EcosystemCard,
-	CommunityCard,
-	BannerCard,
-} from "@/components/home-cards";
 import { baseOptions } from "./layout.config";
-import { Footer } from "@/components/footer";
 
 export default function HomePage() {
 	return (
