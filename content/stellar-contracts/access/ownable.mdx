@@ -37,9 +37,9 @@ Ensures the caller is the owner before executing the function:
 
 ```rust
 #[only_owner]
-pub fn restricted_function(e: &Env, other_param: u32) {
+pub fn restricted_function(e: &Env, other_param: u32) 
     // Function body - only accessible to owner
-}
+
 ```
 
 This expands to code that retrieves the owner from storage and requires authorization before executing the function body.
@@ -49,32 +49,32 @@ This expands to code that retrieves the owner from storage and requires authoriz
 Here’s a simple example of using the Ownable module:
 
 ```rust
-use soroban_sdk::{contract, contractimpl, Address, Env};
-use stellar_access::ownable::{self as ownable, Ownable};
+use soroban_sdk::contract, contractimpl, Address, Env;
+use stellar_access::ownable::self as ownable, Ownable;
 use stellar_macros::only_owner;
 
 #[contract]
 pub struct MyContract;
 
 #[contractimpl]
-impl MyContract {
-    pub fn __constructor(e: &Env, initial_owner: Address) {
+impl MyContract 
+    pub fn __constructor(e: &Env, initial_owner: Address) 
         // Set the contract owner
         ownable::set_owner(e, &initial_owner);
-    }
+    
 
     #[only_owner]
-    pub fn update_config(e: &Env, new_value: u32) {
+    pub fn update_config(e: &Env, new_value: u32) 
         // Only the owner can call this function
         // Implementation...
-    }
+    
 
     // This function is accessible to anyone
-    pub fn get_config(e: &Env) -> u32 {
+    pub fn get_config(e: &Env) -> u32 
         // Implementation...
         42
-    }
-}
+    
+
 ```
 
 ## Benefits and Trade-offs

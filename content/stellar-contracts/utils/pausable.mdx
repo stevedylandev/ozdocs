@@ -17,17 +17,17 @@ To make it easier to spot when inspecting the code, we turned this simple functi
 An example:
 ```rust
 #[when_paused]
-pub fn emergency_reset(e: &Env) {
+pub fn emergency_reset(e: &Env) 
     e.storage().instance().set(&DataKey::Counter, &0);
-}
+
 ```
 
 Which will expand into the below code:
 
 ```rust
-pub fn emergency_reset(e: &Env) {
+pub fn emergency_reset(e: &Env) 
     when_paused(e);
 
     e.storage().instance().set(&DataKey::Counter, &0);
-}
+
 ```
