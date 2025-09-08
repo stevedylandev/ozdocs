@@ -7,9 +7,13 @@ import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins";
 // see https://fumadocs.vercel.app/docs/mdx/collections#define-docs
 export const docs = defineDocs({
 	dir: "content",
+	// Async mode - enables runtime compilation for faster dev server startup
 	docs: {
 		async: true,
 	},
+	// To switch back to sync mode (pre-compilation), comment out the docs config above and uncomment below:
+	// (sync mode - pre-compiles all content at build time)
+	// No additional config needed for sync mode - just remove the docs config
 });
 
 export default defineConfig({
