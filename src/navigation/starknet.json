@@ -179,6 +179,82 @@
 	},
 	{
 		"type": "folder",
+		"name": "API Reference",
+		"children": [
+			{
+				"type": "page",
+				"name": "Access Control",
+				"url": "/cairo-contracts/api/access"
+			},
+			{
+				"type": "page",
+				"name": "Account",
+				"url": "/cairo-contracts/api/account"
+			},
+			{
+				"type": "page",
+				"name": "ERC-1155",
+				"url": "/cairo-contracts/api/erc1155"
+			},
+			{
+				"type": "page",
+				"name": "ERC-20",
+				"url": "/cairo-contracts/api/erc20"
+			},
+			{
+				"type": "page",
+				"name": "ERC-721",
+				"url": "/cairo-contracts/api/erc721"
+			},
+			{
+				"type": "page",
+				"name": "Finance",
+				"url": "/cairo-contracts/api/finance"
+			},
+			{
+				"type": "page",
+				"name": "Governance",
+				"url": "/cairo-contracts/api/governance"
+			},
+			{
+				"type": "page",
+				"name": "Introspection",
+				"url": "/cairo-contracts/api/introspection"
+			},
+			{
+				"type": "page",
+				"name": "Merkle Tree",
+				"url": "/cairo-contracts/api/merkle-tree"
+			},
+			{
+				"type": "page",
+				"name": "Security",
+				"url": "/cairo-contracts/api/security"
+			},
+			{
+				"type": "page",
+				"name": "Token Common",
+				"url": "/cairo-contracts/api/token_common"
+			},
+			{
+				"type": "page",
+				"name": "UDC",
+				"url": "/cairo-contracts/api/udc"
+			},
+			{
+				"type": "page",
+				"name": "Upgrades",
+				"url": "/cairo-contracts/api/upgrades"
+			},
+			{
+				"type": "page",
+				"name": "Utilities",
+				"url": "/cairo-contracts/api/utilities"
+			}
+		]
+	},
+	{
+		"type": "folder",
 		"name": "Utils",
 		"children": [
 			{

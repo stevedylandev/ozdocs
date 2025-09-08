@@ -1,0 +1,150 @@
+---
+title: Security
+---
+
+This crate provides components to handle common security-related tasks.
+
+## [](#initializable)Initializable
+
+### [](#InitializableComponent)`InitializableComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/security/src/initializable.cairo)
+
+```cairo
+use openzeppelin_security::InitializableComponent;
+```
+
+Component enabling one-time initialization for contracts.
+
+Embeddable Implementations
+
+InitializableImpl
+
+- [`is_initialized(self)`](#InitializableComponent-is_initialized)
+
+Internal Implementations
+
+InternalImpl
+
+- [`initialize(self)`](#InitializableComponent-initialize)
+
+#### [](#InitializableComponent-Embeddable-Functions)Embeddable functions
+
+#### [](#InitializableComponent-is_initialized)`is_initialized(self: @ComponentState) → bool` external
+
+Returns whether the contract has been initialized.
+
+#### [](#InitializableComponent-Internal-Functions)Internal functions
+
+#### [](#InitializableComponent-initialize)`initialize(ref self: ComponentState)` internal
+
+Initializes the contract. Can only be called once.
+
+Requirements:
+
+- the contract must not have been initialized before.
+
+## [](#pausable)Pausable
+
+### [](#PausableComponent)`PausableComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/security/src/pausable.cairo)
+
+```cairo
+use openzeppelin_security::PausableComponent;
+```
+
+Component to implement an emergency stop mechanism.
+
+Embeddable Implementations
+
+PausableImpl
+
+- [`is_paused(self)`](#PausableComponent-is_paused)
+
+Internal Implementations
+
+InternalImpl
+
+- [`assert_not_paused(self)`](#PausableComponent-assert_not_paused)
+- [`assert_paused(self)`](#PausableComponent-assert_paused)
+- [`pause(self)`](#PausableComponent-pause)
+- [`unpause(self)`](#PausableComponent-unpause)
+
+Events
+
+- [`Paused(account)`](#PausableComponent-Paused)
+- [`Unpaused(account)`](#PausableComponent-Unpaused)
+
+#### [](#PausableComponent-Embeddable-Functions)Embeddable functions
+
+#### [](#PausableComponent-is_paused)`is_paused(self: @ComponentState) → bool` external
+
+Returns whether the contract is currently paused.
+
+#### [](#PausableComponent-Internal-Functions)Internal functions
+
+#### [](#PausableComponent-assert_not_paused)`assert_not_paused(self: @ComponentState)` internal
+
+Panics if the contract is paused.
+
+#### [](#PausableComponent-assert_paused)`assert_paused(self: @ComponentState)` internal
+
+Panics if the contract is not paused.
+
+#### [](#PausableComponent-pause)`pause(ref self: ComponentState)` internal
+
+Pauses the contract.
+
+Requirements:
+
+- the contract must not be paused.
+
+Emits a [Paused](#PausableComponent-Paused) event.
+
+#### [](#PausableComponent-unpause)`unpause(ref self: ComponentState)` internal
+
+Unpauses the contract.
+
+Requirements:
+
+- the contract must be paused.
+
+Emits an [Unpaused](#PausableComponent-Unpaused) event.
+
+#### [](#PausableComponent-Events)Events
+
+#### [](#PausableComponent-Paused)`Paused(account: ContractAddress)` event
+
+Emitted when the contract is paused by `account`.
+
+#### [](#PausableComponent-Unpaused)`Unpaused(account: ContractAddress)` event
+
+Emitted when the contract is unpaused by `account`.
+
+## [](#reentrancyguard)ReentrancyGuard
+
+### [](#ReentrancyGuardComponent)`ReentrancyGuardComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/security/src/reentrancyguard.cairo)
+
+```cairo
+use openzeppelin_security::ReentrancyGuardComponent;
+```
+
+Component to help prevent reentrant calls.
+
+Internal Implementations
+
+InternalImpl
+
+- [`start(self)`](#ReentrancyGuardComponent-start)
+- [`end(self)`](#ReentrancyGuardComponent-end)
+
+#### [](#ReentrancyGuardComponent-Internal-Functions)Internal functions
+
+#### [](#ReentrancyGuardComponent-start)`start(ref self: ComponentState)` internal
+
+Prevents a contract’s function from calling itself or another protected function, directly or indirectly.
+
+Requirements:
+
+- the guard must not be currently enabled.
+
+#### [](#ReentrancyGuardComponent-end)`end(ref self: ComponentState)` internal
+
+Removes the reentrant guard.
