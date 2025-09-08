@@ -7,6 +7,9 @@ import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins";
 // see https://fumadocs.vercel.app/docs/mdx/collections#define-docs
 export const docs = defineDocs({
 	dir: "content",
+	docs: {
+		async: true,
+	},
 });
 
 export default defineConfig({
