@@ -1,6 +1,5 @@
 ---
 title: ERC-20 Permit
-description: ERC-20 Permit
 ---
 
 Adds the permit method, which can be used to change an account’s ERC20 allowance (see [`IErc20::allowance`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/token/erc20/trait.IErc20.html#tymethod.allowance)) by presenting a message signed by the account. By not relying on [`IErc20::approve`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/token/erc20/trait.IErc20.html#tymethod.approve), the token holder account doesn’t need to send a transaction, and thus is not required to hold Ether at all.
