@@ -58,7 +58,7 @@ export default async function Layout({
 	return (
 		<DocsLayout
 			tree={currentTree}
-      nav={{...baseOptions, mode: 'top', transparentMode: 'none'}}
+			nav={{ ...baseOptions, mode: "top", transparentMode: "none" }}
 			{...baseOptions}
 			sidebar={{
 				tabs: [
