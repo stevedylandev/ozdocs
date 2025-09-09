@@ -1,6 +1,5 @@
 ---
 title: Using with Upgrades
-description: Using with Upgrades
 ---
 
 If your contract is going to be deployed with upgradeability, such as using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index.adoc), you will need to use the Upgradeable variant of OpenZeppelin Contracts.
@@ -37,7 +36,7 @@ The Upgradeable package replicates the structure of the main OpenZeppelin Contra
 Interfaces and libraries are not included in the Upgradeable package, but are instead imported from the main OpenZeppelin Contracts package.
 </Callout>
 
-Constructors are replaced by internal initializer functions following the naming convention `__{ContractName}_init`. Since these are internal, you must always define your own public initializer function and call the parent initializer of the contract you extend.
+Constructors are replaced by internal initializer functions following the naming convention `__ContractName_init`. Since these are internal, you must always define your own public initializer function and call the parent initializer of the contract you extend.
 
 ```diff
 -    constructor() ERC721("MyCollectible", "MCO") public {
@@ -70,9 +69,9 @@ main();
 
 ### Multiple Inheritance
 
-Initializer functions are not linearized by the compiler like constructors. Because of this, each `__{ContractName}_init` function embeds the linearized calls to all parent initializers. As a consequence, calling two of these `init` functions can potentially initialize the same contract twice.
+Initializer functions are not linearized by the compiler like constructors. Because of this, each `__ContractName_init` function embeds the linearized calls to all parent initializers. As a consequence, calling two of these `init` functions can potentially initialize the same contract twice.
 
-The function `__{ContractName}_init_unchained` found in every contract is the initializer function minus the calls to parent initializers, and can be used to avoid the double initialization problem, but doing this manually is not recommended. We hope to be able to implement safety checks for this in future versions of the Upgrades Plugins.
+The function `__ContractName_init_unchained` found in every contract is the initializer function minus the calls to parent initializers, and can be used to avoid the double initialization problem, but doing this manually is not recommended. We hope to be able to implement safety checks for this in future versions of the Upgrades Plugins.
 
 ### Namespaced Storage
 

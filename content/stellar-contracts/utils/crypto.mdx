@@ -1,6 +1,5 @@
 ---
 title: Cryptography Utilities
-description: Cryptography Utilities
 ---
 
 [Crypto Source Code](https://github.com/OpenZeppelin/stellar-contracts/tree/main/packages/contract-utils/src/crypto) |
@@ -33,13 +32,13 @@ Provides a generic `Hasher` trait and implementations for common hash functions:
 Each hasher follows the same interface:
 
 ```rust
-pub trait Hasher {
+pub trait Hasher 
     type Output;
 
     fn new(e: &Env) -> Self;
     fn update(&mut self, input: Bytes);
     fn finalize(self) -> Self::Output;
-}
+
 ```
 
 #### Hashable
@@ -47,9 +46,9 @@ pub trait Hasher {
 The `Hashable` trait allows types to be hashed with any `Hasher` implementation:
 
 ```rust
-pub trait Hashable {
+pub trait Hashable 
     fn hash<H: Hasher>(&self, hasher: &mut H);
-}
+
 ```
 
 Built-in implementations are provided for `BytesN<32>` and `Bytes`.
@@ -67,11 +66,11 @@ The `Verifier` struct provides functionality to verify Merkle proofs:
 impl<H> Verifier<H>
 where
     H: Hasher<Output = Bytes32>,
-{
-    pub fn verify(e: &Env, proof: Vec<Bytes32>, root: Bytes32, leaf: Bytes32) -> bool {
+
+    pub fn verify(e: &Env, proof: Vec<Bytes32>, root: Bytes32, leaf: Bytes32) -> bool 
         // Implementation verifies that the leaf is part of the tree defined by root
-    }
-}
+    
+
 ```
 
 ### Usage Examples
@@ -79,7 +78,7 @@ where
 #### Hashing Data
 
 ```rust
-use soroban_sdk::{Bytes, Env};
+use soroban_sdk::Bytes, Env;
 use stellar_contract_utils::crypto::keccak::Keccak256;
 use stellar_contract_utils::crypto::hasher::Hasher;
 
@@ -95,7 +94,7 @@ let hash = hasher.finalize();
 #### Verifying a Merkle Proof
 
 ```rust
-use soroban_sdk::{BytesN, Env, Vec};
+use soroban_sdk::BytesN, Env, Vec;
 use stellar_crypto::keccak::Keccak256;
 use stellar_crypto::merkle::Verifier;
 
@@ -120,9 +119,9 @@ other assets using Merkle proofs for verification.
 The `IndexableLeaf` trait defines the structure for nodes in the Merkle tree:
 
 ```rust
-pub trait IndexableLeaf {
+pub trait IndexableLeaf 
     fn index(&self) -> u32;
-}
+
 ```
 
 Each node must include a unique index that identifies its position in the Merkle tree.
@@ -138,49 +137,49 @@ The `MerkleDistributor` struct provides functionality for:
 ### Usage Example
 
 ```rust
-use soroban_sdk::{contract, contractimpl, contracttype, Address, BytesN, Env, Vec};
+use soroban_sdk::contract, contractimpl, contracttype, Address, BytesN, Env, Vec;
 use stellar_contract_utils::crypto::keccak::Keccak256;
-use stellar_contract_utils::merkle_distributor::{IndexableLeaf, MerkleDistributor};
+use stellar_contract_utils::merkle_distributor::IndexableLeaf, MerkleDistributor;
 
 // Define a leaf node structure
 #[contracttype]
-struct LeafData {
+struct LeafData 
     pub index: u32,
     pub address: Address,
     pub amount: i128,
-}
+
 
 // Implement IndexableLeaf for the leaf structure
-impl IndexableLeaf for LeafData {
-    fn index(&self) -> u32 {
+impl IndexableLeaf for LeafData 
+    fn index(&self) -> u32 
         self.index
-    }
-}
+    
+
 
 #[contract]
 pub struct TokenDistributor;
 
 #[contractimpl]
-impl TokenDistributor {
+impl TokenDistributor 
     // Initialize the distributor with a Merkle root
-    pub fn initialize(e: &Env, root: BytesN<32>) {
+    pub fn initialize(e: &Env, root: BytesN<32>) 
         MerkleDistributor::<Keccak256>::set_root(e, root);
-    }
+    
 
     // Claim tokens by providing a proof
-    pub fn claim(e: &Env, leaf: LeafData, proof: Vec<BytesN<32>>) {
+    pub fn claim(e: &Env, leaf: LeafData, proof: Vec<BytesN<32>>) 
         // Verify the proof and mark as claimed
         MerkleDistributor::<Keccak256>::verify_and_set_claimed(e, leaf.clone(), proof);
 
         // Transfer tokens or perform other actions based on leaf data
         // ...
-    }
+    
 
     // Check if an index has been claimed
-    pub fn is_claimed(e: &Env, index: u32) -> bool {
+    pub fn is_claimed(e: &Env, index: u32) -> bool 
         MerkleDistributor::<Keccak256>::is_claimed(e, index)
-    }
-}
+    
+
 ```
 
 ## Use Cases

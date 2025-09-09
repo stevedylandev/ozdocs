@@ -996,10 +996,175 @@
 				"url": "/openzeppelin-relayer/stellar"
 			},
 			{
-				"type": "page",
+				"type": "folder",
 				"name": "API Reference",
-				"url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/api_docs.html",
-				"external": true
+				"children": [
+					{
+						"type": "page",
+						"name": "Call Plugin",
+						"url": "/openzeppelin-relayer/api/callPlugin"
+					},
+					{
+						"type": "page",
+						"name": "Cancel Transaction",
+						"url": "/openzeppelin-relayer/api/cancelTransaction"
+					},
+					{
+						"type": "page",
+						"name": "Create Notification",
+						"url": "/openzeppelin-relayer/api/createNotification"
+					},
+					{
+						"type": "page",
+						"name": "Create Relayer",
+						"url": "/openzeppelin-relayer/api/createRelayer"
+					},
+					{
+						"type": "page",
+						"name": "Create Signer",
+						"url": "/openzeppelin-relayer/api/createSigner"
+					},
+					{
+						"type": "page",
+						"name": "Delete Notification",
+						"url": "/openzeppelin-relayer/api/deleteNotification"
+					},
+					{
+						"type": "page",
+						"name": "Delete Pending Transactions",
+						"url": "/openzeppelin-relayer/api/deletePendingTransactions"
+					},
+					{
+						"type": "page",
+						"name": "Delete Relayer",
+						"url": "/openzeppelin-relayer/api/deleteRelayer"
+					},
+					{
+						"type": "page",
+						"name": "Delete Signer",
+						"url": "/openzeppelin-relayer/api/deleteSigner"
+					},
+					{
+						"type": "page",
+						"name": "Get Notification",
+						"url": "/openzeppelin-relayer/api/getNotification"
+					},
+					{
+						"type": "page",
+						"name": "Get Relayer",
+						"url": "/openzeppelin-relayer/api/getRelayer"
+					},
+					{
+						"type": "page",
+						"name": "Get Relayer Balance",
+						"url": "/openzeppelin-relayer/api/getRelayerBalance"
+					},
+					{
+						"type": "page",
+						"name": "Get Relayer Status",
+						"url": "/openzeppelin-relayer/api/getRelayerStatus"
+					},
+					{
+						"type": "page",
+						"name": "Get Signer",
+						"url": "/openzeppelin-relayer/api/getSigner"
+					},
+					{
+						"type": "page",
+						"name": "Get Transaction by ID",
+						"url": "/openzeppelin-relayer/api/getTransactionById"
+					},
+					{
+						"type": "page",
+						"name": "Get Transaction by Nonce",
+						"url": "/openzeppelin-relayer/api/getTransactionByNonce"
+					},
+					{
+						"type": "page",
+						"name": "Health",
+						"url": "/openzeppelin-relayer/api/health"
+					},
+					{
+						"type": "page",
+						"name": "List Notifications",
+						"url": "/openzeppelin-relayer/api/listNotifications"
+					},
+					{
+						"type": "page",
+						"name": "List Relayers",
+						"url": "/openzeppelin-relayer/api/listRelayers"
+					},
+					{
+						"type": "page",
+						"name": "List Signers",
+						"url": "/openzeppelin-relayer/api/listSigners"
+					},
+					{
+						"type": "page",
+						"name": "List Transactions",
+						"url": "/openzeppelin-relayer/api/listTransactions"
+					},
+					{
+						"type": "page",
+						"name": "List Metrics",
+						"url": "/openzeppelin-relayer/api/list_metrics"
+					},
+					{
+						"type": "page",
+						"name": "Metric Detail",
+						"url": "/openzeppelin-relayer/api/metric_detail"
+					},
+					{
+						"type": "page",
+						"name": "Replace Transaction",
+						"url": "/openzeppelin-relayer/api/replaceTransaction"
+					},
+					{
+						"type": "page",
+						"name": "RPC",
+						"url": "/openzeppelin-relayer/api/rpc"
+					},
+					{
+						"type": "page",
+						"name": "Scrape Metrics",
+						"url": "/openzeppelin-relayer/api/scrape_metrics"
+					},
+					{
+						"type": "page",
+						"name": "Send Transaction",
+						"url": "/openzeppelin-relayer/api/sendTransaction"
+					},
+					{
+						"type": "page",
+						"name": "Sign",
+						"url": "/openzeppelin-relayer/api/sign"
+					},
+					{
+						"type": "page",
+						"name": "Sign Transaction",
+						"url": "/openzeppelin-relayer/api/signTransaction"
+					},
+					{
+						"type": "page",
+						"name": "Sign Typed Data",
+						"url": "/openzeppelin-relayer/api/signTypedData"
+					},
+					{
+						"type": "page",
+						"name": "Update Notification",
+						"url": "/openzeppelin-relayer/api/updateNotification"
+					},
+					{
+						"type": "page",
+						"name": "Update Relayer",
+						"url": "/openzeppelin-relayer/api/updateRelayer"
+					},
+					{
+						"type": "page",
+						"name": "Update Signer",
+						"url": "/openzeppelin-relayer/api/updateSigner"
+					}
+				]
 			},
 			{
 				"type": "page",
@@ -1023,7 +1188,7 @@
 			},
 			{
 				"type": "page",
-				"name": "Technical Rust Documentation",
+				"name": "Rust Book",
 				"url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/openzeppelin_relayer/",
 				"external": true
 			}

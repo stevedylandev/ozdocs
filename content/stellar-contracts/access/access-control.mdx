@@ -1,6 +1,5 @@
 ---
 title: Access Control
-description: Access Control
 ---
 
 [Source Code](https://github.com/OpenZeppelin/stellar-contracts/tree/main/packages/access/src/access-control)
@@ -47,48 +46,48 @@ Roles exist only through their relationships with accounts, so a role with zero 
 Here’s a simple example of using the Access Control module:
 
 ```rust
-use soroban_sdk::{contract, contractimpl, symbol_short, Address, Env};
-use stellar_access::access_control::{self as access_control, AccessControl};
-use stellar_macros::{has_role, only_admin};
+use soroban_sdk::contract, contractimpl, symbol_short, Address, Env;
+use stellar_access::access_control::self as access_control, AccessControl;
+use stellar_macros::has_role, only_admin;
 
 #[contract]
 pub struct MyContract;
 
 #[contractimpl]
-impl MyContract {
-    pub fn __constructor(e: &Env, admin: Address) {
+impl MyContract 
+    pub fn __constructor(e: &Env, admin: Address) 
         // Set the contract admin
         access_control::set_admin(e, &admin);
 
         // Create a "minter" role with admin as its admin
         access_control::set_role_admin_no_auth(e, &symbol_short!("minter"), &symbol_short!("admin"));
-    }
+    
 
     #[only_admin]
-    pub fn admin_restricted_function(e: &Env) -> Vec<String> {
+    pub fn admin_restricted_function(e: &Env) -> Vec<String> 
         vec![&e, String::from_str(e, "seems sus")]
-    }
+    
 
     // we want `require_auth()` provided by the macro, since there is no
     // `require_auth()` in `Base::mint`.
     #[only_role(caller, "minter")]
-    pub fn mint(e: &Env, caller: Address, to: Address, token_id: u32) {
+    pub fn mint(e: &Env, caller: Address, to: Address, token_id: u32) 
         Base::mint(e, &to, token_id)
-    }
+    
 
     // allows either minter or burner role, does not enforce `require_auth` in the macro
     #[has_any_role(caller, ["minter", "burner"])]
-    pub fn multi_role_action(e: &Env, caller: Address) -> String {
+    pub fn multi_role_action(e: &Env, caller: Address) -> String 
         caller.require_auth();
         String::from_str(e, "multi_role_action_success")
-    }
+    
 
     // allows either minter or burner role AND enforces `require_auth` in the macro
     #[only_any_role(caller, ["minter", "burner"])]
-    pub fn multi_role_auth_action(e: &Env, caller: Address) -> String {
+    pub fn multi_role_auth_action(e: &Env, caller: Address) -> String 
         String::from_str(e, "multi_role_auth_action_success")
-    }
-}
+    
+
 ```
 
 ## Benefits and Trade-offs
@@ -107,6 +106,6 @@ impl MyContract {
 
 ## See Also
 
-* [Ownable](access/ownable.adoc)
-* [Fungible Token](tokens/fungible/fungible.adoc)
-* [Non-Fungible Token](tokens/non-fungible/non-fungible.adoc)
+* [Ownable](/stellar-contracts/access/ownable)
+* [Fungible Token](/stellar-contracts/tokens/fungible/fungible)
+* [Non-Fungible Token](/stellar-contracts/tokens/non-fungible/non-fungible)

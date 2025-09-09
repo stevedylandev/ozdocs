@@ -1,6 +1,5 @@
 ---
 title: Non-Fungible Token
-description: Non-Fungible Token
 ---
 
 [Source Code](https://github.com/OpenZeppelin/stellar-contracts/tree/main/packages/tokens/src/non-fungible)
@@ -36,42 +35,42 @@ want to implement access control to restrict who can mint.
 Here’s what a contract for tokenized items might look like:
 
 ```rust
-use soroban_sdk::{contract, contractimpl, Address, Env, String};
+use soroban_sdk::contract, contractimpl, Address, Env, String;
 use stellar_macros::default_impl;
-use stellar_tokens::non_fungible::{
+use stellar_tokens::non_fungible::
     burnable::NonFungibleBurnable,
     Base, ContractOverrides, NonFungibleToken,
-};
+;
 
 #[contract]
 pub struct GameItem;
 
 #[contractimpl]
-impl GameItem {
-    pub fn __constructor(e: &Env) {
+impl GameItem 
+    pub fn __constructor(e: &Env) 
         Base::set_metadata(
             e,
             String::from_str(e, "www.mygame.com"),
             String::from_str(e, "My Game Items Collection"),
             String::from_str(e, "MGMC"),
         );
-    }
+    
 
-    pub fn award_item(e: &Env, to: Address) -> u32 {
+    pub fn award_item(e: &Env, to: Address) -> u32 
         // access control might be needed
         Base::sequential_mint(e, &to)
-    }
-}
+    
+
 
 #[default_impl]
 #[contractimpl]
-impl NonFungibleToken for GameItem {
+impl NonFungibleToken for GameItem 
     type ContractType = Base;
-}
+
 
 #[default_impl]
 #[contractimpl]
-impl NonFungibleBurnable for GameItem {}
+impl NonFungibleBurnable for GameItem 
 ```
 
 ## Extensions
@@ -86,20 +85,20 @@ The `NonFungibleBurnable` trait extends the `NonFungibleToken` trait to provide 
 ### - Consecutive
 [Source Code](https://github.com/OpenZeppelin/stellar-contracts/tree/main/packages/tokens/src/non-fungible/extensions/consecutive)
 
-The `NonFungibleConsecutive` extension is optimized for batch minting of tokens with consecutive IDs. This approach drastically reduces storage writes during minting by storing ownership only at boundaries and inferring ownership for other tokens. See [Non-Fungible Consecutive](tokens/non-fungible/nft-consecutive.adoc) for detailed documentation.
+The `NonFungibleConsecutive` extension is optimized for batch minting of tokens with consecutive IDs. This approach drastically reduces storage writes during minting by storing ownership only at boundaries and inferring ownership for other tokens. See [Non-Fungible Consecutive](/stellar-contracts/tokens/non-fungible/nft-consecutive) for detailed documentation.
 
 This extension is build around the contract variant `Consecutive`. Here is an example usage:
 
-* [Non-Fungible Consecutive](tokens/non-fungible/nft-consecutive.adoc)
+* [Non-Fungible Consecutive](/stellar-contracts/tokens/non-fungible/nft-consecutive)
 
 ### - Enumerable
 [Source Code](https://github.com/OpenZeppelin/stellar-contracts/tree/main/packages/tokens/src/non-fungible/extensions/enumerable)
 
-The `NonFungibleEnumerable` extension enables on-chain enumeration of tokens owned by an address. See [Non-Fungible Enumerable](tokens/non-fungible/nft-enumerable.adoc) for detailed documentation.
+The `NonFungibleEnumerable` extension enables on-chain enumeration of tokens owned by an address. See [Non-Fungible Enumerable](/stellar-contracts/tokens/non-fungible/nft-enumerable) for detailed documentation.
 
 This extension is build around the contract variant `Enumerable`. Here is an example usage:
 
-* [Non-Fungible Enumerable](tokens/non-fungible/nft-enumerable.adoc)
+* [Non-Fungible Enumerable](/stellar-contracts/tokens/non-fungible/nft-enumerable)
 
 ### - Royalties
 [Source Code](https://github.com/OpenZeppelin/stellar-contracts/tree/main/packages/tokens/src/non-fungible/extensions/royalties)

@@ -1,7 +1,7 @@
-import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { DocsLayout } from "fumadocs-ui/layouts/notebook";
 import type { ReactNode } from "react";
-
 import { baseOptions } from "@/app/layout.config";
+
 import {
 	ArbitrumIcon,
 	EthereumIcon,
@@ -58,6 +58,7 @@ export default async function Layout({
 	return (
 		<DocsLayout
 			tree={currentTree}
+			nav={{ ...baseOptions, mode: "top", transparentMode: "none" }}
 			{...baseOptions}
 			sidebar={{
 				tabs: [

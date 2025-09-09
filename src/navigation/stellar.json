@@ -20,12 +20,12 @@
 			{
 				"type": "page",
 				"name": "Access Control",
-				"url": "/stellar-contracts/access-control"
+				"url": "/stellar-contracts/access/access-control"
 			},
 			{
 				"type": "page",
 				"name": "Ownable",
-				"url": "/stellar-contracts/ownable"
+				"url": "/stellar-contracts/access/ownable"
 			}
 		]
 	},
@@ -34,14 +34,46 @@
 		"name": "Tokens",
 		"children": [
 			{
-				"type": "page",
-				"name": "Fungible Tokens",
-				"url": "/stellar-contracts/tokens/fungible/fungible"
+				"type": "folder",
+				"name": "Fungible",
+				"children": [
+					{
+						"type": "page",
+						"name": "Fungible Tokens",
+						"url": "/stellar-contracts/tokens/fungible/fungible"
+					},
+					{
+						"type": "page",
+						"name": "SAC Admin Generic",
+						"url": "/stellar-contracts/tokens/fungible/sac-admin-generic"
+					},
+					{
+						"type": "page",
+						"name": "SAC Admin Wrapper",
+						"url": "/stellar-contracts/tokens/fungible/sac-admin-wrapper"
+					}
+				]
 			},
 			{
-				"type": "page",
-				"name": "Non-Fungible Tokens",
-				"url": "/stellar-contracts/tokens/non-fungible/non-fungible"
+				"type": "folder",
+				"name": "Non-Fungible",
+				"children": [
+					{
+						"type": "page",
+						"name": "Non-Fungible Tokens",
+						"url": "/stellar-contracts/tokens/non-fungible/non-fungible"
+					},
+					{
+						"type": "page",
+						"name": "NFT Consecutive",
+						"url": "/stellar-contracts/tokens/non-fungible/nft-consecutive"
+					},
+					{
+						"type": "page",
+						"name": "NFT Enumerable",
+						"url": "/stellar-contracts/tokens/non-fungible/nft-enumerable"
+					}
+				]
 			}
 		]
 	},
@@ -63,6 +95,17 @@
 				"type": "page",
 				"name": "Upgradeable",
 				"url": "/stellar-contracts/utils/upgradeable"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Helpers",
+		"children": [
+			{
+				"type": "page",
+				"name": "Default Implementation Macro",
+				"url": "/stellar-contracts/helpers/default-impl-macro"
 			}
 		]
 	},
