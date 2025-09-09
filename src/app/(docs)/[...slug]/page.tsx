@@ -8,6 +8,7 @@ import {
 import { notFound } from "next/navigation";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
+import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 
 export default async function Page(props: {
 	params: Promise<{ slug?: string[] }>;
@@ -28,6 +29,14 @@ export default async function Page(props: {
 			<DocsTitle>{page.data.title}</DocsTitle>
 			<DocsDescription>{page.data.description}</DocsDescription>
 			<DocsBody>
+			<div className="flex flex-row gap-2 items-center border-b pt-2 pb-6">
+
+	  <LLMCopyButton markdownUrl={`${page.url}.md`} />
+  <ViewOptions
+    markdownUrl={`${page.url}.md`}
+    githubUrl={`https://github.com/OpenZeppelin/docs/blob/main/content/${page.path}`}
+  />
+			</div>
 				<MDXContent
 					components={getMDXComponents({
 						// this allows you to link to other pages with relative file paths
