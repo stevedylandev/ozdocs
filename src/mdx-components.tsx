@@ -1,3 +1,4 @@
+import { APIPage } from "fumadocs-openapi/ui";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import {
 	AnchorIcon,
@@ -17,9 +18,8 @@ import {
 } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
 import { Mermaid } from "@/components/mdx/mermaid";
-import OZWizard from "./components/oz-wizard";
-import { APIPage } from "fumadocs-openapi/ui";
 import { openapi } from "@/lib/openapi";
+import OZWizard from "./components/oz-wizard";
 
 // use this function to get MDX components, you will need it for rendering MDX
 export function getMDXComponents(components?: MDXComponents): MDXComponents {

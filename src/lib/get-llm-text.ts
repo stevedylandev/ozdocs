@@ -1,10 +1,10 @@
+import fs from "node:fs/promises";
+import type { InferPageType } from "fumadocs-core/source";
+import { remarkInclude } from "fumadocs-mdx/config";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
-import { remarkInclude } from "fumadocs-mdx/config";
-import { source } from "./source";
-import type { InferPageType } from "fumadocs-core/source";
-import fs from "node:fs/promises";
+import type { source } from "./source";
 
 const processor = remark()
 	.use(remarkMdx)
