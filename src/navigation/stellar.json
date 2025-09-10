@@ -39,7 +39,7 @@
 				"children": [
 					{
 						"type": "page",
-						"name": "Fungible Tokens",
+						"name": "Fungible Token",
 						"url": "/stellar-contracts/tokens/fungible/fungible"
 					},
 					{
@@ -60,7 +60,7 @@
 				"children": [
 					{
 						"type": "page",
-						"name": "Non-Fungible Tokens",
+						"name": "Non-Fungible Token",
 						"url": "/stellar-contracts/tokens/non-fungible/non-fungible"
 					},
 					{

@@ -39,44 +39,44 @@ Here’s a simplified example of a SAC Admin Generic contract:
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 #[repr(u32)]
-pub enum SACAdminGenericError 
+pub enum SACAdminGenericError {
     Unauthorized = 1,
     InvalidContext = 2,
     MintingLimitExceeded = 3,
-
+}
 
 #[contracttype]
 #[derive(Clone)]
-pub struct Signature 
+pub struct Signature {
     pub public_key: BytesN<32>,
     pub signature: BytesN<64>,
-
+}
 
 #[contracttype]
-pub enum SacDataKey 
+pub enum SacDataKey {
     Chief,
     Operator(BytesN<32>),     // -> true/false
     MintingLimit(BytesN<32>), // -> (max_limit, curr)
-
+}
 
 #[contract]
 pub struct SacAdminExampleContract;
 
 #[contractimpl]
-impl SacAdminExampleContract 
-    pub fn __constructor(e: Env, sac: Address, chief: BytesN<32>, operator: BytesN<32>) 
+impl SacAdminExampleContract {
+    pub fn __constructor(e: Env, sac: Address, chief: BytesN<32>, operator: BytesN<32>) {
         set_sac_address(&e, &sac);
         e.storage().instance().set(&SacDataKey::Chief, &chief);
         e.storage().instance().set(&SacDataKey::Operator(operator.clone()), &true);
         e.storage()
             .instance()
             .set(&SacDataKey::MintingLimit(operator), &(1_000_000_000i128, 0i128));
-    
+    }
 
-    pub fn get_sac_address(e: &Env) -> Address 
+    pub fn get_sac_address(e: &Env) -> Address {
         get_sac_address(e)
-    
-
+    }
+}
 ```
 
 ### Custom Authorization Logic
@@ -85,15 +85,15 @@ The key feature of the Generic approach is the ability to implement custom autho
 function:
 
 ```rust
-use soroban_sdk::
+use soroban_sdk::{
     auth::Context, CustomAccountInterface,
     contract, contracterror, contractimpl, contracttype,
     crypto::Hash,
     Address, BytesN, Env, IntoVal, Val, Vec,
-;
+};
 
 #[contractimpl]
-impl CustomAccountInterface for SacAdminExampleContract 
+impl CustomAccountInterface for SacAdminExampleContract {
     type Error = SACAdminGenericError;
     type Signature = Signature;
 
@@ -102,7 +102,7 @@ impl CustomAccountInterface for SacAdminExampleContract
         payload: Hash<32>,
         signature: Self::Signature,
         auth_context: Vec<Context>,
-    ) -> Result<(), SACAdminGenericError> 
+    ) -> Result<(), SACAdminGenericError> {
         // authenticate
         e.crypto().ed25519_verify(
             &signature.public_key,
@@ -112,64 +112,64 @@ impl CustomAccountInterface for SacAdminExampleContract
         let caller = signature.public_key.clone();
 
         // extract from context and check required permissions for every function
-        for ctx in auth_context.iter() 
-            let context = match ctx 
+        for ctx in auth_context.iter() {
+            let context = match ctx {
                 Context::Contract(c) => c,
                 _ => return Err(SACAdminGenericError::InvalidContext),
-            ;
+            };
 
-            match extract_sac_contract_context(&e, &context) 
-                SacFn::Mint(amount) => 
+            match extract_sac_contract_context(&e, &context) {
+                SacFn::Mint(amount) => {
                     // ensure caller has required permissions
                     ensure_caller_operator(&e, &SacDataKey::Operator(caller.clone()))?;
                     // ensure operator has minting limit
                     ensure_minting_limit(&e, &caller, amount)?;
-                
-                SacFn::Clawback(_amount) => 
+                }
+                SacFn::Clawback(_amount) => {
                     // ensure caller has required permissions
                     ensure_caller_operator(&e, &SacDataKey::Operator(caller.clone()))?;
-                
-                SacFn::SetAuthorized(_) => 
+                }
+                SacFn::SetAuthorized(_) => {
                     // ensure caller has required permissions
                     ensure_caller_operator(&e, &SacDataKey::Operator(caller.clone()))?;
-                
-                SacFn::SetAdmin => 
+                }
+                SacFn::SetAdmin => {
                     // ensure caller has required permissions
                     ensure_caller_chief(&e, &caller, &SacDataKey::Chief)?;
-                
-                SacFn::Unknown => 
+                }
+                SacFn::Unknown => {
                     // ensure only chief can call other functions
                     ensure_caller_chief(&e, &caller, &SacDataKey::Chief)?
-                
-            
-        
+                }
+            }
+        }
 
         Ok(())
-    
-
+    }
+}
 
 // Helper functions
 fn ensure_caller_chief<K: IntoVal<Env, Val>>(
     e: &Env,
     caller: &BytesN<32>,
     key: &K,
-) -> Result<(), SACAdminGenericError> 
+) -> Result<(), SACAdminGenericError> {
     let operator: BytesN<32> = e.storage().instance().get(key).expect("chief or operator not set");
-    if *caller != operator 
+    if *caller != operator {
         return Err(SACAdminGenericError::Unauthorized);
-    
+    }
     Ok(())
-
+}
 
 fn ensure_caller_operator<K: IntoVal<Env, Val>>(
     e: &Env,
     key: &K,
-) -> Result<(), SACAdminGenericError> 
-    match e.storage().instance().get::<_, bool>(key) 
+) -> Result<(), SACAdminGenericError> {
+    match e.storage().instance().get::<_, bool>(key) {
         Some(is_op) if is_op => Ok(()),
         _ => Err(SACAdminGenericError::Unauthorized),
-    
-
+    }
+}
 ```
 
 ## Benefits and Trade-offs

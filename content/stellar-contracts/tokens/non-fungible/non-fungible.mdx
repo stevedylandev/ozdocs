@@ -35,42 +35,42 @@ want to implement access control to restrict who can mint.
 Here’s what a contract for tokenized items might look like:
 
 ```rust
-use soroban_sdk::contract, contractimpl, Address, Env, String;
+use soroban_sdk::{contract, contractimpl, Address, Env, String};
 use stellar_macros::default_impl;
-use stellar_tokens::non_fungible::
+use stellar_tokens::non_fungible::{
     burnable::NonFungibleBurnable,
     Base, ContractOverrides, NonFungibleToken,
-;
+};
 
 #[contract]
 pub struct GameItem;
 
 #[contractimpl]
-impl GameItem 
-    pub fn __constructor(e: &Env) 
+impl GameItem {
+    pub fn __constructor(e: &Env) {
         Base::set_metadata(
             e,
             String::from_str(e, "www.mygame.com"),
             String::from_str(e, "My Game Items Collection"),
             String::from_str(e, "MGMC"),
         );
-    
+    }
 
-    pub fn award_item(e: &Env, to: Address) -> u32 
+    pub fn award_item(e: &Env, to: Address) -> u32 {
         // access control might be needed
         Base::sequential_mint(e, &to)
-    
-
+    }
+}
 
 #[default_impl]
 #[contractimpl]
-impl NonFungibleToken for GameItem 
+impl NonFungibleToken for GameItem {
     type ContractType = Base;
-
+}
 
 #[default_impl]
 #[contractimpl]
-impl NonFungibleBurnable for GameItem 
+impl NonFungibleBurnable for GameItem {}
 ```
 
 ## Extensions
