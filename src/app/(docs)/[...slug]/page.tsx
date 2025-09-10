@@ -31,10 +31,7 @@ export default async function Page(props: {
 			<DocsBody>
 				<div className="flex flex-row gap-2 items-center border-b pt-2 pb-6">
 					<LLMCopyButton markdownUrl={`${page.url}.md`} />
-					<ViewOptions
-						markdownUrl={`${page.url}.md`}
-						githubUrl={`https://github.com/OpenZeppelin/docs/blob/main/content/${page.path}`}
-					/>
+					<ViewOptions markdownUrl={`${page.url}.md`} />
 				</div>
 				<MDXContent
 					components={getMDXComponents({
