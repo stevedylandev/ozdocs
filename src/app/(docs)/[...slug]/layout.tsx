@@ -1,7 +1,5 @@
-import { DocsLayout } from "fumadocs-ui/layouts/notebook";
 import type { ReactNode } from "react";
 import { baseOptions } from "@/app/layout.config";
-
 import {
 	ArbitrumIcon,
 	EthereumIcon,
@@ -12,6 +10,7 @@ import {
 	UniswapIcon,
 	ZamaIcon,
 } from "@/components/icons";
+import { DocsLayout } from "@/components/layout/docs";
 import {
 	arbitrumStylusTree,
 	ethereumEvmTree,
@@ -66,6 +65,17 @@ export default async function Layout({
 						title: "Ethereum & EVM",
 						url: "/contracts/v5.x",
 						icon: <EthereumIcon className="w-5 h-5" />,
+						urls: new Set([
+							"/contracts",
+							"/community-contracts",
+							"/upgrade-plugins",
+							"/wizard",
+							"/openzeppelin-relayer",
+							"/openzeppelin-monitor",
+							"/contracts-ui-builder",
+							"/defender",
+							"/tools",
+						]),
 					},
 					{
 						title: "Arbitrum Stylus",

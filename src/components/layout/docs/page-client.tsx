@@ -18,7 +18,6 @@ import {
 	type ComponentProps,
 	Fragment,
 	useEffect,
-	useId,
 	useMemo,
 	useRef,
 	useState,
@@ -166,7 +165,6 @@ export function PageTOCPopover(props: ComponentProps<"div">) {
 	const [open, setOpen] = useState(false);
 	const { collapsed } = useSidebar();
 	const { isTransparent } = useNav();
-	const tocNavId = useId();
 
 	const onClick = useEffectEvent((e: Event) => {
 		if (!open) return;
@@ -196,7 +194,7 @@ export function PageTOCPopover(props: ComponentProps<"div">) {
 			<Collapsible open={open} onOpenChange={setOpen} asChild>
 				<header
 					ref={ref}
-					id={tocNavId}
+					id="nd-tocnav"
 					{...props}
 					className={cn(
 						"fixed pr-(--removed-body-scroll-bar-size,0) z-10 border-b backdrop-blur-sm transition-colors xl:hidden max-xl:on-root:[--fd-tocnav-height:40px]",
@@ -396,11 +394,10 @@ export function PageBreadcrumb({
 export function PageTOC(props: ComponentProps<"div">) {
 	const { collapsed } = useSidebar();
 	const offset = collapsed ? "0px" : "var(--fd-layout-offset)";
-	const tocId = useId();
 
 	return (
 		<div
-			id={tocId}
+			id="nd-toc"
 			{...props}
 			className={cn(
 				"fixed bottom-0 pt-12 pb-2 pr-(--removed-body-scroll-bar-size,0) max-xl:hidden",
