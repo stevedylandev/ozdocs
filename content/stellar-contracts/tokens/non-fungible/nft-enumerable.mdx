@@ -15,46 +15,46 @@ and modify the contract so that all tokens an address own can be listed. Please 
 can call `award_item` and we might want to implement access control to restrict who can mint.
 
 ```rust
-use soroban_sdk::contract, contractimpl, Address, Env, String;
+use soroban_sdk::{contract, contractimpl, Address, Env, String};
 use stellar_macros::default_impl;
-use stellar_tokens::non_fungible::
-    enumerable::Enumerable, NonFungibleEnumerable,
+use stellar_tokens::non_fungible::{
+    enumerable::{Enumerable, NonFungibleEnumerable},
     Base, ContractOverrides, NonFungibleToken,
-;
+};
 
 #[contract]
 pub struct GameItem;
 
 #[contractimpl]
-impl GameItem 
-    pub fn __constructor(e: &Env) 
+impl GameItem {
+    pub fn __constructor(e: &Env) {
         Base::set_metadata(
             e,
             String::from_str(e, "www.mygame.com"),
             String::from_str(e, "My Game Items Collection"),
             String::from_str(e, "MGMC"),
         );
-    
+    }
 
-    pub fn award_item(e: &Env, to: Address) -> u32 
+    pub fn award_item(e: &Env, to: Address) -> u32 {
         // access control might be needed
         Enumerable::sequential_mint(e, &to)
-    
+    }
 
-    pub fn burn(e: &Env, from: Address, token_id: u32) 
+    pub fn burn(e: &Env, from: Address, token_id: u32) {
         Enumerable::sequential_burn(e, &from, token_id);
-    
-
+    }
+}
 
 #[default_impl]
 #[contractimpl]
-impl NonFungibleToken for GameItem 
+impl NonFungibleToken for GameItem {
     type ContractType = Enumerable;
-
+}
 
 #[default_impl]
 #[contractimpl]
-impl NonFungibleEnumerable for GameItem 
+impl NonFungibleEnumerable for GameItem {}
 ```
 
 The extension exposes additionally the following entry-point functions, automatically implemented by `#[default_impl]`:

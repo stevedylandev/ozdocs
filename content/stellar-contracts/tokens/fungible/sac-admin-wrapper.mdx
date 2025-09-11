@@ -29,12 +29,12 @@ The Wrapper approach to SAC Admin implementation:
 The `SACAdminWrapper` trait defines the interface for the wrapper approach:
 
 ```rust
-pub trait SACAdminWrapper 
+pub trait SACAdminWrapper {
     fn set_admin(e: Env, new_admin: Address, operator: Address);
     fn set_authorized(e: Env, id: Address, authorize: bool, operator: Address);
     fn mint(e: Env, to: Address, amount: i128, operator: Address);
     fn clawback(e: Env, from: Address, amount: i128, operator: Address);
-
+}
 ```
 
 ### Example Implementation
@@ -46,14 +46,14 @@ Here’s a simplified example of a SAC Admin Wrapper contract using the OpenZepp
 pub struct ExampleContract;
 
 #[contractimpl]
-impl ExampleContract 
+impl ExampleContract {
     pub fn __constructor(
         e: &Env,
         default_admin: Address,
         manager1: Address,
         manager2: Address,
         sac: Address,
-    ) 
+    ) {
         access_control::set_admin(e, &default_admin);
 
         // create a role "manager" and grant it to `manager1`
@@ -63,31 +63,31 @@ impl ExampleContract
         access_control::grant_role_no_auth(e, &default_admin, &manager2, &symbol_short!("manager"));
 
         fungible::sac_admin_wrapper::set_sac_address(e, &sac);
-    
-
+    }
+}
 
 #[contractimpl]
-impl SACAdminWrapper for ExampleContract 
+impl SACAdminWrapper for ExampleContract {
     #[only_admin]
-    fn set_admin(e: Env, new_admin: Address, _operator: Address) 
+    fn set_admin(e: Env, new_admin: Address, _operator: Address) {
         fungible::sac_admin_wrapper::set_admin(&e, &new_admin);
-    
+    }
 
     #[only_role(operator, "manager")]
-    fn set_authorized(e: Env, id: Address, authorize: bool, operator: Address) 
+    fn set_authorized(e: Env, id: Address, authorize: bool, operator: Address) {
         fungible::sac_admin_wrapper::set_authorized(&e, &id, authorize);
-    
+    }
 
     #[only_role(operator, "manager")]
-    fn mint(e: Env, to: Address, amount: i128, operator: Address) 
+    fn mint(e: Env, to: Address, amount: i128, operator: Address) {
         fungible::sac_admin_wrapper::mint(&e, &to, amount);
-    
+    }
 
     #[only_role(operator, "manager")]
-    fn clawback(e: Env, from: Address, amount: i128, operator: Address) 
+    fn clawback(e: Env, from: Address, amount: i128, operator: Address) {
         fungible::sac_admin_wrapper::clawback(&e, &from, amount);
-    
-
+    }
+}
 ```
 
 ### Integration with Access Control
