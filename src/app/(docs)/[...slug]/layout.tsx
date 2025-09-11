@@ -1,7 +1,5 @@
-import { DocsLayout } from "fumadocs-ui/layouts/notebook";
 import type { ReactNode } from "react";
 import { baseOptions } from "@/app/layout.config";
-
 import {
 	ArbitrumIcon,
 	EthereumIcon,
@@ -12,6 +10,7 @@ import {
 	UniswapIcon,
 	ZamaIcon,
 } from "@/components/icons";
+import { DocsLayout } from "@/components/layout/docs";
 import {
 	arbitrumStylusTree,
 	ethereumEvmTree,

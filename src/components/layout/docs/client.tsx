@@ -4,7 +4,7 @@ import Link from "fumadocs-core/link";
 import { useNav } from "fumadocs-ui/contexts/layout";
 import { useSidebar } from "fumadocs-ui/contexts/sidebar";
 import { Sidebar as SidebarIcon } from "lucide-react";
-import { type ComponentProps, useId, useMemo } from "react";
+import { type ComponentProps, useMemo } from "react";
 import { cn } from "../../../lib/cn";
 import { isTabActive } from "../../../lib/is-active";
 import type { Option } from "../../root-toggle";
@@ -16,11 +16,10 @@ export function Navbar({
 }: ComponentProps<"header"> & { mode: "top" | "auto" }) {
 	const { open, collapsed } = useSidebar();
 	const { isTransparent } = useNav();
-	const subnavId = useId();
 
 	return (
 		<header
-			id={subnavId}
+			id="nd-subnav"
 			{...props}
 			className={cn(
 				"fixed flex flex-col top-(--fd-banner-height) left-0 right-(--removed-body-scroll-bar-size,0) z-10 px-(--fd-layout-offset) h-(--fd-nav-height) backdrop-blur-sm transition-colors",
@@ -38,11 +37,10 @@ export function Navbar({
 
 export function LayoutBody(props: ComponentProps<"main">) {
 	const { collapsed } = useSidebar();
-	const layoutId = useId();
 
 	return (
 		<main
-			id={layoutId}
+			id="nd-docs-layout"
 			{...props}
 			className={cn(
 				"flex flex-1 flex-col transition-[padding] pt-(--fd-nav-height) fd-notebook-layout",

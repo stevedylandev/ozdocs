@@ -21,6 +21,13 @@
 			},
 			"security": {
 				"noDangerouslySetInnerHtml": "off"
+			},
+			"correctness": {
+				"useUniqueElementIds": "off"
+			},
+			"a11y": {
+				"useKeyWithClickEvents": "off",
+				"noStaticElementInteractions": "off"
 			}
 		}
 	},
