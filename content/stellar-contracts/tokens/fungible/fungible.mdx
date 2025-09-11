@@ -31,17 +31,17 @@ and players can transfer tokens between accounts.
 Here’s what a basic fungible token contract might look like:
 
 ```rust
-use soroban_sdk::contract, contractimpl, Address, Env, String;
-use stellar_tokens::fungible::burnable::FungibleBurnable, Base, ContractOverrides, FungibleToken;
-use stellar_access::ownable::self as ownable, Ownable;
-use stellar_macros::default_impl, only_owner;
+use soroban_sdk::{contract, contractimpl, Address, Env, String};
+use stellar_tokens::fungible::{burnable::FungibleBurnable, Base, ContractOverrides, FungibleToken};
+use stellar_access::ownable::{self as ownable, Ownable};
+use stellar_macros::{default_impl, only_owner};
 
 #[contract]
 pub struct GameCurrency;
 
 #[contractimpl]
-impl GameCurrency 
-    pub fn __constructor(e: &Env, initial_owner: Address) 
+impl GameCurrency {
+    pub fn __constructor(e: &Env, initial_owner: Address) {
         // Set token metadata
         Base::set_metadata(
             e,
@@ -52,24 +52,24 @@ impl GameCurrency
 
         // Set the contract owner
         ownable::set_owner(e, &initial_owner);
-    
+    }
 
     #[only_owner]
-    pub fn mint_tokens(e: &Env, to: Address, amount: i128) 
+    pub fn mint_tokens(e: &Env, to: Address, amount: i128) {
         // Mint tokens to the recipient
         Base::mint(e, &to, amount);
-    
-
+    }
+}
 
 #[default_impl]
 #[contractimpl]
-impl FungibleToken for GameCurrency 
+impl FungibleToken for GameCurrency {
     type ContractType = Base;
-
+}
 
 #[default_impl]
 #[contractimpl]
-impl FungibleBurnable for GameCurrency 
+impl FungibleBurnable for GameCurrency {}
 ```
 
 ## Extensions
@@ -102,12 +102,6 @@ transfer/receive tokens or approve token transfers.
 The `FungibleBlockList` trait extends the `FungibleToken` trait to provide a blocklist mechanism that
 can be managed by an authorized account. This extension ensures that blocked accounts cannot transfer/receive
 tokens, or approve token transfers.
-
-### TokenInterface Macro
-
-For contracts that implement both `FungibleToken` and `FungibleBurnable` and also need to implement
-`soroban_sdk::token::TokenInterface`, we provide the `impl_token_interface!` macro. This macro automatically
-generates the required boilerplate, simplifying the implementation process.
 
 ## Utility Modules
 

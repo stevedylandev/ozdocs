@@ -2,21 +2,28 @@
 title: Stellar Smart Contracts Suite
 ---
 
-A comprehensive collection of secure, scalable smart contracts and utilities for the Stellar network,
-supporting Fungible, Non-Fungible, and Multi-Token standards.
+Explore our comprehensive suite of secure and scalable smart contract utilities for Stellar Soroban. Our libraries provide robust implementations for fungible and non-fungible tokens, along with powerful tools for access control and contract management.
 
 ## Tokens
-Explore our implementations for token standards on Stellar Soroban:
 
-* ***[Fungible Tokens](/stellar-contracts/tokens/fungible/fungible)***: Digital assets representing a fixed or dynamic supply of identical units.
-* ***[Non-Fungible Tokens](/stellar-contracts/tokens/non-fungible/non-fungible)***: Unique digital assets with verifiable ownership.
-* ***Multi-Token***: Hybrid tokens enabling both fungible and non-fungible token functionalities (work in progress).
+*   **[Fungible Tokens](/stellar-contracts/tokens/fungible/fungible)**: Digital assets representing a fixed or dynamic supply of identical units.
+*   **[Non-Fungible Tokens (NFTs)](/stellar-contracts/tokens/non-fungible/non-fungible)**: Unique digital assets with verifiable ownership.
+*   **Multi-Tokens**: Hybrid tokens enabling both fungible and non-fungible token functionalities (work in progress).
+
+## Access Control
+
+*   **[Ownable](/stellar-contracts/access/ownable)**: A simple mechanism with a single account authorized for all privileged actions.
+*   **[Role-Based Access Control](/stellar-contracts/access/access-control)**: A flexible mechanism with distinct roles for each privileged action.
 
 ## Utilities
-Discover our utility contracts for Stellar Soroban, applicable to all token standards mentioned above:
 
-* ***[Pausable](/stellar-contracts/utils/pausable)***
-* ***[Upgrades and Migrations](/stellar-contracts/utils/upgradeable)***
+*   **[Pausable](/stellar-contracts/utils/pausable)**: Pause and unpause contract functions, useful for emergency response.
+*   **[Upgradeable](/stellar-contracts/utils/upgradeable)**: Manage contract upgrades and data migrations seamlessly.
+*   **[Cryptography](/stellar-contracts/utils/crypto)**: A set of cryptographic primitives and utilities for Soroban contracts.
+
+## Security and Audits
+
+Our contracts are built with security as a top priority. You can find our audit reports [here](https://github.com/OpenZeppelin/stellar-contracts/tree/main/audits).
 
 ## Error Codes
 In Stellar Soroban, each error variant is assigned an integer. To prevent duplication of error codes,
