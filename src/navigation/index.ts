@@ -45,12 +45,12 @@ export const starknetTree: NavigationTree = {
 };
 
 export const zamaTree: NavigationTree = {
-	name: "Zama",
+	name: "Zama FHEVM",
 	children: zama,
 };
 
 export const uniswapTree: NavigationTree = {
-	name: "Uniswap",
+	name: "Uniswap Hooks",
 	children: uniswap,
 };
 

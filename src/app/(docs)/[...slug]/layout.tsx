@@ -93,12 +93,12 @@ export default async function Layout({
 						icon: <PolkadotIcon className="w-5 h-5" />,
 					},
 					{
-						title: "Uniswap",
+						title: "Uniswap Hooks",
 						url: "/uniswap-hooks",
 						icon: <UniswapIcon className="w-5 h-5" />,
 					},
 					{
-						title: "Zama",
+						title: "Zama FHEVM",
 						url: "/confidential-contracts",
 						icon: <ZamaIcon className="w-5 h-5" />,
 					},
