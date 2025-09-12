@@ -1,7 +1,7 @@
 "use client";
 import { RootProvider } from "fumadocs-ui/provider";
-import SearchDialog from "@/components/search";
 import type { ReactNode } from "react";
+import SearchDialog from "@/components/search";
 
 export function Provider({ children }: { children: ReactNode }) {
 	return (
