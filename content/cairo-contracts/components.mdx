@@ -20,13 +20,13 @@ The contract should first import the component and declare it with the `componen
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     // Import the component
     use openzeppelin_security::InitializableComponent;
 
     // Declare the component
     component!(path: InitializableComponent, storage: initializable, event: InitializableEvent);
-
+}
 ```
 
 The `path` argument should be the imported component itself (in this case, [InitializableComponent](/security.mdx#initializable)).
@@ -35,7 +35,7 @@ Note that even if the component doesn’t define any events, the compiler will s
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_security::InitializableComponent;
 
     component!(path: InitializableComponent, storage: initializable, event: InitializableEvent);
@@ -44,14 +44,14 @@ mod MyContract
     struct Storage {
         #[substorage(v0)]
         initializable: InitializableComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         InitializableEvent: InitializableComponent::Event
-    
+    }
 }
 ```
 
@@ -70,7 +70,7 @@ This allows contracts to integrate only the implementations that they’ll use a
 Integrating an implementation looks like this:
 
 ```rust
-mod MyContract 
+mod MyContract {
     use openzeppelin_security::InitializableComponent;
 
     component!(path: InitializableComponent, storage: initializable, event: InitializableEvent);
@@ -80,7 +80,7 @@ mod MyContract
     // Gives the contract access to the implementation methods
     impl InitializableImpl =
         InitializableComponent::InitializableImpl<ContractState>;
-
+}
 ```
 
 Defining an `impl` gives the contract access to the methods within the implementation from the component.
@@ -89,7 +89,7 @@ A function on the contract level can expose it like this:
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_security::InitializableComponent;
 
     component!(path: InitializableComponent, storage: initializable, event: InitializableEvent);
@@ -102,7 +102,7 @@ mod MyContract
     #[external(v0)]
     fn is_initialized(ref self: ContractState) -> bool {
         self.initializable.is_initialized()
-    
+    }
 }
 ```
 
@@ -112,14 +112,14 @@ To embed an implementation, add the `#[abi(embed_v0)]` attribute above the `impl
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     (...)
 
     // This attribute exposes the methods of the `impl`
     #[abi(embed_v0)]
     impl InitializableImpl =
         InitializableComponent::InitializableImpl<ContractState>;
-
+}
 ```
 
 `InitializableImpl` defines the `is_initialized` method in the component.
@@ -188,7 +188,7 @@ Here’s a full example of an account contract that embeds the `AccountMixinImpl
 
 ```rust
 #[starknet::contract]
-mod Account 
+mod Account {
     use openzeppelin_account::AccountComponent;
     use openzeppelin_introspection::src5::SRC5Component;
 
@@ -207,21 +207,21 @@ mod Account
         account: AccountComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         AccountEvent: AccountComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: felt252) 
+    fn constructor(ref self: ContractState, public_key: felt252) {
         self.account.initializer(public_key);
-    
+    }
 }
 ```
 
@@ -239,7 +239,7 @@ Let’s look at how a contract would integrate [OwnableComponent](/api/access.md
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_access::ownable::OwnableComponent;
     use starknet::ContractAddress;
 
@@ -252,20 +252,20 @@ mod MyContract
     struct Storage {
         #[substorage(v0)]
         ownable: OwnableComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         OwnableEvent: OwnableComponent::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, owner: ContractAddress) 
+    fn constructor(ref self: ContractState, owner: ContractAddress) {
         // Invoke ownable's `initializer`
         self.ownable.initializer(owner);
-    
+    }
 }
 ```
 
@@ -284,7 +284,7 @@ Here’s an example of how to use the Immutable Component Config pattern with th
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_introspection::src5::SRC5Component;
     use openzeppelin_token::common::erc2981::ERC2981Component;
     use starknet::contract_address_const;
@@ -305,29 +305,29 @@ mod MyContract
         erc2981: ERC2981Component::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC2981Event: ERC2981Component::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     // Define the immutable config
-    pub impl ERC2981ImmutableConfig of ERC2981Component::ImmutableConfig 
+    pub impl ERC2981ImmutableConfig of ERC2981Component::ImmutableConfig {
         const FEE_DENOMINATOR: u128 = 10_000;
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState) 
+    fn constructor(ref self: ContractState) {
         let default_receiver = contract_address_const::<'RECEIVER'>();
         let default_royalty_fraction = 1000;
         // Invoke erc2981's `initializer`
         self.erc2981.initializer(default_receiver, default_royalty_fraction);
-    
+    }
 }
 ```
 
@@ -341,10 +341,10 @@ In the following example, the `DefaultConfig` trait is used to define the `FEE_D
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_introspection::src5::SRC5Component;
     // Bring the DefaultConfig trait into scope
-    use openzeppelin_token::common::erc2981::{ERC2981Component, DefaultConfig;
+    use openzeppelin_token::common::erc2981::{ERC2981Component, DefaultConfig};
     use starknet::contract_address_const;
 
     component!(path: ERC2981Component, storage: erc2981, event: ERC2981Event);
@@ -358,23 +358,23 @@ mod MyContract
     impl InternalImpl = ERC2981Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         (...)
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         (...)
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState) 
+    fn constructor(ref self: ContractState) {
         let default_receiver = contract_address_const::<'RECEIVER'>();
         let default_royalty_fraction = 1000;
         // Invoke erc2981's `initializer`
         self.erc2981.initializer(default_receiver, default_royalty_fraction);
-    
+    }
 }
 ```
 
@@ -393,7 +393,7 @@ Creating a contract with `AccessControlComponent` should look like this:
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_access::accesscontrol::AccessControlComponent;
     use openzeppelin_introspection::src5::SRC5Component;
 
@@ -419,16 +419,16 @@ mod MyContract
         accesscontrol: AccessControlComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         AccessControlEvent: AccessControlComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     (...)
 }
@@ -454,10 +454,10 @@ The following snippet leverages the `before_update` hook to include this behavio
 
 ```rust
 #[starknet::contract]
-mod MyToken 
+mod MyToken {
     use openzeppelin_security::pausable::PausableComponent::InternalTrait;
     use openzeppelin_security::pausable::PausableComponent;
-    use openzeppelin_token::erc20::{ERC20Component, DefaultConfig;
+    use openzeppelin_token::erc20::{ERC20Component, DefaultConfig};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -473,7 +473,7 @@ mod MyToken
     impl PausableInternalImpl = PausableComponent::InternalImpl<ContractState>;
 
     // Create the hooks implementation
-    impl ERC20HooksImpl of ERC20Component::ERC20HooksTrait<ContractState> 
+    impl ERC20HooksImpl of ERC20Component::ERC20HooksTrait<ContractState> {
         // Occurs before token transfers
         fn before_update(
             ref self: ERC20Component::ComponentState<ContractState>,
@@ -485,7 +485,7 @@ mod MyToken
             let contract_state = self.get_contract();
             // Call function from integrated component
             contract_state.pausable.assert_not_paused();
-        
+        }
 
         // Omitting the `after_update` hook because the default behavior
         // is already implemented in the trait
@@ -507,8 +507,8 @@ The using contract just needs to bring the implementation into scope like this:
 
 ```rust
 #[starknet::contract]
-mod MyToken 
-    use openzeppelin_token::erc20::{ERC20Component, DefaultConfig;
+mod MyToken {
+    use openzeppelin_token::erc20::{ERC20Component, DefaultConfig};
     use openzeppelin_token::erc20::ERC20HooksEmptyImpl;
 
     (...)
@@ -528,11 +528,11 @@ Here’s the setup:
 
 ```rust
 #[starknet::contract]
-mod ERC20Pausable 
+mod ERC20Pausable {
     use openzeppelin_security::pausable::PausableComponent;
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig};
     // Import the ERC20 interfaces to create custom implementations
-    use openzeppelin_interfaces::erc20::IERC20, IERC20CamelOnly;
+    use openzeppelin_interfaces::erc20::{IERC20, IERC20CamelOnly};
     use starknet::ContractAddress;
 
     component!(path: PausableComponent, storage: pausable, event: PausableEvent);
@@ -566,7 +566,7 @@ The following example shows the pausable logic integrated into the ERC20 impleme
 
 ```rust
 #[starknet::contract]
-mod ERC20Pausable 
+mod ERC20Pausable {
     (...)
 
     // Custom ERC20 implementation
@@ -579,38 +579,38 @@ mod ERC20Pausable
             self.pausable.assert_not_paused();
             // Add the original implementation method from `IERC20Impl`
             self.erc20.transfer(recipient, amount)
-        
+        }
 
-        fn total_supply(self: @ContractState) -> u256 
+        fn total_supply(self: @ContractState) -> u256 {
             // This method's behavior does not change from the component
             // implementation, but this method must still be defined.
             // Simply add the original implementation method from `IERC20Impl`
             self.erc20.total_supply()
-        
+        }
 
         (...)
     }
 
     // Custom ERC20CamelOnly implementation
     #[abi(embed_v0)]
-    impl CustomERC20CamelOnlyImpl of IERC20CamelOnly<ContractState> 
+    impl CustomERC20CamelOnlyImpl of IERC20CamelOnly<ContractState> {
         fn totalSupply(self: @ContractState) -> u256 {
             self.erc20.total_supply()
-        
+        }
 
-        fn balanceOf(self: @ContractState, account: ContractAddress) -> u256 
+        fn balanceOf(self: @ContractState, account: ContractAddress) -> u256 {
             self.erc20.balance_of(account)
-        
+        }
 
         fn transferFrom(
             ref self: ContractState,
             sender: ContractAddress,
             recipient: ContractAddress,
             amount: u256
-        ) -> bool 
+        ) -> bool {
             self.pausable.assert_not_paused();
             self.erc20.transfer_from(sender, recipient, amount)
-        
+        }
     }
 }
 ```
@@ -628,7 +628,7 @@ To do so, use the same syntax as calling an implementation method except replace
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_security::InitializableComponent;
 
     component!(path: InitializableComponent, storage: initializable, event: InitializableEvent);
@@ -637,17 +637,17 @@ mod MyContract
     struct Storage {
         #[substorage(v0)]
         initializable: InitializableComponent::Storage
-    
+    }
 
     (...)
 
-    fn write_to_comp_storage(ref self: ContractState) 
+    fn write_to_comp_storage(ref self: ContractState) {
         self.initializable.Initializable_initialized.write(true);
-    
+    }
 
-    fn read_from_comp_storage(self: @ContractState) -> bool 
+    fn read_from_comp_storage(self: @ContractState) -> bool {
         self.initializable.Initializable_initialized.read()
-    
+    }
 }
 ```
 

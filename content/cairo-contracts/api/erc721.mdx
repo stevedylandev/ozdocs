@@ -12,7 +12,7 @@ Starting from version `3.x.x`, the interfaces are no longer part of the `openzep
 
 ### [](#IERC721)`IERC721`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/token/erc721.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::erc721::IERC721;
 ```
 
@@ -99,7 +99,7 @@ Emitted when `token_id` token is transferred from `from` to `to`.
 
 ### [](#IERC721Metadata)`IERC721Metadata`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/token/erc721.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::erc721::IERC721Metadata;
 ```
 
@@ -131,7 +131,7 @@ Returns the Uniform Resource Identifier (URI) for the `token_id` token. If the U
 
 ### [](#IERC721Receiver)`IERC721Receiver`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/token/erc721.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::erc721::IERC721Receiver;
 ```
 
@@ -183,7 +183,7 @@ Returns the token id owned by `owner` at a given `index` of its token list. Use 
 
 ### [](#ERC721Component)`ERC721Component`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/token/src/erc721/erc721.cairo)
 
-```cairo
+```rust
 use openzeppelin_token::erc721::ERC721Component;
 ```
 
@@ -590,7 +590,7 @@ See [IERC721::Transfer](#IERC721-Transfer).
 
 ### [](#ERC721ReceiverComponent)`ERC721ReceiverComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/token/src/erc721/erc721_receiver.cairo)
 
-```cairo
+```rust
 use openzeppelin_token::erc721::ERC721ReceiverComponent;
 ```
 
@@ -642,7 +642,7 @@ Registers the `IERC721Receiver` interface ID as supported through introspection.
 
 ### [](#ERC721EnumerableComponent)`ERC721EnumerableComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/token/src/erc721/extensions/erc721_enumerable.cairo)
 
-```cairo
+```rust
 use openzeppelin_token::erc721::extensions::ERC721EnumerableComponent;
 ```
 
@@ -766,7 +766,7 @@ This has 0(1) time complexity but alters the indexed order by swapping `token_id
 
 ### [](#ERC721Upgradeable)`ERC721Upgradeable`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/presets/src/erc721.cairo)
 
-```cairo
+```rust
 use openzeppelin_presets::ERC721Upgradeable;
 ```
 

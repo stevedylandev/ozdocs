@@ -32,9 +32,9 @@ This is how a contract with multiple components looks when using the macro.
 ```rust
 #[with_components(Account, SRC5, SRC9, Upgradeable)]
 #[starknet::contract(account)]
-mod OutsideExecutionAccountUpgradeable
+mod OutsideExecutionAccountUpgradeable {
     use openzeppelin_interfaces::upgrades::IUpgradeable;
-    use starknet::{ClassHash, ContractAddress;
+    use starknet::{ClassHash, ContractAddress};
 
     // External
     #[abi(embed_v0)]
@@ -47,17 +47,17 @@ mod OutsideExecutionAccountUpgradeable
     struct Storage {}
 
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: felt252)
+    fn constructor(ref self: ContractState, public_key: felt252) {
         self.account.initializer(public_key);
         self.src9.initializer();
-
+    }
 
     #[abi(embed_v0)]
-    impl UpgradeableImpl of IUpgradeable<ContractState>
+    impl UpgradeableImpl of IUpgradeable<ContractState> {
         fn upgrade(ref self: ContractState, new_class_hash: ClassHash) {
             self.account.assert_only_self();
             self.upgradeable.upgrade(new_class_hash);
-
+        }
     }
 }
 ```
@@ -66,7 +66,7 @@ This is how the same contract looks using regular syntax.
 
 ```rust
 #[starknet::contract(account)]
-mod OutsideExecutionAccountUpgradeable
+mod OutsideExecutionAccountUpgradeable {
     use openzeppelin::account::AccountComponent;
     use openzeppelin::account::extensions::SRC9Component;
     use openzeppelin::introspection::src5::SRC5Component;
@@ -101,11 +101,11 @@ mod OutsideExecutionAccountUpgradeable
         src9: SRC9Component::Storage,
         #[substorage(v0)]
         upgradeable: UpgradeableComponent::Storage,
-
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event
+    enum Event {
         #[flat]
         AccountEvent: AccountComponent::Event,
         #[flat]
@@ -114,20 +114,20 @@ mod OutsideExecutionAccountUpgradeable
         SRC9Event: SRC9Component::Event,
         #[flat]
         UpgradeableEvent: UpgradeableComponent::Event,
-
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: felt252)
+    fn constructor(ref self: ContractState, public_key: felt252) {
         self.account.initializer(public_key);
         self.src9.initializer();
-
+    }
 
     #[abi(embed_v0)]
-    impl UpgradeableImpl of IUpgradeable<ContractState>
+    impl UpgradeableImpl of IUpgradeable<ContractState> {
         fn upgrade(ref self: ContractState, new_class_hash: ClassHash) {
             self.account.assert_only_self();
             self.upgradeable.upgrade(new_class_hash);
-
+        }
     }
 }
 ```

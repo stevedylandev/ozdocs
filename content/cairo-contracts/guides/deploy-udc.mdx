@@ -3,7 +3,7 @@ title: UDC Appchain Deployment
 ---
 
 While the Universal Deployer Contract (UDC) is deployed on Starknet public networks, appchains may need to deploy
-their own instance of the UDC for their own use. This guide will walk you through this process while keeping the 
+their own instance of the UDC for their own use. This guide will walk you through this process while keeping the
 same final address on all networks.
 
 ## Prerequisites
@@ -93,12 +93,12 @@ This reference implementation targets Cairo v2.11.4. If you are using a differen
 
 ```rust
 #[starknet::contract(account)]
-mod UniversalDeployerBootstrapper 
+mod UniversalDeployerBootstrapper {
     use core::num::traits::Zero;
     use openzeppelin_account::AccountComponent;
     use openzeppelin_introspection::src5::SRC5Component;
     use openzeppelin_utils::deployments::calculate_contract_address_from_deploy_syscall;
-    use starknet::{ClassHash, ContractAddress, SyscallResultTrait;
+    use starknet::{ClassHash, ContractAddress, SyscallResultTrait};
 
     component!(path: AccountComponent, storage: account, event: AccountEvent);
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
@@ -117,43 +117,43 @@ mod UniversalDeployerBootstrapper
     impl AccountInternalImpl = AccountComponent::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         pub account: AccountComponent::Storage,
         #[substorage(v0)]
         pub src5: SRC5Component::Storage,
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    pub(crate) enum Event 
+    pub(crate) enum Event {
         #[flat]
         AccountEvent: AccountComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event,
-    
+    }
 
     #[constructor]
-    pub fn constructor(ref self: ContractState, public_key: felt252) 
+    pub fn constructor(ref self: ContractState, public_key: felt252) {
         self.account.initializer(public_key);
-    
+    }
 
     #[abi(per_item)]
     #[generate_trait]
-    impl ExternalImpl of ExternalTrait 
+    impl ExternalImpl of ExternalTrait {
         #[external(v0)]
         fn deploy_udc(ref self: ContractState, udc_class_hash: ClassHash) {
             self.account.assert_only_self();
             starknet::syscalls::deploy_syscall(udc_class_hash, 0, array![].span(), true)
                 .unwrap_syscall();
-        
+        }
 
     #[external(v0)]
-    fn get_udc_address(ref self: ContractState, udc_class_hash: ClassHash) -> ContractAddress 
+    fn get_udc_address(ref self: ContractState, udc_class_hash: ClassHash) -> ContractAddress {
         calculate_contract_address_from_deploy_syscall(
             0, udc_class_hash, array![].span(), Zero::zero(),
         )
-    
+    }
 
 }
 ```

@@ -20,7 +20,7 @@ You can use the component in your contracts like this:
 
 ```rust
 #[starknet::contract]
-mod MyInitializableContract 
+mod MyInitializableContract {
     use openzeppelin_security::InitializableComponent;
 
     component!(path: InitializableComponent, storage: initializable, event: InitializableEvent);
@@ -32,22 +32,22 @@ mod MyInitializableContract
         #[substorage(v0)]
         initializable: InitializableComponent::Storage,
         param: felt252
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         InitializableEvent: InitializableComponent::Event
-    
+    }
 
-    fn initializer(ref self: ContractState, some_param: felt252) 
+    fn initializer(ref self: ContractState, some_param: felt252) {
         // Makes the method callable only once
         self.initializable.initialize();
 
         // Initialization logic
         self.param.write(some_param);
-    
+    }
 }
 ```
 
@@ -61,9 +61,9 @@ The component provides the following external functions as part of the `Initiali
 
 ```rust
 #[starknet::interface]
-pub trait InitializableABI 
+pub trait InitializableABI {
     fn is_initialized() -> bool;
-
+}
 ```
 
 ## Pausable
@@ -81,7 +81,7 @@ For example (using the [Ownable](api/access.mdx#OwnableComponent) component for 
 
 ```rust
 #[starknet::contract]
-mod MyPausableContract 
+mod MyPausableContract {
     use openzeppelin_access::ownable::OwnableComponent;
     use openzeppelin_security::PausableComponent;
     use starknet::ContractAddress;
@@ -105,45 +105,45 @@ mod MyPausableContract
         ownable: OwnableComponent::Storage,
         #[substorage(v0)]
         pausable: PausableComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         OwnableEvent: OwnableComponent::Event,
         #[flat]
         PausableEvent: PausableComponent::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, owner: ContractAddress) 
+    fn constructor(ref self: ContractState, owner: ContractAddress) {
         self.ownable.initializer(owner);
-    
+    }
 
     #[external(v0)]
-    fn pause(ref self: ContractState) 
+    fn pause(ref self: ContractState) {
         self.ownable.assert_only_owner();
         self.pausable.pause();
-    
+    }
 
     #[external(v0)]
-    fn unpause(ref self: ContractState) 
+    fn unpause(ref self: ContractState) {
         self.ownable.assert_only_owner();
         self.pausable.unpause();
-    
+    }
 
     #[external(v0)]
-    fn when_not_paused(ref self: ContractState) 
+    fn when_not_paused(ref self: ContractState) {
         self.pausable.assert_not_paused();
         // Do something
-    
+    }
 
     #[external(v0)]
-    fn when_paused(ref self: ContractState) 
+    fn when_paused(ref self: ContractState) {
         self.pausable.assert_paused();
         // Do something
-    
+    }
 }
 ```
 
@@ -153,9 +153,9 @@ The component provides the following external functions as part of the `Pausable
 
 ```rust
 #[starknet::interface]
-pub trait PausableABI 
+pub trait PausableABI {
     fn is_paused() -> bool;
-
+}
 ```
 
 ## Reentrancy Guard
@@ -170,7 +170,7 @@ The protected function must call `start` before the first function statement, an
 
 ```rust
 #[starknet::contract]
-mod MyReentrancyContract 
+mod MyReentrancyContract {
     use openzeppelin_security::ReentrancyGuardComponent;
 
     component!(
@@ -183,32 +183,32 @@ mod MyReentrancyContract
     struct Storage {
         #[substorage(v0)]
         reentrancy_guard: ReentrancyGuardComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ReentrancyGuardEvent: ReentrancyGuardComponent::Event
-    
+    }
 
     #[external(v0)]
-    fn protected_function(ref self: ContractState) 
+    fn protected_function(ref self: ContractState) {
         self.reentrancy_guard.start();
 
         // Do something
 
         self.reentrancy_guard.end();
-    
+    }
 
     #[external(v0)]
-    fn another_protected_function(ref self: ContractState) 
+    fn another_protected_function(ref self: ContractState) {
         self.reentrancy_guard.start();
 
         // Do something
 
         self.reentrancy_guard.end();
-    
+    }
 }
 ```
 

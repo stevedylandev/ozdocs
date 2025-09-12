@@ -13,7 +13,7 @@ Starting from version `3.x.x`, the interfaces are no longer part of the `openzep
 
 ### [](#IAccessControl)`IAccessControl`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/access/accesscontrol.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::accesscontrol::IAccessControl;
 ```
 
@@ -106,7 +106,7 @@ Emitted when `account` is revoked `role`.
 
 ### [](#IAccessControlWithDelay)`IAccessControlWithDelay`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/access/accesscontrol.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::accesscontrol::IAccessControlWithDelay;
 ```
 
@@ -153,7 +153,7 @@ Emitted when `account` is granted `role` with a delay.
 
 ### [](#IAccessControlDefaultAdminRules)`IAccessControlDefaultAdminRules`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/access/accesscontrol_default_admin_rules.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::accesscontrol_default_admin_rules::IAccessControlDefaultAdminRules;
 ```
 
@@ -319,7 +319,7 @@ Emitted when a [pending\_default\_admin\_delay](#IAccessControlDefaultAdminRules
 
 ### [](#OwnableComponent)`OwnableComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/access/src/ownable/ownable.cairo)
 
-```cairo
+```rust
 use openzeppelin_access::ownable::OwnableComponent;
 ```
 
@@ -495,19 +495,19 @@ Emitted when the ownership is transferred.
 
 ### [](#AccessControlComponent)`AccessControlComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/access/src/accesscontrol/accesscontrol.cairo)
 
-```cairo
+```rust
 use openzeppelin_access::accesscontrol::AccessControlComponent;
 ```
 
 Component that allows contracts to implement role-based access control mechanisms. Roles are referred to by their `felt252` identifier:
 
-```cairo
+```rust
 const MY_ROLE: felt252 = selector!("MY_ROLE");
 ```
 
 Roles can be used to represent a set of permissions. To restrict access to a function call, use [`assert_only_role`](#AccessControlComponent-assert_only_role):
 
-```cairo
+```rust
 (...)
 
 #[external(v0)]
@@ -777,7 +777,7 @@ See [IAccessControl::RoleRevoked](#IAccessControl-RoleRevoked).
 
 ### [](#AccessControlDefaultAdminRulesComponent)`AccessControlDefaultAdminRulesComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/access/src/accesscontrol/extensions/accesscontrol_default_admin_rules.cairo)
 
-```cairo
+```rust
 use openzeppelin_access::accesscontrol::extensions::AccessControlDefaultAdminRulesComponent;
 ```
 

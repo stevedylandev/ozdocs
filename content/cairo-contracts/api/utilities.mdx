@@ -8,7 +8,7 @@ This crate provides miscellaneous components and libraries containing utility fu
 
 ### [](#utils)`utils`
 
-```cairo
+```rust
 use openzeppelin_utils;
 ```
 
@@ -48,7 +48,7 @@ See [`openzeppelin_utils::serde`](#serde).
 
 ### [](#cryptography)`cryptography`
 
-```cairo
+```rust
 use openzeppelin_utils::cryptography;
 ```
 
@@ -73,7 +73,7 @@ See [`openzeppelin_utils::cryptography::snip12`](#snip12).
 
 ### [](#deployments)`deployments`
 
-```cairo
+```rust
 use openzeppelin_utils::deployments;
 ```
 
@@ -117,7 +117,7 @@ Origin-dependent deployments hash `salt` with `caller_address` (member of [Deplo
 
 ### [](#math)`math`
 
-```cairo
+```rust
 use openzeppelin_utils::math;
 ```
 
@@ -139,7 +139,7 @@ Returns the average of two unsigned integers. The result is rounded down.
 
 ### [](#contract_clock)`contract_clock`
 
-```cairo
+```rust
 use openzeppelin_utils::contract_clock;
 ```
 
@@ -156,7 +156,7 @@ Implementations
 
 #### [](#ERC6372Clock)`ERC6372Clock` [github-icon](https://github.com/OpenZeppelin/cairo-contracts/blob/votes-erc6372/packages/utils/src/contract_clock.cairo)
 
-```cairo
+```rust
 use openzeppelin_utils::contract_clock::ERC6372Clock;
 ```
 
@@ -197,7 +197,7 @@ Implementation of the `ERC6372Clock` trait that uses the block timestamp as its 
 
 ### [](#serde)`serde`
 
-```cairo
+```rust
 use openzeppelin_utils::serde;
 ```
 
@@ -217,7 +217,7 @@ Importing this trait allows the ability to append a serialized representation of
 
 Usage example:
 
-```cairo
+```rust
 use openzeppelin_utils::serde::SerializedAppend;
 use starknet::ContractAddress;
 
@@ -235,7 +235,7 @@ Note that the `append_serde` method is automatically available for arrays of fel
 
 ### [](#NoncesComponent)`NoncesComponent`
 
-```cairo
+```rust
 use openzeppelin_utils::cryptography::nonces::NoncesComponent;
 ```
 
@@ -274,7 +274,7 @@ Same as `use_nonce` but checking that `nonce` is the next valid one for `owner`.
 
 ### [](#snip12)`snip12`
 
-```cairo
+```rust
 use openzeppelin_utils::snip12;
 ```
 

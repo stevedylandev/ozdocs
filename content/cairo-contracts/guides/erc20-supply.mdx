@@ -13,8 +13,8 @@ We can achieve this by setting the token supply in the constructor which will ex
 
 ```rust
 #[starknet::contract]
-mod MyToken 
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl;
+mod MyToken {
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -25,30 +25,30 @@ mod MyToken
     impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         erc20: ERC20Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC20Event: ERC20Component::Event
-    
+    }
 
     #[constructor]
     fn constructor(
         ref self: ContractState,
         fixed_supply: u256,
         recipient: ContractAddress
-    ) 
+    ) {
         let name = "MyToken";
         let symbol = "MTK";
 
         self.erc20.initializer(name, symbol);
         self.erc20.mint(recipient, fixed_supply);
-    
+    }
 }
 ```
 
@@ -64,8 +64,8 @@ Let’s make a few changes to the almighty `MyToken` contract and create a minti
 
 ```rust
 #[starknet::contract]
-mod MyToken 
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl;
+mod MyToken {
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -76,36 +76,36 @@ mod MyToken
     impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         erc20: ERC20Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC20Event: ERC20Component::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState) 
+    fn constructor(ref self: ContractState) {
         let name = "MyToken";
         let symbol = "MTK";
 
         self.erc20.initializer(name, symbol);
-    
+    }
 
     #[external(v0)]
     fn mint(
         ref self: ContractState,
         recipient: ContractAddress,
         amount: u256
-    ) 
+    ) {
         // This function is NOT protected which means
         // ANYONE can mint tokens
         self.erc20.mint(recipient, amount);
-    
+    }
 }
 ```
 
@@ -118,7 +118,7 @@ For the sake of good practices, let’s implement a simple permissioning mechani
 
 ```rust
 #[starknet::contract]
-mod MyToken 
+mod MyToken {
 
     (...)
 
@@ -135,7 +135,7 @@ mod MyToken
 
         // Mint tokens if called by the contract owner
         self.erc20.mint(recipient, amount);
-    
+    }
 }
 ```
 

@@ -28,7 +28,7 @@ Here’s the setup:
 
 ```rust
 #[starknet::contract]
-mod MigratingContract 
+mod MigratingContract {
     use openzeppelin_introspection::src5::SRC5Component;
     use openzeppelin_security::initializable::InitializableComponent;
 
@@ -49,16 +49,16 @@ mod MigratingContract
         src5: SRC5Component::Storage,
         #[substorage(v0)]
         initializable: InitializableComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         SRC5Event: SRC5Component::Event,
         #[flat]
         InitializableEvent: InitializableComponent::Event
-    
+    }
 }
 ```
 
@@ -71,18 +71,18 @@ The contract should implement an `InternalImpl` and add a function to register t
 
 ```rust
 #[starknet::contract]
-mod MigratingContract 
-    use openzeppelin_interfaces::erc721::{IERC721_ID, IERC721_METADATA_ID;
+mod MigratingContract {
+    use openzeppelin_interfaces::erc721::{IERC721_ID, IERC721_METADATA_ID};
 
     (...)
 
     #[generate_trait]
-    impl InternalImpl of InternalTrait 
+    impl InternalImpl of InternalTrait {
         // Register SRC5 interfaces
         fn register_src5_interfaces(ref self: ContractState) {
             self.src5.register_interface(IERC721_ID);
             self.src5.register_interface(IERC721_METADATA_ID);
-        
+        }
     }
 }
 ```
@@ -102,7 +102,7 @@ Instead, the contract can take inspiration from `InitializableComponent` and cre
 
 ```rust
 #[starknet::contract]
-mod MigratingContract 
+mod MigratingContract {
     (...)
 
     #[external(v0)]
@@ -115,7 +115,7 @@ mod MigratingContract
 
         // Register SRC5 interfaces
         self.register_src5_interfaces();
-    
+    }
 }
 ```
 

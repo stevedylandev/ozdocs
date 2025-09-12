@@ -6,49 +6,49 @@ This module includes primitives for financial systems.
 
 ## Vesting component
 
-The [VestingComponent](api/finance.mdx#VestingComponent) manages the gradual release of ERC-20 tokens to a designated beneficiary based on a predefined vesting schedule. 
-The implementing contract must implement the [OwnableComponent](api/access.mdx#OwnableComponent), where the contract owner is regarded as the vesting beneficiary. 
+The [VestingComponent](api/finance.mdx#VestingComponent) manages the gradual release of ERC-20 tokens to a designated beneficiary based on a predefined vesting schedule.
+The implementing contract must implement the [OwnableComponent](api/access.mdx#OwnableComponent), where the contract owner is regarded as the vesting beneficiary.
 This structure allows ownership rights of both the contract and the vested tokens to be assigned and transferred.
 
 <Callout>
-Any assets transferred to this contract will follow the vesting schedule as if they were locked from the beginning of the vesting period. 
+Any assets transferred to this contract will follow the vesting schedule as if they were locked from the beginning of the vesting period.
 </Callout>
 As a result, if the vesting has already started, a portion of the newly transferred tokens may become immediately releasable.
 
 <Callout>
-By setting the duration to 0, it’s possible to configure this contract to behave like an asset timelock that holds tokens 
+By setting the duration to 0, it’s possible to configure this contract to behave like an asset timelock that holds tokens
 </Callout>
 for a beneficiary until a specified date.
 
 ### Vesting schedule
 
-The [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait defines the logic for calculating the vested amount based on a given timestamp. This 
-logic is not part of the [VestingComponent](api/finance.mdx#VestingComponent), so any contract implementing the [VestingComponent](api/finance.mdx#VestingComponent) must provide its own 
+The [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait defines the logic for calculating the vested amount based on a given timestamp. This
+logic is not part of the [VestingComponent](api/finance.mdx#VestingComponent), so any contract implementing the [VestingComponent](api/finance.mdx#VestingComponent) must provide its own
 implementation of the [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait.
 
 <Callout>
-There’s a ready-made implementation of the [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait available named [LinearVestingSchedule](api/finance.mdx#LinearVestingSchedule). 
+There’s a ready-made implementation of the [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait available named [LinearVestingSchedule](api/finance.mdx#LinearVestingSchedule).
 </Callout>
-It incorporates a cliff period by returning 0 vested amount until the cliff ends. After the cliff, the vested amount 
+It incorporates a cliff period by returning 0 vested amount until the cliff ends. After the cliff, the vested amount
 is calculated as directly proportional to the time elapsed since the beginning of the vesting schedule.
 
 ### Usage
 
-The contract must integrate [VestingComponent](api/finance.mdx#VestingComponent) and [OwnableComponent](api/access.mdx#OwnableComponent) as dependencies. The contract’s constructor 
-should initialize both components. Core vesting parameters, such as `beneficiary`, `start`, `duration` 
+The contract must integrate [VestingComponent](api/finance.mdx#VestingComponent) and [OwnableComponent](api/access.mdx#OwnableComponent) as dependencies. The contract’s constructor
+should initialize both components. Core vesting parameters, such as `beneficiary`, `start`, `duration`
 and `cliff_duration`, are passed as arguments to the constructor and set at the time of deployment.
 
-The implementing contract must provide an implementation of the [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait. This can be achieved either by importing 
+The implementing contract must provide an implementation of the [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait. This can be achieved either by importing
 a ready-made [LinearVestingSchedule](api/finance.mdx#LinearVestingSchedule) implementation or by defining a custom one.
 
-Here’s an example of a simple vesting wallet contract with a [LinearVestingSchedule](api/finance.mdx#LinearVestingSchedule), where the vested amount 
+Here’s an example of a simple vesting wallet contract with a [LinearVestingSchedule](api/finance.mdx#LinearVestingSchedule), where the vested amount
 is calculated as being directly proportional to the time elapsed since the start of the vesting period.
 
 ```rust
 #[starknet::contract]
-mod LinearVestingWallet 
+mod LinearVestingWallet {
     use openzeppelin_access::ownable::OwnableComponent;
-    use openzeppelin_finance::vesting::{VestingComponent, LinearVestingSchedule;
+    use openzeppelin_finance::vesting::{VestingComponent, LinearVestingSchedule};
     use starknet::ContractAddress;
 
     component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
@@ -63,21 +63,21 @@ mod LinearVestingWallet
     impl VestingInternalImpl = VestingComponent::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         ownable: OwnableComponent::Storage,
         #[substorage(v0)]
         vesting: VestingComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         OwnableEvent: OwnableComponent::Event,
         #[flat]
         VestingEvent: VestingComponent::Event
-    
+    }
 
     #[constructor]
     fn constructor(
@@ -86,15 +86,15 @@ mod LinearVestingWallet
         start: u64,
         duration: u64,
         cliff_duration: u64
-    ) 
+    ) {
         self.ownable.initializer(beneficiary);
         self.vesting.initializer(start, duration, cliff_duration);
-    
+    }
 }
 ```
 
-A vesting schedule will often follow a custom formula. In such cases, the [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait is useful. 
-To support a custom vesting schedule, the contract must provide an implementation of the 
+A vesting schedule will often follow a custom formula. In such cases, the [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) trait is useful.
+To support a custom vesting schedule, the contract must provide an implementation of the
 [calculate_vested_amount](api/finance.mdx#VestingComponent-calculate_vested_amount) function based on the desired formula.
 
 <Callout>
@@ -105,17 +105,17 @@ When using a custom [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-S
 If there are additional parameters required for calculations, which are stored in the contract’s storage, you can access them using `self.get_contract()`.
 </Callout>
 
-Here’s an example of a vesting wallet contract with a custom [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) implementation, where tokens 
+Here’s an example of a vesting wallet contract with a custom [VestingSchedule](api/finance.mdx#VestingComponent-Vesting-Schedule) implementation, where tokens
 are vested in a number of steps.
 
 ```rust
 #[starknet::contract]
-mod StepsVestingWallet 
+mod StepsVestingWallet {
     use openzeppelin_access::ownable::OwnableComponent;
     use openzeppelin_finance::vesting::VestingComponent::VestingScheduleTrait;
     use openzeppelin_finance::vesting::VestingComponent;
     use starknet::ContractAddress;
-    use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess;
+    use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
 
     component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
     component!(path: VestingComponent, storage: vesting, event: VestingEvent);
@@ -129,22 +129,22 @@ mod StepsVestingWallet
     impl VestingInternalImpl = VestingComponent::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         total_steps: u64,
         #[substorage(v0)]
         ownable: OwnableComponent::Storage,
         #[substorage(v0)]
         vesting: VestingComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         OwnableEvent: OwnableComponent::Event,
         #[flat]
         VestingEvent: VestingComponent::Event
-    
+    }
 
     #[constructor]
     fn constructor(
@@ -154,13 +154,13 @@ mod StepsVestingWallet
         start: u64,
         duration: u64,
         cliff: u64,
-    ) 
+    ) {
         self.total_steps.write(total_steps);
         self.ownable.initializer(beneficiary);
         self.vesting.initializer(start, duration, cliff);
-    
+    }
 
-    impl VestingSchedule of VestingScheduleTrait<ContractState> 
+    impl VestingSchedule of VestingScheduleTrait<ContractState> {
         fn calculate_vested_amount(
             self: @VestingComponent::ComponentState<ContractState>,
             token: ContractAddress,
@@ -172,16 +172,16 @@ mod StepsVestingWallet
         ) -> u256 {
             if timestamp < cliff {
                 0
-             else if timestamp >= start + duration 
+            } else if timestamp >= start + duration {
                 total_allocation
-             else 
+            } else {
                 let total_steps = self.get_contract().total_steps.read();
                 let vested_per_step = total_allocation / total_steps.into();
                 let step_duration = duration / total_steps;
                 let current_step = (timestamp - start) / step_duration;
                 let vested_amount = vested_per_step * current_step.into();
                 vested_amount
-            
+            }
         }
     }
 }
@@ -193,7 +193,7 @@ Here is the full interface of a standard contract implementing the vesting funct
 
 ```rust
 #[starknet::interface]
-pub trait VestingABI<TState> 
+pub trait VestingABI<TState> {
     // IVesting
     fn start(self: @TState) -> u64;
     fn cliff(self: @TState) -> u64;
@@ -212,5 +212,5 @@ pub trait VestingABI<TState>
     // IOwnableCamelOnly
     fn transferOwnership(ref self: TState, newOwner: ContractAddress);
     fn renounceOwnership(ref self: TState);
-
+}
 ```

@@ -10,7 +10,7 @@ Starting from version `3.x.x`, the interfaces are no longer part of the `openzep
 
 ### [](#IVesting)`IVesting`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/finance/vesting.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::vesting::IVesting;
 ```
 
@@ -77,7 +77,7 @@ Emitted when vested tokens are released to the beneficiary.
 
 ### [](#VestingComponent)`VestingComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/finance/src/vesting/vesting.cairo)
 
-```cairo
+```rust
 use openzeppelin_finance::vesting::VestingComponent;
 ```
 
@@ -177,7 +177,7 @@ Returns the vested amount that’s calculated using the [VestingSchedule](#Vesti
 
 ### [](#LinearVestingSchedule)`LinearVestingSchedule`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/finance/src/vesting/vesting.cairo)
 
-```cairo
+```rust
 use openzeppelin_finance::vesting::LinearVestingSchedule;
 ```
 
@@ -187,7 +187,7 @@ Defines the logic for calculating the vested amount, incorporating a cliff perio
 
 ### [](#VestingWallet)`VestingWallet`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/presets/src/vesting.cairo)
 
-```cairo
+```rust
 use openzeppelin::presets::VestingWallet;
 ```
 

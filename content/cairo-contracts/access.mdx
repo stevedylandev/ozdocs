@@ -23,7 +23,7 @@ The implementing contract’s constructor should set the initial owner by passin
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_access::ownable::OwnableComponent;
     use starknet::ContractAddress;
 
@@ -38,20 +38,20 @@ mod MyContract
     struct Storage {
         #[substorage(v0)]
         ownable: OwnableComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         OwnableEvent: OwnableComponent::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, owner: ContractAddress) 
+    fn constructor(ref self: ContractState, owner: ContractAddress) {
         // Set the initial owner of the contract
         self.ownable.initializer(owner);
-    
+    }
 
     (...)
 }
@@ -61,7 +61,7 @@ To restrict a function’s access to the owner only, add in the `assert_only_own
 
 ```rust
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     (...)
 
     #[external(v0)]
@@ -70,7 +70,7 @@ mod MyContract
         self.ownable.assert_only_owner();
 
         (...)
-    
+    }
 }
 ```
 
@@ -80,7 +80,7 @@ This is the full interface of the `OwnableMixinImpl` implementation:
 
 ```rust
 #[starknet::interface]
-pub trait OwnableABI 
+pub trait OwnableABI {
     // IOwnable
     fn owner() -> ContractAddress;
     fn transfer_ownership(new_owner: ContractAddress);
@@ -89,7 +89,7 @@ pub trait OwnableABI
     // IOwnableCamelOnly
     fn transferOwnership(newOwner: ContractAddress);
     fn renounceOwnership();
-
+}
 ```
 
 Ownable also lets you:
@@ -121,7 +121,7 @@ This is the full interface of the two step `OwnableTwoStepMixinImpl` implementat
 
 ```rust
 #[starknet::interface]
-pub trait OwnableTwoStepABI 
+pub trait OwnableTwoStepABI {
     // IOwnableTwoStep
     fn owner() -> ContractAddress;
     fn pending_owner() -> ContractAddress;
@@ -134,7 +134,7 @@ pub trait OwnableTwoStepABI
     fn acceptOwnership();
     fn transferOwnership(newOwner: ContractAddress);
     fn renounceOwnership();
-
+}
 ```
 
 ## Role-Based `AccessControl`
@@ -165,10 +165,10 @@ and sets a 'minter' role:
 const MINTER_ROLE: felt252 = selector!("MINTER_ROLE");
 
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_access::accesscontrol::AccessControlComponent;
     use openzeppelin_introspection::src5::SRC5Component;
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig};
     use starknet::ContractAddress;
     use super::MINTER_ROLE;
 
@@ -194,25 +194,25 @@ mod MyContract
     impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         accesscontrol: AccessControlComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage,
         #[substorage(v0)]
         erc20: ERC20Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         AccessControlEvent: AccessControlComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event,
         #[flat]
         ERC20Event: ERC20Component::Event
-    
+    }
 
     #[constructor]
     fn constructor(
@@ -222,7 +222,7 @@ mod MyContract
         initial_supply: u256,
         recipient: ContractAddress,
         minter: ContractAddress
-    ) 
+    ) {
         // ERC20-related initialization
         self.erc20.initializer(name, symbol);
         self.erc20.mint(recipient, initial_supply);
@@ -230,14 +230,14 @@ mod MyContract
         // AccessControl-related initialization
         self.accesscontrol.initializer();
         self.accesscontrol._grant_role(MINTER_ROLE, minter);
-    
+    }
 
     /// This function can only be called by a minter.
     #[external(v0)]
-    fn mint(ref self: ContractState, recipient: ContractAddress, amount: u256) 
+    fn mint(ref self: ContractState, recipient: ContractAddress, amount: u256) {
         self.accesscontrol.assert_only_role(MINTER_ROLE);
         self.erc20.mint(recipient, amount);
-    
+    }
 }
 ```
 
@@ -257,12 +257,12 @@ const MINTER_ROLE: felt252 = selector!("MINTER_ROLE");
 const BURNER_ROLE: felt252 = selector!("BURNER_ROLE");
 
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_access::accesscontrol::AccessControlComponent;
     use openzeppelin_introspection::src5::SRC5Component;
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig};
     use starknet::ContractAddress;
-    use super::MINTER_ROLE, BURNER_ROLE;
+    use super::{MINTER_ROLE, BURNER_ROLE};
 
     component!(path: AccessControlComponent, storage: accesscontrol, event: AccessControlEvent);
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
@@ -286,25 +286,25 @@ mod MyContract
     impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         accesscontrol: AccessControlComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage,
         #[substorage(v0)]
         erc20: ERC20Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         AccessControlEvent: AccessControlComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event,
         #[flat]
         ERC20Event: ERC20Component::Event
-    
+    }
 
     #[constructor]
     fn constructor(
@@ -315,7 +315,7 @@ mod MyContract
         recipient: ContractAddress,
         minter: ContractAddress,
         burner: ContractAddress
-    ) 
+    ) {
         // ERC20-related initialization
         self.erc20.initializer(name, symbol);
         self.erc20.mint(recipient, initial_supply);
@@ -324,21 +324,21 @@ mod MyContract
         self.accesscontrol.initializer();
         self.accesscontrol._grant_role(MINTER_ROLE, minter);
         self.accesscontrol._grant_role(BURNER_ROLE, burner);
-    
+    }
 
     /// This function can only be called by a minter.
     #[external(v0)]
-    fn mint(ref self: ContractState, recipient: ContractAddress, amount: u256) 
+    fn mint(ref self: ContractState, recipient: ContractAddress, amount: u256) {
         self.accesscontrol.assert_only_role(MINTER_ROLE);
         self.erc20.mint(recipient, amount);
-    
+    }
 
     /// This function can only be called by a burner.
     #[external(v0)]
-    fn burn(ref self: ContractState, account: ContractAddress, amount: u256) 
+    fn burn(ref self: ContractState, account: ContractAddress, amount: u256) {
         self.accesscontrol.assert_only_role(BURNER_ROLE);
         self.erc20.burn(account, amount);
-    
+    }
 }
 ```
 
@@ -380,13 +380,13 @@ const MINTER_ROLE: felt252 = selector!("MINTER_ROLE");
 const BURNER_ROLE: felt252 = selector!("BURNER_ROLE");
 
 #[starknet::contract]
-mod MyContract 
+mod MyContract {
     use openzeppelin_access::accesscontrol::AccessControlComponent;
     use openzeppelin_access::accesscontrol::DEFAULT_ADMIN_ROLE;
     use openzeppelin_introspection::src5::SRC5Component;
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig};
     use starknet::ContractAddress;
-    use super::MINTER_ROLE, BURNER_ROLE;
+    use super::{MINTER_ROLE, BURNER_ROLE};
 
     component!(path: AccessControlComponent, storage: accesscontrol, event: AccessControlEvent);
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
@@ -419,7 +419,7 @@ mod MyContract
         initial_supply: u256,
         recipient: ContractAddress,
         admin: ContractAddress
-    ) 
+    ) {
         // ERC20-related initialization
         self.erc20.initializer(name, symbol);
         self.erc20.mint(recipient, initial_supply);
@@ -427,21 +427,21 @@ mod MyContract
         // AccessControl-related initialization
         self.accesscontrol.initializer();
         self.accesscontrol._grant_role(DEFAULT_ADMIN_ROLE, admin);
-    
+    }
 
     /// This function can only be called by a minter.
     #[external(v0)]
-    fn mint(ref self: ContractState, recipient: ContractAddress, amount: u256) 
+    fn mint(ref self: ContractState, recipient: ContractAddress, amount: u256) {
         self.accesscontrol.assert_only_role(MINTER_ROLE);
         self.erc20.mint(recipient, amount);
-    
+    }
 
     /// This function can only be called by a burner.
     #[external(v0)]
-    fn burn(ref self: ContractState, account: ContractAddress, amount: u256) 
+    fn burn(ref self: ContractState, account: ContractAddress, amount: u256) {
         self.accesscontrol.assert_only_role(BURNER_ROLE);
         self.erc20.burn(account, amount);
-    
+    }
 }
 ```
 
@@ -490,7 +490,7 @@ This is the full interface of the `AccessControlMixinImpl` implementation:
 
 ```rust
 #[starknet::interface]
-pub trait AccessControlABI 
+pub trait AccessControlABI {
     // IAccessControl
     fn has_role(role: felt252, account: ContractAddress) -> bool;
     fn get_role_admin(role: felt252) -> felt252;
@@ -507,7 +507,7 @@ pub trait AccessControlABI
 
     // ISRC5
     fn supports_interface(interface_id: felt252) -> bool;
-
+}
 ```
 
 `AccessControl` also lets you `renounce_role` from the calling account.

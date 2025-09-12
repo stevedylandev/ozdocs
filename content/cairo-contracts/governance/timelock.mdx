@@ -100,7 +100,7 @@ Here’s an example of a simple timelock contract:
 
 ```rust
 #[starknet::contract]
-mod TimelockControllerContract 
+mod TimelockControllerContract {
     use openzeppelin_access::accesscontrol::AccessControlComponent;
     use openzeppelin_governance::timelock::TimelockControllerComponent;
     use openzeppelin_introspection::src5::SRC5Component;
@@ -124,18 +124,18 @@ mod TimelockControllerContract
         timelock: TimelockControllerComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         AccessControlEvent: AccessControlComponent::Event,
         #[flat]
         TimelockEvent: TimelockControllerComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
     fn constructor(
@@ -144,9 +144,9 @@ mod TimelockControllerContract
         proposers: Span<ContractAddress>,
         executors: Span<ContractAddress>,
         admin: ContractAddress
-    ) 
+    ) {
         self.timelock.initializer(min_delay, proposers, executors, admin);
-    
+    }
 }
 ```
 
@@ -156,7 +156,7 @@ This is the full interface of the TimelockMixinImpl implementation:
 
 ```rust
 #[starknet::interface]
-pub trait TimelockABI<TState> 
+pub trait TimelockABI<TState> {
     // ITimelock
     fn is_operation(self: @TState, id: felt252) -> bool;
     fn is_operation_pending(self: @TState, id: felt252) -> bool;
@@ -194,5 +194,5 @@ pub trait TimelockABI<TState>
     fn grantRole(ref self: TState, role: felt252, account: ContractAddress);
     fn revokeRole(ref self: TState, role: felt252, account: ContractAddress);
     fn renounceRole(ref self: TState, role: felt252, account: ContractAddress);
-
+}
 ```

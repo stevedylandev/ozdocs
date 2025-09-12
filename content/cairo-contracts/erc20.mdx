@@ -18,8 +18,8 @@ Here’s what that looks like:
 
 ```rust
 #[starknet::contract]
-mod MyToken 
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+mod MyToken {
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -30,30 +30,30 @@ mod MyToken
     impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         erc20: ERC20Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC20Event: ERC20Component::Event
-    
+    }
 
     #[constructor]
     fn constructor(
         ref self: ContractState,
         initial_supply: u256,
         recipient: ContractAddress
-    ) 
+    ) {
         let name = "MyToken";
         let symbol = "MTK";
 
         self.erc20.initializer(name, symbol);
         self.erc20.mint(recipient, initial_supply);
-    
+    }
 }
 ```
 
@@ -75,7 +75,7 @@ To support older token deployments, as mentioned in [Dual interfaces](/interface
 
 ```rust
 #[starknet::interface]
-pub trait ERC20ABI 
+pub trait ERC20ABI {
     // IERC20
     fn total_supply() -> u256;
     fn balance_of(account: ContractAddress) -> u256;
@@ -97,7 +97,7 @@ pub trait ERC20ABI
     fn transferFrom(
         sender: ContractAddress, recipient: ContractAddress, amount: u256
     ) -> bool;
-
+}
 ```
 
 ## ERC20 compatibility
@@ -128,9 +128,9 @@ To use the default `18` decimals, you can use the `DefaultConfig` implementation
 
 ```rust
 #[starknet::contract]
-mod MyToken 
+mod MyToken {
     // Importing the DefaultConfig implementation would make decimals 18 by default.
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig;
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl, DefaultConfig};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -149,8 +149,8 @@ To customize this value, you can implement the ImmutableConfig trait locally in 
 The following example shows how to set the decimals to `6`:
 
 ```rust
-mod MyToken 
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl;
+mod MyToken {
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -164,9 +164,9 @@ mod MyToken
     (...)
 
     // Custom implementation of the ERC20Component ImmutableConfig.
-    impl ERC20ImmutableConfig of ERC20Component::ImmutableConfig 
+    impl ERC20ImmutableConfig of ERC20Component::ImmutableConfig {
         const DECIMALS: u8 = 6;
-    
+    }
 }
 ```
 
@@ -180,9 +180,9 @@ Note that we are not using the MixinImpl or the DefaultConfig in this case, sinc
 
 ```rust
 #[starknet::contract]
-mod MyToken 
+mod MyToken {
     use openzeppelin_interfaces::erc20 as interface;
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl;
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -194,24 +194,24 @@ mod MyToken
     impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         erc20: ERC20Component::Storage,
         // The decimals value is stored locally
         decimals: u8,
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC20Event: ERC20Component::Event,
-    
+    }
 
     #[constructor]
     fn constructor(
         ref self: ContractState, decimals: u8, initial_supply: u256, recipient: ContractAddress,
-    ) 
+    ) {
         // Call the internal function that writes decimals to storage
         self._set_decimals(decimals);
 
@@ -221,28 +221,28 @@ mod MyToken
 
         self.erc20.initializer(name, symbol);
         self.erc20.mint(recipient, initial_supply);
-    
+    }
 
     #[abi(embed_v0)]
-    impl ERC20CustomMetadataImpl of interface::IERC20Metadata<ContractState> 
+    impl ERC20CustomMetadataImpl of interface::IERC20Metadata<ContractState> {
         fn name(self: @ContractState) -> ByteArray {
             self.erc20.ERC20_name.read()
-        
+        }
 
-        fn symbol(self: @ContractState) -> ByteArray 
+        fn symbol(self: @ContractState) -> ByteArray {
             self.erc20.ERC20_symbol.read()
-        
+        }
 
-        fn decimals(self: @ContractState) -> u8 
+        fn decimals(self: @ContractState) -> u8 {
             self.decimals.read()
-        
+        }
     }
 
     #[generate_trait]
-    impl InternalImpl of InternalTrait 
+    impl InternalImpl of InternalTrait {
         fn _set_decimals(ref self: ContractState, decimals: u8) {
             self.decimals.write(decimals);
-        
+        }
     }
 }
 ```
