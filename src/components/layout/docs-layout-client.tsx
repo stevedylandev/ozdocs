@@ -31,7 +31,7 @@ export function DocsLayoutClient({ children }: DocsLayoutClientProps) {
 				tabs: [
 					{
 						title: "Ethereum & EVM",
-						url: "/contracts/v5.x",
+						url: "/contracts/5.x",
 						icon: <EthereumIcon className="w-5 h-5" />,
 						urls: new Set([
 							"/contracts",

@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 // Version mappings for redirects
 const VERSION_REDIRECTS: Record<string, string> = {
-	contracts: "contracts/v5.x",
+	contracts: "contracts/5.x",
 };
 
 export function middleware(request: NextRequest) {
