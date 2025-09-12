@@ -5,14 +5,8 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
 	reactStrictMode: true,
-	async rewrites() {
-		return [
-			{
-				source: "/:path*.md",
-				destination: "/llms.mdx/:path*",
-			},
-		];
-	},
+	output: "export",
+	images: { unoptimized: true },
 };
 
 export default withMDX(config);
