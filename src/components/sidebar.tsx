@@ -21,7 +21,6 @@ import {
 	Fragment,
 	type ReactNode,
 	useContext,
-	useId,
 	useMemo,
 	useRef,
 	useState,
@@ -114,7 +113,6 @@ export function SidebarContent(props: ComponentProps<"aside">) {
 	const [hover, setHover] = useState(false);
 	const timerRef = useRef(0);
 	const closeTimeRef = useRef(0);
-	const sidebarId = useId();
 
 	useOnChange(collapsed, () => {
 		setHover(false);
@@ -123,7 +121,7 @@ export function SidebarContent(props: ComponentProps<"aside">) {
 
 	return (
 		<aside
-			id={sidebarId}
+			id="nd-sidebar"
 			{...props}
 			data-collapsed={collapsed}
 			className={cn(
@@ -184,26 +182,20 @@ export function SidebarContentMobile({
 }: ComponentProps<"aside">) {
 	const { open, setOpen } = useSidebar();
 	const state = open ? "open" : "closed";
-	const mobileSidebarId = useId();
 
 	return (
 		<>
 			<Presence present={open}>
-				<button
+				<div
 					data-state={state}
 					className="fixed z-40 inset-0 backdrop-blur-xs data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out"
 					onClick={() => setOpen(false)}
-					onKeyDown={(e) => {
-						if (e.key === "Escape") setOpen(false);
-					}}
-					type="button"
-					aria-label="Close sidebar"
 				/>
 			</Presence>
 			<Presence present={open}>
 				{({ present }) => (
 					<aside
-						id={mobileSidebarId}
+						id="nd-sidebar-mobile"
 						{...props}
 						data-state={state}
 						className={cn(

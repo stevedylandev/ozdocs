@@ -1,7 +1,7 @@
-import { DocsLayout } from "fumadocs-ui/layouts/notebook";
+"use client";
+
 import type { ReactNode } from "react";
 import { baseOptions } from "@/app/layout.config";
-
 import {
 	ArbitrumIcon,
 	EthereumIcon,
@@ -12,48 +12,15 @@ import {
 	UniswapIcon,
 	ZamaIcon,
 } from "@/components/icons";
-import {
-	arbitrumStylusTree,
-	ethereumEvmTree,
-	midnightTree,
-	polkadotTree,
-	starknetTree,
-	stellarTree,
-	uniswapTree,
-	zamaTree,
-} from "@/navigation";
+import { DocsLayout } from "@/components/layout/docs";
+import { useNavigationTree } from "@/hooks/use-navigation-tree";
 
-export default async function Layout({
-	children,
-	params,
-}: {
+interface DocsLayoutClientProps {
 	children: ReactNode;
-	params: Promise<{ slug?: string[] }>;
-}) {
-	// Determine which navigation tree to use based on the current path
-	const resolvedParams = await params;
-	const slug = resolvedParams.slug || [];
-	const pathname = `/${slug.join("/")}`;
+}
 
-	let currentTree = ethereumEvmTree;
-
-	if (pathname.startsWith("/contracts-stylus")) {
-		currentTree = arbitrumStylusTree;
-	} else if (pathname.startsWith("/cairo-contracts")) {
-		currentTree = starknetTree;
-	} else if (pathname.startsWith("/stellar-contracts")) {
-		currentTree = stellarTree;
-	} else if (pathname.startsWith("/contracts-compact")) {
-		currentTree = midnightTree;
-	} else if (pathname.startsWith("/confidential-contracts")) {
-		currentTree = zamaTree;
-	} else if (pathname.startsWith("/uniswap-hooks")) {
-		currentTree = uniswapTree;
-	} else if (pathname.startsWith("/substrate-runtimes")) {
-		currentTree = polkadotTree;
-	} else if (pathname.startsWith("/tools")) {
-		currentTree = ethereumEvmTree;
-	}
+export function DocsLayoutClient({ children }: DocsLayoutClientProps) {
+	const currentTree = useNavigationTree();
 
 	return (
 		<DocsLayout
@@ -64,8 +31,19 @@ export default async function Layout({
 				tabs: [
 					{
 						title: "Ethereum & EVM",
-						url: "/contracts/v5.x",
+						url: "/contracts/5.x",
 						icon: <EthereumIcon className="w-5 h-5" />,
+						urls: new Set([
+							"/contracts",
+							"/community-contracts",
+							"/upgrade-plugins",
+							"/wizard",
+							"/openzeppelin-relayer",
+							"/openzeppelin-monitor",
+							"/contracts-ui-builder",
+							"/defender",
+							"/tools",
+						]),
 					},
 					{
 						title: "Arbitrum Stylus",
@@ -93,12 +71,12 @@ export default async function Layout({
 						icon: <PolkadotIcon className="w-5 h-5" />,
 					},
 					{
-						title: "Uniswap",
+						title: "Uniswap Hooks",
 						url: "/uniswap-hooks",
 						icon: <UniswapIcon className="w-5 h-5" />,
 					},
 					{
-						title: "Zama",
+						title: "Zama FHEVM",
 						url: "/confidential-contracts",
 						icon: <ZamaIcon className="w-5 h-5" />,
 					},

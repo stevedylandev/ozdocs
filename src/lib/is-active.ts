@@ -17,7 +17,12 @@ export function isActive(
 }
 
 export function isTabActive(tab: SidebarTab, pathname: string) {
-	if (tab.urls) return tab.urls.has(normalize(pathname));
+	if (tab.urls) {
+		const normalizedPathname = normalize(pathname);
+		return Array.from(tab.urls).some((url) =>
+			isActive(url, normalizedPathname, true),
+		);
+	}
 
 	return isActive(tab.url, pathname, true);
 }
