@@ -275,7 +275,7 @@
 		"children": [
 			{
 				"type": "folder",
-				"name": "2.0.0",
+				"name": "v2.0.0",
 				"children": [
 					{
 						"type": "page",
@@ -461,7 +461,7 @@
 			},
 			{
 				"type": "folder",
-				"name": "1.0.0",
+				"name": "v1.0.0",
 				"children": [
 					{
 						"type": "page",

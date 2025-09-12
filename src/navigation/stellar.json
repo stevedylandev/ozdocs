@@ -120,7 +120,7 @@
 		"children": [
 			{
 				"type": "folder",
-				"name": "0.3.0",
+				"name": "v0.3.0",
 				"children": [
 					{
 						"type": "page",
@@ -232,7 +232,7 @@
 			},
 			{
 				"type": "folder",
-				"name": "0.2.0",
+				"name": "v0.2.0",
 				"children": [
 					{
 						"type": "page",
