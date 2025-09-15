@@ -101,8 +101,19 @@ async function convertAdocFiles(directory) {
 				"]($1.mdx$2)",
 			);
 
-			// Fix curly bracket file references {filename} -> filename
-			mdContent = mdContent.replace(/\{([^}]+)\}/g, "$1");
+			// Fix curly bracket file references {filename} -> filename, but preserve braces in code blocks
+			const parts = mdContent.split(/(```[\s\S]*?```)/g);
+			mdContent = parts
+				.map((part, index) => {
+					// Every odd index is a code block (```...```)
+					if (index % 2 === 1) {
+						return part; // Preserve code blocks as-is
+					} else {
+						// Remove curly brackets from non-code-block parts only
+						return part.replace(/\{([^}]+)\}/g, "$1");
+					}
+				})
+				.join("");
 
 			// Fix HTML-style callouts <dl><dt><strong>📌 NOTE</strong></dt><dd> ... </dd></dl>
 			// Handle multi-line callouts by using a more permissive pattern
@@ -198,12 +209,27 @@ ${contentWithoutFirstH1}`;
 // Process files to remove curly brackets after conversion
 function processFile(filePath) {
 	try {
+		// Only process .mdx files (skip .adoc files)
+		if (!filePath.endsWith(".mdx")) {
+			console.log(`Skipped: ${filePath}`);
+			return;
+		}
+
 		const content = fsSync.readFileSync(filePath, "utf8");
-		// Preserve brackets inside code fences (```...```)
-		const modifiedContent = content.replace(/```[\s\S]*?```|[{}]/g, (match) => {
-			// If match contains newlines or starts with ```, it's a code block - preserve it
-			return match.includes("\n") || match.startsWith("```") ? match : "";
-		});
+		// Split content by code blocks and process non-code-block parts only
+		const parts = content.split(/(```[\s\S]*?```)/g);
+		const modifiedContent = parts
+			.map((part, index) => {
+				// Every odd index is a code block (```...```)
+				if (index % 2 === 1) {
+					return part; // Preserve code blocks as-is
+				} else {
+					// Remove curly brackets from non-code-block parts
+					return part.replace(/[{}]/g, "");
+				}
+			})
+			.join("");
+
 		fsSync.writeFileSync(filePath, modifiedContent, "utf8");
 		console.log(`Processed: ${filePath}`);
 	} catch (error) {
@@ -231,7 +257,11 @@ function crawlDirectory(dirPath) {
 }
 
 const directory = process.argv[2];
-convertAdocFiles(directory).catch(console.error);
 
-// Run bracket processing after conversion
-crawlDirectory(directory);
+async function main() {
+	await convertAdocFiles(directory);
+	// Run bracket processing after conversion
+	crawlDirectory(directory);
+}
+
+main().catch(console.error);

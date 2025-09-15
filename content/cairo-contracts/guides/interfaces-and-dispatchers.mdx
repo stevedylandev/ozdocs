@@ -38,7 +38,7 @@ This includes only the functions defined in the interface, and is the standard w
 
 ```rust
 #[starknet::interface]
-pub trait IERC20<TState> 
+pub trait IERC20<TState> {
     fn total_supply(self: @TState) -> u256;
     fn balance_of(self: @TState, account: ContractAddress) -> u256;
     fn allowance(self: @TState, owner: ContractAddress, spender: ContractAddress) -> u256;
@@ -47,7 +47,7 @@ pub trait IERC20<TState>
         ref self: TState, sender: ContractAddress, recipient: ContractAddress, amount: u256
     ) -> bool;
     fn approve(ref self: TState, spender: ContractAddress, amount: u256) -> bool;
-
+}
 ```
 
 ### ABI traits
@@ -62,7 +62,7 @@ even when most of the time all of them don’t need to be implemented at the sam
 
 ```rust
 #[starknet::interface]
-pub trait ERC20ABI<TState> 
+pub trait ERC20ABI<TState> {
     // IERC20
     fn total_supply(self: @TState) -> u256;
     fn balance_of(self: @TState, account: ContractAddress) -> u256;
@@ -84,7 +84,7 @@ pub trait ERC20ABI<TState>
     fn transferFrom(
         ref self: TState, sender: ContractAddress, recipient: ContractAddress, amount: u256
     ) -> bool;
-
+}
 ```
 
 ### Dispatcher traits
@@ -92,7 +92,7 @@ pub trait ERC20ABI<TState>
 Traits annotated with `#[starknet::interface]` automatically generate a dispatcher that can be used to interact with contracts that implement the given interface. They can be imported by appending the `Dispatcher` and `DispatcherTrait` suffixes to the trait name, like this:
 
 ```rust
-use openzeppelin_interfaces::erc20::IERC20Dispatcher, IERC20DispatcherTrait;
+use openzeppelin_interfaces::erc20::{IERC20Dispatcher, IERC20DispatcherTrait};
 ```
 
 Other types of dispatchers are also auto-generated from the annotated trait. See the
@@ -130,7 +130,7 @@ The default version of the ERC20 interface trait exposes `snake_case` functions:
 
 ```rust
 #[starknet::interface]
-pub trait IERC20<TState> 
+pub trait IERC20<TState> {
     fn name(self: @TState) -> ByteArray;
     fn symbol(self: @TState) -> ByteArray;
     fn decimals(self: @TState) -> u8;
@@ -142,7 +142,7 @@ pub trait IERC20<TState>
         ref self: TState, sender: ContractAddress, recipient: ContractAddress, amount: u256
     ) -> bool;
     fn approve(ref self: TState, spender: ContractAddress, amount: u256) -> bool;
-
+}
 ```
 
 ### `IERC20Camel`
@@ -151,7 +151,7 @@ On top of that, the library also offers a `camelCase` version of the same interf
 
 ```rust
 #[starknet::interface]
-pub trait IERC20Camel<TState> 
+pub trait IERC20Camel<TState> {
     fn name(self: @TState) -> ByteArray;
     fn symbol(self: @TState) -> ByteArray;
     fn decimals(self: @TState) -> u8;
@@ -163,5 +163,5 @@ pub trait IERC20Camel<TState>
         ref self: TState, sender: ContractAddress, recipient: ContractAddress, amount: u256
     ) -> bool;
     fn approve(ref self: TState, spender: ContractAddress, amount: u256) -> bool;
-
+}
 ```

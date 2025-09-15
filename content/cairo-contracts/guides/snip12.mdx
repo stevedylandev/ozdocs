@@ -23,8 +23,8 @@ Note that some declarations are omitted for brevity. The full example will be av
 
 ```rust
 #[starknet::contract]
-mod CustomERC20 
-    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl;
+mod CustomERC20 {
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl};
     use starknet::ContractAddress;
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
@@ -40,10 +40,10 @@ mod CustomERC20
         ref self: ContractState,
         initial_supply: u256,
         recipient: ContractAddress
-    ) 
+    ) {
         self.erc20.initializer("MyToken", "MTK");
         self.erc20.mint(recipient, initial_supply);
-    
+    }
 
     #[external(v0)]
     fn transfer_with_signature(
@@ -53,9 +53,9 @@ mod CustomERC20
         nonce: felt252,
         expiry: u64,
         signature: Array<felt252>
-    ) 
+    ) {
         (...)
-    
+    }
 }
 ```
 
@@ -80,12 +80,12 @@ To generate the hash of the message, we need to follow these steps:
 In this particular example, the message struct looks like this:
 
 ```rust
-struct Message 
+struct Message {
     recipient: ContractAddress,
     amount: u256,
     nonce: felt252,
     expiry: u64
-
+}
 ```
 
 ### 2. Get the message type hash.
@@ -117,7 +117,7 @@ You can import the trait from: `openzeppelin_utils::snip12::StructHash`. And thi
 is nothing more than the encoding of the message as defined in the [SNIP](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-12.md#how-to-work-with-each-type).
 
 ```rust
-use core::hash::HashStateExTrait, HashStateTrait;
+use core::hash::{HashStateExTrait, HashStateTrait};
 use core::poseidon::PoseidonTrait;
 use openzeppelin_utils::snip12::StructHash;
 use starknet::ContractAddress;
@@ -126,18 +126,18 @@ const MESSAGE_TYPE_HASH: felt252 =
     0x28bf13f11bba405c77ce010d2781c5903cbed100f01f72fcff1664f98343eb6;
 
 #[derive(Copy, Drop, Hash)]
-struct Message 
+struct Message {
     recipient: ContractAddress,
     amount: u256,
     nonce: felt252,
     expiry: u64
+}
 
-
-impl StructHashImpl of StructHash<Message> 
+impl StructHashImpl of StructHash<Message> {
     fn hash_struct(self: @Message) -> felt252 {
         let hash_state = PoseidonTrait::new();
         hash_state.update_with(MESSAGE_TYPE_HASH).update_with(*self).finalize()
-    
+    }
 }
 ```
 
@@ -149,9 +149,9 @@ because the `chain_id` is obtained on-chain, and the `revision` is hardcoded to 
 ```rust
 use openzeppelin_utils::snip12::SNIP12Metadata;
 
-impl SNIP12MetadataImpl of SNIP12Metadata 
-    fn name() -> felt252 { 'DAPP_NAME' 
-    fn version() -> felt252  'v1' 
+impl SNIP12MetadataImpl of SNIP12Metadata {
+    fn name() -> felt252 { 'DAPP_NAME' }
+    fn version() -> felt252 { 'v1' }
 }
 ```
 
@@ -162,15 +162,15 @@ the trait is not bounded to the ContractState, like this:
 ```rust
 use openzeppelin_utils::snip12::SNIP12Metadata;
 
-impl SNIP12MetadataImpl of SNIP12Metadata 
+impl SNIP12MetadataImpl of SNIP12Metadata {
     fn name() -> felt252 {
         let state = unsafe_new_contract_state();
 
         // Some logic to get the name from storage
         state.erc20.name().at(0).unwrap().into()
-    
+    }
 
-    fn version() -> felt252  'v1' 
+    fn version() -> felt252 { 'v1' }
 }
 ```
 
@@ -180,42 +180,42 @@ The final step is to use the `OffchainMessageHashImpl` implementation to generat
 using the `get_message_hash` function. The implementation is already available as a utility.
 
 ```rust
-use core::hash::HashStateExTrait, HashStateTrait;
+use core::hash::{HashStateExTrait, HashStateTrait};
 use core::poseidon::PoseidonTrait;
-use openzeppelin_utils::snip12::SNIP12Metadata, StructHash, OffchainMessageHash;
+use openzeppelin_utils::snip12::{SNIP12Metadata, StructHash, OffchainMessageHash};
 use starknet::ContractAddress;
 
 const MESSAGE_TYPE_HASH: felt252 =
     0x28bf13f11bba405c77ce010d2781c5903cbed100f01f72fcff1664f98343eb6;
 
 #[derive(Copy, Drop, Hash)]
-struct Message 
+struct Message {
     recipient: ContractAddress,
     amount: u256,
     nonce: felt252,
     expiry: u64
+}
 
-
-impl StructHashImpl of StructHash<Message> 
+impl StructHashImpl of StructHash<Message> {
     fn hash_struct(self: @Message) -> felt252 {
         let hash_state = PoseidonTrait::new();
         hash_state.update_with(MESSAGE_TYPE_HASH).update_with(*self).finalize()
-    
+    }
 }
 
-impl SNIP12MetadataImpl of SNIP12Metadata 
+impl SNIP12MetadataImpl of SNIP12Metadata {
     fn name() -> felt252 {
         'DAPP_NAME'
-    
-    fn version() -> felt252 
+    }
+    fn version() -> felt252 {
         'v1'
-    
+    }
 }
 
 fn get_hash(
     account: ContractAddress, recipient: ContractAddress, amount: u256, nonce: felt252, expiry: u64
-) -> felt252 
-    let message = Message { recipient, amount, nonce, expiry ;
+) -> felt252 {
+    let message = Message { recipient, amount, nonce, expiry };
     message.get_message_hash(account)
 }
 ```
@@ -234,37 +234,37 @@ We are using the [`ISRC6Dispatcher`](/api/account#ISRC6) to verify the signature
 and the [`NoncesComponent`](/api/utilities#NoncesComponent) to handle nonces to prevent replay attacks.
 
 ```rust
-use core::hash::HashStateExTrait, HashStateTrait;
+use core::hash::{HashStateExTrait, HashStateTrait};
 use core::poseidon::PoseidonTrait;
-use openzeppelin_utils::snip12::SNIP12Metadata, StructHash, OffchainMessageHash;
+use openzeppelin_utils::snip12::{SNIP12Metadata, StructHash, OffchainMessageHash};
 use starknet::ContractAddress;
 
 const MESSAGE_TYPE_HASH: felt252 =
     0x28bf13f11bba405c77ce010d2781c5903cbed100f01f72fcff1664f98343eb6;
 
 #[derive(Copy, Drop, Hash)]
-struct Message 
+struct Message {
     recipient: ContractAddress,
     amount: u256,
     nonce: felt252,
     expiry: u64
+}
 
-
-impl StructHashImpl of StructHash<Message> 
+impl StructHashImpl of StructHash<Message> {
     fn hash_struct(self: @Message) -> felt252 {
         let hash_state = PoseidonTrait::new();
         hash_state.update_with(MESSAGE_TYPE_HASH).update_with(*self).finalize()
-    
+    }
 }
 
 #[starknet::contract]
-mod CustomERC20 
-    use openzeppelin_interfaces::accounts::{ISRC6Dispatcher, ISRC6DispatcherTrait;
-    use openzeppelin_token::erc20::ERC20Component, ERC20HooksEmptyImpl;
+mod CustomERC20 {
+    use openzeppelin_interfaces::accounts::{ISRC6Dispatcher, ISRC6DispatcherTrait};
+    use openzeppelin_token::erc20::{ERC20Component, ERC20HooksEmptyImpl};
     use openzeppelin_utils::cryptography::nonces::NoncesComponent;
     use starknet::ContractAddress;
 
-    use super::Message, OffchainMessageHash, SNIP12Metadata;
+    use super::{Message, OffchainMessageHash, SNIP12Metadata};
 
     component!(path: ERC20Component, storage: erc20, event: ERC20Event);
     component!(path: NoncesComponent, storage: nonces, event: NoncesEvent);
@@ -278,36 +278,36 @@ mod CustomERC20
     impl NoncesInternalImpl = NoncesComponent::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         erc20: ERC20Component::Storage,
         #[substorage(v0)]
         nonces: NoncesComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC20Event: ERC20Component::Event,
         #[flat]
         NoncesEvent: NoncesComponent::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, initial_supply: u256, recipient: ContractAddress) 
+    fn constructor(ref self: ContractState, initial_supply: u256, recipient: ContractAddress) {
         self.erc20.initializer("MyToken", "MTK");
         self.erc20.mint(recipient, initial_supply);
-    
+    }
 
     /// Required for hash computation.
-    impl SNIP12MetadataImpl of SNIP12Metadata 
+    impl SNIP12MetadataImpl of SNIP12Metadata {
         fn name() -> felt252 {
             'CustomERC20'
-        
-        fn version() -> felt252 
+        }
+        fn version() -> felt252 {
             'v1'
-        
+        }
     }
 
     #[external(v0)]
@@ -318,7 +318,7 @@ mod CustomERC20
         nonce: felt252,
         expiry: u64,
         signature: Array<felt252>
-    ) 
+    ) {
         assert(starknet::get_block_timestamp() <= expiry, 'Expired signature');
         let owner = starknet::get_caller_address();
 
@@ -326,10 +326,10 @@ mod CustomERC20
         self.nonces.use_checked_nonce(owner, nonce);
 
         // Build hash for calling `is_valid_signature`
-        let message = Message { recipient, amount, nonce, expiry ;
+        let message = Message { recipient, amount, nonce, expiry };
         let hash = message.get_message_hash(owner);
 
-        let is_valid_signature_felt = ISRC6Dispatcher  contract_address: owner 
+        let is_valid_signature_felt = ISRC6Dispatcher { contract_address: owner }
             .is_valid_signature(hash, signature);
 
         // Check either 'VALID' or true for backwards compatibility

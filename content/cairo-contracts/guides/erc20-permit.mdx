@@ -2,8 +2,8 @@
 title: ERC20Permit
 ---
 
-The [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) standard, commonly referred to as ERC20Permit, is designed to support gasless token approvals. This is achieved with an off-chain 
-signature following the [SNIP12](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-12.md) standard, rather than with an on-chain transaction. The [permit](/api/erc20.mdx#ERC20Component-permit) function verifies the signature and sets 
+The [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) standard, commonly referred to as ERC20Permit, is designed to support gasless token approvals. This is achieved with an off-chain
+signature following the [SNIP12](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-12.md) standard, rather than with an on-chain transaction. The [permit](/api/erc20.mdx#ERC20Component-permit) function verifies the signature and sets
 the spender’s allowance if the signature is valid. This approach improves user experience and reduces gas costs.
 
 ## Differences from Solidity
@@ -14,9 +14,9 @@ Although this extension is mostly similar to the [Solidity implementation](https
 * The `signature` parameter is represented by a span of felts rather than `v`, `r`, and `s` values.
 
 <Callout>
-Unlike Solidity, there is no enforced format for signatures on Starknet. A signature is represented by an array or span of felts, 
+Unlike Solidity, there is no enforced format for signatures on Starknet. A signature is represented by an array or span of felts,
 </Callout>
-and there is no universal method for validating signatures of unknown formats. Consequently, a signature provided to the [permit](/api/erc20.mdx#ERC20Component-permit) function 
+and there is no universal method for validating signatures of unknown formats. Consequently, a signature provided to the [permit](/api/erc20.mdx#ERC20Component-permit) function
 is validated through an external `is_valid_signature` call to the contract at the `owner` address.
 
 ## Usage
@@ -46,13 +46,13 @@ To safeguard against replay attacks and ensure the uniqueness of each approval v
 
 The format of the `Permit` structure in a signed permit message is as follows:
 ```rust
-struct Permit 
+struct Permit {
     token: ContractAddress,
     spender: ContractAddress,
     amount: u256,
     nonce: felt252,
     deadline: u64,
-
+}
 ```
 
 <Callout>

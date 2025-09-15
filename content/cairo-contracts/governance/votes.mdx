@@ -28,9 +28,9 @@ Here’s an example of how to structure a simple ERC20Votes contract:
 
 ```rust
 #[starknet::contract]
-mod ERC20VotesContract 
+mod ERC20VotesContract {
     use openzeppelin_governance::votes::VotesComponent;
-    use openzeppelin_token::erc20::{ERC20Component, DefaultConfig;
+    use openzeppelin_token::erc20::{ERC20Component, DefaultConfig};
     use openzeppelin_utils::cryptography::nonces::NoncesComponent;
     use openzeppelin_utils::cryptography::snip12::SNIP12Metadata;
     use starknet::ContractAddress;
@@ -54,40 +54,40 @@ mod ERC20VotesContract
     impl NoncesImpl = NoncesComponent::NoncesImpl<ContractState>;
 
     #[storage]
-    pub struct Storage 
+    pub struct Storage {
         #[substorage(v0)]
         pub erc20_votes: VotesComponent::Storage,
         #[substorage(v0)]
         pub erc20: ERC20Component::Storage,
         #[substorage(v0)]
         pub nonces: NoncesComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC20VotesEvent: VotesComponent::Event,
         #[flat]
         ERC20Event: ERC20Component::Event,
         #[flat]
         NoncesEvent: NoncesComponent::Event
-    
+    }
 
     // Required for hash computation.
-    pub impl SNIP12MetadataImpl of SNIP12Metadata 
+    pub impl SNIP12MetadataImpl of SNIP12Metadata {
         fn name() -> felt252 {
             'DAPP_NAME'
-        
-        fn version() -> felt252 
+        }
+        fn version() -> felt252 {
             'DAPP_VERSION'
-        
+        }
     }
 
     // We need to call the `transfer_voting_units` function after
     // every mint, burn and transfer.
     // For this, we use the `after_update` hook of the `ERC20Component::ERC20HooksTrait`.
-    impl ERC20VotesHooksImpl of ERC20Component::ERC20HooksTrait<ContractState> 
+    impl ERC20VotesHooksImpl of ERC20Component::ERC20HooksTrait<ContractState> {
         fn after_update(
             ref self: ERC20Component::ComponentState<ContractState>,
             from: ContractAddress,
@@ -96,13 +96,13 @@ mod ERC20VotesContract
         ) {
             let mut contract_state = self.get_contract_mut();
             contract_state.erc20_votes.transfer_voting_units(from, recipient, amount);
-        
+        }
     }
 
     #[constructor]
-    fn constructor(ref self: ContractState) 
+    fn constructor(ref self: ContractState) {
         self.erc20.initializer("MyToken", "MTK");
-    
+    }
 }
 ```
 
@@ -110,7 +110,7 @@ And here’s an example of how to structure a simple ERC721Votes contract:
 
 ```rust
 #[starknet::contract]
-pub mod ERC721VotesContract 
+pub mod ERC721VotesContract {
     use openzeppelin_governance::votes::VotesComponent;
     use openzeppelin_introspection::src5::SRC5Component;
     use openzeppelin_token::erc721::ERC721Component;
@@ -147,11 +147,11 @@ pub mod ERC721VotesContract
         pub src5: SRC5Component::Storage,
         #[substorage(v0)]
         pub nonces: NoncesComponent::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC721VotesEvent: VotesComponent::Event,
         #[flat]
@@ -160,25 +160,25 @@ pub mod ERC721VotesContract
         SRC5Event: SRC5Component::Event,
         #[flat]
         NoncesEvent: NoncesComponent::Event
-    
-
-    /// Required for hash computation.
-    pub impl SNIP12MetadataImpl of SNIP12Metadata 
-        fn name() -> felt252 {
-            'DAPP_NAME'
-        
-        fn version() -> felt252 
-            'DAPP_VERSION'
-        
     }
 
-    // We need to call the `transfer_voting_units` function after 
+    /// Required for hash computation.
+    pub impl SNIP12MetadataImpl of SNIP12Metadata {
+        fn name() -> felt252 {
+            'DAPP_NAME'
+        }
+        fn version() -> felt252 {
+            'DAPP_VERSION'
+        }
+    }
+
+    // We need to call the `transfer_voting_units` function after
     // every mint, burn and transfer.
     // For this, we use the `before_update` hook of the
     //`ERC721Component::ERC721HooksTrait`.
     // This hook is called before the transfer is executed.
     // This gives us access to the previous owner.
-    impl ERC721VotesHooksImpl of ERC721Component::ERC721HooksTrait<ContractState> 
+    impl ERC721VotesHooksImpl of ERC721Component::ERC721HooksTrait<ContractState> {
         fn before_update(
             ref self: ERC721Component::ComponentState<ContractState>,
             to: ContractAddress,
@@ -191,13 +191,13 @@ pub mod ERC721VotesContract
             // id exists which is necessary for mints
             let previous_owner = self._owner_of(token_id);
             contract_state.erc721_votes.transfer_voting_units(previous_owner, to, 1);
-        
+        }
     }
 
     #[constructor]
-    fn constructor(ref self: ContractState) 
+    fn constructor(ref self: ContractState) {
         self.erc721.initializer("MyToken", "MTK", "");
-    
+    }
 }
 ```
 
@@ -206,7 +206,7 @@ pub mod ERC721VotesContract
 This is the full interface of the `VotesImpl` implementation:
 ```rust
 #[starknet::interface]
-pub trait VotesABI<TState> 
+pub trait VotesABI<TState> {
     // IVotes
     fn get_votes(self: @TState, account: ContractAddress) -> u256;
     fn get_past_votes(self: @TState, account: ContractAddress, timepoint: u64) -> u256;
@@ -217,5 +217,5 @@ pub trait VotesABI<TState>
 
     // INonces
     fn nonces(self: @TState, owner: ContractAddress) -> felt252;
-
+}
 ```

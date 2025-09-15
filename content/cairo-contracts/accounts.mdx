@@ -28,15 +28,15 @@ supporting this execution flow and interoperability with DApps in the ecosystem.
 
 ```rust
 /// Represents a call to a target contract function.
-struct Call 
+struct Call {
     to: ContractAddress,
     selector: felt252,
     calldata: Span<felt252>
-
+}
 
 /// Standard Account Interface
 #[starknet::interface]
-pub trait ISRC6 
+pub trait ISRC6 {
     /// Executes a transaction through the account.
     fn __execute__(calls: Array<Call>);
 
@@ -45,7 +45,7 @@ pub trait ISRC6
 
     /// Asserts whether a given signature for a given hash is valid.
     fn is_valid_signature(hash: felt252, signature: Array<felt252>) -> felt252;
-
+}
 ```
 
 <Callout type='warn'>
@@ -64,10 +64,10 @@ a mechanism for detecting whether a contract is an account or not through intros
 ```rust
 /// Standard Interface Detection
 #[starknet::interface]
-pub trait ISRC5 
+pub trait ISRC5 {
     /// Queries if a contract implements a given interface.
     fn supports_interface(interface_id: felt252) -> bool;
-
+}
 ```
 
 [SNIP-6](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-6.md) compliant accounts must return `true` when queried for the ISRC6 interface ID.
@@ -105,7 +105,7 @@ Constructing an account contract requires integrating both [AccountComponent](/a
 
 ```rust
 #[starknet::contract(account)]
-mod MyAccount 
+mod MyAccount {
     use openzeppelin_account::AccountComponent;
     use openzeppelin_introspection::src5::SRC5Component;
 
@@ -123,21 +123,21 @@ mod MyAccount
         account: AccountComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         AccountEvent: AccountComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: felt252) 
+    fn constructor(ref self: ContractState, public_key: felt252) {
         self.account.initializer(public_key);
-    
+    }
 }
 ```
 
@@ -147,7 +147,7 @@ This is the full interface of the `AccountMixinImpl` implementation:
 
 ```rust
 #[starknet::interface]
-pub trait AccountABI 
+pub trait AccountABI {
     // ISRC6
     fn __execute__(calls: Array<Call>);
     fn __validate__(calls: Array<Call>) -> felt252;
@@ -174,7 +174,7 @@ pub trait AccountABI
     // IPublicKeyCamel
     fn getPublicKey() -> felt252;
     fn setPublicKey(newPublicKey: felt252, signature: Span<felt252>);
-
+}
 ```
 
 ## Ethereum Account
@@ -190,7 +190,7 @@ Here’s an example of a basic contract:
 
 ```rust
 #[starknet::contract(account)]
-mod MyEthAccount 
+mod MyEthAccount {
     use openzeppelin_account::EthAccountComponent;
     use openzeppelin_interfaces::accounts::EthPublicKey;
     use openzeppelin_introspection::src5::SRC5Component;
@@ -211,21 +211,21 @@ mod MyEthAccount
         eth_account: EthAccountComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         EthAccountEvent: EthAccountComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: EthPublicKey) 
+    fn constructor(ref self: ContractState, public_key: EthPublicKey) {
         self.eth_account.initializer(public_key);
-    
+    }
 }
 ```
 
@@ -235,7 +235,7 @@ This is the full interface of the `EthAccountMixinImpl` implementation:
 
 ```rust
 #[starknet::interface]
-pub trait EthAccountABI 
+pub trait EthAccountABI {
     // ISRC6
     fn __execute__(calls: Array<Call>);
     fn __validate__(calls: Array<Call>) -> felt252;
@@ -262,7 +262,7 @@ pub trait EthAccountABI
     // IEthPublicKeyCamel
     fn getPublicKey() -> EthPublicKey;
     fn setPublicKey(newPublicKey: EthPublicKey, signature: Span<felt252>);
-
+}
 
 ```
 
@@ -287,7 +287,7 @@ First, let’s take the example account we created before and deploy it:
 
 ```[,cairo]
 #[starknet::contract(account)]
-mod MyAccount 
+mod MyAccount {
     use openzeppelin_account::AccountComponent;
     use openzeppelin_introspection::src5::SRC5Component;
 
@@ -305,21 +305,21 @@ mod MyAccount
         account: AccountComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         AccountEvent: AccountComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: felt252) 
+    fn constructor(ref self: ContractState, public_key: felt252) {
         self.account.initializer(public_key);
-    
+    }
 }
 ```
 
@@ -369,7 +369,7 @@ First, let’s take the example account we created before and deploy it:
 
 ```[,cairo]
 #[starknet::contract(account)]
-mod MyEthAccount 
+mod MyEthAccount {
     use openzeppelin_account::EthAccountComponent;
     use openzeppelin_interfaces::accounts::EthPublicKey;
     use openzeppelin_introspection::src5::SRC5Component;
@@ -389,21 +389,21 @@ mod MyEthAccount
         eth_account: EthAccountComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         EthAccountEvent: EthAccountComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: EthPublicKey) 
+    fn constructor(ref self: ContractState, public_key: EthPublicKey) {
         self.eth_account.initializer(public_key);
-    
+    }
 }
 ```
 
@@ -419,17 +419,17 @@ The following examples use unreleased features from StarknetJS (`starknetjs@next
 
 ```[,javascript]
 import * as dotenv from 'dotenv';
-import  CallData, EthSigner, hash  from 'starknet';
-import  ABI as ETH_ABI  from '../abis/eth_account.js';
+import { CallData, EthSigner, hash } from 'starknet';
+import { ABI as ETH_ABI } from '../abis/eth_account.js';
 dotenv.config();
 
 const ethSigner = new EthSigner(process.env.ETH_PRIVATE_KEY);
 const ethPubKey = await ethSigner.getPubKey();
 const ethAccountClassHash = '<ETH_ACCOUNT_CLASS_HASH>';
 const ethCallData = new CallData(ETH_ABI);
-const ethAccountConstructorCalldata = ethCallData.compile('constructor', 
+const ethAccountConstructorCalldata = ethCallData.compile('constructor', {
     public_key: ethPubKey
-)
+})
 const salt = '0x12345';
 const deployerAddress = '0x0';
 const ethContractAddress = hash.calculateContractAddressFromHash(
@@ -445,11 +445,11 @@ Send funds to the pre-calculated EthAccount address and deploy the contract.
 
 ```[,javascript]
 import * as dotenv from 'dotenv';
-import  Account, CallData, EthSigner, RpcProvider, stark  from 'starknet';
-import  ABI as ETH_ABI  from '../abis/eth_account.js';
+import { Account, CallData, EthSigner, RpcProvider, stark } from 'starknet';
+import { ABI as ETH_ABI } from '../abis/eth_account.js';
 dotenv.config();
 
-const provider = new RpcProvider( nodeUrl: process.env.API_URL );
+const provider = new RpcProvider({ nodeUrl: process.env.API_URL });
 const ethSigner = new EthSigner(process.env.ETH_PRIVATE_KEY);
 const ethPubKey = await ethSigner.getPubKey();
 const ethAccountAddress = '<ETH_ACCOUNT_ADDRESS>'
@@ -457,20 +457,20 @@ const ethAccount = new Account(provider, ethAccountAddress, ethSigner);
 
 const ethAccountClassHash = '<ETH_ACCOUNT_CLASS_HASH>'
 const ethCallData = new CallData(ETH_ABI);
-const ethAccountConstructorCalldata = ethCallData.compile('constructor', 
+const ethAccountConstructorCalldata = ethCallData.compile('constructor', {
     public_key: ethPubKey
-)
+})
 const salt = '0x12345';
-const deployPayload = 
+const deployPayload = {
     classHash: ethAccountClassHash,
     constructorCalldata: ethAccountConstructorCalldata,
     addressSalt: salt,
-;
+};
 
-const  suggestedMaxFee: feeDeploy  = await ethAccount.estimateAccountDeployFee(deployPayload);
-const  transaction_hash, contract_address  = await ethAccount.deployAccount(
+const { suggestedMaxFee: feeDeploy } = await ethAccount.estimateAccountDeployFee(deployPayload);
+const { transaction_hash, contract_address } = await ethAccount.deployAccount(
     deployPayload,
-     maxFee: stark.estimatedFeeToMaxFee(feeDeploy, 100) 
+    { maxFee: stark.estimatedFeeToMaxFee(feeDeploy, 100) }
 );
 await provider.waitForTransaction(transaction_hash);
 console.log('EthAccount deployed at: ', contract_address);
@@ -481,10 +481,10 @@ Here’s what an ERC20 transfer from an EthAccount looks like.
 
 ```[,javascript]
 import * as dotenv from 'dotenv';
-import  Account, RpcProvider, Contract, EthSigner  from 'starknet';
+import { Account, RpcProvider, Contract, EthSigner } from 'starknet';
 dotenv.config();
 
-const provider = new RpcProvider( nodeUrl: process.env.API_URL );
+const provider = new RpcProvider({ nodeUrl: process.env.API_URL });
 const ethSigner = new EthSigner(process.env.ETH_PRIVATE_KEY);
 const ethAccountAddress = '<ETH_ACCOUNT_CONTRACT_ADDRESS>'
 const ethAccount = new Account(provider, ethAccountAddress, ethSigner);
@@ -493,12 +493,12 @@ const erc20 = new Contract(compiledErc20.abi, erc20Address, provider);
 
 erc20.connect(ethAccount);
 
-const transferCall = erc20.populate('transfer', 
+const transferCall = erc20.populate('transfer', {
     recipient: recipient.address,
     amount: 50n
-);
+});
 const tx = await erc20.transfer(
-    transferCall.calldata,  maxFee: 900_000_000_000_000 
+    transferCall.calldata, { maxFee: 900_000_000_000_000 }
 );
 await provider.waitForTransaction(tx.transaction_hash);
 ```

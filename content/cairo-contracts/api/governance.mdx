@@ -10,7 +10,7 @@ Starting from version `3.x.x`, the interfaces are no longer part of the `openzep
 
 ### [](#IGovernor)`IGovernor`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/governance/governor.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::governor::IGovernor;
 ```
 
@@ -253,7 +253,7 @@ Emitted when a vote is cast with params.
 
 ### [](#IMultisig)`IMultisig`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/governance/multisig.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::multisig::IMultisig;
 ```
 
@@ -499,7 +499,7 @@ Emitted when a new transaction is submitted with non-zero salt.
 
 ### [](#ITimelock)`ITimelock`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/governance/timelock.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::timelock::ITimelock;
 ```
 
@@ -671,7 +671,7 @@ Emitted when the minimum delay for future operations is modified.
 
 ### [](#IVotes)`IVotes`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/governance/votes.cairo)
 
-```cairo
+```rust
 use openzeppelin_interfaces::votes::IVotes;
 ```
 
@@ -740,7 +740,7 @@ For a walkthrough of how to implement a Governor, check the [Governor](../govern
 
 ### [](#GovernorComponent)`GovernorComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/governor/governor.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::governor::GovernorComponent;
 ```
 
@@ -1326,7 +1326,7 @@ The Governor component can (and must) be extended by implementing the [extension
 
 ### [](#GovernorCoreExecutionComponent)`GovernorCoreExecutionComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/governor/extensions/governor_core_execution.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::governor::extensions::GovernorCoreExecutionComponent;
 ```
 
@@ -1377,7 +1377,7 @@ Cancels a proposal’s operations.
 
 ### [](#GovernorCountingSimpleComponent)`GovernorCountingSimpleComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/governor/extensions/governor_counting_simple.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::governor::extensions::GovernorCountingSimpleComponent;
 ```
 
@@ -1428,7 +1428,7 @@ In this implementation, the For votes must be strictly greater than Against vote
 
 ### [](#GovernorSettingsComponent)`GovernorSettingsComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/governor/extensions/governor_settings.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::governor::extensions::GovernorSettingsComponent;
 ```
 
@@ -1579,7 +1579,7 @@ Emitted when the proposal threshold is updated.
 
 ### [](#GovernorVotesComponent)`GovernorVotesComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/governor/extensions/governor_votes.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::governor::extensions::GovernorVotesComponent;
 ```
 
@@ -1645,7 +1645,7 @@ Requirements:
 
 ### [](#GovernorVotesQuorumFractionComponent)`GovernorVotesQuorumFractionComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/governor/extensions/governor_votes_quorum_fraction.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::governor::extensions::GovernorVotesQuorumFractionComponent;
 ```
 
@@ -1760,7 +1760,7 @@ Emitted when the quorum numerator is updated.
 
 ### [](#GovernorTimelockExecutionComponent)`GovernorTimelockExecutionComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/governor/extensions/governor_timelock_execution.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::governor::extensions::GovernorTimelockExecutionComponent;
 ```
 
@@ -1901,7 +1901,7 @@ A Multisig module enhances security and decentralization by requiring multiple s
 
 ### [](#MultisigComponent)`MultisigComponent`
 
-```cairo
+```rust
 use openzeppelin_governance::multisig::MultisigComponent;
 ```
 
@@ -2273,7 +2273,7 @@ In a governance system, `TimelockControllerComponent` is in charge of introducin
 
 ### [](#TimelockControllerComponent)`TimelockControllerComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/timelock/timelock_controller.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::timelock::TimelockControllerComponent;
 ```
 
@@ -2557,7 +2557,7 @@ The `VotesComponent` provides a flexible system for tracking and delegating voti
 
 ### [](#VotesComponent)`VotesComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/votes/votes.cairo)
 
-```cairo
+```rust
 use openzeppelin_governance::votes::VotesComponent;
 ```
 
@@ -2747,7 +2747,7 @@ Emitted when a token transfer or delegate change results in changes to a delegat
 
 ### [](#VotingUnitsTrait)`VotingUnitsTrait`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/governance/src/votes/votes.cairo)
 
-```cairo
+```rust
 pub trait VotingUnitsTrait<TState> {
     fn get_voting_units(self: @TState, account: ContractAddress) -> u256;
 }

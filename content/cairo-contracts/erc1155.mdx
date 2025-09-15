@@ -28,9 +28,9 @@ Here’s an example of a basic contract:
 
 ```rust
 #[starknet::contract]
-mod MyERC1155 
+mod MyERC1155 {
     use openzeppelin_introspection::src5::SRC5Component;
-    use openzeppelin_token::erc1155::{ERC1155Component, ERC1155HooksEmptyImpl;
+    use openzeppelin_token::erc1155::{ERC1155Component, ERC1155HooksEmptyImpl};
     use starknet::ContractAddress;
 
     component!(path: ERC1155Component, storage: erc1155, event: ERC1155Event);
@@ -42,21 +42,21 @@ mod MyERC1155
     impl ERC1155InternalImpl = ERC1155Component::InternalImpl<ContractState>;
 
     #[storage]
-    struct Storage 
+    struct Storage {
         #[substorage(v0)]
         erc1155: ERC1155Component::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC1155Event: ERC1155Component::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
     fn constructor(
@@ -65,12 +65,12 @@ mod MyERC1155
         recipient: ContractAddress,
         token_ids: Span<u256>,
         values: Span<u256>
-    ) 
+    ) {
         self.erc1155.initializer(token_uri);
         self
             .erc1155
             .batch_mint_with_acceptance_check(recipient, token_ids, values, array![].span());
-    
+    }
 }
 ```
 
@@ -83,7 +83,7 @@ To support older token deployments, as mentioned in [Dual interfaces](interfaces
 
 ```rust
 #[starknet::interface]
-pub trait ERC1155ABI 
+pub trait ERC1155ABI {
     // IERC1155
     fn balance_of(account: ContractAddress, token_id: u256) -> u256;
     fn balance_of_batch(
@@ -135,7 +135,7 @@ pub trait ERC1155ABI
     );
     fn isApprovedForAll(owner: ContractAddress, operator: ContractAddress) -> bool;
     fn setApprovalForAll(operator: ContractAddress, approved: bool);
-
+}
 ```
 
 ## ERC1155 Compatibility
@@ -167,7 +167,7 @@ The recipient contract must also implement the [SRC5](introspection.mdx#src5) in
 
 ```rust
 #[starknet::interface]
-pub trait IERC1155Receiver 
+pub trait IERC1155Receiver {
     fn on_erc1155_received(
         operator: ContractAddress,
         from: ContractAddress,
@@ -182,7 +182,7 @@ pub trait IERC1155Receiver
         values: Span<u256>,
         data: Span<felt252>
     ) -> felt252;
-
+}
 ```
 
 Implementing the `IERC1155Receiver` interface exposes the [on_erc1155_received](/api/erc1155.mdx#IERC1155Receiver-on_erc1155_received) and [on_erc1155_batch_received](/api/erc1155.mdx#IERC1155Receiver-on_erc1155_batch_received) methods.
@@ -201,7 +201,7 @@ Here’s an example of a simple token receiver contract:
 
 ```rust
 #[starknet::contract]
-mod MyTokenReceiver 
+mod MyTokenReceiver {
     use openzeppelin_introspection::src5::SRC5Component;
     use openzeppelin_token::erc1155::ERC1155ReceiverComponent;
     use starknet::ContractAddress;
@@ -220,20 +220,20 @@ mod MyTokenReceiver
         erc1155_receiver: ERC1155ReceiverComponent::Storage,
         #[substorage(v0)]
         src5: SRC5Component::Storage
-    
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event 
+    enum Event {
         #[flat]
         ERC1155ReceiverEvent: ERC1155ReceiverComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event
-    
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState) 
+    fn constructor(ref self: ContractState) {
         self.erc1155_receiver.initializer();
-    
+    }
 }
 ```

@@ -3,30 +3,26 @@ title: "Utils"
 description: "Smart contract utils utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/confidential-contracts/api/utils
-</Callout>
-
 Miscellaneous contracts and libraries containing utility functions you can use to improve security, and ease integrations when working with confidential contracts.
 
-* [`FHESafeMath`](#FHESafeMath): Implementation of safe math operations for encrypted values.
-* [`CheckpointsConfidential`](#CheckpointsConfidential): Implementation of checkpoints for encrypted values.
-* [`HandleAccessManager`](#HandleAccessManager): Minimal contract that adds a function to give allowance to callers for a given ciphertext handle.
+* FHESafeMath: Implementation of safe math operations for encrypted values.
+* CheckpointsConfidential: Implementation of checkpoints for encrypted values.
+* HandleAccessManager: Minimal contract that adds a function to give allowance to callers for a given ciphertext handle.
 
 ## Math
 
-[`FHESafeMath`](#FHESafeMath)
+FHESafeMath
 
 ## Structs
 
-[`CheckpointsConfidential`](#CheckpointsConfidential)
+CheckpointsConfidential
 
 ## Other
-[`HandleAccessManager`](#HandleAccessManager)
+HandleAccessManager
 
 <a id="FHESafeMath"></a>
 
-## `FHESafeMath` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/FHESafeMath.sol)
+## `FHESafeMath` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/utils/FHESafeMath.sol)
 
 ```solidity
 import "@openzeppelin/contracts/utils/FHESafeMath.sol";
@@ -38,6 +34,8 @@ to handle potential overflows in FHE operations.
 ### Functions
 - [tryIncrease(oldValue, delta)](#FHESafeMath-tryIncrease-euint64-euint64-)
 - [tryDecrease(oldValue, delta)](#FHESafeMath-tryDecrease-euint64-euint64-)
+- [tryAdd(a, b)](#FHESafeMath-tryAdd-euint64-euint64-)
+- [trySub(a, b)](#FHESafeMath-trySub-euint64-euint64-)
 
 <a id="FHESafeMath-tryIncrease-euint64-euint64-"></a>
 
@@ -57,9 +55,25 @@ Try to decrease the encrypted value `oldValue` by `delta`. If the operation is s
 `success` will be true and `updated` will be the new value. Otherwise, `success` will be false
 and `updated` will be the original value.
 
+<a id="FHESafeMath-tryAdd-euint64-euint64-"></a>
+
+### `tryAdd(euint64 a, euint64 b) → ebool success, euint64 res`
+*internal*
+
+Try to add `a` and `b`. If the operation is successful, `success` will be true and `res`
+will be the sum of `a` and `b`. Otherwise, `success` will be false, and `res` will be 0.
+
+<a id="FHESafeMath-trySub-euint64-euint64-"></a>
+
+### `trySub(euint64 a, euint64 b) → ebool success, euint64 res`
+*internal*
+
+Try to subtract `b` from `a`. If the operation is successful, `success` will be true and `res`
+will be `a - b`. Otherwise, `success` will be false, and `res` will be 0.
+
 <a id="HandleAccessManager"></a>
 
-## `HandleAccessManager` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/HandleAccessManager.sol)
+## `HandleAccessManager` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/utils/HandleAccessManager.sol)
 
 ```solidity
 import "@openzeppelin/contracts/utils/HandleAccessManager.sol";
@@ -90,7 +104,7 @@ Unimplemented function that must revert if the message sender is not allowed to 
 
 <a id="CheckpointsConfidential"></a>
 
-## `CheckpointsConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/structs/CheckpointsConfidential.sol)
+## `CheckpointsConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/utils/structs/CheckpointsConfidential.sol)
 
 ```solidity
 import "@openzeppelin/contracts/utils/structs/CheckpointsConfidential.sol";
@@ -258,7 +272,7 @@ Returns checkpoint at given position.
 
 <a id="Checkpoints"></a>
 
-## `Checkpoints` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/utils/structs/temporary-Checkpoints.sol)
+## `Checkpoints` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/utils/structs/temporary-Checkpoints.sol)
 
 ```solidity
 import "@openzeppelin/contracts/utils/structs/temporary-Checkpoints.sol";

@@ -268,5 +268,352 @@
 				"url": "/cairo-contracts/utils/_class_hashes"
 			}
 		]
+	},
+	{
+		"type": "folder",
+		"name": "Previous Versions",
+		"children": [
+			{
+				"type": "folder",
+				"name": "v2.0.0",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/cairo-contracts/2.0.0"
+					},
+					{
+						"type": "folder",
+						"name": "Learn",
+						"children": [
+							{
+								"type": "page",
+								"name": "Components",
+								"url": "/cairo-contracts/2.0.0/components"
+							},
+							{
+								"type": "page",
+								"name": "Presets",
+								"url": "/cairo-contracts/2.0.0/presets"
+							},
+							{
+								"type": "page",
+								"name": "Counterfactual Deployments",
+								"url": "/cairo-contracts/2.0.0/guides/deployment"
+							},
+							{
+								"type": "page",
+								"name": "SNIP12 and Typed Messages",
+								"url": "/cairo-contracts/2.0.0/guides/snip12"
+							},
+							{
+								"type": "page",
+								"name": "ERC20 Permit",
+								"url": "/cairo-contracts/2.0.0/guides/erc20-permit"
+							},
+							{
+								"type": "page",
+								"name": "ERC20 Supply",
+								"url": "/cairo-contracts/2.0.0/guides/erc20-supply"
+							},
+							{
+								"type": "page",
+								"name": "SRC5 Migration",
+								"url": "/cairo-contracts/2.0.0/guides/src5-migration"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Backwards Compatibility",
+						"url": "/cairo-contracts/2.0.0/backwards-compatibility"
+					},
+					{
+						"type": "folder",
+						"name": "Tokens",
+						"children": [
+							{
+								"type": "page",
+								"name": "ERC-20",
+								"url": "/cairo-contracts/2.0.0/erc20"
+							},
+							{
+								"type": "page",
+								"name": "ERC-721",
+								"url": "/cairo-contracts/2.0.0/erc721"
+							},
+							{
+								"type": "page",
+								"name": "ERC-1155",
+								"url": "/cairo-contracts/2.0.0/erc1155"
+							},
+							{
+								"type": "page",
+								"name": "ERC-4626",
+								"url": "/cairo-contracts/2.0.0/erc4626"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Governance",
+						"children": [
+							{
+								"type": "page",
+								"name": "Governor",
+								"url": "/cairo-contracts/2.0.0/governance/governor"
+							},
+							{
+								"type": "page",
+								"name": "Multisig",
+								"url": "/cairo-contracts/2.0.0/governance/multisig"
+							},
+							{
+								"type": "page",
+								"name": "Timelock",
+								"url": "/cairo-contracts/2.0.0/governance/timelock"
+							},
+							{
+								"type": "page",
+								"name": "Votes",
+								"url": "/cairo-contracts/2.0.0/governance/votes"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/cairo-contracts/2.0.0/access"
+					},
+					{
+						"type": "page",
+						"name": "Accounts",
+						"url": "/cairo-contracts/2.0.0/accounts"
+					},
+					{
+						"type": "page",
+						"name": "Finance",
+						"url": "/cairo-contracts/2.0.0/finance"
+					},
+					{
+						"type": "page",
+						"name": "Interfaces",
+						"url": "/cairo-contracts/2.0.0/interfaces"
+					},
+					{
+						"type": "page",
+						"name": "Introspection",
+						"url": "/cairo-contracts/2.0.0/introspection"
+					},
+					{
+						"type": "page",
+						"name": "Security",
+						"url": "/cairo-contracts/2.0.0/security"
+					},
+					{
+						"type": "page",
+						"name": "Upgrades",
+						"url": "/cairo-contracts/2.0.0/upgrades"
+					},
+					{
+						"type": "page",
+						"name": "Universal Deployer Contract",
+						"url": "/cairo-contracts/2.0.0/udc"
+					},
+					{
+						"type": "folder",
+						"name": "Macros",
+						"children": [
+							{
+								"type": "page",
+								"name": "Overview",
+								"url": "/cairo-contracts/2.0.0/macros"
+							},
+							{
+								"type": "page",
+								"name": "Type Hash",
+								"url": "/cairo-contracts/2.0.0/macros/type_hash"
+							},
+							{
+								"type": "page",
+								"name": "With Components",
+								"url": "/cairo-contracts/2.0.0/macros/with_components"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Utils",
+						"children": [
+							{
+								"type": "page",
+								"name": "Common",
+								"url": "/cairo-contracts/2.0.0/utils/_common"
+							},
+							{
+								"type": "page",
+								"name": "Class Hashes",
+								"url": "/cairo-contracts/2.0.0/utils/_class_hashes"
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "v1.0.0",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/cairo-contracts/1.0.0"
+					},
+					{
+						"type": "folder",
+						"name": "Learn",
+						"children": [
+							{
+								"type": "page",
+								"name": "Components",
+								"url": "/cairo-contracts/1.0.0/components"
+							},
+							{
+								"type": "page",
+								"name": "Presets",
+								"url": "/cairo-contracts/1.0.0/presets"
+							},
+							{
+								"type": "page",
+								"name": "Counterfactual Deployments",
+								"url": "/cairo-contracts/1.0.0/guides/deployment"
+							},
+							{
+								"type": "page",
+								"name": "SNIP12 and Typed Messages",
+								"url": "/cairo-contracts/1.0.0/guides/snip12"
+							},
+							{
+								"type": "page",
+								"name": "ERC20 Permit",
+								"url": "/cairo-contracts/1.0.0/guides/erc20-permit"
+							},
+							{
+								"type": "page",
+								"name": "ERC20 Supply",
+								"url": "/cairo-contracts/1.0.0/guides/erc20-supply"
+							},
+							{
+								"type": "page",
+								"name": "SRC5 Migration",
+								"url": "/cairo-contracts/1.0.0/guides/src5-migration"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Backwards Compatibility",
+						"url": "/cairo-contracts/1.0.0/backwards-compatibility"
+					},
+					{
+						"type": "folder",
+						"name": "Tokens",
+						"children": [
+							{
+								"type": "page",
+								"name": "ERC-20",
+								"url": "/cairo-contracts/1.0.0/erc20"
+							},
+							{
+								"type": "page",
+								"name": "ERC-721",
+								"url": "/cairo-contracts/1.0.0/erc721"
+							},
+							{
+								"type": "page",
+								"name": "ERC-1155",
+								"url": "/cairo-contracts/1.0.0/erc1155"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Governance",
+						"children": [
+							{
+								"type": "page",
+								"name": "Governor",
+								"url": "/cairo-contracts/1.0.0/governance/governor"
+							},
+							{
+								"type": "page",
+								"name": "Timelock",
+								"url": "/cairo-contracts/1.0.0/governance/timelock"
+							},
+							{
+								"type": "page",
+								"name": "Votes",
+								"url": "/cairo-contracts/1.0.0/governance/votes"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/cairo-contracts/1.0.0/access"
+					},
+					{
+						"type": "page",
+						"name": "Accounts",
+						"url": "/cairo-contracts/1.0.0/accounts"
+					},
+					{
+						"type": "page",
+						"name": "Finance",
+						"url": "/cairo-contracts/1.0.0/finance"
+					},
+					{
+						"type": "page",
+						"name": "Interfaces",
+						"url": "/cairo-contracts/1.0.0/interfaces"
+					},
+					{
+						"type": "page",
+						"name": "Introspection",
+						"url": "/cairo-contracts/1.0.0/introspection"
+					},
+					{
+						"type": "page",
+						"name": "Security",
+						"url": "/cairo-contracts/1.0.0/security"
+					},
+					{
+						"type": "page",
+						"name": "Upgrades",
+						"url": "/cairo-contracts/1.0.0/upgrades"
+					},
+					{
+						"type": "page",
+						"name": "Universal Deployer Contract",
+						"url": "/cairo-contracts/1.0.0/udc"
+					},
+					{
+						"type": "folder",
+						"name": "Utils",
+						"children": [
+							{
+								"type": "page",
+								"name": "Common",
+								"url": "/cairo-contracts/1.0.0/utils/_common"
+							},
+							{
+								"type": "page",
+								"name": "Class Hashes",
+								"url": "/cairo-contracts/1.0.0/utils/_class_hashes"
+							}
+						]
+					}
+				]
+			}
+		]
 	}
 ]

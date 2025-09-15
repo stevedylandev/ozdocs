@@ -92,14 +92,14 @@ The last missing step is to add an `SNIP12Metadata` implementation used to retri
 
 ```rust
 #[starknet::contract]
-mod MyGovernor
+mod MyGovernor {
     use openzeppelin_governance::governor::GovernorComponent::InternalTrait as GovernorInternalTrait;
     use openzeppelin_governance::governor::extensions::GovernorVotesQuorumFractionComponent::InternalTrait;
     use openzeppelin_governance::governor::extensions::{
         GovernorVotesQuorumFractionComponent, GovernorCountingSimpleComponent,
         GovernorCoreExecutionComponent,
-    ;
-    use openzeppelin_governance::governor::GovernorComponent, DefaultConfig;
+    };
+    use openzeppelin_governance::governor::{GovernorComponent, DefaultConfig};
     use openzeppelin_introspection::src5::SRC5Component;
     use openzeppelin_utils::cryptography::snip12::SNIP12Metadata;
     use starknet::ContractAddress;
@@ -149,7 +149,7 @@ mod MyGovernor
     impl SRC5Impl = SRC5Component::SRC5Impl<ContractState>;
 
     #[storage]
-    struct Storage
+    struct Storage {
         #[substorage(v0)]
         pub governor: GovernorComponent::Storage,
         #[substorage(v0)]
@@ -160,11 +160,11 @@ mod MyGovernor
         pub governor_core_execution: GovernorCoreExecutionComponent::Storage,
         #[substorage(v0)]
         pub src5: SRC5Component::Storage,
-
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event
+    enum Event {
         #[flat]
         GovernorEvent: GovernorComponent::Event,
         #[flat]
@@ -175,47 +175,47 @@ mod MyGovernor
         GovernorCoreExecutionEvent: GovernorCoreExecutionComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event,
-
+    }
 
     #[constructor]
-    fn constructor(ref self: ContractState, votes_token: ContractAddress)
+    fn constructor(ref self: ContractState, votes_token: ContractAddress) {
         self.governor.initializer();
         self.governor_votes.initializer(votes_token, QUORUM_NUMERATOR);
-
+    }
 
     //
     // SNIP12 Metadata
     //
 
-    pub impl SNIP12MetadataImpl of SNIP12Metadata
+    pub impl SNIP12MetadataImpl of SNIP12Metadata {
         fn name() -> felt252 {
             'DAPP_NAME'
+        }
 
-
-        fn version() -> felt252
+        fn version() -> felt252 {
             'DAPP_VERSION'
-
+        }
     }
 
     //
     // Locally implemented extensions
     //
 
-    pub impl GovernorSettings of GovernorComponent::GovernorSettingsTrait<ContractState>
+    pub impl GovernorSettings of GovernorComponent::GovernorSettingsTrait<ContractState> {
         /// See `GovernorComponent::GovernorSettingsTrait::voting_delay`.
         fn voting_delay(self: @GovernorComponent::ComponentState<ContractState>) -> u64 {
             VOTING_DELAY
-
+        }
 
         /// See `GovernorComponent::GovernorSettingsTrait::voting_period`.
-        fn voting_period(self: @GovernorComponent::ComponentState<ContractState>) -> u64
+        fn voting_period(self: @GovernorComponent::ComponentState<ContractState>) -> u64 {
             VOTING_PERIOD
-
+        }
 
         /// See `GovernorComponent::GovernorSettingsTrait::proposal_threshold`.
-        fn proposal_threshold(self: @GovernorComponent::ComponentState<ContractState>) -> u256
+        fn proposal_threshold(self: @GovernorComponent::ComponentState<ContractState>) -> u256 {
             PROPOSAL_THRESHOLD
-
+        }
     }
 }
 ```
@@ -249,7 +249,7 @@ fixed quorum value instead of a percentage:
 
 ```rust
 #[starknet::contract]
-pub mod MyTimelockedGovernor
+pub mod MyTimelockedGovernor {
     use openzeppelin_governance::governor::GovernorComponent::InternalTrait as GovernorInternalTrait;
     use openzeppelin_governance::governor::extensions::GovernorSettingsComponent::InternalTrait as GovernorSettingsInternalTrait;
     use openzeppelin_governance::governor::extensions::GovernorTimelockExecutionComponent::InternalTrait as GovernorTimelockExecutionInternalTrait;
@@ -257,8 +257,8 @@ pub mod MyTimelockedGovernor
     use openzeppelin_governance::governor::extensions::{
         GovernorVotesComponent, GovernorSettingsComponent, GovernorCountingSimpleComponent,
         GovernorTimelockExecutionComponent
-    ;
-    use openzeppelin_governance::governor::GovernorComponent, DefaultConfig;
+    };
+    use openzeppelin_governance::governor::{GovernorComponent, DefaultConfig};
     use openzeppelin_introspection::src5::SRC5Component;
     use openzeppelin_utils::cryptography::snip12::SNIP12Metadata;
     use starknet::ContractAddress;
@@ -312,7 +312,7 @@ pub mod MyTimelockedGovernor
     impl SRC5Impl = SRC5Component::SRC5Impl<ContractState>;
 
     #[storage]
-    struct Storage
+    struct Storage {
         #[substorage(v0)]
         pub governor: GovernorComponent::Storage,
         #[substorage(v0)]
@@ -325,11 +325,11 @@ pub mod MyTimelockedGovernor
         pub governor_timelock_execution: GovernorTimelockExecutionComponent::Storage,
         #[substorage(v0)]
         pub src5: SRC5Component::Storage,
-
+    }
 
     #[event]
     #[derive(Drop, starknet::Event)]
-    enum Event
+    enum Event {
         #[flat]
         GovernorEvent: GovernorComponent::Event,
         #[flat]
@@ -342,41 +342,41 @@ pub mod MyTimelockedGovernor
         GovernorTimelockExecutionEvent: GovernorTimelockExecutionComponent::Event,
         #[flat]
         SRC5Event: SRC5Component::Event,
-
+    }
 
     #[constructor]
     fn constructor(
         ref self: ContractState, votes_token: ContractAddress, timelock_controller: ContractAddress
-    )
+    ) {
         self.governor.initializer();
         self.governor_votes.initializer(votes_token);
         self.governor_settings.initializer(VOTING_DELAY, VOTING_PERIOD, PROPOSAL_THRESHOLD);
         self.governor_timelock_execution.initializer(timelock_controller);
-
+    }
 
     //
     // SNIP12 Metadata
     //
 
-    pub impl SNIP12MetadataImpl of SNIP12Metadata
+    pub impl SNIP12MetadataImpl of SNIP12Metadata {
         fn name() -> felt252 {
             'DAPP_NAME'
+        }
 
-
-        fn version() -> felt252
+        fn version() -> felt252 {
             'DAPP_VERSION'
-
+        }
     }
 
     //
     // Locally implemented extensions
     //
 
-    impl GovernorQuorum of GovernorComponent::GovernorQuorumTrait<ContractState>
+    impl GovernorQuorum of GovernorComponent::GovernorQuorumTrait<ContractState> {
         /// See `GovernorComponent::GovernorQuorumTrait::quorum`.
         fn quorum(self: @GovernorComponent::ComponentState<ContractState>, timepoint: u64) -> u256 {
             QUORUM
-
+        }
     }
 }
 ```
@@ -386,7 +386,7 @@ pub mod MyTimelockedGovernor
 This is the full interface of the `Governor` implementation:
 ```rust
 #[starknet::interface]
-pub trait IGovernor<TState>
+pub trait IGovernor<TState> {
     fn name(self: @TState) -> felt252;
     fn version(self: @TState) -> felt252;
     fn COUNTING_MODE(self: @TState) -> ByteArray;
@@ -439,5 +439,5 @@ pub trait IGovernor<TState>
     ) -> u256;
     fn nonces(self: @TState, voter: ContractAddress) -> felt252;
     fn relay(ref self: TState, call: Call);
-
+}
 ```
