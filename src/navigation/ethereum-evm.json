@@ -1,5 +1,10 @@
 [
 	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/contracts"
+	},
+	{
 		"type": "separator",
 		"name": "Solidity Contracts"
 	},
