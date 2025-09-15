@@ -3,34 +3,36 @@ title: "Token"
 description: "Smart contract token utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/confidential-contracts/api/token
-</Callout>
+This set of interfaces, contracts, and utilities are all related to `ERC7984`, an evolving confidential token standard. The standard utilizes the Zama fhEVM co-processor for manipulating FHE values. All amounts are stored on-chain as ciphertext handles (or pointers) to values stored on the co-processor.
 
-This set of interfaces, contracts, and utilities are all related to the evolving Confidential Token Standard. The standard utilizes the Zama fhEVM co-processor for manipulating FHE values. All amounts are stored on-chain as ciphertext handles (or pointers) to values stored on the co-processor.
-
-* [`ConfidentialFungibleToken`](#ConfidentialFungibleToken): Implementation of [`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken).
-* [`ConfidentialFungibleTokenERC20Wrapper`](#ConfidentialFungibleTokenERC20Wrapper): Extension of [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) which wraps an `ERC20` into a confidential token. The wrapper allows for free conversion in both directions at a fixed rate.
-* [`ConfidentialFungibleTokenUtils`](#ConfidentialFungibleTokenUtils): A library that provides the on-transfer callback check used by [`ConfidentialFungibleToken`](#ConfidentialFungibleToken). 
+* ERC7984: Implementation of IERC7984.
+* ERC7984ERC20Wrapper: Extension of ERC7984 which wraps an `ERC20` into a confidential token. The wrapper allows for free conversion in both directions at a fixed rate.
+* ERC7984Freezable: An extension of ERC7984, which allows accounts granted the "freezer" role to freeze and unfreeze tokens.
+* ERC7984ObserverAccess: An extension of ERC7984, which allows each account to add an observer who is given access to their transfer and balance amounts.
+* ERC7984Restricted: An extension of ERC7984 that implements user account transfer restrictions.
+* ERC7984Utils: A library that provides the on-transfer callback check used by ERC7984.
 
 ## Core
-[`ConfidentialFungibleToken`](#ConfidentialFungibleToken)
+ERC7984
 
 ## Extensions
-[`ConfidentialFungibleTokenERC20Wrapper`](#ConfidentialFungibleTokenERC20Wrapper)
+ERC7984ERC20Wrapper
+ERC7984Freezable
+ERC7984ObserverAccess
+ERC7984Restricted
 
 ## Utilities
-[`ConfidentialFungibleTokenUtils`](#ConfidentialFungibleTokenUtils)
+ERC7984Utils
 
-<a id="ConfidentialFungibleToken"></a>
+<a id="ERC7984"></a>
 
-## `ConfidentialFungibleToken` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/ConfidentialFungibleToken.sol)
+## `ERC7984` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/token/ERC7984/ERC7984.sol)
 
 ```solidity
-import "@openzeppelin/contracts/token/ConfidentialFungibleToken.sol";
+import "@openzeppelin/contracts/token/ERC7984/ERC7984.sol";
 ```
 
-Reference implementation for [`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken).
+Reference implementation for [`IERC7984`](interfaces#IERC7984).
 
 This contract implements a fungible token where balances and transfers are encrypted using the Zama fhEVM,
 providing confidentiality to users. Token amounts are stored as encrypted, unsigned integers (`euint64`)
@@ -45,107 +47,107 @@ Key features:
 - Safe overflow/underflow handling for FHE operations
 
 ### Functions
-- [constructor(name_, symbol_, tokenURI_)](#ConfidentialFungibleToken-constructor-string-string-string-)
-- [name()](#ConfidentialFungibleToken-name--)
-- [symbol()](#ConfidentialFungibleToken-symbol--)
-- [decimals()](#ConfidentialFungibleToken-decimals--)
-- [tokenURI()](#ConfidentialFungibleToken-tokenURI--)
-- [confidentialTotalSupply()](#ConfidentialFungibleToken-confidentialTotalSupply--)
-- [confidentialBalanceOf(account)](#ConfidentialFungibleToken-confidentialBalanceOf-address-)
-- [isOperator(holder, spender)](#ConfidentialFungibleToken-isOperator-address-address-)
-- [setOperator(operator, until)](#ConfidentialFungibleToken-setOperator-address-uint48-)
-- [confidentialTransfer(to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-)
-- [confidentialTransfer(to, amount)](#ConfidentialFungibleToken-confidentialTransfer-address-euint64-)
-- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-)
-- [confidentialTransferFrom(from, to, amount)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-)
-- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
-- [confidentialTransferAndCall(to, amount, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-)
-- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
-- [confidentialTransferFromAndCall(from, to, amount, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-)
-- [discloseEncryptedAmount(encryptedAmount)](#ConfidentialFungibleToken-discloseEncryptedAmount-euint64-)
-- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
-- [_setOperator(holder, operator, until)](#ConfidentialFungibleToken-_setOperator-address-address-uint48-)
-- [_mint(to, amount)](#ConfidentialFungibleToken-_mint-address-euint64-)
-- [_burn(from, amount)](#ConfidentialFungibleToken-_burn-address-euint64-)
-- [_transfer(from, to, amount)](#ConfidentialFungibleToken-_transfer-address-address-euint64-)
-- [_transferAndCall(from, to, amount, data)](#ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-)
-- [_update(from, to, amount)](#ConfidentialFungibleToken-_update-address-address-euint64-)
+- [constructor(name_, symbol_, tokenURI_)](#ERC7984-constructor-string-string-string-)
+- [name()](#ERC7984-name--)
+- [symbol()](#ERC7984-symbol--)
+- [decimals()](#ERC7984-decimals--)
+- [tokenURI()](#ERC7984-tokenURI--)
+- [confidentialTotalSupply()](#ERC7984-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#ERC7984-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ERC7984-isOperator-address-address-)
+- [setOperator(operator, until)](#ERC7984-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ERC7984-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ERC7984-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ERC7984-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ERC7984-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ERC7984-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ERC7984-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ERC7984-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ERC7984-_mint-address-euint64-)
+- [_burn(from, amount)](#ERC7984-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ERC7984-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ERC7984-_transferAndCall-address-address-euint64-bytes-)
+- [_update(from, to, amount)](#ERC7984-_update-address-address-euint64-)
 
-#### IConfidentialFungibleToken
+#### IERC7984
 
 ### Events
 
-#### IConfidentialFungibleToken
-- [OperatorSet(holder, operator, until)](#IConfidentialFungibleToken-OperatorSet-address-address-uint48-)
-- [ConfidentialTransfer(from, to, amount)](#IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-)
-- [AmountDisclosed(encryptedAmount, amount)](#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+#### IERC7984
+- [OperatorSet(holder, operator, until)](#IERC7984-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IERC7984-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IERC7984-AmountDisclosed-euint64-uint64-)
 
 ### Errors
-- [ConfidentialFungibleTokenInvalidReceiver(receiver)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-)
-- [ConfidentialFungibleTokenInvalidSender(sender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-)
-- [ConfidentialFungibleTokenUnauthorizedSpender(holder, spender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-)
-- [ConfidentialFungibleTokenZeroBalance(holder)](#ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-)
-- [ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(amount, user)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-)
-- [ConfidentialFungibleTokenUnauthorizedCaller(caller)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-)
-- [ConfidentialFungibleTokenInvalidGatewayRequest(requestId)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-)
+- [ERC7984InvalidReceiver(receiver)](#ERC7984-ERC7984InvalidReceiver-address-)
+- [ERC7984InvalidSender(sender)](#ERC7984-ERC7984InvalidSender-address-)
+- [ERC7984UnauthorizedSpender(holder, spender)](#ERC7984-ERC7984UnauthorizedSpender-address-address-)
+- [ERC7984ZeroBalance(holder)](#ERC7984-ERC7984ZeroBalance-address-)
+- [ERC7984UnauthorizedUseOfEncryptedAmount(amount, user)](#ERC7984-ERC7984UnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ERC7984UnauthorizedCaller(caller)](#ERC7984-ERC7984UnauthorizedCaller-address-)
+- [ERC7984InvalidGatewayRequest(requestId)](#ERC7984-ERC7984InvalidGatewayRequest-uint256-)
 
-#### IConfidentialFungibleToken
+#### IERC7984
 
-<a id="ConfidentialFungibleToken-constructor-string-string-string-"></a>
+<a id="ERC7984-constructor-string-string-string-"></a>
 
 ### `constructor(string name_, string symbol_, string tokenURI_)`
 *internal*
 
-<a id="ConfidentialFungibleToken-name--"></a>
+<a id="ERC7984-name--"></a>
 
 ### `name() → string`
 *public*
 
 Returns the name of the token.
 
-<a id="ConfidentialFungibleToken-symbol--"></a>
+<a id="ERC7984-symbol--"></a>
 
 ### `symbol() → string`
 *public*
 
 Returns the symbol of the token.
 
-<a id="ConfidentialFungibleToken-decimals--"></a>
+<a id="ERC7984-decimals--"></a>
 
 ### `decimals() → uint8`
 *public*
 
 Returns the number of decimals of the token. Recommended to be 6.
 
-<a id="ConfidentialFungibleToken-tokenURI--"></a>
+<a id="ERC7984-tokenURI--"></a>
 
 ### `tokenURI() → string`
 *public*
 
 Returns the token URI.
 
-<a id="ConfidentialFungibleToken-confidentialTotalSupply--"></a>
+<a id="ERC7984-confidentialTotalSupply--"></a>
 
 ### `confidentialTotalSupply() → euint64`
 *public*
 
 Returns the confidential total supply of the token.
 
-<a id="ConfidentialFungibleToken-confidentialBalanceOf-address-"></a>
+<a id="ERC7984-confidentialBalanceOf-address-"></a>
 
 ### `confidentialBalanceOf(address account) → euint64`
 *public*
 
 Returns the confidential balance of the account `account`.
 
-<a id="ConfidentialFungibleToken-isOperator-address-address-"></a>
+<a id="ERC7984-isOperator-address-address-"></a>
 
 ### `isOperator(address holder, address spender) → bool`
 *public*
 
 Returns true if `spender` is currently an operator for `holder`.
 
-<a id="ConfidentialFungibleToken-setOperator-address-uint48-"></a>
+<a id="ERC7984-setOperator-address-uint48-"></a>
 
 ### `setOperator(address operator, uint48 until)`
 *public*
@@ -154,7 +156,7 @@ Sets `operator` as an operator for `holder` until the timestamp `until`.
 
 NOTE: An operator may transfer any amount of tokens on behalf of a holder while approved.
 
-<a id="ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-"></a>
+<a id="ERC7984-confidentialTransfer-address-externalEuint64-bytes-"></a>
 
 ### `confidentialTransfer(address to, externalEuint64 encryptedAmount, bytes inputProof) → euint64`
 *public*
@@ -163,15 +165,15 @@ Transfers the encrypted amount `encryptedAmount` to `to` with the given input pr
 
 Returns the encrypted amount that was actually transferred.
 
-<a id="ConfidentialFungibleToken-confidentialTransfer-address-euint64-"></a>
+<a id="ERC7984-confidentialTransfer-address-euint64-"></a>
 
 ### `confidentialTransfer(address to, euint64 amount) → euint64`
 *public*
 
-Similar to interfaces#IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes- but without an input proof. The caller
+Similar to interfaces#IERC7984-confidentialTransfer-address-externalEuint64-bytes- but without an input proof. The caller
 *must* already be allowed by ACL for the given `amount`.
 
-<a id="ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-"></a>
+<a id="ERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes-"></a>
 
 ### `confidentialTransferFrom(address from, address to, externalEuint64 encryptedAmount, bytes inputProof) → euint64 transferred`
 *public*
@@ -181,245 +183,253 @@ Transfers the encrypted amount `encryptedAmount` from `from` to `to` with the gi
 
 Returns the encrypted amount that was actually transferred.
 
-<a id="ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-"></a>
+<a id="ERC7984-confidentialTransferFrom-address-address-euint64-"></a>
 
 ### `confidentialTransferFrom(address from, address to, euint64 amount) → euint64 transferred`
 *public*
 
-Similar to interfaces#IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes- but without an input proof.
+Similar to interfaces#IERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes- but without an input proof.
 The caller *must* be already allowed by ACL for the given `amount`.
 
-<a id="ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-"></a>
+<a id="ERC7984-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-"></a>
 
 ### `confidentialTransferAndCall(address to, externalEuint64 encryptedAmount, bytes inputProof, bytes data) → euint64 transferred`
 *public*
 
-Similar to interfaces#IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes- but with a callback to `to` after
+Similar to interfaces#IERC7984-confidentialTransfer-address-externalEuint64-bytes- but with a callback to `to` after
 the transfer.
 
-The callback is made to the [`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) function on the
+The callback is made to the [`IERC7984Receiver.onConfidentialTransferReceived`](interfaces#IERC7984Receiver-onConfidentialTransferReceived-address-address-euint64-bytes-) function on the
 to address with the actual transferred amount (may differ from the given `encryptedAmount`) and the given
 data `data`.
 
-<a id="ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-"></a>
+<a id="ERC7984-confidentialTransferAndCall-address-euint64-bytes-"></a>
 
 ### `confidentialTransferAndCall(address to, euint64 amount, bytes data) → euint64 transferred`
 *public*
 
-Similar to interfaces#IConfidentialFungibleToken-confidentialTransfer-address-euint64- but with a callback to `to` after the transfer.
+Similar to interfaces#IERC7984-confidentialTransfer-address-euint64- but with a callback to `to` after the transfer.
 
-<a id="ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-"></a>
+<a id="ERC7984-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-"></a>
 
 ### `confidentialTransferFromAndCall(address from, address to, externalEuint64 encryptedAmount, bytes inputProof, bytes data) → euint64 transferred`
 *public*
 
-Similar to interfaces#IConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes- but with a callback to `to`
+Similar to interfaces#IERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes- but with a callback to `to`
 after the transfer.
 
-<a id="ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-"></a>
+<a id="ERC7984-confidentialTransferFromAndCall-address-address-euint64-bytes-"></a>
 
 ### `confidentialTransferFromAndCall(address from, address to, euint64 amount, bytes data) → euint64 transferred`
 *public*
 
-Similar to interfaces#IConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64- but with a callback to `to`
+Similar to interfaces#IERC7984-confidentialTransferFrom-address-address-euint64- but with a callback to `to`
 after the transfer.
 
-<a id="ConfidentialFungibleToken-discloseEncryptedAmount-euint64-"></a>
+<a id="ERC7984-discloseEncryptedAmount-euint64-"></a>
 
 ### `discloseEncryptedAmount(euint64 encryptedAmount)`
 *public*
 
-Discloses an encrypted amount `encryptedAmount` publicly via an [`IConfidentialFungibleToken.AmountDisclosed`](interfaces#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+Discloses an encrypted amount `encryptedAmount` publicly via an [`IERC7984.AmountDisclosed`](interfaces#IERC7984-AmountDisclosed-euint64-uint64-)
 event. The caller and this contract must be authorized to use the encrypted amount on the ACL.
 
 NOTE: This is an asynchronous operation where the actual decryption happens off-chain and
-[`ConfidentialFungibleToken.finalizeDiscloseEncryptedAmount`](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---) is called with the result.
+[`ERC7984.finalizeDiscloseEncryptedAmount`](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---) is called with the result.
 
-<a id="ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---"></a>
+<a id="ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---"></a>
 
 ### `finalizeDiscloseEncryptedAmount(uint256 requestId, uint64 amount, bytes[] signatures)`
 *public*
 
 Finalizes a disclose encrypted amount request.
+For gas saving purposes, the `requestId` might not be related to a
+[`ERC7984.discloseEncryptedAmount`](#ERC7984-discloseEncryptedAmount-euint64-) request. As a result, the current [`ERC7984.finalizeDiscloseEncryptedAmount`](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+function might emit a disclosed amount related to another decryption request context.
+In this case it would only display public information
+since the handle would have already been allowed for public decryption through a previous
+`FHE.requestDecryption` call.
+The downside of this behavior is that a [`ERC7984.finalizeDiscloseEncryptedAmount`](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---) watcher might observe
+unexpected `AmountDisclosed` events.
 
-<a id="ConfidentialFungibleToken-_setOperator-address-address-uint48-"></a>
+<a id="ERC7984-_setOperator-address-address-uint48-"></a>
 
 ### `_setOperator(address holder, address operator, uint48 until)`
 *internal*
 
-<a id="ConfidentialFungibleToken-_mint-address-euint64-"></a>
+<a id="ERC7984-_mint-address-euint64-"></a>
 
 ### `_mint(address to, euint64 amount) → euint64 transferred`
 *internal*
 
-<a id="ConfidentialFungibleToken-_burn-address-euint64-"></a>
+<a id="ERC7984-_burn-address-euint64-"></a>
 
 ### `_burn(address from, euint64 amount) → euint64 transferred`
 *internal*
 
-<a id="ConfidentialFungibleToken-_transfer-address-address-euint64-"></a>
+<a id="ERC7984-_transfer-address-address-euint64-"></a>
 
 ### `_transfer(address from, address to, euint64 amount) → euint64 transferred`
 *internal*
 
-<a id="ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-"></a>
+<a id="ERC7984-_transferAndCall-address-address-euint64-bytes-"></a>
 
 ### `_transferAndCall(address from, address to, euint64 amount, bytes data) → euint64 transferred`
 *internal*
 
-<a id="ConfidentialFungibleToken-_update-address-address-euint64-"></a>
+<a id="ERC7984-_update-address-address-euint64-"></a>
 
 ### `_update(address from, address to, euint64 amount) → euint64 transferred`
 *internal*
 
-<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-"></a>
+<a id="ERC7984-ERC7984InvalidReceiver-address-"></a>
 
-### `ConfidentialFungibleTokenInvalidReceiver(address receiver)`
+### `ERC7984InvalidReceiver(address receiver)`
 *error*
 
 The given receiver `receiver` is invalid for transfers.
 
-<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-"></a>
+<a id="ERC7984-ERC7984InvalidSender-address-"></a>
 
-### `ConfidentialFungibleTokenInvalidSender(address sender)`
+### `ERC7984InvalidSender(address sender)`
 *error*
 
 The given sender `sender` is invalid for transfers.
 
-<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-"></a>
+<a id="ERC7984-ERC7984UnauthorizedSpender-address-address-"></a>
 
-### `ConfidentialFungibleTokenUnauthorizedSpender(address holder, address spender)`
+### `ERC7984UnauthorizedSpender(address holder, address spender)`
 *error*
 
 The given holder `holder` is not authorized to spend on behalf of `spender`.
 
-<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-"></a>
+<a id="ERC7984-ERC7984ZeroBalance-address-"></a>
 
-### `ConfidentialFungibleTokenZeroBalance(address holder)`
+### `ERC7984ZeroBalance(address holder)`
 *error*
 
 The holder `holder` is trying to send tokens but has a balance of 0.
 
-<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-"></a>
+<a id="ERC7984-ERC7984UnauthorizedUseOfEncryptedAmount-euint64-address-"></a>
 
-### `ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(euint64 amount, address user)`
+### `ERC7984UnauthorizedUseOfEncryptedAmount(euint64 amount, address user)`
 *error*
 
 The caller `user` does not have access to the encrypted amount `amount`.
 
 NOTE: Try using the equivalent transfer function with an input proof.
 
-<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-"></a>
+<a id="ERC7984-ERC7984UnauthorizedCaller-address-"></a>
 
-### `ConfidentialFungibleTokenUnauthorizedCaller(address caller)`
+### `ERC7984UnauthorizedCaller(address caller)`
 *error*
 
 The given caller `caller` is not authorized for the current operation.
 
-<a id="ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-"></a>
+<a id="ERC7984-ERC7984InvalidGatewayRequest-uint256-"></a>
 
-### `ConfidentialFungibleTokenInvalidGatewayRequest(uint256 requestId)`
+### `ERC7984InvalidGatewayRequest(uint256 requestId)`
 *error*
 
 The given gateway request ID `requestId` is invalid.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper"></a>
+<a id="ERC7984ERC20Wrapper"></a>
 
-## `ConfidentialFungibleTokenERC20Wrapper` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/extensions/ConfidentialFungibleTokenERC20Wrapper.sol)
+## `ERC7984ERC20Wrapper` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/token/ERC7984/extensions/ERC7984ERC20Wrapper.sol)
 
 ```solidity
-import "@openzeppelin/contracts/token/extensions/ConfidentialFungibleTokenERC20Wrapper.sol";
+import "@openzeppelin/contracts/token/ERC7984/extensions/ERC7984ERC20Wrapper.sol";
 ```
 
-A wrapper contract built on top of [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) that allows wrapping an `ERC20` token
-into a confidential fungible token. The wrapper contract implements the `IERC1363Receiver` interface
+A wrapper contract built on top of [`ERC7984`](#ERC7984) that allows wrapping an `ERC20` token
+into an `ERC7984` token. The wrapper contract implements the `IERC1363Receiver` interface
 which allows users to transfer `ERC1363` tokens directly to the wrapper with a callback to wrap the tokens.
 
 WARNING: Minting assumes the full amount of the underlying token transfer has been received, hence some non-standard
 tokens such as fee-on-transfer or other deflationary-type tokens are not supported by this wrapper.
 
 ### Functions
-- [constructor(underlying_)](#ConfidentialFungibleTokenERC20Wrapper-constructor-contract-IERC20-)
-- [decimals()](#ConfidentialFungibleTokenERC20Wrapper-decimals--)
-- [rate()](#ConfidentialFungibleTokenERC20Wrapper-rate--)
-- [underlying()](#ConfidentialFungibleTokenERC20Wrapper-underlying--)
-- [onTransferReceived(, from, amount, data)](#ConfidentialFungibleTokenERC20Wrapper-onTransferReceived-address-address-uint256-bytes-)
-- [wrap(to, amount)](#ConfidentialFungibleTokenERC20Wrapper-wrap-address-uint256-)
-- [unwrap(from, to, amount)](#ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-euint64-)
-- [unwrap(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-externalEuint64-bytes-)
-- [finalizeUnwrap(requestID, amount, signatures)](#ConfidentialFungibleTokenERC20Wrapper-finalizeUnwrap-uint256-uint64-bytes---)
-- [_unwrap(from, to, amount)](#ConfidentialFungibleTokenERC20Wrapper-_unwrap-address-address-euint64-)
-- [_fallbackUnderlyingDecimals()](#ConfidentialFungibleTokenERC20Wrapper-_fallbackUnderlyingDecimals--)
-- [_maxDecimals()](#ConfidentialFungibleTokenERC20Wrapper-_maxDecimals--)
+- [constructor(underlying_)](#ERC7984ERC20Wrapper-constructor-contract-IERC20-)
+- [decimals()](#ERC7984ERC20Wrapper-decimals--)
+- [rate()](#ERC7984ERC20Wrapper-rate--)
+- [underlying()](#ERC7984ERC20Wrapper-underlying--)
+- [onTransferReceived(, from, amount, data)](#ERC7984ERC20Wrapper-onTransferReceived-address-address-uint256-bytes-)
+- [wrap(to, amount)](#ERC7984ERC20Wrapper-wrap-address-uint256-)
+- [unwrap(from, to, amount)](#ERC7984ERC20Wrapper-unwrap-address-address-euint64-)
+- [unwrap(from, to, encryptedAmount, inputProof)](#ERC7984ERC20Wrapper-unwrap-address-address-externalEuint64-bytes-)
+- [finalizeUnwrap(requestID, amount, signatures)](#ERC7984ERC20Wrapper-finalizeUnwrap-uint256-uint64-bytes---)
+- [_unwrap(from, to, amount)](#ERC7984ERC20Wrapper-_unwrap-address-address-euint64-)
+- [_fallbackUnderlyingDecimals()](#ERC7984ERC20Wrapper-_fallbackUnderlyingDecimals--)
+- [_maxDecimals()](#ERC7984ERC20Wrapper-_maxDecimals--)
 
 #### IERC1363Receiver
 
-#### ConfidentialFungibleToken
-- [name()](#ConfidentialFungibleToken-name--)
-- [symbol()](#ConfidentialFungibleToken-symbol--)
-- [tokenURI()](#ConfidentialFungibleToken-tokenURI--)
-- [confidentialTotalSupply()](#ConfidentialFungibleToken-confidentialTotalSupply--)
-- [confidentialBalanceOf(account)](#ConfidentialFungibleToken-confidentialBalanceOf-address-)
-- [isOperator(holder, spender)](#ConfidentialFungibleToken-isOperator-address-address-)
-- [setOperator(operator, until)](#ConfidentialFungibleToken-setOperator-address-uint48-)
-- [confidentialTransfer(to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-)
-- [confidentialTransfer(to, amount)](#ConfidentialFungibleToken-confidentialTransfer-address-euint64-)
-- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-)
-- [confidentialTransferFrom(from, to, amount)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-)
-- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
-- [confidentialTransferAndCall(to, amount, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-)
-- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
-- [confidentialTransferFromAndCall(from, to, amount, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-)
-- [discloseEncryptedAmount(encryptedAmount)](#ConfidentialFungibleToken-discloseEncryptedAmount-euint64-)
-- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
-- [_setOperator(holder, operator, until)](#ConfidentialFungibleToken-_setOperator-address-address-uint48-)
-- [_mint(to, amount)](#ConfidentialFungibleToken-_mint-address-euint64-)
-- [_burn(from, amount)](#ConfidentialFungibleToken-_burn-address-euint64-)
-- [_transfer(from, to, amount)](#ConfidentialFungibleToken-_transfer-address-address-euint64-)
-- [_transferAndCall(from, to, amount, data)](#ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-)
-- [_update(from, to, amount)](#ConfidentialFungibleToken-_update-address-address-euint64-)
+#### ERC7984
+- [name()](#ERC7984-name--)
+- [symbol()](#ERC7984-symbol--)
+- [tokenURI()](#ERC7984-tokenURI--)
+- [confidentialTotalSupply()](#ERC7984-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#ERC7984-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ERC7984-isOperator-address-address-)
+- [setOperator(operator, until)](#ERC7984-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ERC7984-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ERC7984-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ERC7984-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ERC7984-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ERC7984-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ERC7984-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ERC7984-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ERC7984-_mint-address-euint64-)
+- [_burn(from, amount)](#ERC7984-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ERC7984-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ERC7984-_transferAndCall-address-address-euint64-bytes-)
+- [_update(from, to, amount)](#ERC7984-_update-address-address-euint64-)
 
-#### IConfidentialFungibleToken
+#### IERC7984
 
 ### Events
 
 #### IERC1363Receiver
 
-#### ConfidentialFungibleToken
+#### ERC7984
 
-#### IConfidentialFungibleToken
-- [OperatorSet(holder, operator, until)](#IConfidentialFungibleToken-OperatorSet-address-address-uint48-)
-- [ConfidentialTransfer(from, to, amount)](#IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-)
-- [AmountDisclosed(encryptedAmount, amount)](#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+#### IERC7984
+- [OperatorSet(holder, operator, until)](#IERC7984-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IERC7984-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IERC7984-AmountDisclosed-euint64-uint64-)
 
 ### Errors
 
 #### IERC1363Receiver
 
-#### ConfidentialFungibleToken
-- [ConfidentialFungibleTokenInvalidReceiver(receiver)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-)
-- [ConfidentialFungibleTokenInvalidSender(sender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-)
-- [ConfidentialFungibleTokenUnauthorizedSpender(holder, spender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-)
-- [ConfidentialFungibleTokenZeroBalance(holder)](#ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-)
-- [ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(amount, user)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-)
-- [ConfidentialFungibleTokenUnauthorizedCaller(caller)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-)
-- [ConfidentialFungibleTokenInvalidGatewayRequest(requestId)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-)
+#### ERC7984
+- [ERC7984InvalidReceiver(receiver)](#ERC7984-ERC7984InvalidReceiver-address-)
+- [ERC7984InvalidSender(sender)](#ERC7984-ERC7984InvalidSender-address-)
+- [ERC7984UnauthorizedSpender(holder, spender)](#ERC7984-ERC7984UnauthorizedSpender-address-address-)
+- [ERC7984ZeroBalance(holder)](#ERC7984-ERC7984ZeroBalance-address-)
+- [ERC7984UnauthorizedUseOfEncryptedAmount(amount, user)](#ERC7984-ERC7984UnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ERC7984UnauthorizedCaller(caller)](#ERC7984-ERC7984UnauthorizedCaller-address-)
+- [ERC7984InvalidGatewayRequest(requestId)](#ERC7984-ERC7984InvalidGatewayRequest-uint256-)
 
-#### IConfidentialFungibleToken
+#### IERC7984
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-constructor-contract-IERC20-"></a>
+<a id="ERC7984ERC20Wrapper-constructor-contract-IERC20-"></a>
 
 ### `constructor(contract IERC20 underlying_)`
 *internal*
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-decimals--"></a>
+<a id="ERC7984ERC20Wrapper-decimals--"></a>
 
 ### `decimals() → uint8`
 *public*
 
 Returns the number of decimals of the token. Recommended to be 6.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-rate--"></a>
+<a id="ERC7984ERC20Wrapper-rate--"></a>
 
 ### `rate() → uint256`
 *public*
@@ -427,32 +437,32 @@ Returns the number of decimals of the token. Recommended to be 6.
 Returns the rate at which the underlying token is converted to the wrapped token.
 For example, if the `rate` is 1000, then 1000 units of the underlying token equal 1 unit of the wrapped token.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-underlying--"></a>
+<a id="ERC7984ERC20Wrapper-underlying--"></a>
 
 ### `underlying() → contract IERC20`
 *public*
 
 Returns the address of the underlying ERC-20 token that is being wrapped.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-onTransferReceived-address-address-uint256-bytes-"></a>
+<a id="ERC7984ERC20Wrapper-onTransferReceived-address-address-uint256-bytes-"></a>
 
 ### `onTransferReceived(address, address from, uint256 amount, bytes data) → bytes4`
 *public*
 
 `ERC1363` callback function which wraps tokens to the address specified in `data` or
 the address `from` (if no address is specified in `data`). This function refunds any excess tokens
-sent beyond the nearest multiple of [`ConfidentialFungibleTokenERC20Wrapper.rate`](#ConfidentialFungibleTokenERC20Wrapper-rate--). See [`ConfidentialFungibleTokenERC20Wrapper.wrap`](#ConfidentialFungibleTokenERC20Wrapper-wrap-address-uint256-) from more details on wrapping tokens.
+sent beyond the nearest multiple of [`ERC7984ERC20Wrapper.rate`](#ERC7984ERC20Wrapper-rate--). See [`ERC7984ERC20Wrapper.wrap`](#ERC7984ERC20Wrapper-wrap-address-uint256-) from more details on wrapping tokens.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-wrap-address-uint256-"></a>
+<a id="ERC7984ERC20Wrapper-wrap-address-uint256-"></a>
 
 ### `wrap(address to, uint256 amount)`
 *public*
 
 Wraps amount `amount` of the underlying token into a confidential token and sends it to
-`to`. Tokens are exchanged at a fixed rate specified by [`ConfidentialFungibleTokenERC20Wrapper.rate`](#ConfidentialFungibleTokenERC20Wrapper-rate--) such that `amount / rate()` confidential
-tokens are sent. Amount transferred in is rounded down to the nearest multiple of [`ConfidentialFungibleTokenERC20Wrapper.rate`](#ConfidentialFungibleTokenERC20Wrapper-rate--).
+`to`. Tokens are exchanged at a fixed rate specified by [`ERC7984ERC20Wrapper.rate`](#ERC7984ERC20Wrapper-rate--) such that `amount / rate()` confidential
+tokens are sent. Amount transferred in is rounded down to the nearest multiple of [`ERC7984ERC20Wrapper.rate`](#ERC7984ERC20Wrapper-rate--).
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-euint64-"></a>
+<a id="ERC7984ERC20Wrapper-unwrap-address-address-euint64-"></a>
 
 ### `unwrap(address from, address to, euint64 amount)`
 *public*
@@ -464,60 +474,442 @@ NOTE: This is an asynchronous function and waits for decryption to be completed 
 tokens.
 NOTE: The caller *must* already be approved by ACL for the given `amount`.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-externalEuint64-bytes-"></a>
+<a id="ERC7984ERC20Wrapper-unwrap-address-address-externalEuint64-bytes-"></a>
 
 ### `unwrap(address from, address to, externalEuint64 encryptedAmount, bytes inputProof)`
 *public*
 
-Variant of [`ConfidentialFungibleTokenERC20Wrapper.unwrap`](#ConfidentialFungibleTokenERC20Wrapper-unwrap-address-address-externalEuint64-bytes-) that passes an `inputProof` which approves the caller for the `encryptedAmount`
+Variant of [`ERC7984ERC20Wrapper.unwrap`](#ERC7984ERC20Wrapper-unwrap-address-address-externalEuint64-bytes-) that passes an `inputProof` which approves the caller for the `encryptedAmount`
 in the ACL.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-finalizeUnwrap-uint256-uint64-bytes---"></a>
+<a id="ERC7984ERC20Wrapper-finalizeUnwrap-uint256-uint64-bytes---"></a>
 
 ### `finalizeUnwrap(uint256 requestID, uint64 amount, bytes[] signatures)`
 *public*
 
 Fills an unwrap request for a given request id related to a decrypted unwrap amount.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-_unwrap-address-address-euint64-"></a>
+<a id="ERC7984ERC20Wrapper-_unwrap-address-address-euint64-"></a>
 
 ### `_unwrap(address from, address to, euint64 amount)`
 *internal*
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-_fallbackUnderlyingDecimals--"></a>
+<a id="ERC7984ERC20Wrapper-_fallbackUnderlyingDecimals--"></a>
 
 ### `_fallbackUnderlyingDecimals() → uint8`
 *internal*
 
 Returns the default number of decimals of the underlying ERC-20 token that is being wrapped.
-Used as a default fallback when [`ConfidentialFungibleTokenERC20Wrapper._tryGetAssetDecimals`](#ConfidentialFungibleTokenERC20Wrapper-_tryGetAssetDecimals-contract-IERC20-) fails to fetch decimals of the underlying
+Used as a default fallback when [`ERC7984ERC20Wrapper._tryGetAssetDecimals`](#ERC7984ERC20Wrapper-_tryGetAssetDecimals-contract-IERC20-) fails to fetch decimals of the underlying
 ERC-20 token.
 
-<a id="ConfidentialFungibleTokenERC20Wrapper-_maxDecimals--"></a>
+<a id="ERC7984ERC20Wrapper-_maxDecimals--"></a>
 
 ### `_maxDecimals() → uint8`
 *internal*
 
-Returns the maximum number that will be used for [`IConfidentialFungibleToken.decimals`](interfaces#IConfidentialFungibleToken-decimals--) by the wrapper.
+Returns the maximum number that will be used for [`IERC7984.decimals`](interfaces#IERC7984-decimals--) by the wrapper.
 
-<a id="ConfidentialFungibleTokenVotes"></a>
+<a id="ERC7984Freezable"></a>
 
-## `ConfidentialFungibleTokenVotes` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/extensions/ConfidentialFungibleTokenVotes.sol)
+## `ERC7984Freezable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/token/ERC7984/extensions/ERC7984Freezable.sol)
 
 ```solidity
-import "@openzeppelin/contracts/token/extensions/ConfidentialFungibleTokenVotes.sol";
+import "@openzeppelin/contracts/token/ERC7984/extensions/ERC7984Freezable.sol";
 ```
 
-Extension of [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) supporting confidential votes tracking and delegation.
+Extension of [`ERC7984`](#ERC7984) that implements a confidential
+freezing mechanism that can be managed by an authorized account with
+[`ERC7984Freezable._setConfidentialFrozen`](#ERC7984Freezable-_setConfidentialFrozen-address-euint64-) functions.
 
-The amount of confidential voting units an account has is equal to the confidential token balance of
+The freezing mechanism provides the guarantee to the contract owner
+(e.g. a DAO or a well-configured multisig) that a specific confidential
+amount of tokens held by an account won't be transferable until those
+tokens are unfrozen.
+
+Inspired by https://github.com/OpenZeppelin/openzeppelin-community-contracts/blob/master/contracts/token/ERC20/extensions/ERC20Freezable.sol
+
+### Functions
+- [confidentialFrozen(account)](#ERC7984Freezable-confidentialFrozen-address-)
+- [confidentialAvailable(account)](#ERC7984Freezable-confidentialAvailable-address-)
+- [_setConfidentialFrozen(account, encryptedAmount)](#ERC7984Freezable-_setConfidentialFrozen-address-euint64-)
+- [_checkFreezer()](#ERC7984Freezable-_checkFreezer--)
+- [_update(from, to, encryptedAmount)](#ERC7984Freezable-_update-address-address-euint64-)
+
+#### ERC7984
+- [name()](#ERC7984-name--)
+- [symbol()](#ERC7984-symbol--)
+- [decimals()](#ERC7984-decimals--)
+- [tokenURI()](#ERC7984-tokenURI--)
+- [confidentialTotalSupply()](#ERC7984-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#ERC7984-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ERC7984-isOperator-address-address-)
+- [setOperator(operator, until)](#ERC7984-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ERC7984-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ERC7984-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ERC7984-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ERC7984-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ERC7984-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ERC7984-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ERC7984-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ERC7984-_mint-address-euint64-)
+- [_burn(from, amount)](#ERC7984-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ERC7984-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ERC7984-_transferAndCall-address-address-euint64-bytes-)
+
+#### IERC7984
+
+### Events
+- [TokensFrozen(account, encryptedAmount)](#ERC7984Freezable-TokensFrozen-address-euint64-)
+
+#### ERC7984
+
+#### IERC7984
+- [OperatorSet(holder, operator, until)](#IERC7984-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IERC7984-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IERC7984-AmountDisclosed-euint64-uint64-)
+
+### Errors
+
+#### ERC7984
+- [ERC7984InvalidReceiver(receiver)](#ERC7984-ERC7984InvalidReceiver-address-)
+- [ERC7984InvalidSender(sender)](#ERC7984-ERC7984InvalidSender-address-)
+- [ERC7984UnauthorizedSpender(holder, spender)](#ERC7984-ERC7984UnauthorizedSpender-address-address-)
+- [ERC7984ZeroBalance(holder)](#ERC7984-ERC7984ZeroBalance-address-)
+- [ERC7984UnauthorizedUseOfEncryptedAmount(amount, user)](#ERC7984-ERC7984UnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ERC7984UnauthorizedCaller(caller)](#ERC7984-ERC7984UnauthorizedCaller-address-)
+- [ERC7984InvalidGatewayRequest(requestId)](#ERC7984-ERC7984InvalidGatewayRequest-uint256-)
+
+#### IERC7984
+
+<a id="ERC7984Freezable-confidentialFrozen-address-"></a>
+
+### `confidentialFrozen(address account) → euint64`
+*public*
+
+Returns the confidential frozen balance of an account.
+
+<a id="ERC7984Freezable-confidentialAvailable-address-"></a>
+
+### `confidentialAvailable(address account) → euint64`
+*public*
+
+Returns the confidential available (unfrozen) balance of an account. Up to [`IERC7984.confidentialBalanceOf`](interfaces#IERC7984-confidentialBalanceOf-address-).
+
+<a id="ERC7984Freezable-_setConfidentialFrozen-address-euint64-"></a>
+
+### `_setConfidentialFrozen(address account, euint64 encryptedAmount)`
+*internal*
+
+Internal function to freeze a confidential amount of tokens for an account.
+
+<a id="ERC7984Freezable-_checkFreezer--"></a>
+
+### `_checkFreezer()`
+*internal*
+
+Unimplemented function that must revert if `msg.sender` is not authorized as a freezer.
+
+<a id="ERC7984Freezable-_update-address-address-euint64-"></a>
+
+### `_update(address from, address to, euint64 encryptedAmount) → euint64`
+*internal*
+
+See [`ERC7984._update`](#ERC7984-_update-address-address-euint64-). The `from` account must have sufficient unfrozen balance,
+otherwise 0 tokens are transferred.
+
+<a id="ERC7984Freezable-TokensFrozen-address-euint64-"></a>
+
+### `TokensFrozen(address indexed account, euint64 encryptedAmount)`
+*event*
+
+Emitted when a confidential amount of token is frozen for an account
+
+<a id="ERC7984ObserverAccess"></a>
+
+## `ERC7984ObserverAccess` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/token/ERC7984/extensions/ERC7984ObserverAccess.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC7984/extensions/ERC7984ObserverAccess.sol";
+```
+
+Extension of [`ERC7984`](#ERC7984) that allows each account to add a observer who is given
+permanent ACL access to its transfer and balance amounts. A observer can be added or removed at any point in time.
+
+### Functions
+- [setObserver(account, newObserver)](#ERC7984ObserverAccess-setObserver-address-address-)
+- [observer(account)](#ERC7984ObserverAccess-observer-address-)
+- [_update(from, to, amount)](#ERC7984ObserverAccess-_update-address-address-euint64-)
+
+#### ERC7984
+- [name()](#ERC7984-name--)
+- [symbol()](#ERC7984-symbol--)
+- [decimals()](#ERC7984-decimals--)
+- [tokenURI()](#ERC7984-tokenURI--)
+- [confidentialTotalSupply()](#ERC7984-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#ERC7984-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ERC7984-isOperator-address-address-)
+- [setOperator(operator, until)](#ERC7984-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ERC7984-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ERC7984-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ERC7984-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ERC7984-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ERC7984-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ERC7984-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ERC7984-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ERC7984-_mint-address-euint64-)
+- [_burn(from, amount)](#ERC7984-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ERC7984-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ERC7984-_transferAndCall-address-address-euint64-bytes-)
+
+#### IERC7984
+
+### Events
+- [ERC7984ObserverAccessObserverSet(account, oldObserver, newObserver)](#ERC7984ObserverAccess-ERC7984ObserverAccessObserverSet-address-address-address-)
+
+#### ERC7984
+
+#### IERC7984
+- [OperatorSet(holder, operator, until)](#IERC7984-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IERC7984-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IERC7984-AmountDisclosed-euint64-uint64-)
+
+### Errors
+- [Unauthorized()](#ERC7984ObserverAccess-Unauthorized--)
+
+#### ERC7984
+- [ERC7984InvalidReceiver(receiver)](#ERC7984-ERC7984InvalidReceiver-address-)
+- [ERC7984InvalidSender(sender)](#ERC7984-ERC7984InvalidSender-address-)
+- [ERC7984UnauthorizedSpender(holder, spender)](#ERC7984-ERC7984UnauthorizedSpender-address-address-)
+- [ERC7984ZeroBalance(holder)](#ERC7984-ERC7984ZeroBalance-address-)
+- [ERC7984UnauthorizedUseOfEncryptedAmount(amount, user)](#ERC7984-ERC7984UnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ERC7984UnauthorizedCaller(caller)](#ERC7984-ERC7984UnauthorizedCaller-address-)
+- [ERC7984InvalidGatewayRequest(requestId)](#ERC7984-ERC7984InvalidGatewayRequest-uint256-)
+
+#### IERC7984
+
+<a id="ERC7984ObserverAccess-setObserver-address-address-"></a>
+
+### `setObserver(address account, address newObserver)`
+*public*
+
+Sets the observer for the given account `account` to `newObserver`. Can be called by the
+account or the existing observer to abdicate the observer role (may only set to `address(0)`).
+
+<a id="ERC7984ObserverAccess-observer-address-"></a>
+
+### `observer(address account) → address`
+*public*
+
+Returns the observer for the given account `account`.
+
+<a id="ERC7984ObserverAccess-_update-address-address-euint64-"></a>
+
+### `_update(address from, address to, euint64 amount) → euint64 transferred`
+*internal*
+
+<a id="ERC7984ObserverAccess-ERC7984ObserverAccessObserverSet-address-address-address-"></a>
+
+### `ERC7984ObserverAccessObserverSet(address account, address oldObserver, address newObserver)`
+*event*
+
+Emitted when the observer is changed for the given account `account`.
+
+<a id="ERC7984ObserverAccess-Unauthorized--"></a>
+
+### `Unauthorized()`
+*error*
+
+Thrown when an account tries to set a `newObserver` for a given `account` without proper authority.
+
+<a id="ERC7984Restricted"></a>
+
+## `ERC7984Restricted` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/token/ERC7984/extensions/ERC7984Restricted.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC7984/extensions/ERC7984Restricted.sol";
+```
+
+Extension of [`ERC7984`](#ERC7984) that implements user account transfer restrictions through the
+[`ERC7984Restricted.isUserAllowed`](#ERC7984Restricted-isUserAllowed-address-) function. Inspired by
+https://github.com/OpenZeppelin/openzeppelin-community-contracts/blob/master/contracts/token/ERC20/extensions/ERC20Restricted.sol.
+
+By default, each account has no explicit restriction. The [`ERC7984Restricted.isUserAllowed`](#ERC7984Restricted-isUserAllowed-address-) function acts as
+a blocklist. Developers can override [`ERC7984Restricted.isUserAllowed`](#ERC7984Restricted-isUserAllowed-address-) to check that `restriction == ALLOWED`
+to implement an allowlist.
+
+### Functions
+- [getRestriction(account)](#ERC7984Restricted-getRestriction-address-)
+- [isUserAllowed(account)](#ERC7984Restricted-isUserAllowed-address-)
+- [_update(from, to, value)](#ERC7984Restricted-_update-address-address-euint64-)
+- [_setRestriction(account, restriction)](#ERC7984Restricted-_setRestriction-address-enum-ERC7984Restricted-Restriction-)
+- [_blockUser(account)](#ERC7984Restricted-_blockUser-address-)
+- [_allowUser(account)](#ERC7984Restricted-_allowUser-address-)
+- [_resetUser(account)](#ERC7984Restricted-_resetUser-address-)
+- [_checkRestriction(account)](#ERC7984Restricted-_checkRestriction-address-)
+
+#### ERC7984
+- [name()](#ERC7984-name--)
+- [symbol()](#ERC7984-symbol--)
+- [decimals()](#ERC7984-decimals--)
+- [tokenURI()](#ERC7984-tokenURI--)
+- [confidentialTotalSupply()](#ERC7984-confidentialTotalSupply--)
+- [confidentialBalanceOf(account)](#ERC7984-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ERC7984-isOperator-address-address-)
+- [setOperator(operator, until)](#ERC7984-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ERC7984-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ERC7984-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ERC7984-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ERC7984-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ERC7984-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ERC7984-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ERC7984-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ERC7984-_mint-address-euint64-)
+- [_burn(from, amount)](#ERC7984-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ERC7984-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ERC7984-_transferAndCall-address-address-euint64-bytes-)
+
+#### IERC7984
+
+### Events
+- [UserRestrictionUpdated(account, restriction)](#ERC7984Restricted-UserRestrictionUpdated-address-enum-ERC7984Restricted-Restriction-)
+
+#### ERC7984
+
+#### IERC7984
+- [OperatorSet(holder, operator, until)](#IERC7984-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IERC7984-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IERC7984-AmountDisclosed-euint64-uint64-)
+
+### Errors
+- [UserRestricted(account)](#ERC7984Restricted-UserRestricted-address-)
+
+#### ERC7984
+- [ERC7984InvalidReceiver(receiver)](#ERC7984-ERC7984InvalidReceiver-address-)
+- [ERC7984InvalidSender(sender)](#ERC7984-ERC7984InvalidSender-address-)
+- [ERC7984UnauthorizedSpender(holder, spender)](#ERC7984-ERC7984UnauthorizedSpender-address-address-)
+- [ERC7984ZeroBalance(holder)](#ERC7984-ERC7984ZeroBalance-address-)
+- [ERC7984UnauthorizedUseOfEncryptedAmount(amount, user)](#ERC7984-ERC7984UnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ERC7984UnauthorizedCaller(caller)](#ERC7984-ERC7984UnauthorizedCaller-address-)
+- [ERC7984InvalidGatewayRequest(requestId)](#ERC7984-ERC7984InvalidGatewayRequest-uint256-)
+
+#### IERC7984
+
+<a id="ERC7984Restricted-getRestriction-address-"></a>
+
+### `getRestriction(address account) → enum ERC7984Restricted.Restriction`
+*public*
+
+Returns the restriction of a user account.
+
+<a id="ERC7984Restricted-isUserAllowed-address-"></a>
+
+### `isUserAllowed(address account) → bool`
+*public*
+
+Returns whether a user account is allowed to interact with the token.
+
+Default implementation only disallows explicitly BLOCKED accounts (i.e. a blocklist).
+
+To convert into an allowlist, override as:
+
+```solidity
+function isUserAllowed(address account) public view virtual override returns (bool) {
+    return getRestriction(account) == Restriction.ALLOWED;
+}
+```
+
+<a id="ERC7984Restricted-_update-address-address-euint64-"></a>
+
+### `_update(address from, address to, euint64 value) → euint64`
+*internal*
+
+See [`ERC7984._update`](#ERC7984-_update-address-address-euint64-). Enforces transfer restrictions (excluding minting and burning).
+
+Requirements:
+
+* `from` must be allowed to transfer tokens (see [`ERC7984Restricted.isUserAllowed`](#ERC7984Restricted-isUserAllowed-address-)).
+* `to` must be allowed to receive tokens (see [`ERC7984Restricted.isUserAllowed`](#ERC7984Restricted-isUserAllowed-address-)).
+
+<a id="ERC7984Restricted-_setRestriction-address-enum-ERC7984Restricted-Restriction-"></a>
+
+### `_setRestriction(address account, enum ERC7984Restricted.Restriction restriction)`
+*internal*
+
+Updates the restriction of a user account.
+
+<a id="ERC7984Restricted-_blockUser-address-"></a>
+
+### `_blockUser(address account)`
+*internal*
+
+Convenience function to block a user account (set to BLOCKED).
+
+<a id="ERC7984Restricted-_allowUser-address-"></a>
+
+### `_allowUser(address account)`
+*internal*
+
+Convenience function to allow a user account (set to ALLOWED).
+
+<a id="ERC7984Restricted-_resetUser-address-"></a>
+
+### `_resetUser(address account)`
+*internal*
+
+Convenience function to reset a user account to default restriction.
+
+<a id="ERC7984Restricted-_checkRestriction-address-"></a>
+
+### `_checkRestriction(address account)`
+*internal*
+
+Checks if a user account is restricted. Reverts with ERC20Restricted if so.
+
+<a id="ERC7984Restricted-UserRestrictionUpdated-address-enum-ERC7984Restricted-Restriction-"></a>
+
+### `UserRestrictionUpdated(address indexed account, enum ERC7984Restricted.Restriction restriction)`
+*event*
+
+Emitted when a user account's restriction is updated.
+
+<a id="ERC7984Restricted-UserRestricted-address-"></a>
+
+### `UserRestricted(address account)`
+*error*
+
+The operation failed because the user account is restricted.
+
+<a id="ERC7984Votes"></a>
+
+## `ERC7984Votes` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/token/ERC7984/extensions/ERC7984Votes.sol)
+
+```solidity
+import "@openzeppelin/contracts/token/ERC7984/extensions/ERC7984Votes.sol";
+```
+
+Extension of [`ERC7984`](#ERC7984) supporting confidential votes tracking and delegation.
+
+The amount of confidential voting units an account has is equal to the balance of
 that account. Voing power is taken into account when an account delegates votes to itself or to another
 account.
 
 ### Functions
-- [confidentialTotalSupply()](#ConfidentialFungibleTokenVotes-confidentialTotalSupply--)
-- [_update(from, to, amount)](#ConfidentialFungibleTokenVotes-_update-address-address-euint64-)
-- [_getVotingUnits(account)](#ConfidentialFungibleTokenVotes-_getVotingUnits-address-)
+- [confidentialTotalSupply()](#ERC7984Votes-confidentialTotalSupply--)
+- [_update(from, to, amount)](#ERC7984Votes-_update-address-address-euint64-)
+- [_getVotingUnits(account)](#ERC7984Votes-_getVotingUnits-address-)
 
 #### VotesConfidential
 - [clock()](#VotesConfidential-clock--)
@@ -553,31 +945,31 @@ account.
 - [_useNonce(owner)](#Nonces-_useNonce-address-)
 - [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
 
-#### ConfidentialFungibleToken
-- [name()](#ConfidentialFungibleToken-name--)
-- [symbol()](#ConfidentialFungibleToken-symbol--)
-- [decimals()](#ConfidentialFungibleToken-decimals--)
-- [tokenURI()](#ConfidentialFungibleToken-tokenURI--)
-- [confidentialBalanceOf(account)](#ConfidentialFungibleToken-confidentialBalanceOf-address-)
-- [isOperator(holder, spender)](#ConfidentialFungibleToken-isOperator-address-address-)
-- [setOperator(operator, until)](#ConfidentialFungibleToken-setOperator-address-uint48-)
-- [confidentialTransfer(to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes-)
-- [confidentialTransfer(to, amount)](#ConfidentialFungibleToken-confidentialTransfer-address-euint64-)
-- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-externalEuint64-bytes-)
-- [confidentialTransferFrom(from, to, amount)](#ConfidentialFungibleToken-confidentialTransferFrom-address-address-euint64-)
-- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
-- [confidentialTransferAndCall(to, amount, data)](#ConfidentialFungibleToken-confidentialTransferAndCall-address-euint64-bytes-)
-- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
-- [confidentialTransferFromAndCall(from, to, amount, data)](#ConfidentialFungibleToken-confidentialTransferFromAndCall-address-address-euint64-bytes-)
-- [discloseEncryptedAmount(encryptedAmount)](#ConfidentialFungibleToken-discloseEncryptedAmount-euint64-)
-- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ConfidentialFungibleToken-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
-- [_setOperator(holder, operator, until)](#ConfidentialFungibleToken-_setOperator-address-address-uint48-)
-- [_mint(to, amount)](#ConfidentialFungibleToken-_mint-address-euint64-)
-- [_burn(from, amount)](#ConfidentialFungibleToken-_burn-address-euint64-)
-- [_transfer(from, to, amount)](#ConfidentialFungibleToken-_transfer-address-address-euint64-)
-- [_transferAndCall(from, to, amount, data)](#ConfidentialFungibleToken-_transferAndCall-address-address-euint64-bytes-)
+#### ERC7984
+- [name()](#ERC7984-name--)
+- [symbol()](#ERC7984-symbol--)
+- [decimals()](#ERC7984-decimals--)
+- [tokenURI()](#ERC7984-tokenURI--)
+- [confidentialBalanceOf(account)](#ERC7984-confidentialBalanceOf-address-)
+- [isOperator(holder, spender)](#ERC7984-isOperator-address-address-)
+- [setOperator(operator, until)](#ERC7984-setOperator-address-uint48-)
+- [confidentialTransfer(to, encryptedAmount, inputProof)](#ERC7984-confidentialTransfer-address-externalEuint64-bytes-)
+- [confidentialTransfer(to, amount)](#ERC7984-confidentialTransfer-address-euint64-)
+- [confidentialTransferFrom(from, to, encryptedAmount, inputProof)](#ERC7984-confidentialTransferFrom-address-address-externalEuint64-bytes-)
+- [confidentialTransferFrom(from, to, amount)](#ERC7984-confidentialTransferFrom-address-address-euint64-)
+- [confidentialTransferAndCall(to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferAndCall-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferAndCall(to, amount, data)](#ERC7984-confidentialTransferAndCall-address-euint64-bytes-)
+- [confidentialTransferFromAndCall(from, to, encryptedAmount, inputProof, data)](#ERC7984-confidentialTransferFromAndCall-address-address-externalEuint64-bytes-bytes-)
+- [confidentialTransferFromAndCall(from, to, amount, data)](#ERC7984-confidentialTransferFromAndCall-address-address-euint64-bytes-)
+- [discloseEncryptedAmount(encryptedAmount)](#ERC7984-discloseEncryptedAmount-euint64-)
+- [finalizeDiscloseEncryptedAmount(requestId, amount, signatures)](#ERC7984-finalizeDiscloseEncryptedAmount-uint256-uint64-bytes---)
+- [_setOperator(holder, operator, until)](#ERC7984-_setOperator-address-address-uint48-)
+- [_mint(to, amount)](#ERC7984-_mint-address-euint64-)
+- [_burn(from, amount)](#ERC7984-_burn-address-euint64-)
+- [_transfer(from, to, amount)](#ERC7984-_transfer-address-address-euint64-)
+- [_transferAndCall(from, to, amount, data)](#ERC7984-_transferAndCall-address-address-euint64-bytes-)
 
-#### IConfidentialFungibleToken
+#### IERC7984
 
 ### Events
 
@@ -596,12 +988,12 @@ account.
 
 #### Nonces
 
-#### ConfidentialFungibleToken
+#### ERC7984
 
-#### IConfidentialFungibleToken
-- [OperatorSet(holder, operator, until)](#IConfidentialFungibleToken-OperatorSet-address-address-uint48-)
-- [ConfidentialTransfer(from, to, amount)](#IConfidentialFungibleToken-ConfidentialTransfer-address-address-euint64-)
-- [AmountDisclosed(encryptedAmount, amount)](#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+#### IERC7984
+- [OperatorSet(holder, operator, until)](#IERC7984-OperatorSet-address-address-uint48-)
+- [ConfidentialTransfer(from, to, amount)](#IERC7984-ConfidentialTransfer-address-address-euint64-)
+- [AmountDisclosed(encryptedAmount, amount)](#IERC7984-AmountDisclosed-euint64-uint64-)
 
 ### Errors
 
@@ -621,57 +1013,57 @@ account.
 #### Nonces
 - [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
 
-#### ConfidentialFungibleToken
-- [ConfidentialFungibleTokenInvalidReceiver(receiver)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidReceiver-address-)
-- [ConfidentialFungibleTokenInvalidSender(sender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidSender-address-)
-- [ConfidentialFungibleTokenUnauthorizedSpender(holder, spender)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedSpender-address-address-)
-- [ConfidentialFungibleTokenZeroBalance(holder)](#ConfidentialFungibleToken-ConfidentialFungibleTokenZeroBalance-address-)
-- [ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount(amount, user)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedUseOfEncryptedAmount-euint64-address-)
-- [ConfidentialFungibleTokenUnauthorizedCaller(caller)](#ConfidentialFungibleToken-ConfidentialFungibleTokenUnauthorizedCaller-address-)
-- [ConfidentialFungibleTokenInvalidGatewayRequest(requestId)](#ConfidentialFungibleToken-ConfidentialFungibleTokenInvalidGatewayRequest-uint256-)
+#### ERC7984
+- [ERC7984InvalidReceiver(receiver)](#ERC7984-ERC7984InvalidReceiver-address-)
+- [ERC7984InvalidSender(sender)](#ERC7984-ERC7984InvalidSender-address-)
+- [ERC7984UnauthorizedSpender(holder, spender)](#ERC7984-ERC7984UnauthorizedSpender-address-address-)
+- [ERC7984ZeroBalance(holder)](#ERC7984-ERC7984ZeroBalance-address-)
+- [ERC7984UnauthorizedUseOfEncryptedAmount(amount, user)](#ERC7984-ERC7984UnauthorizedUseOfEncryptedAmount-euint64-address-)
+- [ERC7984UnauthorizedCaller(caller)](#ERC7984-ERC7984UnauthorizedCaller-address-)
+- [ERC7984InvalidGatewayRequest(requestId)](#ERC7984-ERC7984InvalidGatewayRequest-uint256-)
 
-#### IConfidentialFungibleToken
+#### IERC7984
 
-<a id="ConfidentialFungibleTokenVotes-confidentialTotalSupply--"></a>
+<a id="ERC7984Votes-confidentialTotalSupply--"></a>
 
 ### `confidentialTotalSupply() → euint64`
 *public*
 
 Returns the confidential total supply of the token.
 
-<a id="ConfidentialFungibleTokenVotes-_update-address-address-euint64-"></a>
+<a id="ERC7984Votes-_update-address-address-euint64-"></a>
 
 ### `_update(address from, address to, euint64 amount) → euint64 transferred`
 *internal*
 
-<a id="ConfidentialFungibleTokenVotes-_getVotingUnits-address-"></a>
+<a id="ERC7984Votes-_getVotingUnits-address-"></a>
 
 ### `_getVotingUnits(address account) → euint64`
 *internal*
 
-<a id="ConfidentialFungibleTokenUtils"></a>
+<a id="ERC7984Utils"></a>
 
-## `ConfidentialFungibleTokenUtils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/token/utils/ConfidentialFungibleTokenUtils.sol)
+## `ERC7984Utils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/token/ERC7984/utils/ERC7984Utils.sol)
 
 ```solidity
-import "@openzeppelin/contracts/token/utils/ConfidentialFungibleTokenUtils.sol";
+import "@openzeppelin/contracts/token/ERC7984/utils/ERC7984Utils.sol";
 ```
 
-Library that provides common [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) utility functions.
+Library that provides common [`ERC7984`](#ERC7984) utility functions.
 
 ### Functions
-- [checkOnTransferReceived(operator, from, to, amount, data)](#ConfidentialFungibleTokenUtils-checkOnTransferReceived-address-address-address-euint64-bytes-)
+- [checkOnTransferReceived(operator, from, to, amount, data)](#ERC7984Utils-checkOnTransferReceived-address-address-address-euint64-bytes-)
 
-<a id="ConfidentialFungibleTokenUtils-checkOnTransferReceived-address-address-address-euint64-bytes-"></a>
+<a id="ERC7984Utils-checkOnTransferReceived-address-address-address-euint64-bytes-"></a>
 
 ### `checkOnTransferReceived(address operator, address from, address to, euint64 amount, bytes data) → ebool`
 *internal*
 
 Performs a transfer callback to the recipient of the transfer `to`. Should be invoked
-after all transfers "withCallback" on a [`ConfidentialFungibleToken`](#ConfidentialFungibleToken).
+after all transfers "withCallback" on a [`ERC7984`](#ERC7984).
 
 The transfer callback is not invoked on the recipient if the recipient has no code (i.e. is an EOA). If the
 recipient has non-zero code, it must implement
-[`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) and return an `ebool` indicating
+[`IERC7984Receiver.onConfidentialTransferReceived`](interfaces#IERC7984Receiver-onConfidentialTransferReceived-address-address-euint64-bytes-) and return an `ebool` indicating
 whether the transfer was accepted or not. If the `ebool` is `false`, the transfer will be reversed.
 

@@ -3,27 +3,23 @@ title: "Finance"
 description: "Smart contract finance utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/confidential-contracts/api#finance
-</Callout>
-
 This directory includes primitives for on-chain confidential financial systems:
 
-* [`VestingWalletConfidential`](#VestingWalletConfidential): Handles the vesting of confidential tokens for a given beneficiary. Custody of multiple tokens can be given to this contract, which will release the token to the beneficiary following a given, customizable, vesting schedule.
-* [`VestingWalletCliffConfidential`](#VestingWalletCliffConfidential): Variant of [`VestingWalletConfidential`](#VestingWalletConfidential) which adds a cliff period to the vesting schedule.
+* VestingWalletConfidential: Handles the vesting of confidential tokens for a given beneficiary. Custody of multiple tokens can be given to this contract, which will release the token to the beneficiary following a given, customizable, vesting schedule.
+* VestingWalletCliffConfidential: Variant of VestingWalletConfidential which adds a cliff period to the vesting schedule.
 
 For convenience, this directory also includes:
 
-* [`VestingWalletConfidentialFactory`](#VestingWalletConfidentialFactory): A factory which enables batch funding of vesting wallets.
+* VestingWalletConfidentialFactory: A factory which enables batch funding of vesting wallets.
 
 ## Contracts
-[`VestingWalletConfidential`](#VestingWalletConfidential)
-[`VestingWalletCliffConfidential`](#VestingWalletCliffConfidential)
-[`VestingWalletConfidentialFactory`](#VestingWalletConfidentialFactory)
+VestingWalletConfidential
+VestingWalletCliffConfidential
+VestingWalletConfidentialFactory
 
 <a id="ERC7821WithExecutor"></a>
 
-## `ERC7821WithExecutor` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/ERC7821WithExecutor.sol)
+## `ERC7821WithExecutor` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/finance/ERC7821WithExecutor.sol)
 
 ```solidity
 import "@openzeppelin/contracts/finance/ERC7821WithExecutor.sol";
@@ -104,7 +100,7 @@ function _erc7821AuthorizedExecutor(
 
 <a id="VestingWalletCliffConfidential"></a>
 
-## `VestingWalletCliffConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/VestingWalletCliffConfidential.sol)
+## `VestingWalletCliffConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/finance/VestingWalletCliffConfidential.sol)
 
 ```solidity
 import "@openzeppelin/contracts/finance/VestingWalletCliffConfidential.sol";
@@ -230,13 +226,13 @@ The specified cliff duration is larger than the vesting duration.
 
 <a id="VestingWalletConfidential"></a>
 
-## `VestingWalletConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/VestingWalletConfidential.sol)
+## `VestingWalletConfidential` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/finance/VestingWalletConfidential.sol)
 
 ```solidity
 import "@openzeppelin/contracts/finance/VestingWalletConfidential.sol";
 ```
 
-A vesting wallet is an ownable contract that can receive ConfidentialFungibleTokens, and release these
+A vesting wallet is an ownable contract that can receive ERC7984 tokens, and release these
 assets to the wallet owner, also referred to as "beneficiary", according to a vesting schedule.
 
 Any assets transferred to this contract will follow the vesting schedule as if they were locked from the beginning.
@@ -353,7 +349,7 @@ Amount of token already released
 *public*
 
 Getter for the amount of releasable `token` tokens. `token` should be the address of an
-[`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken) contract.
+[`IERC7984`](interfaces#IERC7984) contract.
 
 <a id="VestingWalletConfidential-release-address-"></a>
 
@@ -401,7 +397,7 @@ Emitted when releasable vested tokens are released.
 
 <a id="VestingWalletConfidentialFactory"></a>
 
-## `VestingWalletConfidentialFactory` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.1.0/contracts/finance/VestingWalletConfidentialFactory.sol)
+## `VestingWalletConfidentialFactory` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.2.0/contracts/finance/VestingWalletConfidentialFactory.sol)
 
 ```solidity
 import "@openzeppelin/contracts/finance/VestingWalletConfidentialFactory.sol";
@@ -414,7 +410,7 @@ functions remain unimplemented to allow for custom implementations of the vestin
 
 ### Functions
 - [constructor()](#VestingWalletConfidentialFactory-constructor--)
-- [batchFundVestingWalletConfidential(confidentialFungibleToken, vestingPlans, inputProof)](#VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-)
+- [batchFundVestingWalletConfidential(token, vestingPlans, inputProof)](#VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-)
 - [createVestingWalletConfidential(initArgs)](#VestingWalletConfidentialFactory-createVestingWalletConfidential-bytes-)
 - [predictVestingWalletConfidential(initArgs)](#VestingWalletConfidentialFactory-predictVestingWalletConfidential-bytes-)
 - [_validateVestingWalletInitArgs(initArgs)](#VestingWalletConfidentialFactory-_validateVestingWalletInitArgs-bytes-)
@@ -423,7 +419,7 @@ functions remain unimplemented to allow for custom implementations of the vestin
 - [_getCreate2VestingWalletConfidentialSalt(initArgs)](#VestingWalletConfidentialFactory-_getCreate2VestingWalletConfidentialSalt-bytes-)
 
 ### Events
-- [VestingWalletConfidentialFunded(vestingWalletConfidential, confidentialFungibleToken, transferredAmount, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-)
+- [VestingWalletConfidentialFunded(vestingWalletConfidential, token, transferredAmount, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-)
 - [VestingWalletConfidentialCreated(vestingWalletConfidential, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialCreated-address-bytes-)
 
 <a id="VestingWalletConfidentialFactory-constructor--"></a>
@@ -433,7 +429,7 @@ functions remain unimplemented to allow for custom implementations of the vestin
 
 <a id="VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-"></a>
 
-### `batchFundVestingWalletConfidential(address confidentialFungibleToken, struct VestingWalletConfidentialFactory.VestingPlan[] vestingPlans, bytes inputProof)`
+### `batchFundVestingWalletConfidential(address token, struct VestingWalletConfidentialFactory.VestingPlan[] vestingPlans, bytes inputProof)`
 *public*
 
 Batches the funding of multiple confidential vesting wallets.
@@ -491,7 +487,7 @@ Gets create2 salt for a confidential vesting wallet.
 
 <a id="VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-"></a>
 
-### `VestingWalletConfidentialFunded(address indexed vestingWalletConfidential, address indexed confidentialFungibleToken, euint64 transferredAmount, bytes initArgs)`
+### `VestingWalletConfidentialFunded(address indexed vestingWalletConfidential, address indexed token, euint64 transferredAmount, bytes initArgs)`
 *event*
 
 Emitted for each vesting wallet funded within a batch.
