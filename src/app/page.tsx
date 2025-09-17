@@ -159,7 +159,7 @@ export default function HomePage() {
 						/>
 
 						<EcosystemCard
-							href="/cairo-contracts"
+							href="/contracts-cairo"
 							icon={<StarknetIcon color className="w-7 h-7" />}
 							title="Starknet"
 							description="Essential contracts library written in Cairo for Starknet"
