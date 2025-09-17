@@ -661,6 +661,57 @@
 				"type": "page",
 				"name": "Utilities",
 				"url": "/community-contracts/utilities"
+			},
+			{
+				"type": "folder",
+				"name": "API Reference",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/community-contracts/api"
+				},
+				"children": [
+					{
+						"type": "page",
+						"name": "Access",
+						"url": "/community-contracts/api/access"
+					},
+					{
+						"type": "page",
+						"name": "Account",
+						"url": "/community-contracts/api/account"
+					},
+					{
+						"type": "page",
+						"name": "Crosschain",
+						"url": "/community-contracts/api/crosschain"
+					},
+					{
+						"type": "page",
+						"name": "Interfaces",
+						"url": "/community-contracts/api/interfaces"
+					},
+					{
+						"type": "page",
+						"name": "Proxy",
+						"url": "/community-contracts/api/proxy"
+					},
+					{
+						"type": "page",
+						"name": "Token",
+						"url": "/community-contracts/api/token"
+					},
+					{
+						"type": "page",
+						"name": "Utils",
+						"url": "/community-contracts/api/utils"
+					},
+					{
+						"type": "page",
+						"name": "Cryptography",
+						"url": "/community-contracts/api/utils/cryptography"
+					}
+				]
 			}
 		]
 	},

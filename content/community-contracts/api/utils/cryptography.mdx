@@ -3,14 +3,11 @@ title: "Cryptography"
 description: "Smart contract cryptography utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/community-contracts/utils/cryptography
-</Callout>
-
 A collection of contracts and libraries that implement various signature validation schemes and cryptographic primitives. These utilities enable secure authentication, multisignature operations, and advanced cryptographic operations in smart contracts.
 
 * [`ZKEmailUtils`](#ZKEmailUtils): Library for ZKEmail signature validation utilities, enabling email-based authentication through zero-knowledge proofs.
 * [`WebAuthn`](#WebAuthn): Library for verifying WebAuthn Authentication Assertions.
+* [`DKIMRegistry`](#DKIMRegistry): Implementation of [ERC-7969](https://eips.ethereum.org/EIPS/eip-7969) to enable onchain verification of DomainKeys Identified Mail (DKIM) signatures.
 * [`SignerZKEmail`](#SignerZKEmail): Implementation of an [AbstractSigner](https://docs.openzeppelin.com/contracts/5.x/api/utils/cryptography#AbstractSigner) that enables email-based authentication through zero-knowledge proofs.
 * [`SignerWebAuthn`](#SignerWebAuthn): Implementation of [SignerP256](https://docs.openzeppelin.com/contracts/5.x/api/utils/cryptography#SignerP256) that supports WebAuthn authentication assertions.
 * [`ERC7913ZKEmailVerifier`](#ERC7913ZKEmailVerifier), [`ERC7913WebAuthnVerifier`](#ERC7913WebAuthnVerifier): Ready to use ERC-7913 signature verifiers for ZKEmail and WebAuthn.
@@ -20,6 +17,8 @@ A collection of contracts and libraries that implement various signature validat
 [`ZKEmailUtils`](#ZKEmailUtils)
 
 [`WebAuthn`](#WebAuthn)
+
+[`DKIMRegistry`](#DKIMRegistry)
 
 ## Abstract Signers
 
@@ -33,9 +32,165 @@ A collection of contracts and libraries that implement various signature validat
 
 [`ERC7913WebAuthnVerifier`](#ERC7913WebAuthnVerifier)
 
+<a id="DKIMRegistry"></a>
+
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `DKIMRegistry` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/DKIMRegistry.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
+
+```solidity
+import "@openzeppelin/contracts/utils/cryptography/DKIMRegistry.sol";
+```
+
+Implementation of the [ERC-7969](https://eips.ethereum.org/EIPS/eip-7969) interface for registering
+and validating DomainKeys Identified Mail (DKIM) public key hashes onchain.
+
+This contract provides a standard way to register and validate DKIM public key hashes, enabling
+email-based account abstraction and secure account recovery mechanisms. Domain owners can register
+their DKIM public key hashes and third parties can verify their validity.
+
+The contract stores mappings of domain hashes to DKIM public key hashes, where:
+
+* Domain hash: keccak256 hash of the lowercase domain name
+* Key hash: keccak256 hash of the DKIM public key
+
+Example of usage:
+
+```solidity
+contract MyDKIMRegistry is DKIMRegistry, Ownable {
+    function setKeyHash(bytes32 domainHash, bytes32 keyHash) public onlyOwner {
+        _setKeyHash(domainHash, keyHash);
+    }
+
+    function setKeyHashes(bytes32 domainHash, bytes32[] memory keyHashes) public onlyOwner {
+        _setKeyHashes(domainHash, keyHashes);
+    }
+
+    function revokeKeyHash(bytes32 domainHash, bytes32 keyHash) public onlyOwner {
+        _revokeKeyHash(domainHash, keyHash);
+    }
+}
+```
+
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
+- [isKeyHashValid(domainHash, keyHash)](#DKIMRegistry-isKeyHashValid-bytes32-bytes32-)
+- [_setKeyHash(domainHash, keyHash)](#DKIMRegistry-_setKeyHash-bytes32-bytes32-)
+- [_setKeyHashes(domainHash, keyHashes)](#DKIMRegistry-_setKeyHashes-bytes32-bytes32---)
+- [_revokeKeyHash(domainHash, keyHash)](#DKIMRegistry-_revokeKeyHash-bytes32-bytes32-)
+#### IDKIMRegistry
+</div>
+</div>
+
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
+#### IDKIMRegistry
+- [KeyHashRegistered(domainHash, keyHash)](#IDKIMRegistry-KeyHashRegistered-bytes32-bytes32-)
+- [KeyHashRevoked(domainHash)](#IDKIMRegistry-KeyHashRevoked-bytes32-)
+</div>
+</div>
+
+<a id="DKIMRegistry-isKeyHashValid-bytes32-bytes32-"></a>
+
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isKeyHashValid(bytes32 domainHash, bytes32 keyHash) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="DKIMRegistry-isKeyHashValid-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+Returns whether a DKIM key hash is valid for a given domain.
+
+</div>
+</div>
+
+<a id="DKIMRegistry-_setKeyHash-bytes32-bytes32-"></a>
+
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setKeyHash(bytes32 domainHash, bytes32 keyHash)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="DKIMRegistry-_setKeyHash-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+Sets a DKIM key hash as valid for a domain. Internal version without access control.
+
+Emits a [`IDKIMRegistry.KeyHashRegistered`](../interfaces#IDKIMRegistry-KeyHashRegistered-bytes32-bytes32-) event.
+
+NOTE: This function does not validate that keyHash is non-zero. Consider adding
+validation in derived contracts if needed.
+
+</div>
+</div>
+
+<a id="DKIMRegistry-_setKeyHashes-bytes32-bytes32---"></a>
+
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setKeyHashes(bytes32 domainHash, bytes32[] keyHashes)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="DKIMRegistry-_setKeyHashes-bytes32-bytes32---">#</a>
+</div>
+</div>
+<div className="px-4">
+
+Sets multiple DKIM key hashes as valid for a domain in a single transaction.
+Internal version without access control.
+
+Emits a [`IDKIMRegistry.KeyHashRegistered`](../interfaces#IDKIMRegistry-KeyHashRegistered-bytes32-bytes32-) event for each key hash.
+
+NOTE: This function does not validate that the keyHashes array is non-empty.
+Consider adding validation in derived contracts if needed.
+
+</div>
+</div>
+
+<a id="DKIMRegistry-_revokeKeyHash-bytes32-bytes32-"></a>
+
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_revokeKeyHash(bytes32 domainHash, bytes32 keyHash)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="DKIMRegistry-_revokeKeyHash-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+Revokes a DKIM key hash for a domain, making it invalid.
+Internal version without access control.
+
+Emits a [`IDKIMRegistry.KeyHashRevoked`](../interfaces#IDKIMRegistry-KeyHashRevoked-bytes32-) event.
+
+</div>
+</div>
+
 <a id="WebAuthn"></a>
 
-## `WebAuthn` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/WebAuthn.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `WebAuthn` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/WebAuthn.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/cryptography/WebAuthn.sol";
@@ -70,22 +225,43 @@ Inspired by:
 * [daimo-eth implementation](https://github.com/daimo-eth/p256-verifier/blob/master/src/WebAuthn.sol)
 * [base implementation](https://github.com/base/webauthn-sol/blob/main/src/WebAuthn.sol)
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [verify(challenge, auth, qx, qy)](#WebAuthn-verify-bytes-struct-WebAuthn-WebAuthnAuth-bytes32-bytes32-)
 - [verify(challenge, auth, qx, qy, requireUV)](#WebAuthn-verify-bytes-struct-WebAuthn-WebAuthnAuth-bytes32-bytes32-bool-)
 - [tryDecodeAuth(input)](#WebAuthn-tryDecodeAuth-bytes-)
+</div>
+</div>
 
 <a id="WebAuthn-verify-bytes-struct-WebAuthn-WebAuthnAuth-bytes32-bytes32-"></a>
 
-### `verify(bytes challenge, struct WebAuthn.WebAuthnAuth auth, bytes32 qx, bytes32 qy) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">verify(bytes challenge, struct WebAuthn.WebAuthnAuth auth, bytes32 qx, bytes32 qy) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="WebAuthn-verify-bytes-struct-WebAuthn-WebAuthnAuth-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Performs standard verification of a WebAuthn Authentication Assertion.
 
+</div>
+</div>
+
 <a id="WebAuthn-verify-bytes-struct-WebAuthn-WebAuthnAuth-bytes32-bytes32-bool-"></a>
 
-### `verify(bytes challenge, struct WebAuthn.WebAuthnAuth auth, bytes32 qx, bytes32 qy, bool requireUV) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">verify(bytes challenge, struct WebAuthn.WebAuthnAuth auth, bytes32 qx, bytes32 qy, bool requireUV) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="WebAuthn-verify-bytes-struct-WebAuthn-WebAuthnAuth-bytes32-bytes32-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Performs verification of a WebAuthn Authentication Assertion. This variants allow the caller to select
 whether of not to require the UV flag (step 17).
@@ -99,10 +275,20 @@ Verifies:
 5. (if `requireUV` is true) confirming stronger user authentication (biometrics/PIN)
 6. Backup Eligibility (`BE`) and Backup State (BS) bits relationship is valid
 
+</div>
+</div>
+
 <a id="WebAuthn-tryDecodeAuth-bytes-"></a>
 
-### `tryDecodeAuth(bytes input) → bool success, struct WebAuthn.WebAuthnAuth auth`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">tryDecodeAuth(bytes input) → bool success, struct WebAuthn.WebAuthnAuth auth</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="WebAuthn-tryDecodeAuth-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Verifies that calldata bytes (`input`) represents a valid `WebAuthnAuth` object. If encoding is valid,
 returns true and the calldata view at the object. Otherwise, returns false and an invalid calldata object.
@@ -110,9 +296,20 @@ returns true and the calldata view at the object. Otherwise, returns false and a
 NOTE: The returned `auth` object should not be accessed if `success` is false. Trying to access the data may
 cause revert/panic.
 
+</div>
+</div>
+
 <a id="ZKEmailUtils"></a>
 
-## `ZKEmailUtils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/ZKEmailUtils.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ZKEmailUtils` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/ZKEmailUtils.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/cryptography/ZKEmailUtils.sol";
@@ -133,61 +330,135 @@ mechanism to ensure the email command matches the expected format and parameters
 * A [zero-knowledge proof](https://docs.zk.email/architecture/zk-proofs#how-zk-email-uses-zero-knowledge-proofs) verification
 mechanism to ensure the email was actually sent and received without revealing its contents. Defined by an `IGroth16Verifier` interface.
 
-### Functions
-- [isValidZKEmail(emailAuthMsg, dkimregistry, groth16Verifier)](#ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-)
-- [isValidZKEmail(emailAuthMsg, dkimregistry, groth16Verifier, template)](#ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-string---)
-- [isValidZKEmail(emailAuthMsg, dkimregistry, groth16Verifier, template, stringCase)](#ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-string---enum-ZKEmailUtils-Case-)
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
+- [isValidZKEmail(emailProof, dkimregistry, groth16Verifier, hash)](#ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-bytes32-)
+- [isValidZKEmail(emailProof, dkimregistry, groth16Verifier, template, templateParams)](#ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---)
+- [isValidZKEmail(emailProof, dkimregistry, groth16Verifier, template, templateParams, stringCase)](#ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---enum-ZKEmailUtils-Case-)
+- [tryDecodeEmailProof(input)](#ZKEmailUtils-tryDecodeEmailProof-bytes-)
 - [toPubSignals(proof)](#ZKEmailUtils-toPubSignals-struct-EmailProof-)
+</div>
+</div>
 
-<a id="ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-"></a>
+<a id="ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-bytes32-"></a>
 
-### `isValidZKEmail(struct EmailAuthMsg emailAuthMsg, contract IDKIMRegistry dkimregistry, contract IGroth16Verifier groth16Verifier) → enum ZKEmailUtils.EmailProofError`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isValidZKEmail(struct EmailProof emailProof, contract IDKIMRegistry dkimregistry, contract IGroth16Verifier groth16Verifier, bytes32 hash) → enum ZKEmailUtils.EmailProofError</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
-Variant of [`ZKEmailUtils.isValidZKEmail`](#ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-string---enum-ZKEmailUtils-Case-) that validates the `["signHash", "../access#AccessManagerLight-ADMIN_ROLE-uint8"]` command template.
+Variant of [`ZKEmailUtils.isValidZKEmail`](#ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---enum-ZKEmailUtils-Case-) that validates the `["signHash", "../access#AccessManagerLight-ADMIN_ROLE-uint8"]` command template.
 
-<a id="ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-string---"></a>
+</div>
+</div>
 
-### `isValidZKEmail(struct EmailAuthMsg emailAuthMsg, contract IDKIMRegistry dkimregistry, contract IGroth16Verifier groth16Verifier, string[] template) → enum ZKEmailUtils.EmailProofError`
-*internal*
+<a id="ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---"></a>
 
-Validates a ZKEmail authentication message.
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isValidZKEmail(struct EmailProof emailProof, contract IDKIMRegistry dkimregistry, contract IGroth16Verifier groth16Verifier, string[] template, bytes[] templateParams) → enum ZKEmailUtils.EmailProofError</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---">#</a>
+</div>
+</div>
+<div className="px-4">
 
-This function takes an email authentication message, a DKIM registry contract, and a verifier contract
-as inputs. It performs several validation checks and returns a tuple containing a boolean success flag
-and an [`ZKEmailUtils.EmailProofError`](#ZKEmailUtils-EmailProofError) if validation failed. Returns EmailProofError.NoError if all validations pass,
-or false with a specific [`ZKEmailUtils.EmailProofError`](#ZKEmailUtils-EmailProofError) indicating which validation check failed.
+Validates a ZKEmail proof against a command template.
+
+This function takes an email proof, a DKIM registry contract, and a verifier contract
+as inputs. It performs several validation checks and returns an [`ZKEmailUtils.EmailProofError`](#ZKEmailUtils-EmailProofError) indicating the result.
+Returns `EmailProofError.NoError` if all validations pass, or a specific [`ZKEmailUtils.EmailProofError`](#ZKEmailUtils-EmailProofError) indicating
+which validation check failed.
 
 NOTE: Attempts to validate the command for all possible string [`ZKEmailUtils.Case`](#ZKEmailUtils-Case) values.
 
-<a id="ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-string---enum-ZKEmailUtils-Case-"></a>
+</div>
+</div>
 
-### `isValidZKEmail(struct EmailAuthMsg emailAuthMsg, contract IDKIMRegistry dkimregistry, contract IGroth16Verifier groth16Verifier, string[] template, enum ZKEmailUtils.Case stringCase) → enum ZKEmailUtils.EmailProofError`
-*internal*
+<a id="ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---enum-ZKEmailUtils-Case-"></a>
 
-Variant of [`ZKEmailUtils.isValidZKEmail`](#ZKEmailUtils-isValidZKEmail-struct-EmailAuthMsg-contract-IDKIMRegistry-contract-IGroth16Verifier-string---enum-ZKEmailUtils-Case-) that validates a template with a specific string [`ZKEmailUtils.Case`](#ZKEmailUtils-Case).
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isValidZKEmail(struct EmailProof emailProof, contract IDKIMRegistry dkimregistry, contract IGroth16Verifier groth16Verifier, string[] template, bytes[] templateParams, enum ZKEmailUtils.Case stringCase) → enum ZKEmailUtils.EmailProofError</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---enum-ZKEmailUtils-Case-">#</a>
+</div>
+</div>
+<div className="px-4">
 
-Useful for templates with Ethereum address matchers (i.e. `ethAddr`), which are case-sensitive (e.g., `["someCommand", "../access#AccessManagerLight-_groups-mapping-address----Masks-Mask-"]`).
+Variant of [`ZKEmailUtils.isValidZKEmail`](#ZKEmailUtils-isValidZKEmail-struct-EmailProof-contract-IDKIMRegistry-contract-IGroth16Verifier-string---bytes---enum-ZKEmailUtils-Case-) that validates a template with a specific string [`ZKEmailUtils.Case`](#ZKEmailUtils-Case).
+
+Useful for templates with Ethereum address matchers (i.e. ``ethAddr``), which are case-sensitive (e.g., `["someCommand", "../access#AccessManagerLight-_groups-mapping-address----Masks-Mask-"]`).
+
+</div>
+</div>
+
+<a id="ZKEmailUtils-tryDecodeEmailProof-bytes-"></a>
+
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">tryDecodeEmailProof(bytes input) → bool success, struct EmailProof emailProof</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ZKEmailUtils-tryDecodeEmailProof-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+Verifies that calldata bytes (`input`) represents a valid `EmailProof` object. If encoding is valid,
+returns true and the calldata view at the object. Otherwise, returns false and an invalid calldata object.
+
+NOTE: The returned `emailProof` object should not be accessed if `success` is false. Trying to access the data may
+cause revert/panic.
+
+</div>
+</div>
 
 <a id="ZKEmailUtils-toPubSignals-struct-EmailProof-"></a>
 
-### `toPubSignals(struct EmailProof proof) → uint256[34] pubSignals`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">toPubSignals(struct EmailProof proof) → uint256[34] pubSignals</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ZKEmailUtils-toPubSignals-struct-EmailProof-">#</a>
+</div>
+</div>
+<div className="px-4">
 
-Builds the expected public signals array for the Groth16 verifier from the given EmailAuthMsg.
+Builds the expected public signals array for the Groth16 verifier from the given EmailProof.
 
 Packs the domain, public key hash, email nullifier, timestamp, masked command, account salt, and isCodeExist fields
 into a uint256 array in the order expected by the verifier circuit.
 
+</div>
+</div>
+
 <a id="SignerWebAuthn"></a>
 
-## `SignerWebAuthn` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/signers/SignerWebAuthn.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `SignerWebAuthn` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/signers/SignerWebAuthn.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerWebAuthn.sol";
 ```
 
-Implementation of SignerP256 that supports WebAuthn authentication assertions.
+Implementation of `SignerP256` that supports WebAuthn authentication assertions.
 
 This contract enables signature validation using WebAuthn authentication assertions,
 leveraging the P256 public key stored in the contract. It allows for both WebAuthn
@@ -205,48 +476,72 @@ contract MyAccountWebAuthn is Account, SignerWebAuthn, Initializable {
 }
 ```
 
-IMPORTANT: Failing to call [`ERC7579Signature._setSigner`](../account#ERC7579Signature-_setSigner-address-bytes-) either during construction (if used standalone)
+<Callout type="warn">
+Failing to call [`ERC7579Signature._setSigner`](../account#ERC7579Signature-_setSigner-address-bytes-) either during construction (if used standalone)
+</Callout>
 or during initialization (if used as a clone) may leave the signer either front-runnable or unusable.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_rawSignatureValidation(hash, signature)](#SignerWebAuthn-_rawSignatureValidation-bytes32-bytes-)
-
 #### SignerP256
 - [_setSigner(qx, qy)](#SignerP256-_setSigner-bytes32-bytes32-)
 - [signer()](#SignerP256-signer--)
-
 #### AbstractSigner
+</div>
+</div>
 
-### Errors
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 #### SignerP256
 - [SignerP256InvalidPublicKey(qx, qy)](#SignerP256-SignerP256InvalidPublicKey-bytes32-bytes32-)
-
 #### AbstractSigner
+</div>
+</div>
 
 <a id="SignerWebAuthn-_rawSignatureValidation-bytes32-bytes-"></a>
 
-### `_rawSignatureValidation(bytes32 hash, bytes signature) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_rawSignatureValidation(bytes32 hash, bytes signature) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SignerWebAuthn-_rawSignatureValidation-bytes32-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Validates a raw signature using the WebAuthn authentication assertion.
 
 In case the signature can't be validated, it falls back to the
-SignerP256-_rawSignatureValidation method for raw P256 signature validation by passing
+`SignerP256-_rawSignatureValidation` method for raw P256 signature validation by passing
 the raw `r` and `s` values from the signature.
+
+</div>
+</div>
 
 <a id="SignerZKEmail"></a>
 
-## `SignerZKEmail` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/signers/SignerZKEmail.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `SignerZKEmail` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/signers/SignerZKEmail.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerZKEmail.sol";
 ```
 
-Implementation of AbstractSigner using [ZKEmail](https://docs.zk.email) signatures.
+Implementation of `AbstractSigner` using [ZKEmail](https://docs.zk.email) signatures.
 
 ZKEmail enables secure authentication and authorization through email messages, leveraging
-DKIM signatures from a [`SignerZKEmail.DKIMRegistry`](#SignerZKEmail-DKIMRegistry--) and zero-knowledge proofs enabled by a [`SignerZKEmail.verifier`](#SignerZKEmail-verifier--)
+DKIM signatures from a [`DKIMRegistry`](#DKIMRegistry) and zero-knowledge proofs enabled by a [`SignerZKEmail.verifier`](#SignerZKEmail-verifier--)
 contract that ensures email authenticity without revealing sensitive information. The DKIM
 registry is trusted to correctly update DKIM keys, but users can override this behaviour and
 set their own keys. This contract implements the core functionality for validating email-based
@@ -255,9 +550,8 @@ signatures in smart contracts.
 Developers must set the following components during contract initialization:
 
 * [`SignerZKEmail.accountSalt`](#SignerZKEmail-accountSalt--) - A unique identifier derived from the user's email address and account code.
-* [`SignerZKEmail.DKIMRegistry`](#SignerZKEmail-DKIMRegistry--) - An instance of the DKIM registry contract for domain verification.
+* [`DKIMRegistry`](#DKIMRegistry) - An instance of the DKIM registry contract for domain verification.
 * [`SignerZKEmail.verifier`](#SignerZKEmail-verifier--) - An instance of the Groth16Verifier contract for zero-knowledge proof validation.
-* [`SignerZKEmail.templateId`](#SignerZKEmail-templateId--) - The template ID of the sign hash command, defining the expected format.
 
 Example of usage:
 
@@ -266,44 +560,55 @@ contract MyAccountZKEmail is Account, SignerZKEmail, Initializable {
   function initialize(
       bytes32 accountSalt,
       IDKIMRegistry registry,
-      IGroth16Verifier groth16Verifier,
-      uint256 templateId
+      IGroth16Verifier groth16Verifier
   ) public initializer {
       // Will revert if the signer is already initialized
       _setAccountSalt(accountSalt);
       _setDKIMRegistry(registry);
-      _setGroth16Verifier(groth16Verifier);
-      _setTemplateId(templateId);
+      _setVerifier(groth16Verifier);
   }
 }
 ```
 
-IMPORTANT: Avoiding to call [`SignerZKEmail._setAccountSalt`](#SignerZKEmail-_setAccountSalt-bytes32-), [`SignerZKEmail._setDKIMRegistry`](#SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-), [`SignerZKEmail._setVerifier`](#SignerZKEmail-_setVerifier-contract-IGroth16Verifier-) and [`SignerZKEmail._setTemplateId`](#SignerZKEmail-_setTemplateId-uint256-)
+<Callout type="warn">
+Failing to call [`SignerZKEmail._setAccountSalt`](#SignerZKEmail-_setAccountSalt-bytes32-), [`SignerZKEmail._setDKIMRegistry`](#SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-), and [`SignerZKEmail._setVerifier`](#SignerZKEmail-_setVerifier-contract-IGroth16Verifier-)
+</Callout>
 either during construction (if used standalone) or during initialization (if used as a clone) may
 leave the signer either front-runnable or unusable.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [accountSalt()](#SignerZKEmail-accountSalt--)
 - [DKIMRegistry()](#SignerZKEmail-DKIMRegistry--)
 - [verifier()](#SignerZKEmail-verifier--)
-- [templateId()](#SignerZKEmail-templateId--)
 - [_setAccountSalt(accountSalt_)](#SignerZKEmail-_setAccountSalt-bytes32-)
 - [_setDKIMRegistry(registry_)](#SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-)
 - [_setVerifier(verifier_)](#SignerZKEmail-_setVerifier-contract-IGroth16Verifier-)
-- [_setTemplateId(templateId_)](#SignerZKEmail-_setTemplateId-uint256-)
 - [_rawSignatureValidation(hash, signature)](#SignerZKEmail-_rawSignatureValidation-bytes32-bytes-)
-
 #### AbstractSigner
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [InvalidEmailProof(err)](#SignerZKEmail-InvalidEmailProof-enum-ZKEmailUtils-EmailProofError-)
-
 #### AbstractSigner
+</div>
+</div>
 
 <a id="SignerZKEmail-accountSalt--"></a>
 
-### `accountSalt() → bytes32`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">accountSalt() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="SignerZKEmail-accountSalt--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Unique identifier for owner of this contract defined as a hash of an email address and an account code.
 
@@ -320,80 +625,145 @@ The account salt is used for:
 * Deterministic Address Generation: Enables the creation of deterministic addresses based on email addresses,
   allowing users to recover their accounts using only their email.
 
+</div>
+</div>
+
 <a id="SignerZKEmail-DKIMRegistry--"></a>
 
-### `DKIMRegistry() → contract IDKIMRegistry`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">DKIMRegistry() → contract IDKIMRegistry</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="SignerZKEmail-DKIMRegistry--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 An instance of the DKIM registry contract.
 See [DKIM Verification](https://docs.zk.email/architecture/dkim-verification).
 
+</div>
+</div>
+
 <a id="SignerZKEmail-verifier--"></a>
 
-### `verifier() → contract IGroth16Verifier`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">verifier() → contract IGroth16Verifier</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="SignerZKEmail-verifier--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 An instance of the Groth16Verifier contract.
 See [ZK Proofs](https://docs.zk.email/architecture/zk-proofs#how-zk-email-uses-zero-knowledge-proofs).
 
-<a id="SignerZKEmail-templateId--"></a>
-
-### `templateId() → uint256`
-*public*
-
-The command template of the sign hash command.
+</div>
+</div>
 
 <a id="SignerZKEmail-_setAccountSalt-bytes32-"></a>
 
-### `_setAccountSalt(bytes32 accountSalt_)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setAccountSalt(bytes32 accountSalt_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SignerZKEmail-_setAccountSalt-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Set the [`SignerZKEmail.accountSalt`](#SignerZKEmail-accountSalt--).
 
+</div>
+</div>
+
 <a id="SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-"></a>
 
-### `_setDKIMRegistry(contract IDKIMRegistry registry_)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setDKIMRegistry(contract IDKIMRegistry registry_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-">#</a>
+</div>
+</div>
+<div className="px-4">
 
-Set the [`SignerZKEmail.DKIMRegistry`](#SignerZKEmail-DKIMRegistry--) contract address.
+Set the [`DKIMRegistry`](#DKIMRegistry) contract address.
+
+</div>
+</div>
 
 <a id="SignerZKEmail-_setVerifier-contract-IGroth16Verifier-"></a>
 
-### `_setVerifier(contract IGroth16Verifier verifier_)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setVerifier(contract IGroth16Verifier verifier_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SignerZKEmail-_setVerifier-contract-IGroth16Verifier-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Set the [`SignerZKEmail.verifier`](#SignerZKEmail-verifier--) contract address.
 
-<a id="SignerZKEmail-_setTemplateId-uint256-"></a>
-
-### `_setTemplateId(uint256 templateId_)`
-*internal*
-
-Set the command's [`SignerZKEmail.templateId`](#SignerZKEmail-templateId--).
+</div>
+</div>
 
 <a id="SignerZKEmail-_rawSignatureValidation-bytes32-bytes-"></a>
 
-### `_rawSignatureValidation(bytes32 hash, bytes signature) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_rawSignatureValidation(bytes32 hash, bytes signature) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SignerZKEmail-_rawSignatureValidation-bytes32-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
-See AbstractSigner-_rawSignatureValidation. Validates a raw signature by:
+See `AbstractSigner-_rawSignatureValidation`. Validates a raw signature by:
 
-1. Decoding the email authentication message from the signature
-2. Verifying the hash matches the command parameters
-3. Checking the template ID matches
-4. Validating the account salt
-5. Verifying the email proof
+1. Decoding the email proof from the signature
+2. Validating the account salt matches
+3. Verifying the email proof using ZKEmail utilities
+
+</div>
+</div>
 
 <a id="SignerZKEmail-InvalidEmailProof-enum-ZKEmailUtils-EmailProofError-"></a>
 
-### `InvalidEmailProof(enum ZKEmailUtils.EmailProofError err)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">InvalidEmailProof(enum ZKEmailUtils.EmailProofError err)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="SignerZKEmail-InvalidEmailProof-enum-ZKEmailUtils-EmailProofError-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Proof verification error.
 
+</div>
+</div>
+
 <a id="ERC7913WebAuthnVerifier"></a>
 
-## `ERC7913WebAuthnVerifier` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/verifiers/ERC7913WebAuthnVerifier.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC7913WebAuthnVerifier` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/verifiers/ERC7913WebAuthnVerifier.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/cryptography/verifiers/ERC7913WebAuthnVerifier.sol";
@@ -405,20 +775,30 @@ This verifier enables the validation of WebAuthn signatures using P256 public ke
 The key is expected to be a 64-byte concatenation of the P256 public key coordinates (qx || qy).
 The signature is expected to be an abi-encoded [`WebAuthn.WebAuthnAuth`](#WebAuthn-WebAuthnAuth) struct.
 
-Uses WebAuthn-verifyMinimal for signature verification, which performs the essential
+Uses `WebAuthn-verifyMinimal` for signature verification, which performs the essential
 WebAuthn checks: type validation, challenge matching, and cryptographic signature verification.
 
 NOTE: Wallets that may require default P256 validation may install a P256 verifier separately.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [verify(key, hash, signature)](#ERC7913WebAuthnVerifier-verify-bytes-bytes32-bytes-)
-
 #### IERC7913SignatureVerifier
+</div>
+</div>
 
 <a id="ERC7913WebAuthnVerifier-verify-bytes-bytes32-bytes-"></a>
 
-### `verify(bytes key, bytes32 hash, bytes signature) → bytes4`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">verify(bytes key, bytes32 hash, bytes signature) → bytes4</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC7913WebAuthnVerifier-verify-bytes-bytes32-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Verifies `signature` as a valid signature of `hash` by `key`.
 
@@ -426,9 +806,20 @@ MUST return the bytes4 magic value IERC7913SignatureVerifier.verify.selector if 
 SHOULD return 0xffffffff or revert if the signature is not valid.
 SHOULD return 0xffffffff or revert if the key is empty
 
+</div>
+</div>
+
 <a id="ERC7913ZKEmailVerifier"></a>
 
-## `ERC7913ZKEmailVerifier` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/verifiers/ERC7913ZKEmailVerifier.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC7913ZKEmailVerifier` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/cryptography/verifiers/ERC7913ZKEmailVerifier.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/cryptography/verifiers/ERC7913ZKEmailVerifier.sol";
@@ -441,77 +832,94 @@ proofs which allows users to authenticate using their email addresses.
 
 The key decoding logic is customizable: users may override the [`ERC7913ZKEmailVerifier._decodeKey`](#ERC7913ZKEmailVerifier-_decodeKey-bytes-) function
 to enforce restrictions or validation on the decoded values (e.g., requiring a specific
-verifier, templateId, or registry). To remain compliant with ERC-7913's statelessness,
+verifier or registry). To remain compliant with ERC-7913's statelessness,
 it is recommended to enforce such restrictions using immutable variables only.
 
-Example of overriding _decodeKey to enforce a specific verifier, registry, (or templateId):
+Example of overriding _decodeKey to enforce a specific verifier, registry:
 
 ```solidity
   function _decodeKey(bytes calldata key) internal view override returns (
       IDKIMRegistry registry,
       bytes32 accountSalt,
-      IGroth16Verifier verifier,
-      uint256 templateId
+      IGroth16Verifier verifier
   ) {
-      (registry, accountSalt, verifier, templateId) = super._decodeKey(key);
+      (registry, accountSalt, verifier) = super._decodeKey(key);
       require(verifier == _verifier, "Invalid verifier");
       require(registry == _registry, "Invalid registry");
-      return (registry, accountSalt, verifier, templateId);
+      return (registry, accountSalt, verifier);
   }
 ```
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [verify(key, hash, signature)](#ERC7913ZKEmailVerifier-verify-bytes-bytes32-bytes-)
 - [_decodeKey(key)](#ERC7913ZKEmailVerifier-_decodeKey-bytes-)
-
 #### IERC7913SignatureVerifier
+</div>
+</div>
 
 <a id="ERC7913ZKEmailVerifier-verify-bytes-bytes32-bytes-"></a>
 
-### `verify(bytes key, bytes32 hash, bytes signature) → bytes4`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">verify(bytes key, bytes32 hash, bytes signature) → bytes4</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC7913ZKEmailVerifier-verify-bytes-bytes32-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
-Verifies a zero-knowledge proof of an email signature validated by a [`SignerZKEmail.DKIMRegistry`](#SignerZKEmail-DKIMRegistry--) contract.
+Verifies a zero-knowledge proof of an email signature validated by a [`DKIMRegistry`](#DKIMRegistry) contract.
 
-The key format is ABI-encoded (IDKIMRegistry, bytes32, IGroth16Verifier, uint256) where:
+The key format is ABI-encoded (IDKIMRegistry, bytes32, IGroth16Verifier) where:
 
 * IDKIMRegistry: The registry contract that validates DKIM public key hashes
 * bytes32: The account salt that uniquely identifies the user's email address
 * IGroth16Verifier: The verifier contract instance for ZK proof verification.
-* uint256: The template ID for the command
 
 See [`ERC7913ZKEmailVerifier._decodeKey`](#ERC7913ZKEmailVerifier-_decodeKey-bytes-) for the key encoding format.
 
-The signature is an ABI-encoded ZKEmailUtils-EmailAuthMsg struct containing
-the command parameters, template ID, and proof details.
+The signature is an ABI-encoded [`ZKEmailUtils.EmailProofError`](#ZKEmailUtils-EmailProofError) struct containing
+the proof details.
 
 Signature encoding:
 
 ```solidity
-bytes memory signature = abi.encode(EmailAuthMsg({
-    templateId: 1,
-    commandParams: [hash],
-    proof: {
-        domainName: "example.com", // The domain name of the email sender
-        publicKeyHash: bytes32(0x...), // Hash of the DKIM public key used to sign the email
-        timestamp: block.timestamp, // When the email was sent
-        maskedCommand: "Sign hash", // The command being executed, with sensitive data masked
-        emailNullifier: bytes32(0x...), // Unique identifier for the email to prevent replay attacks
-        accountSalt: bytes32(0x...), // Unique identifier derived from email and account code
-        isCodeExist: true, // Whether the account code exists in the proof
-        proof: bytes(0x...) // The zero-knowledge proof verifying the email's authenticity
-    }
+bytes memory signature = abi.encode(EmailProof({
+    domainName: "example.com", // The domain name of the email sender
+    publicKeyHash: bytes32(0x...), // Hash of the DKIM public key used to sign the email
+    timestamp: block.timestamp, // When the email was sent
+    maskedCommand: "signHash 12345...", // The command being executed, with sensitive data masked
+    emailNullifier: bytes32(0x...), // Unique identifier for the email to prevent replay attacks
+    accountSalt: bytes32(0x...), // Unique identifier derived from email and account code
+    isCodeExist: true, // Whether the account code exists in the proof
+    proof: bytes(0x...) // The zero-knowledge proof verifying the email's authenticity
 }));
 ```
 
+</div>
+</div>
+
 <a id="ERC7913ZKEmailVerifier-_decodeKey-bytes-"></a>
 
-### `_decodeKey(bytes key) → contract IDKIMRegistry registry, bytes32 accountSalt, contract IGroth16Verifier verifier, uint256 templateId`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_decodeKey(bytes key) → contract IDKIMRegistry registry, bytes32 accountSalt, contract IGroth16Verifier verifier</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC7913ZKEmailVerifier-_decodeKey-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Decodes the key into its components.
 
 ```solidity
-bytes memory key = abi.encode(registry, accountSalt, verifier, templateId);
+bytes memory key = abi.encode(registry, accountSalt, verifier);
 ```
+
+</div>
+</div>
 
