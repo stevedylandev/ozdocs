@@ -3,10 +3,6 @@ title: "Proxy"
 description: "Smart contract proxy utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/contracts/api/proxy
-</Callout>
-
 This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](upgrades-plugins::proxies.adoc) page.
 
 Most of the proxies below are built on an abstract base contract.
@@ -92,7 +88,15 @@ The current implementation of this security mechanism uses [ERC-1822](https://ei
 
 <a id="Clones"></a>
 
-## `Clones` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/Clones.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `Clones` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/Clones.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/Clones.sol";
@@ -108,7 +112,9 @@ The library includes functions to deploy a proxy using either `create` (traditio
 (salted deterministic deployment). It also includes functions to predict the addresses of clones deployed using the
 deterministic method.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [clone(implementation)](#Clones-clone-address-)
 - [clone(implementation, value)](#Clones-clone-address-uint256-)
 - [cloneDeterministic(implementation, salt)](#Clones-cloneDeterministic-address-bytes32-)
@@ -122,42 +128,79 @@ deterministic method.
 - [predictDeterministicAddressWithImmutableArgs(implementation, args, salt, deployer)](#Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-address-)
 - [predictDeterministicAddressWithImmutableArgs(implementation, args, salt)](#Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-)
 - [fetchCloneArgs(instance)](#Clones-fetchCloneArgs-address-)
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [CloneArgumentsTooLong()](#Clones-CloneArgumentsTooLong--)
+</div>
+</div>
 
 <a id="Clones-clone-address-"></a>
 
-### `clone(address implementation) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">clone(address implementation) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-clone-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deploys and returns the address of a clone that mimics the behavior of `implementation`.
 
 This function uses the create opcode, which should never revert.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
+</div>
+</div>
+
 <a id="Clones-clone-address-uint256-"></a>
 
-### `clone(address implementation, uint256 value) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">clone(address implementation, uint256 value) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-clone-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Same as [clone](#Clones-clone-address-), but with a `value` parameter to send native currency
 to the new contract.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
 NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
 
+</div>
+</div>
+
 <a id="Clones-cloneDeterministic-address-bytes32-"></a>
 
-### `cloneDeterministic(address implementation, bytes32 salt) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cloneDeterministic(address implementation, bytes32 salt) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-cloneDeterministic-address-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deploys and returns the address of a clone that mimics the behavior of `implementation`.
 
@@ -165,43 +208,87 @@ This function uses the create2 opcode and a `salt` to deterministically deploy
 the clone. Using the same `implementation` and `salt` multiple times will revert, since
 the clones cannot be deployed twice at the same address.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
+</div>
+</div>
+
 <a id="Clones-cloneDeterministic-address-bytes32-uint256-"></a>
 
-### `cloneDeterministic(address implementation, bytes32 salt, uint256 value) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cloneDeterministic(address implementation, bytes32 salt, uint256 value) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-cloneDeterministic-address-bytes32-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Same as [cloneDeterministic](#Clones-cloneDeterministic-address-bytes32-), but with
 a `value` parameter to send native currency to the new contract.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
 NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
 
+</div>
+</div>
+
 <a id="Clones-predictDeterministicAddress-address-bytes32-address-"></a>
 
-### `predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-predictDeterministicAddress-address-bytes32-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-uint256-).
+
+</div>
+</div>
 
 <a id="Clones-predictDeterministicAddress-address-bytes32-"></a>
 
-### `predictDeterministicAddress(address implementation, bytes32 salt) → address predicted`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">predictDeterministicAddress(address implementation, bytes32 salt) → address predicted</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-predictDeterministicAddress-address-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-uint256-).
 
+</div>
+</div>
+
 <a id="Clones-cloneWithImmutableArgs-address-bytes-"></a>
 
-### `cloneWithImmutableArgs(address implementation, bytes args) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cloneWithImmutableArgs(address implementation, bytes args) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-cloneWithImmutableArgs-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deploys and returns the address of a clone that mimics the behavior of `implementation` with custom
 immutable arguments. These are provided through `args` and cannot be changed after deployment. To
@@ -209,29 +296,53 @@ access the arguments within the implementation, use [`Clones.fetchCloneArgs`](#C
 
 This function uses the create opcode, which should never revert.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
+</div>
+</div>
+
 <a id="Clones-cloneWithImmutableArgs-address-bytes-uint256-"></a>
 
-### `cloneWithImmutableArgs(address implementation, bytes args, uint256 value) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cloneWithImmutableArgs(address implementation, bytes args, uint256 value) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-cloneWithImmutableArgs-address-bytes-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Same as [cloneWithImmutableArgs](#Clones-cloneWithImmutableArgs-address-bytes-), but with a `value`
 parameter to send native currency to the new contract.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
 NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
 
+</div>
+</div>
+
 <a id="Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-"></a>
 
-### `cloneDeterministicWithImmutableArgs(address implementation, bytes args, bytes32 salt) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cloneDeterministicWithImmutableArgs(address implementation, bytes args, bytes32 salt) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deploys and returns the address of a clone that mimics the behavior of `implementation` with custom
 immutable arguments. These are provided through `args` and cannot be changed after deployment. To
@@ -241,43 +352,87 @@ This function uses the create2 opcode and a `salt` to deterministically deploy t
 `implementation`, `args` and `salt` multiple times will revert, since the clones cannot be deployed twice
 at the same address.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
+</div>
+</div>
+
 <a id="Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-"></a>
 
-### `cloneDeterministicWithImmutableArgs(address implementation, bytes args, bytes32 salt, uint256 value) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cloneDeterministicWithImmutableArgs(address implementation, bytes args, bytes32 salt, uint256 value) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Same as [cloneDeterministicWithImmutableArgs](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-),
 but with a `value` parameter to send native currency to the new contract.
 
-WARNING: This function does not check if `implementation` has code. A clone that points to an address
+<Callout type="warn">
+This function does not check if `implementation` has code. A clone that points to an address
+</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
 
 NOTE: Using a non-zero value at creation will require the contract using this function (e.g. a factory)
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
 
+</div>
+</div>
+
 <a id="Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-address-"></a>
 
-### `predictDeterministicAddressWithImmutableArgs(address implementation, bytes args, bytes32 salt, address deployer) → address predicted`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">predictDeterministicAddressWithImmutableArgs(address implementation, bytes args, bytes32 salt, address deployer) → address predicted</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Computes the address of a clone deployed using [`Clones.cloneDeterministicWithImmutableArgs`](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-).
+
+</div>
+</div>
 
 <a id="Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-"></a>
 
-### `predictDeterministicAddressWithImmutableArgs(address implementation, bytes args, bytes32 salt) → address predicted`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">predictDeterministicAddressWithImmutableArgs(address implementation, bytes args, bytes32 salt) → address predicted</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-predictDeterministicAddressWithImmutableArgs-address-bytes-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Computes the address of a clone deployed using [`Clones.cloneDeterministicWithImmutableArgs`](#Clones-cloneDeterministicWithImmutableArgs-address-bytes-bytes32-uint256-).
 
+</div>
+</div>
+
 <a id="Clones-fetchCloneArgs-address-"></a>
 
-### `fetchCloneArgs(address instance) → bytes`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">fetchCloneArgs(address instance) → bytes</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-fetchCloneArgs-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Get the immutable args attached to a clone.
 
@@ -289,14 +444,35 @@ Get the immutable args attached to a clone.
 - If `instance` is NOT a clone deployed using this library, the behavior is undefined. This
   function should only be used to check addresses that are known to be clones.
 
+</div>
+</div>
+
 <a id="Clones-CloneArgumentsTooLong--"></a>
 
-### `CloneArgumentsTooLong()`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">CloneArgumentsTooLong()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="Clones-CloneArgumentsTooLong--">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC1967Proxy"></a>
 
-## `ERC1967Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/ERC1967/ERC1967Proxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC1967Proxy` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/ERC1967/ERC1967Proxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
@@ -307,19 +483,29 @@ implementation address that can be changed. This address is stored in storage in
 [ERC-1967](https://eips.ethereum.org/EIPS/eip-1967), so that it doesn't conflict with the storage layout of the
 implementation behind the proxy.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(implementation, _data)](#ERC1967Proxy-constructor-address-bytes-)
 - [_implementation()](#ERC1967Proxy-_implementation--)
-
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
+</div>
+</div>
 
 <a id="ERC1967Proxy-constructor-address-bytes-"></a>
 
-### `constructor(address implementation, bytes _data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address implementation, bytes _data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC1967Proxy-constructor-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Initializes the upgradeable proxy with an initial implementation specified by `implementation`.
 
@@ -330,10 +516,20 @@ Requirements:
 
 - If `data` is empty, `msg.value` must be zero.
 
+</div>
+</div>
+
 <a id="ERC1967Proxy-_implementation--"></a>
 
-### `_implementation() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Proxy-_implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address.
 
@@ -341,9 +537,20 @@ TIP: To get this value clients can read directly from the storage slot shown bel
 the [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
 `0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc`
 
+</div>
+</div>
+
 <a id="ERC1967Utils"></a>
 
-## `ERC1967Utils` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/ERC1967/ERC1967Utils.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC1967Utils` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/ERC1967/ERC1967Utils.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
@@ -352,31 +559,56 @@ import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
 This library provides getters and event emitting update functions for
 [ERC-1967](https://eips.ethereum.org/EIPS/eip-1967) slots.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [getImplementation()](#ERC1967Utils-getImplementation--)
 - [upgradeToAndCall(newImplementation, data)](#ERC1967Utils-upgradeToAndCall-address-bytes-)
 - [getAdmin()](#ERC1967Utils-getAdmin--)
 - [changeAdmin(newAdmin)](#ERC1967Utils-changeAdmin-address-)
 - [getBeacon()](#ERC1967Utils-getBeacon--)
 - [upgradeBeaconToAndCall(newBeacon, data)](#ERC1967Utils-upgradeBeaconToAndCall-address-bytes-)
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [ERC1967InvalidImplementation(implementation)](#ERC1967Utils-ERC1967InvalidImplementation-address-)
 - [ERC1967InvalidAdmin(admin)](#ERC1967Utils-ERC1967InvalidAdmin-address-)
 - [ERC1967InvalidBeacon(beacon)](#ERC1967Utils-ERC1967InvalidBeacon-address-)
 - [ERC1967NonPayable()](#ERC1967Utils-ERC1967NonPayable--)
+</div>
+</div>
 
 <a id="ERC1967Utils-getImplementation--"></a>
 
-### `getImplementation() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getImplementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Utils-getImplementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-upgradeToAndCall-address-bytes-"></a>
 
-### `upgradeToAndCall(address newImplementation, bytes data)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeToAndCall(address newImplementation, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Utils-upgradeToAndCall-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Performs implementation upgrade with additional setup call if data is nonempty.
 This function is payable only if the setup call is performed, otherwise `msg.value` is rejected
@@ -384,10 +616,20 @@ to avoid stuck value in the contract.
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-getAdmin--"></a>
 
-### `getAdmin() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getAdmin() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Utils-getAdmin--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current admin.
 
@@ -395,26 +637,56 @@ TIP: To get this value clients can read directly from the storage slot shown bel
 the [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
 `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`
 
+</div>
+</div>
+
 <a id="ERC1967Utils-changeAdmin-address-"></a>
 
-### `changeAdmin(address newAdmin)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">changeAdmin(address newAdmin)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Utils-changeAdmin-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Changes the admin of the proxy.
 
 Emits an [`IERC1967.AdminChanged`](interfaces#IERC1967-AdminChanged-address-address-) event.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-getBeacon--"></a>
 
-### `getBeacon() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getBeacon() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Utils-getBeacon--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current beacon.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-upgradeBeaconToAndCall-address-bytes-"></a>
 
-### `upgradeBeaconToAndCall(address newBeacon, bytes data)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeBeaconToAndCall(address newBeacon, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Utils-upgradeBeaconToAndCall-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Change the beacon and trigger a setup call if data is nonempty.
 This function is payable only if the setup call is performed, otherwise `msg.value` is rejected
@@ -426,37 +698,88 @@ CAUTION: Invoking this function has no effect on an instance of [`BeaconProxy`](
 it uses an immutable beacon without looking at the value of the ERC-1967 beacon slot for
 efficiency.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-ERC1967InvalidImplementation-address-"></a>
 
-### `ERC1967InvalidImplementation(address implementation)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC1967InvalidImplementation(address implementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC1967Utils-ERC1967InvalidImplementation-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The `implementation` of the proxy is invalid.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-ERC1967InvalidAdmin-address-"></a>
 
-### `ERC1967InvalidAdmin(address admin)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC1967InvalidAdmin(address admin)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC1967Utils-ERC1967InvalidAdmin-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The `admin` of the proxy is invalid.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-ERC1967InvalidBeacon-address-"></a>
 
-### `ERC1967InvalidBeacon(address beacon)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC1967InvalidBeacon(address beacon)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC1967Utils-ERC1967InvalidBeacon-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The `beacon` of the proxy is invalid.
 
+</div>
+</div>
+
 <a id="ERC1967Utils-ERC1967NonPayable--"></a>
 
-### `ERC1967NonPayable()`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC1967NonPayable()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC1967Utils-ERC1967NonPayable--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 An upgrade function sees `msg.value > 0` that may be lost.
 
+</div>
+</div>
+
 <a id="Proxy"></a>
 
-## `Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/Proxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `Proxy` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/Proxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/Proxy.sol";
@@ -471,49 +794,101 @@ different contract through the [`Votes._delegate`](governance#Votes-_delegate-ad
 
 The success and return data of the delegated call will be returned back to the caller of the proxy.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_implementation()](#Proxy-_implementation--)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
+</div>
+</div>
 
 <a id="Proxy-_delegate-address-"></a>
 
-### `_delegate(address implementation)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_delegate(address implementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Proxy-_delegate-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Delegates the current call to `implementation`.
 
 This function does not return to its internal call site, it will return directly to the external caller.
 
+</div>
+</div>
+
 <a id="Proxy-_implementation--"></a>
 
-### `_implementation() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Proxy-_implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 This is a virtual function that should be overridden so it returns the address to which the fallback
 function and [`AccountERC7579._fallback`](account#AccountERC7579-_fallback--) should delegate.
 
+</div>
+</div>
+
 <a id="Proxy-_fallback--"></a>
 
-### `_fallback()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_fallback()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Proxy-_fallback--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Delegates the current call to the address returned by `_implementation()`.
 
 This function does not return to its internal call site, it will return directly to the external caller.
 
+</div>
+</div>
+
 <a id="Proxy-fallback--"></a>
 
-### `fallback()`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">fallback()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="Proxy-fallback--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Fallback function that delegates calls to the address returned by `_implementation()`. Will run if no other
 function in the contract matches the call data.
 
+</div>
+</div>
+
 <a id="BeaconProxy"></a>
 
-## `BeaconProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/BeaconProxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `BeaconProxy` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/BeaconProxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
@@ -528,23 +903,35 @@ immutable variable to avoid unnecessary storage reads, and also in the beacon st
 CAUTION: Since the beacon address can never be changed, you must ensure that you either control the beacon, or trust
 the beacon to not upgrade the implementation maliciously.
 
-IMPORTANT: Do not use the implementation logic to modify the beacon storage slot. Doing so would leave the proxy in
+<Callout type="warn">
+Do not use the implementation logic to modify the beacon storage slot. Doing so would leave the proxy in
+</Callout>
 an inconsistent state where the beacon storage slot does not match the beacon address.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(beacon, data)](#BeaconProxy-constructor-address-bytes-)
 - [_implementation()](#BeaconProxy-_implementation--)
 - [_getBeacon()](#BeaconProxy-_getBeacon--)
-
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
+</div>
+</div>
 
 <a id="BeaconProxy-constructor-address-bytes-"></a>
 
-### `constructor(address beacon, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address beacon, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="BeaconProxy-constructor-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Initializes the proxy with `beacon`.
 
@@ -557,23 +944,54 @@ Requirements:
 - `beacon` must be a contract with the interface [`IBeacon`](#IBeacon).
 - If `data` is empty, `msg.value` must be zero.
 
+</div>
+</div>
+
 <a id="BeaconProxy-_implementation--"></a>
 
-### `_implementation() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="BeaconProxy-_implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address of the associated beacon.
 
+</div>
+</div>
+
 <a id="BeaconProxy-_getBeacon--"></a>
 
-### `_getBeacon() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_getBeacon() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="BeaconProxy-_getBeacon--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the beacon.
 
+</div>
+</div>
+
 <a id="IBeacon"></a>
 
-## `IBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/IBeacon.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IBeacon` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/IBeacon.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
@@ -581,21 +999,43 @@ import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
 
 This is the interface that [`BeaconProxy`](#BeaconProxy) expects of its beacon.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [implementation()](#IBeacon-implementation--)
+</div>
+</div>
 
 <a id="IBeacon-implementation--"></a>
 
-### `implementation() → address`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IBeacon-implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Must return an address that can be used as a delegate call target.
 
 [`UpgradeableBeacon`](#UpgradeableBeacon) will check that this address is a contract.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon"></a>
 
-## `UpgradeableBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/UpgradeableBeacon.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `UpgradeableBeacon` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/beacon/UpgradeableBeacon.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
@@ -606,55 +1046,88 @@ implementation contract, which is where they will delegate all function calls.
 
 An owner is able to change the implementation the beacon points to, thus upgrading the proxies that use this beacon.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(implementation_, initialOwner)](#UpgradeableBeacon-constructor-address-address-)
 - [implementation()](#UpgradeableBeacon-implementation--)
 - [upgradeTo(newImplementation)](#UpgradeableBeacon-upgradeTo-address-)
-
 #### Ownable
 - [owner()](#Ownable-owner--)
 - [_checkOwner()](#Ownable-_checkOwner--)
 - [renounceOwnership()](#Ownable-renounceOwnership--)
 - [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
 - [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
-
 #### IBeacon
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [Upgraded(implementation)](#UpgradeableBeacon-Upgraded-address-)
-
 #### Ownable
 - [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
-
 #### IBeacon
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [BeaconInvalidImplementation(implementation)](#UpgradeableBeacon-BeaconInvalidImplementation-address-)
-
 #### Ownable
 - [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
 - [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
-
 #### IBeacon
+</div>
+</div>
 
 <a id="UpgradeableBeacon-constructor-address-address-"></a>
 
-### `constructor(address implementation_, address initialOwner)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address implementation_, address initialOwner)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UpgradeableBeacon-constructor-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the address of the initial implementation, and the initial owner who can upgrade the beacon.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon-implementation--"></a>
 
-### `implementation() → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UpgradeableBeacon-implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon-upgradeTo-address-"></a>
 
-### `upgradeTo(address newImplementation)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeTo(address newImplementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UpgradeableBeacon-upgradeTo-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrades the beacon to a new implementation.
 
@@ -665,23 +1138,55 @@ Requirements:
 - msg.sender must be the owner of the contract.
 - `newImplementation` must be a contract.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon-Upgraded-address-"></a>
 
-### `Upgraded(address indexed implementation)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Upgraded(address indexed implementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="UpgradeableBeacon-Upgraded-address-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when the implementation returned by the beacon is changed.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon-BeaconInvalidImplementation-address-"></a>
 
-### `BeaconInvalidImplementation(address implementation)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">BeaconInvalidImplementation(address implementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="UpgradeableBeacon-BeaconInvalidImplementation-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The `implementation` of the beacon is invalid.
 
+</div>
+</div>
+
 <a id="ProxyAdmin"></a>
 
-## `ProxyAdmin` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/ProxyAdmin.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ProxyAdmin` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/ProxyAdmin.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
@@ -690,40 +1195,66 @@ import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 This is an auxiliary contract meant to be assigned as the admin of a [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy). For an
 explanation of why you would want to use this see the documentation for [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(initialOwner)](#ProxyAdmin-constructor-address-)
 - [upgradeAndCall(proxy, implementation, data)](#ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-)
 - [UPGRADE_INTERFACE_VERSION()](#ProxyAdmin-UPGRADE_INTERFACE_VERSION-string)
-
 #### Ownable
 - [owner()](#Ownable-owner--)
 - [_checkOwner()](#Ownable-_checkOwner--)
 - [renounceOwnership()](#Ownable-renounceOwnership--)
 - [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
 - [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### Ownable
 - [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
+</div>
+</div>
 
-### Errors
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 #### Ownable
 - [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
 - [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
+</div>
+</div>
 
 <a id="ProxyAdmin-constructor-address-"></a>
 
-### `constructor(address initialOwner)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address initialOwner)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-constructor-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the initial owner who can perform upgrades.
 
+</div>
+</div>
+
 <a id="ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-"></a>
 
-### `upgradeAndCall(contract ITransparentUpgradeableProxy proxy, address implementation, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeAndCall(contract ITransparentUpgradeableProxy proxy, address implementation, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrades `proxy` to `implementation` and calls a function on the new implementation.
 See [`TransparentUpgradeableProxy._dispatchUpgradeToAndCall`](#TransparentUpgradeableProxy-_dispatchUpgradeToAndCall--).
@@ -733,10 +1264,20 @@ Requirements:
 - This contract must be the admin of `proxy`.
 - If `data` is empty, `msg.value` must be zero.
 
+</div>
+</div>
+
 <a id="ProxyAdmin-UPGRADE_INTERFACE_VERSION-string"></a>
 
-### `UPGRADE_INTERFACE_VERSION() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">UPGRADE_INTERFACE_VERSION() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-UPGRADE_INTERFACE_VERSION-string">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The version of the upgrade interface of the contract. If this getter is missing, both `upgrade(address,address)`
 and `upgradeAndCall(address,address,bytes)` are present, and `upgrade` must be used if no function should be called,
@@ -745,9 +1286,20 @@ If the getter returns `"5.0.0"`, only `upgradeAndCall(address,address,bytes)` is
 be the empty byte string if no function should be called, making it impossible to invoke the `receive` function
 during an upgrade.
 
+</div>
+</div>
+
 <a id="ITransparentUpgradeableProxy"></a>
 
-## `ITransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ITransparentUpgradeableProxy` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/TransparentUpgradeableProxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
@@ -758,28 +1310,52 @@ does not implement this interface directly, and its upgradeability mechanism is 
 mechanism. The compiler is unaware that these functions are implemented by [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy) and will not
 include them in the ABI so this interface must be used to interact with it.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [upgradeToAndCall(newImplementation, data)](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-)
-
 #### IERC1967
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC1967
 - [Upgraded(implementation)](#IERC1967-Upgraded-address-)
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
+</div>
+</div>
 
 <a id="ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-"></a>
 
-### `upgradeToAndCall(address newImplementation, bytes data)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeToAndCall(address newImplementation, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`UUPSUpgradeable.upgradeToAndCall`](#UUPSUpgradeable-upgradeToAndCall-address-bytes-)
 
+</div>
+</div>
+
 <a id="TransparentUpgradeableProxy"></a>
 
-## `TransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `TransparentUpgradeableProxy` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/transparent/TransparentUpgradeableProxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
@@ -813,69 +1389,125 @@ implementation.
 NOTE: This proxy does not inherit from [`Context`](utils#Context) deliberately. The [`ProxyAdmin`](#ProxyAdmin) of this contract won't send a
 meta-transaction in any way, and any other meta-transaction setup should be made in the implementation contract.
 
-IMPORTANT: This contract avoids unnecessary storage reads by setting the admin only during construction as an
+<Callout type="warn">
+This contract avoids unnecessary storage reads by setting the admin only during construction as an
+</Callout>
 immutable variable, preventing any changes thereafter. However, the admin slot defined in ERC-1967 can still be
 overwritten by the implementation logic pointed to by this proxy. In such cases, the contract may end up in an
 undesirable state where the admin slot is different from the actual admin. Relying on the value of the admin slot
 is generally fine if the implementation is trusted.
 
-WARNING: It is not recommended to extend this contract to add additional external functions. If you do so, the
+<Callout type="warn">
+It is not recommended to extend this contract to add additional external functions. If you do so, the
+</Callout>
 compiler will not check that there are no selector conflicts, due to the note above. A selector clash between any new
 function and the functions declared in [`ITransparentUpgradeableProxy`](#ITransparentUpgradeableProxy) will be resolved in favor of the new one. This
 could render the `upgradeToAndCall` function inaccessible, preventing upgradeability and compromising transparency.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(_logic, initialOwner, _data)](#TransparentUpgradeableProxy-constructor-address-address-bytes-)
 - [_proxyAdmin()](#TransparentUpgradeableProxy-_proxyAdmin--)
 - [_fallback()](#TransparentUpgradeableProxy-_fallback--)
-
 #### ERC1967Proxy
 - [_implementation()](#ERC1967Proxy-_implementation--)
-
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [fallback()](#Proxy-fallback--)
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [ProxyDeniedAdminAccess()](#TransparentUpgradeableProxy-ProxyDeniedAdminAccess--)
-
 #### ERC1967Proxy
-
 #### Proxy
+</div>
+</div>
 
 <a id="TransparentUpgradeableProxy-constructor-address-address-bytes-"></a>
 
-### `constructor(address _logic, address initialOwner, bytes _data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address _logic, address initialOwner, bytes _data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-constructor-address-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Initializes an upgradeable proxy managed by an instance of a [`ProxyAdmin`](#ProxyAdmin) with an `initialOwner`,
 backed by the implementation at `_logic`, and optionally initialized with `_data` as explained in
 [`ERC1967Proxy.constructor`](#ERC1967Proxy-constructor-address-bytes-).
 
+</div>
+</div>
+
 <a id="TransparentUpgradeableProxy-_proxyAdmin--"></a>
 
-### `_proxyAdmin() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_proxyAdmin() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-_proxyAdmin--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the admin of this proxy.
 
+</div>
+</div>
+
 <a id="TransparentUpgradeableProxy-_fallback--"></a>
 
-### `_fallback()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_fallback()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-_fallback--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 If caller is the admin process the call internally, otherwise transparently fallback to the proxy behavior.
 
+</div>
+</div>
+
 <a id="TransparentUpgradeableProxy-ProxyDeniedAdminAccess--"></a>
 
-### `ProxyDeniedAdminAccess()`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ProxyDeniedAdminAccess()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-ProxyDeniedAdminAccess--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The proxy caller is the current admin, and can't fallback to the proxy target.
 
+</div>
+</div>
+
 <a id="Initializable"></a>
 
-## `Initializable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/utils/Initializable.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `Initializable` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/utils/Initializable.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
@@ -930,28 +1562,53 @@ constructor() {
 ```
 ====
 
-### Modifiers
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Modifiers</h3>
+<div className="font-mono">
 - [initializer()](#Initializable-initializer--)
 - [reinitializer(version)](#Initializable-reinitializer-uint64-)
 - [onlyInitializing()](#Initializable-onlyInitializing--)
+</div>
+</div>
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_checkInitializing()](#Initializable-_checkInitializing--)
 - [_disableInitializers()](#Initializable-_disableInitializers--)
 - [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
 - [_isInitializing()](#Initializable-_isInitializing--)
 - [_initializableStorageSlot()](#Initializable-_initializableStorageSlot--)
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [Initialized(version)](#Initializable-Initialized-uint64-)
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [InvalidInitialization()](#Initializable-InvalidInitialization--)
 - [NotInitializing()](#Initializable-NotInitializing--)
+</div>
+</div>
 
 <a id="Initializable-initializer--"></a>
 
-### `initializer()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">initializer()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-initializer--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 A modifier that defines a protected initializer function that can be invoked at most once. In its scope,
 `onlyInitializing` functions can be used to initialize parent contracts.
@@ -962,9 +1619,21 @@ production.
 
 Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint64-) event.
 
+</div>
+</div>
+
 <a id="Initializable-reinitializer-uint64-"></a>
 
-### `reinitializer(uint64 version)`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">reinitializer(uint64 version)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-reinitializer-uint64-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 A modifier that defines a protected reinitializer function that can be invoked at most once, and only if the
 contract hasn't been initialized to a greater version before. In its scope, `onlyInitializing` functions can be
@@ -979,28 +1648,62 @@ cannot be nested. If one is invoked in the context of another, execution will re
 Note that versions can jump in increments greater than 1; this implies that if multiple reinitializers coexist in
 a contract, executing them in the right order is up to the developer or operator.
 
-WARNING: Setting the version to 2**64 - 1 will prevent any future reinitialization.
+<Callout type="warn">
+Setting the version to 2**64 - 1 will prevent any future reinitialization.
+</Callout>
 
 Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint64-) event.
 
+</div>
+</div>
+
 <a id="Initializable-onlyInitializing--"></a>
 
-### `onlyInitializing()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">onlyInitializing()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-onlyInitializing--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Modifier to protect an initialization function so that it can only be invoked by functions with the
 [`Initializable.initializer`](#Initializable-initializer--) and [`Initializable.reinitializer`](#Initializable-reinitializer-uint64-) modifiers, directly or indirectly.
 
+</div>
+</div>
+
 <a id="Initializable-_checkInitializing--"></a>
 
-### `_checkInitializing()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_checkInitializing()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_checkInitializing--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Reverts if the contract is not in an initializing state. See [`Initializable.onlyInitializing`](#Initializable-onlyInitializing--).
 
+</div>
+</div>
+
 <a id="Initializable-_disableInitializers--"></a>
 
-### `_disableInitializers()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_disableInitializers()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_disableInitializers--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Locks the contract, preventing any future reinitialization. This cannot be part of an initializer call.
 Calling this in the constructor of a contract will prevent that contract from being initialized or reinitialized
@@ -1009,53 +1712,125 @@ through proxies.
 
 Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint64-) event the first time it is successfully executed.
 
+</div>
+</div>
+
 <a id="Initializable-_getInitializedVersion--"></a>
 
-### `_getInitializedVersion() → uint64`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_getInitializedVersion() → uint64</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_getInitializedVersion--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the highest version that has been initialized. See [`Initializable.reinitializer`](#Initializable-reinitializer-uint64-).
 
+</div>
+</div>
+
 <a id="Initializable-_isInitializing--"></a>
 
-### `_isInitializing() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isInitializing() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_isInitializing--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns `true` if the contract is currently initializing. See [`Initializable.onlyInitializing`](#Initializable-onlyInitializing--).
 
+</div>
+</div>
+
 <a id="Initializable-_initializableStorageSlot--"></a>
 
-### `_initializableStorageSlot() → bytes32`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_initializableStorageSlot() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_initializableStorageSlot--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Pointer to storage slot. Allows integrators to override it with a custom storage location.
 
 NOTE: Consider following the ERC-7201 formula to derive storage locations.
 
+</div>
+</div>
+
 <a id="Initializable-Initialized-uint64-"></a>
 
-### `Initialized(uint64 version)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Initialized(uint64 version)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="Initializable-Initialized-uint64-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Triggered when the contract has been initialized or reinitialized.
 
+</div>
+</div>
+
 <a id="Initializable-InvalidInitialization--"></a>
 
-### `InvalidInitialization()`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">InvalidInitialization()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="Initializable-InvalidInitialization--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The contract is already initialized.
 
+</div>
+</div>
+
 <a id="Initializable-NotInitializing--"></a>
 
-### `NotInitializing()`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">NotInitializing()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="Initializable-NotInitializing--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The contract is not initializing.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable"></a>
 
-## `UUPSUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/utils/UUPSUpgradeable.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `UUPSUpgradeable` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/proxy/utils/UUPSUpgradeable.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
@@ -1070,29 +1845,48 @@ reinstated if the upgrade retains upgradeability but removes the security mechan
 
 The [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-address-) function must be overridden to include access restriction to the upgrade mechanism.
 
-### Modifiers
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Modifiers</h3>
+<div className="font-mono">
 - [onlyProxy()](#UUPSUpgradeable-onlyProxy--)
 - [notDelegated()](#UUPSUpgradeable-notDelegated--)
+</div>
+</div>
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [proxiableUUID()](#UUPSUpgradeable-proxiableUUID--)
 - [upgradeToAndCall(newImplementation, data)](#UUPSUpgradeable-upgradeToAndCall-address-bytes-)
 - [_checkProxy()](#UUPSUpgradeable-_checkProxy--)
 - [_checkNotDelegated()](#UUPSUpgradeable-_checkNotDelegated--)
 - [_authorizeUpgrade(newImplementation)](#UUPSUpgradeable-_authorizeUpgrade-address-)
 - [UPGRADE_INTERFACE_VERSION()](#UUPSUpgradeable-UPGRADE_INTERFACE_VERSION-string)
-
 #### IERC1822Proxiable
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [UUPSUnauthorizedCallContext()](#UUPSUpgradeable-UUPSUnauthorizedCallContext--)
 - [UUPSUnsupportedProxiableUUID(slot)](#UUPSUpgradeable-UUPSUnsupportedProxiableUUID-bytes32-)
-
 #### IERC1822Proxiable
+</div>
+</div>
 
 <a id="UUPSUpgradeable-onlyProxy--"></a>
 
-### `onlyProxy()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">onlyProxy()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-onlyProxy--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Check that the execution is being performed through a delegatecall call and that the execution context is
 a proxy contract with an implementation (as defined in ERC-1967) pointing to self. This should only be the case
@@ -1100,29 +1894,63 @@ for UUPS and transparent proxies that are using the current contract as their im
 function through ERC-1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to
 fail.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-notDelegated--"></a>
 
-### `notDelegated()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">notDelegated()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-notDelegated--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Check that the execution is not being performed through a delegate call. This allows a function to be
 callable on the implementing contract but not through proxies.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-proxiableUUID--"></a>
 
-### `proxiableUUID() → bytes32`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">proxiableUUID() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="UUPSUpgradeable-proxiableUUID--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Implementation of the ERC-1822 [`IERC1822Proxiable.proxiableUUID`](interfaces#IERC1822Proxiable-proxiableUUID--) function. This returns the storage slot used by the
 implementation. It is used to validate the implementation's compatibility when performing an upgrade.
 
-IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
+<Callout type="warn">
+A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
+</Callout>
 bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this
 function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-upgradeToAndCall-address-bytes-"></a>
 
-### `upgradeToAndCall(address newImplementation, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeToAndCall(address newImplementation, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UUPSUpgradeable-upgradeToAndCall-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrade the implementation of the proxy to `newImplementation`, and subsequently execute the function call
 encoded in `data`.
@@ -1131,26 +1959,56 @@ Calls [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-a
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-_checkProxy--"></a>
 
-### `_checkProxy()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_checkProxy()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-_checkProxy--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Reverts if the execution is not performed via delegatecall or the execution
 context is not of a proxy with an ERC-1967 compliant implementation pointing to self.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-_checkNotDelegated--"></a>
 
-### `_checkNotDelegated()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_checkNotDelegated()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-_checkNotDelegated--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Reverts if the execution is performed via delegatecall.
 See [`UUPSUpgradeable.notDelegated`](#UUPSUpgradeable-notDelegated--).
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-_authorizeUpgrade-address-"></a>
 
-### `_authorizeUpgrade(address newImplementation)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_authorizeUpgrade(address newImplementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-_authorizeUpgrade-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Function that should revert when `msg.sender` is not authorized to upgrade the contract. Called by
 [`ERC1967Utils.upgradeToAndCall`](#ERC1967Utils-upgradeToAndCall-address-bytes-).
@@ -1161,10 +2019,20 @@ Normally, this function will use an xref:access.adoc[access control] modifier su
 function _authorizeUpgrade(address) internal onlyOwner {}
 ```
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-UPGRADE_INTERFACE_VERSION-string"></a>
 
-### `UPGRADE_INTERFACE_VERSION() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">UPGRADE_INTERFACE_VERSION() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UUPSUpgradeable-UPGRADE_INTERFACE_VERSION-string">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The version of the upgrade interface of the contract. If this getter is missing, both `upgradeTo(address)`
 and `upgradeToAndCall(address,bytes)` are present, and `upgradeTo` must be used if no function should be called,
@@ -1173,17 +2041,40 @@ If the getter returns `"5.0.0"`, only `upgradeToAndCall(address,bytes)` is prese
 be the empty byte string if no function should be called, making it impossible to invoke the `receive` function
 during an upgrade.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-UUPSUnauthorizedCallContext--"></a>
 
-### `UUPSUnauthorizedCallContext()`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">UUPSUnauthorizedCallContext()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="UUPSUpgradeable-UUPSUnauthorizedCallContext--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The call is from an unauthorized context.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-UUPSUnsupportedProxiableUUID-bytes32-"></a>
 
-### `UUPSUnsupportedProxiableUUID(bytes32 slot)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">UUPSUnsupportedProxiableUUID(bytes32 slot)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="UUPSUpgradeable-UUPSUnsupportedProxiableUUID-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The storage `slot` is unsupported as a UUID.
+
+</div>
+</div>
 
