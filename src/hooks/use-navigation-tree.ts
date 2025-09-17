@@ -18,7 +18,7 @@ export function useNavigationTree() {
 	// Determine which navigation tree to use based on the current path
 	if (pathname.startsWith("/contracts-stylus")) {
 		return arbitrumStylusTree;
-	} else if (pathname.startsWith("/cairo-contracts")) {
+	} else if (pathname.startsWith("/contracts-cairo")) {
 		return starknetTree;
 	} else if (pathname.startsWith("/stellar-contracts")) {
 		return stellarTree;

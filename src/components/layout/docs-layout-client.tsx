@@ -52,7 +52,7 @@ export function DocsLayoutClient({ children }: DocsLayoutClientProps) {
 					},
 					{
 						title: "Starknet",
-						url: "/cairo-contracts",
+						url: "/contracts-cairo",
 						icon: <StarknetIcon className="w-5 h-5" />,
 					},
 					{
