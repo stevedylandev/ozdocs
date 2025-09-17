@@ -1,5 +1,5 @@
-import { source } from "@/lib/source";
 import type { DocumentRecord } from "fumadocs-core/search/algolia";
+import { source } from "@/lib/source";
 
 export async function exportSearchIndexes() {
 	const results: DocumentRecord[] = [];

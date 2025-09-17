@@ -12,8 +12,10 @@ import {
 	SearchDialogOverlay,
 	type SharedProps,
 } from "fumadocs-ui/components/dialog/search";
-import { useDocsSearch } from "fumadocs-core/search/client";
 import { useI18n } from "fumadocs-ui/contexts/i18n";
+import { useRouter } from "next/navigation";
+import { CustomSearchResultItem } from "@/components/custom-search-result";
+import { useCustomDocsSearch } from "@/lib/search/client";
 
 const appId = `${process.env.NEXT_PUBLIC_ALGOLIA_ID}`;
 const apiKey = `${process.env.NEXT_PUBLIC_ALGOLIA_KEY}`;
@@ -21,14 +23,28 @@ const client = liteClient(appId, apiKey);
 
 export default function CustomSearchDialog(props: SharedProps) {
 	const { locale } = useI18n(); // (optional) for i18n
-	const { search, setSearch, query } = useDocsSearch({
-		type: "algolia",
+	const router = useRouter();
+
+	// Now using your custom search implementation with customization options
+	const { search, setSearch, query } = useCustomDocsSearch({
+		type: "custom-algolia",
 		client,
 		indexName: "document",
 		locale,
+		// Add your custom options here:
+		customFilters: [
+			// Example: Filter by content type
+			// 'type:"documentation"',
+			// 'published:true'
+		],
+		customRankingCriteria: [
+			// Example: Custom ranking criteria
+			// 'desc(popularity)',
+			// 'asc(difficulty_level)'
+		],
+		enablePersonalization: false, // Set to true if you want personalized results
+		delay: 150, // Custom debounce delay
 	});
-
-	console.log(query.data?.[0]);
 
 	return (
 		<SearchDialog
@@ -44,7 +60,23 @@ export default function CustomSearchDialog(props: SharedProps) {
 					<SearchDialogInput />
 					<SearchDialogClose />
 				</SearchDialogHeader>
-				<SearchDialogList items={query.data !== "empty" ? query.data : null} />
+				<SearchDialogList
+					items={query.data !== "empty" ? query.data : null}
+					Item={({ item, onClick }) => (
+						<CustomSearchResultItem
+							result={item}
+							query={search}
+							onSelect={() => {
+								onClick();
+								router.push(item.url);
+								// Close the dialog after selection
+								if (props.onOpenChange) {
+									props.onOpenChange(false);
+								}
+							}}
+						/>
+					)}
+				/>
 				<SearchDialogFooter>
 					<a
 						href="https://algolia.com"
