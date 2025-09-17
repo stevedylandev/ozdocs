@@ -170,8 +170,8 @@ export async function searchDocs(
 			"locale",
 		],
 		attributesToHighlight: ["title", "content", "structured.content"],
-		hitsPerPage: 2,
-		distinct: 10, // This is key for diverse results
+		hitsPerPage: 20, // Increase to get more results before distinct filtering
+		distinct: 1, // Limit to 1 result per distinct attribute
 	};
 
 	// Add tag filter if specified

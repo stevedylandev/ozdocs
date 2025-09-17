@@ -133,7 +133,7 @@ export function CustomSearchResultItem({
 				<div className="flex items-center gap-2 min-w-0 flex-1">
 					{/* Title */}
 					<h3 className="font-semibold text-sm truncate group-hover:text-fd-accent-foreground">
-						{getHighlighted(getDisplayTitle())}
+						{getHighlighted(getDisplayTitle() as string)}
 					</h3>
 				</div>
 
