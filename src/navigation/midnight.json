@@ -25,6 +25,11 @@
 		]
 	},
 	{
+		"type": "page",
+		"name": "Security",
+		"url": "/contracts-compact/security"
+	},
+	{
 		"type": "folder",
 		"name": "Tokens",
 		"children": [
