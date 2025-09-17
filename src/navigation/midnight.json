@@ -86,6 +86,11 @@
 			},
 			{
 				"type": "page",
+				"name": "Security API",
+				"url": "/contracts-compact/api/security"
+			},
+			{
+				"type": "page",
 				"name": "Utils API",
 				"url": "/contracts-compact/api/utils"
 			}
