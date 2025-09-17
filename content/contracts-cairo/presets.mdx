@@ -25,13 +25,13 @@ Before version 3.0.0-alpha.2, class hashes were computed using the `scarb --dev`
 
 | Name | Sierra Class Hash |
 | --- | --- |
-| `[AccountUpgradeable](/api/account.mdx#AccountUpgradeable)` | `AccountUpgradeable-class-hash` |
-| `[ERC20Upgradeable](/api/erc20.mdx#ERC20Upgradeable)` | `ERC20Upgradeable-class-hash` |
-| `[ERC721Upgradeable](/api/erc721.mdx#ERC721Upgradeable)` | `ERC721Upgradeable-class-hash` |
-| `[ERC1155Upgradeable](/api/erc1155.mdx#ERC1155Upgradeable)` | `ERC1155Upgradeable-class-hash` |
-| `[EthAccountUpgradeable](/api/account.mdx#EthAccountUpgradeable)` | `EthAccountUpgradeable-class-hash` |
-| `[UniversalDeployer](/api/udc.mdx#UniversalDeployer)` | `UniversalDeployer-class-hash` |
-| `[VestingWallet](/api/finance.mdx#VestingWallet)` | `VestingWallet-class-hash` |
+| `[AccountUpgradeable](/api/account#AccountUpgradeable)` | `AccountUpgradeable-class-hash` |
+| `[ERC20Upgradeable](/api/erc20#ERC20Upgradeable)` | `ERC20Upgradeable-class-hash` |
+| `[ERC721Upgradeable](/api/erc721#ERC721Upgradeable)` | `ERC721Upgradeable-class-hash` |
+| `[ERC1155Upgradeable](/api/erc1155#ERC1155Upgradeable)` | `ERC1155Upgradeable-class-hash` |
+| `[EthAccountUpgradeable](/api/account#EthAccountUpgradeable)` | `EthAccountUpgradeable-class-hash` |
+| `[UniversalDeployer](/api/udc#UniversalDeployer)` | `UniversalDeployer-class-hash` |
+| `[VestingWallet](/api/finance#VestingWallet)` | `VestingWallet-class-hash` |
 
 <Callout>
 [starkli](https://book.starkli.rs/introduction) class-hash command can be used to compute the class hash from a Sierra artifact.
@@ -50,7 +50,7 @@ starkli deploy {ERC20Upgradeable-class-hash} \
 ```
 
 If a class hash has yet to be declared, copy/paste the preset contract code and declare it locally.
-Start by [setting up a project](index.mdx#set_up_your_project) and [installing the Contracts for Cairo library](index.mdx#install_the_library).
+Start by [setting up a project](index#set_up_your_project) and [installing the Contracts for Cairo library](index#install_the_library).
 Copy the target preset contract from the [presets directory](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.2/packages/presets/src) and paste it in the new project’s `src/lib.cairo` like this:
 
 ```rust

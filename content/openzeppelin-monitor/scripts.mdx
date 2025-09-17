@@ -23,7 +23,7 @@ Custom filter scripts allow you to apply additional conditions to matches detect
    * EVM
 
      ```json
-     
+
        "args": ["--verbose"],
        "monitor_match": {
          "EVM": {
@@ -33,16 +33,16 @@ Custom filter scripts allow you to apply additional conditions to matches detect
                {
                  "expression": null,
                  "signature": "transfer(address,uint256)"
-               
+
              ],
              "transactions": [
-               
+
                  "expression": null,
                  "status": "Success"
-               
+
              ]
            },
-           "matched_on_args": 
+           "matched_on_args":
              "events": null,
              "functions": [
                {
@@ -53,59 +53,59 @@ Custom filter scripts allow you to apply additional conditions to matches detect
                      "name": "to",
                      "value": "0x94d953b148d4d7143028f397de3a65a1800f97b3"
                    ,
-                   
+
                      "indexed": false,
                      "kind": "uint256",
                      "name": "value",
                      "value": "434924400"
-                   
+
                  ],
                  "hex_signature": "a9059cbb",
                  "signature": "transfer(address,uint256)"
                }
              ]
            },
-           "monitor": 
+           "monitor":
              "addresses": [
                {
                  "contract_spec": null,
                  "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-               
+
              ],
-             "match_conditions": 
+             "match_conditions":
                "events": [
                  {
                    "expression": "value > 10000000000",
                    "signature": "Transfer(address,address,uint256)"
-                 
+
                ],
                "functions": [
-                 
+
                    "expression": null,
                    "signature": "transfer(address,uint256)"
-                 
+
                ],
                "transactions": [
-                 
+
                    "expression": null,
                    "status": "Success"
-                 
+
                ]
              },
              "name": "Large Transfer of USDC Token",
              "networks": ["ethereum_mainnet"],
              "paused": false,
              "trigger_conditions": [
-               
+
                  "arguments": ["--verbose"],
                  "language": "Bash",
                  "script_path": "./config/filters/evm_filter_block_number.sh",
                  "timeout_ms": 1000
-               
+
              ],
              "triggers": ["evm_large_transfer_usdc_script"]
            },
-           "receipt": 
+           "receipt":
              "blockHash": "0x...",
              "blockNumber": "0x...",
              "contractAddress": null,
@@ -120,7 +120,7 @@ Custom filter scripts allow you to apply additional conditions to matches detect
              "type": "0x2"
            ,
            "logs": [
-              
+
                  "address": "0xd1f2586790a5bd6da1e443441df53af6ec213d83",
                  "topics": [
                      "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
@@ -136,7 +136,7 @@ Custom filter scripts allow you to apply additional conditions to matches detect
                  "removed": false
                ,
            ],
-           "transaction": 
+           "transaction":
              "accessList": [],
              "blockHash": "0x...",
              "blockNumber": "0x1506545",
@@ -152,7 +152,7 @@ Custom filter scripts allow you to apply additional conditions to matches detect
              "transactionIndex": "0x...",
              "type": "0x2",
              "value": "0x0"
-           
+
          }
        }
      }
@@ -160,7 +160,7 @@ Custom filter scripts allow you to apply additional conditions to matches detect
    * Stellar
 
      ```json
-     
+
        "args": ["--verbose"],
        "monitor_match": {
          "Stellar": {
@@ -172,29 +172,29 @@ Custom filter scripts allow you to apply additional conditions to matches detect
                {
                  "address": "GCXYK...",
                  "contract_spec": null
-               
+
              ],
-             "match_conditions": 
+             "match_conditions":
                "functions": [
                  {
                    "signature": "swap(Address,U32,U32,U128,U128)",
                    "expression": "out_min > 1000000000"
-                 
+
                ],
                "events": [],
                "transactions": []
              },
              "trigger_conditions": [
-               
+
                  "arguments": ["--verbose"],
                  "language": "Bash",
                  "script_path": "./config/filters/stellar_filter_block_number.sh",
                  "timeout_ms": 1000
-               
+
              ],
              "triggers": ["stellar_large_transfer_usdc_script"]
            },
-           "transaction": 
+           "transaction":
              "status": "SUCCESS",
              "txHash": "2b5a0c...",
              "applicationOrder": 3,
@@ -212,13 +212,13 @@ Custom filter scripts allow you to apply additional conditions to matches detect
              "diagnosticEventsJson": [/* event details */],
              "ledger": 123456,
              "createdAt": 1679644800,
-             "decoded": 
+             "decoded":
                "envelope": {/* decoded envelope */,
                "result": /* decoded result */,
                "meta": /* decoded metadata */
              }
            },
-           "ledger": 
+           "ledger":
              "hash": "abc1...",
              "sequence": 123456,
              "ledgerCloseTime": "2024-03-20T10:00:00Z",
@@ -227,20 +227,20 @@ Custom filter scripts allow you to apply additional conditions to matches detect
              "metadataXdr": "AAAAAA...",
              "metadataJSON": /* metadata details */
            },
-           "matched_on": 
+           "matched_on":
              "functions": [
                {
                  "signature": "swap(Address,U32,U32,U128,U128)",
                  "expression": "out_min > 1000000000"
-               
+
              ],
              "events": [],
              "transactions": []
            },
-           "matched_on_args": 
+           "matched_on_args":
              "functions": [],
              "events": null
-           
+
          }
        }
      }
@@ -258,7 +258,7 @@ Custom filter scripts allow you to apply additional conditions to matches detect
 ```bash
 #!/bin/bash
 
-main() 
+main()
     # Read JSON input from stdin
     input_json=$(cat)
 
@@ -335,14 +335,14 @@ main
 ```bash
 #!/bin/bash
 
-try 
+try
     let inputData = '';
     // Read from stdin
     process.stdin.on('data', chunk => {
         inputData += chunk;
     );
 
-    process.stdin.on('end', () => 
+    process.stdin.on('end', () =>
         const data = JSON.parse(inputData);
         const monitorMatch = data.monitor_match;
         const args = data.args;
@@ -354,19 +354,19 @@ try
             if (hexBlock) {
                 // Convert hex string to integer
                 blockNumber = parseInt(hexBlock, 16);
-            
+
         }
 
-        if (blockNumber === null) 
+        if (blockNumber === null)
             console.log('false');
             return;
-        
+
 
         const result = blockNumber % 2 === 0;
         console.log(`Block number $blockNumber is $result ? 'even' : 'odd'`);
         console.log(result.toString());
     });
-} catch (e) 
+} catch (e)
     console.log(`Error processing input: ${e`);
     console.log('false');
 }
@@ -434,7 +434,7 @@ This examples script filters EVM transactions based on their block number:
 
 ### Integration
 
-Integrate your custom filter script with the monitor by following the [configuration guidelines](index.mdx#trigger_conditions_custom_filters).
+Integrate your custom filter script with the monitor by following the [configuration guidelines](index#trigger_conditions_custom_filters).
 
 
 
@@ -464,7 +464,7 @@ Custom notification scripts allow you to define how alerts are delivered when sp
 ```bash
 #!/bin/bash
 
-main() 
+main()
     # Read JSON input from stdin
     input_json=$(cat)
 
@@ -524,14 +524,14 @@ main
 ```bash
 #!/bin/bash
 
-try 
+try
     let inputData = '';
     // Read from stdin
     process.stdin.on('data', chunk => {
         inputData += chunk;
     );
 
-    process.stdin.on('end', () => 
+    process.stdin.on('end', () =>
         // Parse input JSON
         const data = JSON.parse(inputData);
         const monitorMatch = data.monitor_match;
@@ -543,12 +543,12 @@ try
         }
 
         // Validate monitor match data
-        if (!monitorMatch) 
+        if (!monitorMatch)
             console.log("No monitor match data provided");
             return;
-        
+
     });
-} catch (e) 
+} catch (e)
     console.log(`Error processing input: ${e`);
 }
 
@@ -598,7 +598,7 @@ This examples demonstrates how to:
 
 ### Integration
 
-Integrate your custom notification script with the triggers by following the [configuration guidelines](index.mdx#custom_script_notifications).
+Integrate your custom notification script with the triggers by following the [configuration guidelines](index#custom_script_notifications).
 
 ## Performance Considerations
 

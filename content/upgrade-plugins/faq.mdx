@@ -8,7 +8,7 @@ Yes. The Solidity team guarantees that the compiler will [preserve the storage l
 
 ## Why am I getting the error "Cannot call fallback function from the proxy admin"?
 
-This is due to the [Transparent Proxy Pattern](proxies.mdx#transparent-proxies-and-function-clashes). You shouldn’t get this error when using the OpenZeppelin Upgrades Plugins, since it uses the `ProxyAdmin` contract for managing your proxies.
+This is due to the [Transparent Proxy Pattern](proxies#transparent-proxies-and-function-clashes). You shouldn’t get this error when using the OpenZeppelin Upgrades Plugins, since it uses the `ProxyAdmin` contract for managing your proxies.
 
 However, if you are using OpenZeppelin Contracts proxies programmatically you could potentially run into such error. The solution is to always interact with your proxies from an account that is not the admin of the proxy, unless you want to specifically call the functions of the proxy itself.
 
@@ -16,20 +16,20 @@ However, if you are using OpenZeppelin Contracts proxies programmatically you co
 
 When deploying a proxy for a contract, there are some limitations to the contract code. In particular, the contract cannot have a constructor, and should not use the `selfdestruct` or `delegatecall` operations for security reasons.
 
-As a replacement for the constructor, it is common to set up an `initialize` function to take care of the contract’s initialization. You can use the [`Initializable`](writing-upgradeable.mdx#initializers) base contract to have access to an `initializer` modifier that ensures the function is only called once.
+As a replacement for the constructor, it is common to set up an `initialize` function to take care of the contract’s initialization. You can use the [`Initializable`](writing-upgradeable#initializers) base contract to have access to an `initializer` modifier that ensures the function is only called once.
 
 ```solidity
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract MyContract is Initializable 
+contract MyContract is Initializable
   uint256 value;
   function initialize(uint256 initialValue) public initializer {
     value = initialValue;
-  
+
 }
 ```
 
-Both plugins will validate that the contract you are trying to deploy complies with these rules. You can read more about how to write upgrade safe contracts [here](upgrades::writing-upgradeable.mdx).
+Both plugins will validate that the contract you are trying to deploy complies with these rules. You can read more about how to write upgrade safe contracts [here](upgrades::writing-upgradeable).
 
 ## How can I disable some of the checks?
 
@@ -57,13 +57,13 @@ await upgradeProxy(proxyAddress, implementationFactory,  unsafeAllow: ['delegate
 Additionally, it is possible to precisely disable checks directly from the Solidity source code using NatSpec comments. This requires Solidity >=0.8.2.
 
 ```solidity
-contract SomeContract 
+contract SomeContract
   function some_dangerous_function() public {
     ...
     /// @custom:oz-upgrades-unsafe-allow delegatecall
     (bool success, bytes memory returndata) = msg.sender.delegatecall("");
     ...
-  
+
 }
 ```
 
@@ -80,11 +80,11 @@ In some cases you may want to allow multiple errors in a single line.
 
 ```solidity
 /// @custom:oz-upgrades-unsafe-allow constructor state-variable-immutable
-contract SomeOtherContract 
+contract SomeOtherContract
   uint256 immutable x;
   constructor() {
     x = block.number;
-  
+
 }
 ```
 
@@ -102,27 +102,27 @@ This is an advanced technique and can put funds at risk of permanent loss.
 It may be possible to safely use `delegatecall` and `selfdestruct` if they are guarded so that they can only be triggered through proxies and not on the implementation contract itself. A way to achieve this in Solidity is as follows.
 
 ```solidity
-abstract contract OnlyDelegateCall 
+abstract contract OnlyDelegateCall
     /// @custom:oz-upgrades-unsafe-allow state-variable-immutable
     address private immutable self = address(this);
 
     function checkDelegateCall() private view {
         require(address(this) != self);
-    
 
-    modifier onlyDelegateCall() 
+
+    modifier onlyDelegateCall()
         checkDelegateCall();
         _;
-    
+
 }
 ```
 
 ```solidity
-contract UsesUnsafeOperations is OnlyDelegateCall 
+contract UsesUnsafeOperations is OnlyDelegateCall
     /// @custom:oz-upgrades-unsafe-allow selfdestruct
     function destroyProxy() onlyDelegateCall {
         selfdestruct(msg.sender);
-    
+
 }
 ```
 
@@ -132,23 +132,23 @@ When upgrading a proxy from one implementation to another, the _storage layout_ 
 
 Both plugins will validate that the new implementation contract is compatible with the previous one.
 
-You can read more about how to make storage-compatible changes to an implementation contract [here](upgrades::writing-upgradeable.adoc#modifying-your-contracts.mdx).
+You can read more about how to make storage-compatible changes to an implementation contract [here](upgrades::writing-upgradeable.adoc#modifying-your-contracts).
 
 ## What is a proxy admin?
 
-A `ProxyAdmin` is an intermediary contract that acts as the upgrader of a transparent proxy. Each `ProxyAdmin` is owned by the deployer address, or by the `initialOwner` address when deploying a transparent proxy from OpenZeppelin Contracts 5.0 or above. You can transfer the ownership of a proxy admin by calling [`transferOwnership`](contracts:api:access.mdx#Ownable-transferOwnership-address-).
+A `ProxyAdmin` is an intermediary contract that acts as the upgrader of a transparent proxy. Each `ProxyAdmin` is owned by the deployer address, or by the `initialOwner` address when deploying a transparent proxy from OpenZeppelin Contracts 5.0 or above. You can transfer the ownership of a proxy admin by calling [`transferOwnership`](contracts:api:access#Ownable-transferOwnership-address-).
 
 ## What is an implementation contract?
 
 Upgradeable deployments require at least two contracts: a proxy and an implementation. The proxy contract is the instance you and your users will interact with, and the implementation is the contract that holds the code. If you call `deployProxy` several times for the same implementation contract, several proxies will be deployed, but only one implementation contract will be used.
 
-When you upgrade a proxy to a new version, a new implementation contract is deployed if needed, and the proxy is set to use the new implementation contract. You can read more about the proxy upgrade pattern [here](upgrades::proxies.mdx).
+When you upgrade a proxy to a new version, a new implementation contract is deployed if needed, and the proxy is set to use the new implementation contract. You can read more about the proxy upgrade pattern [here](upgrades::proxies).
 
 ## What is a proxy?
 
 A proxy is a contract that delegates all of its calls to a second contract, named an implementation contract. All state and funds are held in the proxy, but the code actually executed is that of the implementation. A proxy can be _upgraded_ by its admin to use a different implementation contract.
 
-You can read more about the proxy upgrade pattern [here](upgrades::proxies.mdx).
+You can read more about the proxy upgrade pattern [here](upgrades::proxies).
 
 ## Why can't I use `immutable` variables?
 
@@ -182,12 +182,12 @@ The recommended way to include one or both of these functions is by inheriting t
 ```solidity
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract MyContract is Initializable, ..., UUPSUpgradeable 
+contract MyContract is Initializable, ..., UUPSUpgradeable
     ...
 
 ```
 
-Read more about the differences with the Transparent Proxy Pattern in [Transparent vs UUPS](contracts:api:proxy.mdx#transparent-vs-uups).
+Read more about the differences with the Transparent Proxy Pattern in [Transparent vs UUPS](contracts:api:proxy#transparent-vs-uups).
 
 ## Can I use custom types like structs and enums?
 
@@ -202,10 +202,10 @@ Renaming a variable is disallowed by default because there is a chance that a re
 It is possible to disable this check by passing the option `unsafeAllowRenames: true`. A more granular approach is to use a docstring comment `/// @custom:oz-renamed-from <previous name>` right above the variable that is being renamed, for example:
 
 ```solidity
-contract V1 
+contract V1
     uint x;
 
-contract V2 
+contract V2
     /// @custom:oz-renamed-from x
     uint y;
 
@@ -214,10 +214,10 @@ contract V2
 Changing the type of a variable is not allowed either, even in cases where the types have the same size and alignment, for the similar reason explained above. As long as we can guarantee that the rest of the layout is not affected by this type change, it is also possible to override this check by placing a docstring comment `/// @custom:oz-retyped-from <previous type>`.
 
 ```solidity
-contract V1 
+contract V1
     bool x;
 
-contract V2 
+contract V2
     /// @custom:oz-retyped-from bool
     uint8 x;
 
@@ -233,20 +233,20 @@ For example, the `messageFunction` variable in the following contract is not upg
 ```solidity
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract V1 is Initializable 
+contract V1 is Initializable
   function() internal pure returns (string memory) messageFunction;
 
   function initialize() initializer public {
     messageFunction = hello;
-  
 
-  function hello() internal pure returns (string memory) 
+
+  function hello() internal pure returns (string memory)
     return "Hello, World!";
-  
 
-  function showMessage() public view returns (string memory) 
+
+  function showMessage() public view returns (string memory)
     return messageFunction();
-  
+
   ...
 }
 ```
@@ -258,17 +258,17 @@ In new versions of this contract, assign the internal function in the storage va
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "./V1.sol";
 
-contract V2 is V1 
+contract V2 is V1
   function initializeV2() reinitializer(2) public {
     messageFunction = hello;
-  
+
   ...
 }
 ```
 
 Then when upgrading, call the reinitializer function as part of the upgrade process, for example in Hardhat:
 ```ts
-await upgrades.upgradeProxy(PROXY_ADDRESS, ContractFactoryV2, 
+await upgrades.upgradeProxy(PROXY_ADDRESS, ContractFactoryV2,
   call: 'initializeV2',
   unsafeAllow: ['internal-function-storage']
 );

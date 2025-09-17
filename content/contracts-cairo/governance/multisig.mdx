@@ -56,7 +56,7 @@ A transaction in the Multisig component follows a specific lifecycle:
 
 ## Usage
 
-Integrating the Multisig functionality into a contract requires implementing [MultisigComponent](api/governance.mdx#MultisigComponent).
+Integrating the Multisig functionality into a contract requires implementing [MultisigComponent](api/governance#MultisigComponent).
 The contract’s constructor should initialize the component with a quorum value and a list of initial signers.
 
 Here’s an example of a simple wallet contract featuring the Multisig functionality:
@@ -95,7 +95,7 @@ mod MultisigWallet {
 
 ## Interface
 
-This is the interface of a contract implementing the [MultisigComponent](api/governance.mdx#MultisigComponent):
+This is the interface of a contract implementing the [MultisigComponent](api/governance#MultisigComponent):
 
 ```rust
 #[starknet::interface]

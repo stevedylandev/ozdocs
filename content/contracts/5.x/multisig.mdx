@@ -27,7 +27,7 @@ The [SignatureChecker](https://github.com/OpenZeppelin/openzeppelin-contracts/bl
 
 ### SignerERC7913
 
-The [`SignerERC7913`](contracts/v5.x/api/utils.mdx#SignerERC7913) contract allows a single ERC-7913 formatted signer to control an account. The signer is represented as a `bytes` object that concatenates a verifier address and a key: `verifier || key`.
+The [`SignerERC7913`](contracts/v5.x/api/utils#SignerERC7913) contract allows a single ERC-7913 formatted signer to control an account. The signer is represented as a `bytes` object that concatenates a verifier address and a key: `verifier || key`.
 
 ```solidity
 // contracts/MyAccountERC7913.sol
@@ -72,7 +72,7 @@ Leaving an account uninitialized may leave it unusable since no public key was a
 
 ### MultiSignerERC7913
 
-The [`MultiSignerERC7913`](contracts/v5.x/api/utils/cryptography.mdx#MultiSignerERC7913) contract extends this concept to support multiple signers with a threshold-based signature verification system.
+The [`MultiSignerERC7913`](contracts/v5.x/api/utils/cryptography#MultiSignerERC7913) contract extends this concept to support multiple signers with a threshold-based signature verification system.
 
 ```solidity
 // contracts/MyAccountMultiSigner.sol
@@ -136,11 +136,11 @@ The `MultiSignerERC7913` contract provides several key features for managing mul
 `MultiSignerERC7913` safeguards to ensure that the threshold remains achievable based on the current number of active signers, preventing situations where operations could become impossible to execute.
 </Callout>
 
-The contract also provides public functions for querying signer information: [`isSigner(bytes memory signer)`](contracts/v5.x/api/utils/cryptography.mdx#MultiSignerERC7913-isSigner-bytes-) to check if a given signer is authorized, [`getSigners(uint64 start, uint64 end)`](contracts/v5.x/api/utils/cryptography.mdx#MultiSignerERC7913-getSigners-uint64-uint64-) to retrieve a paginated list of authorized signers, and [`getSignerCount()`](contracts/v5.x/api/utils/cryptography.mdx#MultiSignerERC7913-getSignerCount) to get the total number of signers. These functions are useful when validating signatures, implementing customized access control logic, or building user interfaces that need to display signer information.
+The contract also provides public functions for querying signer information: [`isSigner(bytes memory signer)`](contracts/v5.x/api/utils/cryptography#MultiSignerERC7913-isSigner-bytes-) to check if a given signer is authorized, [`getSigners(uint64 start, uint64 end)`](contracts/v5.x/api/utils/cryptography#MultiSignerERC7913-getSigners-uint64-uint64-) to retrieve a paginated list of authorized signers, and [`getSignerCount()`](contracts/v5.x/api/utils/cryptography#MultiSignerERC7913-getSignerCount) to get the total number of signers. These functions are useful when validating signatures, implementing customized access control logic, or building user interfaces that need to display signer information.
 
 ### MultiSignerERC7913Weighted
 
-For more sophisticated governance structures, the [`MultiSignerERC7913Weighted`](contracts/v5.x/api/utils/cryptography.mdx#MultiSignerERC7913Weighted) contract extends `MultiSignerERC7913` by assigning different weights to each signer.
+For more sophisticated governance structures, the [`MultiSignerERC7913Weighted`](contracts/v5.x/api/utils/cryptography#MultiSignerERC7913Weighted) contract extends `MultiSignerERC7913` by assigning different weights to each signer.
 
 ```solidity
 // contracts/MyAccountMultiSignerWeighted.sol
@@ -283,7 +283,7 @@ function setupWeightedMultisigAccount() external {
 ```
 
 <Callout type='warn'>
-The [`_validateReachableThreshold`](contracts/v5.x/api/utils/cryptography.mdx#MultiSignerERC7913-_validateReachableThreshold--) function ensures that the sum of weights for all active signers meets or exceeds the threshold. Any customization built on top of the multisigner contracts must ensure the threshold is always reachable.
+The [`_validateReachableThreshold`](contracts/v5.x/api/utils/cryptography#MultiSignerERC7913-_validateReachableThreshold--) function ensures that the sum of weights for all active signers meets or exceeds the threshold. Any customization built on top of the multisigner contracts must ensure the threshold is always reachable.
 </Callout>
 
 For multisig accounts, the signature is a complex structure that contains both the signers and their individual signatures. The format follows ERC-7913’s specification and must be properly encoded.

@@ -31,7 +31,7 @@ Now, you will create a Defender test environment with the Sepolia testnet, where
 2. Click on **Setup**.
 
    ![Deploy environments page](/defender/tutorial-deploy-environments.png)
-3. Pick **Sepolia** from the dropdown. 
+3. Pick **Sepolia** from the dropdown.
 
    ![Deploy networks wizard](/defender/tutorial-deploy-step1-wizard.png)
 4. Select the approval process associated with your funded relayer that will execute the deployments for the test environment. In case you don’t already have an approval process, Defender will allow you to create one within the wizard flow. Relayers automate the payment of gas fees and take care of private key secure storage, transaction signing, nonce management, gas pricing estimation, and resubmissions. However, you may also choose to deploy using an EOA ("Externally Owned Account") or Safe wallet.
@@ -94,7 +94,7 @@ First, make sure you have [Hardhat, window=_blank](https://hardhat.org/hardhat-r
    mkdir deploy-tutorial && cd deploy-tutorial && npx hardhat init
    ```
 2. Hardhat will ask some questions to setup the configuration, so answer the following:
-+ 
++
    * What do you want to do: Create a **Typescript** project
    * Hardhat project root: _Leave it as it is_
    * Do you want to use .gitignore: Yes
@@ -120,13 +120,13 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
 
    require("dotenv").config();
 
-   const config: HardhatUserConfig = 
+   const config: HardhatUserConfig =
      solidity: "0.8.20",
      defender: {
        apiKey: process.env.DEFENDER_KEY as string,
        apiSecret: process.env.DEFENDER_SECRET as string,
      ,
-     networks: 
+     networks:
        sepolia: {
          url: "https://ethereum-sepolia.publicnode.com",
          chainId: 11155111
@@ -157,7 +157,7 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
 
    /// @title Box
    /// @notice A box with objects inside.
-   contract Box is Initializable, UUPSUpgradeable, OwnableUpgradeable 
+   contract Box is Initializable, UUPSUpgradeable, OwnableUpgradeable
        /*//////////////////////////////////////////////////////////////
                                    VARIABLES
        //////////////////////////////////////////////////////////////*/
@@ -175,13 +175,13 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
            __Ownable_init(multisig);
 
            numberOfObjects = objects;
-       
+
 
        /// @notice Remove an object from the box.
-       function removeObject() external 
+       function removeObject() external
            require(numberOfObjects > 1, "Nothing inside");
            numberOfObjects -= 1;
-       
+
 
        /// @dev Upgrades the implementation of the proxy to new address.
        function _authorizeUpgrade(address) internal override onlyOwner {}
@@ -210,10 +210,10 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
 
    import Box from "src/Box.sol";
 
-   contract DefenderScript is Script 
+   contract DefenderScript is Script
        function setUp() public {
 
-       function run() public 
+       function run() public
            ApprovalProcessResponse memory upgradeApprovalProcess = Defender.getUpgradeApprovalProcess();
 
            if (upgradeApprovalProcess.via == address(0)) {
@@ -224,7 +224,7 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
                        " has no assigned address"
                    )
                );
-           
+
 
            Options memory opts;
            opts.defender.useDefenderDeploy = true;
@@ -249,7 +249,7 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
    ```jsx
    import  ethers, defender  from "hardhat";
 
-   async function main() 
+   async function main()
      const Box = await ethers.getContractFactory("Box");
 
      const upgradeApprovalProcess = await defender.getUpgradeApprovalProcess();
@@ -267,14 +267,14 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
 
    // We recommend this pattern to be able to use async/await everywhere
    // and properly handle errors.
-   main().catch((error) => 
+   main().catch((error) =>
      console.error(error);
      process.exitCode = 1;
    );
    ```
 
    <Callout>
-   You should use `deployProxy()`, `deployBeacon()` and `deployImplementation()` for upgradeable contracts, and `deployContract()` for non-upgradeable contracts. To forcefully use `deployContract()`, set the `unsafeAllowDeployContract` option to `true`. More information [here, window=_blank](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/docs/modules/ROOT/pages/defender-deploy.mdx).
+   You should use `deployProxy()`, `deployBeacon()` and `deployImplementation()` for upgradeable contracts, and `deployContract()` for non-upgradeable contracts. To forcefully use `deployContract()`, set the `unsafeAllowDeployContract` option to `true`. More information [here, window=_blank](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/docs/modules/ROOT/pages/defender-deploy).
    </Callout>
 2. Deploy your box by running the following command which executes your deployment script:
 
@@ -311,7 +311,7 @@ Upgrading a smart contract allows changing its logic while maintaining the same 
    /// @title BoxV2
    /// @notice An improved box with objects inside.
    /// @custom:oz-upgrades-from Box
-   contract BoxV2 is Box 
+   contract BoxV2 is Box
        /*//////////////////////////////////////////////////////////////
                                    FUNCTIONS
        //////////////////////////////////////////////////////////////*/
@@ -319,12 +319,12 @@ Upgrading a smart contract allows changing its logic while maintaining the same 
        /// @notice Add an object to the box.
        function addObject() external {
            numberOfObjects += 1;
-       
+
 
        /// @notice Returns the box version.
-       function boxVersion() external pure returns (uint256) 
+       function boxVersion() external pure returns (uint256)
            return 2;
-       
+
    }
    ```
 
@@ -346,10 +346,10 @@ Upgrading a smart contract allows changing its logic while maintaining the same 
 
    import ProposeUpgradeResponse, Defender, Options from "openzeppelin-foundry-upgrades/Defender.sol";
 
-   contract DefenderScript is Script 
+   contract DefenderScript is Script
        function setUp() public {
 
-       function run() public 
+       function run() public
            Options memory opts;
            ProposeUpgradeResponse memory response = Defender.proposeUpgrade(
                <PROXY ADDRESS>,
@@ -358,7 +358,7 @@ Upgrading a smart contract allows changing its logic while maintaining the same 
            );
            console.log("Proposal id", response.proposalId);
            console.log("Url", response.url);
-       
+
    }
    ```
 2. Create the upgrade proposal using the upgrade script with the the following command:
@@ -374,7 +374,7 @@ Upgrading a smart contract allows changing its logic while maintaining the same 
    ```jsx
    import  ethers, defender  from "hardhat";
 
-   async function main() 
+   async function main()
      const BoxV2 = await ethers.getContractFactory("BoxV2");
 
      const proposal = await defender.proposeUpgradeWithApproval('<PROXY ADDRESS>', BoxV2);
@@ -384,7 +384,7 @@ Upgrading a smart contract allows changing its logic while maintaining the same 
 
    // We recommend this pattern to be able to use async/await everywhere
    // and properly handle errors.
-   main().catch((error) => 
+   main().catch((error) =>
      console.error(error);
      process.exitCode = 1;
    );

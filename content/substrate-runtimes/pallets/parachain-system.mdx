@@ -16,20 +16,20 @@ This pallet is a core element of each parachain. It will:
 * Process binary code upgrades
 * Process incoming messages from both relay chain and other parachains (if a channel is established between them)
 * Send outgoing messages to relay chain and other parachains
-* Build collation info when requested by [collator](../glossary.mdx#collator)
+* Build collation info when requested by [collator](../glossary#collator)
 
 ## Config
 
 * Pallet-specific configs:
-  * `OnSystemEvent` — a handler that will be called when new [validation data](../glossary.mdx#validation_data) will be set (once each block). New validation data will also be passed to it. Look to `trait OnSystemEvent` for more details.
+  * `OnSystemEvent` — a handler that will be called when new [validation data](../glossary#validation_data) will be set (once each block). New validation data will also be passed to it. Look to `trait OnSystemEvent` for more details.
   * `SelfParaId` — getter for a parachain id of this chain
   * `OutboundXcmpMessageSource` — source of  outgoing XCMP messages. It is queried in `finalize_block` and later included into collation information
   * `DmpQueue` — a handler for the incoming **downward** messages from relay chain
-  * `ReservedDmpWeight` — [weight](../glossary.mdx#weight) reserved for DMP message processing. This config seems to not be used as the function that processes these messages (`enqueue_inbound_downward_messages`) returns used weight.
+  * `ReservedDmpWeight` — [weight](../glossary#weight) reserved for DMP message processing. This config seems to not be used as the function that processes these messages (`enqueue_inbound_downward_messages`) returns used weight.
   * `XcmpMessageHandler` — a handler for the incoming _horizontal_ messages from other parachains
   * `ReservedXcmpWeight` — default weight limit for the XCMP message processing. May be overridden by storage `ReservedXcmpWeightOverride`. If incoming messages in block will exceed the weight limit, they won’t be processed.
   * `CheckAssociatedRelayNumber` — type that implements `trait CheckAssociatedRelayNumber` . Currently there are three implementations: no check (`AnyRelayNumber`), strict increase (`RelayNumberStrictlyIncreases`), monotonic increase (`RelayNumberMonotonicallyIncreases`). It is needed to maintain some order between blocks in relay chain and parachain.
-  * `ConsensusHook` — this is a feature-enabled config for the management of the [unincluded segment](../glossary.mdx#unincluded_segment). Requires the implementation of `trait ConsensusHook`. There are several implementations of it, in `parachain-system` crate (`FixedCapacityUnincludedSegment`) and in `aura-ext` crate (`FixedVelocityConsensusHook`). It is needed to maintain the logic of segment length handling.
+  * `ConsensusHook` — this is a feature-enabled config for the management of the [unincluded segment](../glossary#unincluded_segment). Requires the implementation of `trait ConsensusHook`. There are several implementations of it, in `parachain-system` crate (`FixedCapacityUnincludedSegment`) and in `aura-ext` crate (`FixedVelocityConsensusHook`). It is needed to maintain the logic of segment length handling.
 * Common parameters for all pallets:
   * `RuntimeEvent`
   * `WeightInfo`
@@ -106,7 +106,7 @@ Validate and perform the authorized upgrade.
 ### Pallet's workflow
 
 * Block Initialization
-  * Remove already processed [validation code](../glossary.mdx#validation_code)
+  * Remove already processed [validation code](../glossary#validation_code)
   * Update `UnincludedSegment` with latest parent hash
   * Cleans up `ValidationData` and other functions.
   * Calculate weights for everything that was done in `on_finalize` hook

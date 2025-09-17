@@ -8,16 +8,16 @@ Both `deployProxy` and `upgradeProxy` functions will return instances of [ethers
 
 The following options are common to some functions.
 
-* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](contracts:api:proxy.mdx#transparent-vs-uups).
+* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](contracts:api:proxy#transparent-vs-uups).
 * `unsafeAllow`: (`ValidationError[]`) Selectively disable one or more validation errors or warnings:
-  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq.mdx#why-cant-i-use-external-libraries).)
+  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq#why-cant-i-use-external-libraries).)
   * `"struct-definition"`, `"enum-definition"`: Used to be necessary to deploy a contract with structs or enums. No longer necessary.
   * `"state-variable-assignment"`: Allows assigning state variables in a contract even though they will be stored in the implementation.
   * `"state-variable-immutable"`: Allows use of immutable variables, which are not unsafe
   * `"constructor"`: Allows defining a constructor. See `constructorArgs`.
-  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](faq.mdx#delegatecall-selfdestruct)
+  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](faq#delegatecall-selfdestruct)
   * `"missing-public-upgradeto"`: Allow UUPS implementations that do not contain a public `upgradeTo` or `upgradeToAndCall` function. Enabling this option is likely to cause a revert due to the built-in UUPS safety mechanism.
-  * `"internal-function-storage"`: Allow internal functions in storage variables. Internal functions are code pointers which will no longer be valid after an upgrade, so they must be reassigned during upgrades. See [How can I use internal functions in storage variables?](faq.mdx#internal-function-storage)
+  * `"internal-function-storage"`: Allow internal functions in storage variables. Internal functions are code pointers which will no longer be valid after an upgrade, so they must be reassigned during upgrades. See [How can I use internal functions in storage variables?](faq#internal-function-storage)
   * `"missing-initializer"`: Allows implementations where an initializer function is not detected.
   * `"missing-initializer-call"`: Allows implementations where a parent initializer is not called from the child initializer.
   * `"duplicate-initializer-call"`: Allows implementations where a parent initializer is called more than once from the child initializer.
@@ -36,7 +36,7 @@ The following options are common to some functions.
   * If set to `"never"`, the implementation contract is never redeployed. If the implementation contract was not previously deployed or is not found in the network file, an error will be thrown.
   * If set to `"onchange"`, the implementation contract is redeployed only if the bytecode has changed from previous deployments.
 * `txOverrides`: (`ethers.Overrides`) An ethers.js [Overrides](https://docs.ethers.org/v6/api/contract/#Overrides) object to override transaction parameters, such as `gasLimit` and `gasPrice`. Applies to all transactions sent by a function with this option, even if the function sends multiple transactions. For OpenZeppelin Defender deployments, only the `gasLimit`, `gasPrice`, `maxFeePerGas`, and `maxPriorityFeePerGas` parameters are supported.
-* `useDefenderDeploy`: (`boolean`) Deploy contracts using OpenZeppelin Defender instead of ethers.js. See [Using with OpenZeppelin Defender](defender-deploy.mdx).
+* `useDefenderDeploy`: (`boolean`) Deploy contracts using OpenZeppelin Defender instead of ethers.js. See [Using with OpenZeppelin Defender](defender-deploy).
 * `verifySourceCode`: (`boolean`) When using OpenZeppelin Defender deployments, whether to verify source code on block explorers. Defaults to `true`.
 * `relayerId`: (`string`) When using OpenZeppelin Defender deployments, the ID of the relayer to use for the deployment. Defaults to the relayer configured for your deployment environment on Defender.
 * `salt`: (`string`) When using OpenZeppelin Defender deployments, if this is not set, deployments will be performed using the CREATE opcode. If this is set, deployments will be performed using the CREATE2 opcode with the provided salt. Note that deployments using a Safe are done using CREATE2 and require a salt. ***Warning:*** CREATE2 affects `msg.sender` behavior. See [Caveats](https://docs.openzeppelin.com/defender/tutorial/deploy#deploy-caveat) for more information.
@@ -46,7 +46,7 @@ The following options are common to some functions.
 * `deployFunction`: (`(hre, opts, factory, ...args) => Promise<EthersOrDefenderDeployment>`) Customizes the function used to deploy the proxy. Can be used along with the `proxyFactory` option to override constructor parameters for custom proxy deployments. See [deploy.ts](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/packages/plugin-hardhat/src/utils/deploy.ts) for the default deploy function.
   * **Since:** `@openzeppelin/hardhat-upgrades@3.7.0`
 
-Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](faq.mdx#how-can-i-disable-checks)
+Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](faq#how-can-i-disable-checks)
 
 The following options have been deprecated.
 
@@ -60,7 +60,7 @@ The following options have been deprecated.
 async function deployProxy(
   Contract: ethers.ContractFactory,
   args: unknown[] = [],
-  opts?: 
+  opts?:
     initializer?: string | false,
     unsafeAllow?: ValidationError[],
     constructorArgs?: unknown[],
@@ -100,7 +100,7 @@ If you call `deployProxy` several times for the same implementation contract, se
 async function upgradeProxy(
   proxy: string | ethers.Contract,
   Contract: ethers.ContractFactory,
-  opts?: 
+  opts?:
     call?: string | { fn: string; args?: unknown[] ,
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
@@ -134,7 +134,7 @@ Upgrades a UUPS or Transparent proxy at a specified address to a new implementat
 ```ts
 async function deployBeacon(
   Contract: ethers.ContractFactory,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     constructorArgs?: unknown[],
     initialOwner?: string,
@@ -168,7 +168,7 @@ Creates an [upgradable beacon](https://docs.openzeppelin.com/contracts/api/proxy
 async function upgradeBeacon(
   beacon: string | ethers.Contract,
   Contract: ethers.ContractFactory,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
     unsafeSkipStorageCheck?: boolean,
@@ -205,7 +205,7 @@ async function deployBeaconProxy(
   beacon: string | ethers.Contract,
   attachTo: ethers.ContractFactory,
   args: unknown[] = [],
-  opts?: 
+  opts?:
     initializer?: string | false,
     txOverrides?: ethers.Overrides,
     useDefenderDeploy?: boolean,
@@ -240,7 +240,7 @@ Creates a [Beacon proxy](https://docs.openzeppelin.com/contracts/api/proxy#Beaco
 async function forceImport(
   address: string,
   deployedImpl: ethers.ContractFactory,
-  opts?: 
+  opts?:
     kind?: 'uups' | 'transparent' | 'beacon',
   ,
 ): Promise<ethers.Contract>
@@ -274,7 +274,7 @@ Use this function to recreate a lost [network file](https://docs.openzeppelin.co
 ```ts
 async function validateImplementation(
   Contract: ethers.ContractFactory,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     kind?: 'uups' | 'transparent' | 'beacon',
   ,
@@ -298,7 +298,7 @@ Validates an implementation contract without deploying it.
 ```ts
 async function deployImplementation(
   Contract: ethers.ContractFactory,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     constructorArgs?: unknown[],
     timeout?: number,
@@ -335,7 +335,7 @@ Validates and deploys an implementation contract, and returns its address.
 async function validateUpgrade(
   referenceAddressOrContract: string | ethers.ContractFactory,
   newContract: ethers.ContractFactory,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
     unsafeSkipStorageCheck?: boolean,
@@ -382,7 +382,7 @@ await upgrades.validateUpgrade(Box, BoxV2);
 async function prepareUpgrade(
   referenceAddressOrContract: string | ethers.Contract,
   Contract: ethers.ContractFactory,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
     unsafeSkipStorageCheck?: boolean,
@@ -418,7 +418,7 @@ Validates and deploys a new implementation contract, and returns its address. If
 async function deployContract(
   Contract: ethers.ContractFactory,
   args: unknown[] = [],
-  opts?: 
+  opts?:
     unsafeAllowDeployContract?: boolean,
     pollingInterval?: number,
   ,
@@ -494,7 +494,7 @@ Gets the default upgrade approval process configured for your deployment environ
 async function proposeUpgradeWithApproval(
   proxyAddress: string,
   ImplFactory: ContractFactory,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
     unsafeSkipStorageCheck?: boolean,
@@ -540,9 +540,9 @@ async function changeProxyAdmin(
   proxyAddress: string,
   newAdmin: string,
   signer?: ethers.Signer,
-  opts?: 
+  opts?:
     txOverrides?: ethers.Overrides,
-  
+
 ): Promise<void>
 ```
 
@@ -567,10 +567,10 @@ async function transferProxyAdminOwnership(
   proxyAddress: string,
   newOwner: string,
   signer?: ethers.Signer,
-  opts?: 
+  opts?:
     silent?: boolean,
     txOverrides?: ethers.Overrides,
-  
+
 ): Promise<void>
 ```
 
@@ -685,7 +685,7 @@ npx hardhat verify --network mainnet PROXY_ADDRESS
 ```
 or programmatically using the [`verify:verify` subtask](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-verify#using-programmatically):
 ```javascript
-await hre.run("verify:verify", 
+await hre.run("verify:verify",
   address: PROXY_ADDRESS,
 );
 ```

@@ -28,7 +28,7 @@ The Compact contracts library provides `AccessControl` for implementing role-bas
 Its usage is straightforward: for each role that you want to define,
 you will create a new role identifier that is used to grant, revoke, and check if an account has that role.
 
-Here’s a simple example of using `AccessControl` with [FungibleToken](fungibleToken.mdx) to define a 'minter' role, which allows accounts that have this role to create new tokens:
+Here’s a simple example of using `AccessControl` with [FungibleToken](fungibleToken) to define a 'minter' role, which allows accounts that have this role to create new tokens:
 
 ```ts
 pragma language_version >= 0.16.0;
@@ -61,10 +61,10 @@ export circuit mint(recipient: Either<ZswapCoinPublicKey, ContractAddress>, valu
 ```
 
 <Callout>
-Make sure you fully understand how [AccessControl](api/accessControl.mdx#accessControl) works before using it on your system, or copy-pasting the examples from this guide.
+Make sure you fully understand how [AccessControl](api/accessControl#accessControl) works before using it on your system, or copy-pasting the examples from this guide.
 </Callout>
 
-While clear and explicit, this isn’t anything we wouldn’t have been able to achieve with [Ownable](ownable.mdx). Indeed, where `AccessControl` shines is in scenarios where granular permissions are required, which can be implemented by defining _multiple_ roles.
+While clear and explicit, this isn’t anything we wouldn’t have been able to achieve with [Ownable](ownable). Indeed, where `AccessControl` shines is in scenarios where granular permissions are required, which can be implemented by defining _multiple_ roles.
 
 Let’s augment our FungibleToken example by also defining a 'burner' role, which lets accounts destroy tokens.
 
@@ -169,7 +169,7 @@ Dynamic role allocation is often a desirable property, for example in systems wh
 
 ### Experimental features
 
-This module offers an experimental circuit that allow access control permissions to be granted to contract addresses [_unsafeGrantRole](api/accessControl.mdx#AccessControl-_unsafeGrantRole).
+This module offers an experimental circuit that allow access control permissions to be granted to contract addresses [_unsafeGrantRole](api/accessControl#AccessControl-_unsafeGrantRole).
 Note that the circuit name is very explicit ("unsafe") with this experimental circuit.
 Until contract-to-contract calls are supported, there is no direct way for a contract to call permissioned circuits of other contracts or grant/revoke role permissions.
 

@@ -27,7 +27,7 @@ The Upgradeable package replicates the structure of the main OpenZeppelin Contra
 ```diff
 -import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 +import {ERC721Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
- 
+
 -contract MyCollectible is ERC721 {
 +contract MyCollectible is ERC721Upgradeable {
 ```
@@ -45,8 +45,9 @@ Constructors are replaced by internal initializer functions following the naming
      }
 ```
 
-**🔥 CAUTION**\
+<Callout type="warning">
 Use with multiple inheritance requires special attention. See the section below titled [Multiple Inheritance](#multiple-inheritance).
+</Callout>
 
 Once this contract is set up and compiled, you can deploy it using the [Upgrades Plugins](upgrades-plugins::index.adoc). The following snippet shows an example deployment script using Hardhat.
 

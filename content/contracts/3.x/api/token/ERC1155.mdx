@@ -18,7 +18,7 @@ Additionally there are multiple custom extensions, including:
 * destruction of own tokens (ERC1155Burnable).
 
 <Callout>
-This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC1155 (such as [`_mint`](#`_mint(address-account,-uint256-id,-uint256-amount,-bytes-data) *internal*`)) and expose them as external functions in the way they prefer. On the other hand, [ERC1155 Presets](ROOT:erc1155.mdx#Presets) (such as ERC1155PresetMinterPauser) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
+This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC1155 (such as [`_mint`](#`_mint(address-account,-uint256-id,-uint256-amount,-bytes-data) *internal*`)) and expose them as external functions in the way they prefer. On the other hand, [ERC1155 Presets](ROOT:erc1155#Presets) (such as ERC1155PresetMinterPauser) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
 </Callout>
 
 ## Core
@@ -64,7 +64,7 @@ Requirements:
 
 #### `balanceOfBatch(address[] accounts, uint256[] ids) → uint256[] *external*
 
-[Batched](ROOT:erc1155.mdx#batch-operations) version of balanceOf.
+[Batched](ROOT:erc1155#batch-operations) version of balanceOf.
 
 Requirements:
 
@@ -110,7 +110,7 @@ acceptance magic value.
 
 #### `safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] amounts, bytes data) *external*
 
-[Batched](ROOT:erc1155.mdx#batch-operations) version of safeTransferFrom.
+[Batched](ROOT:erc1155#batch-operations) version of safeTransferFrom.
 
 Emits a TransferBatch event.
 
@@ -334,7 +334,7 @@ acceptance magic value.
 
 #### `_mintBatch(address to, uint256[] ids, uint256[] amounts, bytes data) *internal*
 
-[Batched](ROOT:erc1155.mdx#batch-operations) version of _mint.
+[Batched](ROOT:erc1155#batch-operations) version of _mint.
 
 Requirements:
 
@@ -357,7 +357,7 @@ Requirements:
 
 #### `_burnBatch(address account, uint256[] ids, uint256[] amounts) *internal*
 
-[Batched](ROOT:erc1155.mdx#batch-operations) version of _burn.
+[Batched](ROOT:erc1155#batch-operations) version of _burn.
 
 Requirements:
 
@@ -384,7 +384,7 @@ will be burned.
 * `from` and `to` are never both zero.
 * `ids` and `amounts` have the same, non-zero length.
 
-To learn more about hooks, head to [Using Hooks](ROOT:extending-contracts.mdx#using-hooks).
+To learn more about hooks, head to [Using Hooks](ROOT:extending-contracts#using-hooks).
 
 ### ``IERC1155Receiver``
 

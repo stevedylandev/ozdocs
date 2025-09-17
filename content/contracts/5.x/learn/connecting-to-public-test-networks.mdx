@@ -2,11 +2,11 @@
 title: Connecting to public test networks
 ---
 
-After you have [written your contracts](developing-smart-contracts.mdx), and [tried them out locally](deploying-and-interacting.mdx) and [tested them thoroughly](writing-automated-tests.mdx), it’s time to move to a persistent public testing environment, where you and your beta users can start interacting with your application.
+After you have [written your contracts](developing-smart-contracts), and [tried them out locally](deploying-and-interacting) and [tested them thoroughly](writing-automated-tests), it’s time to move to a persistent public testing environment, where you and your beta users can start interacting with your application.
 
 We will use **public testing networks** (aka _testnets_) for this, which are networks that operate similar to the main Ethereum network, but where Ether has no value and is free to acquire - making them ideal for testing your contracts at no cost.
 
-In this guide, we will use our beloved [`Box` contract](developing-smart-contracts.mdx#box-contract), and deploy it to a testnet, while learning:
+In this guide, we will use our beloved [`Box` contract](developing-smart-contracts#box-contract), and deploy it to a testnet, while learning:
 
 * [What test networks are available](#available-testnets)
 * [How to set up your project for working on a testnet](#connecting-a-project-to-a-public-network)
@@ -39,7 +39,7 @@ While you can spin up your own [Ethereum nodes](https://ethereum.org/en/develope
 We say a node is _public_ when it can be accessed by the general public, and manages no accounts. This means that it can reply to queries and relay signed transactions, but cannot sign transactions on its own.
 </Callout>
 
-In this guide we will use Alchemy, though you can use [Infura](https://infura.io/), or another public node provider of your choice.  
+In this guide we will use Alchemy, though you can use [Infura](https://infura.io/), or another public node provider of your choice.
 
 Head over to [Alchemy](https://dashboard.alchemyapi.io/signup?referral=53fcee38-b894-4d5f-bd65-885d241f8d29) (includes referral code), sign up, and jot down your assigned API key - we will use it later to connect to the network.
 
@@ -61,7 +61,7 @@ Make sure to keep your mnemonic secure. Do not commit secrets to version control
 Since we are using public nodes, we will need to sign all our transactions locally. We will configure the network with our mnemonic and an Alchemy endpoint.
 
 <Callout>
-This part assumes you have already set up a project. If you haven’t, head over to the guide on [Setting up a Solidity project](developing-smart-contracts.mdx#setting-up-a-solidity-project).
+This part assumes you have already set up a project. If you haven’t, head over to the guide on [Setting up a Solidity project](developing-smart-contracts#setting-up-a-solidity-project).
 </Callout>
 
 We need to update our configuration file with a new network connection to the testnet. Here we will use Sepolia, but you can use whichever you want:
@@ -69,7 +69,7 @@ We need to update our configuration file with a new network connection to the te
 // hardhat.config.js
 + const  alchemyApiKey, mnemonic  = require('./secrets.json');
 ...
-  module.exports = 
+  module.exports =
 +    networks: {
 +     sepolia: {
 +       url: `https://eth-sepolia.g.alchemy.com/v2/${alchemyApiKey`,
@@ -133,7 +133,7 @@ Deploying Box...
 Box deployed to: 0x1b99CCaCea0e4046db618770dEF72180F8138641
 ```
 
-That’s it! Your `Box` contract instance will be forever stored in the testnet, and publicly accessible to anyone. 
+That’s it! Your `Box` contract instance will be forever stored in the testnet, and publicly accessible to anyone.
 
 You can see your contract on a block explorer such as [Etherscan](https://etherscan.io/). Remember to access the explorer on the testnet where you deployed your contract, such as [sepolia.etherscan.io](https://sepolia.etherscan.io) for Sepolia.
 
@@ -162,4 +162,4 @@ Keep in mind that every transaction will cost some gas, so you will eventually n
 
 ## Next steps
 
-After thoroughly testing your application on a public testnet, you are ready for the last step on the development journey: [deploying your application in production](preparing-for-mainnet.mdx).
+After thoroughly testing your application on a public testnet, you are ready for the last step on the development journey: [deploying your application in production](preparing-for-mainnet).

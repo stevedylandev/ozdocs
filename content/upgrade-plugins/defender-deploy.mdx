@@ -9,11 +9,11 @@ The Hardhat Upgrades package can use [OpenZeppelin Defender](https://docs.openze
 Create a deployment environment on OpenZeppelin Defender and provide the Team API Key and secret in your `hardhat.config.js` or `hardhat.config.ts` file under `defender`:
 
 ```js
-module.exports = 
+module.exports =
   defender: {
     apiKey: process.env.API_KEY,
     apiSecret: process.env.API_SECRET,
-  
+
 }
 ```
 
@@ -26,12 +26,12 @@ The API key for the above must at least have the capability to Manage Deployment
 The network that is used with OpenZeppelin Defender is determined by the network that Hardhat is connected to.
 If you want to ensure that a specific network is used with Defender, set the `network` field in the `defender` section of your `hardhat.config.js` or `hardhat.config.ts` file:
 ```js
-module.exports = 
+module.exports =
   defender: {
     apiKey: process.env.API_KEY,
     apiSecret: process.env.API_SECRET,
     network: "my-mainnet-fork",
-  
+
 }
 ```
 If set, this must be the name of a public, private or forked network in Defender. If Hardhat is connected to a different network while this is set, the deployment will not occur and will throw an error instead.
@@ -42,7 +42,7 @@ This is required if you have multiple forked networks in Defender with the same 
 
 ## Usage
 
-When using the [Hardhat Upgrades API functions](api-hardhat-upgrades.mdx), enable OpenZeppelin Defender deployments using any of the ways below.
+When using the [Hardhat Upgrades API functions](api-hardhat-upgrades), enable OpenZeppelin Defender deployments using any of the ways below.
 
 <Callout>
 Only functions that have the `useDefenderDeploy` option in their API reference support deployments through OpenZeppelin Defender. If you enable the following but use functions that do not support `useDefenderDeploy`, the first way below will cause those functions to deploy using ethers.js, whereas the second and third ways will cause those functions to give an error.
@@ -51,12 +51,12 @@ Only functions that have the `useDefenderDeploy` option in their API reference s
 * Recommended: In `hardhat.config.js` or `hardhat.config.ts`, set `useDefenderDeploy: true` under `defender`. For example:
 
 ```js
-module.exports = 
+module.exports =
   defender: {
     apiKey: process.env.API_KEY,
     apiSecret: process.env.API_SECRET,
     useDefenderDeploy: true,
-  
+
 }
 ```
 
@@ -64,7 +64,7 @@ module.exports =
 // scripts/create-box.js
 const  ethers, upgrades  = require("hardhat");
 
-async function main() 
+async function main()
   const Box = await ethers.getContractFactory("Box");
   const box = await upgrades.deployProxy(Box, [42]);
   await box.waitForDeployment();
@@ -80,7 +80,7 @@ main();
 // scripts/create-box.js
 const  ethers, defender  = require("hardhat");
 
-async function main() 
+async function main()
   const Box = await ethers.getContractFactory("Box");
   const box = await defender.deployProxy(Box, [42]);
   await box.waitForDeployment();
@@ -96,7 +96,7 @@ main();
 // scripts/create-box.js
 const  ethers, upgrades  = require("hardhat");
 
-async function main() 
+async function main()
   const Box = await ethers.getContractFactory("Box");
   const box = await upgrades.deployProxy(Box, [42], { useDefenderDeploy: true );
   await box.waitForDeployment();
