@@ -4,9 +4,12 @@ title: Extensibility
 
 ## The Module/Contract Pattern
 
-We use the term **modular composition by delegation** to describe the practice of having contracts call into module-defined circuits to implement behavior. Rather than inheriting or overriding functionality, a contract delegates responsibility to the module by explicitly invoking its exported circuits.
+We use the term **modular composition by delegation** to describe the practice of having contracts call into module-defined circuits to implement behavior.
+Rather than inheriting or overriding functionality,
+a contract delegates responsibility to the module by explicitly invoking its exported circuits.
 
-The idea is that there are two types of compact files: modules and contracts. To minimize risk, boilerplate, and avoid naming clashes, we follow these rules:
+The idea is that there are two types of compact files: modules and contracts.
+To minimize risk, boilerplate, and avoid naming clashes, we follow these rules:
 
 ### Modules
 
@@ -24,19 +27,24 @@ Modules must:
 * Avoid defining or calling constructors or `initialize()` directly.
 * Optionally define an `initialize()` circuit for internal setup—but execution must be delegated to the contract.
 
-**Note**: Compact files must contain only one top-level module and all logic must be defined **inside** the module declaration.
+<Callout type='info'>
+Compact files must contain only one top-level module and all logic must be defined **inside** the module declaration.
+</Callout>
 
 ### Contracts
 
-Contracts compose behavior by explicitly invoking the relevant circuits from imported modules. Therefore, contracts:
+Contracts compose behavior by explicitly invoking the relevant circuits from imported modules.
+Therefore, contracts:
 
 * Can import from modules.
 * Should add prefix to imports (`import "FungibleToken" prefix FungibleToken_;`).
-* Should re-expose external module circuits through wrapper circuits to control naming and layering. Avoid raw re-exports to prevent name clashes.
+* Should re-expose external module circuits through wrapper circuits to control naming and layering.
+Avoid raw re-exports to prevent name clashes.
 * Should implement constructor that calls `initialize` from imported modules.
 * Must not call initializers outside of the constructor.
 
-This pattern balances modularity with local control, avoids tight coupling, and works within Compact’s language constraints. As Compact matures, this pattern will likely evolve as well.
+This pattern balances modularity with local control, avoids tight coupling, and works within Compact’s language constraints.
+As Compact matures, this pattern will likely evolve as well.
 
 ### Example contract implementing modules
 
