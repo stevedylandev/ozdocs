@@ -3,10 +3,6 @@ title: "ERC20"
 description: "Smart contract ERC20 utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/contracts/api/token/erc20
-</Callout>
-
 This set of interfaces, contracts, and utilities are all related to the [ERC20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
 
 <Callout>
@@ -89,7 +85,15 @@ These contracts are preconfigured combinations of the above features. They can b
 
 <a id="ERC20"></a>
 
-## `ERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/ERC20.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/ERC20.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -122,7 +126,9 @@ Finally, the non-standard [`ERC20.decreaseAllowance`](#ERC20-decreaseAllowance-a
 functions have been added to mitigate the well-known issues around setting
 allowances. See [`IERC20.approve`](#IERC20-approve-address-uint256-).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(name_, symbol_)](#ERC20-constructor-string-string-)
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -142,48 +148,87 @@ allowances. See [`IERC20.approve`](#IERC20-approve-address-uint256-).
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20-constructor-string-string-"></a>
 
-### `constructor(string name_, string symbol_)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(string name_, string symbol_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-constructor-string-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the values for [`Governor.name`](../governance#Governor-name--) and [`ERC20.symbol`](#ERC20-symbol--).
 
 All two of these values are immutable: they can only be set once during
 construction.
 
+</div>
+</div>
+
 <a id="ERC20-name--"></a>
 
-### `name() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">name() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-name--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the name of the token.
 
+</div>
+</div>
+
 <a id="ERC20-symbol--"></a>
 
-### `symbol() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">symbol() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-symbol--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the symbol of the token, usually a shorter version of the
 name.
 
+</div>
+</div>
+
 <a id="ERC20-decimals--"></a>
 
-### `decimals() → uint8`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">decimals() → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-decimals--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the number of decimals used to get its user representation.
 For example, if `decimals` equals `2`, a balance of `505` tokens should
@@ -197,24 +242,54 @@ NOTE: This information is only used for _display_ purposes: it in
 no way affects any of the arithmetic of the contract, including
 [`IERC20.balanceOf`](#IERC20-balanceOf-address-) and [`IERC20.transfer`](#IERC20-transfer-address-uint256-).
 
+</div>
+</div>
+
 <a id="ERC20-totalSupply--"></a>
 
-### `totalSupply() → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">totalSupply() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-totalSupply--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.totalSupply`](#IERC20-totalSupply--).
 
+</div>
+</div>
+
 <a id="ERC20-balanceOf-address-"></a>
 
-### `balanceOf(address account) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">balanceOf(address account) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-balanceOf-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.balanceOf`](#IERC20-balanceOf-address-).
 
+</div>
+</div>
+
 <a id="ERC20-transfer-address-uint256-"></a>
 
-### `transfer(address to, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transfer(address to, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-transfer-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.transfer`](#IERC20-transfer-address-uint256-).
 
@@ -223,17 +298,37 @@ Requirements:
 - `to` cannot be the zero address.
 - the caller must have a balance of at least `amount`.
 
+</div>
+</div>
+
 <a id="ERC20-allowance-address-address-"></a>
 
-### `allowance(address owner, address spender) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">allowance(address owner, address spender) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-allowance-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.allowance`](#IERC20-allowance-address-address-).
 
+</div>
+</div>
+
 <a id="ERC20-approve-address-uint256-"></a>
 
-### `approve(address spender, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">approve(address spender, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-approve-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.approve`](#IERC20-approve-address-uint256-).
 
@@ -244,10 +339,20 @@ Requirements:
 
 - `spender` cannot be the zero address.
 
+</div>
+</div>
+
 <a id="ERC20-transferFrom-address-address-uint256-"></a>
 
-### `transferFrom(address from, address to, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transferFrom(address from, address to, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-transferFrom-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.transferFrom`](#IERC20-transferFrom-address-address-uint256-).
 
@@ -264,10 +369,20 @@ Requirements:
 - the caller must have allowance for ``from``'s tokens of at least
 `amount`.
 
+</div>
+</div>
+
 <a id="ERC20-increaseAllowance-address-uint256-"></a>
 
-### `increaseAllowance(address spender, uint256 addedValue) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">increaseAllowance(address spender, uint256 addedValue) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-increaseAllowance-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Atomically increases the allowance granted to `spender` by the caller.
 
@@ -280,10 +395,20 @@ Requirements:
 
 - `spender` cannot be the zero address.
 
+</div>
+</div>
+
 <a id="ERC20-decreaseAllowance-address-uint256-"></a>
 
-### `decreaseAllowance(address spender, uint256 subtractedValue) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">decreaseAllowance(address spender, uint256 subtractedValue) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20-decreaseAllowance-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Atomically decreases the allowance granted to `spender` by the caller.
 
@@ -298,10 +423,20 @@ Requirements:
 - `spender` must have allowance for the caller of at least
 `subtractedValue`.
 
+</div>
+</div>
+
 <a id="ERC20-_transfer-address-address-uint256-"></a>
 
-### `_transfer(address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_transfer(address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20-_transfer-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Moves `amount` of tokens from `from` to `to`.
 
@@ -316,10 +451,20 @@ Requirements:
 - `to` cannot be the zero address.
 - `from` must have a balance of at least `amount`.
 
+</div>
+</div>
+
 <a id="ERC20-_mint-address-uint256-"></a>
 
-### `_mint(address account, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_mint(address account, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20-_mint-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Creates `amount` tokens and assigns them to `account`, increasing
 the total supply.
@@ -330,10 +475,20 @@ Requirements:
 
 - `account` cannot be the zero address.
 
+</div>
+</div>
+
 <a id="ERC20-_burn-address-uint256-"></a>
 
-### `_burn(address account, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_burn(address account, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20-_burn-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Destroys `amount` tokens from `account`, reducing the
 total supply.
@@ -345,10 +500,20 @@ Requirements:
 - `account` cannot be the zero address.
 - `account` must have at least `amount` tokens.
 
+</div>
+</div>
+
 <a id="ERC20-_approve-address-address-uint256-"></a>
 
-### `_approve(address owner, address spender, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_approve(address owner, address spender, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20-_approve-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets `amount` as the allowance of `spender` over the `owner` s tokens.
 
@@ -362,10 +527,20 @@ Requirements:
 - `owner` cannot be the zero address.
 - `spender` cannot be the zero address.
 
+</div>
+</div>
+
 <a id="ERC20-_spendAllowance-address-address-uint256-"></a>
 
-### `_spendAllowance(address owner, address spender, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_spendAllowance(address owner, address spender, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20-_spendAllowance-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Updates `owner` s allowance for `spender` based on spent `amount`.
 
@@ -374,10 +549,20 @@ Revert if not enough allowance is available.
 
 Might emit an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
+</div>
+</div>
+
 <a id="ERC20-_beforeTokenTransfer-address-address-uint256-"></a>
 
-### `_beforeTokenTransfer(address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_beforeTokenTransfer(address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20-_beforeTokenTransfer-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Hook that is called before any transfer of tokens. This includes
 minting and burning.
@@ -392,10 +577,20 @@ will be transferred to `to`.
 
 To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
 
+</div>
+</div>
+
 <a id="ERC20-_afterTokenTransfer-address-address-uint256-"></a>
 
-### `_afterTokenTransfer(address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_afterTokenTransfer(address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20-_afterTokenTransfer-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Hook that is called after any transfer of tokens. This includes
 minting and burning.
@@ -410,9 +605,20 @@ has been transferred to `to`.
 
 To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
 
+</div>
+</div>
+
 <a id="IERC20"></a>
 
-## `IERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/IERC20.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IERC20` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/IERC20.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -420,36 +626,71 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 Interface of the ERC20 standard as defined in the EIP.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
 - [transfer(to, amount)](#IERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#IERC20-allowance-address-address-)
 - [approve(spender, amount)](#IERC20-approve-address-uint256-)
 - [transferFrom(from, to, amount)](#IERC20-transferFrom-address-address-uint256-)
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="IERC20-totalSupply--"></a>
 
-### `totalSupply() → uint256`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">totalSupply() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20-totalSupply--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the amount of tokens in existence.
 
+</div>
+</div>
+
 <a id="IERC20-balanceOf-address-"></a>
 
-### `balanceOf(address account) → uint256`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">balanceOf(address account) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20-balanceOf-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the amount of tokens owned by `account`.
 
+</div>
+</div>
+
 <a id="IERC20-transfer-address-uint256-"></a>
 
-### `transfer(address to, uint256 amount) → bool`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transfer(address to, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20-transfer-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Moves `amount` tokens from the caller's account to `to`.
 
@@ -457,10 +698,20 @@ Returns a boolean value indicating whether the operation succeeded.
 
 Emits a [`IERC20.Transfer`](#IERC20-Transfer-address-address-uint256-) event.
 
+</div>
+</div>
+
 <a id="IERC20-allowance-address-address-"></a>
 
-### `allowance(address owner, address spender) → uint256`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">allowance(address owner, address spender) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20-allowance-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the remaining number of tokens that `spender` will be
 allowed to spend on behalf of `owner` through [`ERC20.transferFrom`](#ERC20-transferFrom-address-address-uint256-). This is
@@ -468,16 +719,28 @@ zero by default.
 
 This value changes when [`ERC20.approve`](#ERC20-approve-address-uint256-) or [`ERC20.transferFrom`](#ERC20-transferFrom-address-address-uint256-) are called.
 
+</div>
+</div>
+
 <a id="IERC20-approve-address-uint256-"></a>
 
-### `approve(address spender, uint256 amount) → bool`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">approve(address spender, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20-approve-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets `amount` as the allowance of `spender` over the caller's tokens.
 
 Returns a boolean value indicating whether the operation succeeded.
 
-IMPORTANT: Beware that changing an allowance with this method brings the risk
+<Callout type="warn">
+Beware that changing an allowance with this method brings the risk
+</Callout>
 that someone may use both the old and the new allowance by unfortunate
 transaction ordering. One possible solution to mitigate this race
 condition is to first reduce the spender's allowance to 0 and set the
@@ -486,10 +749,20 @@ https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 
 Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
+</div>
+</div>
+
 <a id="IERC20-transferFrom-address-address-uint256-"></a>
 
-### `transferFrom(address from, address to, uint256 amount) → bool`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transferFrom(address from, address to, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20-transferFrom-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Moves `amount` tokens from `from` to `to` using the
 allowance mechanism. `amount` is then deducted from the caller's
@@ -499,27 +772,59 @@ Returns a boolean value indicating whether the operation succeeded.
 
 Emits a [`IERC20.Transfer`](#IERC20-Transfer-address-address-uint256-) event.
 
+</div>
+</div>
+
 <a id="IERC20-Transfer-address-address-uint256-"></a>
 
-### `Transfer(address indexed from, address indexed to, uint256 value)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Transfer(address indexed from, address indexed to, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="IERC20-Transfer-address-address-uint256-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when `value` tokens are moved from one account (`from`) to
 another (`to`).
 
 Note that `value` may be zero.
 
+</div>
+</div>
 <a id="IERC20-Approval-address-address-uint256-"></a>
 
-### `Approval(address indexed owner, address indexed spender, uint256 value)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Approval(address indexed owner, address indexed spender, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="IERC20-Approval-address-address-uint256-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when the allowance of a `spender` for an `owner` is set by
 a call to [`ERC20.approve`](#ERC20-approve-address-uint256-). `value` is the new allowance.
 
+</div>
+</div>
+
 <a id="ERC20Burnable"></a>
 
-## `ERC20Burnable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Burnable.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20Burnable` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Burnable.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
@@ -529,10 +834,11 @@ Extension of [`ERC20`](#ERC20) that allows token holders to destroy both their o
 tokens and those that they have an allowance for, in a way that can be
 recognized off-chain (via event analysis).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [burn(amount)](#ERC20Burnable-burn-uint256-)
 - [burnFrom(account, amount)](#ERC20Burnable-burnFrom-address-uint256-)
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -552,34 +858,52 @@ recognized off-chain (via event analysis).
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20Burnable-burn-uint256-"></a>
 
-### `burn(uint256 amount)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">burn(uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Burnable-burn-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Destroys `amount` tokens from the caller.
 
 See [`ERC20._burn`](#ERC20-_burn-address-uint256-).
 
+</div>
+</div>
+
 <a id="ERC20Burnable-burnFrom-address-uint256-"></a>
 
-### `burnFrom(address account, uint256 amount)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">burnFrom(address account, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Burnable-burnFrom-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Destroys `amount` tokens from `account`, deducting from the caller's
 allowance.
@@ -591,9 +915,20 @@ Requirements:
 - the caller must have allowance for ``accounts``'s tokens of at least
 `amount`.
 
+</div>
+</div>
+
 <a id="ERC20Capped"></a>
 
-## `ERC20Capped` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Capped.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20Capped` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Capped.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
@@ -601,11 +936,12 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 
 Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(cap_)](#ERC20Capped-constructor-uint256-)
 - [cap()](#ERC20Capped-cap--)
 - [_mint(account, amount)](#ERC20Capped-_mint-address-uint256-)
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -624,46 +960,85 @@ Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20Capped-constructor-uint256-"></a>
 
-### `constructor(uint256 cap_)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(uint256 cap_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Capped-constructor-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the value of the `cap`. This value is immutable, it can only be
 set once during construction.
 
+</div>
+</div>
+
 <a id="ERC20Capped-cap--"></a>
 
-### `cap() → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cap() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Capped-cap--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the cap on the token's total supply.
 
+</div>
+</div>
+
 <a id="ERC20Capped-_mint-address-uint256-"></a>
 
-### `_mint(address account, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_mint(address account, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Capped-_mint-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`ERC20._mint`](#ERC20-_mint-address-uint256-).
 
+</div>
+</div>
+
 <a id="ERC20FlashMint"></a>
 
-## `ERC20FlashMint` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20FlashMint.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20FlashMint` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20FlashMint.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol";
@@ -677,15 +1052,15 @@ level. By default there is no fee, but this can be changed by overriding [`IERC3
 
 _Available since v4.1._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [maxFlashLoan(token)](#ERC20FlashMint-maxFlashLoan-address-)
 - [flashFee(token, amount)](#ERC20FlashMint-flashFee-address-uint256-)
 - [_flashFee(token, amount)](#ERC20FlashMint-_flashFee-address-uint256-)
 - [_flashFeeReceiver()](#ERC20FlashMint-_flashFeeReceiver--)
 - [flashLoan(receiver, token, amount, data)](#ERC20FlashMint-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-)
-
 #### IERC3156FlashLender
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -705,61 +1080,108 @@ _Available since v4.1._
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC3156FlashLender
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20FlashMint-maxFlashLoan-address-"></a>
 
-### `maxFlashLoan(address token) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">maxFlashLoan(address token) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20FlashMint-maxFlashLoan-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the maximum amount of tokens available for loan.
 
+</div>
+</div>
+
 <a id="ERC20FlashMint-flashFee-address-uint256-"></a>
 
-### `flashFee(address token, uint256 amount) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">flashFee(address token, uint256 amount) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20FlashMint-flashFee-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the fee applied when doing flash loans. This function calls
 the [`ERC20FlashMint._flashFee`](#ERC20FlashMint-_flashFee-address-uint256-) function which returns the fee applied when doing flash
 loans.
 
+</div>
+</div>
+
 <a id="ERC20FlashMint-_flashFee-address-uint256-"></a>
 
-### `_flashFee(address token, uint256 amount) → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_flashFee(address token, uint256 amount) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20FlashMint-_flashFee-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the fee applied when doing flash loans. By default this
 implementation has 0 fees. This function can be overloaded to make
 the flash loan mechanism deflationary.
 
+</div>
+</div>
+
 <a id="ERC20FlashMint-_flashFeeReceiver--"></a>
 
-### `_flashFeeReceiver() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_flashFeeReceiver() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20FlashMint-_flashFeeReceiver--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the receiver address of the flash fee. By default this
 implementation returns the address(0) which means the fee amount will be burnt.
 This function can be overloaded to change the fee receiver.
 
+</div>
+</div>
+
 <a id="ERC20FlashMint-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-"></a>
 
-### `flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20FlashMint-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Performs a flash loan. New tokens are minted and sent to the
 `receiver`, who is required to implement the [`IERC3156FlashBorrower`](../interfaces#IERC3156FlashBorrower)
@@ -767,9 +1189,20 @@ interface. By the end of the flash loan, the receiver is expected to own
 amount + fee tokens and have them approved back to the token contract itself so
 they can be burned.
 
+</div>
+</div>
+
 <a id="ERC20Pausable"></a>
 
-## `ERC20Pausable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Pausable.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20Pausable` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Pausable.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
@@ -781,22 +1214,24 @@ Useful for scenarios such as preventing trades until the end of an evaluation
 period, or having an emergency switch for freezing all token transfers in the
 event of a large bug.
 
-IMPORTANT: This contract does not include public pause and unpause functions. In
+<Callout type="warn">
+This contract does not include public pause and unpause functions. In
+</Callout>
 addition to inheriting this contract, you must define both functions, invoking the
 [`Pausable._pause`](../security#Pausable-_pause--) and [`Pausable._unpause`](../security#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
 make the contract unpausable.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_beforeTokenTransfer(from, to, amount)](#ERC20Pausable-_beforeTokenTransfer-address-address-uint256-)
-
 #### Pausable
 - [paused()](#Pausable-paused--)
 - [_requireNotPaused()](#Pausable-_requireNotPaused--)
 - [_requirePaused()](#Pausable-_requirePaused--)
 - [_pause()](#Pausable-_pause--)
 - [_unpause()](#Pausable-_unpause--)
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -815,29 +1250,36 @@ make the contract unpausable.
 - [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### Pausable
 - [Paused(account)](#Pausable-Paused-address-)
 - [Unpaused(account)](#Pausable-Unpaused-address-)
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20Pausable-_beforeTokenTransfer-address-address-uint256-"></a>
 
-### `_beforeTokenTransfer(address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_beforeTokenTransfer(address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Pausable-_beforeTokenTransfer-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`ERC20._beforeTokenTransfer`](#ERC20-_beforeTokenTransfer-address-address-uint256-).
 
@@ -845,9 +1287,20 @@ Requirements:
 
 - the contract must not be paused.
 
+</div>
+</div>
+
 <a id="ERC20Permit"></a>
 
-## `ERC20Permit` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Permit.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20Permit` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Permit.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
@@ -862,22 +1315,20 @@ need to send a transaction, and thus is not required to hold Ether at all.
 
 _Available since v3.4._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(name)](#ERC20Permit-constructor-string-)
 - [permit(owner, spender, value, deadline, v, r, s)](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 - [nonces(owner)](#ERC20Permit-nonces-address-)
 - [DOMAIN_SEPARATOR()](#ERC20Permit-DOMAIN_SEPARATOR--)
 - [_useNonce(owner)](#ERC20Permit-_useNonce-address-)
-
 #### EIP712
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
-
 #### IERC5267
-
 #### IERC20Permit
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -897,46 +1348,63 @@ _Available since v3.4._
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### EIP712
-
 #### IERC5267
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-
 #### IERC20Permit
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20Permit-constructor-string-"></a>
 
-### `constructor(string name)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(string name)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Permit-constructor-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Initializes the [`EIP712`](../utils#EIP712) domain separator using the `name` parameter, and setting `version` to `"1"`.
 
 It's a good idea to use the same `name` that is defined as the ERC20 token name.
 
+</div>
+</div>
+
 <a id="ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
 
-### `permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets `value` as the allowance of `spender` over ``owner``'s tokens,
 given ``owner``'s signed approval.
 
-IMPORTANT: The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
+<Callout type="warn">
+The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
+</Callout>
 ordering also apply here.
 
 Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
@@ -955,10 +1423,20 @@ section](https://eips.ethereum.org/EIPS/eip-2612#specification).
 
 CAUTION: See Security Considerations above.
 
+</div>
+</div>
+
 <a id="ERC20Permit-nonces-address-"></a>
 
-### `nonces(address owner) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">nonces(address owner) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Permit-nonces-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current nonce for `owner`. This value must be
 included whenever a signature is generated for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-).
@@ -966,25 +1444,56 @@ included whenever a signature is generated for [`ERC20Permit.permit`](#ERC20Perm
 Every successful call to [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) increases ``owner``'s nonce by one. This
 prevents a signature from being used multiple times.
 
+</div>
+</div>
+
 <a id="ERC20Permit-DOMAIN_SEPARATOR--"></a>
 
-### `DOMAIN_SEPARATOR() → bytes32`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">DOMAIN_SEPARATOR() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ERC20Permit-DOMAIN_SEPARATOR--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the domain separator used in the encoding of the signature for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-), as defined by [`EIP712`](../utils#EIP712).
 
+</div>
+</div>
+
 <a id="ERC20Permit-_useNonce-address-"></a>
 
-### `_useNonce(address owner) → uint256 current`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_useNonce(address owner) → uint256 current</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Permit-_useNonce-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 "Consume a nonce": return the current value and increment.
 
 _Available since v4.1._
 
+</div>
+</div>
+
 <a id="ERC20Snapshot"></a>
 
-## `ERC20Snapshot` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Snapshot.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20Snapshot` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Snapshot.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
@@ -1020,13 +1529,14 @@ There is a constant overhead for normal ERC20 transfers due to the additional sn
 only significant for the first transfer that immediately follows a snapshot for a particular account. Subsequent
 transfers will have normal cost until the next snapshot, and so on.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_snapshot()](#ERC20Snapshot-_snapshot--)
 - [_getCurrentSnapshotId()](#ERC20Snapshot-_getCurrentSnapshotId--)
 - [balanceOfAt(account, snapshotId)](#ERC20Snapshot-balanceOfAt-address-uint256-)
 - [totalSupplyAt(snapshotId)](#ERC20Snapshot-totalSupplyAt-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20Snapshot-_beforeTokenTransfer-address-address-uint256-)
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -1045,26 +1555,34 @@ transfers will have normal cost until the next snapshot, and so on.
 - [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [Snapshot(id)](#ERC20Snapshot-Snapshot-uint256-)
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20Snapshot-_snapshot--"></a>
 
-### `_snapshot() → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_snapshot() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Snapshot-_snapshot--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Creates a new snapshot and returns its snapshot id.
 
@@ -1086,31 +1604,71 @@ section above.
 We haven't measured the actual numbers; if this is something you're interested in please reach out to us.
 ====
 
+</div>
+</div>
+
 <a id="ERC20Snapshot-_getCurrentSnapshotId--"></a>
 
-### `_getCurrentSnapshotId() → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_getCurrentSnapshotId() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Snapshot-_getCurrentSnapshotId--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Get the current snapshotId
 
+</div>
+</div>
+
 <a id="ERC20Snapshot-balanceOfAt-address-uint256-"></a>
 
-### `balanceOfAt(address account, uint256 snapshotId) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">balanceOfAt(address account, uint256 snapshotId) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Snapshot-balanceOfAt-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Retrieves the balance of `account` at the time `snapshotId` was created.
 
+</div>
+</div>
+
 <a id="ERC20Snapshot-totalSupplyAt-uint256-"></a>
 
-### `totalSupplyAt(uint256 snapshotId) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">totalSupplyAt(uint256 snapshotId) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Snapshot-totalSupplyAt-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Retrieves the total supply at the time `snapshotId` was created.
 
+</div>
+</div>
+
 <a id="ERC20Snapshot-_beforeTokenTransfer-address-address-uint256-"></a>
 
-### `_beforeTokenTransfer(address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_beforeTokenTransfer(address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Snapshot-_beforeTokenTransfer-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Hook that is called before any transfer of tokens. This includes
 minting and burning.
@@ -1125,16 +1683,38 @@ will be transferred to `to`.
 
 To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
 
+</div>
+</div>
+
 <a id="ERC20Snapshot-Snapshot-uint256-"></a>
 
-### `Snapshot(uint256 id)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Snapshot(uint256 id)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="ERC20Snapshot-Snapshot-uint256-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted by [`ERC20Snapshot._snapshot`](#ERC20Snapshot-_snapshot--) when a snapshot identified by `id` is created.
 
+</div>
+</div>
+
 <a id="ERC20Votes"></a>
 
-## `ERC20Votes` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Votes.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20Votes` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Votes.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
@@ -1154,7 +1734,9 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 
 _Available since v4.2._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [clock()](#ERC20Votes-clock--)
 - [CLOCK_MODE()](#ERC20Votes-CLOCK_MODE--)
 - [checkpoints(account, pos)](#ERC20Votes-checkpoints-address-uint32-)
@@ -1170,28 +1752,20 @@ _Available since v4.2._
 - [_burn(account, amount)](#ERC20Votes-_burn-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20Votes-_afterTokenTransfer-address-address-uint256-)
 - [_delegate(delegator, delegatee)](#ERC20Votes-_delegate-address-address-)
-
 #### IERC5805
-
 #### IVotes
-
 #### IERC6372
-
 #### ERC20Permit
 - [permit(owner, spender, value, deadline, v, r, s)](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 - [nonces(owner)](#ERC20Permit-nonces-address-)
 - [DOMAIN_SEPARATOR()](#ERC20Permit-DOMAIN_SEPARATOR--)
 - [_useNonce(owner)](#ERC20Permit-_useNonce-address-)
-
 #### EIP712
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
-
 #### IERC5267
-
 #### IERC20Permit
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -1208,84 +1782,145 @@ _Available since v4.2._
 - [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC5805
-
 #### IVotes
 - [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
 - [DelegateVotesChanged(delegate, previousBalance, newBalance)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
-
 #### IERC6372
-
 #### ERC20Permit
-
 #### EIP712
-
 #### IERC5267
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-
 #### IERC20Permit
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20Votes-clock--"></a>
 
-### `clock() → uint48`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">clock() → uint48</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-clock--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Clock used for flagging checkpoints. Can be overridden to implement timestamp based checkpoints (and voting).
 
+</div>
+</div>
+
 <a id="ERC20Votes-CLOCK_MODE--"></a>
 
-### `CLOCK_MODE() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">CLOCK_MODE() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-CLOCK_MODE--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Description of the clock
 
+</div>
+</div>
+
 <a id="ERC20Votes-checkpoints-address-uint32-"></a>
 
-### `checkpoints(address account, uint32 pos) → struct ERC20Votes.Checkpoint`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">checkpoints(address account, uint32 pos) → struct ERC20Votes.Checkpoint</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-checkpoints-address-uint32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Get the `pos`-th checkpoint for `account`.
 
+</div>
+</div>
+
 <a id="ERC20Votes-numCheckpoints-address-"></a>
 
-### `numCheckpoints(address account) → uint32`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">numCheckpoints(address account) → uint32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-numCheckpoints-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Get number of checkpoints for `account`.
 
+</div>
+</div>
+
 <a id="ERC20Votes-delegates-address-"></a>
 
-### `delegates(address account) → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">delegates(address account) → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-delegates-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Get the address `account` is currently delegating to.
 
+</div>
+</div>
+
 <a id="ERC20Votes-getVotes-address-"></a>
 
-### `getVotes(address account) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getVotes(address account) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-getVotes-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Gets the current votes balance for `account`
 
+</div>
+</div>
+
 <a id="ERC20Votes-getPastVotes-address-uint256-"></a>
 
-### `getPastVotes(address account, uint256 timepoint) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getPastVotes(address account, uint256 timepoint) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-getPastVotes-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Retrieve the number of votes for `account` at the end of `timepoint`.
 
@@ -1293,10 +1928,20 @@ Requirements:
 
 - `timepoint` must be in the past
 
+</div>
+</div>
+
 <a id="ERC20Votes-getPastTotalSupply-uint256-"></a>
 
-### `getPastTotalSupply(uint256 timepoint) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getPastTotalSupply(uint256 timepoint) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-getPastTotalSupply-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Retrieve the `totalSupply` at the end of `timepoint`. Note, this value is the sum of all balances.
 It is NOT the sum of all the delegated votes!
@@ -1305,62 +1950,143 @@ Requirements:
 
 - `timepoint` must be in the past
 
+</div>
+</div>
+
 <a id="ERC20Votes-delegate-address-"></a>
 
-### `delegate(address delegatee)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">delegate(address delegatee)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-delegate-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Delegate votes from the sender to `delegatee`.
 
+</div>
+</div>
+
 <a id="ERC20Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
 
-### `delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Delegates votes from signer to `delegatee`
 
+</div>
+</div>
+
 <a id="ERC20Votes-_maxSupply--"></a>
 
-### `_maxSupply() → uint224`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_maxSupply() → uint224</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Votes-_maxSupply--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Maximum token supply. Defaults to `type(uint224).max` (2^224^ - 1).
 
+</div>
+</div>
+
 <a id="ERC20Votes-_mint-address-uint256-"></a>
 
-### `_mint(address account, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_mint(address account, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Votes-_mint-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Snapshots the totalSupply after it has been increased.
 
+</div>
+</div>
+
 <a id="ERC20Votes-_burn-address-uint256-"></a>
 
-### `_burn(address account, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_burn(address account, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Votes-_burn-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Snapshots the totalSupply after it has been decreased.
 
+</div>
+</div>
+
 <a id="ERC20Votes-_afterTokenTransfer-address-address-uint256-"></a>
 
-### `_afterTokenTransfer(address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_afterTokenTransfer(address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Votes-_afterTokenTransfer-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Move voting power when tokens are transferred.
 
 Emits a [`IVotes.DelegateVotesChanged`](../governance#IVotes-DelegateVotesChanged-address-uint256-uint256-) event.
 
+</div>
+</div>
+
 <a id="ERC20Votes-_delegate-address-address-"></a>
 
-### `_delegate(address delegator, address delegatee)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_delegate(address delegator, address delegatee)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Votes-_delegate-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Change delegation for `delegator` to `delegatee`.
 
 Emits events [`IVotes.DelegateChanged`](../governance#IVotes-DelegateChanged-address-address-address-) and [`IVotes.DelegateVotesChanged`](../governance#IVotes-DelegateVotesChanged-address-uint256-uint256-).
 
+</div>
+</div>
+
 <a id="ERC20VotesComp"></a>
 
-## `ERC20VotesComp` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20VotesComp.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20VotesComp` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20VotesComp.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesComp.sol";
@@ -1382,11 +2108,12 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 
 _Available since v4.2._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [getCurrentVotes(account)](#ERC20VotesComp-getCurrentVotes-address-)
 - [getPriorVotes(account, blockNumber)](#ERC20VotesComp-getPriorVotes-address-uint256-)
 - [_maxSupply()](#ERC20VotesComp-_maxSupply--)
-
 #### ERC20Votes
 - [clock()](#ERC20Votes-clock--)
 - [CLOCK_MODE()](#ERC20Votes-CLOCK_MODE--)
@@ -1402,28 +2129,20 @@ _Available since v4.2._
 - [_burn(account, amount)](#ERC20Votes-_burn-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20Votes-_afterTokenTransfer-address-address-uint256-)
 - [_delegate(delegator, delegatee)](#ERC20Votes-_delegate-address-address-)
-
 #### IERC5805
-
 #### IVotes
-
 #### IERC6372
-
 #### ERC20Permit
 - [permit(owner, spender, value, deadline, v, r, s)](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 - [nonces(owner)](#ERC20Permit-nonces-address-)
 - [DOMAIN_SEPARATOR()](#ERC20Permit-DOMAIN_SEPARATOR--)
 - [_useNonce(owner)](#ERC20Permit-_useNonce-address-)
-
 #### EIP712
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
-
 #### IERC5267
-
 #### IERC20Permit
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -1440,64 +2159,95 @@ _Available since v4.2._
 - [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC20Votes
-
 #### IERC5805
-
 #### IVotes
 - [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
 - [DelegateVotesChanged(delegate, previousBalance, newBalance)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
-
 #### IERC6372
-
 #### ERC20Permit
-
 #### EIP712
-
 #### IERC5267
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-
 #### IERC20Permit
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20VotesComp-getCurrentVotes-address-"></a>
 
-### `getCurrentVotes(address account) → uint96`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getCurrentVotes(address account) → uint96</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ERC20VotesComp-getCurrentVotes-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Comp version of the [`Governor.getVotes`](../governance#Governor-getVotes-address-uint256-) accessor, with `uint96` return type.
 
+</div>
+</div>
+
 <a id="ERC20VotesComp-getPriorVotes-address-uint256-"></a>
 
-### `getPriorVotes(address account, uint256 blockNumber) → uint96`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getPriorVotes(address account, uint256 blockNumber) → uint96</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ERC20VotesComp-getPriorVotes-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Comp version of the [`IVotes.getPastVotes`](../governance#IVotes-getPastVotes-address-uint256-) accessor, with `uint96` return type.
 
+</div>
+</div>
+
 <a id="ERC20VotesComp-_maxSupply--"></a>
 
-### `_maxSupply() → uint224`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_maxSupply() → uint224</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20VotesComp-_maxSupply--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Maximum token supply. Reduced to `type(uint96).max` (2^96^ - 1) to fit COMP interface.
 
+</div>
+</div>
+
 <a id="ERC20Wrapper"></a>
 
-## `ERC20Wrapper` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Wrapper.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20Wrapper` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC20Wrapper.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Wrapper.sol";
@@ -1511,14 +2261,15 @@ wrapping of an existing "basic" ERC20 into a governance token.
 
 _Available since v4.2._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(underlyingToken)](#ERC20Wrapper-constructor-contract-IERC20-)
 - [decimals()](#ERC20Wrapper-decimals--)
 - [underlying()](#ERC20Wrapper-underlying--)
 - [depositFor(account, amount)](#ERC20Wrapper-depositFor-address-uint256-)
 - [withdrawTo(account, amount)](#ERC20Wrapper-withdrawTo-address-uint256-)
 - [_recover(account)](#ERC20Wrapper-_recover-address-)
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -1537,65 +2288,134 @@ _Available since v4.2._
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20Wrapper-constructor-contract-IERC20-"></a>
 
-### `constructor(contract IERC20 underlyingToken)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(contract IERC20 underlyingToken)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Wrapper-constructor-contract-IERC20-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC20Wrapper-decimals--"></a>
 
-### `decimals() → uint8`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">decimals() → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Wrapper-decimals--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`ERC20.decimals`](#ERC20-decimals--).
 
+</div>
+</div>
+
 <a id="ERC20Wrapper-underlying--"></a>
 
-### `underlying() → contract IERC20`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">underlying() → contract IERC20</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Wrapper-underlying--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the address of the underlying ERC-20 token that is being wrapped.
 
+</div>
+</div>
+
 <a id="ERC20Wrapper-depositFor-address-uint256-"></a>
 
-### `depositFor(address account, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">depositFor(address account, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Wrapper-depositFor-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Allow a user to deposit underlying tokens and mint the corresponding number of wrapped tokens.
 
+</div>
+</div>
+
 <a id="ERC20Wrapper-withdrawTo-address-uint256-"></a>
 
-### `withdrawTo(address account, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">withdrawTo(address account, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20Wrapper-withdrawTo-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Allow a user to burn a number of wrapped tokens and withdraw the corresponding number of underlying tokens.
 
+</div>
+</div>
+
 <a id="ERC20Wrapper-_recover-address-"></a>
 
-### `_recover(address account) → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_recover(address account) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20Wrapper-_recover-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Mint wrapped token to cover any underlyingTokens that would have been transferred by mistake. Internal
 function that can be exposed with access control if desired.
 
+</div>
+</div>
+
 <a id="ERC4626"></a>
 
-## `ERC4626` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC4626.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC4626` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/ERC4626.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
@@ -1639,7 +2459,9 @@ To learn more, check out our xref:ROOT:erc4626.adoc[ERC-4626 guide].
 
 _Available since v4.7._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(asset_)](#ERC4626-constructor-contract-IERC20-)
 - [decimals()](#ERC4626-decimals--)
 - [asset()](#ERC4626-asset--)
@@ -1663,9 +2485,7 @@ _Available since v4.7._
 - [_deposit(caller, receiver, assets, shares)](#ERC4626-_deposit-address-address-uint256-uint256-)
 - [_withdraw(caller, receiver, owner, assets, shares)](#ERC4626-_withdraw-address-address-address-uint256-uint256-)
 - [_decimalsOffset()](#ERC4626-_decimalsOffset--)
-
 #### IERC4626
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -1684,36 +2504,53 @@ _Available since v4.7._
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC4626
 - [Deposit(sender, owner, assets, shares)](#IERC4626-Deposit-address-address-uint256-uint256-)
 - [Withdraw(sender, receiver, owner, assets, shares)](#IERC4626-Withdraw-address-address-address-uint256-uint256-)
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC4626-constructor-contract-IERC20-"></a>
 
-### `constructor(contract IERC20 asset_)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(contract IERC20 asset_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC4626-constructor-contract-IERC20-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Set the underlying asset contract. This must be an ERC20-compatible contract (ERC20 or ERC777).
 
+</div>
+</div>
+
 <a id="ERC4626-decimals--"></a>
 
-### `decimals() → uint8`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">decimals() → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-decimals--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Decimals are computed by adding the decimal offset on top of the underlying asset's decimals. This
 "original" value is cached during construction of the vault contract. If this read operation fails (e.g., the
@@ -1721,157 +2558,378 @@ asset has not been created yet), a default of 18 is used to represent the underl
 
 See [`IERC20Metadata.decimals`](#IERC20Metadata-decimals--).
 
+</div>
+</div>
+
 <a id="ERC4626-asset--"></a>
 
-### `asset() → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">asset() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-asset--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.asset`](../interfaces#IERC4626-asset--).
 
+</div>
+</div>
+
 <a id="ERC4626-totalAssets--"></a>
 
-### `totalAssets() → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">totalAssets() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-totalAssets--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.totalAssets`](../interfaces#IERC4626-totalAssets--).
 
+</div>
+</div>
+
 <a id="ERC4626-convertToShares-uint256-"></a>
 
-### `convertToShares(uint256 assets) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">convertToShares(uint256 assets) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-convertToShares-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.convertToShares`](../interfaces#IERC4626-convertToShares-uint256-).
 
+</div>
+</div>
+
 <a id="ERC4626-convertToAssets-uint256-"></a>
 
-### `convertToAssets(uint256 shares) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">convertToAssets(uint256 shares) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-convertToAssets-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.convertToAssets`](../interfaces#IERC4626-convertToAssets-uint256-).
 
+</div>
+</div>
+
 <a id="ERC4626-maxDeposit-address-"></a>
 
-### `maxDeposit(address) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">maxDeposit(address) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-maxDeposit-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.maxDeposit`](../interfaces#IERC4626-maxDeposit-address-).
 
+</div>
+</div>
+
 <a id="ERC4626-maxMint-address-"></a>
 
-### `maxMint(address) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">maxMint(address) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-maxMint-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.maxMint`](../interfaces#IERC4626-maxMint-address-).
 
+</div>
+</div>
+
 <a id="ERC4626-maxWithdraw-address-"></a>
 
-### `maxWithdraw(address owner) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">maxWithdraw(address owner) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-maxWithdraw-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.maxWithdraw`](../interfaces#IERC4626-maxWithdraw-address-).
 
+</div>
+</div>
+
 <a id="ERC4626-maxRedeem-address-"></a>
 
-### `maxRedeem(address owner) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">maxRedeem(address owner) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-maxRedeem-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.maxRedeem`](../interfaces#IERC4626-maxRedeem-address-).
 
+</div>
+</div>
+
 <a id="ERC4626-previewDeposit-uint256-"></a>
 
-### `previewDeposit(uint256 assets) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">previewDeposit(uint256 assets) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-previewDeposit-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.previewDeposit`](../interfaces#IERC4626-previewDeposit-uint256-).
 
+</div>
+</div>
+
 <a id="ERC4626-previewMint-uint256-"></a>
 
-### `previewMint(uint256 shares) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">previewMint(uint256 shares) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-previewMint-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.previewMint`](../interfaces#IERC4626-previewMint-uint256-).
 
+</div>
+</div>
+
 <a id="ERC4626-previewWithdraw-uint256-"></a>
 
-### `previewWithdraw(uint256 assets) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">previewWithdraw(uint256 assets) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-previewWithdraw-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.previewWithdraw`](../interfaces#IERC4626-previewWithdraw-uint256-).
 
+</div>
+</div>
+
 <a id="ERC4626-previewRedeem-uint256-"></a>
 
-### `previewRedeem(uint256 shares) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">previewRedeem(uint256 shares) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-previewRedeem-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.previewRedeem`](../interfaces#IERC4626-previewRedeem-uint256-).
 
+</div>
+</div>
+
 <a id="ERC4626-deposit-uint256-address-"></a>
 
-### `deposit(uint256 assets, address receiver) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">deposit(uint256 assets, address receiver) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-deposit-uint256-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-).
 
+</div>
+</div>
+
 <a id="ERC4626-mint-uint256-address-"></a>
 
-### `mint(uint256 shares, address receiver) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">mint(uint256 shares, address receiver) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-mint-uint256-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.mint`](../interfaces#IERC4626-mint-uint256-address-).
 
 As opposed to [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-), minting is allowed even if the vault is in a state where the price of a share is zero.
 In this case, the shares will be minted without requiring any assets to be deposited.
 
+</div>
+</div>
+
 <a id="ERC4626-withdraw-uint256-address-address-"></a>
 
-### `withdraw(uint256 assets, address receiver, address owner) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">withdraw(uint256 assets, address receiver, address owner) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-withdraw-uint256-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.withdraw`](../interfaces#IERC4626-withdraw-uint256-address-address-).
 
+</div>
+</div>
+
 <a id="ERC4626-redeem-uint256-address-address-"></a>
 
-### `redeem(uint256 shares, address receiver, address owner) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">redeem(uint256 shares, address receiver, address owner) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC4626-redeem-uint256-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC4626.redeem`](../interfaces#IERC4626-redeem-uint256-address-address-).
 
+</div>
+</div>
+
 <a id="ERC4626-_convertToShares-uint256-enum-Math-Rounding-"></a>
 
-### `_convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC4626-_convertToShares-uint256-enum-Math-Rounding-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Internal conversion function (from assets to shares) with support for rounding direction.
 
+</div>
+</div>
+
 <a id="ERC4626-_convertToAssets-uint256-enum-Math-Rounding-"></a>
 
-### `_convertToAssets(uint256 shares, enum Math.Rounding rounding) → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_convertToAssets(uint256 shares, enum Math.Rounding rounding) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC4626-_convertToAssets-uint256-enum-Math-Rounding-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Internal conversion function (from shares to assets) with support for rounding direction.
 
+</div>
+</div>
+
 <a id="ERC4626-_deposit-address-address-uint256-uint256-"></a>
 
-### `_deposit(address caller, address receiver, uint256 assets, uint256 shares)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_deposit(address caller, address receiver, uint256 assets, uint256 shares)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC4626-_deposit-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deposit/mint common workflow.
 
+</div>
+</div>
+
 <a id="ERC4626-_withdraw-address-address-address-uint256-uint256-"></a>
 
-### `_withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC4626-_withdraw-address-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Withdraw/redeem common workflow.
 
+</div>
+</div>
+
 <a id="ERC4626-_decimalsOffset--"></a>
 
-### `_decimalsOffset() → uint8`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_decimalsOffset() → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC4626-_decimalsOffset--">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="IERC20Metadata"></a>
 
-## `IERC20Metadata` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/IERC20Metadata.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IERC20Metadata` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/IERC20Metadata.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
@@ -1881,11 +2939,12 @@ Interface for the optional metadata functions from the ERC20 standard.
 
 _Available since v4.1._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [name()](#IERC20Metadata-name--)
 - [symbol()](#IERC20Metadata-symbol--)
 - [decimals()](#IERC20Metadata-decimals--)
-
 #### IERC20
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
@@ -1893,37 +2952,80 @@ _Available since v4.1._
 - [allowance(owner, spender)](#IERC20-allowance-address-address-)
 - [approve(spender, amount)](#IERC20-approve-address-uint256-)
 - [transferFrom(from, to, amount)](#IERC20-transferFrom-address-address-uint256-)
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="IERC20Metadata-name--"></a>
 
-### `name() → string`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">name() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20Metadata-name--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the name of the token.
 
+</div>
+</div>
+
 <a id="IERC20Metadata-symbol--"></a>
 
-### `symbol() → string`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">symbol() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20Metadata-symbol--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the symbol of the token.
 
+</div>
+</div>
+
 <a id="IERC20Metadata-decimals--"></a>
 
-### `decimals() → uint8`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">decimals() → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20Metadata-decimals--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the decimals places of the token.
 
+</div>
+</div>
+
 <a id="IERC20Permit"></a>
 
-## `IERC20Permit` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/IERC20Permit.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IERC20Permit` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/extensions/IERC20Permit.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol";
@@ -1964,20 +3066,33 @@ Observe that: 1) `msg.sender` is used as the owner, leaving no ambiguity as to t
 Additionally, note that smart contract wallets (such as Argent or Safe) are not able to produce permit signatures, so
 contracts should have entry points that don't rely on permit.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [permit(owner, spender, value, deadline, v, r, s)](#IERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 - [nonces(owner)](#IERC20Permit-nonces-address-)
 - [DOMAIN_SEPARATOR()](#IERC20Permit-DOMAIN_SEPARATOR--)
+</div>
+</div>
 
 <a id="IERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
 
-### `permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets `value` as the allowance of `spender` over ``owner``'s tokens,
 given ``owner``'s signed approval.
 
-IMPORTANT: The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
+<Callout type="warn">
+The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
+</Callout>
 ordering also apply here.
 
 Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
@@ -1996,10 +3111,20 @@ section](https://eips.ethereum.org/EIPS/eip-2612#specification).
 
 CAUTION: See Security Considerations above.
 
+</div>
+</div>
+
 <a id="IERC20Permit-nonces-address-"></a>
 
-### `nonces(address owner) → uint256`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">nonces(address owner) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20Permit-nonces-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current nonce for `owner`. This value must be
 included whenever a signature is generated for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-).
@@ -2007,16 +3132,37 @@ included whenever a signature is generated for [`ERC20Permit.permit`](#ERC20Perm
 Every successful call to [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-) increases ``owner``'s nonce by one. This
 prevents a signature from being used multiple times.
 
+</div>
+</div>
+
 <a id="IERC20Permit-DOMAIN_SEPARATOR--"></a>
 
-### `DOMAIN_SEPARATOR() → bytes32`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">DOMAIN_SEPARATOR() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC20Permit-DOMAIN_SEPARATOR--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the domain separator used in the encoding of the signature for [`ERC20Permit.permit`](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-), as defined by [`EIP712`](../utils#EIP712).
 
+</div>
+</div>
+
 <a id="ERC20PresetFixedSupply"></a>
 
-## `ERC20PresetFixedSupply` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20PresetFixedSupply` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
@@ -2035,13 +3181,13 @@ _Available since v3.4._
 
 _Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(name, symbol, initialSupply, owner)](#ERC20PresetFixedSupply-constructor-string-string-uint256-address-)
-
 #### ERC20Burnable
 - [burn(amount)](#ERC20Burnable-burn-uint256-)
 - [burnFrom(account, amount)](#ERC20Burnable-burnFrom-address-uint256-)
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -2061,35 +3207,53 @@ _Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(from, to, amount)](#ERC20-_beforeTokenTransfer-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC20Burnable
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
+</div>
+</div>
 
 <a id="ERC20PresetFixedSupply-constructor-string-string-uint256-address-"></a>
 
-### `constructor(string name, string symbol, uint256 initialSupply, address owner)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(string name, string symbol, uint256 initialSupply, address owner)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20PresetFixedSupply-constructor-string-string-uint256-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Mints `initialSupply` amount of token and transfers them to `owner`.
 
 See [`ERC20.constructor`](#ERC20-constructor-string-string-).
 
+</div>
+</div>
+
 <a id="ERC20PresetMinterPauser"></a>
 
-## `ERC20PresetMinterPauser` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC20PresetMinterPauser` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol";
@@ -2110,7 +3274,9 @@ and pauser roles to other accounts.
 
 _Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(name, symbol)](#ERC20PresetMinterPauser-constructor-string-string-)
 - [mint(to, amount)](#ERC20PresetMinterPauser-mint-address-uint256-)
 - [pause()](#ERC20PresetMinterPauser-pause--)
@@ -2118,20 +3284,16 @@ _Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 - [_beforeTokenTransfer(from, to, amount)](#ERC20PresetMinterPauser-_beforeTokenTransfer-address-address-uint256-)
 - [MINTER_ROLE()](#ERC20PresetMinterPauser-MINTER_ROLE-bytes32)
 - [PAUSER_ROLE()](#ERC20PresetMinterPauser-PAUSER_ROLE-bytes32)
-
 #### ERC20Pausable
-
 #### Pausable
 - [paused()](#Pausable-paused--)
 - [_requireNotPaused()](#Pausable-_requireNotPaused--)
 - [_requirePaused()](#Pausable-_requirePaused--)
 - [_pause()](#Pausable-_pause--)
 - [_unpause()](#Pausable-_unpause--)
-
 #### ERC20Burnable
 - [burn(amount)](#ERC20Burnable-burn-uint256-)
 - [burnFrom(account, amount)](#ERC20Burnable-burnFrom-address-uint256-)
-
 #### ERC20
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
@@ -2150,18 +3312,14 @@ _Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 - [_approve(owner, spender, amount)](#ERC20-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, amount)](#ERC20-_spendAllowance-address-address-uint256-)
 - [_afterTokenTransfer(from, to, amount)](#ERC20-_afterTokenTransfer-address-address-uint256-)
-
 #### IERC20Metadata
-
 #### IERC20
-
 #### AccessControlEnumerable
 - [supportsInterface(interfaceId)](#AccessControlEnumerable-supportsInterface-bytes4-)
 - [getRoleMember(role, index)](#AccessControlEnumerable-getRoleMember-bytes32-uint256-)
 - [getRoleMemberCount(role)](#AccessControlEnumerable-getRoleMemberCount-bytes32-)
 - [_grantRole(role, account)](#AccessControlEnumerable-_grantRole-bytes32-address-)
 - [_revokeRole(role, account)](#AccessControlEnumerable-_revokeRole-bytes32-address-)
-
 #### AccessControl
 - [hasRole(role, account)](#AccessControl-hasRole-bytes32-address-)
 - [_checkRole(role)](#AccessControl-_checkRole-bytes32-)
@@ -2173,62 +3331,69 @@ _Deprecated in favor of [Contracts Wizard](https://wizard.openzeppelin.com/)._
 - [_setupRole(role, account)](#AccessControl-_setupRole-bytes32-address-)
 - [_setRoleAdmin(role, adminRole)](#AccessControl-_setRoleAdmin-bytes32-bytes32-)
 - [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
-
 #### ERC165
-
 #### IERC165
-
 #### IAccessControlEnumerable
-
 #### IAccessControl
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC20Pausable
-
 #### Pausable
 - [Paused(account)](#Pausable-Paused-address-)
 - [Unpaused(account)](#Pausable-Unpaused-address-)
-
 #### ERC20Burnable
-
 #### ERC20
-
 #### IERC20Metadata
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
-
 #### AccessControlEnumerable
-
 #### AccessControl
-
 #### ERC165
-
 #### IERC165
-
 #### IAccessControlEnumerable
-
 #### IAccessControl
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
+</div>
+</div>
 
 <a id="ERC20PresetMinterPauser-constructor-string-string-"></a>
 
-### `constructor(string name, string symbol)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(string name, string symbol)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20PresetMinterPauser-constructor-string-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Grants `DEFAULT_ADMIN_ROLE`, `MINTER_ROLE` and `PAUSER_ROLE` to the
 account that deploys the contract.
 
 See [`ERC20.constructor`](#ERC20-constructor-string-string-).
 
+</div>
+</div>
+
 <a id="ERC20PresetMinterPauser-mint-address-uint256-"></a>
 
-### `mint(address to, uint256 amount)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">mint(address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20PresetMinterPauser-mint-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Creates `amount` new tokens for `to`.
 
@@ -2238,10 +3403,20 @@ Requirements:
 
 - the caller must have the `MINTER_ROLE`.
 
+</div>
+</div>
+
 <a id="ERC20PresetMinterPauser-pause--"></a>
 
-### `pause()`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">pause()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20PresetMinterPauser-pause--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Pauses all token transfers.
 
@@ -2251,10 +3426,20 @@ Requirements:
 
 - the caller must have the `PAUSER_ROLE`.
 
+</div>
+</div>
+
 <a id="ERC20PresetMinterPauser-unpause--"></a>
 
-### `unpause()`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">unpause()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20PresetMinterPauser-unpause--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Unpauses all token transfers.
 
@@ -2264,24 +3449,65 @@ Requirements:
 
 - the caller must have the `PAUSER_ROLE`.
 
+</div>
+</div>
+
 <a id="ERC20PresetMinterPauser-_beforeTokenTransfer-address-address-uint256-"></a>
 
-### `_beforeTokenTransfer(address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_beforeTokenTransfer(address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC20PresetMinterPauser-_beforeTokenTransfer-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC20PresetMinterPauser-MINTER_ROLE-bytes32"></a>
 
-### `MINTER_ROLE() → bytes32`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">MINTER_ROLE() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20PresetMinterPauser-MINTER_ROLE-bytes32">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC20PresetMinterPauser-PAUSER_ROLE-bytes32"></a>
 
-### `PAUSER_ROLE() → bytes32`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">PAUSER_ROLE() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC20PresetMinterPauser-PAUSER_ROLE-bytes32">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="SafeERC20"></a>
 
-## `SafeERC20` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/utils/SafeERC20.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `SafeERC20` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/utils/SafeERC20.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -2294,7 +3520,9 @@ successful.
 To use this library you can add a `using SafeERC20 for IERC20;` statement to your contract,
 which allows you to call the safe operations as `token.safeTransfer(...)`, etc.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [safeTransfer(token, to, value)](#SafeERC20-safeTransfer-contract-IERC20-address-uint256-)
 - [safeTransferFrom(token, from, to, value)](#SafeERC20-safeTransferFrom-contract-IERC20-address-address-uint256-)
 - [safeApprove(token, spender, value)](#SafeERC20-safeApprove-contract-IERC20-address-uint256-)
@@ -2302,27 +3530,56 @@ which allows you to call the safe operations as `token.safeTransfer(...)`, etc.
 - [safeDecreaseAllowance(token, spender, value)](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-)
 - [forceApprove(token, spender, value)](#SafeERC20-forceApprove-contract-IERC20-address-uint256-)
 - [safePermit(token, owner, spender, value, deadline, v, r, s)](#SafeERC20-safePermit-contract-IERC20Permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
+</div>
+</div>
 
 <a id="SafeERC20-safeTransfer-contract-IERC20-address-uint256-"></a>
 
-### `safeTransfer(contract IERC20 token, address to, uint256 value)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">safeTransfer(contract IERC20 token, address to, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SafeERC20-safeTransfer-contract-IERC20-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,
 non-reverting calls are assumed to be successful.
 
+</div>
+</div>
+
 <a id="SafeERC20-safeTransferFrom-contract-IERC20-address-address-uint256-"></a>
 
-### `safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SafeERC20-safeTransferFrom-contract-IERC20-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the
 calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.
 
+</div>
+</div>
+
 <a id="SafeERC20-safeApprove-contract-IERC20-address-uint256-"></a>
 
-### `safeApprove(contract IERC20 token, address spender, uint256 value)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">safeApprove(contract IERC20 token, address spender, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SafeERC20-safeApprove-contract-IERC20-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deprecated. This function has issues similar to the ones found in
 [`IERC20.approve`](#IERC20-approve-address-uint256-), and its usage is discouraged.
@@ -2330,42 +3587,93 @@ Deprecated. This function has issues similar to the ones found in
 Whenever possible, use [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) and
 [`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) instead.
 
+</div>
+</div>
+
 <a id="SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-"></a>
 
-### `safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,
 non-reverting calls are assumed to be successful.
 
+</div>
+</div>
+
 <a id="SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-"></a>
 
-### `safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Decrease the calling contract's allowance toward `spender` by `value`. If `token` returns no value,
 non-reverting calls are assumed to be successful.
 
+</div>
+</div>
+
 <a id="SafeERC20-forceApprove-contract-IERC20-address-uint256-"></a>
 
-### `forceApprove(contract IERC20 token, address spender, uint256 value)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">forceApprove(contract IERC20 token, address spender, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SafeERC20-forceApprove-contract-IERC20-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,
 non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval
 to be set to zero before setting it to a non-zero value, such as USDT.
 
+</div>
+</div>
+
 <a id="SafeERC20-safePermit-contract-IERC20Permit-address-address-uint256-uint256-uint8-bytes32-bytes32-"></a>
 
-### `safePermit(contract IERC20Permit token, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">safePermit(contract IERC20Permit token, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="SafeERC20-safePermit-contract-IERC20Permit-address-address-uint256-uint256-uint8-bytes32-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.
 Revert on invalid signature.
 
+</div>
+</div>
+
 <a id="TokenTimelock"></a>
 
-## `TokenTimelock` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/utils/TokenTimelock.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `TokenTimelock` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC20/utils/TokenTimelock.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC20/utils/TokenTimelock.sol";
@@ -2377,48 +3685,102 @@ tokens after a given release time.
 Useful for simple vesting schedules like "advisors get all of their tokens
 after 1 year".
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(token_, beneficiary_, releaseTime_)](#TokenTimelock-constructor-contract-IERC20-address-uint256-)
 - [token()](#TokenTimelock-token--)
 - [beneficiary()](#TokenTimelock-beneficiary--)
 - [releaseTime()](#TokenTimelock-releaseTime--)
 - [release()](#TokenTimelock-release--)
+</div>
+</div>
 
 <a id="TokenTimelock-constructor-contract-IERC20-address-uint256-"></a>
 
-### `constructor(contract IERC20 token_, address beneficiary_, uint256 releaseTime_)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(contract IERC20 token_, address beneficiary_, uint256 releaseTime_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="TokenTimelock-constructor-contract-IERC20-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deploys a timelock instance that is able to hold the token specified, and will only release it to
 `beneficiary_` when [`PaymentSplitter.release`](../finance#PaymentSplitter-release-contract-IERC20-address-) is invoked after `releaseTime_`. The release time is specified as a Unix timestamp
 (in seconds).
 
+</div>
+</div>
+
 <a id="TokenTimelock-token--"></a>
 
-### `token() → contract IERC20`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">token() → contract IERC20</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="TokenTimelock-token--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the token being held.
 
+</div>
+</div>
+
 <a id="TokenTimelock-beneficiary--"></a>
 
-### `beneficiary() → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">beneficiary() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="TokenTimelock-beneficiary--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the beneficiary that will receive the tokens.
 
+</div>
+</div>
+
 <a id="TokenTimelock-releaseTime--"></a>
 
-### `releaseTime() → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">releaseTime() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="TokenTimelock-releaseTime--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the time when the tokens are released in seconds since Unix epoch (i.e. Unix timestamp).
 
+</div>
+</div>
+
 <a id="TokenTimelock-release--"></a>
 
-### `release()`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">release()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="TokenTimelock-release--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Transfers tokens held by the timelock to the beneficiary. Will only succeed if invoked after the release
 time.
+
+</div>
+</div>
 
