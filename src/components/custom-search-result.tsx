@@ -31,14 +31,15 @@ export type { FumadocsReactSortedResult as ReactSortedResult };
 
 function renderHighlights(highlights: HighlightedText[]): ReactNode {
 	return highlights.map((node, i) => {
+		const key = `${node.type}-${node.content}-${i}`;
 		if (node.styles?.highlight) {
 			return (
-				<span key={i} className="text-fd-primary bg-fd-primary/10">
+				<span key={key} className="text-fd-primary bg-fd-primary/10">
 					{node.content}
 				</span>
 			);
 		}
-		return <Fragment key={i}>{node.content}</Fragment>;
+		return <Fragment key={key}>{node.content}</Fragment>;
 	});
 }
 
@@ -80,7 +81,8 @@ export function CustomSearchResultItem({
 	// Extract filename from URL or use title
 	const getDisplayTitle = () => {
 		if (result.filename) return result.filename;
-		if ((result as any).title) return (result as any).title;
+		if ((result as { title?: string }).title)
+			return (result as { title?: string }).title;
 
 		// Extract filename from URL as fallback
 		const urlParts = result.url.split("/");
@@ -95,11 +97,11 @@ export function CustomSearchResultItem({
 		}
 
 		// Handle preview field or convert content to string
-		const preview = (result as any).preview;
+		const preview = (result as { preview?: string }).preview;
 		if (preview) {
 			return preview.length <= 150
 				? preview
-				: preview.substring(0, 147) + "...";
+				: `${preview.substring(0, 147)}...`;
 		}
 
 		// Convert ReactNode content to string for preview
@@ -110,7 +112,7 @@ export function CustomSearchResultItem({
 
 		return contentStr.length <= 150
 			? contentStr
-			: contentStr.substring(0, 147) + "...";
+			: `${contentStr.substring(0, 147)}...`;
 	};
 
 	return (
@@ -152,10 +154,12 @@ export function CustomSearchResultItem({
 			</div>
 
 			{/* Section Info */}
-			{(result as any).section && (
+			{(result as { section?: string }).section && (
 				<div className="text-xs text-fd-muted-foreground flex items-center gap-1">
 					<span>in</span>
-					<span className="font-medium">{(result as any).section}</span>
+					<span className="font-medium">
+						{(result as { section?: string }).section}
+					</span>
 				</div>
 			)}
 		</button>

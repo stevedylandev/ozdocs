@@ -1,4 +1,4 @@
-import type { Hit, LiteClient, SearchResponse } from "algoliasearch/lite";
+import type { LiteClient } from "algoliasearch/lite";
 import type { HighlightedText, SortedResult } from "./shared";
 
 export interface AlgoliaOptions {
@@ -110,7 +110,9 @@ function groupResults(
 				filename,
 				section,
 				preview:
-					content.length > 150 ? content.substring(0, 147) + "..." : content,
+					content && content.length > 150
+						? `${content.substring(0, 147)}...`
+						: content,
 			} as SortedResult & {
 				title?: string;
 				filename?: string;
@@ -135,7 +137,9 @@ function groupResults(
 			filename,
 			section,
 			preview:
-				content.length > 150 ? content.substring(0, 147) + "..." : content,
+				content && content.length > 150
+					? `${content.substring(0, 147)}...`
+					: content,
 		} as SortedResult & {
 			title?: string;
 			filename?: string;
@@ -155,7 +159,7 @@ export async function searchDocs(
 	if (query.length === 0) return [];
 
 	// Build search parameters with customizations
-	const searchParams: Record<string, any> = {
+	const searchParams: Record<string, unknown> = {
 		attributesToRetrieve: [
 			"title",
 			"description",
