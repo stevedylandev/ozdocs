@@ -3,10 +3,6 @@ title: "ERC6909"
 description: "Smart contract ERC6909 utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/contracts/api/token/erc6909
-</Callout>
-
 This set of interfaces and contracts are all related to the [ERC-6909 Minimal Multi-Token Interface](https://eips.ethereum.org/EIPS/eip-6909).
 
 The ERC consists of four interfaces which fulfill different roles--the interfaces are as follows:
@@ -32,7 +28,15 @@ Implementations are provided for each of the 4 interfaces defined in the ERC.
 
 <a id="ERC6909"></a>
 
-## `ERC6909` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/draft-ERC6909.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC6909` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/draft-ERC6909.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC6909/draft-ERC6909.sol";
@@ -41,7 +45,9 @@ import "@openzeppelin/contracts/token/ERC6909/draft-ERC6909.sol";
 Implementation of ERC-6909.
 See https://eips.ethereum.org/EIPS/eip-6909
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [supportsInterface(interfaceId)](#ERC6909-supportsInterface-bytes4-)
 - [balanceOf(owner, id)](#ERC6909-balanceOf-address-uint256-)
 - [allowance(owner, spender, id)](#ERC6909-allowance-address-address-uint256-)
@@ -57,42 +63,50 @@ See https://eips.ethereum.org/EIPS/eip-6909
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC6909
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [ERC6909InsufficientBalance(sender, balance, needed, id)](#ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-)
 - [ERC6909InsufficientAllowance(spender, allowance, needed, id)](#ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-)
 - [ERC6909InvalidApprover(approver)](#ERC6909-ERC6909InvalidApprover-address-)
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
 <a id="ERC6909-supportsInterface-bytes4-"></a>
 
-### `supportsInterface(bytes4 interfaceId) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">supportsInterface(bytes4 interfaceId) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-supportsInterface-bytes4-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns true if this contract implements the interface defined by
 `interfaceId`. See the corresponding
@@ -101,70 +115,150 @@ to learn more about how these ids are created.
 
 This function call must use less than 30 000 gas.
 
+</div>
+</div>
+
 <a id="ERC6909-balanceOf-address-uint256-"></a>
 
-### `balanceOf(address owner, uint256 id) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">balanceOf(address owner, uint256 id) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-balanceOf-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the amount of tokens of type `id` owned by `owner`.
 
+</div>
+</div>
+
 <a id="ERC6909-allowance-address-address-uint256-"></a>
 
-### `allowance(address owner, address spender, uint256 id) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">allowance(address owner, address spender, uint256 id) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-allowance-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the amount of tokens of type `id` that `spender` is allowed to spend on behalf of `owner`.
 
 NOTE: Does not include operator allowances.
 
+</div>
+</div>
+
 <a id="ERC6909-isOperator-address-address-"></a>
 
-### `isOperator(address owner, address spender) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isOperator(address owner, address spender) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-isOperator-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns true if `spender` is set as an operator for `owner`.
 
+</div>
+</div>
+
 <a id="ERC6909-approve-address-uint256-uint256-"></a>
 
-### `approve(address spender, uint256 id, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">approve(address spender, uint256 id, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-approve-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets an approval to `spender` for `amount` of tokens of type `id` from the caller's tokens. An `amount` of
 `type(uint256).max` signifies an unlimited approval.
 
 Must return true.
 
+</div>
+</div>
+
 <a id="ERC6909-setOperator-address-bool-"></a>
 
-### `setOperator(address spender, bool approved) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">setOperator(address spender, bool approved) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-setOperator-address-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Grants or revokes unlimited transfer permission of any token id to `spender` for the caller's tokens.
 
 Must return true.
 
+</div>
+</div>
+
 <a id="ERC6909-transfer-address-uint256-uint256-"></a>
 
-### `transfer(address receiver, uint256 id, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transfer(address receiver, uint256 id, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-transfer-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Transfers `amount` of token type `id` from the caller's account to `receiver`.
 
 Must return true.
 
+</div>
+</div>
+
 <a id="ERC6909-transferFrom-address-address-uint256-uint256-"></a>
 
-### `transferFrom(address sender, address receiver, uint256 id, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transferFrom(address sender, address receiver, uint256 id, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909-transferFrom-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Transfers `amount` of token type `id` from `sender` to `receiver`.
 
 Must return true.
 
+</div>
+</div>
+
 <a id="ERC6909-_mint-address-uint256-uint256-"></a>
 
-### `_mint(address to, uint256 id, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_mint(address to, uint256 id, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909-_mint-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Creates `amount` of token `id` and assigns them to `account`, by transferring it from address(0).
 Relies on the `_update` mechanism.
@@ -173,10 +267,20 @@ Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-ad
 
 NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
 
+</div>
+</div>
+
 <a id="ERC6909-_transfer-address-address-uint256-uint256-"></a>
 
-### `_transfer(address from, address to, uint256 id, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_transfer(address from, address to, uint256 id, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909-_transfer-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Moves `amount` of token `id` from `from` to `to` without checking for approvals. This function verifies
 that neither the sender nor the receiver are address(0), which means it cannot mint or burn tokens.
@@ -186,10 +290,20 @@ Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-ad
 
 NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
 
+</div>
+</div>
+
 <a id="ERC6909-_burn-address-uint256-uint256-"></a>
 
-### `_burn(address from, uint256 id, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_burn(address from, uint256 id, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909-_burn-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Destroys a `amount` of token `id` from `account`.
 Relies on the `_update` mechanism.
@@ -198,10 +312,20 @@ Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-ad
 
 NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead
 
+</div>
+</div>
+
 <a id="ERC6909-_update-address-address-uint256-uint256-"></a>
 
-### `_update(address from, address to, uint256 id, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_update(address from, address to, uint256 id, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909-_update-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Transfers `amount` of token `id` from `from` to `to`, or alternatively mints (or burns) if `from`
 (or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
@@ -209,10 +333,20 @@ this function.
 
 Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
 
+</div>
+</div>
+
 <a id="ERC6909-_approve-address-address-uint256-uint256-"></a>
 
-### `_approve(address owner, address spender, uint256 id, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_approve(address owner, address spender, uint256 id, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909-_approve-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets `amount` as the allowance of `spender` over the `owner`'s `id` tokens.
 
@@ -226,10 +360,20 @@ Requirements:
 - `owner` cannot be the zero address.
 - `spender` cannot be the zero address.
 
+</div>
+</div>
+
 <a id="ERC6909-_setOperator-address-address-bool-"></a>
 
-### `_setOperator(address owner, address spender, bool approved)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setOperator(address owner, address spender, bool approved)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909-_setOperator-address-address-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Approve `spender` to operate on all of `owner`'s tokens
 
@@ -243,10 +387,20 @@ Requirements:
 - `owner` cannot be the zero address.
 - `spender` cannot be the zero address.
 
+</div>
+</div>
+
 <a id="ERC6909-_spendAllowance-address-address-uint256-uint256-"></a>
 
-### `_spendAllowance(address owner, address spender, uint256 id, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_spendAllowance(address owner, address spender, uint256 id, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909-_spendAllowance-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Updates `owner`'s allowance for `spender` based on spent `amount`.
 
@@ -255,39 +409,110 @@ Revert if not enough allowance is available.
 
 Does not emit an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
 
+</div>
+</div>
+
 <a id="ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-"></a>
 
-### `ERC6909InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 id)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 id)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-"></a>
 
-### `ERC6909InsufficientAllowance(address spender, uint256 allowance, uint256 needed, uint256 id)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909InsufficientAllowance(address spender, uint256 allowance, uint256 needed, uint256 id)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC6909-ERC6909InvalidApprover-address-"></a>
 
-### `ERC6909InvalidApprover(address approver)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909InvalidApprover(address approver)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC6909-ERC6909InvalidApprover-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC6909-ERC6909InvalidReceiver-address-"></a>
 
-### `ERC6909InvalidReceiver(address receiver)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909InvalidReceiver(address receiver)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC6909-ERC6909InvalidReceiver-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC6909-ERC6909InvalidSender-address-"></a>
 
-### `ERC6909InvalidSender(address sender)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909InvalidSender(address sender)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC6909-ERC6909InvalidSender-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC6909-ERC6909InvalidSpender-address-"></a>
 
-### `ERC6909InvalidSpender(address spender)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909InvalidSpender(address spender)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC6909-ERC6909InvalidSpender-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ERC6909ContentURI"></a>
 
-## `ERC6909ContentURI` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/extensions/draft-ERC6909ContentURI.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC6909ContentURI` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/extensions/draft-ERC6909ContentURI.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC6909/extensions/draft-ERC6909ContentURI.sol";
@@ -295,14 +520,14 @@ import "@openzeppelin/contracts/token/ERC6909/extensions/draft-ERC6909ContentURI
 
 Implementation of the Content URI extension defined in ERC6909.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [contractURI()](#ERC6909ContentURI-contractURI--)
 - [tokenURI(id)](#ERC6909ContentURI-tokenURI-uint256-)
 - [_setContractURI(newContractURI)](#ERC6909ContentURI-_setContractURI-string-)
 - [_setTokenURI(id, newTokenURI)](#ERC6909ContentURI-_setTokenURI-uint256-string-)
-
 #### IERC6909ContentURI
-
 #### ERC6909
 - [supportsInterface(interfaceId)](#ERC6909-supportsInterface-bytes4-)
 - [balanceOf(owner, id)](#ERC6909-balanceOf-address-uint256-)
@@ -319,34 +544,32 @@ Implementation of the Content URI extension defined in ERC6909.
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [ContractURIUpdated()](#ERC6909ContentURI-ContractURIUpdated--)
 - [URI(value, id)](#ERC6909ContentURI-URI-string-uint256-)
-
 #### IERC6909ContentURI
-
 #### ERC6909
-
 #### IERC6909
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Errors
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 #### IERC6909ContentURI
-
 #### ERC6909
 - [ERC6909InsufficientBalance(sender, balance, needed, id)](#ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-)
 - [ERC6909InsufficientAllowance(spender, allowance, needed, id)](#ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-)
@@ -354,62 +577,130 @@ Implementation of the Content URI extension defined in ERC6909.
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
 <a id="ERC6909ContentURI-contractURI--"></a>
 
-### `contractURI() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">contractURI() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909ContentURI-contractURI--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns URI for the contract.
 
+</div>
+</div>
+
 <a id="ERC6909ContentURI-tokenURI-uint256-"></a>
 
-### `tokenURI(uint256 id) → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">tokenURI(uint256 id) → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909ContentURI-tokenURI-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the URI for the token of type `id`.
 
+</div>
+</div>
+
 <a id="ERC6909ContentURI-_setContractURI-string-"></a>
 
-### `_setContractURI(string newContractURI)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setContractURI(string newContractURI)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909ContentURI-_setContractURI-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the [`IERC6909ContentURI.contractURI`](../interfaces#IERC6909ContentURI-contractURI--) for the contract.
 
 Emits a [`ERC6909ContentURI.ContractURIUpdated`](#ERC6909ContentURI-ContractURIUpdated--) event.
 
+</div>
+</div>
+
 <a id="ERC6909ContentURI-_setTokenURI-uint256-string-"></a>
 
-### `_setTokenURI(uint256 id, string newTokenURI)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setTokenURI(uint256 id, string newTokenURI)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909ContentURI-_setTokenURI-uint256-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the [`IERC6909ContentURI.tokenURI`](../interfaces#IERC6909ContentURI-tokenURI-uint256-) for a given token of type `id`.
 
 Emits a [`IERC1155.URI`](ERC1155#IERC1155-URI-string-uint256-) event.
 
+</div>
+</div>
+
 <a id="ERC6909ContentURI-ContractURIUpdated--"></a>
 
-### `ContractURIUpdated()`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ContractURIUpdated()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="ERC6909ContentURI-ContractURIUpdated--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Event emitted when the contract URI is changed. See [ERC-7572](https://eips.ethereum.org/EIPS/eip-7572) for details.
 
+</div>
+</div>
 <a id="ERC6909ContentURI-URI-string-uint256-"></a>
 
-### `URI(string value, uint256 indexed id)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">URI(string value, uint256 indexed id)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="ERC6909ContentURI-URI-string-uint256-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 See [`IERC1155.URI`](ERC1155#IERC1155-URI-string-uint256-)
 
+</div>
+</div>
+
 <a id="ERC6909Metadata"></a>
 
-## `ERC6909Metadata` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/extensions/draft-ERC6909Metadata.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC6909Metadata` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/extensions/draft-ERC6909Metadata.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC6909/extensions/draft-ERC6909Metadata.sol";
@@ -417,16 +708,16 @@ import "@openzeppelin/contracts/token/ERC6909/extensions/draft-ERC6909Metadata.s
 
 Implementation of the Metadata extension defined in ERC6909. Exposes the name, symbol, and decimals of each token id.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [name(id)](#ERC6909Metadata-name-uint256-)
 - [symbol(id)](#ERC6909Metadata-symbol-uint256-)
 - [decimals(id)](#ERC6909Metadata-decimals-uint256-)
 - [_setName(id, newName)](#ERC6909Metadata-_setName-uint256-string-)
 - [_setSymbol(id, newSymbol)](#ERC6909Metadata-_setSymbol-uint256-string-)
 - [_setDecimals(id, newDecimals)](#ERC6909Metadata-_setDecimals-uint256-uint8-)
-
 #### IERC6909Metadata
-
 #### ERC6909
 - [supportsInterface(interfaceId)](#ERC6909-supportsInterface-bytes4-)
 - [balanceOf(owner, id)](#ERC6909-balanceOf-address-uint256-)
@@ -443,35 +734,33 @@ Implementation of the Metadata extension defined in ERC6909. Exposes the name, s
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [ERC6909NameUpdated(id, newName)](#ERC6909Metadata-ERC6909NameUpdated-uint256-string-)
 - [ERC6909SymbolUpdated(id, newSymbol)](#ERC6909Metadata-ERC6909SymbolUpdated-uint256-string-)
 - [ERC6909DecimalsUpdated(id, newDecimals)](#ERC6909Metadata-ERC6909DecimalsUpdated-uint256-uint8-)
-
 #### IERC6909Metadata
-
 #### ERC6909
-
 #### IERC6909
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Errors
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 #### IERC6909Metadata
-
 #### ERC6909
 - [ERC6909InsufficientBalance(sender, balance, needed, id)](#ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-)
 - [ERC6909InsufficientAllowance(spender, allowance, needed, id)](#ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-)
@@ -479,85 +768,183 @@ Implementation of the Metadata extension defined in ERC6909. Exposes the name, s
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
 <a id="ERC6909Metadata-name-uint256-"></a>
 
-### `name(uint256 id) → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">name(uint256 id) → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909Metadata-name-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the name of the token of type `id`.
 
+</div>
+</div>
+
 <a id="ERC6909Metadata-symbol-uint256-"></a>
 
-### `symbol(uint256 id) → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">symbol(uint256 id) → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909Metadata-symbol-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the ticker symbol of the token of type `id`.
 
+</div>
+</div>
+
 <a id="ERC6909Metadata-decimals-uint256-"></a>
 
-### `decimals(uint256 id) → uint8`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">decimals(uint256 id) → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909Metadata-decimals-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the number of decimals for the token of type `id`.
 
+</div>
+</div>
+
 <a id="ERC6909Metadata-_setName-uint256-string-"></a>
 
-### `_setName(uint256 id, string newName)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setName(uint256 id, string newName)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909Metadata-_setName-uint256-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the `name` for a given token of type `id`.
 
 Emits an [`ERC6909Metadata.ERC6909NameUpdated`](#ERC6909Metadata-ERC6909NameUpdated-uint256-string-) event.
 
+</div>
+</div>
+
 <a id="ERC6909Metadata-_setSymbol-uint256-string-"></a>
 
-### `_setSymbol(uint256 id, string newSymbol)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setSymbol(uint256 id, string newSymbol)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909Metadata-_setSymbol-uint256-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the `symbol` for a given token of type `id`.
 
 Emits an [`ERC6909Metadata.ERC6909SymbolUpdated`](#ERC6909Metadata-ERC6909SymbolUpdated-uint256-string-) event.
 
+</div>
+</div>
+
 <a id="ERC6909Metadata-_setDecimals-uint256-uint8-"></a>
 
-### `_setDecimals(uint256 id, uint8 newDecimals)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setDecimals(uint256 id, uint8 newDecimals)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909Metadata-_setDecimals-uint256-uint8-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the `decimals` for a given token of type `id`.
 
 Emits an [`ERC6909Metadata.ERC6909DecimalsUpdated`](#ERC6909Metadata-ERC6909DecimalsUpdated-uint256-uint8-) event.
 
+</div>
+</div>
+
 <a id="ERC6909Metadata-ERC6909NameUpdated-uint256-string-"></a>
 
-### `ERC6909NameUpdated(uint256 indexed id, string newName)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909NameUpdated(uint256 indexed id, string newName)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="ERC6909Metadata-ERC6909NameUpdated-uint256-string-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 The name of the token of type `id` was updated to `newName`.
 
+</div>
+</div>
 <a id="ERC6909Metadata-ERC6909SymbolUpdated-uint256-string-"></a>
 
-### `ERC6909SymbolUpdated(uint256 indexed id, string newSymbol)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909SymbolUpdated(uint256 indexed id, string newSymbol)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="ERC6909Metadata-ERC6909SymbolUpdated-uint256-string-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 The symbol for the token of type `id` was updated to `newSymbol`.
 
+</div>
+</div>
 <a id="ERC6909Metadata-ERC6909DecimalsUpdated-uint256-uint8-"></a>
 
-### `ERC6909DecimalsUpdated(uint256 indexed id, uint8 newDecimals)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC6909DecimalsUpdated(uint256 indexed id, uint8 newDecimals)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="ERC6909Metadata-ERC6909DecimalsUpdated-uint256-uint8-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 The decimals value for token of type `id` was updated to `newDecimals`.
 
+</div>
+</div>
+
 <a id="ERC6909TokenSupply"></a>
 
-## `ERC6909TokenSupply` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/extensions/draft-ERC6909TokenSupply.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC6909TokenSupply` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC6909/extensions/draft-ERC6909TokenSupply.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC6909/extensions/draft-ERC6909TokenSupply.sol";
@@ -566,12 +953,12 @@ import "@openzeppelin/contracts/token/ERC6909/extensions/draft-ERC6909TokenSuppl
 Implementation of the Token Supply extension defined in ERC6909.
 Tracks the total supply of each token id individually.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [totalSupply(id)](#ERC6909TokenSupply-totalSupply-uint256-)
 - [_update(from, to, id, amount)](#ERC6909TokenSupply-_update-address-address-uint256-uint256-)
-
 #### IERC6909TokenSupply
-
 #### ERC6909
 - [supportsInterface(interfaceId)](#ERC6909-supportsInterface-bytes4-)
 - [balanceOf(owner, id)](#ERC6909-balanceOf-address-uint256-)
@@ -587,32 +974,30 @@ Tracks the total supply of each token id individually.
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC6909TokenSupply
-
 #### ERC6909
-
 #### IERC6909
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
-### Errors
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 #### IERC6909TokenSupply
-
 #### ERC6909
 - [ERC6909InsufficientBalance(sender, balance, needed, id)](#ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-)
 - [ERC6909InsufficientAllowance(spender, allowance, needed, id)](#ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-)
@@ -620,24 +1005,43 @@ Tracks the total supply of each token id individually.
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-
 #### IERC6909
-
 #### ERC165
-
 #### IERC165
+</div>
+</div>
 
 <a id="ERC6909TokenSupply-totalSupply-uint256-"></a>
 
-### `totalSupply(uint256 id) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">totalSupply(uint256 id) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC6909TokenSupply-totalSupply-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the total supply of the token of type `id`.
 
+</div>
+</div>
+
 <a id="ERC6909TokenSupply-_update-address-address-uint256-uint256-"></a>
 
-### `_update(address from, address to, uint256 id, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_update(address from, address to, uint256 id, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC6909TokenSupply-_update-address-address-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Override the `_update` function to update the total supply of each token id as necessary.
+
+</div>
+</div>
 

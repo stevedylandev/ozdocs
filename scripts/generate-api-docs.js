@@ -12,7 +12,7 @@ function parseArgs() {
 			"https://github.com/stevedylandev/openzeppelin-contracts.git",
 		contractsBranch: "master",
 		tempDir: "temp-contracts",
-		apiOutputDir: "content/contracts/v5.x/api",
+		apiOutputDir: "content/contracts/5.x/api",
 		examplesOutputDir: "examples",
 	};
 

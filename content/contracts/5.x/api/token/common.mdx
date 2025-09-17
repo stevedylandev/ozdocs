@@ -14,7 +14,15 @@ Functionality that is common to multiple token standards.
 
 <a id="ERC2981"></a>
 
-## `ERC2981` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/common/ERC2981.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC2981` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/common/ERC2981.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
@@ -28,11 +36,15 @@ specific token ids via [`ERC2981._setTokenRoyalty`](#ERC2981-_setTokenRoyalty-ui
 Royalty is specified as a fraction of sale price. [`ERC2981._feeDenominator`](#ERC2981-_feeDenominator--) is overridable but defaults to 10000, meaning the
 fee is specified in basis points by default.
 
-IMPORTANT: ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See
+<Callout type="warn">
+ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See
+</Callout>
 [Rationale](https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments) in the ERC. Marketplaces are expected to
 voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [supportsInterface(interfaceId)](#ERC2981-supportsInterface-bytes4-)
 - [royaltyInfo(tokenId, salePrice)](#ERC2981-royaltyInfo-uint256-uint256-)
 - [_feeDenominator()](#ERC2981-_feeDenominator--)
@@ -40,29 +52,36 @@ voluntarily pay royalties together with sales, but note that this standard is no
 - [_deleteDefaultRoyalty()](#ERC2981-_deleteDefaultRoyalty--)
 - [_setTokenRoyalty(tokenId, receiver, feeNumerator)](#ERC2981-_setTokenRoyalty-uint256-address-uint96-)
 - [_resetTokenRoyalty(tokenId)](#ERC2981-_resetTokenRoyalty-uint256-)
-
 #### ERC165
-
 #### IERC2981
-
 #### IERC165
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [ERC2981InvalidDefaultRoyalty(numerator, denominator)](#ERC2981-ERC2981InvalidDefaultRoyalty-uint256-uint256-)
 - [ERC2981InvalidDefaultRoyaltyReceiver(receiver)](#ERC2981-ERC2981InvalidDefaultRoyaltyReceiver-address-)
 - [ERC2981InvalidTokenRoyalty(tokenId, numerator, denominator)](#ERC2981-ERC2981InvalidTokenRoyalty-uint256-uint256-uint256-)
 - [ERC2981InvalidTokenRoyaltyReceiver(tokenId, receiver)](#ERC2981-ERC2981InvalidTokenRoyaltyReceiver-uint256-address-)
-
 #### ERC165
-
 #### IERC2981
-
 #### IERC165
+</div>
+</div>
 
 <a id="ERC2981-supportsInterface-bytes4-"></a>
 
-### `supportsInterface(bytes4 interfaceId) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">supportsInterface(bytes4 interfaceId) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC2981-supportsInterface-bytes4-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns true if this contract implements the interface defined by
 `interfaceId`. See the corresponding
@@ -71,10 +90,20 @@ to learn more about how these ids are created.
 
 This function call must use less than 30 000 gas.
 
+</div>
+</div>
+
 <a id="ERC2981-royaltyInfo-uint256-uint256-"></a>
 
-### `royaltyInfo(uint256 tokenId, uint256 salePrice) → address receiver, uint256 amount`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">royaltyInfo(uint256 tokenId, uint256 salePrice) → address receiver, uint256 amount</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC2981-royaltyInfo-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns how much royalty is owed and to whom, based on a sale price that may be denominated in any unit of
 exchange. The royalty amount is denominated and should be paid in that same unit of exchange.
@@ -82,19 +111,39 @@ exchange. The royalty amount is denominated and should be paid in that same unit
 NOTE: ERC-2981 allows setting the royalty to 100% of the price. In that case all the price would be sent to the
 royalty receiver and 0 tokens to the seller. Contracts dealing with royalty should consider empty transfers.
 
+</div>
+</div>
+
 <a id="ERC2981-_feeDenominator--"></a>
 
-### `_feeDenominator() → uint96`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_feeDenominator() → uint96</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC2981-_feeDenominator--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The denominator with which to interpret the fee set in [`ERC2981._setTokenRoyalty`](#ERC2981-_setTokenRoyalty-uint256-address-uint96-) and [`ERC2981._setDefaultRoyalty`](#ERC2981-_setDefaultRoyalty-address-uint96-) as a
 fraction of the sale price. Defaults to 10000 so fees are expressed in basis points, but may be customized by an
 override.
 
+</div>
+</div>
+
 <a id="ERC2981-_setDefaultRoyalty-address-uint96-"></a>
 
-### `_setDefaultRoyalty(address receiver, uint96 feeNumerator)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setDefaultRoyalty(address receiver, uint96 feeNumerator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC2981-_setDefaultRoyalty-address-uint96-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the royalty information that all ids in this contract will default to.
 
@@ -103,17 +152,37 @@ Requirements:
 - `receiver` cannot be the zero address.
 - `feeNumerator` cannot be greater than the fee denominator.
 
+</div>
+</div>
+
 <a id="ERC2981-_deleteDefaultRoyalty--"></a>
 
-### `_deleteDefaultRoyalty()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_deleteDefaultRoyalty()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC2981-_deleteDefaultRoyalty--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Removes default royalty information.
 
+</div>
+</div>
+
 <a id="ERC2981-_setTokenRoyalty-uint256-address-uint96-"></a>
 
-### `_setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC2981-_setTokenRoyalty-uint256-address-uint96-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the royalty information for a specific token id, overriding the global default.
 
@@ -122,38 +191,91 @@ Requirements:
 - `receiver` cannot be the zero address.
 - `feeNumerator` cannot be greater than the fee denominator.
 
+</div>
+</div>
+
 <a id="ERC2981-_resetTokenRoyalty-uint256-"></a>
 
-### `_resetTokenRoyalty(uint256 tokenId)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_resetTokenRoyalty(uint256 tokenId)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC2981-_resetTokenRoyalty-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Resets royalty information for the token id back to the global default.
 
+</div>
+</div>
+
 <a id="ERC2981-ERC2981InvalidDefaultRoyalty-uint256-uint256-"></a>
 
-### `ERC2981InvalidDefaultRoyalty(uint256 numerator, uint256 denominator)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC2981InvalidDefaultRoyalty(uint256 numerator, uint256 denominator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC2981-ERC2981InvalidDefaultRoyalty-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The default royalty set is invalid (eg. (numerator / denominator) >= 1).
 
+</div>
+</div>
+
 <a id="ERC2981-ERC2981InvalidDefaultRoyaltyReceiver-address-"></a>
 
-### `ERC2981InvalidDefaultRoyaltyReceiver(address receiver)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC2981InvalidDefaultRoyaltyReceiver(address receiver)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC2981-ERC2981InvalidDefaultRoyaltyReceiver-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The default royalty receiver is invalid.
 
+</div>
+</div>
+
 <a id="ERC2981-ERC2981InvalidTokenRoyalty-uint256-uint256-uint256-"></a>
 
-### `ERC2981InvalidTokenRoyalty(uint256 tokenId, uint256 numerator, uint256 denominator)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC2981InvalidTokenRoyalty(uint256 tokenId, uint256 numerator, uint256 denominator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC2981-ERC2981InvalidTokenRoyalty-uint256-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The royalty set for a specific `tokenId` is invalid (eg. (numerator / denominator) >= 1).
 
+</div>
+</div>
+
 <a id="ERC2981-ERC2981InvalidTokenRoyaltyReceiver-uint256-address-"></a>
 
-### `ERC2981InvalidTokenRoyaltyReceiver(uint256 tokenId, address receiver)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ERC2981InvalidTokenRoyaltyReceiver(uint256 tokenId, address receiver)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="ERC2981-ERC2981InvalidTokenRoyaltyReceiver-uint256-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 The royalty receiver for `tokenId` is invalid.
+
+</div>
+</div>
 
