@@ -23,6 +23,7 @@
 		"@radix-ui/react-presence": "^1.1.5",
 		"@radix-ui/react-scroll-area": "^1.2.10",
 		"@radix-ui/react-separator": "^1.1.7",
+		"algoliasearch": "^5.37.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"fumadocs-core": "15.7.11",
