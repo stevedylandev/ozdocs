@@ -564,11 +564,6 @@
 			{
 				"type": "folder",
 				"name": "Account Abstraction",
-				"index": {
-					"type": "page",
-					"name": "Overview",
-					"url": "/contracts/5.x/account-abstraction"
-				},
 				"children": [
 					{
 						"type": "page",
