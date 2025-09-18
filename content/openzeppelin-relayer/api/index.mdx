@@ -1,0 +1,62 @@
+---
+title: Relayer API Reference
+---
+
+## Authentication
+
+### [Call Plugin](./callPlugin)
+Calls a plugin method.
+
+## Core Management
+
+### Relayers
+- [Create Relayer](./createRelayer) - Creates a new relayer
+- [List Relayers](./listRelayers) - Lists all relayers with pagination support
+- [Get Relayer](./getRelayer) - Retrieves details of a specific relayer by ID
+- [Update Relayer](./updateRelayer) - Updates a relayer's information
+- [Delete Relayer](./deleteRelayer) - Deletes a relayer by ID
+- [Get Relayer Balance](./getRelayerBalance) - Retrieves the balance of a specific relayer
+- [Get Relayer Status](./getRelayerStatus) - Fetches the current status of a specific relayer
+
+### Signers
+- [Create Signer](./createSigner) - Creates a new signer
+- [List Signers](./listSigners) - Lists all signers with pagination support
+- [Get Signer](./getSigner) - Retrieves details of a specific signer by ID
+- [Update Signer](./updateSigner) - Updates an existing signer
+- [Delete Signer](./deleteSigner) - Deletes a signer by ID
+
+### Notifications
+- [Create Notification](./createNotification) - Creates a new notification
+- [List Notifications](./listNotifications) - Lists all notifications with pagination support
+- [Get Notification](./getNotification) - Retrieves details of a specific notification by ID
+- [Update Notification](./updateNotification) - Updates an existing notification
+- [Delete Notification](./deleteNotification) - Deletes a notification by ID
+
+## Transaction Management
+
+### Transaction Operations
+- [Send Transaction](./sendTransaction) - Sends a transaction through the specified relayer
+- [List Transactions](./listTransactions) - Lists all transactions for a specific relayer with pagination
+- [Get Transaction by ID](./getTransactionById) - Retrieves a specific transaction by its ID
+- [Get Transaction by Nonce](./getTransactionByNonce) - Retrieves a transaction by its nonce value
+- [Replace Transaction](./replaceTransaction) - Replaces a specific transaction with a new one
+- [Cancel Transaction](./cancelTransaction) - Cancels a specific transaction by its ID
+- [Delete Pending Transactions](./deletePendingTransactions) - Deletes all pending transactions for a specific relayer
+
+### Signing Operations
+- [Sign](./sign) - Signs data using the specified relayer
+- [Sign Transaction](./signTransaction) - Signs a transaction using the specified relayer (Stellar only)
+- [Sign Typed Data](./signTypedData) - Signs typed data using the specified relayer
+
+### RPC Operations
+- [RPC](./rpc) - Performs a JSON-RPC call using the specified relayer
+
+## Monitoring
+
+### Health Check
+- [Health](./health) - Health routes implementation
+
+### Metrics
+- [List Metrics](./list_metrics) - Returns a list of all available metric names in JSON format
+- [Metric Detail](./metric_detail) - Returns the details of a specific metric in plain text format
+- [Scrape Metrics](./scrape_metrics) - Triggers an update of system metrics and returns the result in plain text format

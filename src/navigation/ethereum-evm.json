@@ -897,6 +897,11 @@
 			{
 				"type": "folder",
 				"name": "API Reference",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/openzeppelin-relayer/api"
+				},
 				"children": [
 					{
 						"type": "page",
