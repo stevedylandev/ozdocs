@@ -695,9 +695,87 @@
 				"url": "/upgrade-plugins/api-hardhat-upgrades"
 			},
 			{
-				"type": "page",
+				"type": "folder",
 				"name": "Foundry Upgrades API",
-				"url": "/upgrade-plugins/foundry/api/api-foundry-upgrades"
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/upgrade-plugins/foundry/api"
+				},
+				"children": [
+					{
+						"type": "page",
+						"name": "Upgrades",
+						"url": "/upgrade-plugins/foundry/api/Upgrades"
+					},
+					{
+						"type": "page",
+						"name": "LegacyUpgrades",
+						"url": "/upgrade-plugins/foundry/api/LegacyUpgrades"
+					},
+					{
+						"type": "page",
+						"name": "Defender",
+						"url": "/upgrade-plugins/foundry/api/Defender"
+					},
+					{
+						"type": "page",
+						"name": "Options",
+						"url": "/upgrade-plugins/foundry/api/Options"
+					},
+					{
+						"type": "folder",
+						"name": "Internal",
+						"children": [
+							{
+								"type": "page",
+								"name": "Core",
+								"url": "/upgrade-plugins/foundry/api/internal/Core"
+							},
+							{
+								"type": "page",
+								"name": "DefenderDeploy",
+								"url": "/upgrade-plugins/foundry/api/internal/DefenderDeploy"
+							},
+							{
+								"type": "page",
+								"name": "Utils",
+								"url": "/upgrade-plugins/foundry/api/internal/Utils"
+							},
+							{
+								"type": "page",
+								"name": "StringFinder",
+								"url": "/upgrade-plugins/foundry/api/internal/StringFinder"
+							},
+							{
+								"type": "page",
+								"name": "Versions",
+								"url": "/upgrade-plugins/foundry/api/internal/Versions"
+							},
+							{
+								"type": "folder",
+								"name": "Interfaces",
+								"children": [
+									{
+										"type": "page",
+										"name": "IProxyAdmin",
+										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IProxyAdmin"
+									},
+									{
+										"type": "page",
+										"name": "IUpgradeableBeacon",
+										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IUpgradeableBeacon"
+									},
+									{
+										"type": "page",
+										"name": "IUpgradeableProxy",
+										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IUpgradeableProxy"
+									}
+								]
+							}
+						]
+					}
+				]
 			},
 			{
 				"type": "page",
