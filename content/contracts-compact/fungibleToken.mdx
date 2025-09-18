@@ -52,7 +52,8 @@ It’s recommended to prefix the module with `FungibleToken_` to avoid circuit s
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken" prefix FungibleToken_;
+import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+  prefix FungibleToken_;
 
 constructor(
   name: Opaque<"string">,
@@ -91,7 +92,8 @@ The following example is a simple token contract with a fixed supply that’s mi
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken" prefix FungibleToken_;
+import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+  prefix FungibleToken_;
 
 constructor(
   name: Opaque<"string">,

@@ -48,8 +48,10 @@ which allows accounts that have this role to create new tokens:
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl" prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken" prefix FungibleToken_;
+import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+  prefix AccessControl_;
+import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+  prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
 
@@ -89,8 +91,10 @@ Let’s augment our FungibleToken example by also defining a 'burner' role, whic
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl" prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken" prefix FungibleToken_;
+import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+  prefix AccessControl_;
+import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+  prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
 export sealed ledger BURNER_ROLE: Bytes<32>;
@@ -168,8 +172,10 @@ Let’s take a look at the FungibleToken example, this time taking advantage of 
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl" prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken" prefix FungibleToken_;
+import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+  prefix AccessControl_;
+import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+  prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
 export sealed ledger BURNER_ROLE: Bytes<32>;
