@@ -646,7 +646,7 @@
 		"index": {
 			"type": "page",
 			"name": "Overview",
-			"url": "/upgrade-plugins"
+			"url": "/upgrades-plugins"
 		},
 		"children": [
 			{
@@ -655,35 +655,35 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/upgrade-plugins/hardhat-upgrades"
+					"url": "/upgrades-plugins/hardhat-upgrades"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Network Files",
-						"url": "/upgrade-plugins/network-files"
+						"url": "/upgrades-plugins/network-files"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Using with Foundry",
-				"url": "/upgrade-plugins/foundry/foundry-upgrades"
+				"url": "/upgrades-plugins/foundry/foundry-upgrades"
 			},
 			{
 				"type": "page",
 				"name": "Writing Upgradeable Contracts",
-				"url": "/upgrade-plugins/writing-upgradeable"
+				"url": "/upgrades-plugins/writing-upgradeable"
 			},
 			{
 				"type": "page",
 				"name": "Proxy Upgrade Pattern",
-				"url": "/upgrade-plugins/proxies"
+				"url": "/upgrades-plugins/proxies"
 			},
 			{
 				"type": "page",
 				"name": "Frequently Asked Questions",
-				"url": "/upgrade-plugins/faq"
+				"url": "/upgrades-plugins/faq"
 			},
 			{
 				"type": "separator",
@@ -692,7 +692,7 @@
 			{
 				"type": "page",
 				"name": "Hardhat Upgrades API",
-				"url": "/upgrade-plugins/api-hardhat-upgrades"
+				"url": "/upgrades-plugins/api-hardhat-upgrades"
 			},
 			{
 				"type": "folder",
@@ -700,28 +700,28 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/upgrade-plugins/foundry/api"
+					"url": "/upgrades-plugins/foundry/api"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Upgrades",
-						"url": "/upgrade-plugins/foundry/api/Upgrades"
+						"url": "/upgrades-plugins/foundry/api/Upgrades"
 					},
 					{
 						"type": "page",
 						"name": "LegacyUpgrades",
-						"url": "/upgrade-plugins/foundry/api/LegacyUpgrades"
+						"url": "/upgrades-plugins/foundry/api/LegacyUpgrades"
 					},
 					{
 						"type": "page",
 						"name": "Defender",
-						"url": "/upgrade-plugins/foundry/api/Defender"
+						"url": "/upgrades-plugins/foundry/api/Defender"
 					},
 					{
 						"type": "page",
 						"name": "Options",
-						"url": "/upgrade-plugins/foundry/api/Options"
+						"url": "/upgrades-plugins/foundry/api/Options"
 					},
 					{
 						"type": "folder",
@@ -730,27 +730,27 @@
 							{
 								"type": "page",
 								"name": "Core",
-								"url": "/upgrade-plugins/foundry/api/internal/Core"
+								"url": "/upgrades-plugins/foundry/api/internal/Core"
 							},
 							{
 								"type": "page",
 								"name": "DefenderDeploy",
-								"url": "/upgrade-plugins/foundry/api/internal/DefenderDeploy"
+								"url": "/upgrades-plugins/foundry/api/internal/DefenderDeploy"
 							},
 							{
 								"type": "page",
 								"name": "Utils",
-								"url": "/upgrade-plugins/foundry/api/internal/Utils"
+								"url": "/upgrades-plugins/foundry/api/internal/Utils"
 							},
 							{
 								"type": "page",
 								"name": "StringFinder",
-								"url": "/upgrade-plugins/foundry/api/internal/StringFinder"
+								"url": "/upgrades-plugins/foundry/api/internal/StringFinder"
 							},
 							{
 								"type": "page",
 								"name": "Versions",
-								"url": "/upgrade-plugins/foundry/api/internal/Versions"
+								"url": "/upgrades-plugins/foundry/api/internal/Versions"
 							},
 							{
 								"type": "folder",
@@ -759,17 +759,17 @@
 									{
 										"type": "page",
 										"name": "IProxyAdmin",
-										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IProxyAdmin"
+										"url": "/upgrades-plugins/foundry/api/internal/interfaces/IProxyAdmin"
 									},
 									{
 										"type": "page",
 										"name": "IUpgradeableBeacon",
-										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IUpgradeableBeacon"
+										"url": "/upgrades-plugins/foundry/api/internal/interfaces/IUpgradeableBeacon"
 									},
 									{
 										"type": "page",
 										"name": "IUpgradeableProxy",
-										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IUpgradeableProxy"
+										"url": "/upgrades-plugins/foundry/api/internal/interfaces/IUpgradeableProxy"
 									}
 								]
 							}
@@ -780,7 +780,7 @@
 			{
 				"type": "page",
 				"name": "Upgrades Core & CLI",
-				"url": "/upgrade-plugins/api-core"
+				"url": "/upgrades-plugins/api-core"
 			}
 		]
 	},
@@ -846,12 +846,12 @@
 			{
 				"type": "page",
 				"name": "Overview",
-				"url": "/openzeppelin-relayer"
+				"url": "/relayer"
 			},
 			{
 				"type": "page",
 				"name": "Quickstart",
-				"url": "/openzeppelin-relayer/quickstart"
+				"url": "/relayer/quickstart"
 			},
 			{
 				"type": "folder",
@@ -859,40 +859,40 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/openzeppelin-relayer/configuration"
+					"url": "/relayer/configuration"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Signers",
-						"url": "/openzeppelin-relayer/configuration/signers"
+						"url": "/relayer/configuration/signers"
 					},
 					{
 						"type": "page",
 						"name": "Network Configuration",
-						"url": "/openzeppelin-relayer/network_configuration"
+						"url": "/relayer/network_configuration"
 					},
 					{
 						"type": "page",
 						"name": "Storage Configuration",
-						"url": "/openzeppelin-relayer/configuration/storage"
+						"url": "/relayer/configuration/storage"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "EVM Integration",
-				"url": "/openzeppelin-relayer/evm"
+				"url": "/relayer/evm"
 			},
 			{
 				"type": "page",
 				"name": "Solana Integration",
-				"url": "/openzeppelin-relayer/solana"
+				"url": "/relayer/solana"
 			},
 			{
 				"type": "page",
 				"name": "Stellar Integration",
-				"url": "/openzeppelin-relayer/stellar"
+				"url": "/relayer/stellar"
 			},
 			{
 				"type": "folder",
@@ -900,200 +900,200 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/openzeppelin-relayer/api"
+					"url": "/relayer/api"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Call Plugin",
-						"url": "/openzeppelin-relayer/api/callPlugin"
+						"url": "/relayer/api/callPlugin"
 					},
 					{
 						"type": "page",
 						"name": "Cancel Transaction",
-						"url": "/openzeppelin-relayer/api/cancelTransaction"
+						"url": "/relayer/api/cancelTransaction"
 					},
 					{
 						"type": "page",
 						"name": "Create Notification",
-						"url": "/openzeppelin-relayer/api/createNotification"
+						"url": "/relayer/api/createNotification"
 					},
 					{
 						"type": "page",
 						"name": "Create Relayer",
-						"url": "/openzeppelin-relayer/api/createRelayer"
+						"url": "/relayer/api/createRelayer"
 					},
 					{
 						"type": "page",
 						"name": "Create Signer",
-						"url": "/openzeppelin-relayer/api/createSigner"
+						"url": "/relayer/api/createSigner"
 					},
 					{
 						"type": "page",
 						"name": "Delete Notification",
-						"url": "/openzeppelin-relayer/api/deleteNotification"
+						"url": "/relayer/api/deleteNotification"
 					},
 					{
 						"type": "page",
 						"name": "Delete Pending Transactions",
-						"url": "/openzeppelin-relayer/api/deletePendingTransactions"
+						"url": "/relayer/api/deletePendingTransactions"
 					},
 					{
 						"type": "page",
 						"name": "Delete Relayer",
-						"url": "/openzeppelin-relayer/api/deleteRelayer"
+						"url": "/relayer/api/deleteRelayer"
 					},
 					{
 						"type": "page",
 						"name": "Delete Signer",
-						"url": "/openzeppelin-relayer/api/deleteSigner"
+						"url": "/relayer/api/deleteSigner"
 					},
 					{
 						"type": "page",
 						"name": "Get Notification",
-						"url": "/openzeppelin-relayer/api/getNotification"
+						"url": "/relayer/api/getNotification"
 					},
 					{
 						"type": "page",
 						"name": "Get Relayer",
-						"url": "/openzeppelin-relayer/api/getRelayer"
+						"url": "/relayer/api/getRelayer"
 					},
 					{
 						"type": "page",
 						"name": "Get Relayer Balance",
-						"url": "/openzeppelin-relayer/api/getRelayerBalance"
+						"url": "/relayer/api/getRelayerBalance"
 					},
 					{
 						"type": "page",
 						"name": "Get Relayer Status",
-						"url": "/openzeppelin-relayer/api/getRelayerStatus"
+						"url": "/relayer/api/getRelayerStatus"
 					},
 					{
 						"type": "page",
 						"name": "Get Signer",
-						"url": "/openzeppelin-relayer/api/getSigner"
+						"url": "/relayer/api/getSigner"
 					},
 					{
 						"type": "page",
 						"name": "Get Transaction by ID",
-						"url": "/openzeppelin-relayer/api/getTransactionById"
+						"url": "/relayer/api/getTransactionById"
 					},
 					{
 						"type": "page",
 						"name": "Get Transaction by Nonce",
-						"url": "/openzeppelin-relayer/api/getTransactionByNonce"
+						"url": "/relayer/api/getTransactionByNonce"
 					},
 					{
 						"type": "page",
 						"name": "Health",
-						"url": "/openzeppelin-relayer/api/health"
+						"url": "/relayer/api/health"
 					},
 					{
 						"type": "page",
 						"name": "List Notifications",
-						"url": "/openzeppelin-relayer/api/listNotifications"
+						"url": "/relayer/api/listNotifications"
 					},
 					{
 						"type": "page",
 						"name": "List Relayers",
-						"url": "/openzeppelin-relayer/api/listRelayers"
+						"url": "/relayer/api/listRelayers"
 					},
 					{
 						"type": "page",
 						"name": "List Signers",
-						"url": "/openzeppelin-relayer/api/listSigners"
+						"url": "/relayer/api/listSigners"
 					},
 					{
 						"type": "page",
 						"name": "List Transactions",
-						"url": "/openzeppelin-relayer/api/listTransactions"
+						"url": "/relayer/api/listTransactions"
 					},
 					{
 						"type": "page",
 						"name": "List Metrics",
-						"url": "/openzeppelin-relayer/api/list_metrics"
+						"url": "/relayer/api/list_metrics"
 					},
 					{
 						"type": "page",
 						"name": "Metric Detail",
-						"url": "/openzeppelin-relayer/api/metric_detail"
+						"url": "/relayer/api/metric_detail"
 					},
 					{
 						"type": "page",
 						"name": "Replace Transaction",
-						"url": "/openzeppelin-relayer/api/replaceTransaction"
+						"url": "/relayer/api/replaceTransaction"
 					},
 					{
 						"type": "page",
 						"name": "RPC",
-						"url": "/openzeppelin-relayer/api/rpc"
+						"url": "/relayer/api/rpc"
 					},
 					{
 						"type": "page",
 						"name": "Scrape Metrics",
-						"url": "/openzeppelin-relayer/api/scrape_metrics"
+						"url": "/relayer/api/scrape_metrics"
 					},
 					{
 						"type": "page",
 						"name": "Send Transaction",
-						"url": "/openzeppelin-relayer/api/sendTransaction"
+						"url": "/relayer/api/sendTransaction"
 					},
 					{
 						"type": "page",
 						"name": "Sign",
-						"url": "/openzeppelin-relayer/api/sign"
+						"url": "/relayer/api/sign"
 					},
 					{
 						"type": "page",
 						"name": "Sign Transaction",
-						"url": "/openzeppelin-relayer/api/signTransaction"
+						"url": "/relayer/api/signTransaction"
 					},
 					{
 						"type": "page",
 						"name": "Sign Typed Data",
-						"url": "/openzeppelin-relayer/api/signTypedData"
+						"url": "/relayer/api/signTypedData"
 					},
 					{
 						"type": "page",
 						"name": "Update Notification",
-						"url": "/openzeppelin-relayer/api/updateNotification"
+						"url": "/relayer/api/updateNotification"
 					},
 					{
 						"type": "page",
 						"name": "Update Relayer",
-						"url": "/openzeppelin-relayer/api/updateRelayer"
+						"url": "/relayer/api/updateRelayer"
 					},
 					{
 						"type": "page",
 						"name": "Update Signer",
-						"url": "/openzeppelin-relayer/api/updateSigner"
+						"url": "/relayer/api/updateSigner"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Project Structure",
-				"url": "/openzeppelin-relayer/structure"
+				"url": "/relayer/structure"
 			},
 			{
 				"type": "page",
 				"name": "Project Roadmap",
-				"url": "/openzeppelin-relayer/roadmap"
+				"url": "/relayer/roadmap"
 			},
 			{
 				"type": "page",
 				"name": "Plugins",
-				"url": "/openzeppelin-relayer/plugins"
+				"url": "/relayer/plugins"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/openzeppelin-relayer/changelog"
+				"url": "/relayer/changelog"
 			},
 			{
 				"type": "page",
 				"name": "Rust Book",
-				"url": "https://release-v1-1-0--openzeppelin-relayer.netlify.app/openzeppelin_relayer/",
+				"url": "https://release-v1-1-0--relayer.netlify.app/openzeppelin_relayer/",
 				"external": true
 			}
 		]
@@ -1105,52 +1105,52 @@
 			{
 				"type": "page",
 				"name": "Quickstart",
-				"url": "/openzeppelin-monitor/quickstart"
+				"url": "/monitor/quickstart"
 			},
 			{
 				"type": "page",
 				"name": "Architecture Guide",
-				"url": "/openzeppelin-monitor/architecture"
+				"url": "/monitor/architecture"
 			},
 			{
 				"type": "page",
 				"name": "Project Structure",
-				"url": "/openzeppelin-monitor/project-structure"
+				"url": "/monitor/project-structure"
 			},
 			{
 				"type": "page",
 				"name": "RPC Client",
-				"url": "/openzeppelin-monitor/rpc"
+				"url": "/monitor/rpc"
 			},
 			{
 				"type": "page",
 				"name": "Custom scripts",
-				"url": "/openzeppelin-monitor/scripts"
+				"url": "/monitor/scripts"
 			},
 			{
 				"type": "page",
 				"name": "Error Handling",
-				"url": "/openzeppelin-monitor/error"
+				"url": "/monitor/error"
 			},
 			{
 				"type": "page",
 				"name": "Testing",
-				"url": "/openzeppelin-monitor/testing"
+				"url": "/monitor/testing"
 			},
 			{
 				"type": "page",
 				"name": "Contribution guidelines",
-				"url": "/openzeppelin-monitor/contribution"
+				"url": "/monitor/contribution"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/openzeppelin-monitor/changelog"
+				"url": "/monitor/changelog"
 			},
 			{
 				"type": "page",
 				"name": "Technical Rust Documentation",
-				"url": "https://release-v1-0-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/",
+				"url": "https://release-v1-0-0--monitor.netlify.app/openzeppelin_monitor/",
 				"external": true
 			}
 		]

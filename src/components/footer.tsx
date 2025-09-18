@@ -136,7 +136,7 @@ export function Footer() {
 								Contracts Wizard
 							</Link>
 							<Link
-								href="/upgrade-plugins"
+								href="/upgrades-plugins"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Upgrade Plugins
@@ -154,13 +154,13 @@ export function Footer() {
 								Contracts UI Builder
 							</Link>
 							<Link
-								href="/openzeppelin-relayer"
+								href="/relayer"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Relayer
 							</Link>
 							<Link
-								href="/openzeppelin-monitor"
+								href="/monitor"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Monitor
