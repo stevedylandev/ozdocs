@@ -15,22 +15,22 @@
 	},
 	{
 		"type": "page",
-		"name": "Beacon Proxy",
-		"url": "/contracts-stylus/beacon-proxy"
-	},
-	{
-		"type": "page",
-		"name": "Common",
-		"url": "/contracts-stylus/common"
-	},
-	{
-		"type": "page",
 		"name": "Cryptography",
 		"url": "/contracts-stylus/crypto"
 	},
 	{
+		"type": "page",
+		"name": "Finance",
+		"url": "/contracts-stylus/finance"
+	},
+	{
 		"type": "folder",
-		"name": "ERC Standards",
+		"name": "Tokens",
+		"index": {
+			"type": "page",
+			"name": "Tokens",
+			"url": "/contracts-stylus/tokens"
+		},
 		"children": [
 			{
 				"type": "page",
@@ -55,34 +55,36 @@
 		]
 	},
 	{
-		"type": "page",
-		"name": "Finance",
-		"url": "/contracts-stylus/finance"
-	},
-	{
-		"type": "page",
-		"name": "Proxy",
-		"url": "/contracts-stylus/proxy"
-	},
-	{
-		"type": "page",
-		"name": "Tokens",
-		"url": "/contracts-stylus/tokens"
+		"type": "folder",
+		"name": "Proxy Patterns",
+		"index": {
+			"type": "page",
+			"name": "Proxy",
+			"url": "/contracts-stylus/proxy"
+		},
+		"children": [
+			{
+				"type": "page",
+				"name": "ERC-1967 Proxy",
+				"url": "/contracts-stylus/erc1967"
+			},
+			{
+				"type": "page",
+				"name": "Beacon Proxy",
+				"url": "/contracts-stylus/beacon-proxy"
+			},
+
+			{
+				"type": "page",
+				"name": "UUPS Proxy",
+				"url": "/contracts-stylus/uups-proxy"
+			}
+		]
 	},
 	{
 		"type": "page",
 		"name": "Utilities",
 		"url": "/contracts-stylus/utilities"
-	},
-	{
-		"type": "page",
-		"name": "UUPS Proxy",
-		"url": "/contracts-stylus/uups-proxy"
-	},
-	{
-		"type": "page",
-		"name": "Vesting Wallet",
-		"url": "/contracts-stylus/vesting-wallet"
 	},
 	{
 		"type": "page",
