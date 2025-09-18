@@ -2,7 +2,7 @@
 title: ERC-20
 ---
 
-An ERC-20 token contract keeps track of [_fungible_ tokens](tokens.mdx#different-kinds-of-tokens): any token is exactly equal to any other token; no token has a special right or behavior associated with them.
+An ERC-20 token contract keeps track of [_fungible_ tokens](tokens#different-kinds-of-tokens): any token is exactly equal to any other token; no token has a special right or behavior associated with them.
 This makes ERC-20 tokens useful for things like a **medium of exchange currency**, **voting rights**, **staking**, and more.
 
 OpenZeppelin Contracts provide many ERC20-related contracts for Arbitrum Stylus.
@@ -25,85 +25,85 @@ use openzeppelin_stylus::
 
 #[entrypoint]
 #[storage]
-struct GLDToken 
+struct GLDToken
     erc20: Erc20,
     metadata: Erc20Metadata,
 
 
 #[public]
 #[implements(IErc20<Error = erc20::Error>, IErc20Metadata, IErc165)]
-impl GLDToken 
+impl GLDToken
     #[constructor]
     fn constructor(&mut self, name: String, symbol: String) {
         self.metadata.constructor(name, symbol);
-    
+
 
     // ...
 }
 
 #[public]
-impl IErc20 for GLDToken 
+impl IErc20 for GLDToken
     type Error = erc20::Error;
 
     fn total_supply(&self) -> U256 {
         self.erc20.total_supply()
-    
 
-    fn balance_of(&self, account: Address) -> U256 
+
+    fn balance_of(&self, account: Address) -> U256
         self.erc20.balance_of(account)
-    
+
 
     fn transfer(
         &mut self,
         to: Address,
         value: U256,
-    ) -> Result<bool, Self::Error> 
+    ) -> Result<bool, Self::Error>
         self.erc20.transfer(to, value)
-    
 
-    fn allowance(&self, owner: Address, spender: Address) -> U256 
+
+    fn allowance(&self, owner: Address, spender: Address) -> U256
         self.erc20.allowance(owner, spender)
-    
+
 
     fn approve(
         &mut self,
         spender: Address,
         value: U256,
-    ) -> Result<bool, Self::Error> 
+    ) -> Result<bool, Self::Error>
         self.erc20.approve(spender, value)
-    
+
 
     fn transfer_from(
         &mut self,
         from: Address,
         to: Address,
         value: U256,
-    ) -> Result<bool, Self::Error> 
+    ) -> Result<bool, Self::Error>
         self.erc20.transfer_from(from, to, value)
-    
+
 }
 
 #[public]
-impl IErc20Metadata for GLDToken 
+impl IErc20Metadata for GLDToken
     fn name(&self) -> String {
         self.metadata.name()
-    
 
-    fn symbol(&self) -> String 
+
+    fn symbol(&self) -> String
         self.metadata.symbol()
-    
 
-    fn decimals(&self) -> U8 
+
+    fn decimals(&self) -> U8
         self.metadata.decimals()
-    
+
 }
 
 #[public]
-impl IErc165 for GLDToken 
+impl IErc165 for GLDToken
     fn supports_interface(&self, interface_id: B32) -> bool {
         self.erc20.supports_interface(interface_id)
             || self.metadata.supports_interface(interface_id)
-    
+
 }
 ```
 
@@ -135,7 +135,7 @@ By default, `ERC20` uses a value of `18` for `decimals`.
 To use a different value, you will need to override the `decimals()` function in your contract. For example, to use `16` decimals, you would do:
 
 ```rust
-fn decimals(&self) -> U8 
+fn decimals(&self) -> U8
     U8::from(16)
 
 ```
@@ -149,11 +149,11 @@ token.transfer(recipient, 5 * uint!(10_U256).pow(uint!(18_U256)));
 ## Extensions
 Additionally, there are multiple custom extensions, including:
 
-* [ERC-20 Burnable](erc20-burnable.mdx): destruction of own tokens.
-* [ERC-20 Capped](erc20-capped.mdx): enforcement of a cap to the total supply when minting tokens.
-* [ERC-20 Metadata](erc20-metadata.mdx): the extended ERC20 interface including the name, symbol, and decimals functions.
-* [ERC-20 Pausable](erc20-pausable.mdx): ability to pause token transfers.
-* [ERC-20 Permit](erc20-permit.mdx): gasless approval of tokens (standardized as [`EIP-2612`](https://eips.ethereum.org/EIPS/eip-2612)).
-* [ERC-4626](erc4626.mdx): tokenized vault that manages shares (represented as ERC-20) that are backed by assets (another ERC-20).
-* [ERC-20 Flash-Mint](erc20-flash-mint.mdx): token level support for flash loans through the minting and burning of ephemeral tokens (standardized as [`EIP-3156`](https://eips.ethereum.org/EIPS/eip-3156)).
-* [ERC-20 Wrapper](erc20-wrapper.mdx): wrapper to create an ERC-20 backed by another ERC-20, with deposit and withdraw methods.
+* [ERC-20 Burnable](erc20-burnable): destruction of own tokens.
+* [ERC-20 Capped](erc20-capped): enforcement of a cap to the total supply when minting tokens.
+* [ERC-20 Metadata](erc20-metadata): the extended ERC20 interface including the name, symbol, and decimals functions.
+* [ERC-20 Pausable](erc20-pausable): ability to pause token transfers.
+* [ERC-20 Permit](erc20-permit): gasless approval of tokens (standardized as [`EIP-2612`](https://eips.ethereum.org/EIPS/eip-2612)).
+* [ERC-4626](erc4626): tokenized vault that manages shares (represented as ERC-20) that are backed by assets (another ERC-20).
+* [ERC-20 Flash-Mint](erc20-flash-mint): token level support for flash loans through the minting and burning of ephemeral tokens (standardized as [`EIP-3156`](https://eips.ethereum.org/EIPS/eip-3156)).
+* [ERC-20 Wrapper](erc20-wrapper): wrapper to create an ERC-20 backed by another ERC-20, with deposit and withdraw methods.

@@ -93,7 +93,7 @@ Define networks directly in your main `config.json` instead of using separate fi
       "network": "ethereum-mainnet",
       "chain_id": 1,
       // ... other fields
-    
+
   ]
 }
 ```
@@ -292,7 +292,7 @@ Networks can inherit from other networks of the same type, allowing you to creat
       "symbol": "ETH",
       "rpc_urls": ["https://mainnet.infura.io/v3/YOUR_KEY"]
     ,
-    
+
       "from": "ethereum-base",
       "type": "evm",
       "network": "ethereum-sepolia",
@@ -300,7 +300,7 @@ Networks can inherit from other networks of the same type, allowing you to creat
       "required_confirmations": 3,
       "rpc_urls": ["https://sepolia.infura.io/v3/YOUR_KEY"],
       "is_testnet": true
-    
+
   ]
 }
 ```
@@ -381,7 +381,7 @@ Once networks are defined, reference them in your relayer configurations:
 
 ## See Also
 
-* [Relayer Configuration](index.mdx#relayer_configuration)
-* [Quickstart Guide](quickstart.mdx)
-* [Solana Integration](solana.mdx)
+* [Relayer Configuration](index#relayer_configuration)
+* [Quickstart Guide](quickstart)
+* [Solana Integration](solana)
 * [API Reference](https://openzeppelin-relayer.netlify.app/api_docs.html)

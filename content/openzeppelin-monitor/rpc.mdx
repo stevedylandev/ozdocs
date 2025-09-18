@@ -26,7 +26,7 @@ RPC endpoints are configured in the network configuration files with weights for
       "url": {"type": "plain", "value": "https://primary-endpoint.example.com",
       "weight": 100
     },
-    
+
       "type_": "rpc",
       "url": {"type": "plain", "value": "https://backup-endpoint.example.com",
       "weight": 50
@@ -44,10 +44,10 @@ For high-availability setups, configure at least 3 (private) RPC endpoints with 
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `**type_**` | `String` | Type of endpoint (currently only "rpc" is supported) |
-| `**url.type**` | `String` | Secret type ("Plain", "Environment", or "HashicorpCloudVault") |
-| `**url.value**` | `String` | The RPC endpoint URL |
-| `**weight**` | `Number` | Load balancing weight (0-100) |
+| `type_` | `String` | Type of endpoint (currently only "rpc" is supported) |
+| `url.type` | `String` | Secret type ("Plain", "Environment", or "HashicorpCloudVault") |
+| `url.value` | `String` | The RPC endpoint URL |
+| `weight` | `Number` | Load balancing weight (0-100) |
 
 ## Endpoint Management
 
@@ -121,7 +121,7 @@ let retry_policy = ExponentialBackoff::builder()
 The configurable options are defined in the `RetryConfig` struct:
 ```rust
 // In utils::http
-pub struct RetryConfig 
+pub struct RetryConfig
     /// Maximum number of retries for transient errors (after the initial attempt).
     pub max_retries: u32,
     /// Initial backoff duration before the first retry.
@@ -145,7 +145,7 @@ Each transport client may define its own retry policy:
 
 ```rust
 // src/services/transports/http.rs
-pub struct HttpTransportClient 
+pub struct HttpTransportClient
   pub client: ClientWithMiddleware,
   endpoint_manager: EndpointManager,
   test_connection_payload: Option<String>,

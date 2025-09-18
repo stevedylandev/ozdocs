@@ -43,15 +43,15 @@ You will setup a deploy environment for the forked network you just added to Def
 3. From the network dropdown, select the forked network you just added.
 
    ![Delpoy wizard step 1](/defender/tutorial-forked-networks-deploy-wizard-step1.png)
-4. Click on **Next** to continue. 
+4. Click on **Next** to continue.
 5. When asked to provide a block explorer API key, click on **Skip this step** as it’s **not possible to use block explorer API keys for forked networks**.
 
    ![Delpoy wizard step 2](/defender/tutorial-forked-networks-deploy-wizard-step2.png)
 6. On step 3 of the deploy wizard, create a new Relayer from which your deploy transaction will originate by clicking on **Create Relayer** from the dropdown menu.
 
    ![Delpoy wizard step 3](/defender/tutorial-forked-networks-deploy-wizard-step3.png)
-7. Lastly, click on **Skip this step** when asked to select an upgrade approval process. **Currently, upgrades are not supported for forked networks**. 
-8. Make sure to copy the generated team API keys and store them in a safe place. You will need them to interact with your deploy environment. 
+7. Lastly, click on **Skip this step** when asked to select an upgrade approval process. **Currently, upgrades are not supported for forked networks**.
+8. Make sure to copy the generated team API keys and store them in a safe place. You will need them to interact with your deploy environment.
 
 Your deploy environment is now setup!
 
@@ -78,7 +78,7 @@ const deployment = await client.deploy.deployContract(
     licenseType: 'MIT',
     verifySourceCode: true,
     // Only provide the `salt` if you wish to use `CREATE2`. Otherwise, omit this field to use `CREATE`.
-    salt: "a-unique-salt" 
+    salt: "a-unique-salt"
 );
 
 const deploymentStatus = await client.deploy.getDeployedContract(deployment.deploymentId);
@@ -92,13 +92,13 @@ console.log(deploymentStatus);
 Congratulations! You have successfully deployed a smart contract on a forked network. If you have provided a `blockExplorerUrl`, you can verify the transaction on the block explorer of your forked network.
 
 <Callout>
-After deploying a contract, we recommend creating a Monitor and setting up Actions on Defender. Learn how to setup a Monitor [here](:tutorial/monitor.adoc), and use Actions with its tutorial [here](:tutorial/actions.adoc).
+After deploying a contract, we recommend creating a Monitor and setting up Actions on Defender. Learn how to setup a Monitor [here](:tutorial/monitor), and use Actions with its tutorial [here](:tutorial/actions).
 </Callout>
 
 ## References
 
-* [Deploy Documentation](:module/deploy.adoc)
-* [Actions Documentation](:module/actions.adoc)
-* [Monitor Documentation](:module/monitor.adoc)
+* [Deploy Documentation](:module/deploy)
+* [Actions Documentation](:module/actions)
+* [Monitor Documentation](:module/monitor)
 * [Phalcon, window=_blank](https://phalcon.xyz)
 * [Conduit, window=_blank](https://conduit.xyz)

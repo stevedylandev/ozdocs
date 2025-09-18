@@ -36,7 +36,7 @@ Example Solana network configurations:
       "is_testnet": false,
       "tags": ["mainnet", "solana"]
     ,
-    
+
       "type": "solana",
       "network": "solana-devnet",
       "rpc_urls": ["https://api.devnet.solana.com"],
@@ -44,17 +44,17 @@ Example Solana network configurations:
       "is_testnet": true,
       "tags": ["devnet", "solana"]
     ,
-    
+
       "type": "solana",
       "network": "solana-custom",
       "rpc_urls": ["https://your-custom-solana-rpc.example.com"],
       "tags": ["custom", "solana"]
-    
+
   ]
 }
 ```
 
-For detailed network configuration options, see the [Network Configuration](network_configuration.mdx) guide.
+For detailed network configuration options, see the [Network Configuration](network_configuration) guide.
 
 ## Supported Signers
 
@@ -71,7 +71,7 @@ In production systems, hosted signers are recommended for the best security mode
 
 ## Quickstart
 
-For a step-by-step setup, see [Quick Start Guide](quickstart.mdx).
+For a step-by-step setup, see [Quick Start Guide](quickstart).
 Key prerequisites:
 
 * Rust 2021, version `1.86` or later
@@ -90,15 +90,15 @@ Example configuration for a Solana relayer:
   "network_type": "solana",
   "custom_rpc_urls": [
     { "url": "https://primary-solana-rpc.example.com", "weight": 100 ,
-     "url": "https://backup-solana-rpc.example.com", "weight": 100 
+     "url": "https://backup-solana-rpc.example.com", "weight": 100
   ],
-  "policies": 
+  "policies":
     "fee_payment_strategy": "user",
     "min_balance": 0,
     "allowed_tokens": [
-      { "mint": "So111...", "max_allowed_fee": 100000000 
+      { "mint": "So111...", "max_allowed_fee": 100000000
     ],
-    "swap_config": 
+    "swap_config":
       "strategy": "jupiter-swap",
       "cron_schedule": "0 0 * * * *",
       "min_balance_threshold": 1000000,
@@ -106,7 +106,7 @@ Example configuration for a Solana relayer:
         "dynamic_compute_unit_limit": true,
         "priority_level": "high",
         "priority_fee_max_lamports": 1000000000
-      
+
     }
   }
 }
@@ -125,7 +125,7 @@ In addition to standard relayer configuration and policies, Solana relayers supp
 * `allowed_programs`, `allowed_accounts`, `disallowed_accounts`: Restrict relayer operations to specific programs/accounts
 * `swap_config`: Automated token swap settings (see below)
 
-You can check all options in [User Documentation - Relayers](index.mdx#3_relayers).
+You can check all options in [User Documentation - Relayers](index#3_relayers).
 
 ### Automated token swap configuration options:
 
@@ -200,7 +200,7 @@ See [API Reference](https://release-v1-0-0%2D%2Dopenzeppelin-relayer.netlify.app
 
 ## Roadmap
 
-* See [Project Roadmap](roadmap.mdx) for upcoming features
+* See [Project Roadmap](roadmap) for upcoming features
 
 ## Support
 

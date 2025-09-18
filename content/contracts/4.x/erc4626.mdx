@@ -2,7 +2,7 @@
 title: ERC4626
 ---
 
-[ERC4626](https://eips.ethereum.org/EIPS/eip-4626) is an extension of [ERC20](erc20.mdx) that proposes a standard interface for token vaults. This standard interface can be used by widely different contracts (including lending markets, aggregators, and intrinsically interest bearing tokens), which brings a number of subtleties. Navigating these potential issues is essential to implementing a compliant and composable token vault.
+[ERC4626](https://eips.ethereum.org/EIPS/eip-4626) is an extension of [ERC20](erc20) that proposes a standard interface for token vaults. This standard interface can be used by widely different contracts (including lending markets, aggregators, and intrinsically interest bearing tokens), which brings a number of subtleties. Navigating these potential issues is essential to implementing a compliant and composable token vault.
 
 We provide a base implementation of ERC4626 that includes a simple vault. This contract is designed in a way that allows developers to easily re-configure the vault’s behavior, with minimal overrides, while staying compliant. In this guide, we will discuss some security considerations that affect ERC4626. We will also discuss common customizations of the vault.
 

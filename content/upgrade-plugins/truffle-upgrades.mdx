@@ -3,7 +3,7 @@ title: Using with Truffle
 ---
 
 <Callout type='warn'>
-This package is deprecated. The recommended alternative is to use [Hardhat](https://hardhat.org/) along with the [Hardhat Upgrades](hardhat-upgrades.mdx) plugin.
+This package is deprecated. The recommended alternative is to use [Hardhat](https://hardhat.org/) along with the [Hardhat Upgrades](hardhat-upgrades) plugin.
 </Callout>
 
 This package adds functions to your Truffle migrations and tests so you can deploy and upgrade proxies for your contracts.
@@ -36,7 +36,7 @@ const  deployProxy  = require('@openzeppelin/truffle-upgrades');
 
 const Box = artifacts.require('Box');
 
-module.exports = async function (deployer) 
+module.exports = async function (deployer)
   const instance = await deployProxy(Box, [42], { deployer );
   console.log('Deployed', instance.address);
 };
@@ -53,7 +53,7 @@ const  upgradeProxy  = require('@openzeppelin/truffle-upgrades');
 const Box = artifacts.require('Box');
 const BoxV2 = artifacts.require('BoxV2');
 
-module.exports = async function (deployer) 
+module.exports = async function (deployer)
   const existing = await Box.deployed();
   const instance = await upgradeProxy(existing.address, BoxV2, { deployer );
   console.log("Upgraded", instance.address);
@@ -72,7 +72,7 @@ const  deployBeacon, deployBeaconProxy  = require('@openzeppelin/truffle-upgrade
 
 const Box = artifacts.require('Box');
 
-module.exports = async function (deployer) 
+module.exports = async function (deployer)
   const beacon = await deployBeacon(Box);
   console.log('Beacon deployed', beacon.address);
 
@@ -90,7 +90,7 @@ const  erc1967, upgradeBeacon  = require('@openzeppelin/truffle-upgrades');
 const Box = artifacts.require('Box');
 const BoxV2 = artifacts.require('BoxV2');
 
-module.exports = async function (deployer) 
+module.exports = async function (deployer)
   const existing = await Box.deployed();
 
   const beaconAddress = await erc1967.getBeaconAddress(existing.address);
@@ -113,7 +113,7 @@ const  deployProxy, upgradeProxy  = require('@openzeppelin/truffle-upgrades');
 const Box = artifacts.require('Box');
 const BoxV2 = artifacts.require('BoxV2');
 
-describe('upgrades', () => 
+describe('upgrades', () =>
   it('works', async () => {
     const box = await deployProxy(Box, [42]);
     const box2 = await upgradeProxy(box.address, BoxV2);
@@ -132,7 +132,7 @@ const  deployBeacon, deployBeaconProxy, upgradeBeacon  = require('@openzeppelin/
 const Box = artifacts.require('Box');
 const BoxV2 = artifacts.require('BoxV2');
 
-describe('upgrades', () => 
+describe('upgrades', () =>
   it('works', async () => {
     const beacon = await deployBeacon(Box);
     const box = await deployBeaconProxy(beacon, Box, [42]);

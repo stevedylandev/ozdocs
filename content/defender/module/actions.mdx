@@ -2,13 +2,13 @@
 title: Actions
 ---
 
-Actions allow you to implement custom app logic for on-chain and off-chain operations. You can enable automated responses to threats detected by the [Monitor](module/monitor.mdx) and [Workflows](module/actions.mdx#workflows) modules.
+Actions allow you to implement custom app logic for on-chain and off-chain operations. You can enable automated responses to threats detected by the [Monitor](module/monitor) and [Workflows](module/actions#workflows) modules.
 
 ## Use cases
 
 * Automate smart contract operations
-* Execute actions as response to a [Monitor](module/monitor.mdx) alert
-* Automate [Workflow](module/actions.mdx#workflows) steps with Actions
+* Execute actions as response to a [Monitor](module/monitor) alert
+* Automate [Workflow](module/actions#workflows) steps with Actions
 * Call external APIs and interact with other smart contracts
 
 ## Actions
@@ -28,7 +28,7 @@ The following triggers are supported:
 When sending requests to the webhook, make sure to include the `Content-Type: application/json` header. We have a strict requirement for this header to be present in the request. Otherwise you will see `415 Unsupported Media Type` error.
 </Callout>
 
-* **Monitor**: Triggered by a Defender [Monitor](module/monitor.mdx). It will contain a body property with the details for the triggering event that you can use to run custom logic.
+* **Monitor**: Triggered by a Defender [Monitor](module/monitor). It will contain a body property with the details for the triggering event that you can use to run custom logic.
 
 ### Environment
 
@@ -87,7 +87,7 @@ we suggest checking your Actions, making necessary changes, and upgrading in adv
 Your code must export an async `handler` function that will be invoked on each execution of the action.
 
 ```jsx
-exports.handler = async function(event) 
+exports.handler = async function(event)
   // Your code here
 
 ```
@@ -95,7 +95,7 @@ exports.handler = async function(event)
 The following interface contains the `event` types injected by Defender when invoking an Action:
 
 ```typescript
-export interface ActionEvent 
+export interface ActionEvent
    /**
    * Internal identifier of the relayer function used by the relay-client
    */
@@ -146,7 +146,7 @@ If you connect your automatic action to a relayer, then Defender will automatica
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
 
-exports.handler = async function(event) 
+exports.handler = async function(event)
   const client = new Defender(event);
 
   // Use relayer for sending txs or querying the network...
@@ -161,7 +161,7 @@ We also support [`ethers.js`](https://www.npmjs.com/package/@openzeppelin/defend
 const  DefenderRelaySigner, DefenderRelayProvider  = require('defender-relay-client/lib/ethers');
 const ethers = require('ethers');
 
-exports.handler = async function(event) 
+exports.handler = async function(event)
   const provider = new DefenderRelayProvider(event);
   const signer = new DefenderRelaySigner(event, provider, { speed: 'fast' );
   // Use provider and signer for querying or sending txs from ethers, for example...
@@ -176,7 +176,7 @@ If you prefer [`web3.js`](https://www.npmjs.com/package/@openzeppelin/defender-r
 const  DefenderRelayProvider  = require('defender-relay-client/lib/web3');
 const Web3 = require('web3');
 
-exports.handler = async function(event) 
+exports.handler = async function(event)
   const provider = new DefenderRelayProvider(event, { speed: 'fast' );
   const web3 = new Web3(provider);
   // Use web3 instance for querying or sending txs, for example...
@@ -190,12 +190,12 @@ exports.handler = async function(event)
 
 Actions triggered from a Monitor can have two types of body properties and scheme, depending what type of Monitor triggered the action:
 
-* In the case of a Defender monitor, the body will contain the [monitor event schema](module/monitor.mdx#monitor_event_schema).
+* In the case of a Defender monitor, the body will contain the [monitor event schema](module/monitor#monitor_event_schema).
 
 If the action is written in TypeScript, `BlockTriggerEvent` type from the [defender-sdk-action-client, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk-action-client) package can be used.
 
 ```jsx
-exports.handler = async function(params) 
+exports.handler = async function(params)
   const payload = params.request.body;
   const matchReasons = payload.matchReasons;
   const sentinel = payload.sentinel;
@@ -213,14 +213,14 @@ exports.handler = async function(params)
 When an action is invoked via a webhook, it can access the HTTP request info as part of the `event` parameter injected in the handler. Likewise, the return value will be included in the `result` field of the HTTP response payload.
 
 ```jsx
-exports.handler = async function(event) 
+exports.handler = async function(event)
   const {
     body,    // Object with JSON-parsed POST body
     headers, // Object with key-values from HTTP headers
     queryParameters, // Object with key-values from query parameters
    = event.request;
 
-  return 
+  return
     hello: 'world' // JSON-serialized and included in the `result` field of the response
   ;
 }
@@ -260,7 +260,7 @@ Defender secrets allow you to store sensitive information, such as API keys and 
 Action secrets are key-value case-sensitive pairs of strings, that can be accessed from action code using the `event.secrets` object. There is no limit to the number of secrets used by an action. Secrets are shared across all actions, and not specific to a single one.
 
 ```jsx
-exports.handler = async function(event) 
+exports.handler = async function(event)
   const { mySecret, anApiKey  = event.secrets;
 }
 ```
@@ -284,7 +284,7 @@ You can interact with your key-value store through an instance of `Defender`, wh
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
 
-exports.handler = async function (event) 
+exports.handler = async function (event)
   const client = new Defender(event);
 
   await client.keyValueStore.put('myKey', 'myValue');
@@ -309,32 +309,32 @@ Actions can send notifications through various channels already defined in the D
 
 To send a notification, you should use `notificationClient.send()`, as shown in the following example:
 ```js
-exports.handler = async function(credentials, context) 
+exports.handler = async function(credentials, context)
   const { notificationClient  = context;
 
-  try 
+  try
     notificationClient.send({
       channelAlias: 'example-email-notification-channel-alias',
       subject: 'Action notification example',
       message: 'This is an example of a email notification sent from an action',
     );
-  } catch (error) 
+  } catch (error)
     console.error('Failed to send notification', error);
-  
+
 }
 ```
 
 For email notifications, basic HTML tags are supported. Here’s an example of how to generate an HTML message:
 ```js
 
-function generateHtmlMessage(actionName, txHash) 
+function generateHtmlMessage(actionName, txHash)
   return `
 <h1>Transaction sent from Action ${actionName</h1>
 <p>Transaction with hash <i>$txHash</i> was sent.</p>
 `;
 }
 
-exports.handler = async function(event, context) 
+exports.handler = async function(event, context)
   const { notificationClient  = context;
 
   const relayer = new Relayer(credentials);
@@ -346,33 +346,33 @@ exports.handler = async function(event, context)
     gasLimit: '21000',
   );
 
-  try 
+  try
     notificationClient.send({
       channelAlias: 'example-email-notification-channel-alias',
       subject: `Transaction sent from Action ${event.actionName`,
       message: generateHtmlMessage(event.actionName, txRes.hash),
     });
-  } catch (error) 
+  } catch (error)
     console.error('Failed to send notification', error);
-  
+
 }
 ```
 
 To send a metric notification, use the `notificationClient.sendMetric()` method instead, as shown in the following example:
 
 ```js
-exports.handler = async function(credentials, context) 
+exports.handler = async function(credentials, context)
   const { notificationClient  = context;
 
-  try 
+  try
     notificationClient.sendMetric({
       channelAlias: 'example-email-notification-channel-alias',
       name: 'datadog-test-metric',
       value: 1,
     );
-  } catch (error) 
+  } catch (error)
     console.error('Failed to send notification', error);
-  
+
 }
 ```
 
@@ -408,13 +408,13 @@ const  Defender  = require('@openzeppelin/defender-sdk');
 
 
 // Entrypoint for the action
-exports.handler = async function(event) 
+exports.handler = async function(event)
   const client = new Defender(credentials);
   // Use client.relaySigner for sending txs
 
 
 // To run locally (this code will not be executed in actions)
-if (require.main === module) 
+if (require.main === module)
   const { RELAYER_API_KEY: apiKey, RELAYER_API_SECRET: apiSecret  = process.env;
   exports.handler( apiKey, apiSecret )
     .then(() => process.exit(0))
@@ -436,7 +436,7 @@ The code bundle must not exceed 5MB in size after being compressed and base64-en
 
 Workflows allow you to instantly detect, respond, and resolve threats and attacks with pre-defined actions and scenarios. You can conduct attack simulations and test real-world scenarios on forked networks too.
 
-Workflows are processes that combine automatic actions and transaction templates. Actions can be run in parallel or connected sequentially. Workflows can be triggered manually or via a [Monitor](module/monitor.mdx).
+Workflows are processes that combine automatic actions and transaction templates. Actions can be run in parallel or connected sequentially. Workflows can be triggered manually or via a [Monitor](module/monitor).
 
 Creating workflows is a seamless experience guided through a form that allows you to organize actions in the workflow process easily.
 
@@ -453,7 +453,7 @@ To run multiple actions in parallel, click "Add Parallel Sequence" and drag acti
 You can drag actions back off the workflow to remove them or click the visible minus icon in the upper right to remove an empty step. The "Save" button on the top right saves the workflow with its configuration and name.
 
 <Callout>
-We provide a quickstart tutorial to create and use Workflows. Check it out [here](tutorial/workflows.mdx)!
+We provide a quickstart tutorial to create and use Workflows. Check it out [here](tutorial/workflows)!
 </Callout>
 
 ## A complete example
@@ -465,7 +465,7 @@ const  ethers  = require("ethers");
 const  DefenderRelaySigner, DefenderRelayProvider  = require('defender-relay-client/lib/ethers');
 
 // Entrypoint for the action
-exports.handler = async function(event) 
+exports.handler = async function(event)
   // Load value provided in the webhook payload (not available in schedule or sentinel invocations)
   const { value  = event.request.body;
 
@@ -478,7 +478,7 @@ exports.handler = async function(event)
 
   // Create contract instance from the signer and use it to send a tx
   const contract = new ethers.Contract(ADDRESS, ABI, signer);
-  if (await contract.canExecute()) 
+  if (await contract.canExecute())
     const tx = await contract.execute();
     console.log(`Called execute in ${tx.hash`);
     return  tx: tx.hash ;
@@ -495,5 +495,5 @@ The code does not need to wait for the transaction to be mined. Defender will ta
 The code for each action is isolated in Defender, and actions are restricted via strict access controls to have zero access to other Defender internal infrastructure. The only exception is that an action may access its linked relayer, which is negotiated via temporary credentials injected by the action service upon each execution. Still, the action can only call the relayer’s exposed methods and has no direct access to the backing private key or any other services.
 
 <Callout>
-We provide a quickstart tutorial to create an automatic action for a smart contract using Defender. Check it out [here](tutorial/actions.mdx)!
+We provide a quickstart tutorial to create an automatic action for a smart contract using Defender. Check it out [here](tutorial/actions)!
 </Callout>

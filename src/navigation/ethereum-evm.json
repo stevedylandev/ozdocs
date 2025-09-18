@@ -132,6 +132,32 @@
 				"url": "/contracts/5.x/utilities"
 			},
 			{
+				"type": "folder",
+				"name": "Subgraphs",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/contracts/5.x/subgraphs"
+				},
+				"children": [
+					{
+						"type": "page",
+						"name": "Automatic Generation",
+						"url": "/contracts/5.x/subgraphs/generate"
+					},
+					{
+						"type": "page",
+						"name": "Query Examples",
+						"url": "/contracts/5.x/subgraphs/examples/query"
+					},
+					{
+						"type": "page",
+						"name": "Subgraph Examples",
+						"url": "/contracts/5.x/subgraphs/examples/subgraph"
+					}
+				]
+			},
+			{
 				"type": "page",
 				"name": "FAQ",
 				"url": "/contracts/5.x/faq"
@@ -500,121 +526,25 @@
 								]
 							},
 							{
-								"type": "page",
-								"name": "Governance",
-								"url": "/contracts/3.x/governance"
+								"type": "folder",
+								"name": "Gas Station Network",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/3.x/gsn"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "Strategies",
+										"url": "/contracts/3.x/gsn-strategies"
+									}
+								]
 							},
 							{
 								"type": "page",
 								"name": "Utilities",
 								"url": "/contracts/3.x/utilities"
-							},
-							{
-								"type": "page",
-								"name": "Gas Station Network",
-								"url": "/contracts/3.x/gsn"
-							},
-							{
-								"type": "page",
-								"name": "GSN Strategies",
-								"url": "/contracts/3.x/gsn-strategies"
-							},
-							{
-								"type": "page",
-								"name": "Drafts",
-								"url": "/contracts/3.x/drafts"
-							},
-							{
-								"type": "page",
-								"name": "Crowdsales (Legacy)",
-								"url": "/contracts/3.x/crowdsales"
-							},
-							{
-								"type": "folder",
-								"name": "API Reference",
-								"index": {
-									"type": "page",
-									"name": "Overview",
-									"url": "/contracts/3.x/api"
-								},
-								"children": [
-									{
-										"type": "page",
-										"name": "Access",
-										"url": "/contracts/3.x/api/access"
-									},
-									{
-										"type": "page",
-										"name": "Cryptography",
-										"url": "/contracts/3.x/api/cryptography"
-									},
-									{
-										"type": "page",
-										"name": "Drafts",
-										"url": "/contracts/3.x/api/drafts"
-									},
-									{
-										"type": "page",
-										"name": "Gas Station Network",
-										"url": "/contracts/3.x/api/GSN"
-									},
-									{
-										"type": "page",
-										"name": "Introspection",
-										"url": "/contracts/3.x/api/introspection"
-									},
-									{
-										"type": "page",
-										"name": "Math",
-										"url": "/contracts/3.x/api/math"
-									},
-									{
-										"type": "page",
-										"name": "Payment",
-										"url": "/contracts/3.x/api/payment"
-									},
-									{
-										"type": "page",
-										"name": "Presets",
-										"url": "/contracts/3.x/api/presets"
-									},
-									{
-										"type": "page",
-										"name": "Proxy",
-										"url": "/contracts/3.x/api/proxy"
-									},
-									{
-										"type": "folder",
-										"name": "Token",
-										"children": [
-											{
-												"type": "page",
-												"name": "ERC20",
-												"url": "/contracts/3.x/api/token/ERC20"
-											},
-											{
-												"type": "page",
-												"name": "ERC721",
-												"url": "/contracts/3.x/api/token/ERC721"
-											},
-											{
-												"type": "page",
-												"name": "ERC777",
-												"url": "/contracts/3.x/api/token/ERC777"
-											},
-											{
-												"type": "page",
-												"name": "ERC1155",
-												"url": "/contracts/3.x/api/token/ERC1155"
-											}
-										]
-									},
-									{
-										"type": "page",
-										"name": "Utils",
-										"url": "/contracts/3.x/api/utils"
-									}
-								]
 							}
 						]
 					}
@@ -634,11 +564,6 @@
 			{
 				"type": "folder",
 				"name": "Account Abstraction",
-				"index": {
-					"type": "page",
-					"name": "Overview",
-					"url": "/contracts/5.x/account-abstraction"
-				},
 				"children": [
 					{
 						"type": "page",
@@ -770,9 +695,87 @@
 				"url": "/upgrade-plugins/api-hardhat-upgrades"
 			},
 			{
-				"type": "page",
+				"type": "folder",
 				"name": "Foundry Upgrades API",
-				"url": "/upgrade-plugins/foundry/api/api-foundry-upgrades"
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/upgrade-plugins/foundry/api"
+				},
+				"children": [
+					{
+						"type": "page",
+						"name": "Upgrades",
+						"url": "/upgrade-plugins/foundry/api/Upgrades"
+					},
+					{
+						"type": "page",
+						"name": "LegacyUpgrades",
+						"url": "/upgrade-plugins/foundry/api/LegacyUpgrades"
+					},
+					{
+						"type": "page",
+						"name": "Defender",
+						"url": "/upgrade-plugins/foundry/api/Defender"
+					},
+					{
+						"type": "page",
+						"name": "Options",
+						"url": "/upgrade-plugins/foundry/api/Options"
+					},
+					{
+						"type": "folder",
+						"name": "Internal",
+						"children": [
+							{
+								"type": "page",
+								"name": "Core",
+								"url": "/upgrade-plugins/foundry/api/internal/Core"
+							},
+							{
+								"type": "page",
+								"name": "DefenderDeploy",
+								"url": "/upgrade-plugins/foundry/api/internal/DefenderDeploy"
+							},
+							{
+								"type": "page",
+								"name": "Utils",
+								"url": "/upgrade-plugins/foundry/api/internal/Utils"
+							},
+							{
+								"type": "page",
+								"name": "StringFinder",
+								"url": "/upgrade-plugins/foundry/api/internal/StringFinder"
+							},
+							{
+								"type": "page",
+								"name": "Versions",
+								"url": "/upgrade-plugins/foundry/api/internal/Versions"
+							},
+							{
+								"type": "folder",
+								"name": "Interfaces",
+								"children": [
+									{
+										"type": "page",
+										"name": "IProxyAdmin",
+										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IProxyAdmin"
+									},
+									{
+										"type": "page",
+										"name": "IUpgradeableBeacon",
+										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IUpgradeableBeacon"
+									},
+									{
+										"type": "page",
+										"name": "IUpgradeableProxy",
+										"url": "/upgrade-plugins/foundry/api/internal/interfaces/IUpgradeableProxy"
+									}
+								]
+							}
+						]
+					}
+				]
 			},
 			{
 				"type": "page",
@@ -894,6 +897,11 @@
 			{
 				"type": "folder",
 				"name": "API Reference",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/openzeppelin-relayer/api"
+				},
 				"children": [
 					{
 						"type": "page",

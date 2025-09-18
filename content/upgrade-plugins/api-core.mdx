@@ -45,7 +45,7 @@ Example:
 pragma solidity ^0.8.0;
 
 /// @custom:oz-upgrades-from MyContractV1
-contract MyContractV2 
+contract MyContractV2
   ...
 
 ```
@@ -56,7 +56,7 @@ Or:
 pragma solidity ^0.8.0;
 
 /// @custom:oz-upgrades-from contracts/MyContract.sol:MyContractV1
-contract MyContractV2 
+contract MyContractV2
   ...
 
 ```
@@ -68,7 +68,7 @@ Compile your contracts and ensure that your build is configured to output JSON f
 ##### Hardhat
 Configure `hardhat.config.js` or `hardhat.config.ts` to include storage layout in the output selection:
 ```js
-module.exports = 
+module.exports =
   solidity: {
     settings: {
       outputSelection: {
@@ -165,7 +165,7 @@ Note that this function does not throw validation errors directly. Instead, you 
 * `buildInfoDir` - the path to the build info directory which contains JSON files with Solidity compiler input and output. Defaults to `artifacts/build-info` for Hardhat projects or `out/build-info` for Foundry projects. If your project uses a custom output directory, you must specify its build info directory here.
 * `contract` - The name or fully qualified name of the contract to validate. If not specified, all upgradeable contracts in the build info directory will be validated.
 * `reference` - Can only be used when the `contract` argument is also provided. The name or fully qualified name of the reference contract to use for storage layout comparisons. If not specified, uses the `@custom:oz-upgrades-from` annotation if it is defined in the contract that is being validated.
-* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades.mdx#common-options):
+* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades#common-options):
   * `unsafeAllow`
   * `unsafeAllowRenames`
   * `unsafeSkipStorageCheck`
@@ -179,7 +179,7 @@ Note that this function does not throw validation errors directly. Instead, you 
 
 #### ProjectReport
 ```ts
-interface ProjectReport 
+interface ProjectReport
   ok: boolean;
   explain(color?: boolean): string;
   numPassed: number;
@@ -230,7 +230,7 @@ constructor UpgradeableContract(
   name: string,
   solcInput: SolcInput,
   solcOutput: SolcOutput,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
     unsafeSkipStorageCheck?: boolean,
@@ -247,7 +247,7 @@ Creates a new instance of `UpgradeableContract`.
 * `name` - the name of the implementation contract as either a fully qualified name or contract name. If multiple contracts have the same name, you must use the fully qualified name e.g., `contracts/Bar.sol:Bar`.
 * `solcInput` - the Solidity input JSON object for the implementation contract.
 * `solcOutput` - the Solidity output JSON object for the implementation contract.
-* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades.mdx#common-options):
+* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades#common-options):
   * `kind`
   * `unsafeAllow`
   * `unsafeAllowRenames`
@@ -271,7 +271,7 @@ getErrorReport(): Report
 ```ts
 getStorageUpgradeReport(
   upgradedContract: UpgradeableContract,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
     unsafeSkipStorageCheck?: boolean,
@@ -285,7 +285,7 @@ Compares the storage layout of an upgradeable contract with that of a proposed u
 **Parameters:**
 
 * `upgradedContract` - another instance of `UpgradeableContract` representing the proposed upgrade.
-* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades.mdx#common-options):
+* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades#common-options):
   * `kind`
   * `unsafeAllow`
   * `unsafeAllowRenames`
@@ -297,7 +297,7 @@ Compares the storage layout of an upgradeable contract with that of a proposed u
 
 #### Report
 ```ts
-interface Report 
+interface Report
   ok: boolean;
   explain(color?: boolean): string;
 

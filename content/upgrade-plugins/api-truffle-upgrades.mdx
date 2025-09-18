@@ -3,7 +3,7 @@ title: OpenZeppelin Truffle Upgrades API
 ---
 
 <Callout type='warn'>
-This package is deprecated. The recommended alternative is to use [Hardhat](https://hardhat.org/) along with the [Hardhat Upgrades](hardhat-upgrades.mdx) plugin.
+This package is deprecated. The recommended alternative is to use [Hardhat](https://hardhat.org/) along with the [Hardhat Upgrades](hardhat-upgrades) plugin.
 </Callout>
 
 Both `deployProxy` and `upgradeProxy` functions will return instances of [Truffle contracts](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions), and require Truffle contract classes (retrieved via `artifacts.require`) as arguments. For [beacons](https://docs.openzeppelin.com/contracts/4.x/api/proxy#beacon), `deployBeacon` and `upgradeBeacon` will both return an upgradable beacon instance that can be used with a beacon proxy. All deploy and upgrade functions validate that the implementation contract is upgrade-safe, and will fail otherwise.
@@ -13,14 +13,14 @@ Both `deployProxy` and `upgradeProxy` functions will return instances of [Truffl
 The following options are common to some functions.
 
 * `deployer`: Should be set to the Truffle migration deployer during migrations.
-* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](contracts:api:proxy.mdx#transparent-vs-uups).
+* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](contracts:api:proxy#transparent-vs-uups).
 * `unsafeAllow`: (`ValidationError[]`) Selectively disable one or more validation errors:
-  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq.mdx#why-cant-i-use-external-libraries).)
+  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq#why-cant-i-use-external-libraries).)
   * `"struct-definition"`, `"enum-definition"`: Used to be necessary to deploy a contract with structs or enums. No longer necessary.
   * `"state-variable-assignment"`: Allows assigning state variables in a contract even though they will be stored in the implementation.
   * `"state-variable-immutable"`: Allows use of immutable variables, which are not unsafe
   * `"constructor"`: Allows defining a constructor. See `constructorArgs`.
-  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](faq.mdx#delegatecall-selfdestruct)
+  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](faq#delegatecall-selfdestruct)
   * `"missing-public-upgradeto"`: Allow UUPS implementations that do not contain a public `upgradeTo` or `upgradeToAndCall` function. Enabling this option is likely to cause a revert due to the built-in UUPS safety mechanism.
 * `unsafeAllowRenames`: (`boolean`) Configure storage layout check to allow variable renaming.
 * `unsafeSkipStorageCheck`: (`boolean`) upgrades the proxy or beacon without first checking for storage layout compatibility errors. This is a dangerous option meant to be used as a last resort.
@@ -31,7 +31,7 @@ The following options are common to some functions.
   * If set to `"onchange"`, the implementation contract is redeployed only if the bytecode has changed from previous deployments.
 * `txOverrides`: (`TruffleTxOptions`) A Truffle [options](https://trufflesuite.com/docs/truffle/how-to/contracts/run-migrations/#deployerdeploycontract-args-options) object to override transaction parameters, such as `gas` and `gasPrice`. Applies to all transactions sent by a function with this option, even if the function sends multiple transactions.
 
-Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](faq.mdx#how-can-i-disable-checks)
+Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](faq#how-can-i-disable-checks)
 
 The following options have been deprecated.
 
@@ -45,7 +45,7 @@ The following options have been deprecated.
 async function deployProxy(
   Contract: ContractClass,
   args: unknown[] = [],
-  opts?: 
+  opts?:
     deployer?: Deployer,
     initializer?: string | false,
     unsafeAllow?: ValidationError[],
@@ -83,7 +83,7 @@ If you call `deployProxy` several times for the same implementation contract, se
 async function upgradeProxy(
   proxy: string | ContractInstance,
   Contract: ContractClass,
-  opts?: 
+  opts?:
     deployer?: Deployer,
     call?: string | { fn: string; args?: unknown[] ,
     unsafeAllow?: ValidationError[],
@@ -118,7 +118,7 @@ Upgrades a UUPS or Transparent proxy at a specified address to a new implementat
 ```ts
 async function deployBeacon(
   Contract: ContractClass,
-  opts?: 
+  opts?:
     deployer?: Deployer,
     unsafeAllow?: ValidationError[],
     constructorArgs?: unknown[],
@@ -152,7 +152,7 @@ Creates an [upgradable beacon](https://docs.openzeppelin.com/contracts/4.x/api/p
 async function upgradeBeacon(
   beacon: string | ContractInstance,
   Contract: ContractClass,
-  opts?: 
+  opts?:
     deployer?: Deployer,
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
@@ -190,7 +190,7 @@ async function deployBeaconProxy(
   beacon: string | ContractInstance,
   attachTo: ContractClass,
   args: unknown[] = [],
-  opts?: 
+  opts?:
     deployer?: Deployer,
     initializer?: string | false,
     txOverrides?: TruffleTxOptions,
@@ -222,7 +222,7 @@ Creates a [Beacon proxy](https://docs.openzeppelin.com/contracts/4.x/api/proxy#B
 async function forceImport(
   address: string,
   deployedImpl: ContractClass,
-  opts?: 
+  opts?:
     kind?: 'uups' | 'transparent' | 'beacon',
   ,
 ): Promise<ContractInstance>
@@ -256,7 +256,7 @@ Use this function to recreate a lost [network file](https://docs.openzeppelin.co
 ```ts
 async function validateImplementation(
   Contract: ContractClass,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     kind?: 'uups' | 'transparent' | 'beacon',
   ,
@@ -280,7 +280,7 @@ Validates an implementation contract without deploying it.
 ```ts
 async function deployImplementation(
   Contract: ContractClass,
-  opts?: 
+  opts?:
     deployer?: Deployer,
     unsafeAllow?: ValidationError[],
     constructorArgs?: unknown[],
@@ -315,7 +315,7 @@ Validates and deploys an implementation contract, and returns its address.
 async function validateUpgrade(
   referenceAddressOrContract: string | ContractClass,
   newContract: ContractClass,
-  opts?: 
+  opts?:
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
     unsafeSkipStorageCheck?: boolean,
@@ -362,7 +362,7 @@ await validateUpgrade(Box, BoxV2);
 async function prepareUpgrade(
   referenceAddressOrContract: string | ContractInstance,
   Contract: ContractClass,
-  opts?: 
+  opts?:
     deployer?: Deployer,
     unsafeAllow?: ValidationError[],
     unsafeAllowRenames?: boolean,
@@ -394,7 +394,7 @@ Validates and deploys a new implementation contract, and returns its address. If
 
 ```ts
 async function deployProxyAdmin(
-  opts?: 
+  opts?:
     deployer?: Deployer,
     timeout?: number,
     pollingInterval?: number,
@@ -424,7 +424,7 @@ Deploys a [proxy admin](https://docs.openzeppelin.com/contracts/4.x/api/proxy#Pr
 async function changeProxyAdmin(
   proxyAddress: string,
   newAdmin: string,
-  opts?: 
+  opts?:
     deployer?: Deployer,
     txOverrides?: TruffleTxOptions,
   ,
@@ -445,7 +445,7 @@ Changes the admin for a specific proxy.
 ```ts
 async function transferProxyAdminOwnership(
   newAdmin: string,
-  opts?: 
+  opts?:
     deployer?: Deployer,
     txOverrides?: TruffleTxOptions,
   ,

@@ -8,7 +8,7 @@ It’s worth mentioning that these restrictions have their roots in how the Ethe
 
 ## Initializers
 
-You can use your Solidity contracts with OpenZeppelin Upgrades without any modifications, except for their _constructors_. Due to a requirement of the proxy-based upgradeability system, no constructors can be used in upgradeable contracts. To learn about the reasons behind this restriction, head to [Proxies](proxies.mdx#the-constructor-caveat).
+You can use your Solidity contracts with OpenZeppelin Upgrades without any modifications, except for their _constructors_. Due to a requirement of the proxy-based upgradeability system, no constructors can be used in upgradeable contracts. To learn about the reasons behind this restriction, head to [Proxies](proxies#the-constructor-caveat).
 
 This means that, when using a contract with the OpenZeppelin Upgrades, you need to change its constructor into a regular function, typically named `initialize`, where you run all the setup logic:
 
@@ -17,12 +17,12 @@ This means that, when using a contract with the OpenZeppelin Upgrades, you need 
 
 pragma solidity ^0.6.0;
 
-contract MyContract 
+contract MyContract
     uint256 public x;
 
     function initialize(uint256 _x) public {
         x = _x;
-    
+
 }
 ```
 
@@ -33,7 +33,7 @@ However, while Solidity ensures that a `constructor` is called only once in the 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 
-contract MyContract 
+contract MyContract
     uint256 public x;
     bool private initialized;
 
@@ -41,7 +41,7 @@ contract MyContract
         require(!initialized, "Contract instance has already been initialized");
         initialized = true;
         x = _x;
-    
+
 }
 ```
 
@@ -54,12 +54,12 @@ pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract MyContract is Initializable 
+contract MyContract is Initializable
     uint256 public x;
 
     function initialize(uint256 _x) public initializer {
         x = _x;
-    
+
 }
 ```
 
@@ -72,21 +72,21 @@ pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract BaseContract is Initializable 
+contract BaseContract is Initializable
     uint256 public y;
 
     function initialize() public onlyInitializing {
         y = 42;
-    
+
 }
 
-contract MyContract is BaseContract 
+contract MyContract is BaseContract
     uint256 public x;
 
     function initialize(uint256 _x) public initializer {
         BaseContract.initialize(); // Do not forget this call!
         x = _x;
-    
+
 }
 ```
 
@@ -100,7 +100,7 @@ pragma solidity ^0.8.0;
 
 ...
 
-contract ERC20 is Context, IERC20 
+contract ERC20 is Context, IERC20
 
     ...
 
@@ -110,7 +110,7 @@ contract ERC20 is Context, IERC20
     constructor(string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
-    
+
 
     ...
 }
@@ -124,7 +124,7 @@ pragma solidity ^0.8.0;
 
 ...
 
-contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20Upgradeable 
+contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20Upgradeable
     ...
 
     string private _name;
@@ -132,12 +132,12 @@ contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20Upgradeabl
 
     function __ERC20_init(string memory name_, string memory symbol_) internal onlyInitializing {
         __ERC20_init_unchained(name_, symbol_);
-    
 
-    function __ERC20_init_unchained(string memory name_, string memory symbol_) internal onlyInitializing 
+
+    function __ERC20_init_unchained(string memory name_, string memory symbol_) internal onlyInitializing
         _name = name_;
         _symbol = symbol_;
-    
+
 
     ...
 }
@@ -145,14 +145,14 @@ contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20Upgradeabl
 
 Whether using OpenZeppelin Contracts or another smart contract library, always make sure that the package is set up to handle upgradeable contracts.
 
-Learn more about OpenZeppelin Contracts Upgradeable in [Contracts: Using with Upgrades](contracts::upgradeable.mdx).
+Learn more about OpenZeppelin Contracts Upgradeable in [Contracts: Using with Upgrades](contracts::upgradeable).
 
 ### Avoiding Initial Values in Field Declarations
 
 Solidity allows defining initial values for fields when declaring them in a contract.
 
 ```solidity
-contract MyContract 
+contract MyContract
     uint256 public hasInitialValue = 42; // equivalent to setting in the constructor
 
 ```
@@ -160,12 +160,12 @@ contract MyContract
 This is equivalent to setting these values in the constructor, and as such, will not work for upgradeable contracts. Make sure that all initial values are set in an initializer function as shown below; otherwise, any upgradeable instances will not have these fields set.
 
 ```solidity
-contract MyContract is Initializable 
+contract MyContract is Initializable
     uint256 public hasInitialValue;
 
     function initialize() public initializer {
         hasInitialValue = 42; // set initial value in initializer
-    
+
 }
 ```
 
@@ -174,7 +174,7 @@ It is still ok to define _constant_ state variables, because the compiler [does 
 </Callout>
 
 ```solidity
-contract MyContract 
+contract MyContract
     uint256 public constant hasInitialValue = 42; // define as constant
 
 ```
@@ -185,7 +185,7 @@ Do not leave an implementation contract uninitialized. An uninitialized implemen
 
 ```solidity
 /// @custom:oz-upgrades-unsafe-allow constructor
-constructor() 
+constructor()
     _disableInitializers();
 
 ```
@@ -210,12 +210,12 @@ pragma solidity ^0.6.0;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract MyContract is Initializable 
+contract MyContract is Initializable
     ERC20 public token;
 
     function initialize() public initializer {
         token = new ERC20("Test", "TST"); // This contract will not be upgradeable
-    
+
 }
 ```
 
@@ -229,12 +229,12 @@ pragma solidity ^0.6.0;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 
-contract MyContract is Initializable 
+contract MyContract is Initializable
     IERC20Upgradeable public token;
 
     function initialize(IERC20Upgradeable _token) public initializer {
         token = _token;
-    
+
 }
 ```
 
@@ -250,7 +250,7 @@ As such, it is not allowed to use either `selfdestruct` or `delegatecall` in you
 
 ## Modifying Your Contracts
 
-When writing new versions of your contracts, either due to new features or bug fixing, there is an additional restriction to observe: you cannot change the order in which the contract state variables are declared, nor their type. You can read more about the reasons behind this restriction by learning about our [Proxies](proxies.mdx).
+When writing new versions of your contracts, either due to new features or bug fixing, there is an additional restriction to observe: you cannot change the order in which the contract state variables are declared, nor their type. You can read more about the reasons behind this restriction by learning about our [Proxies](proxies).
 
 <Callout type='warn'>
 Violating any of these storage layout restrictions will cause the upgraded version of the contract to have its storage values mixed up, and can lead to critical errors in your application.
@@ -259,7 +259,7 @@ Violating any of these storage layout restrictions will cause the upgraded versi
 This means that if you have an initial contract that looks like this:
 
 ```solidity
-contract MyContract 
+contract MyContract
     uint256 private x;
     string private y;
 
@@ -268,7 +268,7 @@ contract MyContract
 Then you cannot change the type of a variable:
 
 ```solidity
-contract MyContract 
+contract MyContract
     string private x;
     string private y;
 
@@ -277,7 +277,7 @@ contract MyContract
 Or change the order in which they are declared:
 
 ```solidity
-contract MyContract 
+contract MyContract
     string private y;
     uint256 private x;
 
@@ -286,7 +286,7 @@ contract MyContract
 Or introduce a new variable before existing ones:
 
 ```solidity
-contract MyContract 
+contract MyContract
     bytes private a;
     uint256 private x;
     string private y;
@@ -296,7 +296,7 @@ contract MyContract
 Or remove an existing variable:
 
 ```solidity
-contract MyContract 
+contract MyContract
     string private y;
 
 ```
@@ -304,7 +304,7 @@ contract MyContract
 If you need to introduce a new variable, make sure you always do so at the end:
 
 ```solidity
-contract MyContract 
+contract MyContract
     uint256 private x;
     string private y;
     bytes private z;
@@ -314,7 +314,7 @@ contract MyContract
 Keep in mind that if you rename a variable, then it will keep the same value as before after upgrading. This may be the desired behavior if the new variable is semantically the same as the old one:
 
 ```solidity
-contract MyContract 
+contract MyContract
     uint256 private x;
     string private z; // starts with the value from `y`
 
@@ -323,14 +323,14 @@ contract MyContract
 And if you remove a variable from the end of the contract, note that the storage will not be cleared. A subsequent update that adds a new variable will cause that variable to read the leftover value from the deleted one.
 
 ```solidity
-contract MyContract 
+contract MyContract
     uint256 private x;
 
 ```
 
 Then upgraded to:
 ```solidity
-contract MyContract 
+contract MyContract
     uint256 private x;
     string private z; // starts with the value from `y`
 
@@ -339,12 +339,12 @@ contract MyContract
 Note that you may also be inadvertently changing the storage variables of your contract by changing its parent contracts. For instance, if you have the following contracts:
 
 ```solidity
-contract A 
+contract A
     uint256 a;
 
 
 
-contract B 
+contract B
     uint256 b;
 
 
@@ -361,12 +361,12 @@ contract MyContract is B, A {}
 You also cannot add new variables to base contracts, if the child has any variables of its own. Given the following scenario:
 
 ```solidity
-contract Base 
+contract Base
     uint256 base1;
 
 
 
-contract Child is Base 
+contract Child is Base
     uint256 child;
 
 ```
@@ -374,7 +374,7 @@ contract Child is Base
 If `Base` is modified to add an extra variable:
 
 ```solidity
-contract Base 
+contract Base
     uint256 base1;
     uint256 base2;
 
@@ -389,12 +389,12 @@ Storage gaps are a convention for reserving storage slots in a base contract, al
 To create a storage gap, declare a fixed-size array in the base contract with an initial number of slots. This can be an array of `uint256` so that each element reserves a 32 byte slot. Use the name `\\__gap` or a name starting with `__gap_` for the array so that OpenZeppelin Upgrades will recognize the gap:
 
 ```solidity
-contract Base 
+contract Base
     uint256 base1;
     uint256[49] __gap;
 
 
-contract Child is Base 
+contract Child is Base
     uint256 child;
 
 ```
@@ -402,7 +402,7 @@ contract Child is Base
 If `Base` is later modified to add extra variable(s), reduce the appropriate number of slots from the storage gap, keeping in mind [Solidity’s rules on how contiguous items are packed](https://docs.soliditylang.org/en/latest/internals/layout_in_storage.html#layout-of-state-variables-in-storage). For example:
 
 ```solidity
-contract Base 
+contract Base
     uint256 base1;
     uint256 base2; // 32 bytes
     uint256[48] __gap;
@@ -412,7 +412,7 @@ contract Base
 Or:
 
 ```solidity
-contract Base 
+contract Base
     uint256 base1;
     address base2; // 20 bytes
     uint256[48] __gap; // array always starts at a new slot
@@ -422,7 +422,7 @@ contract Base
 Or:
 
 ```solidity
-contract Base 
+contract Base
     uint256 base1;
     uint128 base2a; // 16 bytes
     uint128 base2b; // 16 bytes - continues from the same slot as above
@@ -430,7 +430,7 @@ contract Base
 
 ```
 
-To help determine the proper storage gap size in the new version of your contract, you can simply attempt an upgrade using `upgradeProxy` or just run the validations with `validateUpgrade` (see docs for [Hardhat Upgrades](api-hardhat-upgrades.mdx) or [Foundry Upgrades](api-foundry-upgrades.mdx)). If a storage gap is not being reduced properly, you will see an error message indicating the expected size of the storage gap.
+To help determine the proper storage gap size in the new version of your contract, you can simply attempt an upgrade using `upgradeProxy` or just run the validations with `validateUpgrade` (see docs for [Hardhat Upgrades](api-hardhat-upgrades) or [Foundry Upgrades](api-foundry-upgrades)). If a storage gap is not being reduced properly, you will see an error message indicating the expected size of the storage gap.
 
 ### Namespaced Storage Layout
 

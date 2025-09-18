@@ -27,7 +27,7 @@ EVM networks are defined via JSON configuration files, providing flexibility to:
 * Create network variants using inheritance from base configurations
 * Support both Layer 1 and Layer 2 networks
 
-For detailed network configuration options, see the [Network Configuration](network_configuration.mdx) guide.
+For detailed network configuration options, see the [Network Configuration](network_configuration) guide.
 
 ## Supported Signers
 
@@ -38,7 +38,7 @@ For detailed network configuration options, see the [Network Configuration](netw
 * `google_cloud_kms` (Google Cloud KMS)
 * `aws_kms` (Amazon AWS KMS)
 
-For detailed signer configuration options, see the [Signers](signers.mdx) guide.
+For detailed signer configuration options, see the [Signers](signers) guide.
 
 
 
@@ -47,7 +47,7 @@ In production systems, hosted signers (AWS KMS, Google Cloud KMS, Turnkey) are r
 
 ## Quickstart
 
-For a step-by-step setup, see [Quick Start Guide](quickstart.mdx).
+For a step-by-step setup, see [Quick Start Guide](quickstart).
 Key prerequisites:
 
 * Rust 2021, version `1.86` or later
@@ -69,12 +69,12 @@ Example configuration for an EVM relayer:
       "url": "https://primary-rpc.example.com",
       "weight": 100
     ,
-    
+
       "url": "https://backup-rpc.example.com",
       "weight": 100
-    
+
   ],
-  "policies": 
+  "policies":
      "gas_price_cap": 100000000000,
       "eip1559_pricing": true,
       "gas_limit_estimation": true,
@@ -83,7 +83,7 @@ Example configuration for an EVM relayer:
         "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
       ],
       "min_balance": 1000000000000000000
-  
+
 },
 ```
 
@@ -101,7 +101,7 @@ In addition to standard relayer configuration and policies, EVM relayers support
 * `min_balance`: Minimum balance required for the relayer to operate (in wei)
 * `eip1559_pricing`: Enable/disable EIP-1559 pricing methodology for transaction fees
 
-You can check all options in [User Documentation - Relayers](index.mdx#3_relayers).
+You can check all options in [User Documentation - Relayers](index#3_relayers).
 
 ### Gas Management Configuration
 
@@ -112,7 +112,7 @@ Set a maximum gas price to protect against extreme network congestion:
 
   "policies": {
     "gas_price_cap": 100000000000  // 100 Gwei maximum
-  
+
 }
 ```
 
@@ -123,7 +123,7 @@ Enable or disable automatic gas limit estimation:
 
   "policies": {
     "gas_limit_estimation": true  // Enable automatic estimation
-  
+
 }
 ```
 
@@ -155,7 +155,7 @@ Restrict transactions to specific contract addresses:
       "0x1234567890123456789012345678901234567890",
       "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
     ]
-  
+
 }
 ```
 
@@ -181,7 +181,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-exa
     "data": "0x",
     "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
     "speed": "average"
-  
+
 }'
 ```
 
@@ -198,7 +198,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-exa
     "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
     "speed": "average",
     "gas_limit": 21000
-  
+
 }'
 ```
 
@@ -215,7 +215,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-exa
     "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
     "max_fee_per_gas": 30000000000,
     "max_priority_fee_per_gas": 20000000000,
-  
+
 }'
 ```
 
@@ -231,7 +231,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-exa
     "data": "0x",
     "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
     "gas_price": "12312313123"
-  
+
 }'
 ```
 

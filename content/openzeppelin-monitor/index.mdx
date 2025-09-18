@@ -31,7 +31,7 @@ In the rapidly evolving world of blockchain technology, effective monitoring is 
 
 
 
-To get started immediately, see [Quickstart](quickstart.mdx).
+To get started immediately, see [Quickstart](quickstart).
 
 
 ## Installation
@@ -142,24 +142,24 @@ By default, predefined metrics within a dashboard is populated in grafana.
 
   ```json
   // networks/ethereum_mainnet.json
-  
+
     "slug": "ethereum_mainnet",
     ...
-  
+
 
   // triggers/slack_notifications.json
-  
+
     "large_transfer_slack": {
       ...
-    
+
   }
 
   // monitors/usdc_transfer_monitor.json
-  
+
     "networks": ["ethereum_mainnet"],
     "triggers": ["large_transfer_slack"],
     ...
-  
+
 
   ```
 
@@ -465,13 +465,13 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
         "type": "plain",
         "value": "https://hooks.slack.com/services/A/B/C"
       ,
-      "message": 
+      "message":
         "title": "large_transfer_slack triggered",
         "body": "Large transfer of ${events.0.args.value USDC from $events.0.args.from to $events.0.args.to | https://etherscan.io/tx/$transaction.hash#eventlog"
       }
     }
   },
-  "stellar_large_transfer_usdc_slack": 
+  "stellar_large_transfer_usdc_slack":
     "name": "Large Transfer Slack Notification",
     "trigger_type": "slack",
     "config": {
@@ -479,7 +479,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
         "type": "environment",
         "value": "SLACK_WEBHOOK_URL"
       ,
-      "message": 
+      "message":
         "title": "large_transfer_usdc_slack triggered",
         "body": "${monitor.name triggered because of a large transfer of $functions.0.args.amount USDC to $functions.0.args.to | https://stellar.expert/explorer/testnet/tx/$transaction.hash"
       }
@@ -497,7 +497,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
     "type": "HashicorpCloudVault",
     "value": "slack-webhook-url"
   ,
-  "message": 
+  "message":
     "title": "Alert Title",
     "body": "Alert message for ${transaction.hash"
   }
@@ -523,11 +523,11 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
     "type": "plain",
     "value": "sender@example.com"
   ,
-  "password": 
+  "password":
     "type": "environment",
     "value": "SMTP_PASSWORD"
   ,
-  "message": 
+  "message":
     "title": "Alert Subject",
     "body": "Alert message for ${transaction.hash",
   },
@@ -560,14 +560,14 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
     "value": "webhook-url"
   ,
   "method": "POST",
-  "secret": 
+  "secret":
     "type": "environment",
     "value": "WEBHOOK_SECRET"
   ,
-  "headers": 
+  "headers":
     "Content-Type": "application/json"
   ,
-  "message": 
+  "message":
     "title": "Alert Title",
     "body": "Alert message for ${transaction.hash"
   }
@@ -595,7 +595,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
     "type": "plain",
     "value": "https://discord.com/api/webhooks/123-456-789"
   ,
-  "message": 
+  "message":
     "title": "Alert Title",
     "body": "Alert message for ${transaction.hash"
   }
@@ -620,7 +620,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
     "value": "telegram-bot-token"
   ,
   "chat_id": "9876543210",
-  "message": 
+  "message":
     "title": "Alert Title",
     "body": "Alert message for ${transaction.hash"
   }
@@ -659,7 +659,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 | `**arguments**` | `Array[String]` | The arguments of the script (optional). |
 | `**timeout_ms**` | `Number` | The timeout of the script is important to avoid infinite loops during the execution. If the script takes longer than the timeout, it will be killed. |
 
-For more information about custom scripts, see [Custom Scripts Section](scripts.mdx).
+For more information about custom scripts, see [Custom Scripts Section](scripts).
 
 
 
@@ -715,7 +715,7 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
       "port": 465,
       "username": {"type": "plain", "value": "alerts@example.com",
       "password": "type": "plain", "value": "password",
-      "message": 
+      "message":
         "title": "**High Value Transfer Alert**",
         "body": "### Transaction Details\n\n* **Amount:** ${events.0.args.value USDC\n* **From:** `$events.0.args.from`\n* **To:** `$events.0.args.to`\n\n> Transaction Hash: $transaction.hash\n\n[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
       },
@@ -734,7 +734,7 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
     "trigger_type": "slack",
     "config": {
       "slack_url": {"type": "plain", "value": "https://hooks.slack.com/services/XXX/YYY/ZZZ",
-      "message": 
+      "message":
         "title": "*🚨 High Value Transfer Alert*",
         "body": "*Transaction Details*\n\n• *Amount:* `${events.0.args.value` USDC\n• *From:* `$events.0.args.from`\n• *To:* `$events.0.args.to`\n\n>Transaction Hash: `$transaction.hash`\n\n<https://etherscan.io/tx/$transaction.hash|View on Explorer>"
       }
@@ -751,7 +751,7 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
     "trigger_type": "discord",
     "config": {
       "discord_url": {"type": "plain", "value": "https://discord.com/api/webhooks/XXX/YYY",
-      "message": 
+      "message":
         "title": "**🚨 High Value Transfer Alert**",
         "body": "# Transaction Details\n\n* **Amount:** `${events.0.args.value` USDC\n* **From:** `$events.0.args.from`\n* **To:** `$events.0.args.to`\n\n>>> Transaction Hash: `$transaction.hash`\n\n**[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
       }
@@ -769,7 +769,7 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
     "config": {
       "token": {"type": "plain", "value": "1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
       "chat_id": "9876543210",
-      "message": 
+      "message":
         "title": "*🚨 High Value Transfer Alert*",
         "body": "*Transaction Details*\n\n• *Amount:* `${events.0.args.value` USDC\n• *From:* `$events.0.args.from`\n• *To:* `$events.0.args.to`\n\n`Transaction Hash: $transaction.hash`\n\n[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
       }
@@ -809,35 +809,35 @@ A Monitor defines what blockchain activity to watch and what actions to take whe
     {
       "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
       "contract_spec": [ ... ]
-    
+
   ],
-  "match_conditions": 
+  "match_conditions":
     "functions": [
       {
         "signature": "transfer(address,uint256)",
         "expression": "value > 1000000"
-      
+
     ],
     "events": [
-      
+
         "signature": "Transfer(address,address,uint256)",
         "expression": "value > 1000000"
-      
+
     ],
     "transactions": [
-      
+
         "status": "Success",
         "expression": "value > 1500000000000000000"
-      
+
     ]
   },
   "trigger_conditions": [
-    
+
       "script_path": "./config/filters/evm_filter_block_number.sh",
       "language": "bash",
       "arguments": "--verbose",
       "timeout_ms": 1000
-    
+
   ],
   "triggers": ["evm_large_transfer_usdc_slack", "evm_large_transfer_usdc_email"]
 }
@@ -868,7 +868,7 @@ Match specific function calls to monitored contracts:
     {
       "signature": "transfer(address,uint256)",
       "expression": "value > 1000"
-    
+
   ]
 }
 ```
@@ -882,7 +882,7 @@ Match events emitted by monitored contracts:
     {
       "signature": "Transfer(address,address,uint256)",
       "expression": "value > 1000000"
-    
+
   ]
 }
 ```
@@ -896,7 +896,7 @@ Match transaction properties. The available fields and expression syntax depend 
     {
       "status": "Success", // Only match successful transactions
       "expression": "value > 1500000000000000000" // Match transactions with value greater than 1.5 ETH
-    
+
   ]
 }
 ```
@@ -1207,7 +1207,7 @@ You can find the contract specification through Stellar contract explorer tool. 
 
 Custom filters allow you to create sophisticated filtering logic for processing monitor matches. These filters act as additional validation layers that determine whether a match should trigger the execution of a trigger or not.
 
-For more information about custom scripts, see [Custom Scripts Section](scripts.mdx).
+For more information about custom scripts, see [Custom Scripts Section](scripts).
 
 
 
@@ -1398,21 +1398,21 @@ Specific Block Mode requires both parameters:
 
 ## Error Handling
 
-The monitor implements a comprehensive error handling system with rich context and tracing capabilities. For detailed information about error handling, see [Error Handling Guide](error.mdx).
+The monitor implements a comprehensive error handling system with rich context and tracing capabilities. For detailed information about error handling, see [Error Handling Guide](error).
 
 ## Important Considerations
 
 ### Performance Considerations
 
 * Monitor performance depends on network congestion and RPC endpoint reliability.
-  * View the [list of RPC calls](rpc.mdx#list_of_rpc_calls) made by the monitor.
+  * View the [list of RPC calls](rpc#list_of_rpc_calls) made by the monitor.
 * The `max_past_blocks` configuration is critical:
   * Calculate as: `(cron_interval_ms/block_time_ms) + confirmation_blocks + 1` (defaults to this calculation if not specified).
   * Example for 1-minute Ethereum cron: `(60000/12000) + 12 + 1 = 18 blocks`.
   * Too low settings may result in missed blocks.
 * Trigger conditions are executed sequentially based on their position in the trigger conditions array. Proper execution also depends on the number of available file descriptors on your system. To ensure optimal performance, it is recommended to increase the limit for open file descriptors to at least 2048 or higher. On Unix-based systems you can check the current limit by running `ulimit -n` and _***temporarily***_ increase it with `ulimit -n 2048`.
 * Since scripts are loaded at startup, any modifications to script files require restarting the monitor to take effect.
-* See performance considerations about custom scripts [here](scripts.mdx#performance_considerations).
+* See performance considerations about custom scripts [here](scripts#performance_considerations).
 
 ### Notification Considerations
 

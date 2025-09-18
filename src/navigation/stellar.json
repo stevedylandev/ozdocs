@@ -15,7 +15,23 @@
 	},
 	{
 		"type": "folder",
-		"name": "Access Control",
+		"name": "Tokens",
+		"children": [
+			{
+				"type": "page",
+				"name": "Fungible",
+				"url": "/stellar-contracts/tokens/fungible/fungible"
+			},
+			{
+				"type": "page",
+				"name": "Non-Fungible",
+				"url": "/stellar-contracts/tokens/non-fungible/non-fungible"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Access",
 		"children": [
 			{
 				"type": "page",
@@ -31,61 +47,8 @@
 	},
 	{
 		"type": "folder",
-		"name": "Tokens",
-		"children": [
-			{
-				"type": "folder",
-				"name": "Fungible",
-				"children": [
-					{
-						"type": "page",
-						"name": "Fungible Token",
-						"url": "/stellar-contracts/tokens/fungible/fungible"
-					},
-					{
-						"type": "page",
-						"name": "SAC Admin Generic",
-						"url": "/stellar-contracts/tokens/fungible/sac-admin-generic"
-					},
-					{
-						"type": "page",
-						"name": "SAC Admin Wrapper",
-						"url": "/stellar-contracts/tokens/fungible/sac-admin-wrapper"
-					}
-				]
-			},
-			{
-				"type": "folder",
-				"name": "Non-Fungible",
-				"children": [
-					{
-						"type": "page",
-						"name": "Non-Fungible Token",
-						"url": "/stellar-contracts/tokens/non-fungible/non-fungible"
-					},
-					{
-						"type": "page",
-						"name": "NFT Consecutive",
-						"url": "/stellar-contracts/tokens/non-fungible/nft-consecutive"
-					},
-					{
-						"type": "page",
-						"name": "NFT Enumerable",
-						"url": "/stellar-contracts/tokens/non-fungible/nft-enumerable"
-					}
-				]
-			}
-		]
-	},
-	{
-		"type": "folder",
 		"name": "Utilities",
 		"children": [
-			{
-				"type": "page",
-				"name": "Cryptography",
-				"url": "/stellar-contracts/utils/crypto"
-			},
 			{
 				"type": "page",
 				"name": "Pausable",
@@ -95,6 +58,11 @@
 				"type": "page",
 				"name": "Upgradeable",
 				"url": "/stellar-contracts/utils/upgradeable"
+			},
+			{
+				"type": "page",
+				"name": "Cryptography",
+				"url": "/stellar-contracts/utils/crypto"
 			}
 		]
 	},

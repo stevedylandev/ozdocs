@@ -2,21 +2,21 @@
 title: Multisig
 ---
 
-The Multisig component implements a multi-signature mechanism to enhance the security and 
-governance of smart contract transactions. It ensures that no single signer can unilaterally 
-execute critical actions, requiring multiple registered signers to approve and collectively 
+The Multisig component implements a multi-signature mechanism to enhance the security and
+governance of smart contract transactions. It ensures that no single signer can unilaterally
+execute critical actions, requiring multiple registered signers to approve and collectively
 execute transactions.
 
-This component is designed to secure operations such as fund management or protocol governance, 
-where collective decision-making is essential. The Multisig Component is self-administered, 
+This component is designed to secure operations such as fund management or protocol governance,
+where collective decision-making is essential. The Multisig Component is self-administered,
 meaning that changes to signers or quorum must be approved through the multisig process itself.
 
 ## Key features
 
-* **Multi-Signature Security**: transactions must be approved by multiple signers, ensuring 
+* **Multi-Signature Security**: transactions must be approved by multiple signers, ensuring
 distributed governance.
 * **Quorum Enforcement**: defines the minimum number of approvals required for transaction execution.
-* **Self-Administration**: all modifications to the component (e.g., adding or removing signers) 
+* **Self-Administration**: all modifications to the component (e.g., adding or removing signers)
 must pass through the multisig process.
 * **Event Logging**: provides comprehensive event logging for transparency and auditability.
 
@@ -24,25 +24,25 @@ must pass through the multisig process.
 
 The Multisig component introduces the concept of signers and quorum:
 
-* **Signers**: only registered signers can submit, confirm, revoke, or execute transactions. The Multisig 
+* **Signers**: only registered signers can submit, confirm, revoke, or execute transactions. The Multisig
 Component supports adding, removing, or replacing signers.
-* **Quorum**: the quorum defines the minimum number of confirmations required to approve a transaction. 
+* **Quorum**: the quorum defines the minimum number of confirmations required to approve a transaction.
 
 <Callout>
-To prevent unauthorized modifications, only the contract itself can add, remove, or replace signers or change the quorum. 
+To prevent unauthorized modifications, only the contract itself can add, remove, or replace signers or change the quorum.
 </Callout>
 This ensures that all modifications pass through the multisig approval process.
 
 ## Transaction lifecycle
 
-The state of a transaction is represented by the `TransactionState` enum and can be retrieved 
+The state of a transaction is represented by the `TransactionState` enum and can be retrieved
 by calling the `get_transaction_state` function with the transaction’s identifier.
 
-The identifier of a multisig transaction is a `felt252` value, computed as the Pedersen hash 
-of the transaction’s calls and salt. It can be computed by invoking the implementing contract’s 
-`hash_transaction` method for single-call transactions or `hash_transaction_batch` for multi-call 
-transactions. Submitting a transaction with identical calls and the same salt value a second time 
-will fail, as transaction identifiers must be unique. To resolve this, use a different salt value 
+The identifier of a multisig transaction is a `felt252` value, computed as the Pedersen hash
+of the transaction’s calls and salt. It can be computed by invoking the implementing contract’s
+`hash_transaction` method for single-call transactions or `hash_transaction_batch` for multi-call
+transactions. Submitting a transaction with identical calls and the same salt value a second time
+will fail, as transaction identifiers must be unique. To resolve this, use a different salt value
 to generate a unique identifier.
 
 A transaction in the Multisig component follows a specific lifecycle:
@@ -56,7 +56,7 @@ A transaction in the Multisig component follows a specific lifecycle:
 
 ## Usage
 
-Integrating the Multisig functionality into a contract requires implementing [MultisigComponent](api/governance.mdx#MultisigComponent).
+Integrating the Multisig functionality into a contract requires implementing [MultisigComponent](api/governance#MultisigComponent).
 The contract’s constructor should initialize the component with a quorum value and a list of initial signers.
 
 Here’s an example of a simple wallet contract featuring the Multisig functionality:
@@ -95,7 +95,7 @@ mod MultisigWallet {
 
 ## Interface
 
-This is the interface of a contract implementing the [MultisigComponent](api/governance.mdx#MultisigComponent):
+This is the interface of a contract implementing the [MultisigComponent](api/governance#MultisigComponent):
 
 ```cairo
 #[starknet::interface]

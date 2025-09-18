@@ -13,14 +13,14 @@ This module enables multi-signature operations in your runtime. It allows multip
 ## Config
 
 * Pallet-specific configs
-  * `DepositBase` -- The base amount of currency needed to [reserve](glossary.mdx#reserve) for creating a multisig execution or to store a dispatch call for later. Recall: The deposit to be made by the account that creates the multisig is: `threshold * DepositFactor + DepositBase`
+  * `DepositBase` -- The base amount of currency needed to [reserve](glossary#reserve) for creating a multisig execution or to store a dispatch call for later. Recall: The deposit to be made by the account that creates the multisig is: `threshold * DepositFactor + DepositBase`
   * `DepositFactor` -- The amount of currency needed per unit threshold when creating a multisig execution. Recall: The deposit to be made by the account that creates the multisig is: `threshold * DepositFactor + DepositBase`
   * `MaxSignatories` -- The maximum amount of signatories allowed in the multisig.
 * Common configs
   * `RuntimeEvent` -- The overarching event type.
   * `RuntimeCall` -- The overarching call type.
   * `Currency` -- The currency mechanism.
-  * `WeightInfo` -- [Weight](glossary.mdx#weight) information for extrinsics in this pallet.
+  * `WeightInfo` -- [Weight](glossary#weight) information for extrinsics in this pallet.
 
 ## Dispatchables
 
@@ -212,7 +212,7 @@ A real use case scenario could be for example a business that has a bank account
     * use polkadot JS to create a multisig account
     * or, use `multi_account_id` in the source code
   * fund the account by simply sending some money to the derived public key
-  * 👉 check this documentation if you have questions about accounts and their creation [multisig_accounts](misc/multisig-accounts.mdx)
+  * 👉 check this documentation if you have questions about accounts and their creation [multisig_accounts](misc/multisig-accounts)
 * `m-out-of-n multisig account` example:
   * Alice, Bob, Charlie, and Dylan want to create a shared account, and the threshold for this shared account should be 3 (at least 3 people should approve the transactions for this account).
   * One of the signatories should create the multisig operation by calling `as_multi`, and should provide the necessary arguments

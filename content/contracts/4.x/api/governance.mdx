@@ -12,7 +12,7 @@ This modular system of Governor contracts allows the deployment on-chain voting 
 <Callout>
 For a guided experience, set up your Governor contract using [Contracts Wizard](https://wizard.openzeppelin.com/#governor).
 
-For a written walkthrough, check out our guide on [How to set up on-chain governance](ROOT:governance.adoc).
+For a written walkthrough, check out our guide on [How to set up on-chain governance](ROOT:governance).
 </Callout>
 
 * [`Governor`](#Governor): The core contract that contains all the logic and primitives. It is abstract and requires choosing one of each of the modules below, or custom ones.
@@ -92,7 +92,7 @@ In a governance system, the [`TimelockController`](#TimelockController) contract
 
 #### Terminology
 
-* **Operation:** A transaction (or a set of transactions) that is the subject of the timelock. It has to be scheduled by a proposer and executed by an executor. The timelock enforces a minimum delay between the proposition and the execution (see [operation lifecycle](access-control.adoc#operation_lifecycle)). If the operation contains multiple transactions (batch mode), they are executed atomically. Operations are identified by the hash of their content.
+* **Operation:** A transaction (or a set of transactions) that is the subject of the timelock. It has to be scheduled by a proposer and executed by an executor. The timelock enforces a minimum delay between the proposition and the execution (see [operation lifecycle](access-control#operation_lifecycle)). If the operation contains multiple transactions (batch mode), they are executed atomically. Operations are identified by the hash of their content.
 * **Operation status:**
   * **Unset:** An operation that is not part of the timelock mechanism.
   * **Pending:** An operation that has been scheduled, before the timer expires.
@@ -106,7 +106,7 @@ In a governance system, the [`TimelockController`](#TimelockController) contract
 
 #### Operation structure
 
-Operation executed by the [`TimelockController`](contracts/4.x/api/governance.mdx#TimelockController) can contain one or multiple subsequent calls. Depending on whether you need to multiple calls to be executed atomically, you can either use simple or batched operations.
+Operation executed by the [`TimelockController`](contracts/4.x/api/governance#TimelockController) can contain one or multiple subsequent calls. Depending on whether you need to multiple calls to be executed atomically, you can either use simple or batched operations.
 
 Both operations contain:
 
@@ -129,16 +129,16 @@ Timelocked operations are identified by a unique id (their hash) and follow a sp
 
 `Unset` -> `Pending` -> `Pending` + `Ready` -> `Done`
 
-* By calling [`schedule`](contracts/4.x/api/governance.mdx#TimelockController-schedule-address-uint256-bytes-bytes32-bytes32-uint256-) (or [`scheduleBatch`](contracts/4.x/api/governance.mdx#TimelockController-scheduleBatch-address---uint256---bytes---bytes32-bytes32-uint256-)), a proposer moves the operation from the `Unset` to the `Pending` state. This starts a timer that must be longer than the minimum delay. The timer expires at a timestamp accessible through the [`getTimestamp`](contracts/4.x/api/governance.mdx#TimelockController-getTimestamp-bytes32-) method.
+* By calling [`schedule`](contracts/4.x/api/governance#TimelockController-schedule-address-uint256-bytes-bytes32-bytes32-uint256-) (or [`scheduleBatch`](contracts/4.x/api/governance#TimelockController-scheduleBatch-address---uint256---bytes---bytes32-bytes32-uint256-)), a proposer moves the operation from the `Unset` to the `Pending` state. This starts a timer that must be longer than the minimum delay. The timer expires at a timestamp accessible through the [`getTimestamp`](contracts/4.x/api/governance#TimelockController-getTimestamp-bytes32-) method.
 * Once the timer expires, the operation automatically gets the `Ready` state. At this point, it can be executed.
-* By calling [`execute`](contracts/4.x/api/governance.mdx#TimelockController-TimelockController-execute-address-uint256-bytes-bytes32-bytes32-) (or [`executeBatch`](contracts/4.x/api/governance.mdx#TimelockController-executeBatch-address---uint256---bytes---bytes32-bytes32-)), an executor triggers the operation’s underlying transactions and moves it to the `Done` state. If the operation has a predecessor, it has to be in the `Done` state for this transition to succeed.
-* [`cancel`](contracts/4.x/api/governance.mdx#TimelockController-TimelockController-cancel-bytes32-) allows proposers to cancel any `Pending` operation. This resets the operation to the `Unset` state. It is thus possible for a proposer to re-schedule an operation that has been cancelled. In this case, the timer restarts when the operation is re-scheduled.
+* By calling [`execute`](contracts/4.x/api/governance#TimelockController-TimelockController-execute-address-uint256-bytes-bytes32-bytes32-) (or [`executeBatch`](contracts/4.x/api/governance#TimelockController-executeBatch-address---uint256---bytes---bytes32-bytes32-)), an executor triggers the operation’s underlying transactions and moves it to the `Done` state. If the operation has a predecessor, it has to be in the `Done` state for this transition to succeed.
+* [`cancel`](contracts/4.x/api/governance#TimelockController-TimelockController-cancel-bytes32-) allows proposers to cancel any `Pending` operation. This resets the operation to the `Unset` state. It is thus possible for a proposer to re-schedule an operation that has been cancelled. In this case, the timer restarts when the operation is re-scheduled.
 
 Operations status can be queried using the functions:
 
-* [`isOperationPending(bytes32)`](contracts/4.x/api/governance.mdx#TimelockController-isOperationPending-bytes32-)
-* [`isOperationReady(bytes32)`](contracts/4.x/api/governance.mdx#TimelockController-isOperationReady-bytes32-)
-* [`isOperationDone(bytes32)`](contracts/4.x/api/governance.mdx#TimelockController-isOperationDone-bytes32-)
+* [`isOperationPending(bytes32)`](contracts/4.x/api/governance#TimelockController-isOperationPending-bytes32-)
+* [`isOperationReady(bytes32)`](contracts/4.x/api/governance#TimelockController-isOperationReady-bytes32-)
+* [`isOperationDone(bytes32)`](contracts/4.x/api/governance#TimelockController-isOperationDone-bytes32-)
 
 #### Roles
 

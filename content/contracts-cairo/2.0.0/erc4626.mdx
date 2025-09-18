@@ -2,7 +2,7 @@
 title: ERC4626
 ---
 
-[ERC4626](https://eips.ethereum.org/EIPS/eip-4626) is an extension of [ERC20](erc20.mdx) that proposes a standard interface for token vaults. This standard interface can be used by widely different contracts (including lending markets, aggregators, and intrinsically interest bearing tokens), which brings a number of subtleties. Navigating these potential issues is essential to implementing a compliant and composable token vault.
+[ERC4626](https://eips.ethereum.org/EIPS/eip-4626) is an extension of [ERC20](erc20) that proposes a standard interface for token vaults. This standard interface can be used by widely different contracts (including lending markets, aggregators, and intrinsically interest bearing tokens), which brings a number of subtleties. Navigating these potential issues is essential to implementing a compliant and composable token vault.
 
 We provide a base component of ERC4626 which is designed to allow developers to easily re-configure the vault’s behavior, using traits and hooks, while staying compliant. In this guide, we will discuss some security considerations that affect ERC4626. We will also discuss common customizations of the vault.
 
@@ -360,8 +360,8 @@ pub mod ERC4626Fees {
 
 ## Interface
 
-The following interface represents the full ABI of the Contracts for Cairo [ERC4626Component](/api/erc20.mdx#ERC4626Component).
-The full interface includes the [IERC4626](/api/erc20.mdx#IERC4626), [IERC20](/api/erc20.mdx#IERC20), and [IERC20Metadata](/api/erc20.mdx#IERC20Metadata) interfaces.
+The following interface represents the full ABI of the Contracts for Cairo [ERC4626Component](/api/erc20#ERC4626Component).
+The full interface includes the [IERC4626](/api/erc20#IERC4626), [IERC20](/api/erc20#IERC20), and [IERC20Metadata](/api/erc20#IERC20Metadata) interfaces.
 Note that implementing the IERC20Metadata interface is a requirement of IERC4626.
 
 ```cairo

@@ -6,9 +6,9 @@ const path = require("path");
 const { execSync } = require("child_process");
 const { glob } = require("glob");
 
-async function convertAdocFiles(directory) {
+async function convertAdocFiles(directory, apiRoute = "contracts/5.x/api") {
 	if (!directory) {
-		console.error("Usage: node convert-adoc.js <directory>");
+		console.error("Usage: node convert-adoc.js <directory> [apiRoute]");
 		process.exit(1);
 	}
 
@@ -77,10 +77,10 @@ async function convertAdocFiles(directory) {
 				.replace(/&#x2F;/g, "/")
 				.replace(/&amp;/g, "&"); // This should be last to avoid double-decoding
 
-			// Convert api: links to contracts/v5.x/api/ and change .adoc to .mdx
+			// Convert api: links to dynamic api route and change .adoc to .mdx
 			mdContent = mdContent.replace(
 				/\(api:([^)]+)\.adoc([^)]*)\)/g,
-				"(contracts/v5.x/api/$1.mdx$2)",
+				`(/${apiRoute}/$1$2)`,
 			);
 
 			// Add forward slash to image paths
@@ -96,10 +96,7 @@ async function convertAdocFiles(directory) {
 			);
 
 			// Fix .adoc internal links to .mdx
-			mdContent = mdContent.replace(
-				/\]\(([^)]+)\.adoc([^)]*)\)/g,
-				"]($1.mdx$2)",
-			);
+			mdContent = mdContent.replace(/\]\(([^)]+)\.adoc([^)]*)\)/g, "]($1$2)");
 
 			// Fix curly bracket file references {filename} -> filename, but preserve braces in code blocks
 			const parts = mdContent.split(/(```[\s\S]*?```)/g);
@@ -257,9 +254,10 @@ function crawlDirectory(dirPath) {
 }
 
 const directory = process.argv[2];
+const apiRoute = process.argv[3];
 
 async function main() {
-	await convertAdocFiles(directory);
+	await convertAdocFiles(directory, apiRoute);
 	// Run bracket processing after conversion
 	crawlDirectory(directory);
 }

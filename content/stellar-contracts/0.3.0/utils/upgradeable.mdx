@@ -16,15 +16,15 @@ smart contract platforms, which lack native support for upgradability.
 While Soroban’s built-in upgradability eliminates many of the challenges, related to managing smart contract upgrades
 and migrations, certain caveats must still be considered.
 
-## Overview 
+## Overview
 
 The [upgradeable](https://github.com/OpenZeppelin/stellar-contracts/tree/main/packages/contract-utils/upgradeable) module
 provides a lightweight upgradeability framework with additional support for structured and safe migrations.
 
 It consists of two main components:
 
-1. ***[`Upgradeable`](utils/upgradeable.mdx#upgrade_only)*** for cases where only the WASM binary needs to be updated.
-2. ***[`UpgradeableMigratable`](utils/upgradeable.mdx#upgrade_and_migrate)*** for more advanced scenarios where, in addition to the WASM binary, specific storage entries
+1. ***[`Upgradeable`](utils/upgradeable#upgrade_only)*** for cases where only the WASM binary needs to be updated.
+2. ***[`UpgradeableMigratable`](utils/upgradeable#upgrade_and_migrate)*** for more advanced scenarios where, in addition to the WASM binary, specific storage entries
 must be modified (migrated) during the upgrade process.
 
 The recommended way to use this module is through the `\#[derive(Upgradeable)]` and `#[derive(UpgradeableMigratable)]`
@@ -84,7 +84,7 @@ impl UpgradeableInternal for ExampleContract {
     fn _require_auth(e: &Env, operator: &Address) {
         operator.require_auth();
         // `operator` is the invoker of the upgrade function and can be used
-        // to perform a role-based access control if implemented 
+        // to perform a role-based access control if implemented
         let owner: Address = e.storage().instance().get(&symbol_short!("OWNER")).unwrap();
         if *operator != owner {
             panic_with_error!(e, ExampleContractError::Unauthorized)

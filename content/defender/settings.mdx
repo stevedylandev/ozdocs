@@ -15,7 +15,7 @@ Approval processes act as a wrapper for transactions to be executed on-chain. Th
 * Timelock contracts
 * Fireblocks
 
-They are defined per network, and are used throughout Defender to execute transactions, such as in the [Deploy](module/deploy.mdx) wizard, [Actions](module/actions.mdx) and [Workflows](module/actions.mdx#workflows).
+They are defined per network, and are used throughout Defender to execute transactions, such as in the [Deploy](module/deploy) wizard, [Actions](module/actions) and [Workflows](module/actions#workflows).
 
 ![Manage Approval Processes](/defender/manage-approvals.png)
 
@@ -30,7 +30,7 @@ When triggered, Defender can deliver notifications to one or more configured not
 Please see [Slack webhook documentation, window=_blank](https://api.slack.com/messaging/webhooks) to configure a Slack webhook. Once Slack is configured, enter the webhook URL in Defender.
 
 * **Alias** is the name for this Slack configuration. For instance, you might name it after the name of the channel.
-* **Webhook URL** is the URL from your Slack management console to use for notification. 
+* **Webhook URL** is the URL from your Slack management console to use for notification.
 
 ### Email Configuration
 
@@ -42,7 +42,7 @@ Please see [Slack webhook documentation, window=_blank](https://api.slack.com/me
 Please see [Discord webhook documentation, window=_blank](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to configure a webhook for your Discord channel.
 
 * **Alias** is the name for this Discord configuration.
-* **Webhook URL** is the URL from your Discord channel to use for notification. 
+* **Webhook URL** is the URL from your Discord channel to use for notification.
 
 ### Telegram Configuration
 
@@ -64,11 +64,11 @@ $ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
       "channel_post": {
         "message_id": 26,
         "sender_chat": {
-          "id": -100xxxxxx5976, 
+          "id": -100xxxxxx5976,
           "title": "Monitor Test",
           "type": "channel"
         ,
-        "chat": 
+        "chat":
           "id": -100xxxxxx5976, // <--- This is your chat ID
           "title": "Monitor Test",
           "type": "channel"
@@ -82,7 +82,7 @@ $ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 ```
 
 * **Alias** is the name for this Telegram configuration.
-* **Chat ID** is the ID of the Telegram Chat. 
+* **Chat ID** is the ID of the Telegram Chat.
 * **Bot Token** is the token you receive from the BotFather when creating the Telegram Bot.
 
 ### Datadog Configuration
@@ -101,10 +101,10 @@ It can take several minutes for a new custom metric to show up in the Datadog co
 
 ### Webhook Configuration
 
-To configure a custom webhook notification channel, you just need to provide the webhook endpoint URL and an alias for display purposes. 
+To configure a custom webhook notification channel, you just need to provide the webhook endpoint URL and an alias for display purposes.
 
 * **Alias** is the name for this webhook endpoint.
-* **Webhook URL** is the URL where notifications will be sent. 
+* **Webhook URL** is the URL where notifications will be sent.
 
 To avoid overwhelming the receiving webhook with many concurrent requests under a high number of matches, Defender sends a JSON object with an `events` containing an array with all the matching events found in a block.
 
@@ -114,7 +114,7 @@ To avoid overwhelming the receiving webhook with many concurrent requests under 
 
 ```
 
-For more information on the event schema see the documentation on [Monitor](module/monitor.mdx) or [Actions](module/actions.mdx).
+For more information on the event schema see the documentation on [Monitor](module/monitor) or [Actions](module/actions).
 
 ### OpsGenie Configuration
 
@@ -148,7 +148,7 @@ Please see [PagerDuty integration documentation, window=_blank](https://support.
 
 ## Team Members
 
-You can invite, manage access for, and remove team members from your Defender account under the _Team Members_ section. 
+You can invite, manage access for, and remove team members from your Defender account under the _Team Members_ section.
 
 ![Manage Team Members](/defender/manage-team-invite.png)
 
@@ -162,11 +162,11 @@ Every team member has an assigned role. You can manage authorization to access, 
 
 When you invite a new user to your team, you will assign a role to them, determining their access permissions.
 
-To create a new role, click on the _Create Role_ button. You will be asked to enter a role name and description, and to specify the level of access users in that role will get for each product. You can also specify which administrative powers the role will give access to: manage users and roles, manage team API keys, manage Fireblocks API keys, manage Address Book, and configure log forwarding. 
+To create a new role, click on the _Create Role_ button. You will be asked to enter a role name and description, and to specify the level of access users in that role will get for each product. You can also specify which administrative powers the role will give access to: manage users and roles, manage team API keys, manage Fireblocks API keys, manage Address Book, and configure log forwarding.
 
 ![Manage Role Creation](/defender/manage-role-create.png)
 
-After saving, the new role will be available to assign to new or existing team members. Naturally, if in the future you decide to modify the access level of a given role, all users who have that role will as a consequence see their access level change. 
+After saving, the new role will be available to assign to new or existing team members. Naturally, if in the future you decide to modify the access level of a given role, all users who have that role will as a consequence see their access level change.
 
 <Callout type='warn'>
 Be careful when granting administrative permissions. A user with the rights to modify roles but not to access any other component can modify their own role to grant them access to any other parts of the application.
@@ -197,12 +197,12 @@ To change your user password for Defender, follow the steps below.
 Secrets are key-value case-sensitive pairs of strings, that can be accessed from any Action using the `event.secrets` object. You can define as many secrets as you need to be used by your Actions. Secrets are shared across all your Actions, and not specific to a single one.
 
 ```jsx
-exports.handler = async function(event) 
+exports.handler = async function(event)
   const { mySecret, anApiKey  = event.secrets;
 }
 ```
 
-Secrets are encrypted and stored in a secure vault, only decrypted for injection in your actions runs. Once written, a secret can only be deleted or overwritten from the user interface, but not read. 
+Secrets are encrypted and stored in a secure vault, only decrypted for injection in your actions runs. Once written, a secret can only be deleted or overwritten from the user interface, but not read.
 
 <Callout type='warn'>
 An action may log the value of a secret, accidentally leaking it.
@@ -220,7 +220,7 @@ While you can also use actions secrets to store private keys for signing message
 
 In API Keys you can manage the keys used by clients to access the Defender API for your account, and also enter integration API keys if you are using Fireblocks for approvals. Note that relayers have their own API keys that are separate from these API keys and are configured directly in Manage Relayers.
 
-To add an API key, click on the Create API Key button. 
+To add an API key, click on the Create API Key button.
 
 ![Manage Create Team API Key](/defender/manage-new-api-key-v2.png)
 
@@ -268,7 +268,7 @@ Navigate through the "Private Networks" section to effectively manage and overse
 To set up a private network, simply click the "Create Private Network" button.  This action prompts you to define a name for the private network and select the currency symbol ("ETH") for your network. Additionally, provide the RPC URL, and optionally, an API key if access requires it.
 
 <Callout>
-The chain ID of a private network must not conflict with the chain ID of an [officially supported Defender network](index.mdx#networks).
+The chain ID of a private network must not conflict with the chain ID of an [officially supported Defender network](index#networks).
 </Callout>
 
 For an enhanced user experience, customize your setup by including the block explorer URL, Safe contract deployment addresses, and a subgraph URL.
@@ -296,7 +296,7 @@ After creating a Private Network, you cannot edit its name, RPC URL, or symbol. 
 
 While custom networks serve as a great way to integrate EVM compatible networks into Defender or to test unique network conditions, they come with a some notable drawbacks that set them apart from officially supported Defender networks:
 
-* ***RPC Bottlenecks***: Custom networks can only have a single RPC provider which becomes a single point of failure during periods of high traffic. 
+* ***RPC Bottlenecks***: Custom networks can only have a single RPC provider which becomes a single point of failure during periods of high traffic.
 * ***Limited Reliability***: Custom networks may return non-standard or unexpected responses which will not be handled by Defender. Thus, some services may not behave as expected.
 * ***Slower Transaction Processing***: Custom networks require more RPC calls with every transaction request leading to slower transaction processing.
 
