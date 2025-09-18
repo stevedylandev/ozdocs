@@ -9,6 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL("https://openzeppelin-docs-v2.netlify.app"),
 	title: {
 		default: "OpenZeppelin Docs",
 		template: "%s | OpenZeppelin Docs",
