@@ -62,7 +62,7 @@ export default function HomePage() {
 					{/* Supporting Cards */}
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
 						<FeatureCard
-							href="/upgrade-plugins"
+							href="/upgrades-plugins"
 							icon={<ContractsUpgradesIcon className="h-6 w-6 sm:h-8 sm:w-8" />}
 							title="Upgrades Plugins"
 							description="Deploy and manage upgradeable contracts with built-in safety checks and best practices"
@@ -98,7 +98,7 @@ export default function HomePage() {
 					{/* Dual Heroes: Monitor and Relayer */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
 						<FeatureCard
-							href="/openzeppelin-relayer"
+							href="/relayer"
 							icon={<RelayersIcon className="h-6 w-6 sm:h-8 sm:w-8" />}
 							title="Relayer"
 							description="Enable gasless transactions and automate smart contract operations. Build better user experiences with meta-transactions and scheduled executions."
@@ -106,7 +106,7 @@ export default function HomePage() {
 						/>
 
 						<FeatureCard
-							href="/openzeppelin-monitor"
+							href="/monitor"
 							icon={<MonitorIcon className="h-6 w-6 sm:h-8 sm:w-8" />}
 							title="Monitor"
 							description="Real-time monitoring and alerting for your smart contracts. Get notified about important events, transactions, and state changes across multiple chains."

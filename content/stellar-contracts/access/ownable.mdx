@@ -29,7 +29,11 @@ This feature is useful for contracts that need to become fully decentralized aft
 
 ### Procedural Macro
 
-The module includes the `#[only_owner]` procedural macro to simplify authorization checks by ensuring the owner is properly authorized.
+The module includes a procedural macro to simplify owner authorization checks:
+
+#### @only_owner
+
+Ensures the caller is the owner before executing the function:
 
 ```rust
 #[only_owner]
