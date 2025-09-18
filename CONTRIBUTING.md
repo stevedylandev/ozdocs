@@ -50,6 +50,12 @@ pnpm install
 pnpm dev
 ```
 
+4. After making changes run the lint command to make formatting rules are applied
+
+```bash
+pnpm run check:fix
+```
+
 ## Code of Conduct
 
 Please be respectful and constructive in all interactions. We strive to maintain a welcoming and inclusive environment for all contributors.
