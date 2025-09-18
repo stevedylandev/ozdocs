@@ -132,6 +132,32 @@
 				"url": "/contracts/5.x/utilities"
 			},
 			{
+				"type": "folder",
+				"name": "Subgraphs",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/contracts/5.x/subgraphs"
+				},
+				"children": [
+					{
+						"type": "page",
+						"name": "Automatic Generation",
+						"url": "/contracts/5.x/subgraphs/generate"
+					},
+					{
+						"type": "page",
+						"name": "Query Examples",
+						"url": "/contracts/5.x/subgraphs/examples/query"
+					},
+					{
+						"type": "page",
+						"name": "Subgraph Examples",
+						"url": "/contracts/5.x/subgraphs/examples/subgraph"
+					}
+				]
+			},
+			{
 				"type": "page",
 				"name": "FAQ",
 				"url": "/contracts/5.x/faq"
