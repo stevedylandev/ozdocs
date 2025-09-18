@@ -526,121 +526,25 @@
 								]
 							},
 							{
-								"type": "page",
-								"name": "Governance",
-								"url": "/contracts/3.x/governance"
+								"type": "folder",
+								"name": "Gas Station Network",
+								"index": {
+									"type": "page",
+									"name": "Overview",
+									"url": "/contracts/3.x/gsn"
+								},
+								"children": [
+									{
+										"type": "page",
+										"name": "Strategies",
+										"url": "/contracts/3.x/gsn-strategies"
+									}
+								]
 							},
 							{
 								"type": "page",
 								"name": "Utilities",
 								"url": "/contracts/3.x/utilities"
-							},
-							{
-								"type": "page",
-								"name": "Gas Station Network",
-								"url": "/contracts/3.x/gsn"
-							},
-							{
-								"type": "page",
-								"name": "GSN Strategies",
-								"url": "/contracts/3.x/gsn-strategies"
-							},
-							{
-								"type": "page",
-								"name": "Drafts",
-								"url": "/contracts/3.x/drafts"
-							},
-							{
-								"type": "page",
-								"name": "Crowdsales (Legacy)",
-								"url": "/contracts/3.x/crowdsales"
-							},
-							{
-								"type": "folder",
-								"name": "API Reference",
-								"index": {
-									"type": "page",
-									"name": "Overview",
-									"url": "/contracts/3.x/api"
-								},
-								"children": [
-									{
-										"type": "page",
-										"name": "Access",
-										"url": "/contracts/3.x/api/access"
-									},
-									{
-										"type": "page",
-										"name": "Cryptography",
-										"url": "/contracts/3.x/api/cryptography"
-									},
-									{
-										"type": "page",
-										"name": "Drafts",
-										"url": "/contracts/3.x/api/drafts"
-									},
-									{
-										"type": "page",
-										"name": "Gas Station Network",
-										"url": "/contracts/3.x/api/GSN"
-									},
-									{
-										"type": "page",
-										"name": "Introspection",
-										"url": "/contracts/3.x/api/introspection"
-									},
-									{
-										"type": "page",
-										"name": "Math",
-										"url": "/contracts/3.x/api/math"
-									},
-									{
-										"type": "page",
-										"name": "Payment",
-										"url": "/contracts/3.x/api/payment"
-									},
-									{
-										"type": "page",
-										"name": "Presets",
-										"url": "/contracts/3.x/api/presets"
-									},
-									{
-										"type": "page",
-										"name": "Proxy",
-										"url": "/contracts/3.x/api/proxy"
-									},
-									{
-										"type": "folder",
-										"name": "Token",
-										"children": [
-											{
-												"type": "page",
-												"name": "ERC20",
-												"url": "/contracts/3.x/api/token/ERC20"
-											},
-											{
-												"type": "page",
-												"name": "ERC721",
-												"url": "/contracts/3.x/api/token/ERC721"
-											},
-											{
-												"type": "page",
-												"name": "ERC777",
-												"url": "/contracts/3.x/api/token/ERC777"
-											},
-											{
-												"type": "page",
-												"name": "ERC1155",
-												"url": "/contracts/3.x/api/token/ERC1155"
-											}
-										]
-									},
-									{
-										"type": "page",
-										"name": "Utils",
-										"url": "/contracts/3.x/api/utils"
-									}
-								]
 							}
 						]
 					}
