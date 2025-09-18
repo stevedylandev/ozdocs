@@ -75,8 +75,9 @@ import "./node_modules/@openzeppelin-compact/multi-token/src/MultiToken" prefix 
 
 constructor(
   uri: Opaque<"string">,
-)
+) {
   MultiToken_initialize(uri);
+}
 
 ```
 
@@ -86,13 +87,13 @@ Note that circuits with a preceding underscore (`_likeThis`) are meant to be bui
 Exposing [_mint] without some sort of access control, for example, would allow ANYONE to mint tokens.
 
 ```typescript
-export circuit uri(id: Uint<128>): Opaque<"string">
+export circuit uri(id: Uint<128>): Opaque<"string"> {
   return MultiToken_uri();
+}
 
-
-export circuit balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>): Uint<128>
+export circuit balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>): Uint<128> {
   return MultiToken_balanceOf(account);
-
+}
 
 (...)
 ```
@@ -124,34 +125,35 @@ constructor(
   MultiToken__mint(recipient, nonFungibleTokenId, 1);
 }
 
-export circuit uri(id: Uint<128>): Opaque<"string">
+export circuit uri(id: Uint<128>): Opaque<"string"> {
   return MultiToken_uri(id);
+}
 
-
-export circuit balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>): Uint<128>
+export circuit balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>): Uint<128> {
   return MultiToken_balanceOf(account, id);
-
+}
 
 export circuit setApprovalForAll(
   operator: Either<ZswapCoinPublicKey, ContractAddress>,
   approved: Boolean
-): []
+): [] {
   return MultiToken_setApprovalForAll(operator, approved);
-
+}
 
 export circuit isApprovedForAll(
   account: Either<ZswapCoinPublicKey, ContractAddress>,
   operator: Either<ZswapCoinPublicKey, ContractAddress>
-): Boolean
+): Boolean {
   return MultiToken_isApprovedForAll(account, operator);
-
+}
 
 export circuit transferFrom(
   from: Either<ZswapCoinPublicKey, ContractAddress>,
   to: Either<ZswapCoinPublicKey, ContractAddress>,
   id: Uint<128>,
   value: Uint<128>,
-): []
+): [] {
   return MultiToken_transferFrom(from, to, id, value);
+}
 
 ```
