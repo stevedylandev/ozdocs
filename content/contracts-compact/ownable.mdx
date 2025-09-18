@@ -2,6 +2,7 @@
 title: Ownable
 ---
 
+{/* links */}
 [initialize]: api/ownable#initialize
 [transferOwnership]: api/ownable#transferownership
 [_transferOwnership]: api/ownable#_transferownership
@@ -29,7 +30,7 @@ Note that the circuit names are very explicit ("unsafe") with these experimental
 Until contract-to-contract calls are supported,
 there is no direct way for a contract to call circuits of other contracts or transfer ownership back to a user.
 
-<Callout>
+<Callout type='warn'>
 The unsafe circuits are planned to become deprecated once contract-to-contract calls become available.
 </Callout>
 
@@ -42,77 +43,90 @@ It’s recommended to prefix the module with `Ownable_` to avoid circuit signatu
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/ownable/src/Ownable" prefix Ownable_;
+import "./node_modules/@openzeppelin-compact/ownable/src/Ownable"
+  prefix Ownable_;
 
 constructor(
   initialOwner: Either<ZswapCoinPublicKey, ContractAddress>
-)
+) {
   Ownable_initialize(initialOwner);
+}
 ```
 
 To protect a circuit so that only the contract owner may call it,
 insert the `assertOnlyOwner` circuit in the beginning of the circuit body like this:
 
 ```ts
-export circuit mySensitiveCircuit(): []
+export circuit mySensitiveCircuit(): [] {
   Ownable_assertOnlyOwner();
 
   // Do something
+}
 ```
 
 Contracts may expose [transferOwnership] to allow the owner to transfer ownership.
 
 ```ts
-export circuit transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>): []
+export circuit transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>): [] {
   Ownable_transferOwnership(newOwner);
+}
 ```
 
 Here’s a complete contract showcasing how to integrate the Ownable module and protect sensitive circuits.
 
 ```ts
+// SimpleOwnable.compact
+
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/ownable/src/Ownable" prefix Ownable_;
+import "./node_modules/@openzeppelin-compact/ownable/src/Ownable"
+  prefix Ownable_;
 
 /**
  * Set `initialOwner` as the owner of the contract.
  */
-constructor(initialOwner: Either<ZswapCoinPublicKey, ContractAddress>)
+constructor(initialOwner: Either<ZswapCoinPublicKey, ContractAddress>) {
   Ownable_initialize(initialOwner);
+}
 
 /**
  * The current owner of the contact.
  */
-export circuit owner(): Either<ZswapCoinPublicKey, ContractAddress>
+export circuit owner(): Either<ZswapCoinPublicKey, ContractAddress> {
   return Ownable_owner();
+}
 
 /**
  * Transfers ownership of the contract.
  * Can only be called by the current owner.
  */
-export circuit transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>): []
+export circuit transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>): [] {
   Ownable_transferOwnership(newOwner);
+}
 
 /**
  * Leaves the contract without an owner.
  * Can only be called by the current owner.
  * Renouncing ownership means `mySensitiveCircuit` can never be called again.
  */
-export circuit renounceOwnership(): []
+export circuit renounceOwnership(): [] {
   Ownable_renounceOwnership();
+}
 
 /**
  * This is the protected circuit that only the current owner can call.
  */
-export circuit mySensitiveCircuit(): []
+export circuit mySensitiveCircuit(): [] {
   // Protects the circuit
   Ownable_assertOnlyOwner();
 
   // Do something
+}
 ```
 
-<Callout>
-For more complex logic, contracts may transfer ownership to another user irrespective of the caller by leveraging [_transferOwnership].
-</Callout>
+<Callout type="info">
+For more complex logic,
+contracts may transfer ownership to another user irrespective of the caller by leveraging [_transferOwnership].
 This is generally more useful when contract addresses are the owner or when a contract has a unique deployment process.
+</Callout>
