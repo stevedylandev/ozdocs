@@ -3,17 +3,13 @@ title: "ERC777"
 description: "Smart contract ERC777 utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/contracts/api/token/erc777
-</Callout>
-
 **🔥 CAUTION**\
 As of v4.9, OpenZeppelin’s implementation of ERC-777 is deprecated and will be removed in the next major release.
 
 This set of interfaces and contracts are all related to the [ERC777 token standard](https://eips.ethereum.org/EIPS/eip-777).
 
 <Callout>
-For an overview of ERC777 tokens and a walk through on how to create a token contract read our [ERC777 guide](ROOT:erc777.adoc).
+For an overview of ERC777 tokens and a walk through on how to create a token contract read our [ERC777 guide](ROOT:erc777).
 </Callout>
 
 The token behavior itself is implemented in the core contracts: [`IERC777`](#IERC777), [`ERC777`](#ERC777).
@@ -40,7 +36,15 @@ These contracts are preconfigured combinations of features. They can be used thr
 
 <a id="ERC777"></a>
 
-## `ERC777` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/ERC777.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC777`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/ERC777.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
@@ -62,7 +66,9 @@ destroyed. This makes integration with ERC20 applications seamless.
 
 CAUTION: This file is deprecated as of v4.9 and will be removed in the next major release.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(name_, symbol_, defaultOperators_)](#ERC777-constructor-string-string-address---)
 - [name()](#ERC777-name--)
 - [symbol()](#ERC777-symbol--)
@@ -89,91 +95,180 @@ CAUTION: This file is deprecated as of v4.9 and will be removed in the next majo
 - [_approve(holder, spender, value)](#ERC777-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, amount)](#ERC777-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(operator, from, to, amount)](#ERC777-_beforeTokenTransfer-address-address-address-uint256-)
-
 #### IERC20
-
 #### IERC777
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
-
 #### IERC777
 - [Minted(operator, to, amount, data, operatorData)](#IERC777-Minted-address-address-uint256-bytes-bytes-)
 - [Burned(operator, from, amount, data, operatorData)](#IERC777-Burned-address-address-uint256-bytes-bytes-)
 - [AuthorizedOperator(operator, tokenHolder)](#IERC777-AuthorizedOperator-address-address-)
 - [RevokedOperator(operator, tokenHolder)](#IERC777-RevokedOperator-address-address-)
 - [Sent(operator, from, to, amount, data, operatorData)](#IERC777-Sent-address-address-address-uint256-bytes-bytes-)
+</div>
+</div>
 
 <a id="ERC777-constructor-string-string-address---"></a>
 
-### `constructor(string name_, string symbol_, address[] defaultOperators_)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(string name_, string symbol_, address[] defaultOperators_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-constructor-string-string-address---">#</a>
+</div>
+</div>
+<div className="px-4">
 
 `defaultOperators` may be an empty array.
 
+</div>
+</div>
+
 <a id="ERC777-name--"></a>
 
-### `name() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">name() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-name--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.name`](#IERC777-name--).
 
+</div>
+</div>
+
 <a id="ERC777-symbol--"></a>
 
-### `symbol() → string`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">symbol() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-symbol--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.symbol`](#IERC777-symbol--).
 
+</div>
+</div>
+
 <a id="ERC777-decimals--"></a>
 
-### `decimals() → uint8`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">decimals() → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-decimals--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`ERC20.decimals`](ERC20#ERC20-decimals--).
 
 Always returns 18, as per the
 [ERC777 EIP](https://eips.ethereum.org/EIPS/eip-777#backward-compatibility).
 
+</div>
+</div>
+
 <a id="ERC777-granularity--"></a>
 
-### `granularity() → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">granularity() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-granularity--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.granularity`](#IERC777-granularity--).
 
 This implementation always returns `1`.
 
+</div>
+</div>
+
 <a id="ERC777-totalSupply--"></a>
 
-### `totalSupply() → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">totalSupply() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-totalSupply--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.totalSupply`](#IERC777-totalSupply--).
 
+</div>
+</div>
+
 <a id="ERC777-balanceOf-address-"></a>
 
-### `balanceOf(address tokenHolder) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">balanceOf(address tokenHolder) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-balanceOf-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the amount of tokens owned by an account (`tokenHolder`).
 
+</div>
+</div>
+
 <a id="ERC777-send-address-uint256-bytes-"></a>
 
-### `send(address recipient, uint256 amount, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">send(address recipient, uint256 amount, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-send-address-uint256-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.send`](#IERC777-send-address-uint256-bytes-).
 
 Also emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event for ERC20 compatibility.
 
+</div>
+</div>
+
 <a id="ERC777-transfer-address-uint256-"></a>
 
-### `transfer(address recipient, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transfer(address recipient, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-transfer-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.transfer`](ERC20#IERC20-transfer-address-uint256-).
 
@@ -182,65 +277,145 @@ interface if it is a contract.
 
 Also emits a [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-) event.
 
+</div>
+</div>
+
 <a id="ERC777-burn-uint256-bytes-"></a>
 
-### `burn(uint256 amount, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">burn(uint256 amount, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-burn-uint256-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.burn`](#IERC777-burn-uint256-bytes-).
 
 Also emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event for ERC20 compatibility.
 
+</div>
+</div>
+
 <a id="ERC777-isOperatorFor-address-address-"></a>
 
-### `isOperatorFor(address operator, address tokenHolder) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isOperatorFor(address operator, address tokenHolder) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-isOperatorFor-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.isOperatorFor`](#IERC777-isOperatorFor-address-address-).
 
+</div>
+</div>
+
 <a id="ERC777-authorizeOperator-address-"></a>
 
-### `authorizeOperator(address operator)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">authorizeOperator(address operator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-authorizeOperator-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.authorizeOperator`](#IERC777-authorizeOperator-address-).
 
+</div>
+</div>
+
 <a id="ERC777-revokeOperator-address-"></a>
 
-### `revokeOperator(address operator)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">revokeOperator(address operator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-revokeOperator-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.revokeOperator`](#IERC777-revokeOperator-address-).
 
+</div>
+</div>
+
 <a id="ERC777-defaultOperators--"></a>
 
-### `defaultOperators() → address[]`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">defaultOperators() → address[]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-defaultOperators--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.defaultOperators`](#IERC777-defaultOperators--).
 
+</div>
+</div>
+
 <a id="ERC777-operatorSend-address-address-uint256-bytes-bytes-"></a>
 
-### `operatorSend(address sender, address recipient, uint256 amount, bytes data, bytes operatorData)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">operatorSend(address sender, address recipient, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-operatorSend-address-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.operatorSend`](#IERC777-operatorSend-address-address-uint256-bytes-bytes-).
 
 Emits [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) events.
 
+</div>
+</div>
+
 <a id="ERC777-operatorBurn-address-uint256-bytes-bytes-"></a>
 
-### `operatorBurn(address account, uint256 amount, bytes data, bytes operatorData)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">operatorBurn(address account, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-operatorBurn-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC777.operatorBurn`](#IERC777-operatorBurn-address-uint256-bytes-bytes-).
 
 Emits [`IERC777.Burned`](#IERC777-Burned-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) events.
 
+</div>
+</div>
+
 <a id="ERC777-allowance-address-address-"></a>
 
-### `allowance(address holder, address spender) → uint256`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">allowance(address holder, address spender) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-allowance-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.allowance`](ERC20#IERC20-allowance-address-address-).
 
@@ -248,10 +423,20 @@ Note that operator and allowance concepts are orthogonal: operators may
 not have allowance, and accounts with allowance may not be operators
 themselves.
 
+</div>
+</div>
+
 <a id="ERC777-approve-address-uint256-"></a>
 
-### `approve(address spender, uint256 value) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">approve(address spender, uint256 value) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-approve-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.approve`](ERC20#IERC20-approve-address-uint256-).
 
@@ -260,10 +445,20 @@ NOTE: If `value` is the maximum `uint256`, the allowance is not updated on
 
 Note that accounts cannot have allowance issued by their operators.
 
+</div>
+</div>
+
 <a id="ERC777-transferFrom-address-address-uint256-"></a>
 
-### `transferFrom(address holder, address recipient, uint256 amount) → bool`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">transferFrom(address holder, address recipient, uint256 amount) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777-transferFrom-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`IERC20.transferFrom`](ERC20#IERC20-transferFrom-address-address-uint256-).
 
@@ -276,10 +471,20 @@ allowance cannot call `operatorSend` (unless they are operators).
 
 Emits [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-), [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) and [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) events.
 
+</div>
+</div>
+
 <a id="ERC777-_mint-address-uint256-bytes-bytes-"></a>
 
-### `_mint(address account, uint256 amount, bytes userData, bytes operatorData)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_mint(address account, uint256 amount, bytes userData, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC777-_mint-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Creates `amount` tokens and assigns them to `account`, increasing
 the total supply.
@@ -298,10 +503,20 @@ Requirements
 - if `account` is a contract, it must implement the [`IERC777Recipient`](#IERC777Recipient)
 interface.
 
+</div>
+</div>
+
 <a id="ERC777-_mint-address-uint256-bytes-bytes-bool-"></a>
 
-### `_mint(address account, uint256 amount, bytes userData, bytes operatorData, bool requireReceptionAck)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_mint(address account, uint256 amount, bytes userData, bytes operatorData, bool requireReceptionAck)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC777-_mint-address-uint256-bytes-bytes-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Creates `amount` tokens and assigns them to `account`, increasing
 the total supply.
@@ -320,33 +535,73 @@ Requirements
 - if `account` is a contract, it must implement the [`IERC777Recipient`](#IERC777Recipient)
 interface.
 
+</div>
+</div>
+
 <a id="ERC777-_send-address-address-uint256-bytes-bytes-bool-"></a>
 
-### `_send(address from, address to, uint256 amount, bytes userData, bytes operatorData, bool requireReceptionAck)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_send(address from, address to, uint256 amount, bytes userData, bytes operatorData, bool requireReceptionAck)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC777-_send-address-address-uint256-bytes-bytes-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Send tokens
 
+</div>
+</div>
+
 <a id="ERC777-_burn-address-uint256-bytes-bytes-"></a>
 
-### `_burn(address from, uint256 amount, bytes data, bytes operatorData)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_burn(address from, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC777-_burn-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Burn tokens
 
+</div>
+</div>
+
 <a id="ERC777-_approve-address-address-uint256-"></a>
 
-### `_approve(address holder, address spender, uint256 value)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_approve(address holder, address spender, uint256 value)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC777-_approve-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 See [`ERC20._approve`](ERC20#ERC20-_approve-address-address-uint256-).
 
 Note that accounts cannot have allowance issued by their operators.
 
+</div>
+</div>
+
 <a id="ERC777-_spendAllowance-address-address-uint256-"></a>
 
-### `_spendAllowance(address owner, address spender, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_spendAllowance(address owner, address spender, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC777-_spendAllowance-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Updates `owner` s allowance for `spender` based on spent `amount`.
 
@@ -355,10 +610,20 @@ Revert if not enough allowance is available.
 
 Might emit an [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) event.
 
+</div>
+</div>
+
 <a id="ERC777-_beforeTokenTransfer-address-address-address-uint256-"></a>
 
-### `_beforeTokenTransfer(address operator, address from, address to, uint256 amount)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_beforeTokenTransfer(address operator, address from, address to, uint256 amount)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC777-_beforeTokenTransfer-address-address-address-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Hook that is called before any token transfer. This includes
 calls to [`ERC777.send`](#ERC777-send-address-uint256-bytes-), [`ERC20.transfer`](ERC20#ERC20-transfer-address-uint256-), [`ERC777.operatorSend`](#ERC777-operatorSend-address-address-uint256-bytes-bytes-), [`ERC20.transferFrom`](ERC20#ERC20-transferFrom-address-address-uint256-), minting and burning.
@@ -371,11 +636,22 @@ will be to transferred to `to`.
 - when `to` is zero, `amount` of ``from``'s tokens will be burned.
 - `from` and `to` are never both zero.
 
-To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
+To learn more about hooks, head to xref:ROOT:extending-contracts#using-hooks[Using Hooks].
+
+</div>
+</div>
 
 <a id="IERC777"></a>
 
-## `IERC777` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/IERC777.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IERC777`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/IERC777.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC777/IERC777.sol";
@@ -389,7 +665,9 @@ token holders and recipients react to token movements by using setting implement
 for the associated interfaces in said registry. See [`IERC1820Registry`](../utils#IERC1820Registry) and
 [`ERC1820Implementer`](../utils#ERC1820Implementer).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [name()](#IERC777-name--)
 - [symbol()](#IERC777-symbol--)
 - [granularity()](#IERC777-granularity--)
@@ -403,33 +681,66 @@ for the associated interfaces in said registry. See [`IERC1820Registry`](../util
 - [defaultOperators()](#IERC777-defaultOperators--)
 - [operatorSend(sender, recipient, amount, data, operatorData)](#IERC777-operatorSend-address-address-uint256-bytes-bytes-)
 - [operatorBurn(account, amount, data, operatorData)](#IERC777-operatorBurn-address-uint256-bytes-bytes-)
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [Minted(operator, to, amount, data, operatorData)](#IERC777-Minted-address-address-uint256-bytes-bytes-)
 - [Burned(operator, from, amount, data, operatorData)](#IERC777-Burned-address-address-uint256-bytes-bytes-)
 - [AuthorizedOperator(operator, tokenHolder)](#IERC777-AuthorizedOperator-address-address-)
 - [RevokedOperator(operator, tokenHolder)](#IERC777-RevokedOperator-address-address-)
 - [Sent(operator, from, to, amount, data, operatorData)](#IERC777-Sent-address-address-address-uint256-bytes-bytes-)
+</div>
+</div>
 
 <a id="IERC777-name--"></a>
 
-### `name() → string`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">name() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-name--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the name of the token.
 
+</div>
+</div>
+
 <a id="IERC777-symbol--"></a>
 
-### `symbol() → string`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">symbol() → string</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-symbol--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the symbol of the token, usually a shorter version of the
 name.
 
+</div>
+</div>
+
 <a id="IERC777-granularity--"></a>
 
-### `granularity() → uint256`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">granularity() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-granularity--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the smallest part of the token that is not divisible. This
 means all token operations (creation, movement and destruction) must have
@@ -437,24 +748,54 @@ amounts that are a multiple of this number.
 
 For most token contracts, this value will equal 1.
 
+</div>
+</div>
+
 <a id="IERC777-totalSupply--"></a>
 
-### `totalSupply() → uint256`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">totalSupply() → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-totalSupply--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the amount of tokens in existence.
 
+</div>
+</div>
+
 <a id="IERC777-balanceOf-address-"></a>
 
-### `balanceOf(address owner) → uint256`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">balanceOf(address owner) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-balanceOf-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the amount of tokens owned by an account (`owner`).
 
+</div>
+</div>
+
 <a id="IERC777-send-address-uint256-bytes-"></a>
 
-### `send(address recipient, uint256 amount, bytes data)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">send(address recipient, uint256 amount, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-send-address-uint256-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Moves `amount` tokens from the caller's account to `recipient`.
 
@@ -471,10 +812,20 @@ Requirements
 - if `recipient` is a contract, it must implement the [`IERC777Recipient`](#IERC777Recipient)
 interface.
 
+</div>
+</div>
+
 <a id="IERC777-burn-uint256-bytes-"></a>
 
-### `burn(uint256 amount, bytes data)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">burn(uint256 amount, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-burn-uint256-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Destroys `amount` tokens from the caller's account, reducing the
 total supply.
@@ -488,10 +839,20 @@ Requirements
 
 - the caller must have at least `amount` tokens.
 
+</div>
+</div>
+
 <a id="IERC777-isOperatorFor-address-address-"></a>
 
-### `isOperatorFor(address operator, address tokenHolder) → bool`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isOperatorFor(address operator, address tokenHolder) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-isOperatorFor-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns true if an account is an operator of `tokenHolder`.
 Operators can send and burn tokens on behalf of their owners. All
@@ -499,10 +860,20 @@ accounts are their own operator.
 
 See [`ERC777.operatorSend`](#ERC777-operatorSend-address-address-uint256-bytes-bytes-) and [`ERC777.operatorBurn`](#ERC777-operatorBurn-address-uint256-bytes-bytes-).
 
+</div>
+</div>
+
 <a id="IERC777-authorizeOperator-address-"></a>
 
-### `authorizeOperator(address operator)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">authorizeOperator(address operator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-authorizeOperator-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Make an account an operator of the caller.
 
@@ -514,10 +885,20 @@ Requirements
 
 - `operator` cannot be calling address.
 
+</div>
+</div>
+
 <a id="IERC777-revokeOperator-address-"></a>
 
-### `revokeOperator(address operator)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">revokeOperator(address operator)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-revokeOperator-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Revoke an account's operator status for the caller.
 
@@ -529,10 +910,20 @@ Requirements
 
 - `operator` cannot be calling address.
 
+</div>
+</div>
+
 <a id="IERC777-defaultOperators--"></a>
 
-### `defaultOperators() → address[]`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">defaultOperators() → address[]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-defaultOperators--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the list of default operators. These accounts are operators
 for all token holders, even if [`ERC777.authorizeOperator`](#ERC777-authorizeOperator-address-) was never called on
@@ -541,10 +932,20 @@ them.
 This list is immutable, but individual holders may revoke these via
 [`ERC777.revokeOperator`](#ERC777-revokeOperator-address-), in which case [`ERC777.isOperatorFor`](#ERC777-isOperatorFor-address-address-) will return false.
 
+</div>
+</div>
+
 <a id="IERC777-operatorSend-address-address-uint256-bytes-bytes-"></a>
 
-### `operatorSend(address sender, address recipient, uint256 amount, bytes data, bytes operatorData)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">operatorSend(address sender, address recipient, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-operatorSend-address-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Moves `amount` tokens from `sender` to `recipient`. The caller must
 be an operator of `sender`.
@@ -564,10 +965,20 @@ Requirements
 - if `recipient` is a contract, it must implement the [`IERC777Recipient`](#IERC777Recipient)
 interface.
 
+</div>
+</div>
+
 <a id="IERC777-operatorBurn-address-uint256-bytes-bytes-"></a>
 
-### `operatorBurn(address account, uint256 amount, bytes data, bytes operatorData)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">operatorBurn(address account, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777-operatorBurn-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Destroys `amount` tokens from `account`, reducing the total supply.
 The caller must be an operator of `account`.
@@ -583,46 +994,108 @@ Requirements
 - `account` must have at least `amount` tokens.
 - the caller must be an operator for `account`.
 
+</div>
+</div>
+
 <a id="IERC777-Minted-address-address-uint256-bytes-bytes-"></a>
 
-### `Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="IERC777-Minted-address-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when `amount` tokens are created by `operator` and assigned to `to`.
 
 Note that some additional user `data` and `operatorData` can be logged in the event.
 
+</div>
+</div>
 <a id="IERC777-Burned-address-address-uint256-bytes-bytes-"></a>
 
-### `Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="IERC777-Burned-address-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when `operator` destroys `amount` tokens from `account`.
 
 Note that some additional user `data` and `operatorData` can be logged in the event.
 
+</div>
+</div>
 <a id="IERC777-AuthorizedOperator-address-address-"></a>
 
-### `AuthorizedOperator(address indexed operator, address indexed tokenHolder)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">AuthorizedOperator(address indexed operator, address indexed tokenHolder)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="IERC777-AuthorizedOperator-address-address-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when `operator` is made operator for `tokenHolder`.
 
+</div>
+</div>
 <a id="IERC777-RevokedOperator-address-address-"></a>
 
-### `RevokedOperator(address indexed operator, address indexed tokenHolder)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">RevokedOperator(address indexed operator, address indexed tokenHolder)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="IERC777-RevokedOperator-address-address-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when `operator` is revoked its operator status for `tokenHolder`.
 
+</div>
+</div>
 <a id="IERC777-Sent-address-address-address-uint256-bytes-bytes-"></a>
 
-### `Sent(address indexed operator, address indexed from, address indexed to, uint256 amount, bytes data, bytes operatorData)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Sent(address indexed operator, address indexed from, address indexed to, uint256 amount, bytes data, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="IERC777-Sent-address-address-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="IERC777Recipient"></a>
 
-## `IERC777Recipient` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/IERC777Recipient.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IERC777Recipient`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/IERC777Recipient.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC777/IERC777Recipient.sol";
@@ -637,13 +1110,24 @@ implementer) and registering it on the
 
 See [`IERC1820Registry`](../utils#IERC1820Registry) and [`ERC1820Implementer`](../utils#ERC1820Implementer).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [tokensReceived(operator, from, to, amount, userData, operatorData)](#IERC777Recipient-tokensReceived-address-address-address-uint256-bytes-bytes-)
+</div>
+</div>
 
 <a id="IERC777Recipient-tokensReceived-address-address-address-uint256-bytes-bytes-"></a>
 
-### `tokensReceived(address operator, address from, address to, uint256 amount, bytes userData, bytes operatorData)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">tokensReceived(address operator, address from, address to, uint256 amount, bytes userData, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777Recipient-tokensReceived-address-address-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Called by an [`IERC777`](#IERC777) token contract whenever tokens are being
 moved or created into a registered account (`to`). The type of operation
@@ -654,9 +1138,20 @@ This call occurs _after_ the token contract's state is updated, so
 
 This function may revert to prevent the operation from being executed.
 
+</div>
+</div>
+
 <a id="IERC777Sender"></a>
 
-## `IERC777Sender` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/IERC777Sender.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IERC777Sender`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/IERC777Sender.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC777/IERC777Sender.sol";
@@ -671,13 +1166,24 @@ their own implementer) and registering it on the
 
 See [`IERC1820Registry`](../utils#IERC1820Registry) and [`ERC1820Implementer`](../utils#ERC1820Implementer).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [tokensToSend(operator, from, to, amount, userData, operatorData)](#IERC777Sender-tokensToSend-address-address-address-uint256-bytes-bytes-)
+</div>
+</div>
 
 <a id="IERC777Sender-tokensToSend-address-address-address-uint256-bytes-bytes-"></a>
 
-### `tokensToSend(address operator, address from, address to, uint256 amount, bytes userData, bytes operatorData)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">tokensToSend(address operator, address from, address to, uint256 amount, bytes userData, bytes operatorData)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IERC777Sender-tokensToSend-address-address-address-uint256-bytes-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Called by an [`IERC777`](#IERC777) token contract whenever a registered holder's
 (`from`) tokens are about to be moved or destroyed. The type of operation
@@ -688,9 +1194,20 @@ This call occurs _before_ the token contract's state is updated, so
 
 This function may revert to prevent the operation from being executed.
 
+</div>
+</div>
+
 <a id="ERC777PresetFixedSupply"></a>
 
-## `ERC777PresetFixedSupply` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/presets/ERC777PresetFixedSupply.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC777PresetFixedSupply`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/token/ERC777/presets/ERC777PresetFixedSupply.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/token/ERC777/presets/ERC777PresetFixedSupply.sol";
@@ -703,9 +1220,10 @@ import "@openzeppelin/contracts/token/ERC777/presets/ERC777PresetFixedSupply.sol
 
 _Available since v3.4._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(name, symbol, defaultOperators, initialSupply, owner)](#ERC777PresetFixedSupply-constructor-string-string-address---uint256-address-)
-
 #### ERC777
 - [name()](#ERC777-name--)
 - [symbol()](#ERC777-symbol--)
@@ -732,32 +1250,42 @@ _Available since v3.4._
 - [_approve(holder, spender, value)](#ERC777-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, amount)](#ERC777-_spendAllowance-address-address-uint256-)
 - [_beforeTokenTransfer(operator, from, to, amount)](#ERC777-_beforeTokenTransfer-address-address-address-uint256-)
-
 #### IERC20
-
 #### IERC777
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC777
-
 #### IERC20
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
-
 #### IERC777
 - [Minted(operator, to, amount, data, operatorData)](#IERC777-Minted-address-address-uint256-bytes-bytes-)
 - [Burned(operator, from, amount, data, operatorData)](#IERC777-Burned-address-address-uint256-bytes-bytes-)
 - [AuthorizedOperator(operator, tokenHolder)](#IERC777-AuthorizedOperator-address-address-)
 - [RevokedOperator(operator, tokenHolder)](#IERC777-RevokedOperator-address-address-)
 - [Sent(operator, from, to, amount, data, operatorData)](#IERC777-Sent-address-address-address-uint256-bytes-bytes-)
+</div>
+</div>
 
 <a id="ERC777PresetFixedSupply-constructor-string-string-address---uint256-address-"></a>
 
-### `constructor(string name, string symbol, address[] defaultOperators, uint256 initialSupply, address owner)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(string name, string symbol, address[] defaultOperators, uint256 initialSupply, address owner)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC777PresetFixedSupply-constructor-string-string-address---uint256-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Mints `initialSupply` amount of token and transfers them to `owner`.
 
 See [`ERC777.constructor`](#ERC777-constructor-string-string-address---).
 
+</div>
+</div>

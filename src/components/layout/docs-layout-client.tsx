@@ -31,16 +31,17 @@ export function DocsLayoutClient({ children }: DocsLayoutClientProps) {
 				tabs: [
 					{
 						title: "Ethereum & EVM",
-						url: "/contracts/5.x",
+						url: "/contracts",
 						icon: <EthereumIcon className="w-5 h-5" />,
 						urls: new Set([
 							"/contracts",
 							"/community-contracts",
-							"/upgrade-plugins",
+							"/upgrades-plugins",
 							"/wizard",
-							"/openzeppelin-relayer",
-							"/openzeppelin-monitor",
+							"/relayer",
+							"/monitor",
 							"/contracts-ui-builder",
+							"/upgrades",
 							"/defender",
 							"/tools",
 						]),
@@ -52,7 +53,7 @@ export function DocsLayoutClient({ children }: DocsLayoutClientProps) {
 					},
 					{
 						title: "Starknet",
-						url: "/cairo-contracts",
+						url: "/contracts-cairo",
 						icon: <StarknetIcon className="w-5 h-5" />,
 					},
 					{

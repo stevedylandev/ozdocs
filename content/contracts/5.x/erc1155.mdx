@@ -2,25 +2,25 @@
 title: ERC-1155
 ---
 
-ERC-1155 is a novel token standard that aims to take the best from previous standards to create a [**fungibility-agnostic**](tokens.adoc#different-kinds-of-tokens) and **gas-efficient** [token contract](tokens.adoc#but_first_coffee_a_primer_on_token_contracts).
+ERC-1155 is a novel token standard that aims to take the best from previous standards to create a [**fungibility-agnostic**](tokens#different-kinds-of-tokens) and **gas-efficient** [token contract](tokens#but_first_coffee_a_primer_on_token_contracts).
 
 <Callout>
-ERC-1155 draws ideas from all of [ERC-20](erc20.adoc), [ERC-721](erc721.adoc), and [ERC-777](https://eips.ethereum.org/EIPS/eip-777). If you’re unfamiliar with those standards, head to their guides before moving on.
+ERC-1155 draws ideas from all of [ERC-20](erc20), [ERC-721](erc721), and [ERC-777](https://eips.ethereum.org/EIPS/eip-777). If you’re unfamiliar with those standards, head to their guides before moving on.
 </Callout>
 
 ## Multi Token Standard
 
-The distinctive feature of ERC-1155 is that it uses a single smart contract to represent multiple tokens at once. This is why its [`balanceOf`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155-balanceOf-address-uint256-) function differs from ERC-20’s and ERC-777’s: it has an additional `id` argument for the identifier of the token that you want to query the balance of.
+The distinctive feature of ERC-1155 is that it uses a single smart contract to represent multiple tokens at once. This is why its [`balanceOf`](contracts/v5.x/api/token/ERC1155#IERC1155-balanceOf-address-uint256-) function differs from ERC-20’s and ERC-777’s: it has an additional `id` argument for the identifier of the token that you want to query the balance of.
 
-This is similar to how ERC-721 does things, but in that standard a token `id` has no concept of balance: each token is non-fungible and exists or doesn’t. The ERC-721 [`balanceOf`](contracts/v5.x/api/token/ERC721.mdx#IERC721-balanceOf-address-) function refers to _how many different tokens_ an account has, not how many of each. On the other hand, in ERC-1155 accounts have a distinct balance for each token `id`, and non-fungible tokens are implemented by simply minting a single one of them.
+This is similar to how ERC-721 does things, but in that standard a token `id` has no concept of balance: each token is non-fungible and exists or doesn’t. The ERC-721 [`balanceOf`](contracts/v5.x/api/token/ERC721#IERC721-balanceOf-address-) function refers to _how many different tokens_ an account has, not how many of each. On the other hand, in ERC-1155 accounts have a distinct balance for each token `id`, and non-fungible tokens are implemented by simply minting a single one of them.
 
 This approach leads to massive gas savings for projects that require multiple tokens. Instead of deploying a new contract for each token type, a single ERC-1155 token contract can hold the entire system state, reducing deployment costs and complexity.
 
 ## Batch Operations
 
-Because all state is held in a single contract, it is possible to operate over multiple tokens in a single transaction very efficiently. The standard provides two functions, [`balanceOfBatch`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155-balanceOfBatch-address---uint256---) and [`safeBatchTransferFrom`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155-safeBatchTransferFrom-address-address-uint256---uint256---bytes-), that make querying multiple balances and transferring multiple tokens simpler and less gas-intensive.
+Because all state is held in a single contract, it is possible to operate over multiple tokens in a single transaction very efficiently. The standard provides two functions, [`balanceOfBatch`](contracts/v5.x/api/token/ERC1155#IERC1155-balanceOfBatch-address---uint256---) and [`safeBatchTransferFrom`](contracts/v5.x/api/token/ERC1155#IERC1155-safeBatchTransferFrom-address-address-uint256---uint256---bytes-), that make querying multiple balances and transferring multiple tokens simpler and less gas-intensive.
 
-In the spirit of the standard, we’ve also included batch operations in the non-standard functions, such as [`_mintBatch`](contracts/v5.x/api/token/ERC1155.mdx#ERC1155-_mintBatch-address-uint256---uint256---bytes-).
+In the spirit of the standard, we’ve also included batch operations in the non-standard functions, such as [`_mintBatch`](contracts/v5.x/api/token/ERC1155#ERC1155-_mintBatch-address-uint256---uint256---bytes-).
 
 ## Constructing an ERC-1155 Token Contract
 
@@ -29,7 +29,7 @@ We’ll use ERC-1155 to track multiple items in our game, which will each have t
 For simplicity, we will mint all items in the constructor, but you could add minting functionality to the contract to mint on demand to players.
 
 <Callout>
-For an overview of minting mechanisms, check out [Creating ERC-20 Supply](erc20-supply.adoc).
+For an overview of minting mechanisms, check out [Creating ERC-20 Supply](erc20-supply).
 </Callout>
 
 Here’s what a contract for tokenized items might look like:
@@ -38,7 +38,7 @@ Here’s what a contract for tokenized items might look like:
 
 Note that for our Game Items, Gold is a fungible token whilst Thor’s Hammer is a non-fungible token as we minted only one.
 
-The [`ERC1155`](contracts/v5.x/api/token/ERC1155.mdx#ERC1155) contract includes the optional extension [`IERC1155MetadataURI`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155MetadataURI). That’s where the [`uri`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155MetadataURI-uri-uint256-) function comes from: we use it to retrieve the metadata uri.
+The [`ERC1155`](contracts/v5.x/api/token/ERC1155#ERC1155) contract includes the optional extension [`IERC1155MetadataURI`](contracts/v5.x/api/token/ERC1155#IERC1155MetadataURI). That’s where the [`uri`](contracts/v5.x/api/token/ERC1155#IERC1155MetadataURI-uri-uint256-) function comes from: we use it to retrieve the metadata uri.
 
 Also note that, unlike ERC-20, ERC-1155 lacks a `decimals` field, since each token is distinct and cannot be partitioned.
 
@@ -93,12 +93,12 @@ You’ll notice that the item’s information is included in the metadata, but t
 </Callout>
 
 <Callout>
-If you’d like to put all item information on-chain, you can extend ERC-721 to do so (though it will be rather costly) by providing a [`Base64`](utilities.adoc#base64) Data URI with the JSON schema encoded. You could also leverage IPFS to store the URI information, but these techniques are out of the scope of this overview guide
+If you’d like to put all item information on-chain, you can extend ERC-721 to do so (though it will be rather costly) by providing a [`Base64`](utilities#base64) Data URI with the JSON schema encoded. You could also leverage IPFS to store the URI information, but these techniques are out of the scope of this overview guide
 </Callout>
 
 ## Sending Tokens to Contracts
 
-A key difference when using [`safeTransferFrom`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) is that token transfers to other contracts may revert with the following custom error:
+A key difference when using [`safeTransferFrom`](contracts/v5.x/api/token/ERC1155#IERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) is that token transfers to other contracts may revert with the following custom error:
 
 ```text
 ERC1155InvalidReceiver("<ADDRESS>")
@@ -106,8 +106,8 @@ ERC1155InvalidReceiver("<ADDRESS>")
 
 This is a good thing! It means that the recipient contract has not registered itself as aware of the ERC-1155 protocol, so transfers to it are disabled to **prevent tokens from being locked forever**. As an example, [the Golem contract currently holds over 350k `GNT` tokens](https://etherscan.io/token/0xa74476443119A942dE498590Fe1f2454d7D4aC0d?a=0xa74476443119A942dE498590Fe1f2454d7D4aC0d), and lacks methods to get them out of there. This has happened to virtually every ERC20-backed project, usually due to user error.
 
-In order for our contract to receive ERC-1155 tokens we can inherit from the convenience contract [`ERC1155Holder`](contracts/v5.x/api/token/ERC1155.mdx#ERC1155Holder) which handles the registering for us. However, we need to remember to implement functionality to allow tokens to be transferred out of our contract:
+In order for our contract to receive ERC-1155 tokens we can inherit from the convenience contract [`ERC1155Holder`](contracts/v5.x/api/token/ERC1155#ERC1155Holder) which handles the registering for us. However, we need to remember to implement functionality to allow tokens to be transferred out of our contract:
 
 <include cwd lang='solidity'>./examples/token/ERC1155/MyERC115HolderContract.sol</include>
 
-We can also implement more complex scenarios using the [`onERC1155Received`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-) and [`onERC1155BatchReceived`](contracts/v5.x/api/token/ERC1155.mdx#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-) functions.
+We can also implement more complex scenarios using the [`onERC1155Received`](contracts/v5.x/api/token/ERC1155#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-) and [`onERC1155BatchReceived`](contracts/v5.x/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-) functions.

@@ -8,14 +8,14 @@ The OpenZeppelin Contracts provide a ton of useful utilities that you can use in
 
 ### Checking Signatures On-Chain
 
-[`ECDSA`](contracts/v3.x/api/cryptography.mdx#ECDSA) provides functions for recovering and managing Ethereum account ECDSA signatures. These are often generated via [`web3.eth.sign`](https://web3js.readthedocs.io/en/v1.2.4/web3-eth.html#sign), and are a 65 byte array (of type `bytes` in Solidity) arranged the following way: `[[v (1)], [r (32)], [s (32)]]`.
+[`ECDSA`](contracts/v3.x/api/cryptography#ECDSA) provides functions for recovering and managing Ethereum account ECDSA signatures. These are often generated via [`web3.eth.sign`](https://web3js.readthedocs.io/en/v1.2.4/web3-eth.html#sign), and are a 65 byte array (of type `bytes` in Solidity) arranged the following way: `[[v (1)], [r (32)], [s (32)]]`.
 
-The data signer can be recovered with [`ECDSA.recover`](contracts/v3.x/api/cryptography.mdx#ECDSA-recover-bytes32-bytes-), and its address compared to verify the signature. Most wallets will hash the data to sign and add the prefix '\x19Ethereum Signed Message:\n', so when attempting to recover the signer of an Ethereum signed message hash, you’ll want to use [`toEthSignedMessageHash`](contracts/v3.x/api/cryptography.mdx#ECDSA-toEthSignedMessageHash-bytes32-).
+The data signer can be recovered with [`ECDSA.recover`](contracts/v3.x/api/cryptography#ECDSA-recover-bytes32-bytes-), and its address compared to verify the signature. Most wallets will hash the data to sign and add the prefix '\x19Ethereum Signed Message:\n', so when attempting to recover the signer of an Ethereum signed message hash, you’ll want to use [`toEthSignedMessageHash`](contracts/v3.x/api/cryptography#ECDSA-toEthSignedMessageHash-bytes32-).
 
 ```solidity
 using ECDSA for bytes32;
 
-function _verify(bytes32 data, address account) pure returns (bool) 
+function _verify(bytes32 data, address account) pure returns (bool)
     return keccack256(data)
         .toEthSignedMessageHash()
         .recover(signature) == account;
@@ -23,26 +23,26 @@ function _verify(bytes32 data, address account) pure returns (bool)
 ```
 
 <Callout type='warn'>
-Getting signature verification right is not trivial: make sure you fully read and understand [`ECDSA`](contracts/v3.x/api/cryptography.mdx#ECDSA)'s documentation.
+Getting signature verification right is not trivial: make sure you fully read and understand [`ECDSA`](contracts/v3.x/api/cryptography#ECDSA)'s documentation.
 </Callout>
 
 ### Verifying Merkle Proofs
 
-[`MerkleProof`](contracts/v3.x/api/cryptography.mdx#MerkleProof) provides [`verify`](contracts/v3.x/api/cryptography.mdx#MerkleProof-verify-bytes32---bytes32-bytes32-), which can prove that some value is part of a [Merkle tree](https://en.wikipedia.org/wiki/Merkle_tree).
+[`MerkleProof`](contracts/v3.x/api/cryptography#MerkleProof) provides [`verify`](contracts/v3.x/api/cryptography#MerkleProof-verify-bytes32---bytes32-bytes32-), which can prove that some value is part of a [Merkle tree](https://en.wikipedia.org/wiki/Merkle_tree).
 
 ## Introspection
 
 In Solidity, it’s frequently helpful to know whether or not a contract supports an interface you’d like to use. ERC165 is a standard that helps do runtime interface detection. Contracts provides helpers both for implementing ERC165 in your contracts and querying other contracts:
 
-* [`IERC165`](contracts/v3.x/api/introspection.mdx#IERC165) — this is the ERC165 interface that defines [`supportsInterface`](contracts/v3.x/api/introspection.mdx#IERC165-supportsInterface-bytes4-). When implementing ERC165, you’ll conform to this interface.
-* [`ERC165`](contracts/v3.x/api/introspection.mdx#ERC165) — inherit this contract if you’d like to support interface detection using a lookup table in contract storage. You can register interfaces using [`_registerInterface(bytes4)`](contracts/v3.x/api/introspection.mdx#ERC165-_registerInterface-bytes4-): check out example usage as part of the ERC721 implementation.
-* [`ERC165Checker`](contracts/v3.x/api/introspection.mdx#ERC165Checker) — ERC165Checker simplifies the process of checking whether or not a contract supports an interface you care about.
+* [`IERC165`](contracts/v3.x/api/introspection#IERC165) — this is the ERC165 interface that defines [`supportsInterface`](contracts/v3.x/api/introspection#IERC165-supportsInterface-bytes4-). When implementing ERC165, you’ll conform to this interface.
+* [`ERC165`](contracts/v3.x/api/introspection#ERC165) — inherit this contract if you’d like to support interface detection using a lookup table in contract storage. You can register interfaces using [`_registerInterface(bytes4)`](contracts/v3.x/api/introspection#ERC165-_registerInterface-bytes4-): check out example usage as part of the ERC721 implementation.
+* [`ERC165Checker`](contracts/v3.x/api/introspection#ERC165Checker) — ERC165Checker simplifies the process of checking whether or not a contract supports an interface you care about.
 * include with `using ERC165Checker for address;`
-* [`myAddress._supportsInterface(bytes4)`](contracts/v3.x/api/introspection.mdx#ERC165Checker-_supportsInterface-address-bytes4-)
-* [`myAddress._supportsAllInterfaces(bytes4[](contracts/v3.x/api/introspection.mdx#ERC165Checker-_supportsAllInterfaces-address-bytes4---))`]
+* [`myAddress._supportsInterface(bytes4)`](contracts/v3.x/api/introspection#ERC165Checker-_supportsInterface-address-bytes4-)
+* [`myAddress._supportsAllInterfaces(bytes4[](contracts/v3.x/api/introspection#ERC165Checker-_supportsAllInterfaces-address-bytes4---))`]
 
 ```solidity
-contract MyContract 
+contract MyContract
     using ERC165Checker for address;
 
     bytes4 private InterfaceId_ERC721 = 0x80ac58cd;
@@ -59,13 +59,13 @@ contract MyContract
     {
         require(token.supportsInterface(InterfaceId_ERC721), "IS_NOT_721_TOKEN");
         IERC721(token).transferFrom(address(this), to, tokenId);
-    
+
 }
 ```
 
 ## Math
 
-The most popular math related library OpenZeppelin Contracts provides is [`SafeMath`](contracts/v3.x/api/math.mdx#SafeMath), which provides mathematical functions that protect your contract from overflows and underflows.
+The most popular math related library OpenZeppelin Contracts provides is [`SafeMath`](contracts/v3.x/api/math#SafeMath), which provides mathematical functions that protect your contract from overflows and underflows.
 
 Include the contract with `using SafeMath for uint256;` and then call the functions:
 
@@ -79,18 +79,18 @@ Easy!
 
 ## Payment
 
-Want to split some payments between multiple people? Maybe you have an app that sends 30% of art purchases to the original creator and 70% of the profits to the current owner; you can build that with [`PaymentSplitter`](contracts/v3.x/api/payment.mdx#PaymentSplitter)!
+Want to split some payments between multiple people? Maybe you have an app that sends 30% of art purchases to the original creator and 70% of the profits to the current owner; you can build that with [`PaymentSplitter`](contracts/v3.x/api/payment#PaymentSplitter)!
 
-In Solidity, there are some security concerns with blindly sending money to accounts, since it allows them to execute arbitrary code. You can read up on these security concerns in the [Ethereum Smart Contract Best Practices](https://consensys.github.io/smart-contract-best-practices/) website. One of the ways to fix reentrancy and stalling problems is, instead of immediately sending Ether to accounts that need it, you can use [`PullPayment`](contracts/v3.x/api/payment.mdx#PullPayment), which offers an [`_asyncTransfer`](contracts/v3.x/api/payment.mdx#PullPayment-_asyncTransfer-address-uint256-) function for sending money to something and requesting that they [`withdrawPayments()`](contracts/v3.x/api/payment.mdx#PullPayment-withdrawPayments-address-payable-) it later.
+In Solidity, there are some security concerns with blindly sending money to accounts, since it allows them to execute arbitrary code. You can read up on these security concerns in the [Ethereum Smart Contract Best Practices](https://consensys.github.io/smart-contract-best-practices/) website. One of the ways to fix reentrancy and stalling problems is, instead of immediately sending Ether to accounts that need it, you can use [`PullPayment`](contracts/v3.x/api/payment#PullPayment), which offers an [`_asyncTransfer`](contracts/v3.x/api/payment#PullPayment-_asyncTransfer-address-uint256-) function for sending money to something and requesting that they [`withdrawPayments()`](contracts/v3.x/api/payment#PullPayment-withdrawPayments-address-payable-) it later.
 
-If you want to Escrow some funds, check out [`Escrow`](contracts/v3.x/api/payment.mdx#Escrow) and [`ConditionalEscrow`](contracts/v3.x/api/payment.mdx#ConditionalEscrow) for governing the release of some escrowed Ether.
+If you want to Escrow some funds, check out [`Escrow`](contracts/v3.x/api/payment#Escrow) and [`ConditionalEscrow`](contracts/v3.x/api/payment#ConditionalEscrow) for governing the release of some escrowed Ether.
 
 ## Collections
 
-If you need support for more powerful collections than Solidity’s native arrays and mappings, take a look at [`EnumerableSet`](contracts/v3.x/api/utils.mdx#EnumerableSet) and [`EnumerableMap`](contracts/v3.x/api/utils.mdx#EnumerableMap). They are similar to mappings in that they store and remove elements in constant time and don’t allow for repeated entries, but they also support _enumeration_, which means you can easily query all stored entries both on and off-chain.
+If you need support for more powerful collections than Solidity’s native arrays and mappings, take a look at [`EnumerableSet`](contracts/v3.x/api/utils#EnumerableSet) and [`EnumerableMap`](contracts/v3.x/api/utils#EnumerableMap). They are similar to mappings in that they store and remove elements in constant time and don’t allow for repeated entries, but they also support _enumeration_, which means you can easily query all stored entries both on and off-chain.
 
 ## Misc
 
-Want to check if an address is a contract? Use [`Address`](contracts/v3.x/api/utils.mdx#Address) and [`Address.isContract()`](contracts/v3.x/api/utils.mdx#Address-isContract-address-).
+Want to check if an address is a contract? Use [`Address`](contracts/v3.x/api/utils#Address) and [`Address.isContract()`](contracts/v3.x/api/utils#Address-isContract-address-).
 
-Want to keep track of some numbers that increment by 1 every time you want another one? Check out [`Counters`](contracts/v3.x/api/utils.mdx#Counters). This is useful for lots of things, like creating incremental identifiers, as shown on the [ERC721 guide](erc721.mdx).
+Want to keep track of some numbers that increment by 1 every time you want another one? Check out [`Counters`](contracts/v3.x/api/utils#Counters). This is useful for lots of things, like creating incremental identifiers, as shown on the [ERC721 guide](erc721).

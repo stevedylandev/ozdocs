@@ -12,7 +12,7 @@ This demo app showcases how to implement meta-transactions using not just ERC-27
 * ERC-2612: Permit Function: This standard introduces a method for enabling gasless token approvals in ERC-20 tokens. Users can grant spending permission to a relayer service by signing a message instead of directly paying gas fees for the traditional "approve" function. This allows the relayer to handle token approvals on the user’s behalf.
 * ERC-3009: Transfer with Authorization: This standard facilitates gasless token transfers through off-chain authorizations. Users sign messages authorizing specific token transfers, which can then be submitted to the blockchain by anyone, including a relayer service.
 
-A gasless meta-transaction relay can be easily and securely implemented using Defender with [Relayers](:module/relayers.adoc), which allow you to send transactions easily without needing to manage private keys, transaction signing, nonce management, gas estimation, and transaction inclusion.
+A gasless meta-transaction relay can be easily and securely implemented using Defender with [Relayers](:module/relayers), which allow you to send transactions easily without needing to manage private keys, transaction signing, nonce management, gas estimation, and transaction inclusion.
 
 ## Pre-requisites
 
@@ -66,7 +66,7 @@ The Relayer is created using the `defender-sdk` package:
 const client = new Defender(creds);
 
 // Create Relayer using Defender SDK client.
-const requestParams = 
+const requestParams =
   name: 'MetaTxRelayer',
   network: 'sepolia',
   minBalance: BigInt(1e17).toString(),
@@ -89,7 +89,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 import "@openzeppelin/contracts/metatx/ERC2771Forwarder.sol";
 
-contract Registry is ERC2771Context   
+contract Registry is ERC2771Context
   event Registered(address indexed who, string name);
 
   mapping(address => string) public names;
@@ -97,15 +97,15 @@ contract Registry is ERC2771Context
 
   constructor(ERC2771Forwarder forwarder) // Initialize trusted forwarder
     ERC2771Context(address(forwarder)) {
-  
 
-  function register(string memory name) external 
+
+  function register(string memory name) external
     require(owners[name] == address(0), "Name taken");
     address owner = _msgSender(); // Changed from msg.sender
     owners[name] = owner;
     names[owner] = name;
     emit Registered(owner, name);
-  
+
 }
 ```
 
@@ -119,7 +119,7 @@ The `deploy.js` script pulls the Relayer’s credentials from the local `.env` f
 
 ```jsx
 // ...
-const creds = 
+const creds =
   relayerApiKey: process.env.RELAYER_API_KEY,
   relayerApiSecret: process.env.RELAYER_API_SECRET,
 ;
@@ -144,13 +144,13 @@ After the contracts are deployed, the Relayer key and secret can be safely delet
 
 ### 1.5 Create Action via API
 
-The demo app uses an [Action](module/actions.mdx) to supply the necessary logic for telling the Relayer to send a transaction to the `Forwarder` contract, supplying the signer’s address. The Action will get triggered by each call to its webhook from the app.
+The demo app uses an [Action](module/actions) to supply the necessary logic for telling the Relayer to send a transaction to the `Forwarder` contract, supplying the signer’s address. The Action will get triggered by each call to its webhook from the app.
 
 Due to the tight relationship between components, the Relayer credentials are securely available to the Action simply by instantiating a new provider and signer.
 
 The position of the Action here is crucial -- only the Action’s webhook is exposed to the frontend. The Action’s role is to execute the transaction according to the logic assigned to it: if the user has funds, they pay for the transaction. If not, the Relayer pays for the transaction.
 
-It’s important that the Relayer’s API key and secret are insulated from the frontend. If the Relayer keys were exposed, anyone could potentially use the Relayer to send any transaction they wanted. 
+It’s important that the Relayer’s API key and secret are insulated from the frontend. If the Relayer keys were exposed, anyone could potentially use the Relayer to send any transaction they wanted.
 
 Here is the code for the Action, found in `action/index.js`:
 
@@ -161,7 +161,7 @@ const  ethers  = require('hardhat')
 const  ForwarderAbi  = require('../../src/forwarder');
 const ForwarderAddress = require('../../deploy.json').ERC2771Forwarder;
 
-async function relay(forwarder, request, signature, whitelist) 
+async function relay(forwarder, request, signature, whitelist)
   // Decide if we want to relay this request based on a whitelist
   const accepts = !whitelist || whitelist.includes(request.to);
   if (!accepts) throw new Error(`Rejected request to ${request.to`);
@@ -169,18 +169,18 @@ async function relay(forwarder, request, signature, whitelist)
   // Validate request on the forwarder contract
   const valid = await forwarder.verify(request, signature);
   if (!valid) throw new Error(`Invalid request`);
-  
+
   // Send meta-tx through relayer to the forwarder contract
   const gasLimit = (parseInt(request.gas) + 50000).toString();
   return await forwarder.execute(request, signature,  gasLimit );
 }
 
-async function handler(event) 
+async function handler(event)
   // Parse webhook payload
   if (!event.request || !event.request.body) throw new Error(`Missing payload`);
   const { request, signature  = event.request.body;
   console.log(`Relaying`, request);
-  
+
   // Initialize Relayer provider and signer, and forwarder contract
   const creds =  ... event ;
 
@@ -189,14 +189,14 @@ async function handler(event)
   const provider = client.relaySigner.getProvider();
   const signer = client.relaySigner.getSigner(provider,  speed: 'fast' );
   const forwarder = new ethers.Contract(ForwarderAddress, ForwarderAbi, signer);
-  
+
   // Relay transaction!
   const tx = await relay(forwarder, request, signature);
   console.log(`Sent meta-tx: $tx.hash`);
   return  txHash: tx.hash ;
 }
 
-module.exports = 
+module.exports =
   handler,
   relay,
 
@@ -224,7 +224,7 @@ Head to [Defender Actions, window=_blank](https://defender.openzeppelin.com/v2/#
 
 ![Copy Webhook](/defender/guide-meta-tx-copy-webhook.png)
 
-Save the Action webhook in your `.env` file as `WEBHOOK_URL` and in the /app `.env` file as the `REACT_APP_WEBHOOK_URL`. 
+Save the Action webhook in your `.env` file as `WEBHOOK_URL` and in the /app `.env` file as the `REACT_APP_WEBHOOK_URL`.
 
 Test the meta-transaction’s functionality with `yarn sign` followed by `yarn invoke`.
 
@@ -232,19 +232,19 @@ Test the meta-transaction’s functionality with `yarn sign` followed by `yarn i
 
 The key building blocks have been laid, so next it is a matter of crafting a web application that makes use of these components.
 
-You can see the details of this relationship in the [`register.js`, window=_blank](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/app/src/eth/register.js) file. The user’s transaction request is sent to the Relayer by way of the Action’s webhook, and this executes the Actions’s logic given the parameters supplied by the application. Note that the signer’s nonce is incremented from the transaction. 
+You can see the details of this relationship in the [`register.js`, window=_blank](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/app/src/eth/register.js) file. The user’s transaction request is sent to the Relayer by way of the Action’s webhook, and this executes the Actions’s logic given the parameters supplied by the application. Note that the signer’s nonce is incremented from the transaction.
 
 ```jsx
 import  ethers  from 'ethers';
 import  createInstance  from './forwarder';
 import  signMetaTxRequest  from './signer';
 
-async function sendTx(registry, name) 
+async function sendTx(registry, name)
   console.log(`Sending register tx to set name=${name`);
   return registry.register(name);
 }
 
-async function sendMetaTx(registry, provider, signer, name) 
+async function sendMetaTx(registry, provider, signer, name)
   console.log(`Sending register meta-tx to set name=${name`);
   const url = process.env.REACT_APP_WEBHOOK_URL;
   if (!url) throw new Error(`Missing relayer url`);
@@ -253,17 +253,17 @@ async function sendMetaTx(registry, provider, signer, name)
   const from = await signer.getAddress();
   const data = registry.interface.encodeFunctionData('register', [name]);
   const to = registry.address;
-  
+
   const request = await signMetaTxRequest(signer.provider, forwarder,  to, from, data );
 
-  return fetch(url, 
+  return fetch(url,
     method: 'POST',
     body: JSON.stringify(request),
     headers: { 'Content-Type': 'application/json' ,
   });
 }
 
-export async function registerName(registry, provider, name) 
+export async function registerName(registry, provider, name)
   if (!name) throw new Error(`Name cannot be empty`);
   if (!window.ethereum) throw new Error(`User wallet not found`);
 
@@ -276,7 +276,7 @@ export async function registerName(registry, provider, name)
   const signer = userProvider.getSigner();
   const from = await signer.getAddress();
   const balance = await provider.getBalance(from);
-  
+
   const canSendTx = balance.gt(1e15);
   if (canSendTx) return sendTx(registry.connect(signer), name);
   else return sendMetaTx(registry, provider, signer, name);
@@ -295,14 +295,14 @@ How it uses EIP-712 for structured data signing: EIP-2612 leverages EIP-712 for 
 
 ```jsx
 // ...
- const domain = 
+ const domain =
     name: name,
     version: '1',
     chainId: chainId,
     verifyingContract: ERC20_ADDRESS,
   ;
 
-  const types = 
+  const types =
     Permit: [
       { name: 'owner', type: 'address' ,
        name: 'spender', type: 'address' ,
@@ -312,7 +312,7 @@ How it uses EIP-712 for structured data signing: EIP-2612 leverages EIP-712 for 
     ]
   };
 
-  const value = 
+  const value =
     owner: OWNER_ADDRESS,
     spender: SPENDER_ADDRESS,
     value: amount,
@@ -325,7 +325,7 @@ How it uses EIP-712 for structured data signing: EIP-2612 leverages EIP-712 for 
   const sig = ethers.Signature.from(signature);
   const recoveredAddress = ethers.verifyTypedData(domain, types, value, signature);
 
-  const request = 
+  const request =
     owner: OWNER_ADDRESS,
     spender: SPENDER_ADDRESS,
     amount,
@@ -335,19 +335,19 @@ How it uses EIP-712 for structured data signing: EIP-2612 leverages EIP-712 for 
     s: sig.s
   ;
 
-  return fetch(`$url/relayerForwardMessage`, 
+  return fetch(`$url/relayerForwardMessage`,
     method: 'POST',
     body: JSON.stringify(request),
     headers: { 'Content-Type': 'application/json' ,
   });
 ```
 ### 2.2 Relayer service
-Create a back-end service to interact with Defender Relayers. The service will initially require the setup of [Defender Relayers](https://docs.openzeppelin.com/defender/manage/relayers). Once configured, it will handle incoming requests from the front-end and forward the signed EIP-712 message to the contract. The service will utilize the Relayers to execute the contract’s permit function, allowing the Relayer to cover gas fees. The service will facilitate token approvals for end-users, enabling subsequent operations with the Relayers, such as transferring tokens to different wallets. 
+Create a back-end service to interact with Defender Relayers. The service will initially require the setup of [Defender Relayers](https://docs.openzeppelin.com/defender/manage/relayers). Once configured, it will handle incoming requests from the front-end and forward the signed EIP-712 message to the contract. The service will utilize the Relayers to execute the contract’s permit function, allowing the Relayer to cover gas fees. The service will facilitate token approvals for end-users, enabling subsequent operations with the Relayers, such as transferring tokens to different wallets.
 ```jsx
 import  ethers, defender  from "hardhat";
 
 // ...
-const creds = 
+const creds =
   relayerApiKey: process.env.RELAYER_API_KEY,
   relayerApiSecret: process.env.RELAYER_API_SECRET,
 ;
@@ -373,7 +373,7 @@ const tx = await erc20.permit(
 await tx.wait();
 console.log("Permit executed!");
 
-// Example subsequent operation 
+// Example subsequent operation
 const transferTx = await erc20.transferFrom(request.owner, to, request.amount);
 await transferTx.wait();
 // ...
@@ -413,14 +413,14 @@ Similar to ERC-2612, you can use the EIP-712 format to sign messages on the fron
   const value = ethers.parseEther("10"); // Amount to transfer
   const nonce = ethers.randomBytes(32);
 
-  const domain = 
+  const domain =
     name: name,
     version: '1',
     chainId: chainId,
     verifyingContract: ERC20_ADDRESS,
   ;
 
-  const types = 
+  const types =
     TransferWithAuthorization: [
       { name: 'from', type: 'address' ,
        name: 'to', type: 'address' ,
@@ -431,7 +431,7 @@ Similar to ERC-2612, you can use the EIP-712 format to sign messages on the fron
     ]
   };
 
-  const valueToSign = 
+  const valueToSign =
     from: FROM_ADDRESS,
     to: TO_ADDRESS,
     value: value,
@@ -443,7 +443,7 @@ Similar to ERC-2612, you can use the EIP-712 format to sign messages on the fron
 
   const signature = await wallet.signTypedData(domain, types, valueToSign);
   const sig = ethers.Signature.from(signature);
-  const request = 
+  const request =
     from: FROM_ADDRESS,
     to: TO_ADDRESS,
     value,
@@ -455,7 +455,7 @@ Similar to ERC-2612, you can use the EIP-712 format to sign messages on the fron
     s: sig.s
   ;
 
-  return fetch(`$url/relayerForwardMessage`, 
+  return fetch(`$url/relayerForwardMessage`,
     method: 'POST',
     body: JSON.stringify(request),
     headers: { 'Content-Type': 'application/json' ,
@@ -467,7 +467,7 @@ Create a back-end service to interact with Defender Relayers. The service will i
 import  ethers, defender  from "hardhat";
 
 // ...
-const creds = 
+const creds =
   relayerApiKey: process.env.RELAYER_API_KEY,
   relayerApiSecret: process.env.RELAYER_API_SECRET,
 ;

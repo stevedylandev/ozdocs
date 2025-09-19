@@ -1,0 +1,65 @@
+---
+title: Universal Deployer
+---
+
+Reference of the Universal Deployer Contract (UDC) interface and preset.
+
+## [](#interfaces)Interfaces
+
+Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_utils` package. The references documented here are contained in the `openzeppelin_interfaces` package version `v2.1.0`.
+
+### [](#IUniversalDeployer)`IUniversalDeployer`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/utils/deployments.cairo)
+
+```rust
+use openzeppelin_interfaces::deployments::IUniversalDeployer;
+```
+
+Functions
+
+- [`deploy_contract(class_hash, salt, not_from_zero, calldata)`](#IUniversalDeployer-deploy_contract)
+
+Events
+
+- [`ContractDeployed(address, deployer, not_from_zero, class_hash, calldata, salt)`](#IUniversalDeployer-ContractDeployed)
+
+#### [](#IUniversalDeployer-Functions)Functions
+
+#### [](#IUniversalDeployer-deploy_contract)`deploy_contract(class_hash: ClassHash, salt: felt252, not_from_zero: bool, calldata: Span<felt252>) → ContractAddress` external
+
+Deploys a contract through the Universal Deployer Contract.
+
+#### [](#IUniversalDeployer-Events)Events
+
+#### [](#IUniversalDeployer-ContractDeployed)`ContractDeployed(address: ContractAddress, deployer: ContractAddress, not_from_zero: bool, class_hash: ClassHash, calldata: Span<felt252>, salt: felt252)` event
+
+Emitted when `deployer` deploys a contract through the Universal Deployer Contract.
+
+## [](#presets)Presets
+
+### [](#UniversalDeployer)`UniversalDeployer`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/presets/src/universal_deployer.cairo)
+
+```rust
+use openzeppelin_presets::UniversalDeployer;
+```
+
+The standard Universal Deployer Contract.
+
+[Sierra class hash](../presets)
+
+0x037f5901deb2b20bf5b2ddb04f6c770a7c5581edd68aa49f199cf74dfaf03c06
+
+Embedded Implementations
+
+UniversalDeployerImpl
+
+- [`deploy_contract(self, address, deployer, not_from_zero, class_hash, calldata, salt)`](#UniversalDeployer-deploy_contract)
+
+#### [](#UniversalDeployer-deploy_contract)`deploy_contract(ref self: ContractState, address: ContractAddress, deployer: ContractAddress, not_from_zero: bool, class_hash: ClassHash, calldata: Span<felt252>, salt: felt252) -> ContractAddress` external
+
+Deploys a contract through the Universal Deployer Contract.
+
+When `not_from_zero` is `true`, `salt` is hashed with the caller address and the modified salt is passed to the inner `deploy_syscall`. This type of deployment is [origin-dependent](../udc#origin_dependent).
+
+When `not_from_zero` is `false`, the deployment type is [origin-independent](../udc#origin_independent).
+
+Emits an [ContractDeployed](#IUniversalDeployer-ContractDeployed) event.

@@ -6,7 +6,7 @@ title: Proxies
 This document is better viewed at https://docs.openzeppelin.com/contracts/api/proxy
 </Callout>
 
-This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](upgrades-plugins::proxies.mdx) page.
+This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](upgrades-plugins::proxies) page.
 
 The abstract Proxy contract implements the core delegation functionality. If the concrete proxies that we provide below are not suitable, we encourage building on top of this base contract since it contains an assembly block that may be hard to get right.
 
@@ -17,7 +17,7 @@ An alternative upgradeability mechanism is provided in [Beacon](#beacon). This p
 The Clones library provides a way to deploy minimal non-upgradeable proxies for cheap. This can be useful for applications that require deploying many instances of the same contract (for example one per user, or one per task). These instances are designed to be both cheap to deploy, and cheap to call. The drawback being that they are not upgradeable.
 
 <Callout type='warn'>
-Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index.mdx) for Truffle and Buidler.
+Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) for Truffle and Buidler.
 </Callout>
 
 ## Core

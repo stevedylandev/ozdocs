@@ -6,9 +6,9 @@ const path = require("path");
 const { execSync } = require("child_process");
 const { glob } = require("glob");
 
-async function convertAdocFiles(directory) {
+async function convertAdocFiles(directory, apiRoute = "contracts/5.x/api") {
 	if (!directory) {
-		console.error("Usage: node convert-adoc.js <directory>");
+		console.error("Usage: node convert-adoc.js <directory> [apiRoute]");
 		process.exit(1);
 	}
 
@@ -77,10 +77,10 @@ async function convertAdocFiles(directory) {
 				.replace(/&#x2F;/g, "/")
 				.replace(/&amp;/g, "&"); // This should be last to avoid double-decoding
 
-			// Convert api: links to contracts/v5.x/api/ and change .adoc to .mdx
+			// Convert api: links to dynamic api route and change .adoc to .mdx
 			mdContent = mdContent.replace(
 				/\(api:([^)]+)\.adoc([^)]*)\)/g,
-				"(contracts/v5.x/api/$1.mdx$2)",
+				`(/${apiRoute}/$1$2)`,
 			);
 
 			// Add forward slash to image paths
@@ -96,13 +96,21 @@ async function convertAdocFiles(directory) {
 			);
 
 			// Fix .adoc internal links to .mdx
-			mdContent = mdContent.replace(
-				/\]\(([^)]+)\.adoc([^)]*)\)/g,
-				"]($1.mdx$2)",
-			);
+			mdContent = mdContent.replace(/\]\(([^)]+)\.adoc([^)]*)\)/g, "]($1$2)");
 
-			// Fix curly bracket file references {filename} -> filename
-			mdContent = mdContent.replace(/\{([^}]+)\}/g, "$1");
+			// Fix curly bracket file references {filename} -> filename, but preserve braces in code blocks
+			const parts = mdContent.split(/(```[\s\S]*?```)/g);
+			mdContent = parts
+				.map((part, index) => {
+					// Every odd index is a code block (```...```)
+					if (index % 2 === 1) {
+						return part; // Preserve code blocks as-is
+					} else {
+						// Remove curly brackets from non-code-block parts only
+						return part.replace(/\{([^}]+)\}/g, "$1");
+					}
+				})
+				.join("");
 
 			// Fix HTML-style callouts <dl><dt><strong>📌 NOTE</strong></dt><dd> ... </dd></dl>
 			// Handle multi-line callouts by using a more permissive pattern
@@ -198,12 +206,27 @@ ${contentWithoutFirstH1}`;
 // Process files to remove curly brackets after conversion
 function processFile(filePath) {
 	try {
+		// Only process .mdx files (skip .adoc files)
+		if (!filePath.endsWith(".mdx")) {
+			console.log(`Skipped: ${filePath}`);
+			return;
+		}
+
 		const content = fsSync.readFileSync(filePath, "utf8");
-		// Preserve brackets inside code fences (```...```)
-		const modifiedContent = content.replace(/```[\s\S]*?```|[{}]/g, (match) => {
-			// If match contains newlines or starts with ```, it's a code block - preserve it
-			return match.includes("\n") || match.startsWith("```") ? match : "";
-		});
+		// Split content by code blocks and process non-code-block parts only
+		const parts = content.split(/(```[\s\S]*?```)/g);
+		const modifiedContent = parts
+			.map((part, index) => {
+				// Every odd index is a code block (```...```)
+				if (index % 2 === 1) {
+					return part; // Preserve code blocks as-is
+				} else {
+					// Remove curly brackets from non-code-block parts
+					return part.replace(/[{}]/g, "");
+				}
+			})
+			.join("");
+
 		fsSync.writeFileSync(filePath, modifiedContent, "utf8");
 		console.log(`Processed: ${filePath}`);
 	} catch (error) {
@@ -231,7 +254,12 @@ function crawlDirectory(dirPath) {
 }
 
 const directory = process.argv[2];
-convertAdocFiles(directory).catch(console.error);
+const apiRoute = process.argv[3];
 
-// Run bracket processing after conversion
-crawlDirectory(directory);
+async function main() {
+	await convertAdocFiles(directory, apiRoute);
+	// Run bracket processing after conversion
+	crawlDirectory(directory);
+}
+
+main().catch(console.error);

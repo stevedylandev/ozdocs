@@ -2,7 +2,7 @@
 title: Preparing for mainnet
 ---
 
-After [running your project on a testnet](connecting-to-public-test-networks.mdx) for some time without issues, you will want to deploy it to the main Ethereum network (aka _mainnet_). However, the planning for going to mainnet should begin much earlier than your planned release date.
+After [running your project on a testnet](connecting-to-public-test-networks) for some time without issues, you will want to deploy it to the main Ethereum network (aka _mainnet_). However, the planning for going to mainnet should begin much earlier than your planned release date.
 
 In this guide, we will go through Ethereum-specific considerations for taking your project to production, such as:
 
@@ -43,13 +43,13 @@ Update your hardhat configuration:
 const  etherscanApiKey, projectId, mnemonic  = require('./secrets.json');
 require("@nomicfoundation/hardhat-verify");
 ...
-module.exports = 
+module.exports =
   networks: {
-    mainnet: { ... 
+    mainnet: { ...
   },
-  etherscan: 
+  etherscan:
     apiKey: etherscanApiKey
-  
+
 };
 ```
 Finally run the `verify` task, passing the address of the contract, the network where it’s deployed, and the constructor arguments that were used to deploy it (if any):
@@ -77,13 +77,13 @@ Additionally, you may define certain accounts to have special privileges in your
 
 ### Admin accounts
 
-An _admin_ (short for _administrator_) account is one that has special privileges in your system. For example, an admin may have the power to [pause](contracts:api:utils.mdx#Pausable) a contract. If such an account were to fall in the hands of a malicious user, they could wreak havoc in your system.
+An _admin_ (short for _administrator_) account is one that has special privileges in your system. For example, an admin may have the power to [pause](contracts:api:utils#Pausable) a contract. If such an account were to fall in the hands of a malicious user, they could wreak havoc in your system.
 
 A good option for securing admin accounts is to use a special contract, such as a multisig, instead of a regular externally owned account. A _multisig_ is a contract that can execute any action, _as long as a predefined number of trusted members agree upon it_. [Safe](https://safe.global/wallet) is a good multisig to use.
 
 ### Upgrades admin
 
-A special administrator account in an [OpenZeppelin Upgrades Plugins](upgrades-plugins::index.mdx) project is the account with the power to [_upgrade_](upgrading-smart-contracts.mdx) other contracts. This defaults to the externally owned account used to deploy the contracts: while this is good enough for a local or testnet deployment, in mainnet you need to better secure your contracts. An attacker who gets hold of your upgrade admin account can change any contract in your system!
+A special administrator account in an [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) project is the account with the power to [_upgrade_](upgrading-smart-contracts) other contracts. This defaults to the externally owned account used to deploy the contracts: while this is good enough for a local or testnet deployment, in mainnet you need to better secure your contracts. An attacker who gets hold of your upgrade admin account can change any contract in your system!
 
 With this in mind, it is a good idea to ***change the ownership of the ProxyAdmin*** after deployment  - for example, to a multisig. To do this, you can use `admin.transferProxyAdminOwnership` to transfer ownership of our `ProxyAdmin` contract.
 
@@ -93,7 +93,7 @@ When you need to upgrade your contracts, we can use `prepareUpgrade` to validate
 
 It can be argued that admin accounts reflect that a project is not actually _decentralized_. After all, if an account can single-handedly change any contract in the system, we are not exactly creating a trustless environment.
 
-Here is where _governance_ comes in. In many cases there will be some operations in your project that require special privileges, from fine-tuning system parameters, to running full contract upgrades. You will need to choose how those actions will be decided upon: whether it is by a [small group](https://safe.global/wallet) of trusted developers, or by [public voting](contracts::governance.mdx) of all project stakeholders.
+Here is where _governance_ comes in. In many cases there will be some operations in your project that require special privileges, from fine-tuning system parameters, to running full contract upgrades. You will need to choose how those actions will be decided upon: whether it is by a [small group](https://safe.global/wallet) of trusted developers, or by [public voting](contracts::governance) of all project stakeholders.
 
 There is no right answer here. Which governance scheme you pick for your project will largely depend on what you are building and who your community is.
 

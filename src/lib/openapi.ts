@@ -1,5 +1,7 @@
 import { createOpenAPI } from "fumadocs-openapi/server";
 
 export const openapi = createOpenAPI({
-	input: ["./public/schemas/openzeppelin-relayer-openapi.json"],
+	input: [
+		"https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-relayer/refs/heads/main/docs/openapi.json",
+	],
 });

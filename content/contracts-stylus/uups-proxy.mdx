@@ -41,7 +41,7 @@ Minimal example with `Ownable`, `UUPSUpgradeable`, and `Erc20` logic:
 ```rust
 #[entrypoint]
 #[storage]
-struct MyUUPSContract 
+struct MyUUPSContract
     erc20: Erc20,
     ownable: Ownable,
     uups: UUPSUpgradeable,
@@ -49,7 +49,7 @@ struct MyUUPSContract
 
 #[public]
 #[implements(IErc20<Error = erc20::Error>, IUUPSUpgradeable, IErc1822Proxiable, IOwnable)]
-impl MyUUPSContract 
+impl MyUUPSContract
     /// Initializes the contract by storing its own address for later context
     /// validation.
     ///
@@ -64,7 +64,7 @@ impl MyUUPSContract
     ) -> Result<(), ownable::Error> {
         self.uups.constructor();
         self.ownable.constructor(initial_owner)
-    
+
     /// Initializes the contract.
     ///
     /// NOTE: Make sure to provide a proper initialization in your logic
@@ -74,30 +74,30 @@ impl MyUUPSContract
     /// contract address in a storage field. This additional storage slot
     /// enables the same upgrade safety checks as the Solidity implementation
     /// without affecting the contract's upgrade behavior.
-    fn initialize(&mut self, self_address: Address, owner: Address) -> Result<(), ownable::Error> 
+    fn initialize(&mut self, self_address: Address, owner: Address) -> Result<(), ownable::Error>
         self.uups.self_address.set(self_address);
         self.ownable.constructor(owner)
-    
 
-    fn mint(&mut self, to: Address, value: U256) -> Result<(), erc20::Error> 
+
+    fn mint(&mut self, to: Address, value: U256) -> Result<(), erc20::Error>
         self.erc20._mint(to, value)
-    
+
 }
 
 #[public]
-impl IUUPSUpgradeable for MyUUPSContract 
+impl IUUPSUpgradeable for MyUUPSContract
     #[selector(name = "UPGRADE_INTERFACE_VERSION")]
     fn upgrade_interface_version(&self) -> String {
         self.uups.upgrade_interface_version()
-    
 
-    fn upgrade_to_and_call(&mut self, new_impl: Address, data: Bytes) -> Result<(), Vec<u8>> 
+
+    fn upgrade_to_and_call(&mut self, new_impl: Address, data: Bytes) -> Result<(), Vec<u8>>
         // Make sure to provide upgrade authorization in your implementation
         // contract.
         self.ownable.only_owner()?; // authorization
         self.uups.upgrade_to_and_call(new_impl, data)?; // perform upgrade
         Ok(())
-    
+
 }
 ```
 
@@ -108,31 +108,31 @@ A simple UUPS-compatible proxy using ERC-1967:
 ```rust
 #[entrypoint]
 #[storage]
-struct MyUUPSProxy 
+struct MyUUPSProxy
     proxy: Erc1967Proxy,
 
 
 #[public]
-impl MyUUPSProxy 
+impl MyUUPSProxy
     #[constructor]
     fn constructor(&mut self, implementation: Address, data: Bytes) -> Result<(), erc1967::utils::Error> {
         self.proxy.constructor(implementation, &data)
-    
 
-    fn implementation(&self) -> Result<Address, Vec<u8>> 
+
+    fn implementation(&self) -> Result<Address, Vec<u8>>
         self.proxy.implementation()
-    
+
 
     #[fallback]
-    fn fallback(&mut self, calldata: &[u8]) -> ArbResult 
-        unsafe { self.proxy.do_fallback(calldata) 
+    fn fallback(&mut self, calldata: &[u8]) -> ArbResult
+        unsafe { self.proxy.do_fallback(calldata)
     }
 }
 
-unsafe impl IProxy for MyUUPSProxy 
+unsafe impl IProxy for MyUUPSProxy
     fn implementation(&self) -> Result<Address, Vec<u8>> {
         self.proxy.implementation()
-    
+
 }
 ```
 
@@ -169,7 +169,7 @@ This is typically used to invoke an initialize function, which sets up the contr
 initial state (e.g. ownership, token supply, config values).
 
 ```rust
-let data = IMyContract::initializeCall 
+let data = IMyContract::initializeCall
     selfAddress: proxy_addr,
     owner: alice_addr,
 .abi_encode();
@@ -193,7 +193,7 @@ The implementation contract must expose a properly designed initialize function:
 ///
 /// NOTE: Make sure to provide a proper initialization in your logic
 /// contract, [`Self::initialize`] should be invoked at most once.
-fn initialize(&mut self, self_address: Address, owner: Address) -> Result<(), ownable::Error> 
+fn initialize(&mut self, self_address: Address, owner: Address) -> Result<(), ownable::Error>
     // Some initialization stuff.
     self.ownable.constructor(owner)
 
@@ -209,7 +209,7 @@ you must protect it from being re-executed after the proxy is live.
 Initialization data is passed to the implementation’s `initialize` function:
 
 ```rust
-let data = IMyContract::initializeCall 
+let data = IMyContract::initializeCall
     selfAddress: implementation_addr,
     owner: alice_addr,
 .abi_encode();
@@ -247,6 +247,6 @@ This setup call is run via `delegate_call` during proxy deployment.
 
 ## Related
 
-* [ERC-1967 Proxy](erc1967.mdx)
-* [Beacon Proxy](beacon-proxy.mdx)
-* [Basic Proxy](proxy.mdx)
+* [ERC-1967 Proxy](erc1967)
+* [Beacon Proxy](beacon-proxy)
+* [Basic Proxy](proxy)

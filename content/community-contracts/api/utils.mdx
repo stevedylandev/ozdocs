@@ -3,10 +3,6 @@ title: "Utils"
 description: "Smart contract utils utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/community-contracts/utils
-</Callout>
-
 Miscellaneous contracts and libraries containing utility functions you can use to improve security, work with new data types, or safely use low-level primitives.
 
 * [`EnumerableSetExtended`](#EnumerableSetExtended) and [`EnumerableMapExtended`](#EnumerableMapExtended): Extensions of the `EnumerableSet` and `EnumerableMap` libraries with more types, including non-value types.
@@ -24,7 +20,15 @@ Miscellaneous contracts and libraries containing utility functions you can use t
 
 <a id="Masks"></a>
 
-## `Masks` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/Masks.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `Masks` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/Masks.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/Masks.sol";
@@ -32,7 +36,9 @@ import "@openzeppelin/contracts/utils/Masks.sol";
 
 Library for handling bit masks
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [toMask(group)](#Masks-toMask-uint8-)
 - [toMask(groups)](#Masks-toMask-uint8---)
 - [get(self, group)](#Masks-get-Masks-Mask-uint8-)
@@ -42,73 +48,173 @@ Library for handling bit masks
 - [intersection(m1, m2)](#Masks-intersection-Masks-Mask-Masks-Mask-)
 - [difference(m1, m2)](#Masks-difference-Masks-Mask-Masks-Mask-)
 - [symmetricDifference(m1, m2)](#Masks-symmetricDifference-Masks-Mask-Masks-Mask-)
+</div>
+</div>
 
 <a id="Masks-toMask-uint8-"></a>
 
-### `toMask(uint8 group) → Masks.Mask`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">toMask(uint8 group) → Masks.Mask</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-toMask-uint8-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns a new mask with the bit at `group` index set to 1.
 
+</div>
+</div>
+
 <a id="Masks-toMask-uint8---"></a>
 
-### `toMask(uint8[] groups) → Masks.Mask`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">toMask(uint8[] groups) → Masks.Mask</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-toMask-uint8---">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns a new mask with the bits at `groups` indices set to 1.
 
+</div>
+</div>
+
 <a id="Masks-get-Masks-Mask-uint8-"></a>
 
-### `get(Masks.Mask self, uint8 group) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">get(Masks.Mask self, uint8 group) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-get-Masks-Mask-uint8-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Get value of the mask at `group` index
 
+</div>
+</div>
+
 <a id="Masks-isEmpty-Masks-Mask-"></a>
 
-### `isEmpty(Masks.Mask self) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isEmpty(Masks.Mask self) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-isEmpty-Masks-Mask-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Whether the mask is `bytes32(0)`
 
+</div>
+</div>
+
 <a id="Masks-complement-Masks-Mask-"></a>
 
-### `complement(Masks.Mask m1) → Masks.Mask`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">complement(Masks.Mask m1) → Masks.Mask</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-complement-Masks-Mask-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Invert the bits of a mask
 
+</div>
+</div>
+
 <a id="Masks-union-Masks-Mask-Masks-Mask-"></a>
 
-### `union(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">union(Masks.Mask m1, Masks.Mask m2) → Masks.Mask</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-union-Masks-Mask-Masks-Mask-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Perform a bitwise OR operation on two masks
 
+</div>
+</div>
+
 <a id="Masks-intersection-Masks-Mask-Masks-Mask-"></a>
 
-### `intersection(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">intersection(Masks.Mask m1, Masks.Mask m2) → Masks.Mask</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-intersection-Masks-Mask-Masks-Mask-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Perform a bitwise AND operation on two masks
 
+</div>
+</div>
+
 <a id="Masks-difference-Masks-Mask-Masks-Mask-"></a>
 
-### `difference(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">difference(Masks.Mask m1, Masks.Mask m2) → Masks.Mask</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-difference-Masks-Mask-Masks-Mask-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Perform a bitwise difference operation on two masks (m1 - m2)
 
+</div>
+</div>
+
 <a id="Masks-symmetricDifference-Masks-Mask-Masks-Mask-"></a>
 
-### `symmetricDifference(Masks.Mask m1, Masks.Mask m2) → Masks.Mask`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">symmetricDifference(Masks.Mask m1, Masks.Mask m2) → Masks.Mask</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Masks-symmetricDifference-Masks-Mask-Masks-Mask-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the symmetric difference (∆) of two masks, also known as disjunctive union or exclusive OR (XOR)
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended"></a>
 
-## `EnumerableMapExtended` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/structs/EnumerableMapExtended.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `EnumerableMapExtended` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/structs/EnumerableMapExtended.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/structs/EnumerableMapExtended.sol";
@@ -152,7 +258,9 @@ array of EnumerableMap.
 
 NOTE: Extensions of openzeppelin/contracts/utils/struct/EnumerableMap.sol.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [set(map, key, value)](#EnumerableMapExtended-set-struct-EnumerableMapExtended-BytesToUintMap-bytes-uint256-)
 - [remove(map, key)](#EnumerableMapExtended-remove-struct-EnumerableMapExtended-BytesToUintMap-bytes-)
 - [clear(map)](#EnumerableMapExtended-clear-struct-EnumerableMapExtended-BytesToUintMap-)
@@ -173,59 +281,124 @@ NOTE: Extensions of openzeppelin/contracts/utils/struct/EnumerableMap.sol.
 - [get(map, key)](#EnumerableMapExtended-get-struct-EnumerableMapExtended-StringToStringMap-string-)
 - [keys(map)](#EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-)
 - [keys(map, start, end)](#EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-uint256-uint256-)
+</div>
+</div>
 
-### Errors
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Errors</h3>
+<div className="font-mono">
 - [EnumerableMapNonexistentBytesKey(key)](#EnumerableMapExtended-EnumerableMapNonexistentBytesKey-bytes-)
 - [EnumerableMapNonexistentStringKey(key)](#EnumerableMapExtended-EnumerableMapNonexistentStringKey-string-)
+</div>
+</div>
 
 <a id="EnumerableMapExtended-set-struct-EnumerableMapExtended-BytesToUintMap-bytes-uint256-"></a>
 
-### `set(struct EnumerableMapExtended.BytesToUintMap map, bytes key, uint256 value) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">set(struct EnumerableMapExtended.BytesToUintMap map, bytes key, uint256 value) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-set-struct-EnumerableMapExtended-BytesToUintMap-bytes-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Adds a key-value pair to a map, or updates the value for an existing
 key. O(1).
 
 Returns true if the key was added to the map, that is if it was not
 already present.
+
+</div>
+</div>
 
 <a id="EnumerableMapExtended-remove-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
 
-### `remove(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">remove(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-remove-struct-EnumerableMapExtended-BytesToUintMap-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Removes a key-value pair from a map. O(1).
 
 Returns true if the key was removed from the map, that is if it was present.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-clear-struct-EnumerableMapExtended-BytesToUintMap-"></a>
 
-### `clear(struct EnumerableMapExtended.BytesToUintMap map)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">clear(struct EnumerableMapExtended.BytesToUintMap map)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-clear-struct-EnumerableMapExtended-BytesToUintMap-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Removes all the entries from a map. O(n).
 
-WARNING: Developers should keep in mind that this function has an unbounded cost and using it may render the
+<Callout type="warn">
+Developers should keep in mind that this function has an unbounded cost and using it may render the
+</Callout>
 function uncallable if the map grows to the point where clearing it consumes too much gas to fit in a block.
+
+</div>
+</div>
 
 <a id="EnumerableMapExtended-contains-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
 
-### `contains(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">contains(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-contains-struct-EnumerableMapExtended-BytesToUintMap-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns true if the key is in the map. O(1).
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-length-struct-EnumerableMapExtended-BytesToUintMap-"></a>
 
-### `length(struct EnumerableMapExtended.BytesToUintMap map) → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">length(struct EnumerableMapExtended.BytesToUintMap map) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-length-struct-EnumerableMapExtended-BytesToUintMap-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the number of key-value pairs in the map. O(1).
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-at-struct-EnumerableMapExtended-BytesToUintMap-uint256-"></a>
 
-### `at(struct EnumerableMapExtended.BytesToUintMap map, uint256 index) → bytes key, uint256 value`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">at(struct EnumerableMapExtended.BytesToUintMap map, uint256 index) → bytes key, uint256 value</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-at-struct-EnumerableMapExtended-BytesToUintMap-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the key-value pair stored at position `index` in the map. O(1).
 
@@ -236,18 +409,38 @@ Requirements:
 
 - `index` must be strictly less than [`EnumerableMapExtended.length`](#EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-).
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
 
-### `tryGet(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool exists, uint256 value`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">tryGet(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → bool exists, uint256 value</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-BytesToUintMap-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Tries to returns the value associated with `key`. O(1).
 Does not revert if `key` is not in the map.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-get-struct-EnumerableMapExtended-BytesToUintMap-bytes-"></a>
 
-### `get(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → uint256 value`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">get(struct EnumerableMapExtended.BytesToUintMap map, bytes key) → uint256 value</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-get-struct-EnumerableMapExtended-BytesToUintMap-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the value associated with `key`. O(1).
 
@@ -255,34 +448,68 @@ Requirements:
 
 - `key` must be in the map.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-"></a>
 
-### `keys(struct EnumerableMapExtended.BytesToUintMap map) → bytes[]`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">keys(struct EnumerableMapExtended.BytesToUintMap map) → bytes[]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns an array containing all the keys
 
-WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+<Callout type="warn">
+This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+
+</div>
+</div>
 
 <a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-uint256-uint256-"></a>
 
-### `keys(struct EnumerableMapExtended.BytesToUintMap map, uint256 start, uint256 end) → bytes[]`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">keys(struct EnumerableMapExtended.BytesToUintMap map, uint256 start, uint256 end) → bytes[]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-keys-struct-EnumerableMapExtended-BytesToUintMap-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns an array containing a slice of the keys
 
-WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+<Callout type="warn">
+This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-set-struct-EnumerableMapExtended-StringToStringMap-string-string-"></a>
 
-### `set(struct EnumerableMapExtended.StringToStringMap map, string key, string value) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">set(struct EnumerableMapExtended.StringToStringMap map, string key, string value) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-set-struct-EnumerableMapExtended-StringToStringMap-string-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Adds a key-value pair to a map, or updates the value for an existing
 key. O(1).
@@ -290,43 +517,95 @@ key. O(1).
 Returns true if the key was added to the map, that is if it was not
 already present.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-remove-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
 
-### `remove(struct EnumerableMapExtended.StringToStringMap map, string key) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">remove(struct EnumerableMapExtended.StringToStringMap map, string key) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-remove-struct-EnumerableMapExtended-StringToStringMap-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Removes a key-value pair from a map. O(1).
 
 Returns true if the key was removed from the map, that is if it was present.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-clear-struct-EnumerableMapExtended-StringToStringMap-"></a>
 
-### `clear(struct EnumerableMapExtended.StringToStringMap map)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">clear(struct EnumerableMapExtended.StringToStringMap map)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-clear-struct-EnumerableMapExtended-StringToStringMap-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Removes all the entries from a map. O(n).
 
-WARNING: Developers should keep in mind that this function has an unbounded cost and using it may render the
+<Callout type="warn">
+Developers should keep in mind that this function has an unbounded cost and using it may render the
+</Callout>
 function uncallable if the map grows to the point where clearing it consumes too much gas to fit in a block.
+
+</div>
+</div>
 
 <a id="EnumerableMapExtended-contains-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
 
-### `contains(struct EnumerableMapExtended.StringToStringMap map, string key) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">contains(struct EnumerableMapExtended.StringToStringMap map, string key) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-contains-struct-EnumerableMapExtended-StringToStringMap-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns true if the key is in the map. O(1).
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-"></a>
 
-### `length(struct EnumerableMapExtended.StringToStringMap map) → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">length(struct EnumerableMapExtended.StringToStringMap map) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the number of key-value pairs in the map. O(1).
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-at-struct-EnumerableMapExtended-StringToStringMap-uint256-"></a>
 
-### `at(struct EnumerableMapExtended.StringToStringMap map, uint256 index) → string key, string value`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">at(struct EnumerableMapExtended.StringToStringMap map, uint256 index) → string key, string value</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-at-struct-EnumerableMapExtended-StringToStringMap-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the key-value pair stored at position `index` in the map. O(1).
 
@@ -337,18 +616,38 @@ Requirements:
 
 - `index` must be strictly less than [`EnumerableMapExtended.length`](#EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-).
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
 
-### `tryGet(struct EnumerableMapExtended.StringToStringMap map, string key) → bool exists, string value`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">tryGet(struct EnumerableMapExtended.StringToStringMap map, string key) → bool exists, string value</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-tryGet-struct-EnumerableMapExtended-StringToStringMap-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Tries to returns the value associated with `key`. O(1).
 Does not revert if `key` is not in the map.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-get-struct-EnumerableMapExtended-StringToStringMap-string-"></a>
 
-### `get(struct EnumerableMapExtended.StringToStringMap map, string key) → string value`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">get(struct EnumerableMapExtended.StringToStringMap map, string key) → string value</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-get-struct-EnumerableMapExtended-StringToStringMap-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the value associated with `key`. O(1).
 
@@ -356,47 +655,102 @@ Requirements:
 
 - `key` must be in the map.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-"></a>
 
-### `keys(struct EnumerableMapExtended.StringToStringMap map) → string[]`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">keys(struct EnumerableMapExtended.StringToStringMap map) → string[]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns an array containing all the keys
 
-WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+<Callout type="warn">
+This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+
+</div>
+</div>
 
 <a id="EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-uint256-uint256-"></a>
 
-### `keys(struct EnumerableMapExtended.StringToStringMap map, uint256 start, uint256 end) → string[]`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">keys(struct EnumerableMapExtended.StringToStringMap map, uint256 start, uint256 end) → string[]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableMapExtended-keys-struct-EnumerableMapExtended-StringToStringMap-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns an array containing a slice of the keys
 
-WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+<Callout type="warn">
+This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
 
+</div>
+</div>
+
 <a id="EnumerableMapExtended-EnumerableMapNonexistentBytesKey-bytes-"></a>
 
-### `EnumerableMapNonexistentBytesKey(bytes key)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">EnumerableMapNonexistentBytesKey(bytes key)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="EnumerableMapExtended-EnumerableMapNonexistentBytesKey-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Query for a nonexistent map key.
+
+</div>
+</div>
 
 <a id="EnumerableMapExtended-EnumerableMapNonexistentStringKey-string-"></a>
 
-### `EnumerableMapNonexistentStringKey(string key)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">EnumerableMapNonexistentStringKey(string key)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="EnumerableMapExtended-EnumerableMapNonexistentStringKey-string-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Query for a nonexistent map key.
 
+</div>
+</div>
+
 <a id="EnumerableSetExtended"></a>
 
-## `EnumerableSetExtended` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/structs/EnumerableSetExtended.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `EnumerableSetExtended` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v0.0.1/contracts/utils/structs/EnumerableSetExtended.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/utils/structs/EnumerableSetExtended.sol";
@@ -438,7 +792,9 @@ array of EnumerableSet.
 
 NOTE: This is an extension of openzeppelin/contracts/utils/struct/EnumerableSet.sol.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [add(self, value)](#EnumerableSetExtended-add-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--)
 - [remove(self, value)](#EnumerableSetExtended-remove-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--)
 - [clear(self)](#EnumerableSetExtended-clear-struct-EnumerableSetExtended-Bytes32x2Set-)
@@ -447,55 +803,116 @@ NOTE: This is an extension of openzeppelin/contracts/utils/struct/EnumerableSet.
 - [at(self, index)](#EnumerableSetExtended-at-struct-EnumerableSetExtended-Bytes32x2Set-uint256-)
 - [values(self)](#EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-)
 - [values(set, start, end)](#EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-uint256-uint256-)
+</div>
+</div>
 
 <a id="EnumerableSetExtended-add-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--"></a>
 
-### `add(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">add(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-add-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Add a value to a set. O(1).
 
 Returns true if the value was added to the set, that is if it was not
 already present.
 
+</div>
+</div>
+
 <a id="EnumerableSetExtended-remove-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--"></a>
 
-### `remove(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">remove(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-remove-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Removes a value from a set. O(1).
 
 Returns true if the value was removed from the set, that is if it was
 present.
 
+</div>
+</div>
+
 <a id="EnumerableSetExtended-clear-struct-EnumerableSetExtended-Bytes32x2Set-"></a>
 
-### `clear(struct EnumerableSetExtended.Bytes32x2Set self)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">clear(struct EnumerableSetExtended.Bytes32x2Set self)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-clear-struct-EnumerableSetExtended-Bytes32x2Set-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Removes all the values from a set. O(n).
 
-WARNING: Developers should keep in mind that this function has an unbounded cost and using it may render the
+<Callout type="warn">
+Developers should keep in mind that this function has an unbounded cost and using it may render the
+</Callout>
 function uncallable if the set grows to the point where clearing it consumes too much gas to fit in a block.
+
+</div>
+</div>
 
 <a id="EnumerableSetExtended-contains-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--"></a>
 
-### `contains(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">contains(struct EnumerableSetExtended.Bytes32x2Set self, bytes32[2] value) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-contains-struct-EnumerableSetExtended-Bytes32x2Set-bytes32-2--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns true if the value is in the set. O(1).
 
+</div>
+</div>
+
 <a id="EnumerableSetExtended-length-struct-EnumerableSetExtended-Bytes32x2Set-"></a>
 
-### `length(struct EnumerableSetExtended.Bytes32x2Set self) → uint256`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">length(struct EnumerableSetExtended.Bytes32x2Set self) → uint256</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-length-struct-EnumerableSetExtended-Bytes32x2Set-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the number of values on the set. O(1).
 
+</div>
+</div>
+
 <a id="EnumerableSetExtended-at-struct-EnumerableSetExtended-Bytes32x2Set-uint256-"></a>
 
-### `at(struct EnumerableSetExtended.Bytes32x2Set self, uint256 index) → bytes32[2]`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">at(struct EnumerableSetExtended.Bytes32x2Set self, uint256 index) → bytes32[2]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-at-struct-EnumerableSetExtended-Bytes32x2Set-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the value stored at position `index` in the set. O(1).
 
@@ -506,27 +923,54 @@ Requirements:
 
 - `index` must be strictly less than [`EnumerableMapExtended.length`](#EnumerableMapExtended-length-struct-EnumerableMapExtended-StringToStringMap-).
 
+</div>
+</div>
+
 <a id="EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-"></a>
 
-### `values(struct EnumerableSetExtended.Bytes32x2Set self) → bytes32[2][]`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">values(struct EnumerableSetExtended.Bytes32x2Set self) → bytes32[2][]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Return the entire set in an array
 
-WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+<Callout type="warn">
+This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+
+</div>
+</div>
 
 <a id="EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-uint256-uint256-"></a>
 
-### `values(struct EnumerableSetExtended.Bytes32x2Set set, uint256 start, uint256 end) → bytes32[2][]`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">values(struct EnumerableSetExtended.Bytes32x2Set set, uint256 start, uint256 end) → bytes32[2][]</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="EnumerableSetExtended-values-struct-EnumerableSetExtended-Bytes32x2Set-uint256-uint256-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Return a slice of the set in an array
 
-WARNING: This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+<Callout type="warn">
+This operation will copy the entire storage to memory, which can be quite expensive. This is designed
+</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+
+</div>
+</div>
 
