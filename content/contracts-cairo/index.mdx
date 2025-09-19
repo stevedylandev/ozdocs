@@ -8,8 +8,8 @@ title: Contracts for Cairo
 
 
 **A library for secure smart contract development** written in Cairo for [Starknet][starknet]. This library consists of a set of
-[reusable components](/cairo-contracts/components) to build custom smart contracts, as well as ready-to-deploy [presets](/cairo-contracts/presets). You can also
-find other [utilities](/cairo-contracts/api/utilities) including [interfaces and dispatchers](/cairo-contracts/interfaces) and [test utilities](/cairo-contracts/api/testing)
+[reusable components](/contracts-cairo/components) to build custom smart contracts, as well as ready-to-deploy [presets](/contracts-cairo/presets). You can also
+find other [utilities](/contracts-cairo/api/utilities) including [interfaces and dispatchers](/contracts-cairo/interfaces) and [test utilities](/contracts-cairo/api/testing)
 that facilitate testing with Starknet Foundry.
 
 <Callout>
@@ -59,7 +59,7 @@ The `openzeppelin` package is an umbrella (meta) package that aggregates all lib
 versioned in lockstep—their versions always matched. Starting with v3.x, following the introduction of `openzeppelin_interfaces`, the umbrella is
 versioned independently from some of the subpackages.
 
-See the [Versioning of the sub-packages](/cairo-contracts#versioning-of-the-sub-packages) section for more information.
+See the [Versioning of the sub-packages](/contracts-cairo#versioning-of-the-sub-packages) section for more information.
 
 </Callout>
 
@@ -104,7 +104,7 @@ openzeppelin_utils = "{{openzeppelin_utils_version}}"
 
 ## Basic usage
 
-This is how it looks to build an ERC20 contract using the [ERC20 component](erc20).
+This is how it looks to build an ERC20 contract using the [ERC20 component](/contracts-cairo/erc20).
 Copy the code into `src/lib.cairo`.
 
 ```rust
