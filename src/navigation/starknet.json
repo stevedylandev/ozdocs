@@ -41,21 +41,6 @@
 				"type": "page",
 				"name": "SNIP12 and Typed Messages",
 				"url": "/contracts-cairo/guides/snip12"
-			},
-			{
-				"type": "page",
-				"name": "ERC20 Permit",
-				"url": "/contracts-cairo/guides/erc20-permit"
-			},
-			{
-				"type": "page",
-				"name": "ERC20 Supply",
-				"url": "/contracts-cairo/guides/erc20-supply"
-			},
-			{
-				"type": "page",
-				"name": "SRC5 Migration",
-				"url": "/contracts-cairo/guides/src5-migration"
 			}
 		]
 	},
@@ -145,9 +130,25 @@
 				"name": "Tokens",
 				"children": [
 					{
-						"type": "page",
+						"type": "folder",
 						"name": "ERC-20",
-						"url": "/contracts-cairo/erc20"
+						"index": {
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts-cairo/erc20"
+						},
+						"children": [
+							{
+								"type": "page",
+								"name": "Creating Supply",
+								"url": "/contracts-cairo/guides/erc20-supply"
+							},
+							{
+								"type": "page",
+								"name": "ERC20 Permit",
+								"url": "/contracts-cairo/guides/erc20-permit"
+							}
+						]
 					},
 					{
 						"type": "page",
