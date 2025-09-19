@@ -20,12 +20,14 @@ import type { MDXComponents } from "mdx/types";
 import { Mermaid } from "@/components/mdx/mermaid";
 import { openapi } from "@/lib/openapi";
 import OZWizard from "./components/oz-wizard";
+import { APIGithubLinkHeader } from "./components/api-github-link-header";
 
 // use this function to get MDX components, you will need it for rendering MDX
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
 	return {
 		...defaultMdxComponents,
 		OZWizard,
+		APIGithubLinkHeader,
 		FileTextIcon,
 		UsersIcon,
 		ShieldIcon,
