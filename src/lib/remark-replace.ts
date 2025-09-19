@@ -98,5 +98,14 @@ export default function remarkReplaceMulti(rules: Rule[]) {
 				if (rule.exclusive) break; // stop after first exclusive rule
 			}
 		});
+
+		// 2) Markdown links/images: replace in the URL
+    visit(tree, ["link", "image", "definition"], (node: any) => {
+      if (typeof node.url !== "string") return;
+      for (const rule of active) {
+        node.url = replaceAll(node.url, rule.replacements);
+        if (rule.exclusive) break;
+      }
+    });
 	};
 }
