@@ -32,7 +32,7 @@ mod MyContract {
 }
 ```
 
-The `path` argument should be the imported component itself (in this case, [InitializableComponent](/contracts-cairo/security#initializable)).
+The `path` argument should be the imported component itself (in this case, [InitializableComponent](security#initializable)).
 The `storage` and `event` arguments are the variable names that will be set in the `Storage` struct and `Event` enum, respectively.
 Note that even if the component doesn’t define any events, the compiler will still create an empty event enum inside the component module.
 
@@ -128,8 +128,7 @@ mod MyContract {
 `InitializableImpl` defines the `is_initialized` method in the component.
 By adding the embed attribute, `is_initialized` becomes a contract entrypoint for `MyContract`.
 
-
-
+<Callout type='info'>
 Embeddable implementations, when available in this library’s components, are segregated from the internal component implementation which makes it easier to safely expose.
 Components also separate granular implementations from [mixin](/contracts-cairo/components#mixins) implementations.
 The API documentation design reflects these groupings.
@@ -139,6 +138,7 @@ See [ERC20Component](/contracts-cairo/api/erc20#erc20component) as an example wh
 * **Embeddable Implementations**
 * **Internal Implementations**
 * **Events**
+</Callout>
 
 
 ### Mixins
@@ -232,13 +232,15 @@ mod Account {
 
 <Callout type='warn'>
 Failing to use a component’s `initializer` can result in irreparable contract deployments.
+
+Always read the API Reference documentation for each integrated component.
 </Callout>
-Always read the API documentation for each integrated component.
+
 
 Some components require some sort of setup upon construction.
 Usually, this would be a job for a constructor; however, components themselves cannot implement constructors.
 Components instead offer ``initializer``s within their `InternalImpl` to call from the contract’s constructor.
-Let’s look at how a contract would integrate [OwnableComponent](/contracts-cairo/api/access#ownablecomponent):
+Let’s look at how a contract would integrate [OwnableComponent](/contracts-cairo/api/access#OwnableComponent):
 
 ```rust
 #[starknet::contract]
@@ -441,8 +443,10 @@ mod MyContract {
 
 <Callout type='warn'>
 Customizing implementations and accessing component storage can potentially corrupt the state, bypass security checks, and undermine the component logic.
-</Callout>
+
 **Exercise extreme caution**. See [Security](#security).
+</Callout>
+
 
 ### Hooks
 

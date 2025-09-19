@@ -179,11 +179,6 @@
 		]
 	},
 	{
-		"type": "page",
-		"name": "Backwards Compatibility",
-		"url": "/contracts-cairo/backwards-compatibility"
-	},
-	{
 		"type": "folder",
 		"name": "API Reference",
 		"children": [
@@ -263,6 +258,11 @@
 				"url": "/contracts-cairo/api/utilities"
 			}
 		]
+	},
+	{
+		"type": "page",
+		"name": "Backwards Compatibility",
+		"url": "/contracts-cairo/backwards-compatibility"
 	},
 	{
 		"type": "folder",

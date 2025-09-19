@@ -5,7 +5,7 @@ export function APIGithubLinkHeader({
 	moduleName: string;
 	link: string;
 }) {
-	const id = moduleName.toLowerCase().replace(/ /g, "-") + "-toc";
+	const id = moduleName;
 	return (
 		<div
 			style={{ marginTop: "2em" }}

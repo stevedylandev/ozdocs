@@ -13,10 +13,12 @@ This crate provides ways to restrict who can access the functions of a contract 
 Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_access` package. The references documented here are contained in the `openzeppelin_interfaces` package version `v2.1.0`.
 </Callout>
 
+import { UMBRELLA_VERSION } from "../utils/constants.ts";
+
 ### `IAccessControl` [toc]
 <APIGithubLinkHeader
     moduleName="IAccessControl"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/access/accesscontrol.cairo"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-${UMBRELLA_VERSION}/packages/interfaces/src/access/accesscontrol.cairo`}
 />
 
 ```rust
@@ -148,7 +150,7 @@ Emitted when `account` is revoked `role`.
 ### `IAccessControlWithDelay` [toc]
 <APIGithubLinkHeader
     moduleName="IAccessControlWithDelay"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/access/accesscontrol.cairo"
+    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/interfaces/src/access/accesscontrol.cairo"
 />
 
 ```rust
@@ -211,7 +213,7 @@ Emitted when `account` is granted `role` with a delay.
 ### `IAccessControlDefaultAdminRules` [toc]
 <APIGithubLinkHeader
     moduleName="IAccessControlDefaultAdminRules"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/access/accesscontrol_default_admin_rules.cairo"
+    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/interfaces/src/access/accesscontrol_default_admin_rules.cairo"
 />
 
 ```rust
@@ -439,10 +441,10 @@ Emitted when a [pending\_default\_admin\_delay](#IAccessControlDefaultAdminRules
 
 ## Core
 
-### `OwnableComponent` [toc]
+### `OwnableComponent` [toc] [#OwnableComponent]
 <APIGithubLinkHeader
     moduleName="OwnableComponent"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/access/src/ownable/ownable.cairo"
+    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/access/src/ownable/ownable.cairo"
 />
 
 ```rust
@@ -706,7 +708,7 @@ Emitted when the ownership is transferred.
 ### `AccessControlComponent` [toc]
 <APIGithubLinkHeader
     moduleName="AccessControlComponent"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/access/src/accesscontrol/accesscontrol.cairo"
+    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/access/src/accesscontrol/accesscontrol.cairo"
 />
 
 ```rust
@@ -1102,7 +1104,7 @@ See [IAccessControl::RoleRevoked](#IAccessControl-RoleRevoked).
 ### `AccessControlDefaultAdminRulesComponent` [toc]
 <APIGithubLinkHeader
     moduleName="AccessControlDefaultAdminRulesComponent"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/access/src/accesscontrol/extensions/accesscontrol_default_admin_rules.cairo"
+    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/access/src/accesscontrol/extensions/accesscontrol_default_admin_rules.cairo"
 />
 
 ```rust
