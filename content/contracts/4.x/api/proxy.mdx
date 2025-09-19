@@ -3,11 +3,7 @@ title: "Proxy"
 description: "Smart contract proxy utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/contracts/api/proxy
-</Callout>
-
-This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](upgrades-plugins::proxies.adoc) page.
+This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](upgrades-plugins::proxies) page.
 
 Most of the proxies below are built on an abstract base contract.
 
@@ -24,7 +20,7 @@ There are two alternative ways to add upgradeability to an ERC1967 proxy. Their 
 * [`UUPSUpgradeable`](#UUPSUpgradeable): An upgradeability mechanism to be included in the implementation contract.
 
 **🔥 CAUTION**\
-Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index.adoc) for Truffle and Hardhat.
+Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) for Truffle and Hardhat.
 
 A different family of proxies are beacon proxies. This pattern, popularized by Dharma, allows multiple proxies to be upgraded to a different implementation in a single transaction.
 
@@ -92,7 +88,15 @@ The current implementation of this security mechanism uses [EIP1822](https://eip
 
 <a id="Clones"></a>
 
-## `Clones` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/Clones.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `Clones`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/Clones.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/Clones.sol";
@@ -110,25 +114,46 @@ deterministic method.
 
 _Available since v3.4._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [clone(implementation)](#Clones-clone-address-)
 - [cloneDeterministic(implementation, salt)](#Clones-cloneDeterministic-address-bytes32-)
 - [predictDeterministicAddress(implementation, salt, deployer)](#Clones-predictDeterministicAddress-address-bytes32-address-)
 - [predictDeterministicAddress(implementation, salt)](#Clones-predictDeterministicAddress-address-bytes32-)
+</div>
+</div>
 
 <a id="Clones-clone-address-"></a>
 
-### `clone(address implementation) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">clone(address implementation) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-clone-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deploys and returns the address of a clone that mimics the behaviour of `implementation`.
 
 This function uses the create opcode, which should never revert.
 
+</div>
+</div>
+
 <a id="Clones-cloneDeterministic-address-bytes32-"></a>
 
-### `cloneDeterministic(address implementation, bytes32 salt) → address instance`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">cloneDeterministic(address implementation, bytes32 salt) → address instance</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-cloneDeterministic-address-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Deploys and returns the address of a clone that mimics the behaviour of `implementation`.
 
@@ -136,23 +161,54 @@ This function uses the create2 opcode and a `salt` to deterministically deploy
 the clone. Using the same `implementation` and `salt` multiple time will revert, since
 the clones cannot be deployed twice at the same address.
 
+</div>
+</div>
+
 <a id="Clones-predictDeterministicAddress-address-bytes32-address-"></a>
 
-### `predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-predictDeterministicAddress-address-bytes32-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-).
+
+</div>
+</div>
 
 <a id="Clones-predictDeterministicAddress-address-bytes32-"></a>
 
-### `predictDeterministicAddress(address implementation, bytes32 salt) → address predicted`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">predictDeterministicAddress(address implementation, bytes32 salt) → address predicted</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Clones-predictDeterministicAddress-address-bytes32-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Computes the address of a clone deployed using [`Clones.cloneDeterministic`](#Clones-cloneDeterministic-address-bytes32-).
 
+</div>
+</div>
+
 <a id="ERC1967Proxy"></a>
 
-## `ERC1967Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/ERC1967/ERC1967Proxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC1967Proxy`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/ERC1967/ERC1967Proxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
@@ -163,10 +219,11 @@ implementation address that can be changed. This address is stored in storage in
 [EIP1967](https://eips.ethereum.org/EIPS/eip-1967), so that it doesn't conflict with the storage layout of the
 implementation behind the proxy.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(_logic, _data)](#ERC1967Proxy-constructor-address-bytes-)
 - [_implementation()](#ERC1967Proxy-_implementation--)
-
 #### ERC1967Upgrade
 - [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
 - [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
@@ -176,47 +233,76 @@ implementation behind the proxy.
 - [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
 - [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
 - [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
-
 #### IERC1967
-
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
 - [receive()](#Proxy-receive--)
 - [_beforeFallback()](#Proxy-_beforeFallback--)
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC1967Upgrade
-
 #### IERC1967
 - [Upgraded(implementation)](#IERC1967-Upgraded-address-)
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
-
 #### Proxy
+</div>
+</div>
 
 <a id="ERC1967Proxy-constructor-address-bytes-"></a>
 
-### `constructor(address _logic, bytes _data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address _logic, bytes _data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ERC1967Proxy-constructor-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Initializes the upgradeable proxy with an initial implementation specified by `_logic`.
 
 If `_data` is nonempty, it's used as data in a delegate call to `_logic`. This will typically be an encoded
 function call, and allows initializing the storage of the proxy like a Solidity constructor.
 
+</div>
+</div>
+
 <a id="ERC1967Proxy-_implementation--"></a>
 
-### `_implementation() → address impl`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_implementation() → address impl</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Proxy-_implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade"></a>
 
-## `ERC1967Upgrade` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/ERC1967/ERC1967Upgrade.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ERC1967Upgrade`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/ERC1967/ERC1967Upgrade.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol";
@@ -227,7 +313,9 @@ This abstract contract provides getters and event emitting update functions for
 
 _Available since v4.1._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
 - [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
 - [_upgradeToAndCall(newImplementation, data, forceCall)](#ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-)
@@ -236,86 +324,178 @@ _Available since v4.1._
 - [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
 - [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
 - [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
-
 #### IERC1967
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC1967
 - [Upgraded(implementation)](#IERC1967-Upgraded-address-)
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
+</div>
+</div>
 
 <a id="ERC1967Upgrade-_getImplementation--"></a>
 
-### `_getImplementation() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_getImplementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_getImplementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade-_upgradeTo-address-"></a>
 
-### `_upgradeTo(address newImplementation)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_upgradeTo(address newImplementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_upgradeTo-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Perform implementation upgrade
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-"></a>
 
-### `_upgradeToAndCall(address newImplementation, bytes data, bool forceCall)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_upgradeToAndCall(address newImplementation, bytes data, bool forceCall)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_upgradeToAndCall-address-bytes-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Perform implementation upgrade with additional setup call.
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-"></a>
 
-### `_upgradeToAndCallUUPS(address newImplementation, bytes data, bool forceCall)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_upgradeToAndCallUUPS(address newImplementation, bytes data, bool forceCall)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_upgradeToAndCallUUPS-address-bytes-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Perform implementation upgrade with security checks for UUPS proxies, and additional setup call.
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade-_getAdmin--"></a>
 
-### `_getAdmin() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_getAdmin() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_getAdmin--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current admin.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade-_changeAdmin-address-"></a>
 
-### `_changeAdmin(address newAdmin)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_changeAdmin(address newAdmin)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_changeAdmin-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Changes the admin of the proxy.
 
 Emits an [`IERC1967.AdminChanged`](interfaces#IERC1967-AdminChanged-address-address-) event.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade-_getBeacon--"></a>
 
-### `_getBeacon() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_getBeacon() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_getBeacon--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current beacon.
 
+</div>
+</div>
+
 <a id="ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-"></a>
 
-### `_upgradeBeaconToAndCall(address newBeacon, bytes data, bool forceCall)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_upgradeBeaconToAndCall(address newBeacon, bytes data, bool forceCall)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Perform beacon upgrade with additional setup call. Note: This upgrades the address of the beacon, it does
 not upgrade the implementation contained in the beacon (see [`UpgradeableBeacon._setImplementation`](#UpgradeableBeacon-_setImplementation-address-) for that).
 
 Emits a [`IERC1967.BeaconUpgraded`](interfaces#IERC1967-BeaconUpgraded-address-) event.
 
+</div>
+</div>
+
 <a id="Proxy"></a>
 
-## `Proxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/Proxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `Proxy`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/Proxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/Proxy.sol";
@@ -330,69 +510,141 @@ different contract through the [`Votes._delegate`](governance#Votes-_delegate-ad
 
 The success and return data of the delegated call will be returned back to the caller of the proxy.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_implementation()](#Proxy-_implementation--)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
 - [receive()](#Proxy-receive--)
 - [_beforeFallback()](#Proxy-_beforeFallback--)
+</div>
+</div>
 
 <a id="Proxy-_delegate-address-"></a>
 
-### `_delegate(address implementation)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_delegate(address implementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Proxy-_delegate-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Delegates the current call to `implementation`.
 
 This function does not return to its internal call site, it will return directly to the external caller.
 
+</div>
+</div>
+
 <a id="Proxy-_implementation--"></a>
 
-### `_implementation() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Proxy-_implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 This is a virtual function that should be overridden so it returns the address to which the fallback function
 and [`Proxy._fallback`](#Proxy-_fallback--) should delegate.
 
+</div>
+</div>
+
 <a id="Proxy-_fallback--"></a>
 
-### `_fallback()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_fallback()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Proxy-_fallback--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Delegates the current call to the address returned by `_implementation()`.
 
 This function does not return to its internal call site, it will return directly to the external caller.
 
+</div>
+</div>
+
 <a id="Proxy-fallback--"></a>
 
-### `fallback()`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">fallback()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="Proxy-fallback--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Fallback function that delegates calls to the address returned by `_implementation()`. Will run if no other
 function in the contract matches the call data.
 
+</div>
+</div>
+
 <a id="Proxy-receive--"></a>
 
-### `receive()`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">receive()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="Proxy-receive--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data
 is empty.
 
+</div>
+</div>
+
 <a id="Proxy-_beforeFallback--"></a>
 
-### `_beforeFallback()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_beforeFallback()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Proxy-_beforeFallback--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`
 call, or as part of the Solidity `fallback` or `receive` functions.
 
 If overridden should call `super._beforeFallback()`.
 
+</div>
+</div>
+
 <a id="BeaconProxy"></a>
 
-## `BeaconProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/BeaconProxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `BeaconProxy`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/BeaconProxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
@@ -405,12 +657,13 @@ conflict with the storage layout of the implementation behind the proxy.
 
 _Available since v3.4._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(beacon, data)](#BeaconProxy-constructor-address-bytes-)
 - [_beacon()](#BeaconProxy-_beacon--)
 - [_implementation()](#BeaconProxy-_implementation--)
 - [_setBeacon(beacon, data)](#BeaconProxy-_setBeacon-address-bytes-)
-
 #### ERC1967Upgrade
 - [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
 - [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
@@ -420,31 +673,39 @@ _Available since v3.4._
 - [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
 - [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
 - [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
-
 #### IERC1967
-
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [_fallback()](#Proxy-_fallback--)
 - [fallback()](#Proxy-fallback--)
 - [receive()](#Proxy-receive--)
 - [_beforeFallback()](#Proxy-_beforeFallback--)
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC1967Upgrade
-
 #### IERC1967
 - [Upgraded(implementation)](#IERC1967-Upgraded-address-)
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
-
 #### Proxy
+</div>
+</div>
 
 <a id="BeaconProxy-constructor-address-bytes-"></a>
 
-### `constructor(address beacon, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address beacon, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="BeaconProxy-constructor-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Initializes the proxy with `beacon`.
 
@@ -456,24 +717,54 @@ Requirements:
 
 - `beacon` must be a contract with the interface [`IBeacon`](#IBeacon).
 
+</div>
+</div>
+
 <a id="BeaconProxy-_beacon--"></a>
 
-### `_beacon() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_beacon() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="BeaconProxy-_beacon--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current beacon address.
 
+</div>
+</div>
+
 <a id="BeaconProxy-_implementation--"></a>
 
-### `_implementation() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="BeaconProxy-_implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address of the associated beacon.
 
+</div>
+</div>
+
 <a id="BeaconProxy-_setBeacon-address-bytes-"></a>
 
-### `_setBeacon(address beacon, bytes data)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_setBeacon(address beacon, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="BeaconProxy-_setBeacon-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Changes the proxy to use a new beacon. Deprecated: see [`ERC1967Upgrade._upgradeBeaconToAndCall`](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-).
 
@@ -484,9 +775,20 @@ Requirements:
 - `beacon` must be a contract.
 - The implementation returned by `beacon` must be a contract.
 
+</div>
+</div>
+
 <a id="IBeacon"></a>
 
-## `IBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/IBeacon.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `IBeacon`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/IBeacon.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
@@ -494,21 +796,43 @@ import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
 
 This is the interface that [`BeaconProxy`](#BeaconProxy) expects of its beacon.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [implementation()](#IBeacon-implementation--)
+</div>
+</div>
 
 <a id="IBeacon-implementation--"></a>
 
-### `implementation() → address`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="IBeacon-implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Must return an address that can be used as a delegate call target.
 
 [`BeaconProxy`](#BeaconProxy) will check that this address is a contract.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon"></a>
 
-## `UpgradeableBeacon` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/UpgradeableBeacon.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `UpgradeableBeacon`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/beacon/UpgradeableBeacon.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
@@ -519,47 +843,78 @@ implementation contract, which is where they will delegate all function calls.
 
 An owner is able to change the implementation the beacon points to, thus upgrading the proxies that use this beacon.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(implementation_)](#UpgradeableBeacon-constructor-address-)
 - [implementation()](#UpgradeableBeacon-implementation--)
 - [upgradeTo(newImplementation)](#UpgradeableBeacon-upgradeTo-address-)
-
 #### Ownable
 - [owner()](#Ownable-owner--)
 - [_checkOwner()](#Ownable-_checkOwner--)
 - [renounceOwnership()](#Ownable-renounceOwnership--)
 - [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
 - [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
-
 #### IBeacon
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [Upgraded(implementation)](#UpgradeableBeacon-Upgraded-address-)
-
 #### Ownable
 - [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
-
 #### IBeacon
+</div>
+</div>
 
 <a id="UpgradeableBeacon-constructor-address-"></a>
 
-### `constructor(address implementation_)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address implementation_)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UpgradeableBeacon-constructor-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Sets the address of the initial implementation, and the deployer account as the owner who can upgrade the
 beacon.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon-implementation--"></a>
 
-### `implementation() → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UpgradeableBeacon-implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation address.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon-upgradeTo-address-"></a>
 
-### `upgradeTo(address newImplementation)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeTo(address newImplementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UpgradeableBeacon-upgradeTo-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrades the beacon to a new implementation.
 
@@ -570,16 +925,38 @@ Requirements:
 - msg.sender must be the owner of the contract.
 - `newImplementation` must be a contract.
 
+</div>
+</div>
+
 <a id="UpgradeableBeacon-Upgraded-address-"></a>
 
-### `Upgraded(address indexed implementation)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Upgraded(address indexed implementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="UpgradeableBeacon-Upgraded-address-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Emitted when the implementation returned by the beacon is changed.
 
+</div>
+</div>
+
 <a id="ProxyAdmin"></a>
 
-## `ProxyAdmin` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/ProxyAdmin.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ProxyAdmin`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/ProxyAdmin.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
@@ -588,29 +965,42 @@ import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 This is an auxiliary contract meant to be assigned as the admin of a [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy). For an
 explanation of why you would want to use this see the documentation for [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [getProxyImplementation(proxy)](#ProxyAdmin-getProxyImplementation-contract-ITransparentUpgradeableProxy-)
 - [getProxyAdmin(proxy)](#ProxyAdmin-getProxyAdmin-contract-ITransparentUpgradeableProxy-)
 - [changeProxyAdmin(proxy, newAdmin)](#ProxyAdmin-changeProxyAdmin-contract-ITransparentUpgradeableProxy-address-)
 - [upgrade(proxy, implementation)](#ProxyAdmin-upgrade-contract-ITransparentUpgradeableProxy-address-)
 - [upgradeAndCall(proxy, implementation, data)](#ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-)
-
 #### Ownable
 - [owner()](#Ownable-owner--)
 - [_checkOwner()](#Ownable-_checkOwner--)
 - [renounceOwnership()](#Ownable-renounceOwnership--)
 - [transferOwnership(newOwner)](#Ownable-transferOwnership-address-)
 - [_transferOwnership(newOwner)](#Ownable-_transferOwnership-address-)
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### Ownable
 - [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
+</div>
+</div>
 
 <a id="ProxyAdmin-getProxyImplementation-contract-ITransparentUpgradeableProxy-"></a>
 
-### `getProxyImplementation(contract ITransparentUpgradeableProxy proxy) → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getProxyImplementation(contract ITransparentUpgradeableProxy proxy) → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-getProxyImplementation-contract-ITransparentUpgradeableProxy-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current implementation of `proxy`.
 
@@ -618,10 +1008,20 @@ Requirements:
 
 - This contract must be the admin of `proxy`.
 
+</div>
+</div>
+
 <a id="ProxyAdmin-getProxyAdmin-contract-ITransparentUpgradeableProxy-"></a>
 
-### `getProxyAdmin(contract ITransparentUpgradeableProxy proxy) → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">getProxyAdmin(contract ITransparentUpgradeableProxy proxy) → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-getProxyAdmin-contract-ITransparentUpgradeableProxy-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current admin of `proxy`.
 
@@ -629,10 +1029,20 @@ Requirements:
 
 - This contract must be the admin of `proxy`.
 
+</div>
+</div>
+
 <a id="ProxyAdmin-changeProxyAdmin-contract-ITransparentUpgradeableProxy-address-"></a>
 
-### `changeProxyAdmin(contract ITransparentUpgradeableProxy proxy, address newAdmin)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">changeProxyAdmin(contract ITransparentUpgradeableProxy proxy, address newAdmin)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-changeProxyAdmin-contract-ITransparentUpgradeableProxy-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Changes the admin of `proxy` to `newAdmin`.
 
@@ -640,10 +1050,20 @@ Requirements:
 
 - This contract must be the current admin of `proxy`.
 
+</div>
+</div>
+
 <a id="ProxyAdmin-upgrade-contract-ITransparentUpgradeableProxy-address-"></a>
 
-### `upgrade(contract ITransparentUpgradeableProxy proxy, address implementation)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgrade(contract ITransparentUpgradeableProxy proxy, address implementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-upgrade-contract-ITransparentUpgradeableProxy-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrades `proxy` to `implementation`. See [`ITransparentUpgradeableProxy.upgradeTo`](#ITransparentUpgradeableProxy-upgradeTo-address-).
 
@@ -651,10 +1071,20 @@ Requirements:
 
 - This contract must be the admin of `proxy`.
 
+</div>
+</div>
+
 <a id="ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-"></a>
 
-### `upgradeAndCall(contract ITransparentUpgradeableProxy proxy, address implementation, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeAndCall(contract ITransparentUpgradeableProxy proxy, address implementation, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="ProxyAdmin-upgradeAndCall-contract-ITransparentUpgradeableProxy-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrades `proxy` to `implementation` and calls a function on the new implementation. See
 [`ITransparentUpgradeableProxy.upgradeToAndCall`](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-).
@@ -663,9 +1093,20 @@ Requirements:
 
 - This contract must be the admin of `proxy`.
 
+</div>
+</div>
+
 <a id="ITransparentUpgradeableProxy"></a>
 
-## `ITransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `ITransparentUpgradeableProxy`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/TransparentUpgradeableProxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
@@ -676,50 +1117,114 @@ does not implement this interface directly, and some of its functions are implem
 mechanism. The compiler is unaware that these functions are implemented by [`TransparentUpgradeableProxy`](#TransparentUpgradeableProxy) and will not
 include them in the ABI so this interface must be used to interact with it.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [admin()](#ITransparentUpgradeableProxy-admin--)
 - [implementation()](#ITransparentUpgradeableProxy-implementation--)
 - [changeAdmin()](#ITransparentUpgradeableProxy-changeAdmin-address-)
 - [upgradeTo()](#ITransparentUpgradeableProxy-upgradeTo-address-)
 - [upgradeToAndCall(, )](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-)
-
 #### IERC1967
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### IERC1967
 - [Upgraded(implementation)](#IERC1967-Upgraded-address-)
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
+</div>
+</div>
 
 <a id="ITransparentUpgradeableProxy-admin--"></a>
 
-### `admin() → address`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">admin() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ITransparentUpgradeableProxy-admin--">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ITransparentUpgradeableProxy-implementation--"></a>
 
-### `implementation() → address`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">implementation() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ITransparentUpgradeableProxy-implementation--">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ITransparentUpgradeableProxy-changeAdmin-address-"></a>
 
-### `changeAdmin(address)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">changeAdmin(address)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ITransparentUpgradeableProxy-changeAdmin-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ITransparentUpgradeableProxy-upgradeTo-address-"></a>
 
-### `upgradeTo(address)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeTo(address)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ITransparentUpgradeableProxy-upgradeTo-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-"></a>
 
-### `upgradeToAndCall(address, bytes)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeToAndCall(address, bytes)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="TransparentUpgradeableProxy"></a>
 
-## `TransparentUpgradeableProxy` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/TransparentUpgradeableProxy.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `TransparentUpgradeableProxy`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/transparent/TransparentUpgradeableProxy.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
@@ -751,22 +1256,28 @@ mechanism in `_fallback`. Consequently, the compiler will not produce an ABI for
 fully implement transparency without decoding reverts caused by selector clashes between the proxy and the
 implementation.
 
-WARNING: It is not recommended to extend this contract to add additional external functions. If you do so, the compiler
+<Callout type="warn">
+It is not recommended to extend this contract to add additional external functions. If you do so, the compiler
+</Callout>
 will not check that there are no selector conflicts, due to the note above. A selector clash between any new function
 and the functions declared in [`ITransparentUpgradeableProxy`](#ITransparentUpgradeableProxy) will be resolved in favor of the new one. This could
 render the admin operations inaccessible, which could prevent upgradeability. Transparency may also be compromised.
 
-### Modifiers
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Modifiers</h3>
+<div className="font-mono">
 - [ifAdmin()](#TransparentUpgradeableProxy-ifAdmin--)
+</div>
+</div>
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(_logic, admin_, _data)](#TransparentUpgradeableProxy-constructor-address-address-bytes-)
 - [_fallback()](#TransparentUpgradeableProxy-_fallback--)
 - [_admin()](#TransparentUpgradeableProxy-_admin--)
-
 #### ERC1967Proxy
 - [_implementation()](#ERC1967Proxy-_implementation--)
-
 #### ERC1967Upgrade
 - [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
 - [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
@@ -776,64 +1287,114 @@ render the admin operations inaccessible, which could prevent upgradeability. Tr
 - [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
 - [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
 - [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
-
 #### IERC1967
-
 #### Proxy
 - [_delegate(implementation)](#Proxy-_delegate-address-)
 - [fallback()](#Proxy-fallback--)
 - [receive()](#Proxy-receive--)
 - [_beforeFallback()](#Proxy-_beforeFallback--)
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC1967Proxy
-
 #### ERC1967Upgrade
-
 #### IERC1967
 - [Upgraded(implementation)](#IERC1967-Upgraded-address-)
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
-
 #### Proxy
+</div>
+</div>
 
 <a id="TransparentUpgradeableProxy-ifAdmin--"></a>
 
-### `ifAdmin()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ifAdmin()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-ifAdmin--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Modifier used internally that will delegate the call to the implementation unless the sender is the admin.
 
 CAUTION: This modifier is deprecated, as it could cause issues if the modified function has arguments, and the
 implementation provides a function with the same selector.
 
+</div>
+</div>
+
 <a id="TransparentUpgradeableProxy-constructor-address-address-bytes-"></a>
 
-### `constructor(address _logic, address admin_, bytes _data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address _logic, address admin_, bytes _data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-constructor-address-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Initializes an upgradeable proxy managed by `_admin`, backed by the implementation at `_logic`, and
 optionally initialized with `_data` as explained in [`ERC1967Proxy.constructor`](#ERC1967Proxy-constructor-address-bytes-).
 
+</div>
+</div>
+
 <a id="TransparentUpgradeableProxy-_fallback--"></a>
 
-### `_fallback()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_fallback()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-_fallback--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 If caller is the admin process the call internally, otherwise transparently fallback to the proxy behavior
 
+</div>
+</div>
+
 <a id="TransparentUpgradeableProxy-_admin--"></a>
 
-### `_admin() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_admin() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="TransparentUpgradeableProxy-_admin--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the current admin.
 
 CAUTION: This function is deprecated. Use [`ERC1967Upgrade._getAdmin`](#ERC1967Upgrade-_getAdmin--) instead.
 
+</div>
+</div>
+
 <a id="Initializable"></a>
 
-## `Initializable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/utils/Initializable.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `Initializable`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/utils/Initializable.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
@@ -888,22 +1449,43 @@ constructor() {
 ```
 ====
 
-### Modifiers
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Modifiers</h3>
+<div className="font-mono">
 - [initializer()](#Initializable-initializer--)
 - [reinitializer(version)](#Initializable-reinitializer-uint8-)
 - [onlyInitializing()](#Initializable-onlyInitializing--)
+</div>
+</div>
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_disableInitializers()](#Initializable-_disableInitializers--)
 - [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
 - [_isInitializing()](#Initializable-_isInitializing--)
+</div>
+</div>
 
-### Events
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 - [Initialized(version)](#Initializable-Initialized-uint8-)
+</div>
+</div>
 
 <a id="Initializable-initializer--"></a>
 
-### `initializer()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">initializer()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-initializer--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 A modifier that defines a protected initializer function that can be invoked at most once. In its scope,
 `onlyInitializing` functions can be used to initialize parent contracts.
@@ -913,9 +1495,21 @@ constructor.
 
 Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint8-) event.
 
+</div>
+</div>
+
 <a id="Initializable-reinitializer-uint8-"></a>
 
-### `reinitializer(uint8 version)`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">reinitializer(uint8 version)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-reinitializer-uint8-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 A modifier that defines a protected reinitializer function that can be invoked at most once, and only if the
 contract hasn't been initialized to a greater version before. In its scope, `onlyInitializing` functions can be
@@ -930,21 +1524,45 @@ cannot be nested. If one is invoked in the context of another, execution will re
 Note that versions can jump in increments greater than 1; this implies that if multiple reinitializers coexist in
 a contract, executing them in the right order is up to the developer or operator.
 
-WARNING: setting the version to 255 will prevent any future reinitialization.
+<Callout type="warn">
+setting the version to 255 will prevent any future reinitialization.
+</Callout>
 
 Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint8-) event.
 
+</div>
+</div>
+
 <a id="Initializable-onlyInitializing--"></a>
 
-### `onlyInitializing()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">onlyInitializing()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-onlyInitializing--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Modifier to protect an initialization function so that it can only be invoked by functions with the
 [`Initializable.initializer`](#Initializable-initializer--) and [`Initializable.reinitializer`](#Initializable-reinitializer-uint8-) modifiers, directly or indirectly.
 
+</div>
+</div>
+
 <a id="Initializable-_disableInitializers--"></a>
 
-### `_disableInitializers()`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_disableInitializers()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_disableInitializers--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Locks the contract, preventing any future reinitialization. This cannot be part of an initializer call.
 Calling this in the constructor of a contract will prevent that contract from being initialized or reinitialized
@@ -953,30 +1571,72 @@ through proxies.
 
 Emits an [`Initializable.Initialized`](#Initializable-Initialized-uint8-) event the first time it is successfully executed.
 
+</div>
+</div>
+
 <a id="Initializable-_getInitializedVersion--"></a>
 
-### `_getInitializedVersion() → uint8`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_getInitializedVersion() → uint8</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_getInitializedVersion--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the highest version that has been initialized. See [`Initializable.reinitializer`](#Initializable-reinitializer-uint8-).
 
+</div>
+</div>
+
 <a id="Initializable-_isInitializing--"></a>
 
-### `_isInitializing() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isInitializing() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="Initializable-_isInitializing--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns `true` if the contract is currently initializing. See [`Initializable.onlyInitializing`](#Initializable-onlyInitializing--).
 
+</div>
+</div>
+
 <a id="Initializable-Initialized-uint8-"></a>
 
-### `Initialized(uint8 version)`
-*event*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">Initialized(uint8 version)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">event</p>
+<a className="peer" data-card href="Initializable-Initialized-uint8-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Triggered when the contract has been initialized or reinitialized.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable"></a>
 
-## `UUPSUpgradeable` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/utils/UUPSUpgradeable.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `UUPSUpgradeable`
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/proxy/utils/UUPSUpgradeable.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
@@ -993,16 +1653,21 @@ The [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-add
 
 _Available since v4.1._
 
-### Modifiers
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Modifiers</h3>
+<div className="font-mono">
 - [onlyProxy()](#UUPSUpgradeable-onlyProxy--)
 - [notDelegated()](#UUPSUpgradeable-notDelegated--)
+</div>
+</div>
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [proxiableUUID()](#UUPSUpgradeable-proxiableUUID--)
 - [upgradeTo(newImplementation)](#UUPSUpgradeable-upgradeTo-address-)
 - [upgradeToAndCall(newImplementation, data)](#UUPSUpgradeable-upgradeToAndCall-address-bytes-)
 - [_authorizeUpgrade(newImplementation)](#UUPSUpgradeable-_authorizeUpgrade-address-)
-
 #### ERC1967Upgrade
 - [_getImplementation()](#ERC1967Upgrade-_getImplementation--)
 - [_upgradeTo(newImplementation)](#ERC1967Upgrade-_upgradeTo-address-)
@@ -1012,25 +1677,35 @@ _Available since v4.1._
 - [_changeAdmin(newAdmin)](#ERC1967Upgrade-_changeAdmin-address-)
 - [_getBeacon()](#ERC1967Upgrade-_getBeacon--)
 - [_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#ERC1967Upgrade-_upgradeBeaconToAndCall-address-bytes-bool-)
-
 #### IERC1967
-
 #### IERC1822Proxiable
+</div>
+</div>
 
-### Events
-
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Events</h3>
+<div className="font-mono">
 #### ERC1967Upgrade
-
 #### IERC1967
 - [Upgraded(implementation)](#IERC1967-Upgraded-address-)
 - [AdminChanged(previousAdmin, newAdmin)](#IERC1967-AdminChanged-address-address-)
 - [BeaconUpgraded(beacon)](#IERC1967-BeaconUpgraded-address-)
-
 #### IERC1822Proxiable
+</div>
+</div>
 
 <a id="UUPSUpgradeable-onlyProxy--"></a>
 
-### `onlyProxy()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">onlyProxy()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-onlyProxy--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Check that the execution is being performed through a delegatecall call and that the execution context is
 a proxy contract with an implementation (as defined in ERC1967) pointing to self. This should only be the case
@@ -1038,29 +1713,63 @@ for UUPS and transparent proxies that are using the current contract as their im
 function through ERC1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to
 fail.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-notDelegated--"></a>
 
-### `notDelegated()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">notDelegated()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-notDelegated--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Check that the execution is not being performed through a delegate call. This allows a function to be
 callable on the implementing contract but not through proxies.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-proxiableUUID--"></a>
 
-### `proxiableUUID() → bytes32`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">proxiableUUID() → bytes32</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="UUPSUpgradeable-proxiableUUID--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Implementation of the ERC1822 [`IERC1822Proxiable.proxiableUUID`](interfaces#IERC1822Proxiable-proxiableUUID--) function. This returns the storage slot used by the
 implementation. It is used to validate the implementation's compatibility when performing an upgrade.
 
-IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
+<Callout type="warn">
+A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
+</Callout>
 bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this
 function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-upgradeTo-address-"></a>
 
-### `upgradeTo(address newImplementation)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeTo(address newImplementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UUPSUpgradeable-upgradeTo-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrade the implementation of the proxy to `newImplementation`.
 
@@ -1068,10 +1777,20 @@ Calls [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-a
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-upgradeToAndCall-address-bytes-"></a>
 
-### `upgradeToAndCall(address newImplementation, bytes data)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">upgradeToAndCall(address newImplementation, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="UUPSUpgradeable-upgradeToAndCall-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Upgrade the implementation of the proxy to `newImplementation`, and subsequently execute the function call
 encoded in `data`.
@@ -1080,17 +1799,29 @@ Calls [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-a
 
 Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
+</div>
+</div>
+
 <a id="UUPSUpgradeable-_authorizeUpgrade-address-"></a>
 
-### `_authorizeUpgrade(address newImplementation)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_authorizeUpgrade(address newImplementation)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="UUPSUpgradeable-_authorizeUpgrade-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Function that should revert when `msg.sender` is not authorized to upgrade the contract. Called by
 [`UpgradeableBeacon.upgradeTo`](#UpgradeableBeacon-upgradeTo-address-) and [`ITransparentUpgradeableProxy.upgradeToAndCall`](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-).
 
-Normally, this function will use an xref:access.adoc[access control] modifier such as [`Ownable.onlyOwner`](access#Ownable-onlyOwner--).
+Normally, this function will use an xref:access[access control] modifier such as [`Ownable.onlyOwner`](access#Ownable-onlyOwner--).
 
 ```solidity
 function _authorizeUpgrade(address) internal override onlyOwner {}
 ```
 
+</div>
+</div>

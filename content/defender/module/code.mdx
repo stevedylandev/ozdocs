@@ -5,7 +5,7 @@ title: Code Inspector
 Code Inspector seamlessly integrates with Github to maximize security with every step of your development process via automatic code analysis powered by machine learning intelligence and state-of-the-art tools developed by our security experts.
 
 For every push to your code, the OpenZeppelin Code Inspector dives into a detailed examination, identifying potential vulnerabilities and suggesting improvements to enhance your code quality. It generates a succinct report, summarizable in your PR comments for quick and immediate access, while a more detailed report is made available on Defender.
- 
+
 ## Use cases
 
 * Automatically conduct security analysis on pull requests, identifying vulnerabilities and suggesting improvements.
@@ -66,7 +66,7 @@ These are the possible statuses of reports:
 ### Summary Report
 
 The summary report provides a clear overview of potential vulnerabilities detected in the code during the review process. The report is conveniently categorized by process and severity level, making it easier to identify areas that need attention. You can navigate to the complete report on Defender via the provided link. Each report is tied to a specific commit, ensuring accurate tracking of changes and issues over time.
- 
+
 image::code-report-summary.png[Summary Report]
 
 In this example, you can see the number of issues detected by Code Inspector, along with their respective severity levels. By clicking the link at the bottom of the report, you can view the full details of these vulnerabilities on Defender.
@@ -81,7 +81,7 @@ Each issue is assigned a severity level based on the potential impact on the con
 
 Every issue has a suggested resolution tailored to improving your code quality and overall security. This might include recommendations to refine your code, modify visibility scopes, apply necessary mathematical checks, enhance documentation, or adhere to a specific Ethereum standard.
 
-Depicted below is an example of a vulnerability detected in a dependency with a brief description of its potential impact. The specific dependency and its version are outlined, pinpointing where the problem exists. 
+Depicted below is an example of a vulnerability detected in a dependency with a brief description of its potential impact. The specific dependency and its version are outlined, pinpointing where the problem exists.
 
 ![Dependency Checker Report](/defender/dependency-checker-detailed-report.png)
 
@@ -134,9 +134,9 @@ The following `defender.config.json` configuration file will disable Dependency 
         "scan_directories": ["src/contracts1", "src/contracts2"],
         "exclude_rules": ["naming-convention", "unusued-state"]
     ,
-    "dependency_checker": 
+    "dependency_checker":
         "enabled": false
-    
+
 }
 ```
 
@@ -154,7 +154,7 @@ The Asset Settings page offers two main settings to manage how Defender handles 
 
 #### Automatically Trigger Report for Pull Requests
 
-Automatically Generate Report, is specifically for GitHub repositories. When enabled, this setting ensures continuous monitoring by generating new reports automatically whenever a new pull request (PR) is opened or a new commit is pushed to a PR. 
+Automatically Generate Report, is specifically for GitHub repositories. When enabled, this setting ensures continuous monitoring by generating new reports automatically whenever a new pull request (PR) is opened or a new commit is pushed to a PR.
 
 #### Active Vulnerability Detection and Notification
 
@@ -184,7 +184,7 @@ In the Github tab, you can globally suspend or uninstall the app, giving you com
 
 ### Repository Size Issues
 
-Errors related to analysis timeouts are often caused by large codebases. To mitigate this issue, it is recommended to use the `scan_directories` option in the defender configuration file to scope the analysis to relevant files only. By specifying which directories to include in the scan, the configuration file can significantly reduce processing times and prevent timeouts. For detailed instructions on setting up the configuration file, please refer to the [Configuration](module/code.mdx#configuration) section.
+Errors related to analysis timeouts are often caused by large codebases. To mitigate this issue, it is recommended to use the `scan_directories` option in the defender configuration file to scope the analysis to relevant files only. By specifying which directories to include in the scan, the configuration file can significantly reduce processing times and prevent timeouts. For detailed instructions on setting up the configuration file, please refer to the [Configuration](module/code#configuration) section.
 
 ## Rules
 

@@ -3,10 +3,6 @@ title: "Crosschain"
 description: "Smart contract crosschain utilities and implementations"
 ---
 
-<Callout>
-This document is better viewed at https://docs.openzeppelin.com/contracts/api/crosschain
-</Callout>
-
 This directory provides building blocks to improve cross-chain awareness of smart contracts.
 
 * [`CrossChainEnabled`](#CrossChainEnabled) is an abstraction that contains accessors and modifiers to control the execution flow when receiving cross-chain messages.
@@ -39,7 +35,15 @@ In addition to the [`CrossChainEnabled`](#CrossChainEnabled) abstraction, cross-
 
 <a id="CrossChainEnabled"></a>
 
-## `CrossChainEnabled` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/CrossChainEnabled.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `CrossChainEnabled` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/CrossChainEnabled.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/CrossChainEnabled.sol";
@@ -56,50 +60,112 @@ specialization. Such specializations are provided under
 
 _Available since v4.6._
 
-### Modifiers
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Modifiers</h3>
+<div className="font-mono">
 - [onlyCrossChain()](#CrossChainEnabled-onlyCrossChain--)
 - [onlyCrossChainSender(expected)](#CrossChainEnabled-onlyCrossChainSender-address-)
+</div>
+</div>
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_isCrossChain()](#CrossChainEnabled-_isCrossChain--)
 - [_crossChainSender()](#CrossChainEnabled-_crossChainSender--)
+</div>
+</div>
 
 <a id="CrossChainEnabled-onlyCrossChain--"></a>
 
-### `onlyCrossChain()`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">onlyCrossChain()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabled-onlyCrossChain--">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Throws if the current function call is not the result of a
 cross-chain execution.
 
+</div>
+</div>
+
 <a id="CrossChainEnabled-onlyCrossChainSender-address-"></a>
 
-### `onlyCrossChainSender(address expected)`
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">onlyCrossChainSender(address expected)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabled-onlyCrossChainSender-address-">#</a>
+</div>
+</div>
+
+<div className="px-4">
 
 Throws if the current function call is not the result of a
 cross-chain execution initiated by `account`.
 
+</div>
+</div>
+
 <a id="CrossChainEnabled-_isCrossChain--"></a>
 
-### `_isCrossChain() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isCrossChain() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabled-_isCrossChain--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns whether the current function call is the result of a
 cross-chain message.
 
+</div>
+</div>
+
 <a id="CrossChainEnabled-_crossChainSender--"></a>
 
-### `_crossChainSender() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_crossChainSender() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabled-_crossChainSender--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the address of the sender of the cross-chain message that
 triggered the current function call.
 
-IMPORTANT: Should revert with `NotCrossChainCall` if the current function
+<Callout type="warn">
+Should revert with `NotCrossChainCall` if the current function
+</Callout>
 call is not the result of a cross-chain message.
+
+</div>
+</div>
 
 <a id="CrossChainEnabledAMB"></a>
 
-## `CrossChainEnabledAMB` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/amb/CrossChainEnabledAMB.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `CrossChainEnabledAMB` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/amb/CrossChainEnabledAMB.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/amb/CrossChainEnabledAMB.sol";
@@ -122,35 +188,76 @@ As of february 2020, AMB bridges are available between the following chains:
 
 _Available since v4.6._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(bridge)](#CrossChainEnabledAMB-constructor-address-)
 - [_isCrossChain()](#CrossChainEnabledAMB-_isCrossChain--)
 - [_crossChainSender()](#CrossChainEnabledAMB-_crossChainSender--)
-
 #### CrossChainEnabled
+</div>
+</div>
 
 <a id="CrossChainEnabledAMB-constructor-address-"></a>
 
-### `constructor(address bridge)`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address bridge)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="CrossChainEnabledAMB-constructor-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="CrossChainEnabledAMB-_isCrossChain--"></a>
 
-### `_isCrossChain() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isCrossChain() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledAMB-_isCrossChain--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._isCrossChain`](#CrossChainEnabled-_isCrossChain--)
 
+</div>
+</div>
+
 <a id="CrossChainEnabledAMB-_crossChainSender--"></a>
 
-### `_crossChainSender() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_crossChainSender() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledAMB-_crossChainSender--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._crossChainSender`](#CrossChainEnabled-_crossChainSender--)
 
+</div>
+</div>
+
 <a id="LibAMB"></a>
 
-## `LibAMB` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/amb/LibAMB.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `LibAMB` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/amb/LibAMB.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/amb/LibAMB.sol";
@@ -160,22 +267,43 @@ Primitives for cross-chain aware contracts using the
 [AMB](https://docs.tokenbridge.net/amb-bridge/about-amb-bridge)
 family of bridges.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [isCrossChain(bridge)](#LibAMB-isCrossChain-address-)
 - [crossChainSender(bridge)](#LibAMB-crossChainSender-address-)
+</div>
+</div>
 
 <a id="LibAMB-isCrossChain-address-"></a>
 
-### `isCrossChain(address bridge) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isCrossChain(address bridge) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibAMB-isCrossChain-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns whether the current function call is the result of a
 cross-chain message relayed by `bridge`.
 
+</div>
+</div>
+
 <a id="LibAMB-crossChainSender-address-"></a>
 
-### `crossChainSender(address bridge) → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">crossChainSender(address bridge) → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibAMB-crossChainSender-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the address of the sender that triggered the current
 cross-chain message through `bridge`.
@@ -184,9 +312,20 @@ NOTE: [`LibAMB.isCrossChain`](#LibAMB-isCrossChain-address-) should be checked b
 sender, as it will revert with `NotCrossChainCall` if the current
 function call is not the result of a cross-chain message.
 
+</div>
+</div>
+
 <a id="CrossChainEnabledArbitrumL1"></a>
 
-## `CrossChainEnabledArbitrumL1` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL1.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `CrossChainEnabledArbitrumL1` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL1.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL1.sol";
@@ -204,35 +343,76 @@ find the address of this contract on the rinkeby testnet in
 
 _Available since v4.6._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(bridge)](#CrossChainEnabledArbitrumL1-constructor-address-)
 - [_isCrossChain()](#CrossChainEnabledArbitrumL1-_isCrossChain--)
 - [_crossChainSender()](#CrossChainEnabledArbitrumL1-_crossChainSender--)
-
 #### CrossChainEnabled
+</div>
+</div>
 
 <a id="CrossChainEnabledArbitrumL1-constructor-address-"></a>
 
-### `constructor(address bridge)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address bridge)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledArbitrumL1-constructor-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="CrossChainEnabledArbitrumL1-_isCrossChain--"></a>
 
-### `_isCrossChain() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isCrossChain() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledArbitrumL1-_isCrossChain--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._isCrossChain`](#CrossChainEnabled-_isCrossChain--)
 
+</div>
+</div>
+
 <a id="CrossChainEnabledArbitrumL1-_crossChainSender--"></a>
 
-### `_crossChainSender() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_crossChainSender() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledArbitrumL1-_crossChainSender--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._crossChainSender`](#CrossChainEnabled-_crossChainSender--)
 
+</div>
+</div>
+
 <a id="CrossChainEnabledArbitrumL2"></a>
 
-## `CrossChainEnabledArbitrumL2` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL2.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `CrossChainEnabledArbitrumL2` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL2.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL2.sol";
@@ -249,34 +429,67 @@ this specialization of [`CrossChainEnabled`](#CrossChainEnabled) does not includ
 
 _Available since v4.6._
 
-WARNING: There is currently a bug in Arbitrum that causes this contract to
+<Callout type="warn">
+There is currently a bug in Arbitrum that causes this contract to
+</Callout>
 fail to detect cross-chain calls when deployed behind a proxy. This will be
 fixed when the network is upgraded to Arbitrum Nitro, currently scheduled for
 August 31st 2022.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [_isCrossChain()](#CrossChainEnabledArbitrumL2-_isCrossChain--)
 - [_crossChainSender()](#CrossChainEnabledArbitrumL2-_crossChainSender--)
-
 #### CrossChainEnabled
+</div>
+</div>
 
 <a id="CrossChainEnabledArbitrumL2-_isCrossChain--"></a>
 
-### `_isCrossChain() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isCrossChain() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledArbitrumL2-_isCrossChain--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._isCrossChain`](#CrossChainEnabled-_isCrossChain--)
 
+</div>
+</div>
+
 <a id="CrossChainEnabledArbitrumL2-_crossChainSender--"></a>
 
-### `_crossChainSender() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_crossChainSender() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledArbitrumL2-_crossChainSender--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._crossChainSender`](#CrossChainEnabled-_crossChainSender--)
 
+</div>
+</div>
+
 <a id="LibArbitrumL1"></a>
 
-## `LibArbitrumL1` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/LibArbitrumL1.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `LibArbitrumL1` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/LibArbitrumL1.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/arbitrum/LibArbitrumL1.sol";
@@ -288,22 +501,43 @@ Primitives for cross-chain aware contracts for
 This version should only be used on L1 to process cross-chain messages
 originating from L2. For the other side, use [`LibArbitrumL2`](#LibArbitrumL2).
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [isCrossChain(bridge)](#LibArbitrumL1-isCrossChain-address-)
 - [crossChainSender(bridge)](#LibArbitrumL1-crossChainSender-address-)
+</div>
+</div>
 
 <a id="LibArbitrumL1-isCrossChain-address-"></a>
 
-### `isCrossChain(address bridge) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isCrossChain(address bridge) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibArbitrumL1-isCrossChain-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns whether the current function call is the result of a
 cross-chain message relayed by the `bridge`.
 
+</div>
+</div>
+
 <a id="LibArbitrumL1-crossChainSender-address-"></a>
 
-### `crossChainSender(address bridge) → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">crossChainSender(address bridge) → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibArbitrumL1-crossChainSender-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the address of the sender that triggered the current
 cross-chain message through the `bridge`.
@@ -312,9 +546,20 @@ NOTE: [`LibAMB.isCrossChain`](#LibAMB-isCrossChain-address-) should be checked b
 sender, as it will revert with `NotCrossChainCall` if the current
 function call is not the result of a cross-chain message.
 
+</div>
+</div>
+
 <a id="LibArbitrumL2"></a>
 
-## `LibArbitrumL2` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/LibArbitrumL2.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `LibArbitrumL2` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/arbitrum/LibArbitrumL2.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/arbitrum/LibArbitrumL2.sol";
@@ -326,25 +571,48 @@ Primitives for cross-chain aware contracts for
 This version should only be used on L2 to process cross-chain messages
 originating from L1. For the other side, use [`LibArbitrumL1`](#LibArbitrumL1).
 
-WARNING: There is currently a bug in Arbitrum that causes this contract to
+<Callout type="warn">
+There is currently a bug in Arbitrum that causes this contract to
+</Callout>
 fail to detect cross-chain calls when deployed behind a proxy. This will be
 fixed when the network is upgraded to Arbitrum Nitro, currently scheduled for
 August 31st 2022.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [isCrossChain(arbsys)](#LibArbitrumL2-isCrossChain-address-)
 - [crossChainSender(arbsys)](#LibArbitrumL2-crossChainSender-address-)
 - [ARBSYS()](#LibArbitrumL2-ARBSYS-address)
+</div>
+</div>
 
 <a id="LibArbitrumL2-isCrossChain-address-"></a>
 
-### `isCrossChain(address arbsys) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isCrossChain(address arbsys) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibArbitrumL2-isCrossChain-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="LibArbitrumL2-crossChainSender-address-"></a>
 
-### `crossChainSender(address arbsys) → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">crossChainSender(address arbsys) → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibArbitrumL2-crossChainSender-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the address of the sender that triggered the current
 cross-chain message through `arbsys`.
@@ -353,17 +621,38 @@ NOTE: [`LibAMB.isCrossChain`](#LibAMB-isCrossChain-address-) should be checked b
 sender, as it will revert with `NotCrossChainCall` if the current
 function call is not the result of a cross-chain message.
 
+</div>
+</div>
+
 <a id="LibArbitrumL2-ARBSYS-address"></a>
 
-### `ARBSYS() → address`
-*public*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">ARBSYS() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">public</p>
+<a className="peer" data-card href="LibArbitrumL2-ARBSYS-address">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns whether the current function call is the result of a
 cross-chain message relayed by `arbsys`.
 
+</div>
+</div>
+
 <a id="NotCrossChainCall--"></a>
 
-## `NotCrossChainCall` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/errors.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `NotCrossChainCall` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/errors.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/errors.sol";
@@ -371,12 +660,30 @@ import "@openzeppelin/contracts/crosschain/errors.sol";
 
 <a id="NotCrossChainCall--"></a>
 
-### `NotCrossChainCall()`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">NotCrossChainCall()</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="NotCrossChainCall--">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="InvalidCrossChainSender-address-address-"></a>
 
-## `InvalidCrossChainSender` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/errors.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `InvalidCrossChainSender` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/errors.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/errors.sol";
@@ -384,12 +691,30 @@ import "@openzeppelin/contracts/crosschain/errors.sol";
 
 <a id="InvalidCrossChainSender-address-address-"></a>
 
-### `InvalidCrossChainSender(address actual, address expected)`
-*error*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">InvalidCrossChainSender(address actual, address expected)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">error</p>
+<a className="peer" data-card href="InvalidCrossChainSender-address-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="CrossChainEnabledOptimism"></a>
 
-## `CrossChainEnabledOptimism` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/optimism/CrossChainEnabledOptimism.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `CrossChainEnabledOptimism` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/optimism/CrossChainEnabledOptimism.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/optimism/CrossChainEnabledOptimism.sol";
@@ -404,35 +729,76 @@ kovan in the [deployments section of Optimism monorepo](https://github.com/ether
 
 _Available since v4.6._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(messenger)](#CrossChainEnabledOptimism-constructor-address-)
 - [_isCrossChain()](#CrossChainEnabledOptimism-_isCrossChain--)
 - [_crossChainSender()](#CrossChainEnabledOptimism-_crossChainSender--)
-
 #### CrossChainEnabled
+</div>
+</div>
 
 <a id="CrossChainEnabledOptimism-constructor-address-"></a>
 
-### `constructor(address messenger)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address messenger)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledOptimism-constructor-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="CrossChainEnabledOptimism-_isCrossChain--"></a>
 
-### `_isCrossChain() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isCrossChain() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledOptimism-_isCrossChain--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._isCrossChain`](#CrossChainEnabled-_isCrossChain--)
 
+</div>
+</div>
+
 <a id="CrossChainEnabledOptimism-_crossChainSender--"></a>
 
-### `_crossChainSender() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_crossChainSender() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledOptimism-_crossChainSender--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._crossChainSender`](#CrossChainEnabled-_crossChainSender--)
 
+</div>
+</div>
+
 <a id="LibOptimism"></a>
 
-## `LibOptimism` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/optimism/LibOptimism.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `LibOptimism` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/optimism/LibOptimism.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/optimism/LibOptimism.sol";
@@ -442,22 +808,43 @@ Primitives for cross-chain aware contracts for [Optimism](https://www.optimism.i
 See the [documentation](https://community.optimism.io/docs/developers/bridge/messaging/#accessing-msg-sender)
 for the functionality used here.
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [isCrossChain(messenger)](#LibOptimism-isCrossChain-address-)
 - [crossChainSender(messenger)](#LibOptimism-crossChainSender-address-)
+</div>
+</div>
 
 <a id="LibOptimism-isCrossChain-address-"></a>
 
-### `isCrossChain(address messenger) → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">isCrossChain(address messenger) → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibOptimism-isCrossChain-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns whether the current function call is the result of a
 cross-chain message relayed by `messenger`.
 
+</div>
+</div>
+
 <a id="LibOptimism-crossChainSender-address-"></a>
 
-### `crossChainSender(address messenger) → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">crossChainSender(address messenger) → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="LibOptimism-crossChainSender-address-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 Returns the address of the sender that triggered the current
 cross-chain message through `messenger`.
@@ -466,9 +853,20 @@ NOTE: [`LibAMB.isCrossChain`](#LibAMB-isCrossChain-address-) should be checked b
 sender, as it will revert with `NotCrossChainCall` if the current
 function call is not the result of a cross-chain message.
 
+</div>
+</div>
+
 <a id="DEFAULT_SENDER-address"></a>
 
-## `DEFAULT_SENDER` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/polygon/CrossChainEnabledPolygonChild.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `DEFAULT_SENDER` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/polygon/CrossChainEnabledPolygonChild.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/polygon/CrossChainEnabledPolygonChild.sol";
@@ -476,7 +874,15 @@ import "@openzeppelin/contracts/crosschain/polygon/CrossChainEnabledPolygonChild
 
 <a id="CrossChainEnabledPolygonChild"></a>
 
-## `CrossChainEnabledPolygonChild` [📁](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/polygon/CrossChainEnabledPolygonChild.sol)
+<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
+
+## `CrossChainEnabledPolygonChild` 
+
+<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/crosschain/polygon/CrossChainEnabledPolygonChild.sol">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+</a>
+
+</div>
 
 ```solidity
 import "@openzeppelin/contracts/crosschain/polygon/CrossChainEnabledPolygonChild.sol";
@@ -494,42 +900,80 @@ find the address of this contract polygon and mumbai in
 
 _Available since v4.6._
 
-### Functions
+<div className="bg-secondary p-4 rounded-md mb-6">
+<h3 style={{ marginTop: "0"}}>Functions</h3>
+<div className="font-mono">
 - [constructor(fxChild)](#CrossChainEnabledPolygonChild-constructor-address-)
 - [_isCrossChain()](#CrossChainEnabledPolygonChild-_isCrossChain--)
 - [_crossChainSender()](#CrossChainEnabledPolygonChild-_crossChainSender--)
 - [processMessageFromRoot(, rootMessageSender, data)](#CrossChainEnabledPolygonChild-processMessageFromRoot-uint256-address-bytes-)
-
 #### ReentrancyGuard
 - [_reentrancyGuardEntered()](#ReentrancyGuard-_reentrancyGuardEntered--)
-
 #### CrossChainEnabled
-
 #### IFxMessageProcessor
+</div>
+</div>
 
 <a id="CrossChainEnabledPolygonChild-constructor-address-"></a>
 
-### `constructor(address fxChild)`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">constructor(address fxChild)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledPolygonChild-constructor-address-">#</a>
+</div>
+</div>
+<div className="px-4">
+
+</div>
+</div>
 
 <a id="CrossChainEnabledPolygonChild-_isCrossChain--"></a>
 
-### `_isCrossChain() → bool`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_isCrossChain() → bool</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledPolygonChild-_isCrossChain--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._isCrossChain`](#CrossChainEnabled-_isCrossChain--)
 
+</div>
+</div>
+
 <a id="CrossChainEnabledPolygonChild-_crossChainSender--"></a>
 
-### `_crossChainSender() → address`
-*internal*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">_crossChainSender() → address</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">internal</p>
+<a className="peer" data-card href="CrossChainEnabledPolygonChild-_crossChainSender--">#</a>
+</div>
+</div>
+<div className="px-4">
 
 see [`CrossChainEnabled._crossChainSender`](#CrossChainEnabled-_crossChainSender--)
 
+</div>
+</div>
+
 <a id="CrossChainEnabledPolygonChild-processMessageFromRoot-uint256-address-bytes-"></a>
 
-### `processMessageFromRoot(uint256, address rootMessageSender, bytes data)`
-*external*
+<div className="border rounded-md mb-4">
+<div className="bg-secondary flex w-full justify-between px-4">
+<p className="font-bold text-sm font-mono">processMessageFromRoot(uint256, address rootMessageSender, bytes data)</p>
+<div className="flex flex-row items-center gap-2">
+<p className="font-light text-sm">external</p>
+<a className="peer" data-card href="CrossChainEnabledPolygonChild-processMessageFromRoot-uint256-address-bytes-">#</a>
+</div>
+</div>
+<div className="px-4">
 
 External entry point to receive and relay messages originating
 from the fxChild.
@@ -540,4 +984,7 @@ arguments.
 
 Note: if _fxChild calls any other function that does a delegate-call,
 then security could be compromised.
+
+</div>
+</div>
 

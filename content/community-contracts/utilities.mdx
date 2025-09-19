@@ -2,7 +2,7 @@
 title: Utilities
 ---
 
-Multiple libraries and general purpose utilities included in the community version of OpenZeppelin Contracts. These are only a set of utility contracts. For the full list, check out the [API Reference](contracts/v5.x/api/utils.mdx).
+Multiple libraries and general purpose utilities included in the community version of OpenZeppelin Contracts. These are only a set of utility contracts. For the full list, check out the [API Reference](/community-contracts/api/utils).
 
 ## Cryptography
 
@@ -37,12 +37,12 @@ ERC-7913 extends the concept of signature verification to support keys that donâ
 
 The standard defines a verifier interface that can be implemented to support different types of keys. A signer is represented as a `bytes` object that concatenates a verifier address and a key: `verifier || key`.
 
-[`ERC7913Utils`](contracts/v5.x/api/utils/cryptography.mdx#ERC7913Utils) provides functions for verifying signatures using ERC-7913 compatible verifiers:
+[`ERC7913Utils`](/community-contracts/api/utils/cryptography#ERC7913Utils) provides functions for verifying signatures using ERC-7913 compatible verifiers:
 
 ```solidity
 using ERC7913Utils for bytes;
 
-function _verify(bytes memory signer, bytes32 hash, bytes memory signature) internal view returns (bool) 
+function _verify(bytes memory signer, bytes32 hash, bytes memory signature) internal view returns (bool)
     return signer.isValidSignatureNow(hash, signature);
 
 ```

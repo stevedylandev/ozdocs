@@ -290,7 +290,7 @@
 		"index": {
 			"type": "page",
 			"name": "Overview",
-			"url": "/upgrade-plugins"
+			"url": "/upgrades-plugins"
 		},
 		"children": [
 			{
@@ -299,35 +299,35 @@
 				"index": {
 					"type": "page",
 					"name": "Overview",
-					"url": "/upgrade-plugins/hardhat-upgrades"
+					"url": "/upgrades-plugins/hardhat-upgrades"
 				},
 				"children": [
 					{
 						"type": "page",
 						"name": "Network Files",
-						"url": "/upgrade-plugins/network-files"
+						"url": "/upgrades-plugins/network-files"
 					}
 				]
 			},
 			{
 				"type": "page",
 				"name": "Using with Foundry",
-				"url": "/upgrade-plugins/foundry/foundry-upgrades"
+				"url": "/upgrades-plugins/foundry/foundry-upgrades"
 			},
 			{
 				"type": "page",
 				"name": "Writing Upgradeable Contracts",
-				"url": "/upgrade-plugins/writing-upgradeable"
+				"url": "/upgrades-plugins/writing-upgradeable"
 			},
 			{
 				"type": "page",
 				"name": "Proxy Upgrade Pattern",
-				"url": "/upgrade-plugins/proxies"
+				"url": "/upgrades-plugins/proxies"
 			},
 			{
 				"type": "page",
 				"name": "Frequently Asked Questions",
-				"url": "/upgrade-plugins/faq"
+				"url": "/upgrades-plugins/faq"
 			},
 			{
 				"type": "separator",
@@ -336,17 +336,17 @@
 			{
 				"type": "page",
 				"name": "Hardhat Upgrades API",
-				"url": "/upgrade-plugins/api-hardhat-upgrades"
+				"url": "/upgrades-plugins/api-hardhat-upgrades"
 			},
 			{
 				"type": "page",
 				"name": "Foundry Upgrades API",
-				"url": "/upgrade-plugins/foundry/api/api-foundry-upgrades"
+				"url": "/upgrades-plugins/foundry/api/api-foundry-upgrades"
 			},
 			{
 				"type": "page",
 				"name": "Upgrades Core & CLI",
-				"url": "/upgrade-plugins/api-core"
+				"url": "/upgrades-plugins/api-core"
 			}
 		]
 	}

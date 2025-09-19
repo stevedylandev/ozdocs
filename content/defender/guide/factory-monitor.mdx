@@ -6,8 +6,8 @@ The factory-clone pattern can be advantageous for minimizing gas costs. However,
 
 This guide shows how to use Defender to monitor a factory contract as well as the clone contracts created by it. Monitor automation is achieved through the following structure of Defender modules:
 
-* A Monitor watches for successful event emitted by the factory contract that creates a clone. If detected, it triggers an [Action](module/actions.mdx) and [passes along information](module/actions.mdx#monitor_invocations) about the transaction.
-* The Action makes use of the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the address of the newly created contract to the [address book](module/address-book.mdx) for easier monitoring.
+* A Monitor watches for successful event emitted by the factory contract that creates a clone. If detected, it triggers an [Action](module/actions) and [passes along information](module/actions#monitor_invocations) about the transaction.
+* The Action makes use of the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the address of the newly created contract to the [address book](module/address-book) for easier monitoring.
 * Aditionally, the Action uses the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the clone address to the list of addresses watched by a Monitor.
 
 In this case, the contract ABI can be pre-supplied since clone contracts will have identical ABIs. Alternatively, you may be able to dynamically retrieve the ABI from a verified contract at a given address using [Etherscan’s API, window=_blank](https://docs.etherscan.io/api-endpoints/contracts).
@@ -29,18 +29,18 @@ Navigate to the [Action creation page, window=_blank](https://defender.openzeppe
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
 
-exports.handler = async function (event) 
+exports.handler = async function (event)
   const creds = {
     apiKey: event.secrets.API_KEY,
     apiSecret: event.secrets.API_SECRET,
-  
+
   const client = new Defender(creds);
 
   const payload = event.request.body
   const matchReasons = payload.matchReasons
   const newCloneAddress = matchReasons[0].params._clone
   const newCloneAbi = `[
-    
+
       "anonymous": false,
       "inputs": [
         {
@@ -48,25 +48,25 @@ exports.handler = async function (event)
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
-        
+
       ],
       "name": "ValueChanged",
       "type": "event"
     },
-    
+
       "inputs": [
         {
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
-        
+
       ],
       "name": "initialize",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
-    
+
       "inputs": [],
       "name": "retrieve",
       "outputs": [
@@ -74,18 +74,18 @@ exports.handler = async function (event)
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
-        
+
       ],
       "stateMutability": "view",
       "type": "function"
     },
-    
+
       "inputs": [
         {
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
-        
+
       ],
       "name": "store",
       "outputs": [],
@@ -125,7 +125,7 @@ Lastly, open the `Alerts` section and select the Action created in the previous 
 
 ![Monitor Alerts](/defender/guide-factory-monitor-alerts.png)
 
-As with any action, the triggering of this Monitor will be recorded in the [Logs](logs.mdx).
+As with any action, the triggering of this Monitor will be recorded in the [Logs](logs).
 
 ## Test run
 
@@ -141,7 +141,7 @@ Then, execute this this transaction with your preferred approval process, like a
 
 Now that you have a clone contract to serve as a template for all future clone contracts, it’s time to create a Monitor for them. Navigate to the [Monitor creation page, window=_blank](https://defender.openzeppelin.com/v2/#/monitor/new/custom), choose a name, risk category, and select the clone contract.
 
-Aditionally, feel free to add any other filters for transactions, events, and functions, or notifications. Save the Monitor and observe the logs/notifications to verify that the Monitor is working as expected. 
+Aditionally, feel free to add any other filters for transactions, events, and functions, or notifications. Save the Monitor and observe the logs/notifications to verify that the Monitor is working as expected.
 
 ![Monitor Clones](/defender/guide-factory-monitor-clones.png)
 
@@ -152,18 +152,18 @@ With the last Monitor, you can update the Action to add any newly created contra
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
 
-exports.handler = async function (event) 
+exports.handler = async function (event)
   const creds = {
     apiKey: event.secrets.API_KEY,
     apiSecret: event.secrets.API_SECRET,
-  
+
   const client = new Defender(creds);
 
   const payload = event.request.body
   const matchReasons = payload.matchReasons
   const newCloneAddress = matchReasons[0].params._clone
   const newCloneAbi = `[
-    
+
       "anonymous": false,
       "inputs": [
         {
@@ -171,25 +171,25 @@ exports.handler = async function (event)
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
-        
+
       ],
       "name": "ValueChanged",
       "type": "event"
     },
-    
+
       "inputs": [
         {
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
-        
+
       ],
       "name": "initialize",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
-    
+
       "inputs": [],
       "name": "retrieve",
       "outputs": [
@@ -197,18 +197,18 @@ exports.handler = async function (event)
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
-        
+
       ],
       "stateMutability": "view",
       "type": "function"
     },
-    
+
       "inputs": [
         {
           "internalType": "uint256",
           "name": "value",
           "type": "uint256"
-        
+
       ],
       "name": "store",
       "outputs": [],
@@ -239,5 +239,5 @@ To verify, execute another test run!
 
 ## References
 
-* [Actions Documentation](:module/actions.adoc)
-* [Monitor Documentation](:module/monitor.adoc)
+* [Actions Documentation](:module/actions)
+* [Monitor Documentation](:module/monitor)

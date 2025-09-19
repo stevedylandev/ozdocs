@@ -15,22 +15,22 @@
 	},
 	{
 		"type": "page",
-		"name": "Beacon Proxy",
-		"url": "/contracts-stylus/beacon-proxy"
-	},
-	{
-		"type": "page",
-		"name": "Common",
-		"url": "/contracts-stylus/common"
-	},
-	{
-		"type": "page",
 		"name": "Cryptography",
 		"url": "/contracts-stylus/crypto"
 	},
 	{
+		"type": "page",
+		"name": "Finance",
+		"url": "/contracts-stylus/finance"
+	},
+	{
 		"type": "folder",
-		"name": "ERC Standards",
+		"name": "Tokens",
+		"index": {
+			"type": "page",
+			"name": "Tokens",
+			"url": "/contracts-stylus/tokens"
+		},
 		"children": [
 			{
 				"type": "page",
@@ -55,19 +55,31 @@
 		]
 	},
 	{
-		"type": "page",
-		"name": "Finance",
-		"url": "/contracts-stylus/finance"
-	},
-	{
-		"type": "page",
-		"name": "Proxy",
-		"url": "/contracts-stylus/proxy"
-	},
-	{
-		"type": "page",
-		"name": "Tokens",
-		"url": "/contracts-stylus/tokens"
+		"type": "folder",
+		"name": "Proxy Patterns",
+		"index": {
+			"type": "page",
+			"name": "Proxy",
+			"url": "/contracts-stylus/proxy"
+		},
+		"children": [
+			{
+				"type": "page",
+				"name": "ERC-1967 Proxy",
+				"url": "/contracts-stylus/erc1967"
+			},
+			{
+				"type": "page",
+				"name": "Beacon Proxy",
+				"url": "/contracts-stylus/beacon-proxy"
+			},
+
+			{
+				"type": "page",
+				"name": "UUPS Proxy",
+				"url": "/contracts-stylus/uups-proxy"
+			}
+		]
 	},
 	{
 		"type": "page",
@@ -76,17 +88,132 @@
 	},
 	{
 		"type": "page",
-		"name": "UUPS Proxy",
-		"url": "/contracts-stylus/uups-proxy"
-	},
-	{
-		"type": "page",
-		"name": "Vesting Wallet",
-		"url": "/contracts-stylus/vesting-wallet"
-	},
-	{
-		"type": "page",
 		"name": "Changelog",
 		"url": "/contracts-stylus/changelog"
+	},
+	{
+		"type": "folder",
+		"name": "Previous Versions",
+		"children": [
+			{
+				"type": "folder",
+				"name": "v0.2.0",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts-stylus/0.2.0"
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts-stylus/0.2.0/access-control"
+					},
+					{
+						"type": "page",
+						"name": "Common",
+						"url": "/contracts-stylus/0.2.0/common"
+					},
+					{
+						"type": "page",
+						"name": "Cryptography",
+						"url": "/contracts-stylus/0.2.0/crypto"
+					},
+					{
+						"type": "folder",
+						"name": "ERC Standards",
+						"children": [
+							{
+								"type": "page",
+								"name": "ERC-20",
+								"url": "/contracts-stylus/0.2.0/erc20"
+							},
+							{
+								"type": "page",
+								"name": "ERC-721",
+								"url": "/contracts-stylus/0.2.0/erc721"
+							},
+							{
+								"type": "page",
+								"name": "ERC-1155",
+								"url": "/contracts-stylus/0.2.0/erc1155"
+							},
+							{
+								"type": "page",
+								"name": "ERC-4626",
+								"url": "/contracts-stylus/0.2.0/erc4626"
+							},
+							{
+								"type": "page",
+								"name": "ERC-2981",
+								"url": "/contracts-stylus/0.2.0/erc2981"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Finance",
+						"url": "/contracts-stylus/0.2.0/finance"
+					},
+					{
+						"type": "page",
+						"name": "Tokens",
+						"url": "/contracts-stylus/0.2.0/tokens"
+					},
+					{
+						"type": "page",
+						"name": "Utilities",
+						"url": "/contracts-stylus/0.2.0/utilities"
+					},
+					{
+						"type": "page",
+						"name": "Vesting Wallet",
+						"url": "/contracts-stylus/0.2.0/vesting-wallet"
+					}
+				]
+			},
+			{
+				"type": "folder",
+				"name": "v0.1.0",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts-stylus/0.1.0"
+					},
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts-stylus/0.1.0/access-control"
+					},
+					{
+						"type": "page",
+						"name": "Cryptography",
+						"url": "/contracts-stylus/0.1.0/crypto"
+					},
+					{
+						"type": "folder",
+						"name": "ERC Standards",
+						"children": [
+							{
+								"type": "page",
+								"name": "ERC-20",
+								"url": "/contracts-stylus/0.1.0/erc20"
+							},
+							{
+								"type": "page",
+								"name": "ERC-721",
+								"url": "/contracts-stylus/0.1.0/erc721"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Tokens",
+						"url": "/contracts-stylus/0.1.0/tokens"
+					}
+				]
+			}
+		]
 	}
 ]

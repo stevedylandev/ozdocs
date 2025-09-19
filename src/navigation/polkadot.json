@@ -9,73 +9,64 @@
 		"url": "/substrate-runtimes"
 	},
 	{
-		"type": "page",
-		"name": "Quick Start",
-		"url": "/substrate-runtimes/guides/quick_start"
-	},
-	{
 		"type": "folder",
-		"name": "Pallets",
+		"name": "General Guides",
 		"children": [
 			{
 				"type": "page",
-				"name": "Assets",
-				"url": "/substrate-runtimes/pallets/assets"
+				"name": "Quick Start",
+				"url": "/substrate-runtimes/guides/quick_start"
 			},
 			{
 				"type": "page",
-				"name": "Aura Ext",
-				"url": "/substrate-runtimes/pallets/aura_ext"
+				"name": "Weights & Fees",
+				"url": "/substrate-runtimes/guides/weights_fees"
 			},
 			{
 				"type": "page",
-				"name": "Balances",
-				"url": "/substrate-runtimes/pallets/balances"
+				"name": "Async Backing",
+				"url": "/substrate-runtimes/guides/async_backing"
 			},
 			{
 				"type": "page",
-				"name": "Collator Selection",
-				"url": "/substrate-runtimes/pallets/collator-selection"
+				"name": "Sending XCM between Parachains",
+				"url": "/substrate-runtimes/guides/hrmp_channels"
 			},
 			{
 				"type": "page",
-				"name": "Message Queue",
-				"url": "/substrate-runtimes/pallets/message-queue"
+				"name": "OpenZeppelin Pallet Abstractions",
+				"url": "/substrate-runtimes/guides/pallet_abstractions"
 			},
 			{
 				"type": "page",
-				"name": "Multisig",
-				"url": "/substrate-runtimes/pallets/multisig"
+				"name": "Pay DOT as a Fee",
+				"url": "/substrate-runtimes/guides/pay_dot_as_a_fee"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "EVM Template Guides",
+		"children": [
+			{
+				"type": "page",
+				"name": "Contract Migration",
+				"url": "/substrate-runtimes/guides/contract_migration"
 			},
 			{
 				"type": "page",
-				"name": "Parachain System",
-				"url": "/substrate-runtimes/pallets/parachain-system"
+				"name": "Predeployed Contracts",
+				"url": "/substrate-runtimes/guides/predeployed_contracts"
 			},
 			{
 				"type": "page",
-				"name": "Proxy",
-				"url": "/substrate-runtimes/pallets/proxy"
+				"name": "Testing with Zombienet",
+				"url": "/substrate-runtimes/guides/testing_with_zombienet"
 			},
 			{
 				"type": "page",
-				"name": "Transaction Payment",
-				"url": "/substrate-runtimes/pallets/transaction_payment"
-			},
-			{
-				"type": "page",
-				"name": "Treasury",
-				"url": "/substrate-runtimes/pallets/treasury"
-			},
-			{
-				"type": "page",
-				"name": "XCM",
-				"url": "/substrate-runtimes/pallets/xcm"
-			},
-			{
-				"type": "page",
-				"name": "XCMP Queue",
-				"url": "/substrate-runtimes/pallets/xcmp-queue"
+				"name": "RPC Differences",
+				"url": "/substrate-runtimes/guides/rpc_differences"
 			}
 		]
 	},
@@ -85,14 +76,20 @@
 		"children": [
 			{
 				"type": "page",
-				"name": "EVM",
-				"url": "/substrate-runtimes/runtimes/evm"
+				"name": "Generic Runtime",
+				"url": "/substrate-runtimes/runtimes/generic"
 			},
 			{
 				"type": "page",
-				"name": "Generic",
-				"url": "/substrate-runtimes/runtimes/generic"
-			},
+				"name": "EVM Runtime",
+				"url": "/substrate-runtimes/runtimes/evm"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Runtime Descriptions",
+		"children": [
 			{
 				"type": "page",
 				"name": "XCM Executor",
@@ -102,7 +99,73 @@
 	},
 	{
 		"type": "folder",
-		"name": "Miscellaneous",
+		"name": "Pallet Specifications",
+		"children": [
+			{
+				"type": "page",
+				"name": "cumulus_pallet_aura_ext",
+				"url": "/substrate-runtimes/pallets/aura_ext"
+			},
+			{
+				"type": "page",
+				"name": "cumulus_pallet_parachain_system",
+				"url": "/substrate-runtimes/pallets/parachain-system"
+			},
+			{
+				"type": "page",
+				"name": "cumulus_pallet_xcmp_queue",
+				"url": "/substrate-runtimes/pallets/xcmp-queue"
+			},
+			{
+				"type": "page",
+				"name": "pallet_assets",
+				"url": "/substrate-runtimes/pallets/assets"
+			},
+			{
+				"type": "page",
+				"name": "pallet_balances",
+				"url": "/substrate-runtimes/pallets/balances"
+			},
+			{
+				"type": "page",
+				"name": "pallet_collator_selection",
+				"url": "/substrate-runtimes/pallets/collator-selection"
+			},
+			{
+				"type": "page",
+				"name": "pallet_message_queue",
+				"url": "/substrate-runtimes/pallets/message-queue"
+			},
+			{
+				"type": "page",
+				"name": "pallet_multisig",
+				"url": "/substrate-runtimes/pallets/multisig"
+			},
+			{
+				"type": "page",
+				"name": "pallet_proxy",
+				"url": "/substrate-runtimes/pallets/proxy"
+			},
+			{
+				"type": "page",
+				"name": "pallet_transaction_payment",
+				"url": "/substrate-runtimes/pallets/transaction_payment"
+			},
+			{
+				"type": "page",
+				"name": "pallet_treasury",
+				"url": "/substrate-runtimes/pallets/treasury"
+			},
+			{
+				"type": "page",
+				"name": "pallet_xcm",
+				"url": "/substrate-runtimes/pallets/xcm"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Misc",
 		"children": [
 			{
 				"type": "page",
@@ -112,9 +175,15 @@
 		]
 	},
 	{
-		"type": "page",
-		"name": "Glossary",
-		"url": "/substrate-runtimes/glossary"
+		"type": "folder",
+		"name": "Appendix",
+		"children": [
+			{
+				"type": "page",
+				"name": "Glossary",
+				"url": "/substrate-runtimes/glossary"
+			}
+		]
 	},
 	{
 		"type": "page",
@@ -122,52 +191,167 @@
 		"url": "/substrate-runtimes/changelog"
 	},
 	{
-		"type": "separator",
-		"name": "Guides"
-	},
-	{
-		"type": "page",
-		"name": "Async Backing",
-		"url": "/substrate-runtimes/guides/async_backing"
-	},
-	{
-		"type": "page",
-		"name": "Contract Migration",
-		"url": "/substrate-runtimes/guides/contract_migration"
-	},
-	{
-		"type": "page",
-		"name": "HRMP Channels",
-		"url": "/substrate-runtimes/guides/hrmp_channels"
-	},
-	{
-		"type": "page",
-		"name": "Pallet Abstractions",
-		"url": "/substrate-runtimes/guides/pallet_abstractions"
-	},
-	{
-		"type": "page",
-		"name": "Pay DOT as a Fee",
-		"url": "/substrate-runtimes/guides/pay_dot_as_a_fee"
-	},
-	{
-		"type": "page",
-		"name": "Predeployed Contracts",
-		"url": "/substrate-runtimes/guides/predeployed_contracts"
-	},
-	{
-		"type": "page",
-		"name": "RPC Differences",
-		"url": "/substrate-runtimes/guides/rpc_differences"
-	},
-	{
-		"type": "page",
-		"name": "Testing with Zombienet",
-		"url": "/substrate-runtimes/guides/testing_with_zombienet"
-	},
-	{
-		"type": "page",
-		"name": "Weights & Fees",
-		"url": "/substrate-runtimes/guides/weights_fees"
+		"type": "folder",
+		"name": "Previous Versions",
+		"children": [
+			{
+				"type": "folder",
+				"name": "v0.2.0",
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/substrate-runtimes/0.2.0"
+					},
+					{
+						"type": "page",
+						"name": "Quick Start",
+						"url": "/substrate-runtimes/0.2.0/guides/quick_start"
+					},
+					{
+						"type": "folder",
+						"name": "Pallets",
+						"children": [
+							{
+								"type": "page",
+								"name": "Assets",
+								"url": "/substrate-runtimes/0.2.0/pallets/assets"
+							},
+							{
+								"type": "page",
+								"name": "Aura Ext",
+								"url": "/substrate-runtimes/0.2.0/pallets/aura_ext"
+							},
+							{
+								"type": "page",
+								"name": "Balances",
+								"url": "/substrate-runtimes/0.2.0/pallets/balances"
+							},
+							{
+								"type": "page",
+								"name": "Collator Selection",
+								"url": "/substrate-runtimes/0.2.0/pallets/collator-selection"
+							},
+							{
+								"type": "page",
+								"name": "Message Queue",
+								"url": "/substrate-runtimes/0.2.0/pallets/message-queue"
+							},
+							{
+								"type": "page",
+								"name": "Multisig",
+								"url": "/substrate-runtimes/0.2.0/pallets/multisig"
+							},
+							{
+								"type": "page",
+								"name": "Parachain System",
+								"url": "/substrate-runtimes/0.2.0/pallets/parachain-system"
+							},
+							{
+								"type": "page",
+								"name": "Proxy",
+								"url": "/substrate-runtimes/0.2.0/pallets/proxy"
+							},
+							{
+								"type": "page",
+								"name": "Transaction Payment",
+								"url": "/substrate-runtimes/0.2.0/pallets/transaction_payment"
+							},
+							{
+								"type": "page",
+								"name": "Treasury",
+								"url": "/substrate-runtimes/0.2.0/pallets/treasury"
+							},
+							{
+								"type": "page",
+								"name": "XCM",
+								"url": "/substrate-runtimes/0.2.0/pallets/xcm"
+							},
+							{
+								"type": "page",
+								"name": "XCMP Queue",
+								"url": "/substrate-runtimes/0.2.0/pallets/xcmp-queue"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Runtimes",
+						"children": [
+							{
+								"type": "page",
+								"name": "EVM",
+								"url": "/substrate-runtimes/0.2.0/runtimes/evm"
+							},
+							{
+								"type": "page",
+								"name": "Generic",
+								"url": "/substrate-runtimes/0.2.0/runtimes/generic"
+							},
+							{
+								"type": "page",
+								"name": "XCM Executor",
+								"url": "/substrate-runtimes/0.2.0/runtime/xcm_executor"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Miscellaneous",
+						"children": [
+							{
+								"type": "page",
+								"name": "Multisig Accounts",
+								"url": "/substrate-runtimes/0.2.0/misc/multisig-accounts"
+							}
+						]
+					},
+					{
+						"type": "page",
+						"name": "Glossary",
+						"url": "/substrate-runtimes/0.2.0/glossary"
+					},
+					{
+						"type": "separator",
+						"name": "Guides"
+					},
+					{
+						"type": "page",
+						"name": "Async Backing",
+						"url": "/substrate-runtimes/0.2.0/guides/async_backing"
+					},
+					{
+						"type": "page",
+						"name": "Contract Migration",
+						"url": "/substrate-runtimes/0.2.0/guides/contract_migration"
+					},
+					{
+						"type": "page",
+						"name": "HRMP Channels",
+						"url": "/substrate-runtimes/0.2.0/guides/hrmp_channels"
+					},
+					{
+						"type": "page",
+						"name": "Predeployed Contracts",
+						"url": "/substrate-runtimes/0.2.0/guides/predeployed_contracts"
+					},
+					{
+						"type": "page",
+						"name": "RPC Differences",
+						"url": "/substrate-runtimes/0.2.0/guides/rpc_differences"
+					},
+					{
+						"type": "page",
+						"name": "Testing with Zombienet",
+						"url": "/substrate-runtimes/0.2.0/guides/testing_with_zombienet"
+					},
+					{
+						"type": "page",
+						"name": "Weights & Fees",
+						"url": "/substrate-runtimes/0.2.0/guides/weights_fees"
+					}
+				]
+			}
+		]
 	}
 ]

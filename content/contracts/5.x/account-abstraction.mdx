@@ -2,9 +2,9 @@
 title: Account Abstraction
 ---
 
-Unlike Externally Owned Accounts (EOAs), smart contracts may contain arbitrary verification logic based on authentication mechanisms different to Ethereum’s native [ECDSA](contracts/v5.x/api/utils.mdx#ECDSA) and have execution advantages such as batching or gas sponsorship. To leverage these properties of smart contracts, the community has widely adopted [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337), a standard to process user operations through an alternative mempool.
+Unlike Externally Owned Accounts (EOAs), smart contracts may contain arbitrary verification logic based on authentication mechanisms different to Ethereum’s native [ECDSA](contracts/v5.x/api/utils#ECDSA) and have execution advantages such as batching or gas sponsorship. To leverage these properties of smart contracts, the community has widely adopted [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337), a standard to process user operations through an alternative mempool.
 
-The library provides multiple contracts for Account Abstraction following this standard as it enables more flexible and user-friendly interactions with applications. Account Abstraction use cases include wallets in novel contexts (e.g. embedded wallets), more granular configuration of accounts, and recovery mechanisms. 
+The library provides multiple contracts for Account Abstraction following this standard as it enables more flexible and user-friendly interactions with applications. Account Abstraction use cases include wallets in novel contexts (e.g. embedded wallets), more granular configuration of accounts, and recovery mechanisms.
 
 ## ERC-4337 Overview
 
@@ -34,8 +34,8 @@ This process of bundling user operations involves several costs that the bundler
 Estimating `preVerificationGas` is not standardized as it varies based on network conditions such as gas prices and the size of the operation bundle.
 </Callout>
 
-<Callout>
-Use [`ERC4337Utils`](contracts/v5.x/api/account.mdx#ERC4337Utils) to manipulate the `UserOperation` struct and other ERC-4337 related values.
+<Callout type="tip">
+Use [`ERC4337Utils`](contracts/v5.x/api/account#ERC4337Utils) to manipulate the `UserOperation` struct and other ERC-4337 related values.
 </Callout>
 
 ### Entrypoint
@@ -76,28 +76,28 @@ interface IAccountExecute {
 ```
 
 <Callout>
-The `IAccountExecute` interface is optional. Developers might want to use [`ERC-7821`](contracts/v5.x/api/account.mdx#ERC7821) for a minimal batched execution interface or rely on ERC-7579 or any other execution logic.
+The `IAccountExecute` interface is optional. Developers might want to use [`ERC-7821`](contracts/v5.x/api/account#ERC7821) for a minimal batched execution interface or rely on ERC-7579 or any other execution logic.
 </Callout>
 
-To build your own account, see [accounts](accounts.adoc).
+To build your own account, see [accounts](accounts).
 
 ### Factory Contract
 
 The smart contract accounts are created by a Factory contract defined by the Account developer. This factory receives arbitrary bytes as `initData` and returns an `address` where the logic of the account is deployed.
 
-To build your own factory, see [account factories](accounts.adoc#accounts_factory).
+To build your own factory, see [account factories](./accounts#accounts_factory).
 
 ### Paymaster Contract
 
 A Paymaster is an optional entity that can sponsor gas fees for Accounts, or allow them to pay for those fees in ERC-20 instead of native currency. This abstracts gas away of the user experience in the same way that computational costs of cloud servers are abstracted away from end-users.
 
-To build your own paymaster, see [paymasters](https://docs.openzeppelin.com/community-contracts/0.0.1/paymasters).
+To build your own paymaster, see [paymasters](/community-contracts/paymasters).
 
 ## Further notes
 
 ### ERC-7562 Validation Rules
 
-To process a bundle of `UserOperations`, bundlers call [`validateUserOp`](contracts/v5.x/api/account.mdx#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-) on each operation sender to check whether the operation can be executed. However, the bundler has no guarantee that the state of the blockchain will remain the same after the validation phase. To overcome this problem, [ERC-7562](https://eips.ethereum.org/EIPS/eip-7562) proposes a set of limitations to EVM code so that bundlers (or node operators) are protected from unexpected state changes.
+To process a bundle of `UserOperations`, bundlers call [`validateUserOp`](contracts/5.x/api/account#Account-validateUserOp-struct-PackedUserOperation-bytes32-uint256-) on each operation sender to check whether the operation can be executed. However, the bundler has no guarantee that the state of the blockchain will remain the same after the validation phase. To overcome this problem, [ERC-7562](https://eips.ethereum.org/EIPS/eip-7562) proposes a set of limitations to EVM code so that bundlers (or node operators) are protected from unexpected state changes.
 
 These rules outline the requirements for operations to be processed by the canonical mempool.
 

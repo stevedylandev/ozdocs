@@ -95,19 +95,5 @@
 				"url": "/contracts-compact/api/utils"
 			}
 		]
-	},
-	{
-		"type": "separator",
-		"name": "Guides"
-	},
-	{
-		"type": "page",
-		"name": "ZK Circuits 101",
-		"url": "/contracts-compact/zkCircuits101"
-	},
-	{
-		"type": "page",
-		"name": "Extensibility",
-		"url": "/contracts-compact/extensibility"
 	}
 ]

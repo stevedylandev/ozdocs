@@ -2,7 +2,7 @@
 title: Using Relayer for Sending Transactions
 ---
 
-In this tutorial, we will explore how to use the [Relayers](module/relayers.mdx) to send transactions. We will cover:
+In this tutorial, we will explore how to use the [Relayers](module/relayers) to send transactions. We will cover:
 
 * Checking relayer information.
 * Sending a transaction.
@@ -48,7 +48,7 @@ Let’s start by creating a Relayer:
   RELAYER_API_KEY=your_api_key
   RELAYER_SECRET_KEY=your_api_secret
   ```
-* Create a file named `storeObject.ts` in the project. 
+* Create a file named `storeObject.ts` in the project.
 * Now let’s add the following code:
 
   ```jsx
@@ -58,7 +58,7 @@ Let’s start by creating a Relayer:
 
   dotenv.config();
 
-  async function main() 
+  async function main()
 
   const client = new Defender({
 
@@ -71,7 +71,7 @@ Let’s start by creating a Relayer:
 
   }
 
-  main().catch((error) => 
+  main().catch((error) =>
   console.error(error);
   process.exitCode = 1;
   );
@@ -90,7 +90,7 @@ node storeObject.js
 
 ## 3. Send Transaction
 
-Next, we will send a transaction using the relayer. 
+Next, we will send a transaction using the relayer.
 
 * Let’s edit the same file and add the following code:
 
@@ -149,5 +149,5 @@ node storeObject.js
 ## 5. Next Steps
 Congratulations! You have successfully used the Relayer to check information, send transactions, and verify the transaction status. By following this tutorial, you have gained a fundamental understanding of how to interact with smart contracts using the Relayer.
 
-* For more information on using Relayer, refer to the [Relayers](/module/relayers.mdx) documentation.
-* Explore the [Actions](:tutorial/actions.adoc) to automate your smart contract operational tasks with easy integration with the rest of Defender.
+* For more information on using Relayer, refer to the [Relayers](/module/relayers) documentation.
+* Explore the [Actions](:tutorial/actions) to automate your smart contract operational tasks with easy integration with the rest of Defender.

@@ -1,0 +1,614 @@
+---
+title: Account
+---
+
+This crate provides components to implement account contracts that can be used for interacting with the network.
+
+## [](#interfaces)Interfaces
+
+Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_account` package. The references documented here are contained in the `openzeppelin_interfaces` package version `v2.1.0`.
+
+### [](#ISRC6)`ISRC6`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/account/accounts.cairo)
+
+```rust
+use openzeppelin_interfaces::accounts::ISRC6;
+```
+
+Interface of the SRC6 Standard Account as defined in the [SNIP-6](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-6.md).
+
+[SRC5 ID](introspection#ISRC5)
+
+0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91e03caecc1cd
+
+Functions
+
+- [`__execute__(calls)`](#ISRC6-__execute__)
+- [`__validate__(calls)`](#ISRC6-__validate__)
+- [`is_valid_signature(hash, signature)`](#ISRC6-is_valid_signature)
+
+#### [](#ISRC6-Functions)Functions
+
+#### [](#ISRC6-__execute__)`__execute__(calls: Array<Call>)` external
+
+Executes the list of calls as a transaction after validation.
+
+The `Call` struct is defined in [corelib](https://github.com/starkware-libs/cairo/blob/main/corelib/src/starknet/account.cairo#L3).
+
+#### [](#ISRC6-__validate__)`__validate__(calls: Array<Call>) → felt252` external
+
+Validates a transaction before execution.
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+#### [](#ISRC6-is_valid_signature)`is_valid_signature(hash: felt252, signature: Array<felt252>) → felt252` external
+
+Validates whether a signature is valid or not for the given message hash.
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+### [](#ISRC9_V2)`ISRC9_V2`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/account/src9.cairo)
+
+```rust
+use openzeppelin_interfaces::src9::ISRC9_V2;
+```
+
+Interface of the SRC9 Standard as defined in the [SNIP-9](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-9.md).
+
+[SRC5 ID](introspection#ISRC5)
+
+0x1d1144bb2138366ff28d8e9ab57456b1d332ac42196230c3a602003c89872
+
+Functions
+
+- [`execute_from_outside_v2(outside_execution, signature)`](#ISRC9_V2-execute_from_outside_v2)
+- [`is_valid_outside_execution_nonce(nonce)`](#ISRC9_V2-is_valid_outside_execution_nonce)
+
+#### [](#ISRC9_V2-Functions)Functions
+
+#### [](#ISRC9_V2-execute_from_outside_v2)`execute_from_outside_v2(outside_execution: OutsideExecution, signature: Span<felt252>,) → Array<Span<felt252>>` external
+
+Allows anyone to submit a transaction on behalf of the account as long as they have the relevant signatures.
+
+This method allows reentrancy. A call to `__execute__` or `execute_from_outside_v2` can trigger another nested transaction to `execute_from_outside_v2` thus the implementation MUST verify that the provided `signature` matches the hash of `outside_execution` and that `nonce` was not already used.
+
+The implementation should expect version to be set to 2 in the domain separator.
+
+Arguments:
+
+- `outside_execution` - The parameters of the transaction to execute.
+- `signature` - A valid signature on the [SNIP-12](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-12.md) message encoding of `outside_execution`.
+
+#### [](#ISRC9_V2-is_valid_outside_execution_nonce)`is_valid_outside_execution_nonce(nonce: felt252) → bool` external
+
+Get the status of a given nonce. `true` if the nonce is available to use.
+
+## [](#core)Core
+
+### [](#AccountComponent)`AccountComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/account/src/account.cairo)
+
+```rust
+use openzeppelin_account::AccountComponent;
+```
+
+Account component implementing [`ISRC6`](#ISRC6) for signatures over the [Starknet curve](https://docs.starknet.io/architecture-and-concepts/cryptography/#stark-curve).
+
+Implementing [SRC5Component](introspection#SRC5Component) is a requirement for this component to be implemented.
+
+[Embeddable Mixin Implementations](../components#mixins)
+
+AccountMixinImpl
+
+- [`SRC6Impl`](#AccountComponent-Embeddable-Impls-SRC6Impl)
+- [`DeclarerImpl`](#AccountComponent-Embeddable-Impls-DeclarerImpl)
+- [`DeployableImpl`](#AccountComponent-Embeddable-Impls-DeployableImpl)
+- [`PublicKeyImpl`](#AccountComponent-Embeddable-Impls-PublicKeyImpl)
+- [`SRC6CamelOnlyImpl`](#AccountComponent-Embeddable-Impls-SRC6CamelOnlyImpl)
+- [`PublicKeyCamelImpl`](#AccountComponent-Embeddable-Impls-PublicKeyCamelImpl)
+- [`SRC5Impl`](introspection#SRC5Component-Embeddable-Impls)
+
+Embeddable Implementations
+
+SRC6Impl
+
+- [`__execute__(self, calls)`](#AccountComponent-__execute__)
+- [`__validate__(self, calls)`](#AccountComponent-__validate__)
+- [`is_valid_signature(self, hash, signature)`](#AccountComponent-is_valid_signature)
+
+DeclarerImpl
+
+- [`__validate_declare__(self, class_hash)`](#AccountComponent-__validate_declare__)
+
+DeployableImpl
+
+- [`__validate_deploy__(self, hash, signature)`](#AccountComponent-__validate_deploy__)
+
+PublicKeyImpl
+
+- [`get_public_key(self)`](#AccountComponent-get_public_key)
+- [`set_public_key(self, new_public_key, signature)`](#AccountComponent-set_public_key)
+
+SRC6CamelOnlyImpl
+
+- [`isValidSignature(self, hash, signature)`](#AccountComponent-isValidSignature)
+
+PublicKeyCamelImpl
+
+- [`getPublicKey(self)`](#AccountComponent-getPublicKey)
+- [`setPublicKey(self, newPublicKey, signature)`](#AccountComponent-setPublicKey)
+
+SRC5Impl
+
+- [`supports_interface(self, interface_id: felt252)`](introspection#ISRC5-supports_interface)
+
+Internal Implementations
+
+InternalImpl
+
+- [`initializer(self, public_key)`](#AccountComponent-initializer)
+- [`assert_only_self(self)`](#AccountComponent-assert_only_self)
+- [`assert_valid_new_owner(self, current_owner, new_owner, signature)`](#AccountComponent-assert_valid_new_owner)
+- [`validate_transaction(self)`](#AccountComponent-validate_transaction)
+- [`_set_public_key(self, new_public_key)`](#AccountComponent-_set_public_key)
+- [`_is_valid_signature(self, hash, signature)`](#AccountComponent-_is_valid_signature)
+
+Events
+
+- [`OwnerAdded(new_owner_guid)`](#AccountComponent-OwnerAdded)
+- [`OwnerRemoved(removed_owner_guid)`](#AccountComponent-OwnerRemoved)
+
+#### [](#AccountComponent-Embeddable-Functions)Embeddable functions
+
+#### [](#AccountComponent-__execute__)`__execute__(self: @ContractState, calls: Array<Call>)` external
+
+See [ISRC6::\_\_execute\_\_](#ISRC6-__execute__).
+
+#### [](#AccountComponent-__validate__)`__validate__(self: @ContractState, calls: Array<Call>) → felt252` external
+
+See [ISRC6::\_\_validate\_\_](#ISRC6-__validate__).
+
+#### [](#AccountComponent-is_valid_signature)`is_valid_signature(self: @ContractState, hash: felt252, signature: Array<felt252>) → felt252` external
+
+See [ISRC6::is\_valid\_signature](#ISRC6-is_valid_signature).
+
+#### [](#AccountComponent-__validate_declare__)`__validate_declare__(self: @ContractState, class_hash: felt252) → felt252` external
+
+Validates a [`Declare` transaction](https://docs.starknet.io/architecture-and-concepts/network-architecture/transactions/#declare-transaction).
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+#### [](#AccountComponent-__validate_deploy__)`__validate_deploy__(self: @ContractState, class_hash: felt252, contract_address_salt: felt252, public_key: felt252) → felt252` external
+
+Validates a [`DeployAccount` transaction](https://docs.starknet.io/architecture-and-concepts/network-architecture/transactions/#deploy_account_transaction). See [Counterfactual Deployments](../guides/deployment).
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+#### [](#AccountComponent-get_public_key)`get_public_key(self: @ContractState) → felt252` external
+
+Returns the current public key of the account.
+
+#### [](#AccountComponent-set_public_key)`set_public_key(ref self: ContractState, new_public_key: felt252, signature: Span<felt252>)` external
+
+Sets a new public key for the account. Only accessible by the account calling itself through `__execute__`.
+
+Requirements:
+
+- The caller must be the contract itself.
+- The signature must be valid for the new owner.
+
+Emits both an [OwnerRemoved](#AccountComponent-OwnerRemoved) and an [OwnerAdded](#AccountComponent-OwnerAdded) event.
+
+The message to be signed is computed in Cairo as follows:
+
+```javascript
+let message_hash = PoseidonTrait::new()
+        .update_with('StarkNet Message')
+        .update_with('accept_ownership')
+        .update_with(get_contract_address())
+        .update_with(current_owner)
+        .finalize();
+```
+
+#### [](#AccountComponent-isValidSignature)`isValidSignature(self: @ContractState, hash: felt252, signature: Array<felt252>) → felt252` external
+
+See [ISRC6::is\_valid\_signature](#ISRC6-is_valid_signature).
+
+#### [](#AccountComponent-getPublicKey)`getPublicKey(self: @ContractState) → felt252` external
+
+See [get\_public\_key](#AccountComponent-get_public_key).
+
+#### [](#AccountComponent-setPublicKey)`setPublicKey(ref self: ContractState, newPublicKey: felt252, signature: Span<felt252>)` external
+
+See [set\_public\_key](#AccountComponent-set_public_key).
+
+#### [](#AccountComponent-Internal-Functions)Internal functions
+
+#### [](#AccountComponent-initializer)`initializer(ref self: ComponentState, public_key: felt252)` internal
+
+Initializes the account with the given public key, and registers the `ISRC6` interface ID.
+
+Emits an [OwnerAdded](#AccountComponent-OwnerAdded) event.
+
+#### [](#AccountComponent-assert_only_self)`assert_only_self(self: @ComponentState)` internal
+
+Validates that the caller is the account itself. Otherwise it reverts.
+
+#### [](#AccountComponent-assert_valid_new_owner)`assert_valid_new_owner(self: @ComponentState, current_owner: felt252, new_owner: felt252, signature: Span<felt252>)` internal
+
+Validates that `new_owner` accepted the ownership of the contract through a signature.
+
+Requirements:
+
+- `signature` must be valid for the new owner.
+
+This function assumes that `current_owner` is the current owner of the contract, and does not validate this assumption.
+
+#### [](#AccountComponent-validate_transaction)`validate_transaction(self: @ComponentState) → felt252` internal
+
+Validates a transaction signature from the [global context](https://github.com/starkware-libs/cairo/blob/main/corelib/src/starknet/info.cairo#L61).
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+#### [](#AccountComponent-_set_public_key)`_set_public_key(ref self: ComponentState, new_public_key: felt252)` internal
+
+Set the public key without validating the caller.
+
+Emits an [OwnerAdded](#AccountComponent-OwnerAdded) event.
+
+The usage of this method outside the `set_public_key` function is discouraged.
+
+#### [](#AccountComponent-_is_valid_signature)`_is_valid_signature(self: @ComponentState, hash: felt252, signature: Span<felt252>) → bool` internal
+
+Validates the provided `signature` for the `hash`, using the account’s current public key.
+
+#### [](#AccountComponent-Events)Events
+
+#### [](#AccountComponent-OwnerAdded)`OwnerAdded(new_owner_guid: felt252)` event
+
+Emitted when a `public_key` is added.
+
+#### [](#AccountComponent-OwnerRemoved)`OwnerRemoved(removed_owner_guid: felt252)` event
+
+Emitted when a `public_key` is removed.
+
+### [](#EthAccountComponent)`EthAccountComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/account/src/eth_account.cairo)
+
+```rust
+use openzeppelin_account::eth_account::EthAccountComponent;
+```
+
+Account component implementing [`ISRC6`](#ISRC6) for signatures over the [Secp256k1 curve](https://en.bitcoin.it/wiki/Secp256k1).
+
+Implementing [SRC5Component](introspection#SRC5Component) is a requirement for this component to be implemented.
+
+The `EthPublicKey` type is an alias for `starknet::secp256k1::Secp256k1Point`.
+
+[Embeddable Mixin Implementations](../components#mixins)
+
+EthAccountMixinImpl
+
+- [`SRC6Impl`](#EthAccountComponent-Embeddable-Impls-SRC6Impl)
+- [`DeclarerImpl`](#EthAccountComponent-Embeddable-Impls-DeclarerImpl)
+- [`DeployableImpl`](#EthAccountComponent-Embeddable-Impls-DeployableImpl)
+- [`PublicKeyImpl`](#EthAccountComponent-Embeddable-Impls-PublicKeyImpl)
+- [`SRC6CamelOnlyImpl`](#EthAccountComponent-Embeddable-Impls-SRC6CamelOnlyImpl)
+- [`PublicKeyCamelImpl`](#EthAccountComponent-Embeddable-Impls-PublicKeyCamelImpl)
+- [`SRC5Impl`](introspection#SRC5Component-Embeddable-Impls)
+
+Embeddable Implementations
+
+SRC6Impl
+
+- [`__execute__(self, calls)`](#EthAccountComponent-__execute__)
+- [`__validate__(self, calls)`](#EthAccountComponent-__validate__)
+- [`is_valid_signature(self, hash, signature)`](#EthAccountComponent-is_valid_signature)
+
+DeclarerImpl
+
+- [`__validate_declare__(self, class_hash)`](#EthAccountComponent-__validate_declare__)
+
+DeployableImpl
+
+- [`__validate_deploy__(self, hash, signature)`](#EthAccountComponent-__validate_deploy__)
+
+PublicKeyImpl
+
+- [`get_public_key(self)`](#EthAccountComponent-get_public_key)
+- [`set_public_key(self, new_public_key, signature)`](#EthAccountComponent-set_public_key)
+
+SRC6CamelOnlyImpl
+
+- [`isValidSignature(self, hash, signature)`](#EthAccountComponent-isValidSignature)
+
+PublicKeyCamelImpl
+
+- [`getPublicKey(self)`](#EthAccountComponent-getPublicKey)
+- [`setPublicKey(self, newPublicKey, signature)`](#EthAccountComponent-setPublicKey)
+
+SRC5Impl
+
+- [`supports_interface(self, interface_id: felt252)`](introspection#ISRC5-supports_interface)
+
+Internal Implementations
+
+InternalImpl
+
+- [`initializer(self, public_key)`](#EthAccountComponent-initializer)
+- [`assert_only_self(self)`](#EthAccountComponent-assert_only_self)
+- [`assert_valid_new_owner(self, current_owner, new_owner, signature)`](#EthAccountComponent-assert_valid_new_owner)
+- [`validate_transaction(self)`](#EthAccountComponent-validate_transaction)
+- [`_set_public_key(self, new_public_key)`](#EthAccountComponent-_set_public_key)
+- [`_is_valid_signature(self, hash, signature)`](#EthAccountComponent-_is_valid_signature)
+
+Events
+
+- [`OwnerAdded(new_owner_guid)`](#EthAccountComponent-OwnerAdded)
+- [`OwnerRemoved(removed_owner_guid)`](#EthAccountComponent-OwnerRemoved)
+
+#### [](#EthAccountComponent-Embeddable-Functions)Embeddable functions
+
+#### [](#EthAccountComponent-__execute__)`__execute__(self: @ContractState, calls: Array<Call>)` external
+
+See [ISRC6::\_\_execute\_\_](#ISRC6-__execute__).
+
+#### [](#EthAccountComponent-__validate__)`__validate__(self: @ContractState, calls: Array<Call>) → felt252` external
+
+See [ISRC6::\_\_validate\_\_](#ISRC6-__validate__).
+
+#### [](#EthAccountComponent-is_valid_signature)`is_valid_signature(self: @ContractState, hash: felt252, signature: Array<felt252>) → felt252` external
+
+See [ISRC6::is\_valid\_signature](#ISRC6-is_valid_signature).
+
+#### [](#EthAccountComponent-__validate_declare__)`__validate_declare__(self: @ContractState, class_hash: felt252) → felt252` external
+
+Validates a [`Declare` transaction](https://docs.starknet.io/architecture-and-concepts/network-architecture/transactions/#declare-transaction).
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+#### [](#EthAccountComponent-__validate_deploy__)`__validate_deploy__(self: @ContractState, class_hash: felt252, contract_address_salt: felt252, public_key: EthPublicKey) → felt252` external
+
+Validates a [`DeployAccount` transaction](https://docs.starknet.io/architecture-and-concepts/network-architecture/transactions/#deploy_account_transaction). See [Counterfactual Deployments](../guides/deployment).
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+#### [](#EthAccountComponent-get_public_key)`get_public_key(self: @ContractState) → EthPublicKey` external
+
+Returns the current public key of the account.
+
+#### [](#EthAccountComponent-set_public_key)`set_public_key(ref self: ContractState, new_public_key: EthPublicKey, signature: Span<felt252>)` external
+
+Sets a new public key for the account. Only accessible by the account calling itself through `__execute__`.
+
+Requirements:
+
+- The caller must be the contract itself.
+- The signature must be valid for the new owner.
+
+Emits both an [OwnerRemoved](#EthAccountComponent-OwnerRemoved) and an [OwnerAdded](#EthAccountComponent-OwnerAdded) event.
+
+The message to be signed is computed in Cairo as follows:
+
+```javascript
+let message_hash = PoseidonTrait::new()
+        .update_with('StarkNet Message')
+        .update_with('accept_ownership')
+        .update_with(get_contract_address())
+        .update_with(current_owner.get_coordinates().unwrap_syscall())
+        .finalize();
+```
+
+#### [](#EthAccountComponent-isValidSignature)`isValidSignature(self: @ContractState, hash: felt252, signature: Array<felt252>) → felt252` external
+
+See [ISRC6::is\_valid\_signature](#ISRC6-is_valid_signature).
+
+#### [](#EthAccountComponent-getPublicKey)`getPublicKey(self: @ContractState) → EthPublicKey` external
+
+See [get\_public\_key](#EthAccountComponent-get_public_key).
+
+#### [](#EthAccountComponent-setPublicKey)`setPublicKey(ref self: ContractState, newPublicKey: EthPublicKey, signature: Span<felt252>)` external
+
+See [set\_public\_key](#EthAccountComponent-set_public_key).
+
+#### [](#EthAccountComponent-Internal-Functions)Internal functions
+
+#### [](#EthAccountComponent-initializer)`initializer(ref self: ComponentState, public_key: EthPublicKey)` internal
+
+Initializes the account with the given public key, and registers the `ISRC6` interface ID.
+
+Emits an [OwnerAdded](#EthAccountComponent-OwnerAdded) event.
+
+#### [](#EthAccountComponent-assert_only_self)`assert_only_self(self: @ComponentState)` internal
+
+Validates that the caller is the account itself. Otherwise it reverts.
+
+#### [](#EthAccountComponent-assert_valid_new_owner)`assert_valid_new_owner(self: @ComponentState, current_owner: EthPublicKey, new_owner: EthPublicKey, signature: Span<felt252>)` internal
+
+Validates that `new_owner` accepted the ownership of the contract through a signature.
+
+Requirements:
+
+- The signature must be valid for the `new_owner`.
+
+This function assumes that `current_owner` is the current owner of the contract, and does not validate this assumption.
+
+#### [](#EthAccountComponent-validate_transaction)`validate_transaction(self: @ComponentState) → felt252` internal
+
+Validates a transaction signature from the [global context](https://github.com/starkware-libs/cairo/blob/main/corelib/src/starknet/info.cairo#L61).
+
+Returns the short string `'VALID'` if valid, otherwise it reverts.
+
+#### [](#EthAccountComponent-_set_public_key)`_set_public_key(ref self: ComponentState, new_public_key: EthPublicKey)` internal
+
+Set the public key without validating the caller.
+
+Emits an [OwnerAdded](#EthAccountComponent-OwnerAdded) event.
+
+The usage of this method outside the `set_public_key` function is discouraged.
+
+#### [](#EthAccountComponent-_is_valid_signature)`_is_valid_signature(self: @ComponentState, hash: felt252, signature: Span<felt252>) → bool` internal
+
+Validates the provided `signature` for the `hash`, using the account’s current public key.
+
+#### [](#EthAccountComponent-Events)Events
+
+The `guid` is computed as the hash of the public key, using the poseidon hash function.
+
+#### [](#EthAccountComponent-OwnerAdded)`OwnerAdded(new_owner_guid: felt252)` event
+
+Emitted when a `public_key` is added.
+
+#### [](#EthAccountComponent-OwnerRemoved)`OwnerRemoved(removed_owner_guid: felt252)` event
+
+Emitted when a `public_key` is removed.
+
+## [](#extensions)Extensions
+
+### [](#SRC9Component)`SRC9Component`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/account/src/extensions/src9/src9.cairo)
+
+```rust
+use openzeppelin_account::extensions::SRC9Component;
+```
+
+OutsideExecution component implementing [`ISRC9_V2`](#ISRC9_V2).
+
+This component is signature-agnostic, meaning it can be integrated into any account contract, as long as the account implements the ISRC6 interface.
+
+Embeddable Implementations
+
+OutsideExecutionV2Impl
+
+- [`execute_from_outside_v2(self, outside_execution, signature)`](#SRC9Component-execute_from_outside_v2)
+- [`is_valid_outside_execution_nonce(self, nonce)`](#SRC9Component-is_valid_outside_execution_nonce)
+
+Internal Implementations
+
+InternalImpl
+
+- [`initializer(self)`](#SRC9Component-initializer)
+
+#### [](#SRC9Component-Embeddable-Functions)Embeddable functions
+
+#### [](#SRC9Component-execute_from_outside_v2)`execute_from_outside_v2(ref self: ContractState, outside_execution: OutsideExecution, signature: Span<felt252>) → Array<Span<felt252>>` external
+
+Allows anyone to submit a transaction on behalf of the account as long as they have the relevant signatures.
+
+This method allows reentrancy. A call to `__execute__` or `execute_from_outside_v2` can trigger another nested transaction to `execute_from_outside_v2`. This implementation verifies that the provided `signature` matches the hash of `outside_execution` and that `nonce` was not already used.
+
+Arguments:
+
+- `outside_execution` - The parameters of the transaction to execute.
+- `signature` - A valid signature on the [SNIP-12](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-12.md) message encoding of `outside_execution`.
+
+Requirements:
+
+- The caller must be the `outside_execution.caller` unless 'ANY\_CALLER' is used.
+- The current time must be within the `outside_execution.execute_after` and `outside_execution.execute_before` span.
+- The `outside_execution.nonce` must not be used before.
+- The `signature` must be valid.
+
+#### [](#SRC9Component-is_valid_outside_execution_nonce)`is_valid_outside_execution_nonce(self: @ContractState, nonce: felt252) → bool` external
+
+Returns the status of a given nonce. `true` if the nonce is available to use.
+
+#### [](#SRC9Component-Internal-Functions)Internal functions
+
+#### [](#SRC9Component-initializer)`initializer(ref self: ComponentState)` internal
+
+Initializes the account by registering the `ISRC9_V2` interface ID.
+
+## [](#presets)Presets
+
+### [](#AccountUpgradeable)`AccountUpgradeable`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/presets/src/account.cairo)
+
+```rust
+use openzeppelin_presets::AccountUpgradeable;
+```
+
+Upgradeable account which can change its public key and declare, deploy, or call contracts. Supports outside execution by implementing [SRC9](#SRC9Component).
+
+[Sierra class hash](../presets)
+
+0x002de258cce5b9e160bf83956b09f982059582469f7e6fad07b438128317d029
+
+Constructor
+
+- [`constructor(self, public_key)`](#AccountUpgradeable-constructor)
+
+Embedded Implementations
+
+AccountComponent
+
+- [`AccountMixinImpl`](#AccountComponent-Embeddable-Mixin-Impl)
+
+SRC9Component
+
+- [`OutsideExecutionV2Impl`](#SRC9Component-Embeddable-Impls-OutsideExecutionV2Impl)
+
+External Functions
+
+- [`upgrade(self, new_class_hash)`](#AccountUpgradeable-upgrade)
+
+#### [](#AccountUpgradeable-constructor-section)Constructor
+
+#### [](#AccountUpgradeable-constructor)`constructor(ref self: ContractState, public_key: felt252)` constructor
+
+Sets the account `public_key` and registers the interfaces the contract supports.
+
+#### [](#AccountUpgradeable-external-functions)External functions
+
+#### [](#AccountUpgradeable-upgrade)`upgrade(ref self: ContractState, new_class_hash: ClassHash)` external
+
+Upgrades the contract to a new implementation given by `new_class_hash`.
+
+Requirements:
+
+- The caller is the account contract itself.
+- `new_class_hash` cannot be zero.
+
+### [](#EthAccountUpgradeable)`EthAccountUpgradeable`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/presets/src/eth_account.cairo)
+
+```rust
+use openzeppelin_presets::EthAccountUpgradeable;
+```
+
+Upgradeable account which can change its public key and declare, deploy, or call contracts, using Ethereum signing keys. Supports outside execution by implementing [SRC9](#SRC9Component).
+
+The `EthPublicKey` type is an alias for `starknet::secp256k1::Secp256k1Point`.
+
+[Sierra class hash](../presets)
+
+0x07f54a43da3f7beb5099c87f5627b7fba5f31c7a704cce57f8fb73287c1ea3be
+
+Constructor
+
+- [`constructor(self, public_key)`](#EthAccountUpgradeable-constructor)
+
+Embedded Implementations
+
+EthAccountComponent
+
+- [`EthAccountMixinImpl`](#EthAccountComponent-Embeddable-Mixin-Impl)
+
+SRC9Component
+
+- [`OutsideExecutionV2Impl`](#SRC9Component-Embeddable-Impls-OutsideExecutionV2Impl)
+
+External Functions
+
+- [`upgrade(self, new_class_hash)`](#EthAccountUpgradeable-upgrade)
+
+#### [](#EthAccountUpgradeable-constructor-section)Constructor
+
+#### [](#EthAccountUpgradeable-constructor)`constructor(ref self: ContractState, public_key: EthPublicKey)` constructor
+
+Sets the account `public_key` and registers the interfaces the contract supports.
+
+#### [](#EthAccountUpgradeable-external-functions)External functions
+
+#### [](#EthAccountUpgradeable-upgrade)`upgrade(ref self: ContractState, new_class_hash: ClassHash)` external
+
+Upgrades the contract to a new implementation given by `new_class_hash`.
+
+Requirements:
+
+- The caller is the account contract itself.
+- `new_class_hash` cannot be zero.
