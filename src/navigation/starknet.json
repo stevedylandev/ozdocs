@@ -245,7 +245,7 @@
 			{
 				"type": "page",
 				"name": "Testing",
-				"url": "/cairo-contracts/api/testing"
+				"url": "/contracts-cairo/api/testing"
 			},
 			{
 				"type": "page",
