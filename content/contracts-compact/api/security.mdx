@@ -2,21 +2,21 @@
 title: Security
 ---
 
-This package provides the API for all Utils modules.
+This package provides the API for all Security modules.
 
 <Callout>
-For an overview of the module, read the [Utils guide](utils.mdx).
+For an overview of the module, read the [Security guide](../security).
 </Callout>
 
 ## Initializable
 
-```ts
-import "./node_modules/@openzeppelin-compact/utils/src/Initializable" prefix Initializable_;
-```
-
 ### Initializable
 
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/utils/src/Initializable.compact)
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/security/Initializable.compact)
+
+```ts
+import "./node-modules/@openzeppelin-compact/contracts/src/security/Initializable";
+```
 
 **Circuits:**
 
@@ -24,7 +24,11 @@ import "./node_modules/@openzeppelin-compact/utils/src/Initializable" prefix Ini
 - [`assertInitialized()`](#assertinitialized)
 - [`assertNotInitialized()`](#assertnotinitialized)
 
-#### `initialize()` → circuit
+#### initialize
+
+```ts
+initialize() → []
+```
 
 Initializes the state thus ensuring the calling circuit can only be called once.
 
@@ -36,7 +40,11 @@ Constraints:
 
 * k=10, rows=38
 
-#### `assertInitialized()` → circuit
+#### assertInitialized
+
+```ts
+assertInitialized() → []
+```
 
 Asserts that the contract has been initialized, throwing an error if not.
 
@@ -48,7 +56,11 @@ Constraints:
 
 * k=10, rows=31
 
-#### `assertNotInitialized()` → circuit
+#### assertNotInitialized
+
+```ts
+assertNotInitialized() → []
+```
 
 Asserts that the contract has not been initialized, throwing an error if it has.
 
@@ -62,13 +74,13 @@ Constraints:
 
 ## Pausable
 
-```ts
-import "./node_modules/@openzeppelin-compact/utils/src/Pausable" prefix Pausable_;
-```
-
 ### Pausable
 
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/utils/src/Pausable.compact)
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/security/Pausable.compact)
+
+```ts
+import "./node-modules/@openzeppelin-compact/contracts/src/security/Pausable";
+```
 
 **Circuits:**
 
@@ -78,7 +90,11 @@ import "./node_modules/@openzeppelin-compact/utils/src/Pausable" prefix Pausable
 - [`_pause()`](#_pause)
 - [`_unpause()`](#_unpause)
 
-#### `isPaused()` → Boolean (circuit)
+#### isPaused
+
+```ts
+isPaused() → Boolean
+```
 
 Returns true if the contract is paused, and false otherwise.
 
@@ -86,7 +102,11 @@ Constraints:
 
 * k=10, rows=32
 
-#### `assertPaused()` → circuit
+#### assertPaused
+
+```ts
+assertPaused() → []
+```
 
 Makes a circuit only callable when the contract is paused.
 
@@ -98,7 +118,11 @@ Constraints:
 
 * k=10, rows=31
 
-#### `assertNotPaused()` → circuit
+#### assertNotPaused
+
+```ts
+assertNotPaused() → []
+```
 
 Makes a circuit only callable when the contract is not paused.
 
@@ -110,7 +134,11 @@ Constraints:
 
 * k=10, rows=35
 
-#### `_pause()` → circuit
+#### _pause
+
+```ts
+_pause() → []
+```
 
 Triggers a stopped state.
 
@@ -122,7 +150,11 @@ Constraints:
 
 * k=10, rows=38
 
-#### `_unpause()` → circuit
+#### _unpause
+
+```ts
+_unpause() → []
+```
 
 Lifts the pause on the contract.
 
@@ -133,9 +165,3 @@ Requirements:
 Constraints:
 
 * k=10, rows=34
-
-## Utils
-
-```ts
-import "./node_modules/@openzeppelin-compact/utils/src/Utils" prefix Utils_;
-```
