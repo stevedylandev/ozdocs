@@ -1,10 +1,12 @@
 ---
-title: AccessControl
+title: AccessControl API
 ---
 
 This page provides the full AccessControl module API.
 
-Roles are referred to by their `Bytes<32>` identifier. These should be exposed in the top-level contract and be unique. The best way to achieve this is by using `export sealed ledger` hash digests that are initialized in the top-level contract:
+Roles are referred to by their `Bytes<32>` identifier.
+These should be exposed in the top-level contract and be unique.
+The best way to achieve this is by using `export sealed ledger` hash digests that are initialized in the top-level contract:
 
 ```typescript
 import CompactStandardLibrary;
@@ -12,40 +14,47 @@ import "AccessControl" prefix AccessControl_;
 
 export sealed ledger MY_ROLE: Bytes<32>;
 
-constructor()
+constructor() {
   MY_ROLE = persistentHash<Bytes<32>>(pad(32, "MY_ROLE"));
-
+}
 ```
 
 To restrict access to a circuit, use [assertOnlyRole](#assertonlyrole):
 
 ```typescript
-circuit foo(): []
+circuit foo(): [] {
   assertOnlyRole(MY_ROLE);
-  ...
+}
 ```
 
-Roles can be granted and revoked dynamically via the grantRole and revokeRole functions. Each role has an associated admin role, and only accounts that have a role’s admin role can call grantRole and revokeRole.
+Roles can be granted and revoked dynamically via the [grantRole](#grantrole) and [revokeRole](#revokerole) functions.
+Each role has an associated admin role,
+and only accounts that have a role’s admin role can call [grantRole](#grantrole) and [revokeRole](#revokerole).
 
-By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means that only accounts with this role will be able to grant or revoke other roles. More complex role relationships can be created by using [_setRoleAdmin](#_setroleadmin). To set a custom `DEFAULT_ADMIN_ROLE`, implement the `Initializable` module and set `DEFAULT_ADMIN_ROLE` in the `initialize()` function.
+By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`,
+which means that only accounts with this role will be able to grant or revoke other roles.
+More complex role relationships can be created by using [_setRoleAdmin](#_setroleadmin).
+To set a custom `DEFAULT_ADMIN_ROLE`,
+implement the `Initializable` module and set `DEFAULT_ADMIN_ROLE` in the `initialize()` function.
 
 <Callout type='warn'>
-The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role. Extra precautions should be taken to secure accounts that have been granted it.
+The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role.
+Extra precautions should be taken to secure accounts that have been granted it.
 </Callout>
 
-<Callout>
-For an overview of the module, read the accessControl-guide.
+<Callout type='info'>
+For an overview of the module, read the [Access Control guide](../access).
 </Callout>
 
 ## Core
 
-```ts
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl" prefix AccessControl_;
-```
-
 ### AccessControl
 
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/tree/main/contracts/accessControl/src/AccessControl.compact)
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/tree/main/contracts/src/access/AccessControl.compact)
+
+```ts
+import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl";
+```
 
 **Circuits**
 
@@ -112,7 +121,8 @@ Constraints:
 getRoleAdmin(roleId: Bytes<32>) → Bytes<32>
 ```
 
-Returns the admin role that controls `roleId` or a byte array with all zero bytes if `roleId` doesn’t exist. See grantRole and revokeRole.
+Returns the admin role that controls `roleId` or a byte array with all zero bytes if `roleId` doesn’t exist.
+See [grantRole](#grantrole) and [revokeRole](#revokerole).
 
 To change a role's admin use [_setRoleAdmin](#_setroleadmin).
 
@@ -128,10 +138,10 @@ grantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress
 
 Grants `roleId` to `account`.
 
-<Callout>
+<Callout type='info'>
 Granting roles to contract addresses is currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents permanently disabling access to a circuit.
+</Callout>
 
 Requirements:
 
@@ -152,7 +162,7 @@ Revokes `roleId` from `account`.
 
 Requirements:
 
-* The caller must have ``roleId`’s admin role.
+* The caller must have `roleId`’s admin role.
 
 Constraints:
 
@@ -166,12 +176,13 @@ renounceRole(roleId: Bytes<32>, callerConfirmation: Either<ZswapCoinPublicKey, C
 
 Revokes `roleId` from the calling account.
 
-Roles are often managed via grantRole and revokeRole: this circuit’s
-purpose is to provide a mechanism for accounts to lose their privileges
+Roles are often managed via [grantRole](#grantrole) and [revokeRole](#revokerole):
+this circuit’s purpose is to provide a mechanism for accounts to lose their privileges
 if they are compromised (such as when a trusted device is misplaced).
 
-<Callout>
-We do not provide functionality for smart contracts to renounce roles because self-executing transactions are not supported on Midnight at this time. We may revisit this in future if this feature is made available in Compact.
+<Callout type='info'>
+We do not provide functionality for smart contracts to renounce roles because self-executing transactions are not supported on Midnight at this time.
+We may revisit this in future if this feature is made available in Compact.
 </Callout>
 
 Requirements:
@@ -189,7 +200,7 @@ Constraints:
 _setRoleAdmin(roleId: Bytes<32>, adminRole: Bytes<32>) → []
 ```
 
-Sets `adminRole` as ``roleId`’s admin role.
+Sets `adminRole` as `roleId`’s admin role.
 
 Constraints:
 
@@ -205,10 +216,10 @@ Attempts to grant `roleId` to `account` and returns a boolean indicating if `rol
 
 Internal circuit without access restriction.
 
-<Callout>
+<Callout type='info'>
 Granting roles to contract addresses is currently disallowed in this circuit until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents permanently disabling access to a circuit.
+</Callout>
 
 Requirements:
 
@@ -228,9 +239,9 @@ Unsafe variant of [_grantRole](#_grantrole).
 
 <Callout type='warn'>
 Granting roles to contract addresses is considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Granting a role to a smart contract may render a circuit permanently inaccessible.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Constraints:
 
