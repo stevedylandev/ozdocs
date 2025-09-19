@@ -10,7 +10,8 @@ The best way to achieve this is by using `export sealed ledger` hash digests tha
 
 ```typescript
 import CompactStandardLibrary;
-import "AccessControl" prefix AccessControl_;
+import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
+  prefix AccessControl_;
 
 export sealed ledger MY_ROLE: Bytes<32>;
 
@@ -53,7 +54,7 @@ For an overview of the module, read the [Access Control guide](../access).
 [View on GitHub](https://github.com/OpenZeppelin/compact-contracts/tree/main/contracts/src/access/AccessControl.compact)
 
 ```ts
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl";
+import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl";
 ```
 
 **Circuits**
