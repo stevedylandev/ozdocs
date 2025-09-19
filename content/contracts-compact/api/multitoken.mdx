@@ -1,22 +1,22 @@
 ---
-title: MultiToken
+title: MultiToken API
 ---
 
 This module provides the full MultiToken module API.
 
 <Callout>
-For an overview of the module, read the multiToken-guide.
+For an overview of the module, read the [MultiToken guide](../multitoken).
 </Callout>
 
 ## Core
 
 ```ts
-import "./node_modules/@openzeppelin-compact/multi-token/src/MultiToken" prefix MultiToken_;
+import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
 ```
 
 ### MultiToken
 
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/multiToken/src/MultiToken.compact)
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/token/MultiToken.compact)
 
 **Circuits**
 
@@ -117,7 +117,10 @@ Constraints:
 #### isApprovedForAll
 
 ```typescript
-isApprovedForAll(account: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean
+isApprovedForAll(
+  account: Either<ZswapCoinPublicKey, ContractAddress>,
+  operator: Either<ZswapCoinPublicKey, ContractAddress>
+) → Boolean
 ```
 
 **Circuit**
@@ -135,7 +138,11 @@ Constraints:
 #### transferFrom
 
 ```typescript
-transferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []
+transferFrom(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  id: Uint<128>, value: Uint<128>
+) → []
 ```
 
 **Circuit**
@@ -143,10 +150,10 @@ transferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<Zswap
 Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
 The caller must be `from` or approved to transfer on their behalf.
 
-<Callout>
+<Callout type='info'>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -154,7 +161,7 @@ Requirements:
 * `to` is not a ContractAddress.
 * `to` is not the zero address.
 * `from` is not the zero address.
-* Caller must be `from` or approved via `setApprovalForAll`.
+* Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
 * `from` must have an `id` balance of at least `value`.
 
 Constraints:
@@ -164,7 +171,12 @@ Constraints:
 #### _transfer
 
 ```typescript
-_transfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>)
+_transfer(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  id: Uint<128>,
+  value: Uint<128>
+)
 ```
 
 **Circuit**
@@ -172,10 +184,10 @@ _transfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoi
 Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
 Does not impose restrictions on the caller, making it suitable for composition in higher-level contract logic.
 
-<Callout>
+<Callout type='info'>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -192,7 +204,12 @@ Constraints:
 #### _update
 
 ```typescript
-_update(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>)
+_update(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  id: Uint<128>,
+  value: Uint<128>
+)
 ```
 
 **Internal**
@@ -212,7 +229,12 @@ Constraints:
 #### _unsafeTransferFrom
 
 ```typescript
-_unsafeTransferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []
+_unsafeTransferFrom(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  id: Uint<128>,
+  value: Uint<128>
+) → []
 ```
 
 **Circuit**
@@ -230,7 +252,7 @@ Requirements:
 * Contract is initialized.
 * `to` is not the zero address.
 * `from` is not the zero address.
-* Caller must be `from` or approved via `setApprovalForAll`.
+* Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
 * `from` must have an `id` balance of at least `value`.
 
 Constraints:
@@ -240,7 +262,12 @@ Constraints:
 #### _unsafeTransfer
 
 ```typescript
-_unsafeTransfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []
+_unsafeTransfer(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  id: Uint<128>,
+  value: Uint<128>
+) → []
 ```
 
 **Circuit**
@@ -301,8 +328,8 @@ Creates a `value` amount of tokens of type `token_id`, and assigns them to `to`.
 
 <Callout>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -326,9 +353,9 @@ Unsafe variant of `_mint` which allows transfers to contract addresses.
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -362,7 +389,11 @@ Constraints:
 #### _setApprovalForAll
 
 ```typescript
-_setApprovalForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []
+_setApprovalForAll(
+  owner: Either<ZswapCoinPublicKey, ContractAddress>,
+  operator: Either<ZswapCoinPublicKey, ContractAddress>,
+  approved: Boolean
+) → []
 ```
 
 **Circuit**
