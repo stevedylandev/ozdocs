@@ -16,6 +16,7 @@
 	{
 		"type": "folder",
 		"name": "Learn",
+		"defaultOpen": true,
 		"children": [
 			{
 				"type": "page",
