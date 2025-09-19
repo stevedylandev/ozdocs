@@ -238,6 +238,11 @@
 			},
 			{
 				"type": "page",
+				"name": "Testing",
+				"url": "/cairo-contracts/api/testing"
+			},
+			{
+				"type": "page",
 				"name": "UDC",
 				"url": "/cairo-contracts/api/udc"
 			},
