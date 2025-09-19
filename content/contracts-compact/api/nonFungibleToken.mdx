@@ -1,59 +1,57 @@
 ---
-title: NonFungibleToken
+title: NonFungibleToken API
 ---
 
 This module provides the full NonFungibleToken module API.
 
-<Callout>
-For an overview of the module, read the [NonFungibleToken guide](nonFungibleToken).
+<Callout type='info'>
+For an overview of the module, read the [NonFungibleToken guide](../nonfungibletoken).
 </Callout>
 
 ## Core
 
-```ts
-import "./node-modules/@openzeppelin-compact/non-fungible-token/src/NonFungibleToken" prefix NonFungibleToken_;
-```
-
 ### NonFungibleToken
 
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/nonFungibleToken/src/NonFungibleToken.compact)
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/token/NonFungibleToken.compact)
+
+```ts
+import "./node-modules/@openzeppelin-compact/contracts/src/token/NonFungibleToken";
+```
 
 **Circuits**
 
-* [`initialize(name_, symbol_)`](#initialize) - circuit
-* [`balanceOf(owner)`](#balanceof) - circuit
-* [`ownerOf(tokenId)`](#ownerof) - circuit
-* [`name()`](#name) - circuit
-* [`symbol()`](#symbol) - circuit
-* [`tokenURI(tokenId)`](#tokenuri) - circuit
-* [`_setTokenURI(tokenId, tokenURI)`](#_settokenuri) - circuit
-* [`approve(to, tokenId)`](#approve) - circuit
-* [`getApproved(tokenId)`](#getapproved) - circuit
-* [`setApprovalForAll(operator, approved)`](#setapprovalforall) - circuit
-* [`isApprovedForAll(owner, operator)`](#isapprovedforall) - circuit
-* [`transferFrom(from, to, tokenId)`](#transferfrom) - circuit
-* [`_unsafeTransferFrom(from, to, tokenId)`](#_unsafetransferfrom) - circuit
-* [`_ownerOf(tokenId)`](#_ownerof) - circuit
-* [`_getApproved(tokenId)`](#_getapproved) - circuit
-* [`_isAuthorized(owner, spender, tokenId)`](#_isauthorized) - circuit
-* [`_checkAuthorized(owner, spender, tokenId)`](#_checkauthorized) - circuit
+* [`initialize(name_, symbol_)`](#initialize)
+* [`balanceOf(owner)`](#balanceof)
+* [`ownerOf(tokenId)`](#ownerof)
+* [`name()`](#name)
+* [`symbol()`](#symbol)
+* [`tokenURI(tokenId)`](#tokenuri)
+* [`_setTokenURI(tokenId, tokenURI)`](#_settokenuri)
+* [`approve(to, tokenId)`](#approve)
+* [`getApproved(tokenId)`](#getapproved)
+* [`setApprovalForAll(operator, approved)`](#setapprovalforall)
+* [`isApprovedForAll(owner, operator)`](#isapprovedforall)
+* [`transferFrom(from, to, tokenId)`](#transferfrom)
+* [`_unsafeTransferFrom(from, to, tokenId)`](#_unsafetransferfrom)
+* [`_ownerOf(tokenId)`](#_ownerof)
+* [`_getApproved(tokenId)`](#_getapproved)
+* [`_isAuthorized(owner, spender, tokenId)`](#_isauthorized)
+* [`_checkAuthorized(owner, spender, tokenId)`](#_checkauthorized)
 * [`_update(to, tokenId, auth)`](#_update) - internal
-* [`_mint(to, tokenId)`](#_mint) - circuit
-* [`_unsafeMint(to, tokenId)`](#_unsafemint) - circuit
-* [`_burn(tokenId)`](#_burn) - circuit
-* [`_transfer(from, to, tokenId)`](#_transfer) - circuit
-* [`_unsafeTransfer(from, to, tokenId)`](#_unsafetransfer) - circuit
-* [`_approve(to, tokenId, auth)`](#_approve) - circuit
-* [`_setApprovalForAll(owner, operator, approved)`](#_setapprovalforall) - circuit
-* [`_requireOwned(tokenId)`](#_requireowned) - circuit
+* [`_mint(to, tokenId)`](#_mint)
+* [`_unsafeMint(to, tokenId)`](#_unsafemint)
+* [`_burn(tokenId)`](#_burn)
+* [`_transfer(from, to, tokenId)`](#_transfer)
+* [`_unsafeTransfer(from, to, tokenId)`](#_unsafetransfer)
+* [`_approve(to, tokenId, auth)`](#_approve)
+* [`_setApprovalForAll(owner, operator, approved)`](#_setapprovalforall)
+* [`_requireOwned(tokenId)`](#_requireowned)
 
 #### initialize
 
-```
+```ts
 initialize(name_: Opaque<"string">, symbol_: Opaque<"string">) → []
 ```
-
-**Type:** circuit
 
 Initializes the contract by setting the name and symbol.
 
@@ -74,8 +72,6 @@ Constraints:
 balanceOf(owner: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>
 ```
 
-**Type:** circuit
-
 Returns the number of tokens in `owner`'s account.
 
 Requirements:
@@ -88,11 +84,9 @@ Constraints:
 
 #### ownerOf
 
-```
+```ts
 ownerOf(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
 ```
-
-**Type:** circuit
 
 Returns the owner of the `tokenId` token.
 
@@ -107,11 +101,9 @@ Constraints:
 
 #### name
 
-```
+```ts
 name() → Opaque<"string">
 ```
-
-**Type:** circuit
 
 Returns the token name.
 
@@ -125,11 +117,9 @@ Constraints:
 
 #### symbol
 
-```
+```ts
 symbol() → Opaque<"string">
 ```
-
-**Type:** circuit
 
 Returns the symbol of the token.
 
@@ -143,11 +133,9 @@ Constraints:
 
 #### tokenURI
 
-```
+```ts
 tokenURI(tokenId: Uint<128>) → Opaque<"string">
 ```
-
-**Type:** circuit
 
 Returns the token URI for the given `tokenId`.
 Returns an empty string if a tokenURI does not exist.
@@ -157,11 +145,12 @@ Requirements:
 * The contract is initialized.
 * The `tokenId` must exist.
 
-<Callout>
-Native strings and string operations aren’t supported within the Compact language, e.g. concatenating a base URI + token ID is not possible like in other NFT implementations.
-</Callout>
+<Callout type='info'>
+Native strings and string operations aren’t supported within the Compact language,
+e.g. concatenating a base URI + token ID is not possible like in other NFT implementations.
 Therefore, we propose the URI storage approach; whereby, NFTs may or may not have unique "base" URIs.
 It’s up to the implementation to decide on how to handle this.
+</Callout>
 
 Constraints:
 
@@ -169,11 +158,9 @@ Constraints:
 
 #### _setTokenURI
 
-```
+```ts
 _setTokenURI(tokenId: Uint<128>, tokenURI: Opaque<"string">) → []
 ```
-
-**Type:** circuit
 
 Sets the the URI as `tokenURI` for the given `tokenId`.
 
@@ -182,7 +169,7 @@ Requirements:
 * The contract is initialized.
 * The `tokenId` must exist.
 
-<Callout>
+<Callout type='info'>
 The URI for a given NFT is usually set when the NFT is minted.
 </Callout>
 
@@ -192,11 +179,9 @@ Constraints:
 
 #### approve
 
-```
+```ts
 approve(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
 ```
-
-**Type:** circuit
 
 Gives permission to `to` to transfer `tokenId` token to another account.
 The approval is cleared when the token is transferred.
@@ -215,11 +200,9 @@ Constraints:
 
 #### getApproved
 
-```
+```ts
 getApproved(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
 ```
-
-**Type:** circuit
 
 Returns the account approved for `tokenId` token.
 
@@ -234,11 +217,9 @@ Constraints:
 
 #### setApprovalForAll
 
-```
+```ts
 setApprovalForAll(operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []
 ```
-
-**Type:** circuit
 
 Approve or remove `operator` as an operator for the caller.
 Operators can call [transferFrom](#transferfrom) for any token owned by the caller.
@@ -254,11 +235,12 @@ Constraints:
 
 #### isApprovedForAll
 
+```ts
+isApprovedForAll(
+  owner: Either<ZswapCoinPublicKey, ContractAddress>,
+  operator: Either<ZswapCoinPublicKey, ContractAddress>
+) → Boolean
 ```
-isApprovedForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean
-```
-
-**Type:** circuit
 
 Returns if the `operator` is allowed to manage all of the assets of `owner`.
 
@@ -272,18 +254,20 @@ Constraints:
 
 #### transferFrom
 
+```ts
+transferFrom(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>
+) → []
 ```
-transferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
-```
-
-**Type:** circuit
 
 Transfers `tokenId` token from `from` to `to`.
 
-<Callout>
+<Callout type='info'>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -300,19 +284,21 @@ Constraints:
 
 #### _unsafeTransferFrom
 
+```ts
+_unsafeTransferFrom(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>
+) → []
 ```
-_unsafeTransferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
-```
-
-**Type:** circuit
 
 Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -328,11 +314,9 @@ Constraints:
 
 #### _ownerOf
 
-```
+```ts
 _ownerOf(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
 ```
-
-**Type:** circuit
 
 Returns the owner of the `tokenId`. Does NOT revert if token doesn’t exist
 
@@ -346,11 +330,9 @@ Constraints:
 
 #### _getApproved
 
-```
+```ts
 _getApproved(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
 ```
-
-**Type:** circuit
 
 Returns the approved address for `tokenId`. Returns the zero address if `tokenId` is not minted.
 
@@ -364,11 +346,13 @@ Constraints:
 
 #### _isAuthorized
 
+```ts
+_isAuthorized(
+  owner: Either<ZswapCoinPublicKey, ContractAddress>,
+  spender: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>
+) → Boolean
 ```
-_isAuthorized(owner: Either<ZswapCoinPublicKey, ContractAddress>, spender: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → Boolean
-```
-
-**Type:** circuit
 
 Returns whether `spender` is allowed to manage `owner`'s tokens, or `tokenId` in particular (ignoring whether it is owned by `owner`).
 
@@ -386,11 +370,13 @@ Constraints:
 
 #### _checkAuthorized
 
+```ts
+_checkAuthorized(
+  owner: Either<ZswapCoinPublicKey, ContractAddress>,
+  spender: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>
+) → []
 ```
-_checkAuthorized(owner: Either<ZswapCoinPublicKey, ContractAddress>, spender: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
-```
-
-**Type:** circuit
 
 Checks if `spender` can operate on `tokenId`, assuming the provided `owner` is the actual owner.
 
@@ -409,8 +395,12 @@ Constraints:
 
 #### _update
 
-```
-_update(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>, auth: Either<ZswapCoinPublicKey, ContractAddress>) → Either<ZswapCoinPublicKey, ContractAddress>
+```ts
+_update(
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>,
+  auth: Either<ZswapCoinPublicKey, ContractAddress>
+) → Either<ZswapCoinPublicKey, ContractAddress>
 ```
 
 **Type:** internal
@@ -429,11 +419,9 @@ Constraints:
 
 #### _mint
 
-```
+```ts
 _mint(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
 ```
-
-**Type:** circuit
 
 Mints `tokenId` and transfers it to `to`.
 
@@ -450,11 +438,9 @@ Constraints:
 
 #### _unsafeMint
 
-```
+```ts
 _unsafeMint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []
 ```
-
-**Type:** circuit
 
 Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
 
@@ -466,9 +452,9 @@ Requirements:
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Constraints:
 
@@ -476,11 +462,9 @@ Constraints:
 
 #### _burn
 
-```
+```ts
 _burn(tokenId: Uint<128>) → []
 ```
-
-**Type:** circuit
 
 Destroys `tokenId`.
 The approval is cleared when the token is burned.
@@ -497,18 +481,20 @@ Constraints:
 
 #### _transfer
 
+```ts
+_transfer(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>
+) → []
 ```
-_transfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
-```
-
-**Type:** circuit
 
 Transfers `tokenId` from `from` to `to`. As opposed to [transferFrom](#transferfrom), this imposes no restrictions on `ownPublicKey()`.
 
-<Callout>
+<Callout type='info'>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -523,20 +509,23 @@ Constraints:
 
 #### _unsafeTransfer
 
+```ts
+_unsafeTransfer(
+  from: Either<ZswapCoinPublicKey, ContractAddress>,
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>
+) → []
 ```
-_unsafeTransfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
-```
-
-**Type:** circuit
 
 Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
 
 Transfers `tokenId` from `from` to `to`. As opposed to [_unsafeTransferFrom](#_unsafetransferfrom), this imposes no restrictions on `ownPublicKey()`. It does NOT check if the recipient is a `ContractAddress`.
 
 <Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported. Tokens sent to a contract address may become irretrievable.
-</Callout>
+Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -550,11 +539,13 @@ Constraints:
 
 #### _approve
 
+```ts
+_approve(
+  to: Either<ZswapCoinPublicKey, ContractAddress>,
+  tokenId: Uint<128>,
+  auth: Either<ZswapCoinPublicKey, ContractAddress>
+) → []
 ```
-_approve(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>, auth: Either<ZswapCoinPublicKey, ContractAddress>) → []
-```
-
-**Type:** circuit
 
 Approve `to` to operate on `tokenId`
 
@@ -569,11 +560,13 @@ Constraints:
 
 #### _setApprovalForAll
 
+```ts
+_setApprovalForAll(
+  owner: Either<ZswapCoinPublicKey, ContractAddress>,
+  operator: Either<ZswapCoinPublicKey, ContractAddress>,
+  approved: Boolean
+) → []
 ```
-_setApprovalForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []
-```
-
-**Type:** circuit
 
 Approve `operator` to operate on all of `owner` tokens
 
@@ -588,11 +581,9 @@ Constraints:
 
 #### _requireOwned
 
-```
+```ts
 _requireOwned(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
 ```
-
-**Type:** circuit
 
 Reverts if the `tokenId` doesn’t have a current owner (it hasn’t been minted, or it has been burned).
 Returns the owner.
