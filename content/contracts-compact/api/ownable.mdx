@@ -1,22 +1,22 @@
 ---
-title: Ownable
+title: Ownable API
 ---
 
 This module provides the full Ownable module API.
 
-<Callout>
+<Callout type='info'>
 For an overview of the module, read the [Ownable guide](ownable).
 </Callout>
 
 ## Core
 
-```ts
-import "./node_modules/@openzeppelin-compact/ownable/src/Ownable" prefix Ownable_;
-```
-
 ### Ownable
 
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/ownable/src/Ownable.compact)
+[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/access/Ownable.compact)
+
+```ts
+import "./node-modules/@openzeppelin-compact/contracts/src/access/Ownable";
+```
 
 **Circuits**
 
@@ -29,11 +29,11 @@ import "./node_modules/@openzeppelin-compact/ownable/src/Ownable" prefix Ownable
 * [`_transferOwnership(newOwner)`](#_transferownership)
 * [`_unsafeUncheckedTransferOwnership(newOwner)`](#_unsafeuncheckedtransferownership)
 
-#### `initialize`
+#### initialize
 
-**Signature:** `initialize(initialOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []`
-
-**Type:** Circuit
+```ts
+initialize(initialOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []
+```
 
 Initializes the contract by setting the `initialOwner`.
 This must be called in the contract’s constructor.
@@ -48,11 +48,11 @@ Constraints:
 
 * k=10, rows=258
 
-#### `owner`
+#### owner
 
-**Signature:** `owner() → Either<ZswapCoinPublicKey, ContractAddress>`
-
-**Type:** Circuit
+```ts
+owner() → Either<ZswapCoinPublicKey, ContractAddress>
+```
 
 Returns the current contract owner.
 
@@ -64,18 +64,18 @@ Constraints:
 
 * k=10, rows=84
 
-#### `transferOwnership`
+#### transferOwnership
 
-**Signature:** `transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []`
-
-**Type:** Circuit
+```ts
+transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []
+```
 
 Transfers ownership of the contract to `newOwner`.
 
-<Callout>
+<Callout type='info'>
 Ownership transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents permanently disabling access to a circuit.
+</Callout>
 
 Requirements:
 
@@ -88,19 +88,19 @@ Constraints:
 
 * k=10, rows=338
 
-#### `_unsafeTransferOwnership`
+#### _unsafeTransferOwnership
 
-**Signature:** `_unsafeTransferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []`
-
-**Type:** Circuit
+```ts
+_unsafeTransferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []
+```
 
 Unsafe variant of [`transferOwnership`](#transferownership).
 
 <Callout type='warn'>
 Ownership transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Ownership privileges sent to a contract address may become uncallable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -112,11 +112,11 @@ Constraints:
 
 * k=10, rows=335
 
-#### `renounceOwnership`
+#### renounceOwnership
 
-**Signature:** `renounceOwnership() → []`
-
-**Type:** Circuit
+```ts
+renounceOwnership() → []
+```
 
 Leaves the contract without an owner.
 It will not be possible to call [`assertOnlyOwner`](#assertonlyowner) circuits anymore.
@@ -131,11 +131,11 @@ Constraints:
 
 * k=10, rows=124
 
-#### `assertOnlyOwner`
+#### assertOnlyOwner
 
-**Signature:** `assertOnlyOwner() → []`
-
-**Type:** Circuit
+```ts
+assertOnlyOwner() → []
+```
 
 Throws if called by any account other than the owner.
 Use this to restrict access of specific circuits to the owner.
@@ -149,18 +149,18 @@ Constraints:
 
 * k=10, rows=115
 
-#### `_transferOwnership`
+#### _transferOwnership
 
-**Signature:** `_transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []`
-
-**Type:** Circuit
+```ts
+_transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []
+```
 
 Transfers ownership of the contract to a `newOwner` without enforcing permission checks on the caller.
 
-<Callout>
+<Callout type='info'>
 Ownership transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents permanently disabling access to a circuit.
+</Callout>
 
 Requirements:
 
@@ -171,19 +171,19 @@ Constraints:
 
 * k=10, rows=219
 
-#### `_unsafeUncheckedTransferOwnership`
+#### _unsafeUncheckedTransferOwnership
 
-**Signature:** `_unsafeUncheckedTransferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []`
-
-**Type:** Circuit
+```ts
+_unsafeUncheckedTransferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []
+```
 
 Unsafe variant of [`_transferOwnership`](#_transferownership).
 
 <Callout type='warn'>
 Ownership transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Ownership privileges sent to a contract address may become uncallable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
