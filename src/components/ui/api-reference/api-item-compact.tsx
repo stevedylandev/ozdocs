@@ -46,7 +46,7 @@ export async function APIItemCompact({
 		return result;
 	};
 
-	const renderFunctionName = () => {
+	const renderCircuitSig = () => {
 		if (!stackParams) {
 			return <p className="font-bold text-sm font-mono">{circuitSig}</p>;
 		}
@@ -76,7 +76,7 @@ export async function APIItemCompact({
 		<div id={anchorId} className="scroll-mt-20">
 			<div className="border rounded-md mb-4">
 				<div className="bg-secondary flex w-full justify-between px-4 py-2">
-					{renderFunctionName()}
+					{renderCircuitSig()}
 					<div className="flex flex-row items-center gap-2">
 						<p className="font-light text-sm">{kind}</p>
 						<a className="peer" data-card href={`#${anchorId}`}>
