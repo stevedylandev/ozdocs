@@ -9,10 +9,14 @@ title: Access Control
 [FungibleToken]: ./fungibleToken.mdx
 [Ownable]: ./ownable.mdx
 [Initializable]: ./security#initializable
-
 [AccessControl]: api/accessControl.mdx#accessControl
-[_unsafeGrantRole]: api/access#_unsafegrantrole
-[assertOnlyRole]: api/access#assertonlyrole
+
+[assertOnlyRole]: api/access#assertOnlyRole
+[grantRole]: api/access#grantRole
+[_grantRole]: api/access#_grantRole
+[_unsafeGrantRole]: api/access#_unsafeGrantRole
+[revokeRole]: api/access#revokeRole
+[_setRoleAdmin]: api/access#_setRoleAdmin
 
 This module provides a role-based access control mechanism,
 where roles can be used to represent a set of permissions providing the flexibility to create different levels of account authorization.
@@ -136,11 +140,6 @@ and is a good security practice.
 Note that each account may still have more than one role, if so desired.
 
 ### Granting and Revoking Roles
-
-[_grantRole]: api/access#_grantrole
-[grantRole]: api/access#grantrole
-[revokeRole]: api/access#revokerole
-[_setRoleAdmin]: api/access#_setroleadmin
 
 The FungibleToken example above uses [_grantRole],
 an internal circuit that is useful when programmatically assigning roles (such as during construction).
