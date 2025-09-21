@@ -28,13 +28,13 @@ circuit foo(): [] {
 }
 ```
 
-Roles can be granted and revoked dynamically via the [grantRole](#grantrole) and [revokeRole](#revokerole) functions.
+Roles can be granted and revoked dynamically via the [grantRole](#grantRole) and [revokeRole](#revokeRole) functions.
 Each role has an associated admin role,
-and only accounts that have a role’s admin role can call [grantRole](#grantrole) and [revokeRole](#revokerole).
+and only accounts that have a role’s admin role can call [grantRole](#grantRole) and [revokeRole](#revokeRole).
 
 By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`,
 which means that only accounts with this role will be able to grant or revoke other roles.
-More complex role relationships can be created by using [_setRoleAdmin](#_setroleadmin).
+More complex role relationships can be created by using [_setRoleAdmin](#_setRoleAdmin).
 To set a custom `DEFAULT_ADMIN_ROLE`,
 implement the `Initializable` module and set `DEFAULT_ADMIN_ROLE` in the `initialize()` function.
 
@@ -115,9 +115,9 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   complexity="k=10, rows=207"
 >
   Returns the admin role that controls `roleId` or a byte array with all zero bytes if `roleId` doesn’t exist.
-  See [grantRole](#grantrole) and [revokeRole](#revokerole).
+  See [grantRole](#grantRole) and [revokeRole](#revokeRole).
 
-  To change a role's admin use [_setRoleAdmin](#_setroleadmin).
+  To change a role's admin use [_setRoleAdmin](#_setRoleAdmin).
 </APIItemCompact>
 
 
@@ -167,7 +167,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 >
   Revokes `roleId` from the calling account.
 
-  Roles are often managed via [grantRole](#grantrole) and [revokeRole](#revokerole):
+  Roles are often managed via [grantRole](#grantRole) and [revokeRole](#revokeRole):
   this circuit’s purpose is to provide a mechanism for accounts to lose their privileges
   if they are compromised (such as when a trusted device is misplaced).
 
@@ -224,7 +224,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   complexity="k=10, rows=733"
   stackParams="true"
 >
-  Unsafe variant of [_grantRole](#_grantrole).
+  Unsafe variant of [_grantRole](#_grantRole).
 
   <Callout type='warn'>
   Granting roles to contract addresses is considered unsafe because contract-to-contract calls are not currently supported.
