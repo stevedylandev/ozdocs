@@ -18,456 +18,431 @@ For an overview of the module, read the [FungibleToken guide](../fungibleToken).
 import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
 ```
 
-**Circuits**
+---
 
-* [`initialize(name_, symbol_, decimals_)`](#initialize)
-* [`name()`](#name)
-* [`symbol()`](#symbol)
-* [`decimals()`](#decimals)
-* [`totalSupply()`](#totalsupply)
-* [`balanceOf(account)`](#balanceof)
-* [`transfer(to, value)`](#transfer)
-* [`_unsafeTransfer(to, value)`](#_unsafetransfer)
-* [`allowance(owner, spender)`](#allowance)
-* [`approve(spender, value)`](#approve)
-* [`transferFrom(from, to, value)`](#transferfrom)
-* [`_unsafeTransferFrom(from, to, value)`](#_unsafetransferfrom)
-* [`_transfer(from, to, value)`](#_transfer)
-* [`_unsafeUncheckedTransfer(from, to, value)`](#_unsafeuncheckedtransfer)
-* [`_update(from, to, value)`](#_update)
-* [`_mint(account, value)`](#_mint)
-* [`_unsafeMint(account, value)`](#_unsafemint)
-* [`_burn(account, value)`](#_burn)
-* [`_approve(owner, spender, value)`](#_approve)
-* [`_spendAllowance(owner, spender, value)`](#_spendallowance)
+### Circuits [!toc]
 
-#### initialize
+{/*
+  * The first header displays on the `toc` only.
+  * The second header is empty but maintains `toc` highlighting.
+  */}
+#### initialize [toc] [#initialize]
+#### [!toc] [#initialize]
+<APIItemCompact
+  circuitSig='initialize(name_: Opaque<"string">, symbol_: Opaque<"string">, decimals_: Uint<8>) → []'
+  kind="export"
+  complexity="k=10, rows=71"
+  stackParams="true"
+>
+  Initializes the contract by setting the name, symbol, and decimals.
+
+  This MUST be called in the implementing contract’s constructor.
+  Failure to do so can lead to an irreparable contract.
 
-```ts
-initialize(name_: Opaque<"string">, symbol_: Opaque<"string">, decimals_: Uint<8>) → []
-```
+  Requirements:
+
+  * Contract is not initialized.
+</APIItemCompact>
 
-Initializes the contract by setting the name, symbol, and decimals.
 
-This MUST be called in the implementing contract’s constructor.
-Failure to do so can lead to an irreparable contract.
+#### name [toc] [#name]
+#### [!toc] [#name]
+<APIItemCompact
+  circuitSig='name() → Opaque<"string">'
+  kind="export"
+  complexity="k=10, rows=37"
+>
+  Returns the token name.
 
-Requirements:
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+
+#### symbol [toc] [#symbol]
+#### [!toc] [#symbol]
+<APIItemCompact
+  circuitSig='symbol() → Opaque<"string">'
+  kind="export"
+  complexity="k=10, rows=37"
+>
+  Returns the symbol of the token.
 
-* Contract is not initialized.
+  Requirements:
 
-Constraints:
+  * Contract is initialized.
+</APIItemCompact>
 
-* k=10, rows=71
 
-#### name
+#### decimals [toc] [#decimals]
+#### [!toc] [#decimals]
+<APIItemCompact
+  circuitSig="decimals() → Uint<8>"
+  kind="export"
+  complexity="k=10, rows=36"
+>
+  Returns the number of decimals used to get its user representation.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
 
-```ts
-name() → Opaque<"string">
-```
 
-Returns the token name.
+#### totalSupply [toc] [#totalSupply]
+#### [!toc] [#totalSupply]
+<APIItemCompact
+  circuitSig="totalSupply() → Uint<128>"
+  kind="export"
+  complexity="k=10, rows=36"
+>
+  Returns the value of tokens in existence.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
 
-Requirements:
+#### balanceOf [toc] [#balanceOf]
+#### [!toc] [#balanceOf]
+<APIItemCompact
+  circuitSig="balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>"
+  kind="export"
+  complexity="k=10, rows=310"
+>
+  Returns the value of tokens owned by `account`.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
 
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=37
-
-#### symbol
-
-```ts
-symbol() → Opaque<"string">
-```
-
-Returns the symbol of the token.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=37
-
-#### decimals
-
-```ts
-decimals() → Uint<8>
-```
-
-Returns the number of decimals used to get its user representation.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=36
-
-#### totalSupply
-
-```ts
-totalSupply() → Uint<128>
-```
-
-Returns the value of tokens in existence.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=36
-
-#### balanceOf
-
-```ts
-balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>
-```
-
-Returns the value of tokens owned by `account`.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=310
-
-#### transfer
-
-```ts
-transfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean
-```
-
-Moves a `value` amount of tokens from the caller’s account to `to`.
-
-<Callout type='info'>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not a ContractAddress.
-* `to` is not the zero address.
-* The caller has a balance of at least `value`.
-
-Constraints:
-
-* k=11, rows=1173
-
-#### _unsafeTransfer
-
-```ts
-_unsafeTransfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean
-```
-
-Unsafe variant of [transfer](#transfer) which allows transfers to contract addresses.
-
-<Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not the zero address.
-* The caller has a balance of at least `value`.
-
-Constraints:
-
-* k=11, rows=1170
-
-#### allowance
-
-```ts
-allowance(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  spender: Either<ZswapCoinPublicKey, ContractAddress>
-) → Uint<128>
-```
-
-Returns the remaining number of tokens that `spender` will be allowed to spend on behalf of `owner` through [transferFrom](#transferfrom).
-This value changes when [approve](#approve) or [transferFrom](#transferfrom) are called.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=624
-
-#### approve
-
-```ts
-approve(spender: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean
-```
-
-Sets a `value` amount of tokens as allowance of `spender` over the caller’s tokens.
-
-Requirements:
-
-* Contract is initialized.
-* `spender` is not the zero address.
-
-Constraints:
-
-* k=10, rows=452
-
-#### transferFrom
-
-```ts
-transferFrom(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  value: Uint<128>
-) → Boolean
-```
-
-Moves `value` tokens from `from` to `to` using the allowance mechanism.
-`value` is the deducted from the caller’s allowance.
-
-<Callout type='info'>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `from` is not the zero address.
-* `from` must have a balance of at least `value`.
-* `to` is not the zero address.
-* `to` is not a ContractAddress.
-* The caller has an allowance of `from`’s tokens of at least `value`.
-
-Constraints:
-
-* k=11, rows=1821
-
-#### _unsafeTransferFrom
-
-```ts
-_unsafeTransferFrom(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  value: Uint<128>
-) → Boolean
-```
-
-Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
-
-<Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `from` is not the zero address.
-* `from` must have a balance of at least `value`.
-* `to` is not the zero address.
-* The caller has an allowance of `from`’s tokens of at least `value`.
-
-Constraints:
-
-* k=11, rows=1818
-
-#### _transfer
-
-```ts
-_transfer(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  value: Uint<128>
-) → []
-```
-
-Moves a `value` amount of tokens from `from` to `to`.
-This circuit is equivalent to [transfer](#transfer), and can be used to e.g.
-implement automatic token fees, slashing mechanisms, etc.
-
-<Callout type='info'>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `from` is not the zero address.
-* `from` must have at least a balance of `value`.
-* `to` must not be the zero address.
-* `to` must not be a ContractAddress.
-
-Constraints:
-
-* k=11, rows=1312
-
-#### _unsafeUncheckedTransfer
-
-```ts
-_unsafeUncheckedTransfer(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  value: Uint<128>
-) → []
-```
-
-Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
-
-<Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `from` is not the zero address.
-* `to` is not the zero address.
-
-Constraints:
-
-* k=11, rows=1309
-
-#### _update
-
-```ts
-_update(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  value: Uint<128>
-) → []
-```
-
-Transfers a `value` amount of tokens from `from` to `to`,
-or alternatively mints (or burns) if `from` (or `to`) is the zero address.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=11, rows=1305
-
-#### _mint
-
-```ts
-_mint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []
-```
-
-Creates a `value` amount of tokens and assigns them to `account`, by transferring it from the zero address.
-Relies on the `update` mechanism.
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not a ContractAddress.
-* `account` is not the zero address.
-
-Constraints:
-
-* k=10, rows=752
-
-#### _unsafeMint
-
-```ts
-_unsafeMint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []
-```
-
-Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
-
-<Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `account` is not the zero address.
-
-Constraints:
-
-* k=10, rows=749
-
-#### _burn
-
-```ts
-_burn(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []
-```
-
-Destroys a `value` amount of tokens from `account`, lowering the total supply.
-Relies on the `_update` mechanism.
-
-Requirements:
-
-* Contract is initialized.
-* `account` is not the zero address.
-* `account` must have at least a balance of `value`.
-
-Constraints:
-
-* k=10, rows=773
-
-#### _approve
-
-```ts
-_approve(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  spender: Either<ZswapCoinPublicKey, ContractAddress>,
-  value: Uint<128>
-) → []
-```
-
-Sets `value` as the allowance of `spender` over the `owner`’s tokens.
-This circuit is equivalent to `approve`, and can be used to e.g. set automatic allowances for certain subsystems, etc.
-
-Requirements:
-
-* Contract is initialized.
-* `owner` is not the zero address.
-* `spender` is not the zero address.
-
-Constraints:
-
-* k=10, rows=583
-
-#### _spendAllowance
-
-```ts
-_spendAllowance(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  spender: Either<ZswapCoinPublicKey, ContractAddress>,
-  value: Uint<128>
-) → []
-```
-
-Updates `owner`’s allowance for `spender` based on spent `value`.
-Does not update the allowance value in case of infinite allowance.
-
-Requirements:
-
-* Contract is initialized.
-* `spender` must have at least an allowance of `value` from `owner`.
-
-Constraints:
-
-* k=10, rows=931
+#### transfer [toc] [#transfer]
+#### [!toc] [#transfer]
+<APIItemCompact
+  circuitSig="transfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
+  kind="export"
+  complexity="k=11, rows=1173"
+>
+  Moves a `value` amount of tokens from the caller’s account to `to`.
+
+  <Callout type='info'>
+  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not a ContractAddress.
+  * `to` is not the zero address.
+  * The caller has a balance of at least `value`.
+</APIItemCompact>
+
+
+
+#### _unsafeTransfer [toc] [#_unsafeTransfer]
+#### [!toc] [#_unsafeTransfer]
+<APIItemCompact
+  circuitSig="_unsafeTransfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
+  kind="export"
+  complexity="k=11, rows=1170"
+>
+  Unsafe variant of [transfer](#transfer) which allows transfers to contract addresses.
+
+  <Callout type='warn'>
+  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+  Tokens sent to a contract address may become irretrievable.
+  Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not the zero address.
+  * The caller has a balance of at least `value`.
+</APIItemCompact>
+
+
+
+#### allowance [toc] [#allowance]
+#### [!toc] [#allowance]
+<APIItemCompact
+  circuitSig="allowance(
+    owner: Either<ZswapCoinPublicKey, ContractAddress>,
+    spender: Either<ZswapCoinPublicKey, ContractAddress>
+  ) → Uint<128>"
+  kind="export"
+  complexity="k=10, rows=624"
+  stackParams="true"
+>
+  Returns the remaining number of tokens that `spender` will be allowed to spend on behalf of `owner` through [transferFrom](#transferFrom).
+  This value changes when [approve](#approve) or [transferFrom](#transferFrom) are called.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+
+#### approve [toc] [#approve]
+#### [!toc] [#approve]
+<APIItemCompact
+  circuitSig="approve(spender: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
+  kind="export"
+  complexity="k=10, rows=452"
+>
+  Sets a `value` amount of tokens as allowance of `spender` over the caller’s tokens.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `spender` is not the zero address.
+</APIItemCompact>
+
+
+#### transferFrom [toc] [#transferFrom]
+#### [!toc] [#transferFrom]
+<APIItemCompact
+  circuitSig="transferFrom(
+    from: Either<ZswapCoinPublicKey, ContractAddress>,
+    to: Either<ZswapCoinPublicKey, ContractAddress>,
+    value: Uint<128>
+  ) → Boolean"
+  kind="export"
+  complexity="k=11, rows=1821"
+  stackParams="true"
+>
+  Moves `value` tokens from `from` to `to` using the allowance mechanism.
+  `value` is the deducted from the caller’s allowance.
+
+  <Callout type='info'>
+  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `from` is not the zero address.
+  * `from` must have a balance of at least `value`.
+  * `to` is not the zero address.
+  * `to` is not a ContractAddress.
+  * The caller has an allowance of `from`’s tokens of at least `value`.
+</APIItemCompact>
+
+
+#### _unsafeTransferFrom [toc] [#_unsafeTransferFrom]
+#### [!toc] [#_unsafeTransferFrom]
+<APIItemCompact
+  circuitSig="_unsafeTransferFrom(
+    from: Either<ZswapCoinPublicKey, ContractAddress>,
+    to: Either<ZswapCoinPublicKey, ContractAddress>,
+    value: Uint<128>
+  ) → Boolean"
+  kind="export"
+  complexity="k=11, rows=1818"
+  stackParams="true"
+>
+  Unsafe variant of [transferFrom](#transferFrom) which allows transfers to contract addresses.
+
+  <Callout type='warn'>
+  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+  Tokens sent to a contract address may become irretrievable.
+  Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `from` is not the zero address.
+  * `from` must have a balance of at least `value`.
+  * `to` is not the zero address.
+  * The caller has an allowance of `from`’s tokens of at least `value`.
+</APIItemCompact>
+
+
+#### _transfer [toc] [#_transfer]
+#### [!toc] [#_transfer]
+<APIItemCompact
+  circuitSig="_transfer(
+    from: Either<ZswapCoinPublicKey, ContractAddress>,
+    to: Either<ZswapCoinPublicKey, ContractAddress>,
+    value: Uint<128>
+  ) → []"
+  kind="export"
+  complexity="k=11, rows=1312"
+  stackParams="true"
+>
+  Moves a `value` amount of tokens from `from` to `to`.
+  This circuit is equivalent to [transfer](#transfer), and can be used to e.g.
+  implement automatic token fees, slashing mechanisms, etc.
+
+  <Callout type='info'>
+  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `from` is not the zero address.
+  * `from` must have at least a balance of `value`.
+  * `to` must not be the zero address.
+  * `to` must not be a ContractAddress.
+</APIItemCompact>
+
+
+#### _unsafeUncheckedTransfer [toc] [#_unsafeUncheckedTransfer]
+#### [!toc] [#_unsafeUncheckedTransfer]
+<APIItemCompact
+  circuitSig="_unsafeUncheckedTransfer(
+    from: Either<ZswapCoinPublicKey, ContractAddress>,
+    to: Either<ZswapCoinPublicKey, ContractAddress>,
+    value: Uint<128>
+  ) → []"
+  kind="export"
+  complexity="k=11, rows=1309"
+  stackParams="true"
+>
+  Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
+
+  <Callout type='warn'>
+  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+  Tokens sent to a contract address may become irretrievable.
+  Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `from` is not the zero address.
+  * `to` is not the zero address.
+</APIItemCompact>
+
+
+#### _update [toc] [#_update]
+#### [!toc] [#_update]
+<APIItemCompact
+  circuitSig="_update(
+    from: Either<ZswapCoinPublicKey, ContractAddress>,
+    to: Either<ZswapCoinPublicKey, ContractAddress>,
+    value: Uint<128>
+  ) → []"
+  kind="internal"
+  complexity="k=11, rows=1305"
+  stackParams="true"
+>
+  Transfers a `value` amount of tokens from `from` to `to`,
+  or alternatively mints (or burns) if `from` (or `to`) is the zero address.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+
+#### _mint [toc] [#_mint]
+#### [!toc] [#_mint]
+<APIItemCompact
+  circuitSig="_mint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
+  kind="export"
+  complexity="k=10, rows=752"
+>
+  Creates a `value` amount of tokens and assigns them to `account`, by transferring it from the zero address.
+  Relies on the `update` mechanism.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not a ContractAddress.
+  * `account` is not the zero address.
+</APIItemCompact>
+
+
+#### _unsafeMint [toc] [#_unsafeMint]
+#### [!toc] [#_unsafeMint]
+<APIItemCompact
+  circuitSig="_unsafeMint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
+  kind="export"
+  complexity="k=10, rows=749"
+>
+  Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
+
+  <Callout type='warn'>
+  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+  Tokens sent to a contract address may become irretrievable.
+  Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `account` is not the zero address.
+</APIItemCompact>
+
+
+#### _burn [toc] [#_burn]
+#### [!toc] [#_burn]
+<APIItemCompact
+  circuitSig="_burn(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
+  kind="export"
+  complexity="k=10, rows=773"
+>
+  Destroys a `value` amount of tokens from `account`, lowering the total supply.
+  Relies on the `_update` mechanism.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `account` is not the zero address.
+  * `account` must have at least a balance of `value`.
+</APIItemCompact>
+
+
+#### _approve [toc] [#_approve]
+#### [!toc] [#_approve]
+<APIItemCompact
+  circuitSig="_approve(
+    owner: Either<ZswapCoinPublicKey, ContractAddress>,
+    spender: Either<ZswapCoinPublicKey, ContractAddress>,
+    value: Uint<128>
+  ) → []"
+  kind="export"
+  complexity="k=10, rows=583"
+  stackParams="true"
+>
+  Sets `value` as the allowance of `spender` over the `owner`’s tokens.
+  This circuit is equivalent to `approve`, and can be used to e.g. set automatic allowances for certain subsystems, etc.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `owner` is not the zero address.
+  * `spender` is not the zero address.
+</APIItemCompact>
+
+
+#### _spendAllowance [toc] [#_spendAllowance]
+#### [!toc] [#_spendAllowance]
+<APIItemCompact
+  circuitSig="_spendAllowance(
+    owner: Either<ZswapCoinPublicKey, ContractAddress>,
+    spender: Either<ZswapCoinPublicKey, ContractAddress>,
+    value: Uint<128>
+  ) → []"
+  kind="export"
+  complexity="k=10, rows=931"
+  stackParams="true"
+>
+  Updates `owner`’s allowance for `spender` based on spent `value`.
+  Does not update the allowance value in case of infinite allowance.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `spender` must have at least an allowance of `value` from `owner`.
+</APIItemCompact>
