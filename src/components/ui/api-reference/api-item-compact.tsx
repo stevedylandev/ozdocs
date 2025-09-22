@@ -95,7 +95,7 @@ export async function APIItemCompact({
 	};
 
 	return (
-    // `-mt-7.5` compensates for spacing from `#### [!toc] [#id]` pattern
+		// `-mt-7.5` compensates for spacing from `#### [!toc] [#id]` pattern
 		// The empty h4 pattern allows toc tracking/response
 		<div id={anchorId} className="scroll-mt-20 -mt-7.5">
 			<div className="border rounded-md mb-4">
