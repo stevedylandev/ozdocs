@@ -18,69 +18,38 @@ This module provides the full NonFungibleToken module API.
 import "./node-modules/@openzeppelin-compact/contracts/src/token/NonFungibleToken";
 ```
 
-**Circuits**
+---
 
-* [`initialize(name_, symbol_)`](#initialize)
-* [`balanceOf(owner)`](#balanceof)
-* [`ownerOf(tokenId)`](#ownerof)
-* [`name()`](#name)
-* [`symbol()`](#symbol)
-* [`tokenURI(tokenId)`](#tokenuri)
-* [`_setTokenURI(tokenId, tokenURI)`](#_settokenuri)
-* [`approve(to, tokenId)`](#approve)
-* [`getApproved(tokenId)`](#getapproved)
-* [`setApprovalForAll(operator, approved)`](#setapprovalforall)
-* [`isApprovedForAll(owner, operator)`](#isapprovedforall)
-* [`transferFrom(from, to, tokenId)`](#transferfrom)
-* [`_unsafeTransferFrom(from, to, tokenId)`](#_unsafetransferfrom)
-* [`_ownerOf(tokenId)`](#_ownerof)
-* [`_getApproved(tokenId)`](#_getapproved)
-* [`_isAuthorized(owner, spender, tokenId)`](#_isauthorized)
-* [`_checkAuthorized(owner, spender, tokenId)`](#_checkauthorized)
-* [`_update(to, tokenId, auth)`](#_update) - internal
-* [`_mint(to, tokenId)`](#_mint)
-* [`_unsafeMint(to, tokenId)`](#_unsafemint)
-* [`_burn(tokenId)`](#_burn)
-* [`_transfer(from, to, tokenId)`](#_transfer)
-* [`_unsafeTransfer(from, to, tokenId)`](#_unsafetransfer)
-* [`_approve(to, tokenId, auth)`](#_approve)
-* [`_setApprovalForAll(owner, operator, approved)`](#_setapprovalforall)
-* [`_requireOwned(tokenId)`](#_requireowned)
+### Circuits [!toc]
 
-#### initialize
+#### initialize [toc] [#initialize]
+<APIItemCompact
+  circuitSig='initialize(name_: Opaque<"string">, symbol_: Opaque<"string">) → []'
+  kind="export"
+  complexity="k=10, rows=65"
+>
+  Initializes the contract by setting the name and symbol.
 
-```ts
-initialize(name_: Opaque<"string">, symbol_: Opaque<"string">) → []
-```
+  This MUST be called in the implementing contract’s constructor.
+  Failure to do so can lead to an irreparable contract.
 
-Initializes the contract by setting the name and symbol.
+  Requirements:
 
-This MUST be called in the implementing contract’s constructor.
-Failure to do so can lead to an irreparable contract.
+  * Contract is not initialized.
+</APIItemCompact>
 
-Requirements:
+#### balanceOf [toc] [#balanceOf]
+<APIItemCompact
+  circuitSig='balanceOf(owner: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>'
+  kind="export"
+  complexity="k=10, rows=309"
+>
+  Returns the number of tokens in `owner`'s account.
 
-* Contract is not initialized.
+  Requirements:
 
-Constraints:
-
-* k=10, rows=65
-
-#### balanceOf
-
-```
-balanceOf(owner: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>
-```
-
-Returns the number of tokens in `owner`'s account.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=309
+  * Contract is initialized.
+</APIItemCompact>
 
 #### ownerOf
 
