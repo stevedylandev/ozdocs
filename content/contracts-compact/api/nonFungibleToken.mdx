@@ -23,6 +23,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/NonFungibleToke
 ### Circuits [!toc]
 
 #### initialize [toc] [#initialize]
+#### [!toc] [#initialize]
 <APIItemCompact
   circuitSig='initialize(name_: Opaque<"string">, symbol_: Opaque<"string">) → []'
   kind="export"
@@ -39,6 +40,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/NonFungibleToke
 </APIItemCompact>
 
 #### balanceOf [toc] [#balanceOf]
+#### [!toc] [#balanceOf]
 <APIItemCompact
   circuitSig='balanceOf(owner: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>'
   kind="export"
@@ -51,517 +53,440 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/NonFungibleToke
   * Contract is initialized.
 </APIItemCompact>
 
-#### ownerOf
-
-```ts
-ownerOf(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
-```
-
-Returns the owner of the `tokenId` token.
-
-Requirements:
-
-* The contract is initialized.
-* The `tokenId` must exist.
-
-Constraints:
-
-* k=10, rows=290
-
-#### name
-
-```ts
-name() → Opaque<"string">
-```
-
-Returns the token name.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=36
-
-#### symbol
-
-```ts
-symbol() → Opaque<"string">
-```
-
-Returns the symbol of the token.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=36
-
-#### tokenURI
-
-```ts
-tokenURI(tokenId: Uint<128>) → Opaque<"string">
-```
-
-Returns the token URI for the given `tokenId`.
-Returns an empty string if a tokenURI does not exist.
-
-Requirements:
-
-* The contract is initialized.
-* The `tokenId` must exist.
-
-<Callout type='info'>
-  Native strings and string operations aren’t supported within the Compact language,
-  e.g. concatenating a base URI + token ID is not possible like in other NFT implementations.
-  Therefore, we propose the URI storage approach; whereby, NFTs may or may not have unique "base" URIs.
-  It’s up to the implementation to decide on how to handle this.
-</Callout>
-
-Constraints:
-
-* k=10, rows=296
-
-#### _setTokenURI
-
-```ts
-_setTokenURI(tokenId: Uint<128>, tokenURI: Opaque<"string">) → []
-```
-
-Sets the the URI as `tokenURI` for the given `tokenId`.
-
-Requirements:
-
-* The contract is initialized.
-* The `tokenId` must exist.
-
-<Callout type='info'>
-  The URI for a given NFT is usually set when the NFT is minted.
-</Callout>
-
-Constraints:
-
-* k=10, rows=253
-
-#### approve
-
-```ts
-approve(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
-```
-
-Gives permission to `to` to transfer `tokenId` token to another account.
-The approval is cleared when the token is transferred.
-
-Only a single account can be approved at a time, so approving the zero address clears previous approvals.
-
-Requirements:
-
-* The contract is initialized.
-* The caller must either own the token or be an approved operator.
-* `tokenId` must exist.
-
-Constraints:
-
-* k=10, rows=966
-
-#### getApproved
-
-```ts
-getApproved(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
-```
-
-Returns the account approved for `tokenId` token.
-
-Requirements:
-
-* The contract is initialized.
-* `tokenId` must exist.
-
-Constraints:
-
-* k=10, rows=409
-
-#### setApprovalForAll
-
-```ts
-setApprovalForAll(operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []
-```
-
-Approve or remove `operator` as an operator for the caller.
-Operators can call [transferFrom](#transferfrom) for any token owned by the caller.
-
-Requirements:
-
-* The contract is initialized.
-* The `operator` cannot be the zero address.
-
-Constraints:
-
-* k=10, rows=409
-
-#### isApprovedForAll
-
-```ts
-isApprovedForAll(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  operator: Either<ZswapCoinPublicKey, ContractAddress>
-) → Boolean
-```
-
-Returns if the `operator` is allowed to manage all of the assets of `owner`.
-
-Requirements:
-
-* The contract must have been initialized.
-
-Constraints:
-
-* k=10, rows=621
-
-#### transferFrom
-
-```ts
-transferFrom(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>
-) → []
-```
-
-Transfers `tokenId` token from `from` to `to`.
-
-<Callout type='info'>
-  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* The contract is initialized.
-* `from` is not the zero address.
-* `to` is not the zero address.
-* `to` is not a ContractAddress.
-* `tokenId` token must be owned by `from`.
-* If the caller is not `from`, it must be approved to move this token by either [approve](#approve) or [setApprovalForAll](#setapprovalforall).
-
-Constraints:
-
-* k=11, rows=1966
-
-#### _unsafeTransferFrom
-
-```ts
-_unsafeTransferFrom(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>
-) → []
-```
-
-Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
-
-<Callout type='warn'>
-  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-  Tokens sent to a contract address may become irretrievable.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Requirements:
-
-* The contract is initialized.
-* `from` is not the zero address.
-* `to` is not the zero address.
-* `tokenId` token must be owned by `from`.
-* If the caller is not `from`, it must be approved to move this token by either [approve](#approve) or [setApprovalForAll](#setapprovalforall).
-
-Constraints:
-
-* k=11, rows=1963
-
-#### _ownerOf
-
-```ts
-_ownerOf(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
-```
-
-Returns the owner of the `tokenId`. Does NOT revert if token doesn’t exist
-
-Requirements:
-
-* The contract is initialized.
-
-Constraints:
-
-* k=10, rows=253
-
-#### _getApproved
-
-```ts
-_getApproved(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
-```
-
-Returns the approved address for `tokenId`. Returns the zero address if `tokenId` is not minted.
-
-Requirements:
-
-* The contract is initialized.
-
-Constraints:
-
-* k=10, rows=253
-
-#### _isAuthorized
-
-```ts
-_isAuthorized(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  spender: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>
-) → Boolean
-```
-
-Returns whether `spender` is allowed to manage `owner`'s tokens, or `tokenId` in particular (ignoring whether it is owned by `owner`).
-
-Requirements:
-
-* The contract is initialized.
-
-<Callout type='warn'>
-  This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
-</Callout>
-
-Constraints:
-
-* k=11, rows=1098
-
-#### _checkAuthorized
-
-```ts
-_checkAuthorized(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  spender: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>
-) → []
-```
-
-Checks if `spender` can operate on `tokenId`, assuming the provided `owner` is the actual owner.
-
-Requirements:
-
-* The contract is initialized.
-* `spender` has approval from `owner` for `tokenId` OR `spender` has approval to manage all of `owner`'s assets.
-
-<Callout type='warn'>
-  This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
-</Callout>
-
-Constraints:
-
-* k=11, rows=1121
-
-#### _update
-
-```ts
-_update(
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>,
-  auth: Either<ZswapCoinPublicKey, ContractAddress>
-) → Either<ZswapCoinPublicKey, ContractAddress>
-```
-
-**Type:** internal
-
-Transfers `tokenId` from its current owner to `to`, or alternatively mints (or burns) if the current owner (or `to`) is the zero address.
-Returns the owner of the `tokenId` before the update.
-
-Requirements:
-
-* The contract is initialized.
-* If `auth` is non 0, then this function will check that `auth` is either the owner of the token, or approved to operate on the token (by the owner).
-
-Constraints:
-
-* k=12, rows=2049
-
-#### _mint
-
-```ts
-_mint(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []
-```
-
-Mints `tokenId` and transfers it to `to`.
-
-Requirements:
-
-* The contract is initialized.
-* `tokenId` must not exist.
-* `to` is not the zero address.
-* `to` is not a ContractAddress.
-
-Constraints:
-
-* k=10, rows=1013
-
-#### _unsafeMint
-
-```ts
-_unsafeMint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []
-```
-
-Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
-
-Requirements:
-
-* Contract is initialized.
-* `tokenId` must not exist.
-* `to` is not the zero address.
-
-<Callout type='warn'>
-  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-  Tokens sent to a contract address may become irretrievable.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Constraints:
-
-* k=10, rows=1010
-
-#### _burn
-
-```ts
-_burn(tokenId: Uint<128>) → []
-```
-
-Destroys `tokenId`.
-The approval is cleared when the token is burned.
-This circuit does not check if the sender is authorized to operate on the token.
-
-Requirements:
-
-* The contract is initialized.
-* `tokenId` must exist.
-
-Constraints:
-
-* k=10, rows=479
-
-#### _transfer
-
-```ts
-_transfer(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>
-) → []
-```
-
-Transfers `tokenId` from `from` to `to`. As opposed to [transferFrom](#transferfrom), this imposes no restrictions on `ownPublicKey()`.
-
-<Callout type='info'>
-  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* The contract is initialized.
-* `to` is not the zero address.
-* `to` is not a ContractAddress.
-* `tokenId` token must be owned by `from`.
-
-Constraints:
-
-* k=11, rows=1224
-
-#### _unsafeTransfer
-
-```ts
-_unsafeTransfer(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>
-) → []
-```
-
-Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
-
-Transfers `tokenId` from `from` to `to`. As opposed to [_unsafeTransferFrom](#_unsafetransferfrom), this imposes no restrictions on `ownPublicKey()`. It does NOT check if the recipient is a `ContractAddress`.
-
-<Callout type='warn'>
-  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-  Tokens sent to a contract address may become irretrievable.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not the zero address.
-* `tokenId` token must be owned by `from`.
-
-Constraints:
-
-* k=11, rows=1221
-
-#### _approve
-
-```ts
-_approve(
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  tokenId: Uint<128>,
-  auth: Either<ZswapCoinPublicKey, ContractAddress>
-) → []
-```
-
-Approve `to` to operate on `tokenId`
-
-Requirements:
-
-* The contract is initialized.
-* If `auth` is non 0, then this function will check that `auth` is either the owner of the token, or approved to operate on the token (by the owner).
-
-Constraints:
-
-* k=11, rows=1109
-
-#### _setApprovalForAll
-
-```ts
-_setApprovalForAll(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  operator: Either<ZswapCoinPublicKey, ContractAddress>,
-  approved: Boolean
-) → []
-```
-
-Approve `operator` to operate on all of `owner` tokens
-
-Requirements:
-
-* The contract is initialized.
-* `operator` is not the zero address.
-
-Constraints:
-
-* k=10, rows=524
-
-#### _requireOwned
-
-```ts
-_requireOwned(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>
-```
-
-Reverts if the `tokenId` doesn’t have a current owner (it hasn’t been minted, or it has been burned).
-Returns the owner.
-
-Requirements:
-
-* The contract is initialized.
-* `tokenId` must exist.
-
-Constraints:
-
-* k=10, rows=288
+#### ownerOf [toc] [#ownerOf]
+#### [!toc] [#ownerOf]
+<APIItemCompact
+  circuitSig='ownerOf(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>'
+  kind="export"
+  complexity="k=10, rows=290"
+>
+  Returns the owner of the `tokenId` token.
+
+  Requirements:
+
+  * The contract is initialized.
+  * The `tokenId` must exist.
+</APIItemCompact>
+
+#### name [toc] [#name]
+#### [!toc] [#name]
+<APIItemCompact
+  circuitSig='name() → Opaque<"string">'
+  kind="export"
+  complexity="k=10, rows=36"
+>
+  Returns the token name.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+#### symbol [toc] [#symbol]
+#### [!toc] [#symbol]
+<APIItemCompact
+  circuitSig='symbol() → Opaque<"string">'
+  kind="export"
+  complexity="k=10, rows=36"
+>
+  Returns the symbol of the token.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+#### tokenURI [toc] [#tokenURI]
+#### [!toc] [#tokenURI]
+<APIItemCompact
+  circuitSig='tokenURI(tokenId: Uint<128>) → Opaque<"string">'
+  kind="export"
+  complexity="k=10, rows=296"
+>
+  Returns the token URI for the given `tokenId`.
+  Returns an empty string if a tokenURI does not exist.
+
+  Requirements:
+
+  * The contract is initialized.
+  * The `tokenId` must exist.
+
+  <Callout type='info'>
+    Native strings and string operations aren’t supported within the Compact language,
+    e.g. concatenating a base URI + token ID is not possible like in other NFT implementations.
+    Therefore, we propose the URI storage approach; whereby, NFTs may or may not have unique "base" URIs.
+    It’s up to the implementation to decide on how to handle this.
+  </Callout>
+</APIItemCompact>
+
+#### _setTokenURI [toc] [#_setTokenURI]
+#### [!toc] [#_setTokenURI]
+<APIItemCompact
+  circuitSig='_setTokenURI(tokenId: Uint<128>, tokenURI: Opaque<"string">) → []'
+  kind="export"
+  complexity="k=10, rows=253"
+>
+  Sets the the URI as `tokenURI` for the given `tokenId`.
+
+  Requirements:
+
+  * The contract is initialized.
+  * The `tokenId` must exist.
+</APIItemCompact>
+
+#### approve [toc] [#approve]
+#### [!toc] [#approve]
+<APIItemCompact
+  circuitSig='approve(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=10, rows=966"
+>
+  Gives permission to `to` to transfer `tokenId` token to another account.
+  The approval is cleared when the token is transferred.
+
+  Only a single account can be approved at a time, so approving the zero address clears previous approvals.
+
+  Requirements:
+
+  * The contract is initialized.
+  * The caller must either own the token or be an approved operator.
+  * `tokenId` must exist.
+</APIItemCompact>
+
+#### getApproved [toc] [#getApproved]
+#### [!toc] [#getApproved]
+<APIItemCompact
+  circuitSig='getApproved(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>'
+  kind="export"
+  complexity="k=10, rows=409"
+>
+  Returns the account approved for `tokenId` token.
+
+  Requirements:
+
+  * The contract is initialized.
+  * `tokenId` must exist.
+</APIItemCompact>
+
+#### setApprovalForAll [toc] [#setApprovalForAll]
+#### [!toc] [#setApprovalForAll]
+<APIItemCompact
+  circuitSig='setApprovalForAll(operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []'
+  kind="export"
+  complexity="k=10, rows=409"
+>
+  Approve or remove `operator` as an operator for the caller.
+  Operators can call [transferFrom](#transferfrom) for any token owned by the caller.
+
+  Requirements:
+
+  * The contract is initialized.
+  * The `operator` cannot be the zero address.
+</APIItemCompact>
+
+#### isApprovedForAll [toc] [#isApprovedForAll]
+#### [!toc] [#isApprovedForAll]
+<APIItemCompact
+  circuitSig='isApprovedForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean'
+  kind="export"
+  complexity="k=10, rows=621"
+  stackParams="true"
+>
+  Returns if the `operator` is allowed to manage all of the assets of `owner`.
+
+  Requirements:
+
+  * The contract must have been initialized.
+</APIItemCompact>
+
+#### transferFrom [toc] [#transferFrom]
+#### [!toc] [#transferFrom]
+<APIItemCompact
+  circuitSig='transferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=11, rows=1966"
+  stackParams="true"
+>
+  Transfers `tokenId` token from `from` to `to`.
+
+  <Callout type='info'>
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * The contract is initialized.
+  * `from` is not the zero address.
+  * `to` is not the zero address.
+  * `to` is not a ContractAddress.
+  * `tokenId` token must be owned by `from`.
+  * If the caller is not `from`, it must be approved to move this token by either [approve](#approve) or [setApprovalForAll](#setapprovalforall).
+</APIItemCompact>
+
+#### _unsafeTransferFrom [toc] [#_unsafeTransferFrom]
+#### [!toc] [#_unsafeTransferFrom]
+<APIItemCompact
+  circuitSig='_unsafeTransferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=11, rows=1963"
+  stackParams="true"
+>
+  Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
+
+  <Callout type='warn'>
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * The contract is initialized.
+  * `from` is not the zero address.
+  * `to` is not the zero address.
+  * `tokenId` token must be owned by `from`.
+  * If the caller is not `from`, it must be approved to move this token by either [approve](#approve) or [setApprovalForAll](#setapprovalforall).
+</APIItemCompact>
+
+#### _ownerOf [toc] [#_ownerOf]
+#### [!toc] [#_ownerOf]
+<APIItemCompact
+  circuitSig='_ownerOf(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>'
+  kind="export"
+  complexity="k=10, rows=253"
+>
+  Returns the owner of the `tokenId`. Does NOT revert if token doesn’t exist
+
+  Requirements:
+
+  * The contract is initialized.
+</APIItemCompact>
+
+#### _getApproved [toc] [#_getApproved]
+#### [!toc] [#_getApproved]
+<APIItemCompact
+  circuitSig='_getApproved(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>'
+  kind="export"
+  complexity="k=10, rows=253"
+>
+  Returns the approved address for `tokenId`.
+  Returns the zero address if `tokenId` is not minted.
+
+  Requirements:
+
+  * The contract is initialized.
+</APIItemCompact>
+
+#### _isAuthorized [toc] [#_isAuthorized]
+#### [!toc] [#_isAuthorized]
+<APIItemCompact
+  circuitSig='_isAuthorized(owner: Either<ZswapCoinPublicKey, ContractAddress>, spender: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → Boolean'
+  kind="export"
+  complexity="k=11, rows=1098"
+  stackParams="true"
+>
+  Returns whether `spender` is allowed to manage `owner`'s tokens,
+  or `tokenId` in particular (ignoring whether it is owned by `owner`).
+
+  Requirements:
+
+  * The contract is initialized.
+
+  <Callout type='warn'>
+    This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
+  </Callout>
+</APIItemCompact>
+
+#### _checkAuthorized [toc] [#_checkAuthorized]
+#### [!toc] [#_checkAuthorized]
+<APIItemCompact
+  circuitSig='_checkAuthorized(owner: Either<ZswapCoinPublicKey, ContractAddress>, spender: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=11, rows=1121"
+  stackParams="true"
+>
+  Checks if `spender` can operate on `tokenId`, assuming the provided `owner` is the actual owner.
+
+  Requirements:
+
+  * The contract is initialized.
+  * `spender` has approval from `owner` for `tokenId` OR `spender` has approval to manage all of `owner`'s assets.
+
+  <Callout type='warn'>
+    This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
+  </Callout>
+</APIItemCompact>
+
+#### _update [toc] [#_update]
+#### [!toc] [#_update]
+<APIItemCompact
+  circuitSig='_checkAuthorized(owner: Either<ZswapCoinPublicKey, ContractAddress>, spender: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="internal"
+  complexity="k=12, rows=2049"
+  stackParams="true"
+>
+  Transfers `tokenId` from its current owner to `to`,
+  or alternatively mints (or burns) if the current owner (or `to`) is the zero address.
+  Returns the owner of the `tokenId` before the update.
+
+  Requirements:
+
+  * The contract is initialized.
+  * If `auth` is non 0, then this function will check that `auth` is either the owner of the token,
+  or approved to operate on the token (by the owner).
+</APIItemCompact>
+
+#### _mint [toc] [#_mint]
+#### [!toc] [#_mint]
+<APIItemCompact
+  circuitSig='_mint(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=10, rows=1013"
+>
+  Mints `tokenId` and transfers it to `to`.
+
+  Requirements:
+
+  * The contract is initialized.
+  * `tokenId` must not exist.
+  * `to` is not the zero address.
+  * `to` is not a ContractAddress.
+</APIItemCompact>
+
+#### _unsafeMint [toc] [#_unsafeMint]
+#### [!toc] [#_unsafeMint]
+<APIItemCompact
+  circuitSig='_unsafeMint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []'
+  kind="export"
+  complexity="k=10, rows=1010"
+>
+  Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `tokenId` must not exist.
+  * `to` is not the zero address.
+
+  <Callout type='warn'>
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+</APIItemCompact>
+
+#### _burn [toc] [#_burn]
+#### [!toc] [#_burn]
+<APIItemCompact
+  circuitSig='_burn(tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=10, rows=479"
+>
+  Destroys `tokenId`.
+  The approval is cleared when the token is burned.
+  This circuit does not check if the sender is authorized to operate on the token.
+
+  Requirements:
+
+  * The contract is initialized.
+  * `tokenId` must exist.
+</APIItemCompact>
+
+#### _transfer [toc] [#_transfer]
+#### [!toc] [#_transfer]
+<APIItemCompact
+  circuitSig='_transfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=11, rows=1224"
+  stackParams="true"
+>
+  Transfers `tokenId` from `from` to `to`. As opposed to [transferFrom](#transferfrom),
+  this imposes no restrictions on `ownPublicKey()`.
+
+  <Callout type='info'>
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * The contract is initialized.
+  * `to` is not the zero address.
+  * `to` is not a ContractAddress.
+  * `tokenId` token must be owned by `from`.
+</APIItemCompact>
+
+#### _unsafeTransfer [toc] [#_unsafeTransfer]
+#### [!toc] [#_unsafeTransfer]
+<APIItemCompact
+  circuitSig='_unsafeTransfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>) → []'
+  kind="export"
+  complexity="k=11, rows=1221"
+  stackParams="true"
+>
+  Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
+
+  Transfers `tokenId` from `from` to `to`. As opposed to [_unsafeTransferFrom](#_unsafetransferfrom), this imposes no restrictions on `ownPublicKey()`. It does NOT check if the recipient is a `ContractAddress`.
+
+  <Callout type='warn'>
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not the zero address.
+  * `tokenId` token must be owned by `from`.
+</APIItemCompact>
+
+#### _approve [toc] [#_approve]
+#### [!toc] [#_approve]
+<APIItemCompact
+  circuitSig='_approve(to: Either<ZswapCoinPublicKey, ContractAddress>, tokenId: Uint<128>, auth: Either<ZswapCoinPublicKey, ContractAddress>) → []'
+  kind="export"
+  complexity="k=11, rows=1109"
+  stackParams="true"
+>
+  Approve `to` to operate on `tokenId`.
+
+  Requirements:
+
+  * The contract is initialized.
+  * If `auth` is non 0, then this function will check that `auth` is either the owner of the token,
+  or approved to operate on the token (by the owner).
+</APIItemCompact>
+
+#### _setApprovalForAll [toc] [#_setApprovalForAll]
+#### [!toc] [#_setApprovalForAll]
+<APIItemCompact
+  circuitSig='_setApprovalForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []'
+  kind="export"
+  complexity="k=10, rows=524"
+  stackParams="true"
+>
+  Approve `operator` to operate on all of `owner` tokens
+
+  Requirements:
+
+  * The contract is initialized.
+  * `operator` is not the zero address.
+</APIItemCompact>
+
+#### _requireOwned [toc] [#_requireOwned]
+#### [!toc] [#_requireOwned]
+<APIItemCompact
+  circuitSig='_requireOwned(tokenId: Uint<128>) → Either<ZswapCoinPublicKey, ContractAddress>'
+  kind="export"
+  complexity="k=10, rows=288"
+>
+  Reverts if the `tokenId` doesn’t have a current owner (it hasn’t been minted, or it has been burned).
+  Returns the owner.
+
+  Requirements:
+
+  * The contract is initialized.
+  * `tokenId` must exist.
+</APIItemCompact>
