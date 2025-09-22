@@ -39,12 +39,12 @@ To set a custom `DEFAULT_ADMIN_ROLE`,
 implement the `Initializable` module and set `DEFAULT_ADMIN_ROLE` in the `initialize()` function.
 
 <Callout type='warn'>
-The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role.
-Extra precautions should be taken to secure accounts that have been granted it.
+  The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role.
+  Extra precautions should be taken to secure accounts that have been granted it.
 </Callout>
 
 <Callout type='info'>
-For an overview of the module, read the [Access Control guide](../access).
+  For an overview of the module, read the [Access Control guide](../access).
 </Callout>
 
 ## Core
@@ -61,12 +61,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 
 ### Circuits [!toc]
 
-{/*
-  * The first header displays on the `toc` only.
-  * The second header is empty but maintains `toc` highlighting.
-  */}
 #### hasRole [toc] [#hasRole]
-#### [!toc] [#hasRole]
 <APIItemCompact
   circuitSig="hasRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="export"
@@ -75,9 +70,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   Returns `true` if `account` has been granted `roleId`.
 </APIItemCompact>
 
-
 #### assertOnlyRole [toc] [#assertOnlyRole]
-#### [!toc] [#assertOnlyRole]
 <APIItemCompact
   circuitSig="assertOnlyRole(roleId: Bytes<32>) → []"
   kind="export"
@@ -91,9 +84,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   * The caller must not be a `ContractAddress`.
 </APIItemCompact>
 
-
 #### _checkRole [toc] [#_checkRole]
-#### [!toc] [#_checkRole]
 <APIItemCompact
   circuitSig="_checkRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   kind="export"
@@ -106,9 +97,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   * `account` must have `roleId`.
 </APIItemCompact>
 
-
 #### getRoleAdmin [toc] [#getRoleAdmin]
-#### [!toc] [#getRoleAdmin]
 <APIItemCompact
   circuitSig="getRoleAdmin(roleId: Bytes<32>) → Bytes<32>"
   kind="export"
@@ -120,9 +109,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   To change a role's admin use [_setRoleAdmin](#_setRoleAdmin).
 </APIItemCompact>
 
-
 #### grantRole [toc] [#grantRole]
-#### [!toc] [#grantRole]
 <APIItemCompact
   circuitSig="grantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   kind="export"
@@ -131,8 +118,8 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   Grants `roleId` to `account`.
 
   <Callout type='info'>
-  Granting roles to contract addresses is currently disallowed until contract-to-contract interactions are supported in Compact.
-  This restriction prevents permanently disabling access to a circuit.
+    Granting roles to contract addresses is currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents permanently disabling access to a circuit.
   </Callout>
 
   Requirements:
@@ -141,9 +128,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   * The caller must have `roleId`’s admin role.
 </APIItemCompact>
 
-
 #### revokeRole [toc] [#revokeRole]
-#### [!toc] [#revokeRole]
 <APIItemCompact
   circuitSig="revokeRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   kind="export"
@@ -156,9 +141,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   * The caller must have `roleId`’s admin role.
 </APIItemCompact>
 
-
 #### renounceRole [toc] [#renounceRole]
-#### [!toc] [#renounceRole]
 <APIItemCompact
   circuitSig="renounceRole(roleId: Bytes<32>, callerConfirmation: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   stackParams="true"
@@ -172,8 +155,8 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   if they are compromised (such as when a trusted device is misplaced).
 
   <Callout type='info'>
-  We do not provide functionality for smart contracts to renounce roles because self-executing transactions are not supported on Midnight at this time.
-  We may revisit this in future if this feature is made available in Compact.
+    We do not provide functionality for smart contracts to renounce roles because self-executing transactions are not supported on Midnight at this time.
+    We may revisit this in future if this feature is made available in Compact.
   </Callout>
 
   Requirements:
@@ -182,9 +165,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   * The caller must not be a `ContractAddress`.
 </APIItemCompact>
 
-
 #### _setRoleAdmin [toc] [#_setRoleAdmin]
-#### [!toc] [#_setRoleAdmin]
 <APIItemCompact
   circuitSig="_setRoleAdmin(roleId: Bytes<32>, adminRole: Bytes<32>) → []"
   kind="export"
@@ -193,9 +174,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   Sets `adminRole` as `roleId`’s admin role.
 </APIItemCompact>
 
-
 #### _grantRole [toc] [#_grantRole]
-#### [!toc] [#_grantRole]
 <APIItemCompact
   circuitSig="_grantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="export"
@@ -206,8 +185,8 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   Internal circuit without access restriction.
 
   <Callout type='info'>
-  Granting roles to contract addresses is currently disallowed in this circuit until contract-to-contract interactions are supported in Compact.
-  This restriction prevents permanently disabling access to a circuit.
+    Granting roles to contract addresses is currently disallowed in this circuit until contract-to-contract interactions are supported in Compact.
+    This restriction prevents permanently disabling access to a circuit.
   </Callout>
 
   Requirements:
@@ -215,9 +194,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   * `account` must not be a ContractAddress.
 </APIItemCompact>
 
-
 #### _unsafeGrantRole [toc] [#_unsafeGrantRole]
-#### [!toc] [#_unsafeGrantRole]
 <APIItemCompact
   circuitSig="_unsafeGrantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="export"
@@ -227,15 +204,13 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   Unsafe variant of [_grantRole](#_grantRole).
 
   <Callout type='warn'>
-  Granting roles to contract addresses is considered unsafe because contract-to-contract calls are not currently supported.
-  Granting a role to a smart contract may render a circuit permanently inaccessible.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
+    Granting roles to contract addresses is considered unsafe because contract-to-contract calls are not currently supported.
+    Granting a role to a smart contract may render a circuit permanently inaccessible.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
   </Callout>
 </APIItemCompact>
 
-
 #### _revokeRole [toc] [#_revokeRole]
-#### [!toc] [#_revokeRole]
 <APIItemCompact
   circuitSig="_revokeRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="export"
