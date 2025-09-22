@@ -1,5 +1,5 @@
-import { visit } from "unist-util-visit";
 import micromatch from "micromatch";
+import { visit } from "unist-util-visit";
 
 /**
  * A replacement rule applied to MDX/Markdown files.
@@ -15,6 +15,8 @@ export type Rule = {
 	replacements: Record<string, string>;
 	exclusive?: boolean;
 };
+
+type File = { path: string; history: string[] };
 
 /**
  * Multi-rule remark plugin to replace placeholders in text, inlineCode and code blocks.
@@ -48,7 +50,7 @@ export default function remarkReplaceMulti(rules: Rule[]) {
 	// --- helpers ---------------------------------------------------------------
 
 	/** Normalize vfile path (may be missing in virtual files). */
-	const getPath = (file?: any): string | undefined => {
+	const getPath = (file?: File): string | undefined => {
 		const raw =
 			(typeof file?.path === "string" && file.path) ||
 			(Array.isArray(file?.history) && file.history[0]) ||
@@ -82,7 +84,8 @@ export default function remarkReplaceMulti(rules: Rule[]) {
 
 	// --- plugin ---------------------------------------------------------------
 
-	return (tree: any, file?: any) => {
+	// biome-ignore lint/suspicious/noExplicitAny: third-party type, safe here
+	return (tree: any, file?: File) => {
 		const path = getPath(file);
 
 		// Collect rules that apply to this file.
@@ -90,7 +93,7 @@ export default function remarkReplaceMulti(rules: Rule[]) {
 		if (active.length === 0) return;
 
 		// Apply replacements to text & code nodes.
-		visit(tree, ["text", "inlineCode", "code"], (node: any) => {
+		visit(tree, ["text", "inlineCode", "code"], (node: { value: string }) => {
 			if (typeof node.value !== "string") return;
 
 			for (const rule of active) {
@@ -100,12 +103,12 @@ export default function remarkReplaceMulti(rules: Rule[]) {
 		});
 
 		// 2) Markdown links/images: replace in the URL
-    visit(tree, ["link", "image", "definition"], (node: any) => {
-      if (typeof node.url !== "string") return;
-      for (const rule of active) {
-        node.url = replaceAll(node.url, rule.replacements);
-        if (rule.exclusive) break;
-      }
-    });
+		visit(tree, ["link", "image", "definition"], (node: { url: string }) => {
+			if (typeof node.url !== "string") return;
+			for (const rule of active) {
+				node.url = replaceAll(node.url, rule.replacements);
+				if (rule.exclusive) break;
+			}
+		});
 	};
 }
