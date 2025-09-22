@@ -6,7 +6,12 @@ type Props = React.PropsWithChildren<{
 	id?: string;
 }>;
 
-export async function APIItem({ functionSignature, kind, id, children }: Props) {
+export async function APIItem({
+	functionSignature,
+	kind,
+	id,
+	children,
+}: Props) {
 	const anchorId =
 		id ?? `api-${functionSignature.replace(/\W+/g, "-").toLowerCase()}`;
 
