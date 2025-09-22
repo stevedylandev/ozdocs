@@ -2,11 +2,15 @@
 title: Security
 ---
 
+import { UMBRELLA_VERSION } from "../utils/constants.ts";
+
 This crate provides components to handle common security-related tasks.
 
 ## [](#initializable)Initializable
 
-### [](#InitializableComponent)`InitializableComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/security/src/initializable.cairo)
+### [](#InitializableComponent)`InitializableComponent` [toc] [#InitializableComponent]
+
+<APIGithubLinkHeader moduleName="InitializableComponent" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/security/src/initializable.cairo`} />
 
 ```rust
 use openzeppelin_security::InitializableComponent;
@@ -26,25 +30,35 @@ InternalImpl
 
 - [`initialize(self)`](#InitializableComponent-initialize)
 
-#### [](#InitializableComponent-Embeddable-Functions)Embeddable functions
+#### [](#InitializableComponent-Embeddable-Functions)Embeddable functions [!toc]
 
-#### [](#InitializableComponent-is_initialized)`is_initialized(self: @ComponentState) → bool` external
-
+<APIItem
+  functionSignature="is_initialized(self: @ComponentState) → bool"
+  id="InitializableComponent-is_initialized"
+  kind="external"
+>
 Returns whether the contract has been initialized.
+</APIItem>
 
-#### [](#InitializableComponent-Internal-Functions)Internal functions
+#### [](#InitializableComponent-Internal-Functions)Internal functions [!toc]
 
-#### [](#InitializableComponent-initialize)`initialize(ref self: ComponentState)` internal
-
+<APIItem
+  functionSignature="initialize(ref self: ComponentState)"
+  id="InitializableComponent-initialize"
+  kind="internal"
+>
 Initializes the contract. Can only be called once.
 
 Requirements:
 
 - the contract must not have been initialized before.
+</APIItem>
 
 ## [](#pausable)Pausable
 
-### [](#PausableComponent)`PausableComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/security/src/pausable.cairo)
+### [](#PausableComponent)`PausableComponent` [toc] [#PausableComponent]
+
+<APIGithubLinkHeader moduleName="PausableComponent" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/security/src/pausable.cairo`} />
 
 ```rust
 use openzeppelin_security::PausableComponent;
@@ -72,24 +86,39 @@ Events
 - [`Paused(account)`](#PausableComponent-Paused)
 - [`Unpaused(account)`](#PausableComponent-Unpaused)
 
-#### [](#PausableComponent-Embeddable-Functions)Embeddable functions
+#### [](#PausableComponent-Embeddable-Functions)Embeddable functions [!toc]
 
-#### [](#PausableComponent-is_paused)`is_paused(self: @ComponentState) → bool` external
-
+<APIItem
+  functionSignature="is_paused(self: @ComponentState) → bool"
+  id="PausableComponent-is_paused"
+  kind="external"
+>
 Returns whether the contract is currently paused.
+</APIItem>
 
-#### [](#PausableComponent-Internal-Functions)Internal functions
+#### [](#PausableComponent-Internal-Functions)Internal functions [!toc]
 
-#### [](#PausableComponent-assert_not_paused)`assert_not_paused(self: @ComponentState)` internal
-
+<APIItem
+  functionSignature="assert_not_paused(self: @ComponentState)"
+  id="PausableComponent-assert_not_paused"
+  kind="internal"
+>
 Panics if the contract is paused.
+</APIItem>
 
-#### [](#PausableComponent-assert_paused)`assert_paused(self: @ComponentState)` internal
-
+<APIItem
+  functionSignature="assert_paused(self: @ComponentState)"
+  id="PausableComponent-assert_paused"
+  kind="internal"
+>
 Panics if the contract is not paused.
+</APIItem>
 
-#### [](#PausableComponent-pause)`pause(ref self: ComponentState)` internal
-
+<APIItem
+  functionSignature="pause(ref self: ComponentState)"
+  id="PausableComponent-pause"
+  kind="internal"
+>
 Pauses the contract.
 
 Requirements:
@@ -97,9 +126,13 @@ Requirements:
 - the contract must not be paused.
 
 Emits a [Paused](#PausableComponent-Paused) event.
+</APIItem>
 
-#### [](#PausableComponent-unpause)`unpause(ref self: ComponentState)` internal
-
+<APIItem
+  functionSignature="unpause(ref self: ComponentState)"
+  id="PausableComponent-unpause"
+  kind="internal"
+>
 Unpauses the contract.
 
 Requirements:
@@ -107,20 +140,31 @@ Requirements:
 - the contract must be paused.
 
 Emits an [Unpaused](#PausableComponent-Unpaused) event.
+</APIItem>
 
-#### [](#PausableComponent-Events)Events
+#### [](#PausableComponent-Events)Events [!toc]
 
-#### [](#PausableComponent-Paused)`Paused(account: ContractAddress)` event
-
+<APIItem
+  functionSignature="Paused(account: ContractAddress)"
+  id="PausableComponent-Paused"
+  kind="event"
+>
 Emitted when the contract is paused by `account`.
+</APIItem>
 
-#### [](#PausableComponent-Unpaused)`Unpaused(account: ContractAddress)` event
-
+<APIItem
+  functionSignature="Unpaused(account: ContractAddress)"
+  id="PausableComponent-Unpaused"
+  kind="event"
+>
 Emitted when the contract is unpaused by `account`.
+</APIItem>
 
 ## [](#reentrancyguard)ReentrancyGuard
 
-### [](#ReentrancyGuardComponent)`ReentrancyGuardComponent`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/security/src/reentrancyguard.cairo)
+### [](#ReentrancyGuardComponent)`ReentrancyGuardComponent` [toc] [#ReentrancyGuardComponent]
+
+<APIGithubLinkHeader moduleName="ReentrancyGuardComponent" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/security/src/reentrancyguard.cairo`} />
 
 ```rust
 use openzeppelin_security::ReentrancyGuardComponent;
@@ -135,16 +179,24 @@ InternalImpl
 - [`start(self)`](#ReentrancyGuardComponent-start)
 - [`end(self)`](#ReentrancyGuardComponent-end)
 
-#### [](#ReentrancyGuardComponent-Internal-Functions)Internal functions
+#### [](#ReentrancyGuardComponent-Internal-Functions)Internal functions [!toc]
 
-#### [](#ReentrancyGuardComponent-start)`start(ref self: ComponentState)` internal
-
-Prevents a contract’s function from calling itself or another protected function, directly or indirectly.
+<APIItem
+  functionSignature="start(ref self: ComponentState)"
+  id="ReentrancyGuardComponent-start"
+  kind="internal"
+>
+Prevents a contract's function from calling itself or another protected function, directly or indirectly.
 
 Requirements:
 
 - the guard must not be currently enabled.
+</APIItem>
 
-#### [](#ReentrancyGuardComponent-end)`end(ref self: ComponentState)` internal
-
+<APIItem
+  functionSignature="end(ref self: ComponentState)"
+  id="ReentrancyGuardComponent-end"
+  kind="internal"
+>
 Removes the reentrant guard.
+</APIItem>
