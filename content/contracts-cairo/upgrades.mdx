@@ -4,7 +4,7 @@ title: Upgrades
 
 In different blockchains, multiple patterns have been developed for making a contract upgradeable including the widely adopted proxy patterns.
 
-Starknet has native upgradeability through a syscall that updates the contract source code, removing [the need for proxies](#proxies_in_starknet).
+Starknet has native upgradeability through a syscall that updates the contract source code, removing [the need for proxies](#proxies-in-starknet).
 
 <Callout type='warn'>
 Make sure you follow [our security recommendations](#security) before upgrading.
@@ -14,16 +14,21 @@ Make sure you follow [our security recommendations](#security) before upgrading.
 
 To better comprehend how upgradeability works in Starknet, it’s important to understand the difference between a contract and its contract class.
 
-[Contract Classes](https://docs.starknet.io/architecture-and-concepts/smart-contracts/contract-classes/) represent the source code of a program. All contracts are associated to a class, and many contracts can be instances of the same one. Classes are usually represented by a [class hash](https://docs.starknet.io/architecture-and-concepts/smart-contracts/class-hash/), and before a contract of a class can be deployed, the class hash needs to be declared.
+[Contract Classes](https://docs.starknet.io/architecture-and-concepts/smart-contracts/contract-classes/) represent the source code of a program. All
+contracts are associated to a class, and many contracts can be instances of the same one. Classes are usually represented by
+a [class hash](https://docs.starknet.io/architecture-and-concepts/smart-contracts/class-hash/), and before a contract of a class can be deployed,
+the class hash needs to be declared.
 
 ### `replace_class_syscall`
 
-The `[replace_class](https://docs.starknet.io/architecture-and-concepts/smart-contracts/system-calls-cairo1/#replace_class)` syscall allows a contract to update its source code by replacing its class hash once deployed.
+The `[replace_class](https://docs.starknet.io/architecture-and-concepts/smart-contracts/system-calls-cairo1/#replace_class)` syscall allows a contract to
+update its source code by replacing its class hash once deployed.
 
 ```rust
 /// Upgrades the contract source code to the new contract class.
 fn upgrade(new_class_hash: ClassHash) {
-    assert(!new_class_hash.is_zero(), 'Class hash cannot be zero');
+    let CLASS_HASH_CANNOT_BE_ZERO: felt252 = 0x1;
+    assert(!new_class_hash.is_zero(), CLASS_HASH_CANNOT_BE_ZERO);
     starknet::replace_class_syscall(new_class_hash).unwrap_syscall();
 }
 ```
@@ -39,7 +44,7 @@ OpenZeppelin Contracts for Cairo provides [Upgradeable](https://github.com/OpenZ
 ### Usage
 
 Upgrades are often very sensitive operations, and some form of access control is usually required to
-avoid unauthorized upgrades. The [Ownable](access#ownership_and_ownable) module is used in this example.
+avoid unauthorized upgrades. The [Ownable](access#ownership-and-ownable) module is used in this example.
 
 <Callout>
 We will be using the following module to implement the [IUpgradeable](api/upgrades#IUpgradeable) interface described in the API Reference section.
