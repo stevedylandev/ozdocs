@@ -1,11 +1,11 @@
 import * as React from "react";
 
 type Props = React.PropsWithChildren<{
-	circuitSig: string;
-	kind: string;
-	complexity?: string | string[] | React.ReactNode;
-	stackParams?: boolean;
-	id?: string;
+  circuitSig: string;
+  kind: string;
+  complexity?: string | string[] | React.ReactNode;
+  stackParams?: boolean;
+  id?: string;
 }>;
 
 export async function APIItemCompact({
@@ -16,7 +16,13 @@ export async function APIItemCompact({
 	id,
 	children
 }: Props) {
-	const anchorId = id ?? `api-${circuitSig.replace(/\W+/g, "-").toLowerCase()}`;
+	const getCircuitName = (signature: string): string => {
+		const match = signature.match(/^([^(]+)/);
+		return match ? match[1].trim() : signature;
+	};
+
+	const circuitName = getCircuitName(circuitSig);
+	const anchorId = id ?? circuitName;
 
 	const parseParameters = (params: string): string[] => {
 		const result: string[] = [];
@@ -47,34 +53,45 @@ export async function APIItemCompact({
 	};
 
 	const renderCircuitSig = () => {
+		const restMatch = circuitSig.match(/^[^(]+(.*)$/);
+		const rest = restMatch ? restMatch[1] : '';
+
 		if (!stackParams) {
-			return <p className="font-bold text-sm font-mono">{circuitSig}</p>;
+			return (
+				<p className="text-sm font-mono">
+					<span className="font-bold">{circuitName}</span>{rest}
+				</p>
+			);
 		}
 
-		const match = circuitSig.match(/^([^(]+)\(([^)]+)\)(.*)$/);
-		if (!match) {
-			return <p className="font-bold text-sm font-mono">{circuitSig}</p>;
+		const paramMatch = circuitSig.match(/^[^(]+\(([^)]+)\)(.*)$/);
+		if (!paramMatch) {
+			return (
+				<p className="text-sm font-mono">
+					<span className="font-bold">{circuitName}</span>{rest}
+				</p>
+			);
 		}
 
-		const [, name, params, rest] = match;
+		const [, params, suffix] = paramMatch;
 		const paramList = parseParameters(params);
 
 		return (
-			<pre className="font-bold text-sm font-mono whitespace-pre my-2">
-				{name}({'\n'}
+			<pre className="text-sm font-mono whitespace-pre my-2">
+				<span className="font-bold">{circuitName}</span>({'\n'}
 				{paramList.map((param, index) => (
 					<React.Fragment key={index}>
 						{'  '}{param}{index < paramList.length - 1 ? ',' : ''}{'\n'}
 					</React.Fragment>
 				))}
-				){rest}
+				){suffix}
 			</pre>
 		);
 	};
 
 	return (
-        // `-mt-7.5` compensates for spacing from `#### [!toc] [#id]` pattern
-        // The empty h4 pattern allows toc tracking/response
+		// `-mt-7.5` compensates for spacing from `#### [!toc] [#id]` pattern
+		// The empty h4 pattern allows toc tracking/response
 		<div id={anchorId} className="scroll-mt-20 -mt-7.5">
 			<div className="border rounded-md mb-4">
 				<div className="bg-secondary flex w-full justify-between px-4 py-2">
