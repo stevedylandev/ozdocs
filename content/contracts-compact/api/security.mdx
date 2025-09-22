@@ -5,7 +5,7 @@ title: Security
 This package provides the API for all Security modules.
 
 <Callout type='info'>
-For an overview of the module, read the [Security guide](../security).
+  For an overview of the module, read the [Security guide](../security).
 </Callout>
 
 ## Initializable
@@ -18,59 +18,63 @@ For an overview of the module, read the [Security guide](../security).
 import "./node-modules/@openzeppelin-compact/contracts/src/security/Initializable";
 ```
 
-**Circuits:**
+---
 
-- [`initialize()`](#initialize)
-- [`assertInitialized()`](#assertinitialized)
-- [`assertNotInitialized()`](#assertnotinitialized)
+### Ledger [!toc]
 
-#### initialize
+#### _isInitialized [toc] [#_isInitialized]
+#### [!toc] [#_isInitialized]
+<APIItemCompact
+  circuitSig='_isInitialized: Boolean'
+  kind="ledger"
+  id="_isInitialized"
+>
+  Boolean indicating if initialized.
+</APIItemCompact>
 
-```ts
-initialize() → []
-```
+### Circuits [!toc]
 
-Initializes the state thus ensuring the calling circuit can only be called once.
+#### initialize [toc] [#initialize]
+#### [!toc] [#initialize]
+<APIItemCompact
+  circuitSig='initialize() → []'
+  kind="circuit"
+  complexity="k=10, rows=38"
+>
+  Initializes the state thus ensuring the calling circuit can only be called once.
 
-Requirements:
+  Requirements:
 
-* Contract must not be initialized.
+  * Contract must not be initialized.
+</APIItemCompact>
 
-Constraints:
+#### assertInitialized [toc] [#assertInitialized]
+#### [!toc] [#assertInitialized]
+<APIItemCompact
+  circuitSig='assertInitialized() → []'
+  kind="circuit"
+  complexity="k=10, rows=31"
+>
+  Asserts that the contract has been initialized, throwing an error if not.
 
-* k=10, rows=38
+  Requirements:
 
-#### assertInitialized
+  * Contract must not be initialized.
+</APIItemCompact>
 
-```ts
-assertInitialized() → []
-```
+#### assertNotInitialized [toc] [#assertNotInitialized]
+#### [!toc] [#assertNotInitialized]
+<APIItemCompact
+  circuitSig='assertNotInitialized() → []'
+  kind="circuit"
+  complexity="k=10, rows=35"
+>
+  Asserts that the contract has not been initialized, throwing an error if it has.
 
-Asserts that the contract has been initialized, throwing an error if not.
+  Requirements:
 
-Requirements:
-
-* Contract must be initialized.
-
-Constraints:
-
-* k=10, rows=31
-
-#### assertNotInitialized
-
-```ts
-assertNotInitialized() → []
-```
-
-Asserts that the contract has not been initialized, throwing an error if it has.
-
-Requirements:
-
-* Contract must not be initialized.
-
-Constraints:
-
-* k=10, rows=35
+  * Contract must not be initialized.
+</APIItemCompact>
 
 ## Pausable
 
@@ -82,86 +86,82 @@ Constraints:
 import "./node-modules/@openzeppelin-compact/contracts/src/security/Pausable";
 ```
 
-**Circuits:**
+### Ledger [!toc]
 
-- [`isPaused()`](#ispaused)
-- [`assertPaused()`](#assertpaused)
-- [`assertNotPaused()`](#assertnotpaused)
-- [`_pause()`](#_pause)
-- [`_unpause()`](#_unpause)
+#### _isPaused [toc] [#_isPaused]
+#### [!toc] [#_isPaused]
+<APIItemCompact
+  circuitSig='_isPaused: Boolean'
+  kind="ledger"
+  id="_isPaused"
+>
+  Boolean indicating if paused.
+</APIItemCompact>
 
-#### isPaused
+### Circuits [!toc]
 
-```ts
-isPaused() → Boolean
-```
+#### isPaused [toc] [#isPaused]
+#### [!toc] [#isPaused]
+<APIItemCompact
+  circuitSig='isPaused() → Boolean'
+  kind="circuit"
+  complexity="k=10, rows=32"
+>
+  Returns true if the contract is paused, and false otherwise.
+</APIItemCompact>
 
-Returns true if the contract is paused, and false otherwise.
+#### assertPaused [toc] [#assertPaused]
+#### [!toc] [#assertPaused]
+<APIItemCompact
+  circuitSig='assertPaused() → []'
+  kind="circuit"
+  complexity="k=10, rows=31"
+>
+  Makes a circuit only callable when the contract is paused.
 
-Constraints:
+  Requirements:
 
-* k=10, rows=32
+  * Contract must be paused.
+</APIItemCompact>
 
-#### assertPaused
+#### assertNotPaused [toc] [#assertNotPaused]
+#### [!toc] [#assertNotPaused]
+<APIItemCompact
+  circuitSig='assertNotPaused() → []'
+  kind="circuit"
+  complexity="k=10, rows=35"
+>
+  Makes a circuit only callable when the contract is not paused.
 
-```ts
-assertPaused() → []
-```
+  Requirements:
 
-Makes a circuit only callable when the contract is paused.
+  * Contract must not be paused.
+</APIItemCompact>
 
-Requirements:
+#### _pause [toc] [#_pause]
+#### [!toc] [#_pause]
+<APIItemCompact
+  circuitSig='_pause() → []'
+  kind="circuit"
+  complexity="k=10, rows=38"
+>
+  Triggers a stopped state.
 
-* Contract must be paused.
+  Requirements:
 
-Constraints:
+  * Contract must not be paused.
+</APIItemCompact>
 
-* k=10, rows=31
+#### _unpause [toc] [#_unpause]
+#### [!toc] [#_unpause]
+<APIItemCompact
+  circuitSig='_unpause() → []'
+  kind="circuit"
+  complexity="k=10, rows=34"
+>
+  Lifts the pause on the contract.
 
-#### assertNotPaused
+  Requirements:
 
-```ts
-assertNotPaused() → []
-```
-
-Makes a circuit only callable when the contract is not paused.
-
-Requirements:
-
-* Contract must not be paused.
-
-Constraints:
-
-* k=10, rows=35
-
-#### _pause
-
-```ts
-_pause() → []
-```
-
-Triggers a stopped state.
-
-Requirements:
-
-* Contract must not be paused.
-
-Constraints:
-
-* k=10, rows=38
-
-#### _unpause
-
-```ts
-_unpause() → []
-```
-
-Lifts the pause on the contract.
-
-Requirements:
-
-* Contract must be paused.
-
-Constraints:
-
-* k=10, rows=34
+  * Contract must be paused.
+</APIItemCompact>
