@@ -196,11 +196,6 @@
 			},
 			{
 				"type": "page",
-				"name": "ERC-1155",
-				"url": "/contracts-cairo/api/erc1155"
-			},
-			{
-				"type": "page",
 				"name": "ERC-20",
 				"url": "/contracts-cairo/api/erc20"
 			},
@@ -208,6 +203,16 @@
 				"type": "page",
 				"name": "ERC-721",
 				"url": "/contracts-cairo/api/erc721"
+			},
+			{
+				"type": "page",
+				"name": "ERC-1155",
+				"url": "/contracts-cairo/api/erc1155"
+			},
+			{
+				"type": "page",
+				"name": "ERC-4626",
+				"url": "/contracts-cairo/api/erc20#ERC4626Component"
 			},
 			{
 				"type": "page",
