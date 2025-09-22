@@ -54,7 +54,7 @@ The history table shows the activity within the environment, allowing you to che
 
 ## Deploying and Upgrading
 
-After an environment is configured, you can use it for deployments and upgrades. To do so, we provide an [API, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk-deploy-client), and [Hardhat, window=_blank](https://www.npmjs.com/package/@openzeppelin/hardhat-upgrades) and [Foundry, window=_blank](https://github.com/OpenZeppelin/openzeppelin-foundry-upgrades) plugins. The Deploy API is recommended for custom projects that don’t use Hardhat or Foundry. On the other hand, the plugins are extremely easy to use as they only require a few lines of code to implement.
+After an environment is configured, you can use it for deployments and upgrades. To do so, we provide an [API](https://www.npmjs.com/package/@openzeppelin/defender-sdk-deploy-client), and [Hardhat](https://www.npmjs.com/package/@openzeppelin/hardhat-upgrades) and [Foundry](https://github.com/OpenZeppelin/openzeppelin-foundry-upgrades) plugins. The Deploy API is recommended for custom projects that don’t use Hardhat or Foundry. On the other hand, the plugins are extremely easy to use as they only require a few lines of code to implement.
 
 Defender will use the default approve process for deployments and upgrades. However, the Hardhat and Foundry plugins allow you to specify a different approval process for upgrades. If a block explorer API key is not provided, Defender will try to verify the contracts with the default key. Otherwise, it will use the one provided.
 

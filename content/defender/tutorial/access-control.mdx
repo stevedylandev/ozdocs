@@ -12,10 +12,10 @@ Defender allows you to seamlessly oversee and command contract permissions on a 
 ## 1. Add contract
 
 <Callout>
-For this tutorial, you will create a contract that implements the role-based Access Control library using [this, window=_blank](https://sepolia.etherscan.io/address/0xF909B3dBB525fDe7C3e8cd59FbECF3D42c217454) factory deployed to Sepolia. Your created contract will automatically assign you the admin role to manage its roles.
+For this tutorial, you will create a contract that implements the role-based Access Control library using [this](https://sepolia.etherscan.io/address/0xF909B3dBB525fDe7C3e8cd59FbECF3D42c217454) factory deployed to Sepolia. Your created contract will automatically assign you the admin role to manage its roles.
 </Callout>
 
-1. Open the Defender [Address Book, window=_blank](https://defender.openzeppelin.com/v2/#/address-book/new) in a web browser.
+1. Open the Defender [Address Book](https://defender.openzeppelin.com/v2/#/address-book/new) in a web browser.
 2. Fill the form with the following values and click `Create`:
 
    * Name: `Access Control Factory`
@@ -25,7 +25,7 @@ For this tutorial, you will create a contract that implements the role-based Acc
 +
 image::tutorial-access-control-factory.png[Address Book for factory]
 
-1. Navigate to [Transaction Proposals, window=_blank](https://defender.openzeppelin.com/v2/#/transaction-proposals/new?).
+1. Navigate to [Transaction Proposals](https://defender.openzeppelin.com/v2/#/transaction-proposals/new?).
 2. Fill the ***General Information*** section with the following values:
 
    * Name: `Create Access Control contract`
@@ -51,7 +51,7 @@ image::tutorial-access-control-tx-general.png[Transaction Proposal general infor
 7. Scroll down and under ***Execution Result***, hover over the first contract to copy its address.
 
    ![Transaction Proposal copy address](/defender/tutorial-access-control-copy-address.png)
-8. Navigate to the Defender https://defender.openzeppelin.com/v2/#/address-book/new Address Book, window=_blank] to add your newly created contract.
+8. Navigate to the Defender https://defender.openzeppelin.com/v2/#/address-book/new Address Book] to add your newly created contract.
 9. Fill the form with the following values and click `Create`:
 
    * Name: `Access Control Contract`
@@ -64,7 +64,7 @@ image::tutorial-access-control-tx-general.png[Transaction Proposal general infor
 ["inputs": [],"stateMutability": "nonpayable","type": "constructor","inputs": [],"name": "AccessControlBadConfirmation","type": "error","inputs": [{"internalType": "address","name": "account","type": "address","internalType": "bytes32","name": "neededRole","type": "bytes32"],"name": "AccessControlUnauthorizedAccount","type": "error"},"anonymous": false,"inputs": [{"indexed": true,"internalType": "bytes32","name": "role","type": "bytes32","indexed": true,"internalType": "bytes32","name": "previousAdminRole","type": "bytes32","indexed": true,"internalType": "bytes32","name": "newAdminRole","type": "bytes32"],"name": "RoleAdminChanged","type": "event"},"anonymous": false,"inputs": [{"indexed": true,"internalType": "bytes32","name": "role","type": "bytes32","indexed": true,"internalType": "address","name": "account","type": "address","indexed": true,"internalType": "address","name": "sender","type": "address"],"name": "RoleGranted","type": "event"},"anonymous": false,"inputs": [{"indexed": true,"internalType": "bytes32","name": "role","type": "bytes32","indexed": true,"internalType": "address","name": "account","type": "address","indexed": true,"internalType": "address","name": "sender","type": "address"],"name": "RoleRevoked","type": "event"},"inputs": [],"name": "DEFAULT_ADMIN_ROLE","outputs": [{"internalType": "bytes32","name": "","type": "bytes32"],"stateMutability": "view","type": "function"},"inputs": [],"name": "RANDOM_ROLE","outputs": [{"internalType": "bytes32","name": "","type": "bytes32"],"stateMutability": "view","type": "function"},"inputs": [{"internalType": "bytes32","name": "role","type": "bytes32"],"name": "getRoleAdmin","outputs": ["internalType": "bytes32","name": "","type": "bytes32"],"stateMutability": "view","type": "function"},"inputs": [{"internalType": "bytes32","name": "role","type": "bytes32","internalType": "address","name": "account","type": "address"],"name": "grantRole","outputs": [],"stateMutability": "nonpayable","type": "function"},"inputs": [{"internalType": "bytes32","name": "role","type": "bytes32","internalType": "address","name": "account","type": "address"],"name": "hasRole","outputs": ["internalType": "bool","name": "","type": "bool"],"stateMutability": "view","type": "function"},"inputs": [{"internalType": "bytes32","name": "role","type": "bytes32","internalType": "address","name": "callerConfirmation","type": "address"],"name": "renounceRole","outputs": [],"stateMutability": "nonpayable","type": "function"},"inputs": [{"internalType": "bytes32","name": "role","type": "bytes32","internalType": "address","name": "account","type": "address"],"name": "revokeRole","outputs": [],"stateMutability": "nonpayable","type": "function"},"inputs": [{"internalType": "bytes4","name": "interfaceId","type": "bytes4"],"name": "supportsInterface","outputs": ["internalType": "bool","name": "","type": "bool"],"stateMutability": "view","type": "function"}]
 ```
 
-1. Navigate to the [Access Control page, window=_blank](https://defender.openzeppelin.com/v2/#/access-control/contracts).
+1. Navigate to the [Access Control page](https://defender.openzeppelin.com/v2/#/access-control/contracts).
 2. Observe your newly added contract with the number addresses that hold the admin role.
 
    ![Access Control page with contract](/defender/tutorial-access-control-page.gif)
@@ -100,5 +100,5 @@ After configuring Access Control, we recommend seting up Workflows. Learn how to
 ## References
 
 * [Access Control Documentation](:module/access-control)
-* [Access Control Factory, window=_blank](https://sepolia.etherscan.io/address/0xF909B3dBB525fDe7C3e8cd59FbECF3D42c217454)
-* [Access Control Contract, window=_blank](https://sepolia.etherscan.io/address/0x1b073085c60ace585c4179984b3be5bf9ef53176)
+* [Access Control Factory](https://sepolia.etherscan.io/address/0xF909B3dBB525fDe7C3e8cd59FbECF3D42c217454)
+* [Access Control Contract](https://sepolia.etherscan.io/address/0x1b073085c60ace585c4179984b3be5bf9ef53176)

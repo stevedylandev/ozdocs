@@ -17,10 +17,10 @@ Learn to [deploy](:tutorial/deploy) and [monitor](:tutorial/monitor) contracts t
 You will configure an action that sends an hourly transaction with the `addObject()` function to the `0xC64f7ace6127bc7B0bAb23bD1871aC81e6AEC074` contract in Sepolia, which is an example of a Box contract deployed in the [Deploy](:tutorial/deploy) tutorial. To do so, follow these steps:
 
 1. Run the following command in your terminal:
-2. Open [Defender Relayers, window=_blank](https://defender.openzeppelin.com/v2/#/relayers) in a web browser.
+2. Open [Defender Relayers](https://defender.openzeppelin.com/v2/#/relayers) in a web browser.
 3. Click on **Create Relayer** with the name `Actions Relayer` and Sepolia network.
 4. Fund it with some Sepolia ETH. This relayer will send and pay for the automated transactions.
-5. Open [Defender Actions, window=_blank](https://defender.openzeppelin.com/v2/#/actions).
+5. Open [Defender Actions](https://defender.openzeppelin.com/v2/#/actions).
 6. Click on **Create Action**.
 7. Name the action `Hourly object add`.
 8. Select **Schedule** as trigger, and a **Timespan** of 1 hour as schedule.
@@ -52,11 +52,11 @@ After saving, the Actions page should look like this:
 
 ![Actions action card](/defender/tutorial-actions-action.png)
 
-Your action will now be running every hour! You can check the [Defender Logs, window=_blank](https://defender.openzeppelin.com/v2/#/logs) for more detailed information about the activity.
+Your action will now be running every hour! You can check the [Defender Logs](https://defender.openzeppelin.com/v2/#/logs) for more detailed information about the activity.
 
 ## 2. Verify activity
 
-After the action has run for a while, you can verify that the transaction is being sent every hour. To do so, open the [Etherscan contract page, window=_blank](https://sepolia.etherscan.io/address/0xC64f7ace6127bc7B0bAb23bD1871aC81e6AEC074) and look for transactions from the configured Relayer. An alternative is to search your Relayer in Etherscan and look for the transactions sent to the contract.
+After the action has run for a while, you can verify that the transaction is being sent every hour. To do so, open the [Etherscan contract page](https://sepolia.etherscan.io/address/0xC64f7ace6127bc7B0bAb23bD1871aC81e6AEC074) and look for transactions from the configured Relayer. An alternative is to search your Relayer in Etherscan and look for the transactions sent to the contract.
 
 You will also receive alerts in case the action fails (for example, if the Relayer runs out of gas). They look like this:
 
@@ -74,4 +74,4 @@ Alongisde actions, we recommend using Access Control to manage a contract’s pe
 
 * [Actions Documentation](:module/actions)
 * [More information on Action’s Javascript code](:module/actions#defining-code)
-* [BoxV2 Sepolia contract, window=_blank](https://sepolia.etherscan.io/address/0xC64f7ace6127bc7B0bAb23bD1871aC81e6AEC074)
+* [BoxV2 Sepolia contract](https://sepolia.etherscan.io/address/0xC64f7ace6127bc7B0bAb23bD1871aC81e6AEC074)

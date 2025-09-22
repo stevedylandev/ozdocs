@@ -57,7 +57,7 @@ Whenever you create a Relayer, a fresh EOA will be created to back it. For secur
 
 You can limit a Relayer’s behavior by specifying policies.
 
-To configure a Relayer’s policies, go to the [Relayer page, window=_blank](https://defender.openzeppelin.com/v2/#/relayers), select the Relayer, and then go to the **Policies** tab. You will then see a form where you can opt to enable policies and tweak their parameters.
+To configure a Relayer’s policies, go to the [Relayer page](https://defender.openzeppelin.com/v2/#/relayers), select the Relayer, and then go to the **Policies** tab. You will then see a form where you can opt to enable policies and tweak their parameters.
 
 ![Manage Relayer Policies](/defender/manage-relayer-policies.png)
 
@@ -85,10 +85,10 @@ EIP1559 Pricing policy is enabled by default for new Relayers. If you have a Rel
 #### Private transactions
 Specify if the transactions should be sent via private mempool. This means that a transaction will not be publicly seen until it’s included in a block.
 
-The parameter can be toggled between the following states: `true` to enable private mempool transactions, `false` to opt for public visibility. Alternatively, users can specify the transaction speed by setting the value to either `flashbots-normal` or `flashbots-fast`. By default, when the policy is set to `true`, the speed defaults to `flashbots-normal`, allowing for seamless inclusion while maintaining transaction privacy. This configuration empowers users to tailor their transaction strategy to suit their specific privacy and speed requirements effectively. You can read about faster transactions with Flashbots [here, window=_blank](https://docs.flashbots.net/flashbots-protect/quick-start#faster-transactions).
+The parameter can be toggled between the following states: `true` to enable private mempool transactions, `false` to opt for public visibility. Alternatively, users can specify the transaction speed by setting the value to either `flashbots-normal` or `flashbots-fast`. By default, when the policy is set to `true`, the speed defaults to `flashbots-normal`, allowing for seamless inclusion while maintaining transaction privacy. This configuration empowers users to tailor their transaction strategy to suit their specific privacy and speed requirements effectively. You can read about faster transactions with Flashbots [here](https://docs.flashbots.net/flashbots-protect/quick-start#faster-transactions).
 
 <Callout>
-Private transactions are only enabled for _mainnet_ by using the [Flashbots Protect RPC, window=_blank](https://docs.flashbots.net/flashbots-protect/rpc/quick-start). So, the same [key considerations, window=_blank](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations) might apply while sending private transactions through Defender.
+Private transactions are only enabled for _mainnet_ by using the [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start). So, the same [key considerations](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations) might apply while sending private transactions through Defender.
 </Callout>
 
 ## Relayer Groups
@@ -122,7 +122,7 @@ Users can manually adjust the weight of individual relayers. For example, settin
 
 ## Sending transactions
 
-The easiest way to send a transaction via a Relayer is using the [`Defender SDK`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package. The client is initialized with an API key/secret and exposes a simple API for sending transactions through the corresponding Relayer.
+The easiest way to send a transaction via a Relayer is using the [`Defender SDK`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package. The client is initialized with an API key/secret and exposes a simple API for sending transactions through the corresponding Relayer.
 
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
@@ -153,7 +153,7 @@ Currently, _zkSync_ doesn’t have a way to precisely calculate `gasLimit` other
 
 ### Using ethers.js
 
-The Relayer client integrates with [ethers.js, window=_blank](https://docs.ethers.io/v6/) via a custom [signer, window=_blank](https://docs.ethers.org/v6/api/providers/#Signer). This allows you switch to a Relayer and send transactions with minimal changes in your codebase.
+The Relayer client integrates with [ethers.js](https://docs.ethers.io/v6/) via a custom [signer](https://docs.ethers.org/v6/api/providers/#Signer). This allows you switch to a Relayer and send transactions with minimal changes in your codebase.
 
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
@@ -172,11 +172,11 @@ const mined = await tx.wait();
 
 In the example above, we are also using a `DefenderRelayProvider` for making calls to the network. The signer can work with any provider, such as `ethers.getDefaultProvider()`, but you can rely on Defender as a network provider as well.
 
-You can read more about the ethers integration [here, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk-relay-client).
+You can read more about the ethers integration [here](https://www.npmjs.com/package/@openzeppelin/defender-sdk-relay-client).
 
 ### Using web3.js
 
-The Relayer client integrates with [web3.js, window=_blank](https://web3js.readthedocs.io/) as well as via a custom [provider, window=_blank](https://web3js.readthedocs.io/en/v1.3.4/web3-eth.html#providers). This allows you to send transactions with a Relayer and query the network using the familiar web3 interface.
+The Relayer client integrates with [web3.js](https://web3js.readthedocs.io/) as well as via a custom [provider](https://web3js.readthedocs.io/en/v1.3.4/web3-eth.html#providers). This allows you to send transactions with a Relayer and query the network using the familiar web3 interface.
 
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
@@ -196,7 +196,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 In the example above, the `transfer` transaction is signed and broadcasted by the Relayer, and any additional JSON RPC calls are routed via Defender private endpoint.
 
-You can read more about the web3 integration [here, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk-relay-client).
+You can read more about the web3 integration [here](https://www.npmjs.com/package/@openzeppelin/defender-sdk-relay-client).
 
 ### Intents Support with Relay Signer
 
@@ -225,7 +225,7 @@ Any attempt to send `maxFeePerGas` or `maxPriorityFeePerGas` to non-EIP1559 comp
 You can tell if a network supports EIP1559 by looking at the Relayer [policies](#policies). If the EIP1559Pricing policy doesn’t show up, it means that we haven’t added EIP1559 support for that network.
 
 <Callout>
-If you notice an EIP1559 compatible network that we already support but doens’t have the EIP enabled, please don’t hesitate to reach out via [https://www.openzeppelin.com/defender2-feedback, window=_blank](https://www.openzeppelin.com/defender2-feedback).
+If you notice an EIP1559 compatible network that we already support but doens’t have the EIP enabled, please don’t hesitate to reach out via [https://www.openzeppelin.com/defender2-feedback](https://www.openzeppelin.com/defender2-feedback).
 </Callout>
 
 ### Private transactions
@@ -246,7 +246,7 @@ Sending a transaction with the `isPrivate` flag set to `true` to a network that 
 
 Currently, only the following network is supported
 
-* **Mainnet**: Via [Flashbots Protect RPC, window=_blank](https://docs.flashbots.net/flashbots-protect/rpc/quick-start)
+* **Mainnet**: Via [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start)
 
 ### Speed
 
@@ -255,7 +255,7 @@ Instead of the usual `gasPrice` or `maxFeePerGas`/`maxPriorityFeePerGas`, the Re
 If speed is provided, the transaction would be priced according to the `EIP1559Pricing` Relayer policy.
 
 <Callout>
-Mainnet gas prices and priority fees are calculated based on the values reported by [EthGasStation, window=_blank](https://ethgasstation.info/), [EtherChain, window=_blank](https://etherchain.org/tools/gasPriceOracle), [GasNow, window=_blank](https://www.gasnow.org/), [Blockative, window=_blank](https://docs.blocknative.com/gas-platform), and [Etherscan, window=_blank](https://etherscan.io/gastracker). In Polygon and its testnet, the [gas station, window=_blank](https://gasstation-mainnet.matic.network/v2) is used. In other networks, gas prices are obtained from a call to `eth_gasPrice` or `eth_feeHistory` to the network.
+Mainnet gas prices and priority fees are calculated based on the values reported by [EthGasStation](https://ethgasstation.info/), [EtherChain](https://etherchain.org/tools/gasPriceOracle), [GasNow](https://www.gasnow.org/), [Blockative](https://docs.blocknative.com/gas-platform), and [Etherscan](https://etherscan.io/gastracker). In Polygon and its testnet, the [gas station](https://gasstation-mainnet.matic.network/v2) is used. In other networks, gas prices are obtained from a call to `eth_gasPrice` or `eth_feeHistory` to the network.
 </Callout>
 
 ### Fixed Gas Pricing
@@ -295,7 +295,7 @@ const signer = new DefenderRelaySigner(credentials, provider,  speed: 'fast', va
 
 ### Transaction IDs
 
-Since a Relayer may resubmit a transaction with an updated gas pricing if it does’t get confirmed in the expected time frame, the `hash` of a given transaction may change over time. To track the status of a given transaction, the Relayer API returns a `transactionId` identifier you can use to [query, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk-relay-signer-client) it.
+Since a Relayer may resubmit a transaction with an updated gas pricing if it does’t get confirmed in the expected time frame, the `hash` of a given transaction may change over time. To track the status of a given transaction, the Relayer API returns a `transactionId` identifier you can use to [query](https://www.npmjs.com/package/@openzeppelin/defender-sdk-relay-signer-client) it.
 
 ```jsx
 import  Relayer  from '@openzeppelin/defender-sdk-relay-signer-client';
@@ -498,14 +498,14 @@ tx = await relayer.cancelTransactionById('5fcb8a6d-8d3e-403a-b33d-ade27ce0f85a')
 
 ## Signing
 
-In addition to sending transactions, a Relayer can also sign arbitrary messages according to the [EIP-191 Standard, window=_blank](https://eips.ethereum.org/EIPS/eip-191) (prefixed by `\x19Ethereum Signed Message:\n`) using its private key. You can access this feature via the `sign` method of the client or the equivalent ethers.js method.
+In addition to sending transactions, a Relayer can also sign arbitrary messages according to the [EIP-191 Standard](https://eips.ethereum.org/EIPS/eip-191) (prefixed by `\x19Ethereum Signed Message:\n`) using its private key. You can access this feature via the `sign` method of the client or the equivalent ethers.js method.
 
 ```jsx
 const signResponse = await relayer.sign( message );
 ```
 
 <Callout>
-As opposed to most libraries, Relayers use non-deterministic ECDSA signatures. This means that if you request a Relayer to sign the same message multiple times, you will get multiple different signatures, which may differ to the result you get by signing using ethersjs or web3js. All those different signatures are valid. See [RFC6979, window=_blank](https://datatracker.ietf.org/doc/html/rfc6979#section-3) more information.
+As opposed to most libraries, Relayers use non-deterministic ECDSA signatures. This means that if you request a Relayer to sign the same message multiple times, you will get multiple different signatures, which may differ to the result you get by signing using ethersjs or web3js. All those different signatures are valid. See [RFC6979](https://datatracker.ietf.org/doc/html/rfc6979#section-3) more information.
 </Callout>
 
 <Callout>
@@ -514,7 +514,7 @@ For relayers that are part of a relayer group this method is not available.
 
 ## Signing Typed Data
 
-Along with the sign api method, Relayers also implement a `signTypedData`, which you can use to sign messages according to the [EIP712 Standard, window=_blank](https://eips.ethereum.org/EIPS/eip-712) for typed data signatures.
+Along with the sign api method, Relayers also implement a `signTypedData`, which you can use to sign messages according to the [EIP712 Standard](https://eips.ethereum.org/EIPS/eip-712) for typed data signatures.
 You can either provide the `domainSeparator` and `hashStruct(message)` or use the equivalent ethers.js method
 
 ```jsx
@@ -599,7 +599,7 @@ Defender also provides an easy way to make arbitrary JSON RPC calls to the netwo
 const balance = await relayer.call('eth_getBalance', ['0x6b175474e89094c44da98b954eedeac495271d0f', 'latest']);
 ```
 
-If you are using ethers.js, this is supported via a custom `DefenderRelayProvider` [provider, window=_blank](https://docs.ethers.org/v6/api/providers/) object:
+If you are using ethers.js, this is supported via a custom `DefenderRelayProvider` [provider](https://docs.ethers.org/v6/api/providers/) object:
 
 ```jsx
 const provider = new DefenderRelayProvider(credentials);
@@ -608,7 +608,7 @@ const balance = await provider.getBalance('0x6b175474e89094c44da98b954eedeac4952
 
 ## Withdrawing funds
 
-You can withdraw funds from a Relayer on the [Relayers page, window=_blank](https://defender.openzeppelin.com/v2/#/relayers), selecting the Relayer, and clicking on **Withdraw**.
+You can withdraw funds from a Relayer on the [Relayers page](https://defender.openzeppelin.com/v2/#/relayers), selecting the Relayer, and clicking on **Withdraw**.
 
 ![Relayer Withdraw Button](/defender/relayer-withdraw.png)
 
@@ -649,7 +649,7 @@ If you need additional throughput for your use case please reach out `defender-s
 
 For better reliability of the relayers, we recommend sending no more than **50 transactions/min** on a single relayer especially on fast moving chains like Polygon, Optimism, Arbitrum etc.. For example, if you want 250 transactions/min throughput, you would need to load balance across 5 relayers. These 5 relayers can be part of the same account.
 
-You may use the [`Defender SDK`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package to load balance across multiple relayers. Here is a simple example on how you can do this:
+You may use the [`Defender SDK`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package to load balance across multiple relayers. Here is a simple example on how you can do this:
 
 ```ts
 require('dotenv').config();

@@ -10,12 +10,12 @@ Private Networks allow you to customize your account by adding compatible mainne
 
 ## 1. Configure Private Network
 
-As an example, this guide uses [Tenderly, window=_blank](https://tenderly.co/) to create a network to use. Follow these steps:
+As an example, this guide uses [Tenderly](https://tenderly.co/) to create a network to use. Follow these steps:
 
 1. Regsiter an account on Tenderly and create a fork network from Ethereum mainnet. Toggle the custom chain ID and set it to a unique value to prevent conflicts with public chain IDs.
 
    ![Tenderly create network](/defender/guide-tenderly-private-network.png)
-2. Copy the network RPC and go to the [Private Network page on Defender, window=_blank](https://defender.openzeppelin.com/v2/#/settings/networks/private/new). Fill and submit the form with the network information, leaving the optional fields on blank (which will be configured in the next steps):
+2. Copy the network RPC and go to the [Private Network page on Defender](https://defender.openzeppelin.com/v2/#/settings/networks/private/new). Fill and submit the form with the network information, leaving the optional fields on blank (which will be configured in the next steps):
 
    ![Configure network on Defender](/defender/guide-configure-private-network.png)
 
@@ -28,7 +28,7 @@ With the Private Network created, you can now deploy the Safe contracts, which c
    ```
    git clone https://github.com/safe-global/safe-smart-account && cd safe-smart-account && npm install
    ```
-2. Create a new wallet, copy its mnemonic, and paste it in the `.env` file alongside the RPC url of the Private Network in the `NODE_URL` parameter. For example, with [Foundry, window=_blank](https://book.getfoundry.sh/):
+2. Create a new wallet, copy its mnemonic, and paste it in the `.env` file alongside the RPC url of the Private Network in the `NODE_URL` parameter. For example, with [Foundry](https://book.getfoundry.sh/):
 
    ```
    cast wallet new-mnemonic
@@ -44,7 +44,7 @@ With the Private Network created, you can now deploy the Safe contracts, which c
 5. Replace the `deterministicDeployment` function in `hardhat.config.ts` with the following code, replacing `YOUR_CONTRACT_ADDRESS` and `YOUR_WALLET_ADDRESS`:
 
    ```jsx
-   const deterministicDeployment = (): DeterministicDeploymentInfo => 
+   const deterministicDeployment = (): DeterministicDeploymentInfo =>
        return {
            factory: "YOUR_CONTRACT_ADDRESS",
            deployer: "YOUR_WALLET_ADDRESS",
@@ -54,11 +54,11 @@ With the Private Network created, you can now deploy the Safe contracts, which c
    };
    ```
 6. Run the following command to deploy the Safe contracts (don’t worry about the verification errors):
-+ 
++
 ```
 npm run deploy-all custom
 ```
-7. Navigate to the [`Private Networks` page on Defender, window=_blank](https://defender.openzeppelin.com/v2/#/settings/networks/private) and click on the edit button of the network you created. 
+7. Navigate to the [`Private Networks` page on Defender](https://defender.openzeppelin.com/v2/#/settings/networks/private) and click on the edit button of the network you created.
 
    ![Edit Private Network on Defender](/defender/guide-edit-private-network.png)
 8. Copy the following addreses from the Safe contracts deployment output and paste them on Defender:
@@ -69,14 +69,14 @@ npm run deploy-all custom
 
 ## 3. Create subgraph
 
-Subgraphs on Defender are powered by [TheGraph, window=_blank](https://thegraph.com). In order to create one for a Private Network, the network must be first supported by the TheGraph. [Here’s, window=_blank](https://github.com/graphprotocol/graph-tooling/blob/121843e982c69ffb31aae911431a68a2349ea062/packages/cli/src/protocols/index.ts#L91) the list of supported networks as data sources. Follow these steps to create a subgraph:
+Subgraphs on Defender are powered by [TheGraph](https://thegraph.com). In order to create one for a Private Network, the network must be first supported by the TheGraph. [Here’s](https://github.com/graphprotocol/graph-tooling/blob/121843e982c69ffb31aae911431a68a2349ea062/packages/cli/src/protocols/index.ts#L91) the list of supported networks as data sources. Follow these steps to create a subgraph:
 
 1. Clone the Defender subgraph toolkit repository and install the dependencies:
 
    ```
    git clone https://github.com/OpenZeppelin/defender-subgraphs && cd defender-subgraphs && yarn
    ```
-2. Follow the steps in the [README,window=_blank](https://github.com/OpenZeppelin/defender-subgraphs/blob/main/README.md).
+2. Follow the steps in the [README](https://github.com/OpenZeppelin/defender-subgraphs/blob/main/README.md).
 3. Copy the subgraph URL and paste it in the `Subgraph URL` field on the Defender Private Network configuration.
 
 ![Subgraph URL on Defender](/defender/guide-subgraph-private-network.png)
@@ -87,5 +87,5 @@ Congratulations! You have successfully added a complete Private Network. You can
 
 ## References
 
-* [Safe contracts deployments, window=_blank](https://github.com/safe-global/safe-smart-account#deployments)
-* [Defender subgraph toolkit, window=_blank](https://github.com/OpenZeppelin/defender-subgraphs)
+* [Safe contracts deployments](https://github.com/safe-global/safe-smart-account#deployments)
+* [Defender subgraph toolkit](https://github.com/OpenZeppelin/defender-subgraphs)
