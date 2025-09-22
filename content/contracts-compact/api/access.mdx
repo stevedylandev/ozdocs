@@ -59,13 +59,49 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 
 ---
 
+### Ledger [!toc]
+
+#### _operatorRoles [toc] [#_operatorRoles]
+#### [!toc] [#_operatorRoles]
+<APIItemCompact
+  circuitSig="_operatorRoles: Map<Bytes<32>, Map<Either<ZswapCoinPublicKey, ContractAddress>, Boolean>>"
+  kind="ledger"
+  id="_operatorRoles"
+>
+  Mapping from a role identifier -> account -> its permissions.
+</APIItemCompact>
+
+#### _adminRoles [toc] [#_adminRoles]
+#### [!toc] [#_adminRoles]
+<APIItemCompact
+  circuitSig="_adminRoles: Map<Bytes<32>, Bytes<32>>"
+  kind="ledger"
+  id="_adminRoles"
+>
+  Mapping from a role identifier to an admin role identifier.
+</APIItemCompact>
+
+#### DEFAULT_ADMIN_ROLE [toc] [#DEFAULT_ADMIN_ROLE]
+#### [!toc] [#DEFAULT_ADMIN_ROLE]
+<APIItemCompact
+  circuitSig="DEFAULT_ADMIN_ROLE: Bytes<32>"
+  kind="ledger"
+  id="DEFAULT_ADMIN_ROLE"
+>
+  The default `Bytes<32>` value mimicking a constant.
+</APIItemCompact>
+
+### Witnesses [!toc]
+
+None.
+
 ### Circuits [!toc]
 
 #### hasRole [toc] [#hasRole]
 #### [!toc] [#hasRole]
 <APIItemCompact
   circuitSig="hasRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=487"
 >
   Returns `true` if `account` has been granted `roleId`.
@@ -75,7 +111,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#assertOnlyRole]
 <APIItemCompact
   circuitSig="assertOnlyRole(roleId: Bytes<32>) → []"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=345"
 >
   Reverts if caller is missing `roleId`.
@@ -90,7 +126,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#_checkRole]
 <APIItemCompact
   circuitSig="_checkRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=467"
 >
   Reverts if `account` is missing `roleId`.
@@ -104,7 +140,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#getRoleAdmin]
 <APIItemCompact
   circuitSig="getRoleAdmin(roleId: Bytes<32>) → Bytes<32>"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=207"
 >
   Returns the admin role that controls `roleId` or a byte array with all zero bytes if `roleId` doesn’t exist.
@@ -117,7 +153,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#grantRole]
 <APIItemCompact
   circuitSig="grantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=994"
 >
   Grants `roleId` to `account`.
@@ -137,7 +173,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#revokeRole]
 <APIItemCompact
   circuitSig="revokeRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=827"
 >
   Revokes `roleId` from `account`.
@@ -152,7 +188,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 <APIItemCompact
   circuitSig="renounceRole(roleId: Bytes<32>, callerConfirmation: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   stackParams="true"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=640"
 >
   Revokes `roleId` from the calling account.
@@ -176,7 +212,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#_setRoleAdmin]
 <APIItemCompact
   circuitSig="_setRoleAdmin(roleId: Bytes<32>, adminRole: Bytes<32>) → []"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=209"
 >
   Sets `adminRole` as `roleId`’s admin role.
@@ -186,7 +222,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#_grantRole]
 <APIItemCompact
   circuitSig="_grantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=734"
 >
   Attempts to grant `roleId` to `account` and returns a boolean indicating if `roleId` was granted.
@@ -207,7 +243,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#_unsafeGrantRole]
 <APIItemCompact
   circuitSig="_unsafeGrantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=733"
   stackParams="true"
 >
@@ -224,7 +260,7 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
 #### [!toc] [#_revokeRole]
 <APIItemCompact
   circuitSig="_revokeRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
-  kind="export"
+  kind="circuit"
   complexity="k=10, rows=563"
 >
   Attempts to revoke `roleId` from `account` and returns a boolean indicating if `roleId` was revoked.
