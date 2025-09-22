@@ -216,6 +216,11 @@
 			},
 			{
 				"type": "page",
+				"name": "Token Common",
+				"url": "/contracts-cairo/api/token_common"
+			},
+			{
+				"type": "page",
 				"name": "Finance",
 				"url": "/contracts-cairo/api/finance"
 			},
@@ -238,11 +243,6 @@
 				"type": "page",
 				"name": "Security",
 				"url": "/contracts-cairo/api/security"
-			},
-			{
-				"type": "page",
-				"name": "Token Common",
-				"url": "/contracts-cairo/api/token_common"
 			},
 			{
 				"type": "page",
