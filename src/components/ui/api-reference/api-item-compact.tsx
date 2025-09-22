@@ -1,11 +1,11 @@
 import * as React from "react";
 
 type Props = React.PropsWithChildren<{
-  circuitSig: string;
-  kind: string;
-  complexity?: string | string[] | React.ReactNode;
-  stackParams?: boolean;
-  id?: string;
+	circuitSig: string;
+	kind: string;
+	complexity?: string | string[] | React.ReactNode;
+	stackParams?: boolean;
+	id?: string;
 }>;
 
 export async function APIItemCompact({
@@ -14,7 +14,7 @@ export async function APIItemCompact({
 	complexity,
 	stackParams = false,
 	id,
-	children
+	children,
 }: Props) {
 	const getCircuitName = (signature: string): string => {
 		const match = signature.match(/^([^(]+)/);
@@ -26,19 +26,19 @@ export async function APIItemCompact({
 
 	const parseParameters = (params: string): string[] => {
 		const result: string[] = [];
-		let current = '';
+		let current = "";
 		let depth = 0;
 
 		for (let i = 0; i < params.length; i++) {
 			const char = params[i];
 
-			if (char === '<') {
+			if (char === "<") {
 				depth++;
-			} else if (char === '>') {
+			} else if (char === ">") {
 				depth--;
-			} else if (char === ',' && depth === 0) {
+			} else if (char === "," && depth === 0) {
 				result.push(current.trim());
-				current = '';
+				current = "";
 				continue;
 			}
 
@@ -54,12 +54,13 @@ export async function APIItemCompact({
 
 	const renderCircuitSig = () => {
 		const restMatch = circuitSig.match(/^[^(]+(.*)$/);
-		const rest = restMatch ? restMatch[1] : '';
+		const rest = restMatch ? restMatch[1] : "";
 
 		if (!stackParams) {
 			return (
 				<p className="text-sm font-mono">
-					<span className="font-bold">{circuitName}</span>{rest}
+					<span className="font-bold">{circuitName}</span>
+					{rest}
 				</p>
 			);
 		}
@@ -68,7 +69,8 @@ export async function APIItemCompact({
 		if (!paramMatch) {
 			return (
 				<p className="text-sm font-mono">
-					<span className="font-bold">{circuitName}</span>{rest}
+					<span className="font-bold">{circuitName}</span>
+					{rest}
 				</p>
 			);
 		}
@@ -78,10 +80,13 @@ export async function APIItemCompact({
 
 		return (
 			<pre className="text-sm font-mono whitespace-pre my-2">
-				<span className="font-bold">{circuitName}</span>({'\n'}
+				<span className="font-bold">{circuitName}</span>({"\n"}
 				{paramList.map((param, index) => (
-					<React.Fragment key={index}>
-						{'  '}{param}{index < paramList.length - 1 ? ',' : ''}{'\n'}
+					<React.Fragment key={param}>
+						{"  "}
+						{param}
+						{index < paramList.length - 1 ? "," : ""}
+						{"\n"}
 					</React.Fragment>
 				))}
 				){suffix}
@@ -90,7 +95,9 @@ export async function APIItemCompact({
 	};
 
 	return (
-		<div id={anchorId} className="scroll-mt-20">
+    // `-mt-7.5` compensates for spacing from `#### [!toc] [#id]` pattern
+		// The empty h4 pattern allows toc tracking/response
+		<div id={anchorId} className="scroll-mt-20 -mt-7.5">
 			<div className="border rounded-md mb-4">
 				<div className="bg-secondary flex w-full justify-between px-4 py-2">
 					{renderCircuitSig()}
@@ -109,8 +116,8 @@ export async function APIItemCompact({
 							<div className="text-gray-500 dark:text-gray-400 italic text-sm">
 								{Array.isArray(complexity) ? (
 									<div className="text-right">
-										{complexity.map((item, index) => (
-											<div key={index}>{item}</div>
+										{complexity.map((item, _) => (
+											<div key={item}>{item}</div>
 										))}
 									</div>
 								) : (
