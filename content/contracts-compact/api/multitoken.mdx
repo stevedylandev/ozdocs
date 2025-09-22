@@ -22,12 +22,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
 
 ### Circuits [!toc]
 
-{/*
-  * The first header displays on the `toc` only.
-  * The second header is empty but maintains `toc` highlighting.
-  */}
 #### initialize [toc] [#initialize]
-#### [!toc] [#initialize]
 <APIItemCompact
   circuitSig='initialize(uri_: Opaque<"string">) → []'
   kind="export"
@@ -43,9 +38,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * Contract is not initialized.
 </APIItemCompact>
 
-
 #### uri [toc] [#uri]
-#### [!toc] [#uri]
 <APIItemCompact
   circuitSig='uri(id: Uint<128>) → Opaque<"string">'
   kind="export"
@@ -60,9 +53,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### balanceOf [toc] [#balanceOf]
-#### [!toc] [#balanceOf]
 <APIItemCompact
   circuitSig="balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>) → Uint<128>"
   kind="export"
@@ -75,9 +66,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### setApprovalForAll [toc] [#setApprovalForAll]
-#### [!toc] [#setApprovalForAll]
 <APIItemCompact
   circuitSig="setApprovalForAll(operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []"
   kind="export"
@@ -92,9 +81,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `operator` is not the zero address.
 </APIItemCompact>
 
-
 #### isApprovedForAll [toc] [#isApprovedForAll]
-#### [!toc] [#isApprovedForAll]
 <APIItemCompact
   circuitSig="isApprovedForAll(account: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="export"
@@ -108,9 +95,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### transferFrom [toc] [#transferFrom]
-#### [!toc] [#transferFrom]
 <APIItemCompact
   circuitSig="transferFrom( from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="export"
@@ -135,9 +120,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-
 #### _transfer [toc] [#_transfer]
-#### [!toc] [#_transfer]
 <APIItemCompact
   circuitSig="_transfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>): []"
   kind="export"
@@ -161,9 +144,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-
 #### _update [toc] [#_update]
-#### [!toc] [#_update]
 <APIItemCompact
   circuitSig="_update(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>): []"
   kind="internal"
@@ -179,9 +160,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * If `from` is not zero, the balance of `id` of `from` must be >= `value`.
 </APIItemCompact>
 
-
 #### _unsafeTransferFrom [toc] [#_unsafeTransferFrom]
-#### [!toc] [#_unsafeTransferFrom]
 <APIItemCompact
   circuitSig="_unsafeTransferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="external"
@@ -206,9 +185,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-
 #### _unsafeTransfer [toc] [#_unsafeTransfer]
-#### [!toc] [#_unsafeTransfer]
 <APIItemCompact
   circuitSig="_unsafeTransfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="external"
@@ -232,9 +209,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-
 #### _setURI [toc] [#_setURI]
-#### [!toc] [#_setURI]
 <APIItemCompact
   circuitSig='_setURI(newURI: Opaque<"string">) → []'
   kind="external"
@@ -254,9 +229,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### _mint [toc] [#_mint]
-#### [!toc] [#_mint]
 <APIItemCompact
   circuitSig="_mint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="external"
@@ -277,9 +250,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `to` is not a ContractAddress
 </APIItemCompact>
 
-
 #### _unsafeMint [toc] [#_unsafeMint]
-#### [!toc] [#_unsafeMint]
 <APIItemCompact
   circuitSig="_unsafeMint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="external"
@@ -300,9 +271,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `to` is not the zero address.
 </APIItemCompact>
 
-
 #### _burn [toc] [#_burn]
-#### [!toc] [#_burn]
 <APIItemCompact
   circuitSig="_burn(from: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="external"
@@ -318,9 +287,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-
 #### _setApprovalForAll [toc] [#_setApprovalForAll]
-#### [!toc] [#_setApprovalForAll]
 <APIItemCompact
   circuitSig="_setApprovalForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []"
   kind="external"
