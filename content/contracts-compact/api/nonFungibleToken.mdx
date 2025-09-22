@@ -5,7 +5,7 @@ title: NonFungibleToken API
 This module provides the full NonFungibleToken module API.
 
 <Callout type='info'>
-For an overview of the module, read the [NonFungibleToken guide](../nonfungibletoken).
+  For an overview of the module, read the [NonFungibleToken guide](../nonfungibletoken).
 </Callout>
 
 ## Core
@@ -146,10 +146,10 @@ Requirements:
 * The `tokenId` must exist.
 
 <Callout type='info'>
-Native strings and string operations aren’t supported within the Compact language,
-e.g. concatenating a base URI + token ID is not possible like in other NFT implementations.
-Therefore, we propose the URI storage approach; whereby, NFTs may or may not have unique "base" URIs.
-It’s up to the implementation to decide on how to handle this.
+  Native strings and string operations aren’t supported within the Compact language,
+  e.g. concatenating a base URI + token ID is not possible like in other NFT implementations.
+  Therefore, we propose the URI storage approach; whereby, NFTs may or may not have unique "base" URIs.
+  It’s up to the implementation to decide on how to handle this.
 </Callout>
 
 Constraints:
@@ -170,7 +170,7 @@ Requirements:
 * The `tokenId` must exist.
 
 <Callout type='info'>
-The URI for a given NFT is usually set when the NFT is minted.
+  The URI for a given NFT is usually set when the NFT is minted.
 </Callout>
 
 Constraints:
@@ -265,8 +265,8 @@ transferFrom(
 Transfers `tokenId` token from `from` to `to`.
 
 <Callout type='info'>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
 </Callout>
 
 Requirements:
@@ -295,9 +295,9 @@ _unsafeTransferFrom(
 Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
 
 <Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
+  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+  Tokens sent to a contract address may become irretrievable.
+  Once contract-to-contract calls are supported, this circuit may be deprecated.
 </Callout>
 
 Requirements:
@@ -361,7 +361,7 @@ Requirements:
 * The contract is initialized.
 
 <Callout type='warn'>
-This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
+  This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
 </Callout>
 
 Constraints:
@@ -386,7 +386,7 @@ Requirements:
 * `spender` has approval from `owner` for `tokenId` OR `spender` has approval to manage all of `owner`'s assets.
 
 <Callout type='warn'>
-This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
+  This function assumes that `owner` is the actual owner of `tokenId` and does not verify this assumption.
 </Callout>
 
 Constraints:
@@ -451,9 +451,9 @@ Requirements:
 * `to` is not the zero address.
 
 <Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
+  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+  Tokens sent to a contract address may become irretrievable.
+  Once contract-to-contract calls are supported, this circuit may be deprecated.
 </Callout>
 
 Constraints:
@@ -492,8 +492,8 @@ _transfer(
 Transfers `tokenId` from `from` to `to`. As opposed to [transferFrom](#transferfrom), this imposes no restrictions on `ownPublicKey()`.
 
 <Callout type='info'>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
 </Callout>
 
 Requirements:
@@ -522,9 +522,9 @@ Unsafe variant of [_transfer](#_transfer) which allows transfers to contract add
 Transfers `tokenId` from `from` to `to`. As opposed to [_unsafeTransferFrom](#_unsafetransferfrom), this imposes no restrictions on `ownPublicKey()`. It does NOT check if the recipient is a `ContractAddress`.
 
 <Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
+  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+  Tokens sent to a contract address may become irretrievable.
+  Once contract-to-contract calls are supported, this circuit may be deprecated.
 </Callout>
 
 Requirements:
