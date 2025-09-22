@@ -78,7 +78,11 @@ In math that gives:
 | after attacker's deposit | $a_0$ | $a_0$ | $1$ |
 | after attacker's donation | $a_0 + a_1$ | $a_0$ | $\frac{a_0}{a_1 + a_0}$ |
 
-This means a deposit of $u$ will give $\frac{u \times a_0}{a_0 + a_1}$ shares.
+This means a deposit of $u$ will give this number of shares:
+
+```math
+\frac{u \times a_0}{a_0 + a_1}
+```
 
 For the attacker to dilute that deposit to 0 shares, causing the user to lose all its deposit, it must ensure that
 
@@ -119,7 +123,7 @@ Following the previous math definitions, we have:
 | after attacker's donation | $1+a_0+a_1$ | $10^\delta \times (1+a_0)$ | $10^\delta$ |
 
 One important thing to note is that the attacker only owns a fraction $\frac{a_0}{1 + a_0}$ of the shares, so when doing the donation, he will only be able
-to recover that fraction $\frac{a_1 \times a_0}{1 + a_0}$ of the donation. The remaining $\frac{a_1}{1+a_0}$ are captured by the vault.
+to recover that fraction $\frac{a_1 * a_0}{1 + a_0}$ of the donation. The remaining $\frac{a_1}{1+a_0}$ are captured by the vault.
 
 ```math
 \mathit{loss} = \frac{a_1}{1+a_0}
