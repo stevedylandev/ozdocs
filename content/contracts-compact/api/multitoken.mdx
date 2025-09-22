@@ -5,7 +5,7 @@ title: MultiToken API
 This module provides the full MultiToken module API.
 
 <Callout type='info'>
-For an overview of the module, read the [MultiToken guide](../multitoken).
+  For an overview of the module, read the [MultiToken guide](../multitoken).
 </Callout>
 
 ## Core
@@ -18,394 +18,320 @@ For an overview of the module, read the [MultiToken guide](../multitoken).
 import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
 ```
 
-**Circuits**
-
-* [`initialize(uri_)`](#initialize)
-* [`uri(id)`](#uri)
-* [`balanceOf(account, id)`](#balanceof)
-* [`setApprovalForAll(operator, approved)`](#setapprovalforall)
-* [`isApprovedForAll(account, operator)`](#isapprovedforall)
-* [`transferFrom(from, to, id, value)`](#transferfrom)
-* [`_transfer(from, to, id, value)`](#_transfer)
-* [`_update(from, to, id, value)`](#_update)
-* [`_unsafeTransferFrom(from, to, id, value)`](#_unsafetransferfrom)
-* [`_unsafeTransfer(from, to, id, value)`](#_unsafetransfer)
-* [`_setURI(newURI)`](#_seturi)
-* [`_mint(to, id, value)`](#_mint)
-* [`_unsafeMint(to, id, value)`](#_unsafemint)
-* [`_burn(from, id, value)`](#_burn)
-* [`_setApprovalForAll(owner, operator, approved)`](#_setapprovalforall)
-
-#### initialize
-
-```typescript
-initialize(uri_: Opaque<"string">) → []
-```
-
-**Circuit**
-
-Initializes the contract by setting the base URI for all tokens.
-
-This MUST be called in the implementing contract’s constructor.
-Failure to do so can lead to an irreparable contract.
-
-Requirements:
-
-* Contract is not initialized.
-
-Constraints:
-
-* k=10, rows=45
-
-#### uri
-
-```typescript
-uri(id: Uint<128>) → Opaque<"string">
-```
-
-**Circuit**
-
-This implementation returns the same URI for **all** token types.
-It relies on the token type ID substitution mechanism defined in the EIP: [ERC1155-Metadata](https://eips.ethereum.org/EIPS/eip-1155#metadata).
-Clients calling this function must replace the `\id\` substring with the actual token type ID.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=90
-
-#### balanceOf
-
-```typescript
-balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>) → Uint<128>
-```
-
-**Circuit**
-
-Returns the amount of `id` tokens owned by `account`.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=439
-
-#### setApprovalForAll
-
-```typescript
-setApprovalForAll(operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []
-```
-
-**Circuit**
-
-Enables or disables approval for `operator` to manage all of the caller’s assets.
-
-Requirements:
-
-* Contract is initialized.
-* `operator` is not the zero address.
-
-Constraints:
-
-* k=10, rows=404
-
-#### isApprovedForAll
-
-```typescript
-isApprovedForAll(
-  account: Either<ZswapCoinPublicKey, ContractAddress>,
-  operator: Either<ZswapCoinPublicKey, ContractAddress>
-) → Boolean
-```
-
-**Circuit**
-
-Queries if `operator` is an authorized operator for `owner`.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=619
-
-#### transferFrom
-
-```typescript
-transferFrom(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  id: Uint<128>, value: Uint<128>
-) → []
-```
-
-**Circuit**
-
-Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
-The caller must be `from` or approved to transfer on their behalf.
-
-<Callout type='info'>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not a ContractAddress.
-* `to` is not the zero address.
-* `from` is not the zero address.
-* Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
-* `from` must have an `id` balance of at least `value`.
-
-Constraints:
-
-* k=11, rows=1882
-
-#### _transfer
-
-```typescript
-_transfer(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  id: Uint<128>,
-  value: Uint<128>
-)
-```
-
-**Circuit**
-
-Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
-Does not impose restrictions on the caller, making it suitable for composition in higher-level contract logic.
-
-<Callout type='info'>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not a ContractAddress.
-* `to` is not the zero address.
-* `from` is not the zero address.
-* `from` must have an `id` balance of at least `value`.
-
-Constraints:
-
-* k=11, rows=1487
-
-#### _update
-
-```typescript
-_update(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  id: Uint<128>,
-  value: Uint<128>
-)
-```
-
-**Internal**
-
-Transfers a value amount of tokens of type id from from to to.
-This circuit will mint (or burn) if `from` (or `to`) is the zero address.
-
-Requirements:
-
-* Contract is initialized.
-* If `from` is not zero, the balance of `id` of `from` must be >= `value`.
-
-Constraints:
-
-* k=11, rows=1482
-
-#### _unsafeTransferFrom
-
-```typescript
-_unsafeTransferFrom(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  id: Uint<128>,
-  value: Uint<128>
-) → []
-```
-
-**Circuit**
-
-Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
-The caller must be `from` or approved to transfer on their behalf.
-
-<Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported. Tokens sent to a contract address may become irretrievable.
-</Callout>
-Once contract-to-contract calls are supported, this circuit may be deprecated.
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not the zero address.
-* `from` is not the zero address.
-* Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
-* `from` must have an `id` balance of at least `value`.
-
-Constraints:
-
-* k=11, rows=1881
-
-#### _unsafeTransfer
-
-```typescript
-_unsafeTransfer(
-  from: Either<ZswapCoinPublicKey, ContractAddress>,
-  to: Either<ZswapCoinPublicKey, ContractAddress>,
-  id: Uint<128>,
-  value: Uint<128>
-) → []
-```
-
-**Circuit**
-
-Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
-Does not impose restrictions on the caller, making it suitable as a low-level building block for advanced contract logic.
-
-<Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported. Tokens sent to a contract address may become irretrievable.
-</Callout>
-Once contract-to-contract calls are supported, this circuit may be deprecated.
-
-Requirements:
-
-* Contract is initialized.
-* `from` is not the zero address.
-* `to` is not the zero address.
-* `from` must have an `id` balance of at least `value`.
-
-Constraints:
-
-* k=11, rows=1486
-
-#### _setURI
-
-```typescript
-_setURI(newURI: Opaque<"string">) → []
-```
-
-**Circuit**
-
-Sets a new URI for all token types, by relying on the token type ID substitution mechanism defined in the MultiToken standard.
-See https://eips.ethereum.org/EIPS/eip-1155#metadata.
-
-By this mechanism, any occurrence of the `\id\` substring
-in either the URI or any of the values in the JSON file at said URI will be replaced by clients with the token type ID.
-
-For example, the `https://token-cdn-domain/\id\.json` URI would be interpreted by clients as
-`https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json` for token type ID 0x4cce0.
-
-Requirements:
-
-* Contract is initialized.
-
-Constraints:
-
-* k=10, rows=39
-
-#### _mint
-
-```typescript
-_mint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []
-```
-
-**Circuit**
-
-Creates a `value` amount of tokens of type `token_id`, and assigns them to `to`.
-
-<Callout>
-Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not the zero address.
-* `to` is not a ContractAddress
-
-Constraints:
-
-* k=10, rows=912
-
-#### _unsafeMint
-
-```typescript
-_unsafeMint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []
-```
-
-**Circuit**
-
-Unsafe variant of `_mint` which allows transfers to contract addresses.
-
-<Callout type='warn'>
-Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-Tokens sent to a contract address may become irretrievable.
-Once contract-to-contract calls are supported, this circuit may be deprecated.
-</Callout>
-
-Requirements:
-
-* Contract is initialized.
-* `to` is not the zero address.
-
-Constraints:
-
-* k=10, rows=911
-
-#### _burn
-
-```typescript
-_burn(from: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []
-```
-
-**Circuit**
-
-Destroys a `value` amount of tokens of type `token_id` from `from`.
-
-Requirements:
-
-* Contract is initialized.
-* `from` is not the zero address.
-* `from` must have an `id` balance of at least `value`.
-
-Constraints:
-
-* k=10, rows=688
-
-#### _setApprovalForAll
-
-```typescript
-_setApprovalForAll(
-  owner: Either<ZswapCoinPublicKey, ContractAddress>,
-  operator: Either<ZswapCoinPublicKey, ContractAddress>,
-  approved: Boolean
-) → []
-```
-
-**Circuit**
-
-Enables or disables approval for `operator` to manage all of the caller’s assets.
-This circuit does not check for access permissions but can be useful as a building block for more complex contract logic.
-
-Requirements:
-
-* Contract is initialized.
-* `operator` is not the zero address.
-
-Constraints:
-
-* k=10, rows=518
+---
+
+### Circuits [!toc]
+
+{/*
+  * The first header displays on the `toc` only.
+  * The second header is empty but maintains `toc` highlighting.
+  */}
+#### initialize [toc] [#initialize]
+#### [!toc] [#initialize]
+<APIItemCompact
+  circuitSig='initialize(uri_: Opaque<"string">) → []'
+  kind="export"
+  complexity="k=10, rows=45"
+>
+  Initializes the contract by setting the base URI for all tokens.
+
+  This MUST be called in the implementing contract’s constructor.
+  Failure to do so can lead to an irreparable contract.
+
+  Requirements:
+
+  * Contract is not initialized.
+</APIItemCompact>
+
+
+#### uri [toc] [#uri]
+#### [!toc] [#uri]
+<APIItemCompact
+  circuitSig='uri(id: Uint<128>) → Opaque<"string">'
+  kind="export"
+  complexity="k=10, rows=90"
+>
+  This implementation returns the same URI for **all** token types.
+  It relies on the token type ID substitution mechanism defined in the EIP: [ERC1155-Metadata](https://eips.ethereum.org/EIPS/eip-1155#metadata).
+  Clients calling this function must replace the `\id\` substring with the actual token type ID.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+
+#### balanceOf [toc] [#balanceOf]
+#### [!toc] [#balanceOf]
+<APIItemCompact
+  circuitSig="balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>) → Uint<128>"
+  kind="export"
+  complexity="k=10, rows=439"
+>
+  Returns the amount of `id` tokens owned by `account`.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+
+#### setApprovalForAll [toc] [#setApprovalForAll]
+#### [!toc] [#setApprovalForAll]
+<APIItemCompact
+  circuitSig="setApprovalForAll(operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []"
+  kind="export"
+  complexity="k=10, rows=404"
+  stackParams="true"
+>
+  Enables or disables approval for `operator` to manage all of the caller’s assets.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `operator` is not the zero address.
+</APIItemCompact>
+
+
+#### isApprovedForAll [toc] [#isApprovedForAll]
+#### [!toc] [#isApprovedForAll]
+<APIItemCompact
+  circuitSig="isApprovedForAll(account: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
+  kind="export"
+  complexity="k=10, rows=619"
+  stackParams="true"
+>
+  Queries if `operator` is an authorized operator for `owner`.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+
+#### transferFrom [toc] [#transferFrom]
+#### [!toc] [#transferFrom]
+<APIItemCompact
+  circuitSig="transferFrom( from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
+  kind="export"
+  complexity="k=11, rows=1882"
+  stackParams="true"
+>
+  Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
+  The caller must be `from` or approved to transfer on their behalf.
+
+  <Callout type='info'>
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not a ContractAddress.
+  * `to` is not the zero address.
+  * `from` is not the zero address.
+  * Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
+  * `from` must have an `id` balance of at least `value`.
+</APIItemCompact>
+
+
+#### _transfer [toc] [#_transfer]
+#### [!toc] [#_transfer]
+<APIItemCompact
+  circuitSig="_transfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>): []"
+  kind="export"
+  complexity="k=11, rows=1487"
+  stackParams="true"
+>
+  Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
+  Does not impose restrictions on the caller, making it suitable for composition in higher-level contract logic.
+
+  <Callout type='info'>
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not a ContractAddress.
+  * `to` is not the zero address.
+  * `from` is not the zero address.
+  * `from` must have an `id` balance of at least `value`.
+</APIItemCompact>
+
+
+#### _update [toc] [#_update]
+#### [!toc] [#_update]
+<APIItemCompact
+  circuitSig="_update(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>): []"
+  kind="internal"
+  complexity="k=11, rows=1482"
+  stackParams="true"
+>
+  Transfers a value amount of tokens of type id from from to to.
+  This circuit will mint (or burn) if `from` (or `to`) is the zero address.
+
+  Requirements:
+
+  * Contract is initialized.
+  * If `from` is not zero, the balance of `id` of `from` must be >= `value`.
+</APIItemCompact>
+
+
+#### _unsafeTransferFrom [toc] [#_unsafeTransferFrom]
+#### [!toc] [#_unsafeTransferFrom]
+<APIItemCompact
+  circuitSig="_unsafeTransferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
+  kind="external"
+  complexity="k=11, rows=1881"
+  stackParams="true"
+>
+  Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
+  The caller must be `from` or approved to transfer on their behalf.
+
+  <Callout type='warn'>
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not the zero address.
+  * `from` is not the zero address.
+  * Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
+  * `from` must have an `id` balance of at least `value`.
+</APIItemCompact>
+
+
+#### _unsafeTransfer [toc] [#_unsafeTransfer]
+#### [!toc] [#_unsafeTransfer]
+<APIItemCompact
+  circuitSig="_unsafeTransfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
+  kind="external"
+  complexity="k=11, rows=1486"
+  stackParams="true"
+>
+  Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
+  Does not impose restrictions on the caller, making it suitable as a low-level building block for advanced contract logic.
+
+  <Callout type='warn'>
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `from` is not the zero address.
+  * `to` is not the zero address.
+  * `from` must have an `id` balance of at least `value`.
+</APIItemCompact>
+
+
+#### _setURI [toc] [#_setURI]
+#### [!toc] [#_setURI]
+<APIItemCompact
+  circuitSig='_setURI(newURI: Opaque<"string">) → []'
+  kind="external"
+  complexity="k=10, rows=39"
+>
+  Sets a new URI for all token types, by relying on the token type ID substitution mechanism defined in the MultiToken standard.
+  See https://eips.ethereum.org/EIPS/eip-1155#metadata.
+
+  By this mechanism, any occurrence of the `\id\` substring
+  in either the URI or any of the values in the JSON file at said URI will be replaced by clients with the token type ID.
+
+  For example, the `https://token-cdn-domain/\id\.json` URI would be interpreted by clients as
+  `https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json` for token type ID 0x4cce0.
+
+  Requirements:
+
+  * Contract is initialized.
+</APIItemCompact>
+
+
+#### _mint [toc] [#_mint]
+#### [!toc] [#_mint]
+<APIItemCompact
+  circuitSig="_mint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
+  kind="external"
+  complexity="k=10, rows=912"
+  stackParams="true"
+>
+  Creates a `value` amount of tokens of type `token_id`, and assigns them to `to`.
+
+  <Callout>
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not the zero address.
+  * `to` is not a ContractAddress
+</APIItemCompact>
+
+
+#### _unsafeMint [toc] [#_unsafeMint]
+#### [!toc] [#_unsafeMint]
+<APIItemCompact
+  circuitSig="_unsafeMint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
+  kind="external"
+  complexity="k=10, rows=911"
+  stackParams="true"
+>
+  Unsafe variant of `_mint` which allows transfers to contract addresses.
+
+  <Callout type='warn'>
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
+  </Callout>
+
+  Requirements:
+
+  * Contract is initialized.
+  * `to` is not the zero address.
+</APIItemCompact>
+
+
+#### _burn [toc] [#_burn]
+#### [!toc] [#_burn]
+<APIItemCompact
+  circuitSig="_burn(from: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
+  kind="external"
+  complexity="k=10, rows=688"
+  stackParams="true"
+>
+  Destroys a `value` amount of tokens of type `token_id` from `from`.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `from` is not the zero address.
+  * `from` must have an `id` balance of at least `value`.
+</APIItemCompact>
+
+
+#### _setApprovalForAll [toc] [#_setApprovalForAll]
+#### [!toc] [#_setApprovalForAll]
+<APIItemCompact
+  circuitSig="_setApprovalForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []"
+  kind="external"
+  complexity="k=10, rows=518"
+  stackParams="true"
+>
+  Enables or disables approval for `operator` to manage all of the caller’s assets.
+  This circuit does not check for access permissions but can be useful as a building block for more complex contract logic.
+
+  Requirements:
+
+  * Contract is initialized.
+  * `operator` is not the zero address.
+</APIItemCompact>
