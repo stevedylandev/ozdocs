@@ -285,7 +285,7 @@ Let’s now explore how to send transactions through these accounts.
 
 First, let’s take the example account we created before and deploy it:
 
-```[,cairo]
+```rust
 #[starknet::contract(account)]
 mod MyAccount {
     use openzeppelin_account::AccountComponent;
@@ -333,7 +333,7 @@ The flag enables custom account variants.
 The following examples use `sncast` [v0.23.0](https://github.com/foundry-rs/starknet-foundry/releases/tag/v0.23.0).
 </Callout>
 
-```[,bash]
+```bash
 $ sncast \
   --url http://127.0.0.1:5050 \
   account create \
@@ -344,7 +344,7 @@ $ sncast \
 This command will output the precomputed contract address and the recommended `max-fee`.
 To counterfactually deploy the account, send funds to the address and then deploy the custom account.
 
-```[,bash]
+```bash
 $ sncast \
   --url http://127.0.0.1:5050 \
   account deploy \
@@ -353,7 +353,7 @@ $ sncast \
 
 Once the account is deployed, set the `--account` flag with the custom account name to send transactions from that account.
 
-```[,bash]
+```bash
 $ sncast \
   --account my-custom-account \
   --url http://127.0.0.1:5050 \
@@ -367,7 +367,7 @@ $ sncast \
 
 First, let’s take the example account we created before and deploy it:
 
-```[,cairo]
+```rust
 #[starknet::contract(account)]
 mod MyEthAccount {
     use openzeppelin_account::EthAccountComponent;
@@ -417,7 +417,7 @@ Next, precompute the EthAccount contract address using the declared class hash.
 The following examples use unreleased features from StarknetJS (`starknetjs@next`) at commit [d002baea0abc1de3ac6e87a671f3dec3757437b3](https://github.com/starknet-io/starknet.js/commit/d002baea0abc1de3ac6e87a671f3dec3757437b3).
 </Callout>
 
-```[,javascript]
+```javascript
 import * as dotenv from 'dotenv';
 import { CallData, EthSigner, hash } from 'starknet';
 import { ABI as ETH_ABI } from '../abis/eth_account.js';
@@ -443,7 +443,7 @@ console.log('Pre-calculated EthAccount address: ', ethContractAddress);
 
 Send funds to the pre-calculated EthAccount address and deploy the contract.
 
-```[,javascript]
+```javascript
 import * as dotenv from 'dotenv';
 import { Account, CallData, EthSigner, RpcProvider, stark } from 'starknet';
 import { ABI as ETH_ABI } from '../abis/eth_account.js';
@@ -479,7 +479,7 @@ console.log('EthAccount deployed at: ', contract_address);
 Once deployed, connect the EthAccount instance to the target contract which enables calls to come from the EthAccount.
 Here’s what an ERC20 transfer from an EthAccount looks like.
 
-```[,javascript]
+```javascript
 import * as dotenv from 'dotenv';
 import { Account, RpcProvider, Contract, EthSigner } from 'starknet';
 dotenv.config();
