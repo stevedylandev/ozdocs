@@ -2,9 +2,9 @@
 title: Defender SDK and API
 ---
 
-[Defender SDK, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) (Formerly defender-client packages) is a node package that allows developers to interact with Defender programatically using Javascript/Typescript.
+[Defender SDK](https://www.npmjs.com/package/@openzeppelin/defender-sdk) (Formerly defender-client packages) is a node package that allows developers to interact with Defender programatically using Javascript/Typescript.
 
-See [sdk repository, window=_blank](https://github.com/OpenZeppelin/defender-sdk) or [SDK and API documentation, window=_blank](https://www.api-docs.defender.openzeppelin.com/) for more detailed information.
+See [sdk repository](https://github.com/OpenZeppelin/defender-sdk) or [SDK and API documentation](https://www.api-docs.defender.openzeppelin.com/) for more detailed information.
 
 ## Installation
 
@@ -21,18 +21,18 @@ npm install @openzeppelin/defender-sdk-deploy-client
 ```
 
 <Callout>
-For more information about setup, examples and usage, please visit [Defender SDK, window=_blank](https://github.com/OpenZeppelin/defender-sdk) README file in Github.
+For more information about setup, examples and usage, please visit [Defender SDK](https://github.com/OpenZeppelin/defender-sdk) README file in Github.
 </Callout>
 
 ## API Keys
 
-In order to operate your Defender account using the SDK or API, Defender requires API keys and secrets generated in the dashboard to authenticate requests. 
+In order to operate your Defender account using the SDK or API, Defender requires API keys and secrets generated in the dashboard to authenticate requests.
 
 When creating API keys, you can also specify the expiration in days, hours and minutes.
 
 ![API Key expiration configuration in Defender](/defender/api-key-expiration-config.png)
 
-Defender notifies ***3 days*** before and ***at expiration time*** about the API keys expiration. 
+Defender notifies ***3 days*** before and ***at expiration time*** about the API keys expiration.
 
 <Callout type='warn'>
 Once the key is expired, any request sent to Defender API will throw `API Key is either expired or invalid` error.
@@ -43,7 +43,7 @@ Once the key is expired, any request sent to Defender API will throw `API Key is
 Relayers API Keys are generated in Relayer details page, and are exclusively used for managing the signer operations for that Relayer, e.g. send or query transactions, get the nonce or sign data.
 
 ```js
-const creds = 
+const creds =
   relayerApiKey: <RELAYER_API_KEY>,
   relayerApiSecret: <RELAYER_API_SECRET>,
 ;
@@ -65,7 +65,7 @@ Only `client.relaySigner` package is available when authenticating using `relaye
 
 Admin API Keys are generated in ***Manage -> API Keys***, and they are used to operate all other resources in Defender, including relayers CRUD operations.
 ```js
-const creds = 
+const creds =
   apiKey: <API_KEY>,
   apiSecret: <API_SECRET>,
 ;

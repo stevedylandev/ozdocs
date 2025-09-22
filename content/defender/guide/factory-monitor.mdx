@@ -7,24 +7,24 @@ The factory-clone pattern can be advantageous for minimizing gas costs. However,
 This guide shows how to use Defender to monitor a factory contract as well as the clone contracts created by it. Monitor automation is achieved through the following structure of Defender modules:
 
 * A Monitor watches for successful event emitted by the factory contract that creates a clone. If detected, it triggers an [Action](module/actions) and [passes along information](module/actions#monitor_invocations) about the transaction.
-* The Action makes use of the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the address of the newly created contract to the [address book](module/address-book) for easier monitoring.
-* Aditionally, the Action uses the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the clone address to the list of addresses watched by a Monitor.
+* The Action makes use of the [`defender-sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the address of the newly created contract to the [address book](module/address-book) for easier monitoring.
+* Aditionally, the Action uses the [`defender-sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the clone address to the list of addresses watched by a Monitor.
 
-In this case, the contract ABI can be pre-supplied since clone contracts will have identical ABIs. Alternatively, you may be able to dynamically retrieve the ABI from a verified contract at a given address using [Etherscan’s API, window=_blank](https://docs.etherscan.io/api-endpoints/contracts).
+In this case, the contract ABI can be pre-supplied since clone contracts will have identical ABIs. Alternatively, you may be able to dynamically retrieve the ABI from a verified contract at a given address using [Etherscan’s API](https://docs.etherscan.io/api-endpoints/contracts).
 
 ## Generate API Key
 
-To programmatically add a contract to the address book, the [`sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) requires credentials in the form of an API key and secret. Create and copy the credentials in the [API keys page, window=_blank](https://defender.openzeppelin.com/v2/#/settings/api-keys/new).
+To programmatically add a contract to the address book, the [`sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) requires credentials in the form of an API key and secret. Create and copy the credentials in the [API keys page](https://defender.openzeppelin.com/v2/#/settings/api-keys/new).
 
 ![Create API credentials](/defender/guide-factory-api.png)
 
-Now, navigate to the [Secrets, window=_blank](https://defender.openzeppelin.com/v2/#/settings/secrets) page in Defender and create a new secret with the name `API_KEY` and paste in the API key. Create another secret with the name `API_SECRET` and paste in the API secret. These secrets will be used by the Action securely.
+Now, navigate to the [Secrets](https://defender.openzeppelin.com/v2/#/settings/secrets) page in Defender and create a new secret with the name `API_KEY` and paste in the API key. Create another secret with the name `API_SECRET` and paste in the API secret. These secrets will be used by the Action securely.
 
 ![Save API credentials](/defender/guide-factory-secrets.png)
 
 ## Create the Action
 
-Navigate to the [Action creation page, window=_blank](https://defender.openzeppelin.com/v2/#/actions/automatic/new?), enter a name, and select `Webhook` as trigger. Then, paste the following Action code and save it:
+Navigate to the [Action creation page](https://defender.openzeppelin.com/v2/#/actions/automatic/new?), enter a name, and select `Webhook` as trigger. Then, paste the following Action code and save it:
 
 ```jsx
 const  Defender  = require('@openzeppelin/defender-sdk');
@@ -113,7 +113,7 @@ Manually triggering this Action will be raise an error, since the Action relies 
 
 ## Create the Monitor
 
-This Monitor will watch for an event emitted by the factory contract signaling that a new clone has been created. Navigate to the [Monitor creation page, window=_blank](https://defender.openzeppelin.com/v2/#/monitor/new/custom), choose a name, risk category, and select the Factory contract (add the factory if it’s not already added).
+This Monitor will watch for an event emitted by the factory contract signaling that a new clone has been created. Navigate to the [Monitor creation page](https://defender.openzeppelin.com/v2/#/monitor/new/custom), choose a name, risk category, and select the Factory contract (add the factory if it’s not already added).
 
 ![Monitor General Information](/defender/guide-factory-monitor-general-information.png)
 
@@ -129,7 +129,7 @@ As with any action, the triggering of this Monitor will be recorded in the [Logs
 
 ## Test run
 
-To test the set up, navigate to [Transaction Proposals, window=_blank](https://defender.openzeppelin.com/v2/#/transaction-proposals/new?) to manually create a clone through the factory. Select the factory contract, and call the function that creates a clone with any parameters needed.
+To test the set up, navigate to [Transaction Proposals](https://defender.openzeppelin.com/v2/#/transaction-proposals/new?) to manually create a clone through the factory. Select the factory contract, and call the function that creates a clone with any parameters needed.
 
 ![Transaction Proposal to create clone](/defender/guide-factory-create-clone.png)
 
@@ -139,7 +139,7 @@ Then, execute this this transaction with your preferred approval process, like a
 
 ## Create Monitor for clones
 
-Now that you have a clone contract to serve as a template for all future clone contracts, it’s time to create a Monitor for them. Navigate to the [Monitor creation page, window=_blank](https://defender.openzeppelin.com/v2/#/monitor/new/custom), choose a name, risk category, and select the clone contract.
+Now that you have a clone contract to serve as a template for all future clone contracts, it’s time to create a Monitor for them. Navigate to the [Monitor creation page](https://defender.openzeppelin.com/v2/#/monitor/new/custom), choose a name, risk category, and select the clone contract.
 
 Aditionally, feel free to add any other filters for transactions, events, and functions, or notifications. Save the Monitor and observe the logs/notifications to verify that the Monitor is working as expected.
 

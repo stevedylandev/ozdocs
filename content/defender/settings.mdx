@@ -27,7 +27,7 @@ When triggered, Defender can deliver notifications to one or more configured not
 
 ### Slack Configuration
 
-Please see [Slack webhook documentation, window=_blank](https://api.slack.com/messaging/webhooks) to configure a Slack webhook. Once Slack is configured, enter the webhook URL in Defender.
+Please see [Slack webhook documentation](https://api.slack.com/messaging/webhooks) to configure a Slack webhook. Once Slack is configured, enter the webhook URL in Defender.
 
 * **Alias** is the name for this Slack configuration. For instance, you might name it after the name of the channel.
 * **Webhook URL** is the URL from your Slack management console to use for notification.
@@ -39,14 +39,14 @@ Please see [Slack webhook documentation, window=_blank](https://api.slack.com/me
 
 ### Discord Configuration
 
-Please see [Discord webhook documentation, window=_blank](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to configure a webhook for your Discord channel.
+Please see [Discord webhook documentation](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to configure a webhook for your Discord channel.
 
 * **Alias** is the name for this Discord configuration.
 * **Webhook URL** is the URL from your Discord channel to use for notification.
 
 ### Telegram Configuration
 
-Please see [Telegram bot documentation, window=_blank](https://core.telegram.org/bots#6-botfather) to configure a Telegram Bot using the BotFather.
+Please see [Telegram bot documentation](https://core.telegram.org/bots#6-botfather) to configure a Telegram Bot using the BotFather.
 
 <Callout>
 The Telegram Bot must be added to your channel and have the rights to post messages.
@@ -87,7 +87,7 @@ $ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 
 ### Datadog Configuration
 
-Datadog configurations let Defender forward custom metrics to your Datadog account. For more information about custom metrics, please see [Datadog metrics documentation, window=_blank](https://docs.datadoghq.com/developers/metrics/)
+Datadog configurations let Defender forward custom metrics to your Datadog account. For more information about custom metrics, please see [Datadog metrics documentation](https://docs.datadoghq.com/developers/metrics/)
 
 The metric we send is a COUNT metric, which represents the number of transactions that triggered the notification. We do not send zeros, so a lack of data should be expected if there is no trigger. With each metric, we send two tags:  `network` (rinkeby, mainnet,...) and when a monitor has triggered the notification then `monitor` (name of the monitor)
 
@@ -118,13 +118,13 @@ For more information on the event schema see the documentation on [Monitor](modu
 
 ### OpsGenie Configuration
 
-Please see [OpsGenie integration documentation, window=_blank](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to configure an OpsGenie API integration that can create alerts.
+Please see [OpsGenie integration documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to configure an OpsGenie API integration that can create alerts.
 
 * **API Key** Integration API key that can be found in the integration settings
 * **Instance Location** Location where the OpsGenie instance server is located
 * **Responders** Teams, users, escalations and schedules that the alert will be routed to send notifications. The type field is mandatory for each item, where possible values are team, user, escalation and schedule. If the API Key belongs to a team integration, this field will be overwritten with the owner team. Either id or name of each responder should be provided. You can refer below for example values (50 teams, users, escalations or schedules)
 * **Visible To** Teams and users that the alert will become visible to without sending any notification. The type field is mandatory for each item, where possible values are team and user. In addition to the type field, either id or name should be given for teams and either id or username should be given for users. Please note: that alert will be visible to the teams that are specified within responders field by default, so there is no need to re-specify them within visibleTo field. You can refer below for example values (50 teams or users in total)
-* **Alias** Client-defined identifier of the alert, that is also the key element of [Alert De-Duplication, window=_blank](https://support.atlassian.com/opsgenie/docs/what-is-alert-de-duplication/) (512 max characters)
+* **Alias** Client-defined identifier of the alert, that is also the key element of [Alert De-Duplication](https://support.atlassian.com/opsgenie/docs/what-is-alert-de-duplication/) (512 max characters)
 * **Priority** Priority level of the alert. Possible values are P1, P2, P3, P4 and P5. Default value is P3
 * **Entity** Entity field of the alert that is generally used to specify which domain alert is related to (512 max characters)
 * **Actions** Custom actions that will be available for the alert (10 x 50 max characters)
@@ -134,7 +134,7 @@ Please see [OpsGenie integration documentation, window=_blank](https://support.a
 
 ### PagerDuty Configuration
 
-Please see [PagerDuty integration documentation, window=_blank](https://support.pagerduty.com/docs/services-and-integrations) to configure an PagerDuty API v2 integration that can create change and alert events.
+Please see [PagerDuty integration documentation](https://support.pagerduty.com/docs/services-and-integrations) to configure an PagerDuty API v2 integration that can create change and alert events.
 
 * **Event Type** Event type for PagerDuty categorization (alert or change)
 * **Routing Key** Integration Key for an integration on a service or on a global ruleset (32 characters)
@@ -174,7 +174,7 @@ Be careful when granting administrative permissions. A user with the rights to m
 
 ### Two factor authentication (2FA)
 
-We strongly suggest that you enable 2FA to improve your Defender account security. As a second authentication factor, Defender relies on the [Time-based One-Time Password standard (TOTP), window=_blank](https://en.wikipedia.org/wiki/Time-based_One-time_Password_algorithm). To enable 2FA on Defender, you need a TOTP compliant application, such as [Authy, window=_blank](https://authy.com/) or Google Authenticator. Each user can enable 2FA under their profile, accessible from the top-right user menu. Defender will guide users through the necessary steps.
+We strongly suggest that you enable 2FA to improve your Defender account security. As a second authentication factor, Defender relies on the [Time-based One-Time Password standard (TOTP)](https://en.wikipedia.org/wiki/Time-based_One-time_Password_algorithm). To enable 2FA on Defender, you need a TOTP compliant application, such as [Authy](https://authy.com/) or Google Authenticator. Each user can enable 2FA under their profile, accessible from the top-right user menu. Defender will guide users through the necessary steps.
 
 #### Enforcing 2FA
 
@@ -273,16 +273,16 @@ The chain ID of a private network must not conflict with the chain ID of an [off
 
 For an enhanced user experience, customize your setup by including the block explorer URL, Safe contract deployment addresses, and a subgraph URL.
 
-[Safe Contracts, window=_blank](https://github.com/safe-global/safe-contracts) form a comprehensive collection of smart contracts designed for deploying, managing, and interacting with multi-signature wallets. Defender utilizes the following Safe contract deployments to enrich the user experience:
+[Safe Contracts](https://github.com/safe-global/safe-contracts) form a comprehensive collection of smart contracts designed for deploying, managing, and interacting with multi-signature wallets. Defender utilizes the following Safe contract deployments to enrich the user experience:
 
 * ***Master***: Facilitates a Safe multisignature wallet deployment with support for confirmations using signed messages based on EIP-712.
 * ***Proxy Factory***: Enables a Safe smart contract deployment to create a new proxy contract and execute a message call to the new proxy within a single transaction.
 * ***Multi Send Call Only***: Allows a Safe smart contract deployment to batch multiple transactions into one, specifically for calls.
 * ***Create Call***: Facilitates a Safe smart contract deployment to utilize different create opcodes for deploying a contract.
 
-You can [deploy these contracts, window=_blank](https://github.com/safe-global/safe-deployments) on your private network, providing the contract addresses in the creation form to leverage them in Defender, especially when deploying using `CREATE2`.
+You can [deploy these contracts](https://github.com/safe-global/safe-deployments) on your private network, providing the contract addresses in the creation form to leverage them in Defender, especially when deploying using `CREATE2`.
 
-Defender utilizes Subgraph for GraphQL-based querying of blockchain data, primarily for the Access Control module. Create your own [Subgraph, window=_blank](https://thegraph.com/docs/en/developing/creating-a-subgraph/), and input the endpoint in the creation form to activate this functionality in Defender. You can find an example configuration for the Access Control subgraph [here](_attachments/oz-mainnet-graphql-config-example.zip).
+Defender utilizes Subgraph for GraphQL-based querying of blockchain data, primarily for the Access Control module. Create your own [Subgraph](https://thegraph.com/docs/en/developing/creating-a-subgraph/), and input the endpoint in the creation form to activate this functionality in Defender. You can find an example configuration for the Access Control subgraph [here](_attachments/oz-mainnet-graphql-config-example.zip).
 
 Once created, the network becomes accessible for utilization in any Defender module requiring network selection. This proves invaluable when engaging in tasks such as establishing an approval process, configuring a relayer, or deploying a contract.
 

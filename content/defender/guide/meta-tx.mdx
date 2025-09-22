@@ -8,7 +8,7 @@ Defender provides a seamless experience and secure way to implement gasless meta
 
 This demo app showcases how to implement meta-transactions using not just ERC-2771, but also explores other gasless transaction standards:
 
-* ERC-2771: Secure Native Meta Transactions: This [demo app, window=_blank](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api) implements meta-transactions using [ERC2771Forwarder, window=_blank](https://docs.openzeppelin.com/contracts/api/metatx#ERC2771Forwarder) and [ERC2771Context, window=_blank](https://docs.openzeppelin.com/contracts/api/metatx#ERC2771Context) to separate `msg.sender` from the Relayer’s address. All the user needs to do is sign a message using the account they would like to issue the transaction from. The signature is formed for the target contract and the data of the desired transaction, using the user’s private key. This signing happens off-chain and costs no gas. The signature is passed to the Relayer so it can execute the transaction for the user (and pay the gas).
+* ERC-2771: Secure Native Meta Transactions: This [demo app](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api) implements meta-transactions using [ERC2771Forwarder](https://docs.openzeppelin.com/contracts/api/metatx#ERC2771Forwarder) and [ERC2771Context](https://docs.openzeppelin.com/contracts/api/metatx#ERC2771Context) to separate `msg.sender` from the Relayer’s address. All the user needs to do is sign a message using the account they would like to issue the transaction from. The signature is formed for the target contract and the data of the desired transaction, using the user’s private key. This signing happens off-chain and costs no gas. The signature is passed to the Relayer so it can execute the transaction for the user (and pay the gas).
 * ERC-2612: Permit Function: This standard introduces a method for enabling gasless token approvals in ERC-20 tokens. Users can grant spending permission to a relayer service by signing a message instead of directly paying gas fees for the traditional "approve" function. This allows the relayer to handle token approvals on the user’s behalf.
 * ERC-3009: Transfer with Authorization: This standard facilitates gasless token transfers through off-chain authorizations. Users sign messages authorizing specific token transfers, which can then be submitted to the blockchain by anyone, including a relayer service.
 
@@ -17,13 +17,13 @@ A gasless meta-transaction relay can be easily and securely implemented using De
 ## Pre-requisites
 
 * OpenZeppelin Defender account.
-* [Git, window=_blank](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Yarn, window=_blank](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed
 
 ## 1. ERC-2771: Secure Native Meta Transactions
 
-You can view the live [demo app, window=_blank](https://defender-metatx-workshop-demo.openzeppelin.com/) here. It accepts registrations directly if the user has the available funds to pay for the transaction, otherwise the data is sent as a meta-transaction.
+You can view the live [demo app](https://defender-metatx-workshop-demo.openzeppelin.com/) here. It accepts registrations directly if the user has the available funds to pay for the transaction, otherwise the data is sent as a meta-transaction.
 
-In the example code, the functionality of the [`SimpleRegistry` contract, window=_blank](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/SimpleRegistry.sol) is to take a string and store it. The contract’s [meta-transaction implementation, window=_blank](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/Registry.sol) achieves the same result by decoupling the signer from the sender of the transaction.
+In the example code, the functionality of the [`SimpleRegistry` contract](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/SimpleRegistry.sol) is to take a string and store it. The contract’s [meta-transaction implementation](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/Registry.sol) achieves the same result by decoupling the signer from the sender of the transaction.
 
 When comparing the code, note the meta-transaction’s use of `_msgSender()` as opposed to the SimpleRegistry’s use of `msg.sender`. By extending from `ERC2771Context` and `ERC2771Forwarder`, the contract becomes meta-transaction capable.
 
@@ -31,7 +31,7 @@ When comparing the code, note the meta-transaction’s use of `_msgSender()` as 
 All OpenZeppelin contracts are compatible with the use of `_msgSender()`.
 </Callout>
 
-The second fundamental change between the two contracts is the need for the meta-transaction contract ([Registry, window=_blank](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/Registry.sol)) to specify the address of the trusted forwarder, which in this case is the address of the `ERC2771Forwarder` contract.
+The second fundamental change between the two contracts is the need for the meta-transaction contract ([Registry](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/Registry.sol)) to specify the address of the trusted forwarder, which in this case is the address of the `ERC2771Forwarder` contract.
 
 ### 1.1 Configure the project
 
@@ -43,7 +43,7 @@ $ cd workshops/25-defender-metatx-api/
 $ yarn
 ```
 
-Create a `.env` file in the project root and supply an API key and secret from the [API keys page, window=_blank](https://defender.openzeppelin.com/v2/#/settings/api-keys/new). A private key will be used for local testing but the Relayer is used for actual contract deployment.
+Create a `.env` file in the project root and supply an API key and secret from the [API keys page](https://defender.openzeppelin.com/v2/#/settings/api-keys/new). A private key will be used for local testing but the Relayer is used for actual contract deployment.
 
 ```
 PRIVATE_KEY="0xabc"
@@ -113,7 +113,7 @@ Run `npx hardhat compile` to compile it for deployment.
 
 ### 1.4 Deploy Using Relayer
 
-You can easily deploy a compiled smart contract without handling a private key by using the Relayer client from the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package.
+You can easily deploy a compiled smart contract without handling a private key by using the Relayer client from the [`defender-sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package.
 
 The `deploy.js` script pulls the Relayer’s credentials from the local `.env` file along with the artifacts for the `Registry` and `ERC2771Forwarder` contracts and uses ethers.js to deploy. The relevant addresses of these contracts are saved to the local file `deploy.json`.
 
@@ -202,7 +202,7 @@ module.exports =
 
 ```
 
-Note that the Action code must include an `index.js` file that exports a handler entrypoint. If the code relies on any external dependencies (such as an imported ABI) it’s necessary to bundle the Action using webpack, rollup, etc. You can create an Action via [Defender, window=_blank](https://defender.openzeppelin.com/v2/#/actions/automatic/new?) or with the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package.
+Note that the Action code must include an `index.js` file that exports a handler entrypoint. If the code relies on any external dependencies (such as an imported ABI) it’s necessary to bundle the Action using webpack, rollup, etc. You can create an Action via [Defender](https://defender.openzeppelin.com/v2/#/actions/automatic/new?) or with the [`defender-sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) package.
 
 Run `yarn create-action` to compile the code and create the Action with the bundled code via the SDK’s `action.create()` method:
 
@@ -220,7 +220,7 @@ const  actionId  = await client.action.create(
 // ...
 ```
 
-Head to [Defender Actions, window=_blank](https://defender.openzeppelin.com/v2/#/actions/automatic) and copy the Actions’s webhook so that you can test functionality and connect the app to the Action for relaying meta-transactions.
+Head to [Defender Actions](https://defender.openzeppelin.com/v2/#/actions/automatic) and copy the Actions’s webhook so that you can test functionality and connect the app to the Action for relaying meta-transactions.
 
 ![Copy Webhook](/defender/guide-meta-tx-copy-webhook.png)
 
@@ -232,7 +232,7 @@ Test the meta-transaction’s functionality with `yarn sign` followed by `yarn i
 
 The key building blocks have been laid, so next it is a matter of crafting a web application that makes use of these components.
 
-You can see the details of this relationship in the [`register.js`, window=_blank](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/app/src/eth/register.js) file. The user’s transaction request is sent to the Relayer by way of the Action’s webhook, and this executes the Actions’s logic given the parameters supplied by the application. Note that the signer’s nonce is incremented from the transaction.
+You can see the details of this relationship in the [`register.js`](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/app/src/eth/register.js) file. The user’s transaction request is sent to the Relayer by way of the Action’s webhook, and this executes the Actions’s logic given the parameters supplied by the application. Note that the signer’s nonce is incremented from the transaction.
 
 ```jsx
 import  ethers  from 'ethers';
@@ -284,7 +284,7 @@ export async function registerName(registry, provider, name)
 ```
 
 ## 2. ERC-2612: Permit Function
-EIP-2612 introduces the [permit, window=_blank](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#ERC20Permit) function, a tool for enabling gasless transactions in ERC-20 tokens. By extending the ERC-20 interface with a method allowing users to modify their allowance via a signed message instead of the approve function, this standard empowers users to approve tokens without directly paying gas fees. This standard enables relayer services to execute transactions on behalf of users by paying gas fees, while the user only needs to sign a message.
+EIP-2612 introduces the [permit](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#ERC20Permit) function, a tool for enabling gasless transactions in ERC-20 tokens. By extending the ERC-20 interface with a method allowing users to modify their allowance via a signed message instead of the approve function, this standard empowers users to approve tokens without directly paying gas fees. This standard enables relayer services to execute transactions on behalf of users by paying gas fees, while the user only needs to sign a message.
 ```
 function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external
 ```
@@ -505,7 +505,7 @@ $ yarn
 $ yarn start
 ```
 
-1. Open app: [http://localhost:3000/, window=_blank](http://localhost:3000/)
+1. Open app: [http://localhost:3000/](http://localhost:3000/)
 2. Change to Sepolia network in Metamask
 3. Enter a name to register and sign the meta-transaction in Metamask
 4. Your name will be registered, showing the address that created the meta-transaction and the name.
@@ -514,5 +514,5 @@ Use the frontend to see it working for yourself! Compare what happens when you s
 
 ## References
 
-* [Demo repo - Meta-Transaction Name Registry, window=_blank](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)
-* [Documentation - Meta Transactions, window=_blank](https://docs.openzeppelin.com/contracts/api/metatx)
+* [Demo repo - Meta-Transaction Name Registry](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)
+* [Documentation - Meta Transactions](https://docs.openzeppelin.com/contracts/api/metatx)
