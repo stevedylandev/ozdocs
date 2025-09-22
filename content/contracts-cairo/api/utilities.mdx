@@ -6,9 +6,9 @@ import { UMBRELLA_VERSION } from "../utils/constants.ts";
 
 This crate provides miscellaneous components and libraries containing utility functions to handle common tasks.
 
-## [](#core)Core
+## Core
 
-### [](#utils)`utils` [toc] [#utils]
+### `utils` [toc] [#utils]
 
 <APIGithubLinkHeader moduleName="utils" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/lib.cairo`} />
 
@@ -28,7 +28,7 @@ Inner modules
 - [`contract_clock`](#utils-contract_clock)
 - [`serde`](#utils-serde)
 
-#### [](#utils-Inner-Modules)Inner modules [!toc]
+#### Inner modules [!toc] [#utils-Inner-Modules]
 
 <APIItem
   functionSignature="cryptography module"
@@ -70,7 +70,7 @@ See [`openzeppelin_utils::contract_clock`](#contract_clock).
 See [`openzeppelin_utils::serde`](#serde).
 </APIItem>
 
-### [](#cryptography)`cryptography` [toc] [#cryptography]
+### `cryptography` [toc] [#cryptography]
 
 <APIGithubLinkHeader moduleName="cryptography" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/cryptography.cairo`} />
 
@@ -87,7 +87,7 @@ Inner modules
 - [`nonces`](#cryptography-nonces)
 - [`snip12`](#cryptography-snip12)
 
-#### [](#inner_modules)Inner modules [!toc]
+#### Inner modules [!toc] [#cryptography-Inner-Modules]
 
 <APIItem
   functionSignature="nonces module"
@@ -105,7 +105,7 @@ See [`openzeppelin_utils::cryptography::nonces::NoncesComponent`](#NoncesCompone
 See [`openzeppelin_utils::cryptography::snip12`](#snip12).
 </APIItem>
 
-### [](#deployments)`deployments` [toc] [#deployments]
+### `deployments` [toc] [#deployments]
 
 <APIGithubLinkHeader moduleName="deployments" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/deployments.cairo`} />
 
@@ -127,7 +127,7 @@ Functions
 - [`compute_hash_on_elements(data)`](#deployments-compute_hash_on_elements)
 - [`calculate_contract_address_from_udc(salt, class_hash, constructor_calldata, deployer_info)`](#deployments-calculate_contract_address_from_udc)
 
-#### [](#deployments-Structs)Structs [!toc]
+#### Structs [!toc] [#deployments-Structs]
 
 <APIItem
   functionSignature="DeployerInfo(caller_address: ContractAddress, udc_address: ContractAddress)"
@@ -137,7 +137,7 @@ Functions
 Struct containing arguments necessary in [utils::calculate\_contract\_address\_from\_udc](#deployments-calculate_contract_address_from_udc) for origin-dependent deployment calculations.
 </APIItem>
 
-#### [](#deployments-Functions)Functions [!toc]
+#### Functions [!toc] [#deployments-Functions]
 
 <APIItem
   functionSignature="calculate_contract_address_from_deploy_syscall(salt: felt252, class_hash: ClassHash, constructor_calldata: Span<felt252>, deployer_address: ContractAddress) → ContractAddress"
@@ -167,7 +167,7 @@ Origin-independent deployments (deployed from zero) should pass `Option::None` a
 Origin-dependent deployments hash `salt` with `caller_address` (member of [DeployerInfo](#deployments-DeployerInfo)) and pass the hashed salt to the inner [deploy\_syscall](https://docs.starknet.io/architecture-and-concepts/smart-contracts/system-calls-cairo1/#deploy) as the `contract_address_salt` argument.
 </APIItem>
 
-### [](#math)`math` [toc] [#math]
+### `math` [toc] [#math]
 
 <APIGithubLinkHeader moduleName="math" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/math.cairo`} />
 
@@ -183,7 +183,7 @@ Functions
 
 - [`average(a, b)`](#math-average)
 
-#### [](#math-Functions)Functions [!toc]
+#### Functions [!toc] [#math-Functions]
 
 <APIItem
   functionSignature="average(a: T, b: T) → T"
@@ -195,7 +195,7 @@ Returns the average of two unsigned integers. The result is rounded down.
 `T` is a generic value matching different numeric implementations.
 </APIItem>
 
-### [](#contract_clock)`contract_clock` [toc] [#contract_clock]
+### `contract_clock` [toc] [#contract_clock]
 <APIGithubLinkHeader moduleName="contract_clock" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/contract_clock.cairo`} />
 
 ```rust
@@ -227,7 +227,7 @@ Functions
 - [`clock()`](#ERC6372Clock-clock)
 - [`CLOCK_MODE()`](#ERC6372Clock-CLOCK_MODE)
 
-#### [](#ERC6372Clock-Functions)Functions [!toc]
+#### Functions [!toc] [#ERC6372Clock-Functions]
 
 <APIItem
   functionSignature="clock() → u64"
@@ -253,7 +253,7 @@ Requirements:
 - The output MUST be formatted like a URL query string, decodable in standard JavaScript.
 </APIItem>
 
-#### [](#contract_clock-Impls)Implementations [!toc]
+#### Implementations [!toc] [#contract_clock-Impls]
 
 <APIItem
   functionSignature="ERC6372BlockNumberClock impl"
@@ -271,7 +271,7 @@ Implementation of the `ERC6372Clock` trait that uses the block number as its clo
 Implementation of the `ERC6372Clock` trait that uses the block timestamp as its clock reference.
 </APIItem>
 
-### [](#serde)`serde` [toc] [#serde]
+### `serde` [toc] [#serde]
 
 <APIGithubLinkHeader moduleName="serde" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/serde.cairo`} />
 
@@ -287,7 +287,7 @@ Traits
 
 - [`SerializedAppend`](#serde-SerializedAppend)
 
-#### [](#serde-Traits)Traits [!toc]
+#### Traits [!toc] [#serde-Traits]
 
 <APIItem
   functionSignature="SerializedAppend trait"
@@ -313,9 +313,9 @@ fn to_calldata(recipient: ContractAddress, amount: u256) -> Array<felt252> {
 Note that the `append_serde` method is automatically available for arrays of felts, and it accepts any data structure that implements the `Serde` trait.
 </APIItem>
 
-## [](#cryptography_2)Cryptography
+## Cryptography [#cryptography-toc]
 
-### [](#NoncesComponent)`NoncesComponent` [toc] [#NoncesComponent]
+### `NoncesComponent` [toc] [#NoncesComponent]
 
 <APIGithubLinkHeader moduleName="NoncesComponent" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/cryptography/nonces.cairo`} />
 
@@ -338,7 +338,7 @@ InternalImpl
 - [`use_nonce(self, owner)`](#NoncesComponent-use_nonce)
 - [`use_checked_nonce(self, owner, nonce)`](#NoncesComponent-use_checked_nonce)
 
-#### [](#NoncesComponent-Embeddable-Functions)Embeddable functions [!toc]
+#### Embeddable functions [!toc] [#NoncesComponent-Embeddable-Functions]
 
 <APIItem
   functionSignature="nonces(self: @ContractState, owner: ContractAddress) → felt252"
@@ -348,7 +348,7 @@ InternalImpl
 Returns the next unused nonce for an `owner`.
 </APIItem>
 
-#### [](#NoncesComponent-Internal-Functions)Internal functions [!toc]
+#### Internal functions [!toc] [#NoncesComponent-Internal-Functions]
 
 <APIItem
   functionSignature="use_nonce(ref self: ComponentState, owner: ContractAddress) → felt252"
@@ -368,7 +368,7 @@ For each account, the nonce has an initial value of 0, can only be incremented b
 Same as `use_nonce` but checking that `nonce` is the next valid one for `owner`.
 </APIItem>
 
-### [](#snip12)`snip12` [toc] [#snip12]
+### `snip12` [toc] [#snip12]
 
 <APIGithubLinkHeader moduleName="snip12" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/utils/src/cryptography/snip12.cairo`} />
 
