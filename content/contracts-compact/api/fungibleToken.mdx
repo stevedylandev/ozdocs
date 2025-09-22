@@ -5,7 +5,7 @@ title: FungibleToken API
 This module provides the full FungibleToken module API.
 
 <Callout type='info'>
-For an overview of the module, read the [FungibleToken guide](../fungibleToken).
+  For an overview of the module, read the [FungibleToken guide](../fungibleToken).
 </Callout>
 
 ## Core
@@ -22,12 +22,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
 
 ### Circuits [!toc]
 
-{/*
-  * The first header displays on the `toc` only.
-  * The second header is empty but maintains `toc` highlighting.
-  */}
 #### initialize [toc] [#initialize]
-#### [!toc] [#initialize]
 <APIItemCompact
   circuitSig='initialize(name_: Opaque<"string">, symbol_: Opaque<"string">, decimals_: Uint<8>) → []'
   kind="export"
@@ -44,9 +39,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is not initialized.
 </APIItemCompact>
 
-
 #### name [toc] [#name]
-#### [!toc] [#name]
 <APIItemCompact
   circuitSig='name() → Opaque<"string">'
   kind="export"
@@ -59,9 +52,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### symbol [toc] [#symbol]
-#### [!toc] [#symbol]
 <APIItemCompact
   circuitSig='symbol() → Opaque<"string">'
   kind="export"
@@ -74,9 +65,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### decimals [toc] [#decimals]
-#### [!toc] [#decimals]
 <APIItemCompact
   circuitSig="decimals() → Uint<8>"
   kind="export"
@@ -89,9 +78,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### totalSupply [toc] [#totalSupply]
-#### [!toc] [#totalSupply]
 <APIItemCompact
   circuitSig="totalSupply() → Uint<128>"
   kind="export"
@@ -104,9 +91,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### balanceOf [toc] [#balanceOf]
-#### [!toc] [#balanceOf]
 <APIItemCompact
   circuitSig="balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>"
   kind="export"
@@ -119,9 +104,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### transfer [toc] [#transfer]
-#### [!toc] [#transfer]
 <APIItemCompact
   circuitSig="transfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
   kind="export"
@@ -130,8 +113,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   Moves a `value` amount of tokens from the caller’s account to `to`.
 
   <Callout type='info'>
-  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
   </Callout>
 
   Requirements:
@@ -142,10 +125,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * The caller has a balance of at least `value`.
 </APIItemCompact>
 
-
-
 #### _unsafeTransfer [toc] [#_unsafeTransfer]
-#### [!toc] [#_unsafeTransfer]
 <APIItemCompact
   circuitSig="_unsafeTransfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
   kind="export"
@@ -154,9 +134,9 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   Unsafe variant of [transfer](#transfer) which allows transfers to contract addresses.
 
   <Callout type='warn'>
-  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-  Tokens sent to a contract address may become irretrievable.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
   </Callout>
 
   Requirements:
@@ -166,10 +146,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * The caller has a balance of at least `value`.
 </APIItemCompact>
 
-
-
 #### allowance [toc] [#allowance]
-#### [!toc] [#allowance]
 <APIItemCompact
   circuitSig="allowance(
     owner: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -187,9 +164,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### approve [toc] [#approve]
-#### [!toc] [#approve]
 <APIItemCompact
   circuitSig="approve(spender: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
   kind="export"
@@ -203,9 +178,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * `spender` is not the zero address.
 </APIItemCompact>
 
-
 #### transferFrom [toc] [#transferFrom]
-#### [!toc] [#transferFrom]
 <APIItemCompact
   circuitSig="transferFrom(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -220,8 +193,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   `value` is the deducted from the caller’s allowance.
 
   <Callout type='info'>
-  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
   </Callout>
 
   Requirements:
@@ -234,9 +207,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * The caller has an allowance of `from`’s tokens of at least `value`.
 </APIItemCompact>
 
-
 #### _unsafeTransferFrom [toc] [#_unsafeTransferFrom]
-#### [!toc] [#_unsafeTransferFrom]
 <APIItemCompact
   circuitSig="_unsafeTransferFrom(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -250,9 +221,9 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   Unsafe variant of [transferFrom](#transferFrom) which allows transfers to contract addresses.
 
   <Callout type='warn'>
-  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-  Tokens sent to a contract address may become irretrievable.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
   </Callout>
 
   Requirements:
@@ -264,9 +235,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * The caller has an allowance of `from`’s tokens of at least `value`.
 </APIItemCompact>
 
-
 #### _transfer [toc] [#_transfer]
-#### [!toc] [#_transfer]
 <APIItemCompact
   circuitSig="_transfer(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -282,8 +251,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   implement automatic token fees, slashing mechanisms, etc.
 
   <Callout type='info'>
-  Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-  This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+    Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
+    This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
   </Callout>
 
   Requirements:
@@ -295,9 +264,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * `to` must not be a ContractAddress.
 </APIItemCompact>
 
-
 #### _unsafeUncheckedTransfer [toc] [#_unsafeUncheckedTransfer]
-#### [!toc] [#_unsafeUncheckedTransfer]
 <APIItemCompact
   circuitSig="_unsafeUncheckedTransfer(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -311,9 +278,9 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
 
   <Callout type='warn'>
-  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-  Tokens sent to a contract address may become irretrievable.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
   </Callout>
 
   Requirements:
@@ -323,9 +290,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * `to` is not the zero address.
 </APIItemCompact>
 
-
 #### _update [toc] [#_update]
-#### [!toc] [#_update]
 <APIItemCompact
   circuitSig="_update(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -344,9 +309,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * Contract is initialized.
 </APIItemCompact>
 
-
 #### _mint [toc] [#_mint]
-#### [!toc] [#_mint]
 <APIItemCompact
   circuitSig="_mint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
   kind="export"
@@ -362,9 +325,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * `account` is not the zero address.
 </APIItemCompact>
 
-
 #### _unsafeMint [toc] [#_unsafeMint]
-#### [!toc] [#_unsafeMint]
 <APIItemCompact
   circuitSig="_unsafeMint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
   kind="export"
@@ -373,9 +334,9 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
 
   <Callout type='warn'>
-  Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-  Tokens sent to a contract address may become irretrievable.
-  Once contract-to-contract calls are supported, this circuit may be deprecated.
+    Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
+    Tokens sent to a contract address may become irretrievable.
+    Once contract-to-contract calls are supported, this circuit may be deprecated.
   </Callout>
 
   Requirements:
@@ -384,9 +345,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * `account` is not the zero address.
 </APIItemCompact>
 
-
 #### _burn [toc] [#_burn]
-#### [!toc] [#_burn]
 <APIItemCompact
   circuitSig="_burn(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
   kind="export"
@@ -402,9 +361,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * `account` must have at least a balance of `value`.
 </APIItemCompact>
 
-
 #### _approve [toc] [#_approve]
-#### [!toc] [#_approve]
 <APIItemCompact
   circuitSig="_approve(
     owner: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -425,9 +382,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
   * `spender` is not the zero address.
 </APIItemCompact>
 
-
 #### _spendAllowance [toc] [#_spendAllowance]
-#### [!toc] [#_spendAllowance]
 <APIItemCompact
   circuitSig="_spendAllowance(
     owner: Either<ZswapCoinPublicKey, ContractAddress>,
