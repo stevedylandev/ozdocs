@@ -10,12 +10,13 @@ This crate provides ways to restrict who can access the functions of a contract 
 ## Interfaces
 
 <Callout type='info'>
-Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_access` package. The references documented here are contained in the `openzeppelin_interfaces` package version `v2.1.0`.
+Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_access` package. The references
+documented here are contained in the `openzeppelin_interfaces` package version `{{openzeppelin_interfaces_version}}`.
 </Callout>
 
 import { UMBRELLA_VERSION } from "../utils/constants.ts";
 
-### `IAccessControl` [toc]
+### `IAccessControl` [toc] [#IAccessControl]
 <APIGithubLinkHeader
     moduleName="IAccessControl"
     link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/interfaces/src/access/accesscontrol.cairo`}
@@ -51,7 +52,7 @@ Events
 #### Functions [!toc] [#IAccessControl-Functions]
 
 <APIItem
-    functionName="has_role(role: felt252, account: ContractAddress) → bool"
+    functionSignature="has_role(role: felt252, account: ContractAddress) → bool"
     id="IAccessControl-has_role"
     kind="external"
 >
@@ -59,7 +60,7 @@ Returns whether `account` can act as `role`.
 </APIItem>
 
 <APIItem
-    functionName="get_role_admin(role: felt252) → felt252"
+    functionSignature="get_role_admin(role: felt252) → felt252"
     id="IAccessControl-get_role_admin"
     kind="external"
 >
@@ -69,7 +70,7 @@ To change a role’s admin, use [set\_role\_admin](#AccessControlComponent-set_r
 </APIItem>
 
 <APIItem
-    functionName="grant_role(role: felt252, account: ContractAddress)"
+    functionSignature="grant_role(role: felt252, account: ContractAddress)"
     id="IAccessControl-grant_role"
     kind="external"
 >
@@ -83,7 +84,7 @@ Requirements:
 </APIItem>
 
 <APIItem
-    functionName="revoke_role(role: felt252, account: ContractAddress)"
+    functionSignature="revoke_role(role: felt252, account: ContractAddress)"
     id="IAccessControl-revoke_role"
     kind="external"
 >
@@ -97,7 +98,7 @@ Requirements:
 </APIItem>
 
 <APIItem
-    functionName="renounce_role(role: felt252, account: ContractAddress)"
+    functionSignature="renounce_role(role: felt252, account: ContractAddress)"
     id="IAccessControl-renounce_role"
     kind="external"
 >
@@ -115,7 +116,7 @@ Requirements:
 #### Events [!toc] [#IAccessControl-Events]
 
 <APIItem
-    functionName="RoleAdminChanged(role: felt252, previous_admin_role: ContractAddress, new_admin_role: ContractAddress)"
+    functionSignature="RoleAdminChanged(role: felt252, previous_admin_role: ContractAddress, new_admin_role: ContractAddress)"
     id="IAccessControl-RoleAdminChanged"
     kind="event"
 >
@@ -125,7 +126,7 @@ Emitted when `new_admin_role` is set as `role`'s admin role, replacing `previous
 </APIItem>
 
 <APIItem
-    functionName="RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)"
+    functionSignature="RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)"
     id="IAccessControl-RoleGranted"
     kind="event"
 >
@@ -135,7 +136,7 @@ Emitted when `account` is granted `role`.
 </APIItem>
 
 <APIItem
-    functionName="RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)"
+    functionSignature="RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)"
     id="IAccessControl-RoleRevoked"
     kind="event"
 >
@@ -147,10 +148,10 @@ Emitted when `account` is revoked `role`.
 - if using `renounce_role`, it is the role bearer (i.e. `account`).
 </APIItem>
 
-### `IAccessControlWithDelay` [toc]
+### `IAccessControlWithDelay` [toc] [#IAccessControlWithDelay]
 <APIGithubLinkHeader
     moduleName="IAccessControlWithDelay"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/interfaces/src/access/accesscontrol.cairo"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/interfaces/src/access/accesscontrol.cairo`}
 />
 
 ```rust
@@ -171,7 +172,7 @@ Events
 #### Functions [!toc] [#IAccessControlWithDelay-Functions]
 
 <APIItem
-    functionName="get_role_status(role: felt252, account: ContractAddress) → RoleStatus"
+    functionSignature="get_role_status(role: felt252, account: ContractAddress) → RoleStatus"
     id="IAccessControlWithDelay-get_role_status"
     kind="external"
 >
@@ -183,7 +184,7 @@ Returns the account’s status for the given role. The possible statuses are:
 </APIItem>
 
 <APIItem
-    functionName="grant_role_with_delay(role: felt252, account: ContractAddress, delay: u64)"
+    functionSignature="grant_role_with_delay(role: felt252, account: ContractAddress, delay: u64)"
     id="IAccessControlWithDelay-grant_role_with_delay"
     kind="external"
 >
@@ -201,7 +202,7 @@ May emit a [RoleGrantedWithDelay](#IAccessControlWithDelay-RoleGrantedWithDelay)
 #### Events [!toc] [#IAccessControlWithDelay-Events]
 
 <APIItem
-    functionName="RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)"
+    functionSignature="RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)"
     id="IAccessControlWithDelay-RoleGrantedWithDelay"
     kind="event"
 >
@@ -210,10 +211,10 @@ Emitted when `account` is granted `role` with a delay.
 `sender` is the account that originated the contract call, an account with the admin role or the deployer address if [\_grant\_role\_with\_delay](#AccessControlComponent-_grant_role_with_delay) is called from the constructor.
 </APIItem>
 
-### `IAccessControlDefaultAdminRules` [toc]
+### `IAccessControlDefaultAdminRules` [toc] [#IAccessControlDefaultAdminRules]
 <APIGithubLinkHeader
     moduleName="IAccessControlDefaultAdminRules"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/interfaces/src/access/accesscontrol_default_admin_rules.cairo"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/interfaces/src/access/accesscontrol_default_admin_rules.cairo`}
 />
 
 ```rust
@@ -251,7 +252,7 @@ Events
 #### Functions [!toc] [#IAccessControlDefaultAdminRules-Functions]
 
 <APIItem
-    functionName="default_admin() → ContractAddress"
+    functionSignature="default_admin() → ContractAddress"
     id="IAccessControlDefaultAdminRules-default_admin"
     kind="external"
 >
@@ -259,7 +260,7 @@ Returns the address of the current `DEFAULT_ADMIN_ROLE` holder.
 </APIItem>
 
 <APIItem
-    functionName="pending_default_admin() → (ContractAddress, u64)"
+    functionSignature="pending_default_admin() → (ContractAddress, u64)"
     id="IAccessControlDefaultAdminRules-pending_default_admin"
     kind="external"
 >
@@ -277,7 +278,7 @@ A zero address `new_admin` means that `default_admin` is being renounced.
 </APIItem>
 
 <APIItem
-    functionName="default_admin_delay() → u64"
+    functionSignature="default_admin_delay() → u64"
     id="IAccessControlDefaultAdminRules-default_admin_delay"
     kind="external"
 >
@@ -293,7 +294,7 @@ See [change\_default\_admin\_delay](#IAccessControlDefaultAdminRules-change_defa
 </APIItem>
 
 <APIItem
-    functionName="pending_default_admin_delay() → (u64, u64)"
+    functionSignature="pending_default_admin_delay() → (u64, u64)"
     id="IAccessControlDefaultAdminRules-pending_default_admin_delay"
     kind="external"
 >
@@ -307,7 +308,7 @@ A zero value only for `new_delay` means that the next [default\_admin\_delay](#I
 </APIItem>
 
 <APIItem
-    functionName="begin_default_admin_transfer(new_admin: ContractAddress)"
+    functionSignature="begin_default_admin_transfer(new_admin: ContractAddress)"
     id="IAccessControlDefaultAdminRules-begin_default_admin_transfer"
     kind="external"
 >
@@ -321,7 +322,7 @@ Emits a [DefaultAdminTransferScheduled](#IAccessControlDefaultAdminRules-Default
 </APIItem>
 
 <APIItem
-    functionName="cancel_default_admin_transfer()"
+    functionSignature="cancel_default_admin_transfer()"
     id="IAccessControlDefaultAdminRules-cancel_default_admin_transfer"
     kind="external"
 >
@@ -337,7 +338,7 @@ May emit a [DefaultAdminTransferCanceled](#IAccessControlDefaultAdminRules-Defau
 </APIItem>
 
 <APIItem
-    functionName="accept_default_admin_transfer()"
+    functionSignature="accept_default_admin_transfer()"
     id="IAccessControlDefaultAdminRules-accept_default_admin_transfer"
     kind="external"
 >
@@ -356,7 +357,7 @@ Requirements:
 </APIItem>
 
 <APIItem
-    functionName="change_default_admin_delay(new_delay: u64)"
+    functionSignature="change_default_admin_delay(new_delay: u64)"
     id="IAccessControlDefaultAdminRules-change_default_admin_delay"
     kind="external"
 >
@@ -381,7 +382,7 @@ Emits a [DefaultAdminDelayChangeScheduled](#IAccessControlDefaultAdminRules-Defa
 </APIItem>
 
 <APIItem
-    functionName="rollback_default_admin_delay()"
+    functionSignature="rollback_default_admin_delay()"
     id="IAccessControlDefaultAdminRules-rollback_default_admin_delay"
     kind="external"
 >
@@ -396,7 +397,7 @@ May emit a [DefaultAdminDelayChangeCanceled](#IAccessControlDefaultAdminRules-De
 </APIItem>
 
 <APIItem
-    functionName="default_admin_delay_increase_wait() → u64"
+    functionSignature="default_admin_delay_increase_wait() → u64"
     id="IAccessControlDefaultAdminRules-default_admin_delay_increase_wait"
     kind="external"
 >
@@ -410,7 +411,7 @@ Make sure to add a reasonable amount of time while overriding this value, otherw
 #### Events [!toc] [#IAccessControlDefaultAdminRules-Events]
 
 <APIItem
-    functionName="DefaultAdminTransferScheduled(new_admin: ContractAddress, accept_schedule: u64)"
+    functionSignature="DefaultAdminTransferScheduled(new_admin: ContractAddress, accept_schedule: u64)"
     id="IAccessControlDefaultAdminRules-DefaultAdminTransferScheduled"
     kind="event"
 >
@@ -420,7 +421,7 @@ Sets `new_admin` as the next address to become the `default_admin` by calling [a
 </APIItem>
 
 <APIItem
-    functionName="DefaultAdminTransferCanceled()"
+    functionSignature="DefaultAdminTransferCanceled()"
     id="IAccessControlDefaultAdminRules-DefaultAdminTransferCanceled"
     kind="event"
 >
@@ -428,7 +429,7 @@ Emitted when a [pending\_default\_admin](#IAccessControlDefaultAdminRules-pendin
 </APIItem>
 
 <APIItem
-    functionName="DefaultAdminDelayChangeScheduled(new_delay: u64, effect_schedule: u64)"
+    functionSignature="DefaultAdminDelayChangeScheduled(new_delay: u64, effect_schedule: u64)"
     id="IAccessControlDefaultAdminRules-DefaultAdminDelayChangeScheduled"
     kind="event"
 >
@@ -444,7 +445,7 @@ Emitted when a [pending\_default\_admin\_delay](#IAccessControlDefaultAdminRules
 ### `OwnableComponent` [toc] [#OwnableComponent]
 <APIGithubLinkHeader
     moduleName="OwnableComponent"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/access/src/ownable/ownable.cairo"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/access/src/ownable/ownable.cairo`}
 />
 
 ```rust
@@ -512,7 +513,7 @@ Events
 #### Embeddable functions [!toc] [#OwnableComponent-Embeddable-Functions]
 
 <APIItem
-    functionName="owner(self: @ContractState) → ContractAddress"
+    functionSignature="owner(self: @ContractState) → ContractAddress"
     id="OwnableComponent-owner"
     kind="external"
 >
@@ -520,7 +521,7 @@ Returns the address of the current owner.
 </APIItem>
 
 <APIItem
-    functionName="transfer_ownership(ref self: ContractState, new_owner: ContractAddress)"
+    functionSignature="transfer_ownership(ref self: ContractState, new_owner: ContractAddress)"
     id="OwnableComponent-transfer_ownership"
     kind="external"
 >
@@ -530,7 +531,7 @@ Emits an [OwnershipTransferred](#OwnableComponent-OwnershipTransferred) event.
 </APIItem>
 
 <APIItem
-    functionName="renounce_ownership(ref self: ContractState)"
+    functionSignature="renounce_ownership(ref self: ContractState)"
     id="OwnableComponent-renounce_ownership"
     kind="external"
 >
@@ -544,7 +545,7 @@ Renouncing ownership will leave the contract without an owner, thereby removing 
 #### Embeddable functions (two step transfer) [!toc] [#OwnableComponent-Embeddable-Functions-Two-Step]
 
 <APIItem
-    functionName="owner(self: @ContractState) → ContractAddress"
+    functionSignature="owner(self: @ContractState) → ContractAddress"
     id="OwnableComponent-two-step-owner"
     kind="external"
 >
@@ -552,7 +553,7 @@ Returns the address of the current owner.
 </APIItem>
 
 <APIItem
-    functionName="pending_owner(self: @ContractState) → ContractAddress"
+    functionSignature="pending_owner(self: @ContractState) → ContractAddress"
     id="OwnableComponent-two-step-pending_owner"
     kind="external"
 >
@@ -560,7 +561,7 @@ Returns the address of the pending owner.
 </APIItem>
 
 <APIItem
-    functionName="accept_ownership(ref self: ContractState)"
+    functionSignature="accept_ownership(ref self: ContractState)"
     id="OwnableComponent-two-step-accept_ownership"
     kind="external"
 >
@@ -570,7 +571,7 @@ Emits an [OwnershipTransferred](#OwnableComponent-OwnershipTransferred) event.
 </APIItem>
 
 <APIItem
-    functionName="transfer_ownership(ref self: ContractState, new_owner: ContractAddress)"
+    functionSignature="transfer_ownership(ref self: ContractState, new_owner: ContractAddress)"
     id="OwnableComponent-two-step-transfer_ownership"
     kind="external"
 >
@@ -582,7 +583,7 @@ Emits an [OwnershipTransferStarted](#OwnableComponent-OwnershipTransferStarted) 
 </APIItem>
 
 <APIItem
-    functionName="renounce_ownership(ref self: ContractState)"
+    functionSignature="renounce_ownership(ref self: ContractState)"
     id="OwnableComponent-two-step-renounce_ownership"
     kind="external"
 >
@@ -594,7 +595,7 @@ Renouncing ownership will leave the contract without an owner, thereby removing 
 </APIItem>
 
 <APIItem
-    functionName="transferOwnership(ref self: ContractState, newOwner: ContractAddress)"
+    functionSignature="transferOwnership(ref self: ContractState, newOwner: ContractAddress)"
     id="OwnableComponent-two-step-transferOwnership"
     kind="external"
 >
@@ -602,7 +603,7 @@ See [transfer\_ownership](#OwnableComponent-transfer_ownership).
 </APIItem>
 
 <APIItem
-    functionName="renounceOwnership(ref self: ContractState)"
+    functionSignature="renounceOwnership(ref self: ContractState)"
     id="OwnableComponent-two-step-renounceOwnership"
     kind="external"
 >
@@ -610,7 +611,7 @@ See [renounce\_ownership](#OwnableComponent-renounce_ownership).
 </APIItem>
 
 <APIItem
-    functionName="pendingOwner(self: @ContractState)"
+    functionSignature="pendingOwner(self: @ContractState)"
     id="OwnableComponent-two-step-pendingOwner"
     kind="external"
 >
@@ -618,7 +619,7 @@ See [pending\_owner](#OwnableComponent-two-step-pending_owner).
 </APIItem>
 
 <APIItem
-    functionName="acceptOwnership(self: @ContractState)"
+    functionSignature="acceptOwnership(self: @ContractState)"
     id="OwnableComponent-two-step-acceptOwnership"
     kind="external"
 >
@@ -626,7 +627,7 @@ See [accept\_ownership](#OwnableComponent-two-step-accept_ownership).
 </APIItem>
 
 <APIItem
-    functionName="transferOwnership(self: @ContractState)"
+    functionSignature="transferOwnership(self: @ContractState)"
     id="OwnableComponent-two-step-transferOwnership"
     kind="external"
 >
@@ -634,7 +635,7 @@ See [transfer\_ownership](#OwnableComponent-two-step-transfer_ownership).
 </APIItem>
 
 <APIItem
-    functionName="renounceOwnership(self: @ContractState)"
+    functionSignature="renounceOwnership(self: @ContractState)"
     id="OwnableComponent-two-step-renounceOwnership"
     kind="external"
 >
@@ -644,7 +645,7 @@ See [renounce\_ownership](#OwnableComponent-two-step-renounce_ownership).
 #### Internal functions [!toc] [#OwnableComponent-Internal-Functions]
 
 <APIItem
-    functionName="initializer(ref self: ContractState, owner: ContractAddress)"
+    functionSignature="initializer(ref self: ContractState, owner: ContractAddress)"
     id="OwnableComponent-initializer"
     kind="internal"
 >
@@ -658,7 +659,7 @@ Emits an [OwnershipTransferred](#OwnableComponent-OwnershipTransferred) event.
 </APIItem>
 
 <APIItem
-    functionName="assert_only_owner(self: @ContractState)"
+    functionSignature="assert_only_owner(self: @ContractState)"
     id="OwnableComponent-assert_only_owner"
     kind="internal"
 >
@@ -666,7 +667,7 @@ Panics if called by any account other than the owner.
 </APIItem>
 
 <APIItem
-    functionName="_transfer_ownership(ref self: ContractState, new_owner: ContractAddress)"
+    functionSignature="_transfer_ownership(ref self: ContractState, new_owner: ContractAddress)"
     id="OwnableComponent-_transfer_ownership"
     kind="internal"
 >
@@ -676,7 +677,7 @@ Emits an [OwnershipTransferred](#OwnableComponent-OwnershipTransferred) event.
 </APIItem>
 
 <APIItem
-    functionName="_propose_owner(ref self: ContractState, new_owner: ContractAddress)"
+    functionSignature="_propose_owner(ref self: ContractState, new_owner: ContractAddress)"
     id="OwnableComponent-_propose_owner"
     kind="internal"
 >
@@ -690,7 +691,7 @@ Emits an [OwnershipTransferStarted](#OwnableComponent-OwnershipTransferStarted) 
 #### Events [!toc] [#OwnableComponent-Events]
 
 <APIItem
-    functionName="OwnershipTransferStarted(previous_owner: ContractAddress, new_owner: ContractAddress)"
+    functionSignature="OwnershipTransferStarted(previous_owner: ContractAddress, new_owner: ContractAddress)"
     id="OwnableComponent-OwnershipTransferStarted"
     kind="event"
 >
@@ -698,17 +699,17 @@ Emitted when the pending owner is updated.
 </APIItem>
 
 <APIItem
-    functionName="OwnershipTransferred(previous_owner: ContractAddress, new_owner: ContractAddress)"
+    functionSignature="OwnershipTransferred(previous_owner: ContractAddress, new_owner: ContractAddress)"
     id="OwnableComponent-OwnershipTransferred"
     kind="event"
 >
 Emitted when the ownership is transferred.
 </APIItem>
 
-### `AccessControlComponent` [toc]
+### `AccessControlComponent` [toc] [#AccessControlComponent]
 <APIGithubLinkHeader
     moduleName="AccessControlComponent"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/access/src/accesscontrol/accesscontrol.cairo"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/access/src/accesscontrol/accesscontrol.cairo`}
 />
 
 ```rust
@@ -807,7 +808,7 @@ Events
 #### Embeddable functions [!toc] [#AccessControlComponent-Embeddable-Functions]
 
 <APIItem
-    functionName="has_role(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="has_role(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlComponent-has_role"
     kind="external"
 >
@@ -815,7 +816,7 @@ Returns whether `account` can act as `role`.
 </APIItem>
 
 <APIItem
-    functionName="get_role_admin(self: @ContractState, role: felt252) → felt252"
+    functionSignature="get_role_admin(self: @ContractState, role: felt252) → felt252"
     id="AccessControlComponent-get_role_admin"
     kind="external"
 >
@@ -825,7 +826,7 @@ To change a role’s admin, use [set\_role\_admin](#AccessControlComponent-set_r
 </APIItem>
 
 <APIItem
-    functionName="get_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
+    functionSignature="get_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
     id="AccessControlComponent-get_role_status"
     kind="external"
 >
@@ -839,7 +840,7 @@ The possible statuses are:
 </APIItem>
 
 <APIItem
-    functionName="grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-grant_role"
     kind="external"
 >
@@ -855,7 +856,7 @@ May emit a [RoleGranted](#IAccessControl-RoleGranted) event.
 </APIItem>
 
 <APIItem
-    functionName="grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
+    functionSignature="grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
     id="AccessControlComponent-grant_role_with_delay"
     kind="external"
 >
@@ -871,7 +872,7 @@ May emit a [RoleGrantedWithDelay](#IAccessControlWithDelay-RoleGrantedWithDelay)
 </APIItem>
 
 <APIItem
-    functionName="revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-revoke_role"
     kind="external"
 >
@@ -887,7 +888,7 @@ May emit a [RoleRevoked](#IAccessControl-RoleRevoked) event.
 </APIItem>
 
 <APIItem
-    functionName="renounce_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="renounce_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-renounce_role"
     kind="external"
 >
@@ -905,7 +906,7 @@ May emit a [RoleRevoked](#IAccessControl-RoleRevoked) event.
 </APIItem>
 
 <APIItem
-    functionName="supports_interface(self: @ContractState, interface_id: felt252) → bool"
+    functionSignature="supports_interface(self: @ContractState, interface_id: felt252) → bool"
     id="AccessControlComponent-supports_interface"
     kind="external"
 >
@@ -913,7 +914,7 @@ See [ISRC5::supports\_interface](introspection#ISRC5-supports_interface).
 </APIItem>
 
 <APIItem
-    functionName="hasRole(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="hasRole(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlComponent-hasRole"
     kind="external"
 >
@@ -921,7 +922,7 @@ See [has\_role](#AccessControlComponent-has_role).
 </APIItem>
 
 <APIItem
-    functionName="getRoleAdmin(self: @ContractState, role: felt252) → felt252"
+    functionSignature="getRoleAdmin(self: @ContractState, role: felt252) → felt252"
     id="AccessControlComponent-getRoleAdmin"
     kind="external"
 >
@@ -929,7 +930,7 @@ See [get\_role\_admin](#AccessControlComponent-get_role_admin).
 </APIItem>
 
 <APIItem
-    functionName="grantRole(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="grantRole(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-grantRole"
     kind="external"
 >
@@ -937,7 +938,7 @@ See [grant\_role](#AccessControlComponent-grant_role).
 </APIItem>
 
 <APIItem
-    functionName="revokeRole(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="revokeRole(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-revokeRole"
     kind="external"
 >
@@ -945,7 +946,7 @@ See [revoke\_role](#AccessControlComponent-revoke_role).
 </APIItem>
 
 <APIItem
-    functionName="renounceRole(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="renounceRole(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-renounceRole"
     kind="external"
 >
@@ -955,7 +956,7 @@ See [renounce\_role](#AccessControlComponent-renounce_role).
 #### Internal functions [!toc] [#AccessControlComponent-Internal-Functions]
 
 <APIItem
-    functionName="initializer(ref self: ContractState)"
+    functionSignature="initializer(ref self: ContractState)"
     id="AccessControlComponent-initializer"
     kind="internal"
 >
@@ -963,7 +964,7 @@ Initializes the contract by registering the [IAccessControl](#IAccessControl) in
 </APIItem>
 
 <APIItem
-    functionName="assert_only_role(self: @ContractState, role: felt252)"
+    functionSignature="assert_only_role(self: @ContractState, role: felt252)"
     id="AccessControlComponent-assert_only_role"
     kind="internal"
 >
@@ -971,7 +972,7 @@ Validates that the caller can act as the given role. Otherwise it panics.
 </APIItem>
 
 <APIItem
-    functionName="is_role_effective(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="is_role_effective(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlComponent-is_role_effective"
     kind="internal"
 >
@@ -985,7 +986,7 @@ If the `effective_from` timepoint is 0, the role is effective immediately. This 
 </APIItem>
 
 <APIItem
-    functionName="resolve_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
+    functionSignature="resolve_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
     id="AccessControlComponent-resolve_role_status"
     kind="internal"
 >
@@ -999,7 +1000,7 @@ The possible statuses are:
 </APIItem>
 
 <APIItem
-    functionName="is_role_granted(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="is_role_granted(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlComponent-is_role_granted"
     kind="internal"
 >
@@ -1011,7 +1012,7 @@ The account may not be able to act as the role yet, if a delay was set and has n
 </APIItem>
 
 <APIItem
-    functionName="set_role_admin(ref self: ContractState, role: felt252, admin_role: felt252)"
+    functionSignature="set_role_admin(ref self: ContractState, role: felt252, admin_role: felt252)"
     id="AccessControlComponent-set_role_admin"
     kind="internal"
 >
@@ -1023,7 +1024,7 @@ Emits a [RoleAdminChanged](#IAccessControl-RoleAdminChanged) event.
 </APIItem>
 
 <APIItem
-    functionName="_grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="_grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-_grant_role"
     kind="internal"
 >
@@ -1035,7 +1036,7 @@ May emit a [RoleGranted](#IAccessControl-RoleGranted) event.
 </APIItem>
 
 <APIItem
-    functionName="_grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
+    functionSignature="_grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
     id="AccessControlComponent-_grant_role_with_delay"
     kind="internal"
 >
@@ -1054,7 +1055,7 @@ May emit a [RoleGrantedWithDelay](#IAccessControlWithDelay-RoleGrantedWithDelay)
 </APIItem>
 
 <APIItem
-    functionName="_revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="_revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlComponent-_revoke_role"
     kind="internal"
 >
@@ -1068,7 +1069,7 @@ May emit a [RoleRevoked](#IAccessControl-RoleRevoked) event.
 #### Events [!toc] [#AccessControlComponent-Events]
 
 <APIItem
-    functionName="RoleAdminChanged(role: felt252, previous_admin_role: ContractAddress, new_admin_role: ContractAddress)"
+    functionSignature="RoleAdminChanged(role: felt252, previous_admin_role: ContractAddress, new_admin_role: ContractAddress)"
     id="AccessControlComponent-RoleAdminChanged"
     kind="event"
 >
@@ -1076,7 +1077,7 @@ See [IAccessControl::RoleAdminChanged](#IAccessControl-RoleAdminChanged).
 </APIItem>
 
 <APIItem
-    functionName="RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)"
+    functionSignature="RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)"
     id="AccessControlComponent-RoleGranted"
     kind="event"
 >
@@ -1084,7 +1085,7 @@ See [IAccessControl::RoleGranted](#IAccessControl-RoleGranted).
 </APIItem>
 
 <APIItem
-    functionName="RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)"
+    functionSignature="RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)"
     id="AccessControlComponent-RoleGrantedWithDelay"
     kind="event"
 >
@@ -1092,7 +1093,7 @@ See [IAccessControlWithDelay::RoleGrantedWithDelay](#IAccessControlWithDelay-Rol
 </APIItem>
 
 <APIItem
-    functionName="RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)"
+    functionSignature="RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)"
     id="AccessControlComponent-RoleRevoked"
     kind="event"
 >
@@ -1101,10 +1102,10 @@ See [IAccessControl::RoleRevoked](#IAccessControl-RoleRevoked).
 
 ## Extensions
 
-### `AccessControlDefaultAdminRulesComponent` [toc]
+### `AccessControlDefaultAdminRulesComponent` [toc] [#AccessControlDefaultAdminRulesComponent]
 <APIGithubLinkHeader
     moduleName="AccessControlDefaultAdminRulesComponent"
-    link="https://github.com/OpenZeppelin/cairo-contracts/blob/release-{{umbrella_version}}/packages/access/src/accesscontrol/extensions/accesscontrol_default_admin_rules.cairo"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/access/src/accesscontrol/extensions/accesscontrol_default_admin_rules.cairo`}
 />
 
 ```rust
@@ -1212,7 +1213,7 @@ Events
 #### Embeddable functions [!toc] [#AccessControlDefaultAdminRulesComponent-Embeddable-Functions]
 
 <APIItem
-    functionName="default_admin(self: @ContractState) → ContractAddress"
+    functionSignature="default_admin(self: @ContractState) → ContractAddress"
     id="AccessControlDefaultAdminRulesComponent-default_admin"
     kind="external"
 >
@@ -1220,7 +1221,7 @@ Returns the address of the current `DEFAULT_ADMIN_ROLE` holder.
 </APIItem>
 
 <APIItem
-    functionName="pending_default_admin(self: @ContractState) → (ContractAddress, u64)"
+    functionSignature="pending_default_admin(self: @ContractState) → (ContractAddress, u64)"
     id="AccessControlDefaultAdminRulesComponent-pending_default_admin"
     kind="external"
 >
@@ -1236,7 +1237,7 @@ A zero address `new_admin` means that `default_admin` is being renounced.
 </APIItem>
 
 <APIItem
-    functionName="default_admin_delay(self: @ContractState) → u64"
+    functionSignature="default_admin_delay(self: @ContractState) → u64"
     id="AccessControlDefaultAdminRulesComponent-default_admin_delay"
     kind="external"
 >
@@ -1252,7 +1253,7 @@ See [change\_default\_admin\_delay](#AccessControlDefaultAdminRulesComponent-cha
 </APIItem>
 
 <APIItem
-    functionName="pending_default_admin_delay(self: @ContractState) → (u64, u64)"
+    functionSignature="pending_default_admin_delay(self: @ContractState) → (u64, u64)"
     id="AccessControlDefaultAdminRulesComponent-pending_default_admin_delay"
     kind="external"
 >
@@ -1266,7 +1267,7 @@ A zero value only for `new_delay` means that the next [default\_admin\_delay](#A
 </APIItem>
 
 <APIItem
-    functionName="begin_default_admin_transfer(ref self: ContractState, new_admin: ContractAddress)"
+    functionSignature="begin_default_admin_transfer(ref self: ContractState, new_admin: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-begin_default_admin_transfer"
     kind="external"
 >
@@ -1280,7 +1281,7 @@ Emits a [DefaultAdminTransferScheduled](#AccessControlDefaultAdminRulesComponent
 </APIItem>
 
 <APIItem
-    functionName="cancel_default_admin_transfer(ref self: ContractState)"
+    functionSignature="cancel_default_admin_transfer(ref self: ContractState)"
     id="AccessControlDefaultAdminRulesComponent-cancel_default_admin_transfer"
     kind="external"
 >
@@ -1296,7 +1297,7 @@ May emit a [DefaultAdminTransferCanceled](#AccessControlDefaultAdminRulesCompone
 </APIItem>
 
 <APIItem
-    functionName="accept_default_admin_transfer(ref self: ContractState)"
+    functionSignature="accept_default_admin_transfer(ref self: ContractState)"
     id="AccessControlDefaultAdminRulesComponent-accept_default_admin_transfer"
     kind="external"
 >
@@ -1315,7 +1316,7 @@ Requirements:
 </APIItem>
 
 <APIItem
-    functionName="change_default_admin_delay(ref self: ContractState, new_delay: u64)"
+    functionSignature="change_default_admin_delay(ref self: ContractState, new_delay: u64)"
     id="AccessControlDefaultAdminRulesComponent-change_default_admin_delay"
     kind="external"
 >
@@ -1340,7 +1341,7 @@ Emits a [DefaultAdminDelayChangeScheduled](#AccessControlDefaultAdminRulesCompon
 </APIItem>
 
 <APIItem
-    functionName="rollback_default_admin_delay(ref self: ContractState)"
+    functionSignature="rollback_default_admin_delay(ref self: ContractState)"
     id="AccessControlDefaultAdminRulesComponent-rollback_default_admin_delay"
     kind="external"
 >
@@ -1354,7 +1355,7 @@ May emit a [DefaultAdminDelayChangeCanceled](#AccessControlDefaultAdminRulesComp
 </APIItem>
 
 <APIItem
-    functionName="default_admin_delay_increase_wait(self: @ContractState) → u64"
+    functionSignature="default_admin_delay_increase_wait(self: @ContractState) → u64"
     id="AccessControlDefaultAdminRulesComponent-default_admin_delay_increase_wait"
     kind="external"
 >
@@ -1368,7 +1369,7 @@ Make sure to add a reasonable amount of time while overriding this value, otherw
 </APIItem>
 
 <APIItem
-    functionName="has_role(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="has_role(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlDefaultAdminRulesComponent-has_role"
     kind="external"
 >
@@ -1376,7 +1377,7 @@ Returns whether `account` can act as `role`.
 </APIItem>
 
 <APIItem
-    functionName="get_role_admin(self: @ContractState, role: felt252) → felt252"
+    functionSignature="get_role_admin(self: @ContractState, role: felt252) → felt252"
     id="AccessControlDefaultAdminRulesComponent-get_role_admin"
     kind="external"
 >
@@ -1386,7 +1387,7 @@ To change a role’s admin, use [set\_role\_admin](#AccessControlComponent-set_r
 </APIItem>
 
 <APIItem
-    functionName="get_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
+    functionSignature="get_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
     id="AccessControlDefaultAdminRulesComponent-get_role_status"
     kind="external"
 >
@@ -1400,7 +1401,7 @@ The possible statuses are:
 </APIItem>
 
 <APIItem
-    functionName="grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-grant_role"
     kind="external"
 >
@@ -1416,7 +1417,7 @@ May emit a [RoleGranted](#AccessControlDefaultAdminRulesComponent-RoleGranted) e
 </APIItem>
 
 <APIItem
-    functionName="grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
+    functionSignature="grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
     id="AccessControlDefaultAdminRulesComponent-grant_role_with_delay"
     kind="external"
 >
@@ -1432,7 +1433,7 @@ May emit a [RoleGrantedWithDelay](#AccessControlDefaultAdminRulesComponent-RoleG
 </APIItem>
 
 <APIItem
-    functionName="revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-revoke_role"
     kind="external"
 >
@@ -1448,7 +1449,7 @@ May emit a [RoleRevoked](#AccessControlDefaultAdminRulesComponent-RoleRevoked) e
 </APIItem>
 
 <APIItem
-    functionName="renounce_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="renounce_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-renounce_role"
     kind="external"
 >
@@ -1466,7 +1467,7 @@ May emit a [RoleRevoked](#AccessControlDefaultAdminRulesComponent-RoleRevoked) e
 </APIItem>
 
 <APIItem
-    functionName="supports_interface(self: @ContractState, interface_id: felt252) → bool"
+    functionSignature="supports_interface(self: @ContractState, interface_id: felt252) → bool"
     id="AccessControlDefaultAdminRulesComponent-supports_interface"
     kind="external"
 >
@@ -1474,7 +1475,7 @@ See [ISRC5::supports\_interface](introspection#ISRC5-supports_interface).
 </APIItem>
 
 <APIItem
-    functionName="hasRole(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="hasRole(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlDefaultAdminRulesComponent-hasRole"
     kind="external"
 >
@@ -1482,7 +1483,7 @@ See [has\_role](#AccessControlDefaultAdminRulesComponent-has_role).
 </APIItem>
 
 <APIItem
-    functionName="getRoleAdmin(self: @ContractState, role: felt252) → felt252"
+    functionSignature="getRoleAdmin(self: @ContractState, role: felt252) → felt252"
     id="AccessControlDefaultAdminRulesComponent-getRoleAdmin"
     kind="external"
 >
@@ -1490,7 +1491,7 @@ See [get\_role\_admin](#AccessControlDefaultAdminRulesComponent-get_role_admin).
 </APIItem>
 
 <APIItem
-    functionName="grantRole(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="grantRole(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-grantRole"
     kind="external"
 >
@@ -1498,7 +1499,7 @@ See [grant\_role](#AccessControlDefaultAdminRulesComponent-grant_role).
 </APIItem>
 
 <APIItem
-    functionName="revokeRole(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="revokeRole(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-revokeRole"
     kind="external"
 >
@@ -1506,7 +1507,7 @@ See [revoke\_role](#AccessControlDefaultAdminRulesComponent-revoke_role).
 </APIItem>
 
 <APIItem
-    functionName="renounceRole(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="renounceRole(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-renounceRole"
     kind="external"
 >
@@ -1516,7 +1517,7 @@ See [renounce\_role](#AccessControlDefaultAdminRulesComponent-renounce_role).
 #### Internal functions [!toc] [#AccessControlDefaultAdminRulesComponent-Internal-Functions]
 
 <APIItem
-    functionName="initializer(ref self: ContractState, initial_delay: u64, initial_default_admin: ContractAddress)"
+    functionSignature="initializer(ref self: ContractState, initial_delay: u64, initial_default_admin: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-initializer"
     kind="external"
 >
@@ -1528,7 +1529,7 @@ Requirements:
 </APIItem>
 
 <APIItem
-    functionName="assert_only_role(self: @ContractState, role: felt252)"
+    functionSignature="assert_only_role(self: @ContractState, role: felt252)"
     id="AccessControlDefaultAdminRulesComponent-assert_only_role"
     kind="external"
 >
@@ -1536,7 +1537,7 @@ Validates that the caller can act as the given role. Otherwise it panics.
 </APIItem>
 
 <APIItem
-    functionName="is_role_effective(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="is_role_effective(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlDefaultAdminRulesComponent-is_role_effective"
     kind="external"
 >
@@ -1550,7 +1551,7 @@ If the `effective_from` timepoint is 0, the role is effective immediately. This 
 </APIItem>
 
 <APIItem
-    functionName="resolve_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
+    functionSignature="resolve_role_status(self: @ContractState, role: felt252, account: ContractAddress) → RoleStatus"
     id="AccessControlDefaultAdminRulesComponent-resolve_role_status"
     kind="external"
 >
@@ -1564,7 +1565,7 @@ The possible statuses are:
 </APIItem>
 
 <APIItem
-    functionName="is_role_granted(self: @ContractState, role: felt252, account: ContractAddress) → bool"
+    functionSignature="is_role_granted(self: @ContractState, role: felt252, account: ContractAddress) → bool"
     id="AccessControlDefaultAdminRulesComponent-is_role_granted"
     kind="external"
 >
@@ -1576,7 +1577,7 @@ The account may not be able to act as the role yet, if a delay was set and has n
 </APIItem>
 
 <APIItem
-    functionName="set_role_admin(ref self: ContractState, role: felt252, admin_role: felt252)"
+    functionSignature="set_role_admin(ref self: ContractState, role: felt252, admin_role: felt252)"
     id="AccessControlDefaultAdminRulesComponent-set_role_admin"
     kind="external"
 >
@@ -1592,7 +1593,7 @@ Emits a [RoleAdminChanged](#AccessControlDefaultAdminRulesComponent-RoleAdminCha
 </APIItem>
 
 <APIItem
-    functionName="_grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="_grant_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-_grant_role"
     kind="external"
 >
@@ -1608,7 +1609,7 @@ May emit a [RoleGranted](#AccessControlDefaultAdminRulesComponent-RoleGranted) e
 </APIItem>
 
 <APIItem
-    functionName="_grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
+    functionSignature="_grant_role_with_delay(ref self: ContractState, role: felt252, account: ContractAddress, delay: u64)"
     id="AccessControlDefaultAdminRulesComponent-_grant_role_with_delay"
     kind="external"
 >
@@ -1628,7 +1629,7 @@ May emit a [RoleGrantedWithDelay](#AccessControlDefaultAdminRulesComponent-RoleG
 </APIItem>
 
 <APIItem
-    functionName="_revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
+    functionSignature="_revoke_role(ref self: ContractState, role: felt252, account: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-_revoke_role"
     kind="external"
 >
@@ -1640,7 +1641,7 @@ May emit a [RoleRevoked](#AccessControlDefaultAdminRulesComponent-RoleRevoked) e
 </APIItem>
 
 <APIItem
-    functionName="set_pending_default_admin(ref self: ContractState, new_admin: ContractAddress, new_schedule: u64)"
+    functionSignature="set_pending_default_admin(ref self: ContractState, new_admin: ContractAddress, new_schedule: u64)"
     id="AccessControlDefaultAdminRulesComponent-set_pending_default_admin"
     kind="external"
 >
@@ -1650,7 +1651,7 @@ May emit a DefaultAdminTransferCanceled event.
 </APIItem>
 
 <APIItem
-    functionName="set_pending_delay(ref self: ContractState, new_delay: u64, new_schedule: u64)"
+    functionSignature="set_pending_delay(ref self: ContractState, new_delay: u64, new_schedule: u64)"
     id="AccessControlDefaultAdminRulesComponent-set_pending_delay"
     kind="external"
 >
@@ -1660,7 +1661,7 @@ May emit a DefaultAdminDelayChangeCanceled event.
 </APIItem>
 
 <APIItem
-    functionName="delay_change_wait(self: @ContractState, new_delay: u64) → u64"
+    functionSignature="delay_change_wait(self: @ContractState, new_delay: u64) → u64"
     id="AccessControlDefaultAdminRulesComponent-delay_change_wait"
     kind="external"
 >
@@ -1674,7 +1675,7 @@ See [default\_admin\_delay\_increase\_wait](#AccessControlDefaultAdminRulesCompo
 #### Events [!toc] [#AccessControlDefaultAdminRulesComponent-Events]
 
 <APIItem
-    functionName="RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)"
+    functionSignature="RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)"
     id="AccessControlDefaultAdminRulesComponent-RoleAdminChanged"
     kind="event"
 >
@@ -1684,7 +1685,7 @@ Emitted when `new_admin_role` is set as role’s admin role, replacing `previous
 </APIItem>
 
 <APIItem
-    functionName="RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)"
+    functionSignature="RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-RoleGranted"
     kind="event"
 >
@@ -1694,7 +1695,7 @@ Emitted when `account` is granted `role`.
 </APIItem>
 
 <APIItem
-    functionName="RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)"
+    functionSignature="RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)"
     id="AccessControlDefaultAdminRulesComponent-RoleRevoked"
     kind="event"
 >
@@ -1707,7 +1708,7 @@ Emitted when `role` is revoked for `account`.
 </APIItem>
 
 <APIItem
-    functionName="RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)"
+    functionSignature="RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)"
     id="AccessControlDefaultAdminRulesComponent-RoleGrantedWithDelay"
     kind="event"
 >
@@ -1717,7 +1718,7 @@ Emitted when `account` is granted `role` with a delay.
 </APIItem>
 
 <APIItem
-    functionName="DefaultAdminTransferScheduled(new_admin: ContractAddress, accept_schedule: u64)"
+    functionSignature="DefaultAdminTransferScheduled(new_admin: ContractAddress, accept_schedule: u64)"
     id="AccessControlDefaultAdminRulesComponent-DefaultAdminTransferScheduled"
     kind="event"
 >
@@ -1727,7 +1728,7 @@ Sets `new_admin` as the next address to become the `default_admin` by calling [a
 </APIItem>
 
 <APIItem
-    functionName="DefaultAdminTransferCanceled()"
+    functionSignature="DefaultAdminTransferCanceled()"
     id="AccessControlDefaultAdminRulesComponent-DefaultAdminTransferCanceled"
     kind="event"
 >
@@ -1735,7 +1736,7 @@ Emitted when a [pending\_default\_admin](#AccessControlDefaultAdminRulesComponen
 </APIItem>
 
 <APIItem
-    functionName="DefaultAdminDelayChangeScheduled(new_delay: u64, effect_schedule: u64)"
+    functionSignature="DefaultAdminDelayChangeScheduled(new_delay: u64, effect_schedule: u64)"
     id="AccessControlDefaultAdminRulesComponent-DefaultAdminDelayChangeScheduled"
     kind="event"
 >
