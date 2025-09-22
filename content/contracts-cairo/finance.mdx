@@ -12,13 +12,13 @@ This structure allows ownership rights of both the contract and the vested token
 
 <Callout>
 Any assets transferred to this contract will follow the vesting schedule as if they were locked from the beginning of the vesting period.
-</Callout>
 As a result, if the vesting has already started, a portion of the newly transferred tokens may become immediately releasable.
+</Callout>
 
 <Callout>
 By setting the duration to 0, it’s possible to configure this contract to behave like an asset timelock that holds tokens
-</Callout>
 for a beneficiary until a specified date.
+</Callout>
 
 ### Vesting schedule
 
@@ -28,9 +28,9 @@ implementation of the [VestingSchedule](api/finance#VestingComponent-Vesting-Sch
 
 <Callout>
 There’s a ready-made implementation of the [VestingSchedule](api/finance#VestingComponent-Vesting-Schedule) trait available named [LinearVestingSchedule](api/finance#LinearVestingSchedule).
-</Callout>
 It incorporates a cliff period by returning 0 vested amount until the cliff ends. After the cliff, the vested amount
 is calculated as directly proportional to the time elapsed since the beginning of the vesting schedule.
+</Callout>
 
 ### Usage
 

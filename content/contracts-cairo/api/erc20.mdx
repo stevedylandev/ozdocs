@@ -8,9 +8,18 @@ For an overview of ERC20, read our [ERC20 guide](../erc20).
 
 ## [](#interfaces)Interfaces
 
-Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_token` package. The references documented here are contained in the `openzeppelin_interfaces` package version `v2.1.0`.
+<Callout type='info'>
+Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_access` package. The references
+documented here are contained in the `openzeppelin_interfaces` package version `{{openzeppelin_interfaces_version}}`.
+</Callout>
 
-### [](#IERC20)`IERC20`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/token/erc20.cairo)
+import { UMBRELLA_VERSION } from "../utils/constants.js";
+
+### `IERC20` [toc] [#IERC20]
+<APIGithubLinkHeader
+    moduleName="IERC20"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/interfaces/src/token/erc20.cairo`}
+/>
 
 ```rust
 use openzeppelin_interfaces::erc20::IERC20;
@@ -32,53 +41,89 @@ Events
 - [`Transfer(from, to, value)`](#IERC20-Transfer)
 - [`Approval(owner, spender, value)`](#IERC20-Approval)
 
-#### [](#IERC20-Functions)Functions
+#### Functions [!toc] [#IERC20-Functions]
 
-#### [](#IERC20-total_supply)`total_supply() → u256` external
-
+<APIItem
+    functionSignature="total_supply() → u256"
+    id="IERC20-total_supply"
+    kind="external"
+>
 Returns the amount of tokens in existence.
+</APIItem>
 
-#### [](#IERC20-balance_of)`balance_of(account: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="balance_of(account: ContractAddress) → u256"
+    id="IERC20-balance_of"
+    kind="external"
+>
 Returns the amount of tokens owned by `account`.
+</APIItem>
 
-#### [](#IERC20-allowance)`allowance(owner: ContractAddress, spender: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="allowance(owner: ContractAddress, spender: ContractAddress) → u256"
+    id="IERC20-allowance"
+    kind="external"
+>
 Returns the remaining number of tokens that `spender` is allowed to spend on behalf of `owner` through [transfer\_from](#transfer_from). This is zero by default.
 
 This value changes when [approve](#IERC20-approve) or [transfer\_from](#IERC20-transfer_from) are called.
+</APIItem>
 
-#### [](#IERC20-transfer)`transfer(recipient: ContractAddress, amount: u256) → bool` external
-
-Moves `amount` tokens from the caller’s token balance to `to`. Returns `true` on success, reverts otherwise.
-
-Emits a [Transfer](#IERC20-Transfer) event.
-
-#### [](#IERC20-transfer_from)`transfer_from(sender: ContractAddress, recipient: ContractAddress, amount: u256) → bool` external
-
-Moves `amount` tokens from `sender` to `recipient` using the allowance mechanism. `amount` is then deducted from the caller’s allowance. Returns `true` on success, reverts otherwise.
+<APIItem
+    functionSignature="transfer(recipient: ContractAddress, amount: u256) → bool"
+    id="IERC20-transfer"
+    kind="external"
+>
+Moves `amount` tokens from the caller's token balance to `to`. Returns `true` on success, reverts otherwise.
 
 Emits a [Transfer](#IERC20-Transfer) event.
+</APIItem>
 
-#### [](#IERC20-approve)`approve(spender: ContractAddress, amount: u256) → bool` external
+<APIItem
+    functionSignature="transfer_from(sender: ContractAddress, recipient: ContractAddress, amount: u256) → bool"
+    id="IERC20-transfer_from"
+    kind="external"
+>
+Moves `amount` tokens from `sender` to `recipient` using the allowance mechanism. `amount` is then deducted from the caller's allowance. Returns `true` on success, reverts otherwise.
 
-Sets `amount` as the allowance of `spender` over the caller’s tokens. Returns `true` on success, reverts otherwise.
+Emits a [Transfer](#IERC20-Transfer) event.
+</APIItem>
+
+<APIItem
+    functionSignature="approve(spender: ContractAddress, amount: u256) → bool"
+    id="IERC20-approve"
+    kind="external"
+>
+Sets `amount` as the allowance of `spender` over the caller's tokens. Returns `true` on success, reverts otherwise.
 
 Emits an [Approval](#ERC20-Approval) event.
+</APIItem>
 
-#### [](#IERC20-Events)Events
+#### Events [!toc] [#IERC20-Events]
 
-#### [](#IERC20-Transfer)`Transfer(from: ContractAddress, to: ContractAddress, value: u256)` event
-
+<APIItem
+    functionSignature="Transfer(from: ContractAddress, to: ContractAddress, value: u256)"
+    id="IERC20-Transfer"
+    kind="event"
+>
 Emitted when `value` tokens are moved from one address (`from`) to another (`to`).
 
 Note that `value` may be zero.
+</APIItem>
 
-#### [](#IERC20-Approval)`Approval(owner: ContractAddress, spender: ContractAddress, value: u256)` event
-
+<APIItem
+    functionSignature="Approval(owner: ContractAddress, spender: ContractAddress, value: u256)"
+    id="IERC20-Approval"
+    kind="event"
+>
 Emitted when the allowance of a `spender` for an `owner` is set. `value` is the new allowance.
+</APIItem>
 
-### [](#IERC20Metadata)`IERC20Metadata`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/token/erc20.cairo)
+### `IERC20Metadata` [toc] [#IERC20Metadata]
+<APIGithubLinkHeader
+    moduleName="IERC20Metadata"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/interfaces/src/token/erc20.cairo`}
+/>
 
 ```rust
 use openzeppelin_interfaces::erc20::IERC20Metadata;
@@ -92,18 +137,29 @@ Functions
 - [`symbol()`](#IERC20Metadata-symbol)
 - [`decimals()`](#IERC20Metadata-decimals)
 
-#### [](#IERC20Metadata-Functions)Functions
+#### Functions [!toc] [#IERC20Metadata-Functions]
 
-#### [](#IERC20Metadata-name)`name() → ByteArray` external
-
+<APIItem
+    functionSignature="name() → ByteArray"
+    id="IERC20Metadata-name"
+    kind="external"
+>
 Returns the name of the token.
+</APIItem>
 
-#### [](#IERC20Metadata-symbol)`symbol() → ByteArray` external
-
+<APIItem
+    functionSignature="symbol() → ByteArray"
+    id="IERC20Metadata-symbol"
+    kind="external"
+>
 Returns the ticker symbol of the token.
+</APIItem>
 
-#### [](#IERC20Metadata-decimals)`decimals() → u8` external
-
+<APIItem
+    functionSignature="decimals() → u8"
+    id="IERC20Metadata-decimals"
+    kind="external"
+>
 Returns the number of decimals the token uses - e.g. `8` means to divide the token amount by `100000000` to get its user-readable representation.
 
 For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`).
@@ -111,8 +167,13 @@ For example, if `decimals` equals `2`, a balance of `505` tokens should be displ
 Tokens usually opt for a value of `18`, imitating the relationship between Ether and Wei. This is the default value returned by this function. To create a custom decimals implementation, see [Customizing decimals](../erc20#customizing_decimals).
 
 This information is only used for *display* purposes: it in no way affects any of the arithmetic of the contract.
+</APIItem>
 
-### [](#IERC20Permit)`IERC20Permit`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/token/erc20.cairo)
+### `IERC20Permit` [toc] [#IERC20Permit]
+<APIGithubLinkHeader
+    moduleName="IERC20Permit"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/interfaces/src/token/erc20.cairo`}
+/>
 
 ```rust
 use openzeppelin_interfaces::erc20::IERC20Permit;
@@ -126,21 +187,37 @@ Functions
 - [`nonces(owner)`](#IERC20Permit-nonces)
 - [`DOMAIN_SEPARATOR()`](#IERC20Permit-DOMAIN_SEPARATOR)
 
-#### [](#IERC20Permit-Functions)Functions
+#### Functions [!toc] [#IERC20Permit-Functions]
 
-#### [](#IERC20Permit-permit)`permit(owner: ContractAddress, spender: ContractAddress, amount: u256, deadline: u64, signature: Span<felt252>)` external
-
+<APIItem
+    functionSignature="permit(owner: ContractAddress, spender: ContractAddress, amount: u256, deadline: u64, signature: Span<felt252>)"
+    id="IERC20Permit-permit"
+    kind="external"
+>
 Sets `amount` as the allowance of `spender` over `owner`'s tokens after validating the signature.
+</APIItem>
 
-#### [](#IERC20Permit-nonces)`nonces(owner: ContractAddress) → felt252` external
-
+<APIItem
+    functionSignature="nonces(owner: ContractAddress) → felt252"
+    id="IERC20Permit-nonces"
+    kind="external"
+>
 Returns the current nonce of `owner`. A nonce value must be included whenever a signature for `permit` call is generated.
+</APIItem>
 
-#### [](#IERC20Permit-DOMAIN_SEPARATOR)`DOMAIN_SEPARATOR() → felt252` external
-
+<APIItem
+    functionSignature="DOMAIN_SEPARATOR() → felt252"
+    id="IERC20Permit-DOMAIN_SEPARATOR"
+    kind="external"
+>
 Returns the domain separator used in generating a message hash for `permit` signature. The domain hashing logic follows the [SNIP12](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-12.md) standard.
+</APIItem>
 
-### [](#IERC4626)`IERC4626`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/interfaces/src/token/erc4626.cairo)
+### `IERC4626` [toc] [#IERC4626]
+<APIGithubLinkHeader
+    moduleName="IERC4626"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/interfaces/src/token/erc4626.cairo`}
+/>
 
 ```rust
 use openzeppelin_interfaces::erc4626::IERC4626;
@@ -172,29 +249,40 @@ Events
 - [`Deposit(sender, owner, assets, shares)`](#IERC4626-Deposit)
 - [`Withdraw(sender, receiver, owner, assets, shares)`](#IERC4626-Withdraw)
 
-#### [](#IERC4626-Functions)Functions
+#### Functions [!toc] [#IERC4626-Functions]
 
-#### [](#IERC4626-asset)`asset() → ContractAddress` external
-
+<APIItem
+    functionSignature="asset() → ContractAddress"
+    id="IERC4626-asset"
+    kind="external"
+>
 Returns the address of the underlying token used for the Vault for accounting, depositing, and withdrawing.
 
 Requirements:
 
 - MUST be an ERC20 token contract.
 - MUST NOT panic.
+</APIItem>
 
-#### [](#IERC4626-total_assets)`total_assets() → u256` external
-
-Returns the total amount of the underlying asset that is “managed” by Vault.
+<APIItem
+    functionSignature="total_assets() → u256"
+    id="IERC4626-total_assets"
+    kind="external"
+>
+Returns the total amount of the underlying asset that is "managed" by Vault.
 
 Requirements:
 
 - SHOULD include any compounding that occurs from yield.
 - MUST be inclusive of any fees that are charged against assets in the Vault.
 - MUST NOT panic.
+</APIItem>
 
-#### [](#IERC4626-convert_to_shares)`convert_to_shares(assets: u256) → u256` external
-
+<APIItem
+    functionSignature="convert_to_shares(assets: u256) → u256"
+    id="IERC4626-convert_to_shares"
+    kind="external"
+>
 Returns the amount of shares that the Vault would exchange for the amount of `assets` provided irrespective of slippage or fees.
 
 Requirements:
@@ -205,10 +293,14 @@ Requirements:
 - MUST NOT panic unless due to integer overflow caused by an unreasonably large input.
 - MUST round down towards 0.
 
-This calculation MAY NOT reflect the "per-user" price-per-share, and instead should reflect the "average-user’s" price-per-share, meaning what the average user should expect to see when exchanging to and from.
+This calculation MAY NOT reflect the "per-user" price-per-share, and instead should reflect the "average-user's" price-per-share, meaning what the average user should expect to see when exchanging to and from.
+</APIItem>
 
-#### [](#IERC4626-convert_to_assets)`convert_to_assets(shares: u256) → u256` external
-
+<APIItem
+    functionSignature="convert_to_assets(shares: u256) → u256"
+    id="IERC4626-convert_to_assets"
+    kind="external"
+>
 Returns the amount of assets that the Vault would exchange for the amount of `shares` provided irrespective of slippage or fees.
 
 Requirements:
@@ -219,10 +311,14 @@ Requirements:
 - MUST NOT panic unless due to integer overflow caused by an unreasonably large input.
 - MUST round down towards 0.
 
-This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and from.
+This calculation MAY NOT reflect the "per-user" price-per-share, and instead should reflect the "average-user's" price-per-share, meaning what the average user should expect to see when exchanging to and from.
+</APIItem>
 
-#### [](#IERC4626-max_deposit)`max_deposit(receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_deposit(receiver: ContractAddress) → u256"
+    id="IERC4626-max_deposit"
+    kind="external"
+>
 Returns the maximum amount of the underlying asset that can be deposited into the Vault for `receiver`, through a deposit call.
 
 Requirements:
@@ -230,9 +326,13 @@ Requirements:
 - MUST return a limited value if receiver is subject to some deposit limit.
 - MUST return 2 \** 256 - 1 if there is no limit on the maximum amount of assets that may be deposited.
 - MUST NOT panic.
+</APIItem>
 
-#### [](#IERC4626-preview_deposit)`preview_deposit(assets: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_deposit(assets: u256) → u256"
+    id="IERC4626-preview_deposit"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their deposit at the current block, given current on-chain conditions.
 
 Requirements:
@@ -243,9 +343,13 @@ Requirements:
 - MUST NOT panic.
 
 Any unfavorable discrepancy between [IERC4626::convert\_to\_shares](#IERC4626-convert_to_shares) and `preview_deposit` SHOULD be considered slippage in share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</APIItem>
 
-#### [](#IERC4626-deposit)`deposit(assets: u256, receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="deposit(assets: u256, receiver: ContractAddress) → u256"
+    id="IERC4626-deposit"
+    kind="external"
+>
 Mints Vault shares to `receiver` by depositing exactly amount of `assets`.
 
 Requirements:
@@ -254,10 +358,14 @@ Requirements:
 - MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the deposit execution, and are accounted for during deposit.
 - MUST panic if all of assets cannot be deposited (due to deposit limit being reached, slippage, the user not approving enough underlying tokens to the Vault contract, etc).
 
-Most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+Most implementations will require pre-approval of the Vault with the Vault's underlying asset token.
+</APIItem>
 
-#### [](#IERC4626-max_mint)`max_mint(receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_mint(receiver: ContractAddress) → u256"
+    id="IERC4626-max_mint"
+    kind="external"
+>
 Returns the maximum amount of the Vault shares that can be minted for the receiver, through a mint call.
 
 Requirements:
@@ -265,9 +373,13 @@ Requirements:
 - MUST return a limited value if receiver is subject to some mint limit.
 - MUST return 2 \** 256 - 1 if there is no limit on the maximum amount of shares that may be minted.
 - MUST NOT panic.
+</APIItem>
 
-#### [](#IERC4626-preview_mint)`preview_mint(shares: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_mint(shares: u256) → u256"
+    id="IERC4626-preview_mint"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their mint at the current block, given current on-chain conditions.
 
 Requirements:
@@ -278,9 +390,13 @@ Requirements:
 - MUST NOT panic.
 
 Any unfavorable discrepancy between [IERC4626::convert\_to\_assets](#IERC4626-convert_to_assets) and `preview_mint` SHOULD be considered slippage in share price or some other type of condition, meaning the depositor will lose assets by minting.
+</APIItem>
 
-#### [](#IERC4626-mint)`mint(shares: u256, receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="mint(shares: u256, receiver: ContractAddress) → u256"
+    id="IERC4626-mint"
+    kind="external"
+>
 Mints exactly shares Vault shares to receiver by depositing amount of underlying tokens.
 
 Requirements:
@@ -289,19 +405,27 @@ Requirements:
 - MAY support an additional flow in which the underlying tokens are owned by the Vault contract before the mint execution, and are accounted for during mint.
 - MUST panic if all of shares cannot be minted (due to deposit limit being reached, slippage, the user not approving enough underlying tokens to the Vault contract, etc).
 
-Most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+Most implementations will require pre-approval of the Vault with the Vault's underlying asset token.
+</APIItem>
 
-#### [](#IERC4626-max_withdraw)`max_withdraw(owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_withdraw(owner: ContractAddress) → u256"
+    id="IERC4626-max_withdraw"
+    kind="external"
+>
 Returns the maximum amount of the underlying asset that can be withdrawn from the owner balance in the Vault, through a withdraw call.
 
 Requirements:
 
 - MUST return a limited value if owner is subject to some withdrawal limit or timelock.
 - MUST NOT panic.
+</APIItem>
 
-#### [](#IERC4626-preview_withdraw)`preview_withdraw(assets: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_withdraw(assets: u256) → u256"
+    id="IERC4626-preview_withdraw"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their withdrawal at the current block, given current on-chain conditions.
 
 Requirements:
@@ -312,9 +436,13 @@ Requirements:
 - MUST NOT panic.
 
 Any unfavorable discrepancy between [IERC4626::convert\_to\_shares](#IERC4626-convert_to_shares) and `preview_withdraw` SHOULD be considered slippage in share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</APIItem>
 
-#### [](#IERC4626-withdraw)`withdraw(assets: u256, receiver: ContractAddress, owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="withdraw(assets: u256, receiver: ContractAddress, owner: ContractAddress) → u256"
+    id="IERC4626-withdraw"
+    kind="external"
+>
 Burns shares from owner and sends exactly assets of underlying tokens to receiver.
 
 Requirements:
@@ -324,9 +452,13 @@ Requirements:
 - MUST revert if all of assets cannot be withdrawn (due to withdrawal limit being reached, slippage, the owner not having enough shares, etc).
 
 Some implementations will require pre-requesting to the Vault before a withdrawal may be performed. Those methods should be performed separately.
+</APIItem>
 
-#### [](#IERC4626-max_redeem)`max_redeem(owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_redeem(owner: ContractAddress) → u256"
+    id="IERC4626-max_redeem"
+    kind="external"
+>
 Returns the maximum amount of Vault shares that can be redeemed from the owner balance in the Vault, through a redeem call.
 
 Requirements:
@@ -334,9 +466,13 @@ Requirements:
 - MUST return a limited value if owner is subject to some withdrawal limit or timelock.
 - MUST return `ERC20::balance_of(owner)` if `owner` is not subject to any withdrawal limit or timelock.
 - MUST NOT panic.
+</APIItem>
 
-#### [](#IERC4626-preview_redeem)`preview_redeem(shares: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_redeem(shares: u256) → u256"
+    id="IERC4626-preview_redeem"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their redeemption at the current block, given current on-chain conditions.
 
 Requirements:
@@ -347,9 +483,13 @@ Requirements:
 - MUST NOT panic.
 
 Any unfavorable discrepancy between [IERC4626::convert\_to\_assets](#IERC4626-convert_to_assets) and `preview_redeem` SHOULD be considered slippage in share price or some other type of condition, meaning the depositor will lose assets by redeeming.
+</APIItem>
 
-#### [](#IERC4626-redeem)`redeem(shares: u256, receiver: ContractAddress, owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="redeem(shares: u256, receiver: ContractAddress, owner: ContractAddress) → u256"
+    id="IERC4626-redeem"
+    kind="external"
+>
 Burns exactly shares from owner and sends assets of underlying tokens to receiver.
 
 Requirements:
@@ -359,20 +499,33 @@ Requirements:
 - MUST revert if all of shares cannot be redeemed (due to withdrawal limit being reached, slippage, the owner not having enough shares, etc).
 
 Some implementations will require pre-requesting to the Vault before a withdrawal may be performed. Those methods should be performed separately.
+</APIItem>
 
-#### [](#IERC4626-Events)Events
+#### Events [!toc] [#IERC4626-Events]
 
-#### [](#IERC4626-Deposit)`Deposit(sender: ContractAddress, owner: ContractAddress, assets: u256, shares: u256)` event
-
+<APIItem
+    functionSignature="Deposit(sender: ContractAddress, owner: ContractAddress, assets: u256, shares: u256)"
+    id="IERC4626-Deposit"
+    kind="event"
+>
 Emitted when `sender` exchanges `assets` for `shares` and transfers those `shares` to `owner`.
+</APIItem>
 
-#### [](#IERC4626-Withdraw)`Withdraw(sender: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256)` event
-
+<APIItem
+    functionSignature="Withdraw(sender: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256)"
+    id="IERC4626-Withdraw"
+    kind="event"
+>
 Emitted when `sender` exchanges `shares`, owned by `owner`, for `assets` and transfers those `assets` to `receiver`.
+</APIItem>
 
-## [](#core)Core
+## Core
 
-### [](#ERC20Component)`ERC20Component`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/token/src/erc20/erc20.cairo)
+### `ERC20Component` [toc] [#ERC20Component]
+<APIGithubLinkHeader
+    moduleName="ERC20Component"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/token/src/erc20/erc20.cairo`}
+/>
 
 ```rust
 use openzeppelin_token::erc20::ERC20Component;
@@ -384,14 +537,14 @@ See [Hooks](#ERC20Component-Hooks) to understand how are hooks used.
 
 Hooks
 
-ERC20HooksTrait
+#### ERC20HooksTrait [!toc] [#ERC20Component-ERC20HooksTrait]
 
 - [`before_update(self, from, recipient, amount)`](#ERC20Component-before_update)
 - [`after_update(self, from, recipient, amount)`](#ERC20Component-after_update)
 
 [Embeddable Mixin Implementations](../components#mixins)
 
-ERC20MixinImpl
+#### ERC20MixinImpl [!toc] [#ERC20Component-Embeddable-Impls-ERC20MixinImpl]
 
 - [`ERC20Impl`](#ERC20Component-Embeddable-Impls-ERC20Impl)
 - [`ERC20MetadataImpl`](#ERC20Component-Embeddable-Impls-ERC20MetadataImpl)
@@ -399,7 +552,7 @@ ERC20MixinImpl
 
 Embeddable Implementations
 
-ERC20Impl
+#### ERC20Impl [!toc] [#ERC20Component-Embeddable-Impls-ERC20Impl]
 
 - [`total_supply(self)`](#ERC20Component-total_supply)
 - [`balance_of(self, account)`](#ERC20Component-balance_of)
@@ -408,31 +561,31 @@ ERC20Impl
 - [`transfer_from(self, sender, recipient, amount)`](#ERC20Component-transfer_from)
 - [`approve(self, spender, amount)`](#ERC20Component-approve)
 
-ERC20MetadataImpl
+#### ERC20MetadataImpl [!toc] [#ERC20Component-Embeddable-Impls-ERC20MetadataImpl]
 
 - [`name(self)`](#ERC20Component-name)
 - [`symbol(self)`](#ERC20Component-symbol)
 - [`decimals(self)`](#ERC20Component-decimals)
 
-ERC20CamelOnlyImpl
+#### ERC20CamelOnlyImpl [!toc] [#ERC20Component-Embeddable-Impls-ERC20CamelOnlyImpl]
 
 - [`totalSupply(self)`](#ERC20Component-totalSupply)
 - [`balanceOf(self, account)`](#ERC20Component-balanceOf)
 - [`transferFrom(self, sender, recipient, amount)`](#ERC20Component-transferFrom)
 
-ERC20PermitImpl
+#### ERC20PermitImpl [!toc] [#ERC20Component-Embeddable-Impls-ERC20PermitImpl]
 
 - [`permit(self, owner, spender, amount, deadline, signature)`](#ERC20Component-permit)
 - [`nonces(self, owner)`](#ERC20Component-nonces)
 - [`DOMAIN_SEPARATOR(self)`](#ERC20Component-DOMAIN_SEPARATOR)
 
-SNIP12MetadataExternalImpl
+#### SNIP12MetadataExternalImpl [!toc] [#ERC20Component-Embeddable-Impls-SNIP12MetadataExternalImpl]
 
 - [`snip12_metadata(self)`](#ERC20Component-snip12_metadata)
 
 Internal implementations
 
-InternalImpl
+#### InternalImpl [!toc] [#ERC20Component-InternalImpl]
 
 - [`initializer(self, name, symbol)`](#ERC20Component-initializer)
 - [`mint(self, recipient, amount)`](#ERC20Component-mint)
@@ -447,45 +600,72 @@ Events
 - [`Transfer(from, to, value)`](#ERC20Component-Transfer)
 - [`Approval(owner, spender, value)`](#ERC20Component-Approval)
 
-#### [](#ERC20Component-Hooks)Hooks
+#### Hooks [!toc] [#ERC20Component-Hooks]
 
 Hooks are functions which implementations can extend the functionality of the component source code. Every contract using ERC20Component is expected to provide an implementation of the ERC20HooksTrait. For basic token contracts, an empty implementation with no logic must be provided.
 
 You can use `openzeppelin_token::erc20::ERC20HooksEmptyImpl` which is already available as part of the library for this purpose.
 
-#### [](#ERC20Component-before_update)`before_update(ref self: ContractState, from: ContractAddress, recipient: ContractAddress, amount: u256)` hook
-
+<APIItem
+    functionSignature="before_update(ref self: ContractState, from: ContractAddress, recipient: ContractAddress, amount: u256)"
+    id="ERC20Component-before_update"
+    kind="hook"
+>
 Function executed at the beginning of the [update](#ERC20Component-update) function prior to any other logic.
+</APIItem>
 
-#### [](#ERC20Component-after_update)`after_update(ref self: ContractState, from: ContractAddress, recipient: ContractAddress, amount: u256)` hook
-
+<APIItem
+    functionSignature="after_update(ref self: ContractState, from: ContractAddress, recipient: ContractAddress, amount: u256)"
+    id="ERC20Component-after_update"
+    kind="hook"
+>
 Function executed at the end of the [update](#ERC20Component-update) function.
+</APIItem>
 
-#### [](#ERC20Component-Embeddable-functions)Embeddable functions
+#### Embeddable functions [!toc] [#ERC20Component-Embeddable-Functions]
 
-#### [](#ERC20Component-total_supply)`total_supply(@self: ContractState) → u256` external
-
+<APIItem
+    functionSignature="total_supply(@self: ContractState) → u256"
+    id="ERC20Component-total_supply"
+    kind="external"
+>
 See [IERC20::total\_supply](#IERC20-total_supply).
+</APIItem>
 
-#### [](#ERC20Component-balance_of)`balance_of(@self: ContractState, account: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="balance_of(@self: ContractState, account: ContractAddress) → u256"
+    id="ERC20Component-balance_of"
+    kind="external"
+>
 See [IERC20::balance\_of](#IERC20-balance_of).
+</APIItem>
 
-#### [](#ERC20Component-allowance)`allowance(@self: ContractState, owner: ContractAddress, spender: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="allowance(@self: ContractState, owner: ContractAddress, spender: ContractAddress) → u256"
+    id="ERC20Component-allowance"
+    kind="external"
+>
 See [IERC20::allowance](#IERC20-allowance).
+</APIItem>
 
-#### [](#ERC20Component-transfer)`transfer(ref self: ContractState, recipient: ContractAddress, amount: u256) → bool` external
-
+<APIItem
+    functionSignature="transfer(ref self: ContractState, recipient: ContractAddress, amount: u256) → bool"
+    id="ERC20Component-transfer"
+    kind="external"
+>
 See [IERC20::transfer](#IERC20-transfer).
 
 Requirements:
 
 - `recipient` cannot be the zero address.
 - The caller must have a balance of at least `amount`.
+</APIItem>
 
-#### [](#ERC20Component-transfer_from)`transfer_from(ref self: ContractState, sender: ContractAddress, recipient: ContractAddress, amount: u256) → bool` external
-
+<APIItem
+    functionSignature="transfer_from(ref self: ContractState, sender: ContractAddress, recipient: ContractAddress, amount: u256) → bool"
+    id="ERC20Component-transfer_from"
+    kind="external"
+>
 See [IERC20::transfer\_from](#IERC20-transfer_from).
 
 Requirements:
@@ -494,47 +674,79 @@ Requirements:
 - `sender` must have a balance of at least `amount`.
 - `recipient` cannot be the zero address.
 - The caller must have allowance for `sender`'s tokens of at least `amount`.
+</APIItem>
 
-#### [](#ERC20Component-approve)`approve(ref self: ContractState, spender: ContractAddress, amount: u256) → bool` external
-
+<APIItem
+    functionSignature="approve(ref self: ContractState, spender: ContractAddress, amount: u256) → bool"
+    id="ERC20Component-approve"
+    kind="external"
+>
 See [IERC20::approve](#IERC20-approve).
 
 Requirements:
 
 - `spender` cannot be the zero address.
+</APIItem>
 
-#### [](#ERC20Component-name)`name() → ByteArray` external
-
+<APIItem
+    functionSignature="name() → ByteArray"
+    id="ERC20Component-name"
+    kind="external"
+>
 See [IERC20Metadata::name](#IERC20Metadata-name).
+</APIItem>
 
-#### [](#ERC20Component-symbol)`symbol() → ByteArray` external
-
+<APIItem
+    functionSignature="symbol() → ByteArray"
+    id="ERC20Component-symbol"
+    kind="external"
+>
 See [IERC20Metadata::symbol](#IERC20Metadata-symbol).
+</APIItem>
 
-#### [](#ERC20Component-decimals)`decimals() → u8` external
-
+<APIItem
+    functionSignature="decimals() → u8"
+    id="ERC20Component-decimals"
+    kind="external"
+>
 See [IERC20Metadata::decimals](#IERC20Metadata-decimals).
+</APIItem>
 
-#### [](#ERC20Component-totalSupply)`totalSupply(self: @ContractState) → u256` external
-
+<APIItem
+    functionSignature="totalSupply(self: @ContractState) → u256"
+    id="ERC20Component-totalSupply"
+    kind="external"
+>
 See [IERC20::total\_supply](#IERC20-total_supply).
 
 Supports the Cairo v0 convention of writing external methods in camelCase as discussed [here](https://github.com/OpenZeppelin/cairo-contracts/discussions/34).
+</APIItem>
 
-#### [](#ERC20Component-balanceOf)`balanceOf(self: @ContractState, account: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="balanceOf(self: @ContractState, account: ContractAddress) → u256"
+    id="ERC20Component-balanceOf"
+    kind="external"
+>
 See [IERC20::balance\_of](#IERC20-balance_of).
 
 Supports the Cairo v0 convention of writing external methods in camelCase as discussed [here](https://github.com/OpenZeppelin/cairo-contracts/discussions/34).
+</APIItem>
 
-#### [](#ERC20Component-transferFrom)`transferFrom(ref self: ContractState, sender: ContractAddress, recipient: ContractAddress) → bool` external
-
+<APIItem
+    functionSignature="transferFrom(ref self: ContractState, sender: ContractAddress, recipient: ContractAddress) → bool"
+    id="ERC20Component-transferFrom"
+    kind="external"
+>
 See [IERC20::transfer\_from](#IERC20-transfer_from).
 
 Supports the Cairo v0 convention of writing external methods in camelCase as discussed [here](https://github.com/OpenZeppelin/cairo-contracts/discussions/34).
+</APIItem>
 
-#### [](#ERC20Component-permit)`permit(ref self: ContractState, owner: ContractAddress, spender: ContractAddress, amount: u256, deadline: u64, signature: Span<felt252>) → bool` external
-
+<APIItem
+    functionSignature="permit(ref self: ContractState, owner: ContractAddress, spender: ContractAddress, amount: u256, deadline: u64, signature: Span<felt252>) → bool"
+    id="ERC20Component-permit"
+    kind="external"
+>
 Sets `amount` as the allowance of `spender` over `owner`'s tokens after validating the signature.
 
 Requirements:
@@ -545,33 +757,53 @@ Requirements:
 - `signature` is a valid signature that can be validated with a call to `owner` account.
 - `signature` must use the current nonce of the `owner`.
 
-Emits an [Approval](#ERC20-Approval) event. Every successful call increases \`owner’s nonce by one.
+Emits an [Approval](#ERC20-Approval) event. Every successful call increases \`owner's nonce by one.
+</APIItem>
 
-#### [](#ERC20Component-nonces)`nonces(self: @ContractState, owner: ContractAddress) → felt252` external
-
+<APIItem
+    functionSignature="nonces(self: @ContractState, owner: ContractAddress) → felt252"
+    id="ERC20Component-nonces"
+    kind="external"
+>
 Returns the current nonce of `owner`. A nonce value must be included whenever a signature for `permit` call is generated.
+</APIItem>
 
-#### [](#ERC20Component-DOMAIN_SEPARATOR)`DOMAIN_SEPARATOR(self: @ContractState) → felt252` external
-
+<APIItem
+    functionSignature="DOMAIN_SEPARATOR(self: @ContractState) → felt252"
+    id="ERC20Component-DOMAIN_SEPARATOR"
+    kind="external"
+>
 Returns the domain separator used in generating a message hash for `permit` signature. The domain hashing logic follows the [SNIP12](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-12.md) standard.
+</APIItem>
 
-#### [](#ERC20Component-snip12_metadata)`snip12_metadata(self: @ContractState) → (felt252, felt252)` external
-
+<APIItem
+    functionSignature="snip12_metadata(self: @ContractState) → (felt252, felt252)"
+    id="ERC20Component-snip12_metadata"
+    kind="external"
+>
 Returns the domain name and version used to generate the message hash for permit signature.
 
 The returned tuple contains:
 
 - `t.0`: The name used in the [SNIP12Metadata](utilities#snip12) implementation.
 - `t.1`: The version used in the [SNIP12Metadata](utilities#snip12) implementation.
+</APIItem>
 
-#### [](#ERC20Component-Internal-functions)Internal functions
+#### Internal functions [!toc] [#ERC20Component-Internal-Functions]
 
-#### [](#ERC20Component-initializer)`initializer(ref self: ContractState, name: ByteArray, symbol: ByteArray)` internal
+<APIItem
+    functionSignature="initializer(ref self: ContractState, name: ByteArray, symbol: ByteArray)"
+    id="ERC20Component-initializer"
+    kind="internal"
+>
+Initializes the contract by setting the token name and symbol. This should be used inside of the contract's constructor.
+</APIItem>
 
-Initializes the contract by setting the token name and symbol. This should be used inside of the contract’s constructor.
-
-#### [](#ERC20Component-mint)`mint(ref self: ContractState, recipient: ContractAddress, amount: u256)` internal
-
+<APIItem
+    functionSignature="mint(ref self: ContractState, recipient: ContractAddress, amount: u256)"
+    id="ERC20Component-mint"
+    kind="internal"
+>
 Creates an `amount` number of tokens and assigns them to `recipient`.
 
 Emits a [Transfer](#ERC20Component-Transfer) event with `from` being the zero address.
@@ -579,9 +811,13 @@ Emits a [Transfer](#ERC20Component-Transfer) event with `from` being the zero ad
 Requirements:
 
 - `recipient` cannot be the zero address.
+</APIItem>
 
-#### [](#ERC20Component-burn)`burn(ref self: ContractState, account: ContractAddress, amount: u256)` internal
-
+<APIItem
+    functionSignature="burn(ref self: ContractState, account: ContractAddress, amount: u256)"
+    id="ERC20Component-burn"
+    kind="internal"
+>
 Destroys `amount` number of tokens from `account`.
 
 Emits a [Transfer](#ERC20Component-Transfer) event with `to` set to the zero address.
@@ -589,17 +825,25 @@ Emits a [Transfer](#ERC20Component-Transfer) event with `to` set to the zero add
 Requirements:
 
 - `account` cannot be the zero address.
+</APIItem>
 
-#### [](#ERC20Component-update)`update(ref self: ContractState, from: ContractAddress, to: ContractAddress, amount: u256)` internal
-
+<APIItem
+    functionSignature="update(ref self: ContractState, from: ContractAddress, to: ContractAddress, amount: u256)"
+    id="ERC20Component-update"
+    kind="internal"
+>
 Transfers an `amount` of tokens from `from` to `to`, or alternatively mints (or burns) if `from` (or `to`) is the zero address.
 
 This function can be extended using the [ERC20HooksTrait](#ERC20Component-ERC20HooksTrait), to add functionality before and/or after the transfer, mint, or burn.
 
 Emits a [Transfer](#ERC20Component-Transfer) event.
+</APIItem>
 
-#### [](#ERC20Component-_transfer)`_transfer(ref self: ContractState, sender: ContractAddress, recipient: ContractAddress, amount: u256)` internal
-
+<APIItem
+    functionSignature="_transfer(ref self: ContractState, sender: ContractAddress, recipient: ContractAddress, amount: u256)"
+    id="ERC20Component-_transfer"
+    kind="internal"
+>
 Moves `amount` of tokens from `from` to `to`.
 
 This internal function does not check for access permissions but can be useful as a building block, for example to implement automatic token fees, slashing mechanisms, etc.
@@ -611,9 +855,13 @@ Requirements:
 - `from` cannot be the zero address.
 - `to` cannot be the zero address.
 - `from` must have a balance of at least `amount`.
+</APIItem>
 
-#### [](#ERC20Component-_approve)`_approve(ref self: ContractState, owner: ContractAddress, spender: ContractAddress, amount: u256)` internal
-
+<APIItem
+    functionSignature="_approve(ref self: ContractState, owner: ContractAddress, spender: ContractAddress, amount: u256)"
+    id="ERC20Component-_approve"
+    kind="internal"
+>
 Sets `amount` as the allowance of `spender` over `owner`'s tokens.
 
 This internal function does not check for access permissions but can be useful as a building block, for example to implement automatic allowances on behalf of other addresses.
@@ -624,28 +872,45 @@ Requirements:
 
 - `owner` cannot be the zero address.
 - `spender` cannot be the zero address.
+</APIItem>
 
-#### [](#ERC20Component-_spend_allowance)`_spend_allowance(ref self: ContractState, owner: ContractAddress, spender: ContractAddress, amount: u256)` internal
-
+<APIItem
+    functionSignature="_spend_allowance(ref self: ContractState, owner: ContractAddress, spender: ContractAddress, amount: u256)"
+    id="ERC20Component-_spend_allowance"
+    kind="internal"
+>
 Updates `owner`'s allowance for `spender` based on spent `amount`.
 
 This internal function does not update the allowance value in the case of infinite allowance.
 
 Possibly emits an [Approval](#ERC20Component-Approval) event.
+</APIItem>
 
-#### [](#ERC20Component-Events)Events
+#### Events [!toc] [#ERC20Component-Events]
 
-#### [](#ERC20Component-Transfer)`Transfer(from: ContractAddress, to: ContractAddress, value: u256)` event
-
+<APIItem
+    functionSignature="Transfer(from: ContractAddress, to: ContractAddress, value: u256)"
+    id="ERC20Component-Transfer"
+    kind="event"
+>
 See [IERC20::Transfer](#IERC20-Transfer).
+</APIItem>
 
-#### [](#ERC20Component-Approval)`Approval(owner: ContractAddress, spender: ContractAddress, value: u256)` event
-
+<APIItem
+    functionSignature="Approval(owner: ContractAddress, spender: ContractAddress, value: u256)"
+    id="ERC20Component-Approval"
+    kind="event"
+>
 See [IERC20::Approval](#IERC20-Approval).
+</APIItem>
 
-## [](#extensions)Extensions
+## Extensions
 
-### [](#ERC4626Component)`ERC4626Component`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/token/src/erc20/extensions/erc4626/interface.cairo#L19)
+### `ERC4626Component` [toc] [#ERC4626Component]
+<APIGithubLinkHeader
+    moduleName="ERC4626Component"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/token/src/erc20/extensions/erc4626/interface.cairo#L19`}
+/>
 
 ```rust
 use openzeppelin_token::erc20::extensions::erc4626::ERC4626Component;
@@ -653,41 +918,41 @@ use openzeppelin_token::erc20::extensions::erc4626::ERC4626Component;
 
 Extension of ERC20 that implements the [IERC4626](#IERC4626) interface which allows the minting and burning of "shares" in exchange for an underlying "asset." The component leverages traits to configure fees, limits, and decimals.
 
-[Immutable Component Config](../components#immutable_config)
+[Immutable Component Config](../components#immutable-config)
 
-constants
+#### constants [!toc] [#ERC4626Component-constants]
 
 - [`UNDERLYING_DECIMALS`](#ERC4626Component-IC-UNDERLYING_DECIMALS)
 - [`DECIMALS_OFFSET`](#ERC4626Component-IC-DECIMALS_OFFSET)
 
-functions
+#### functions [!toc] [#ERC4626Component-functions]
 
 - [`validate()`](#ERC4626Component-IC-validate)
 
 Hooks
 
-FeeConfigTrait
+#### FeeConfigTrait [!toc] [#ERC4626Component-FeeConfigTrait]
 
 - [`calculate_deposit_fee(self, assets, shares)`](#ERC4626Component-calculate_deposit_fee)
 - [`calculate_mint_fee(self, assets, shares)`](#ERC4626Component-calculate_mint_fee)
 - [`calculate_withdraw_fee(self, assets, shares)`](#ERC4626Component-calculate_withdraw_fee)
 - [`calculate_redeem_fee(self, assets, shares)`](#ERC4626Component-calculate_redeem_fee)
 
-LimitConfigTrait
+#### LimitConfigTrait [!toc] [#ERC4626Component-LimitConfigTrait]
 
 - [`deposit_limit(self, receiver)`](#ERC4626Component-deposit_limit)
 - [`mint_limit(self, receiver)`](#ERC4626Component-mint_limit)
 - [`withdraw_limit(self, owner)`](#ERC4626Component-withdraw_limit)
 - [`redeem_limit(self, owner)`](#ERC4626Component-redeem_limit)
 
-ERC4626HooksTrait
+#### ERC4626HooksTrait [!toc] [#ERC4626Component-ERC4626HooksTrait]
 
 - [`before_deposit(self, caller, receiver, assets, shares, fee)`](#ERC4626Component-before_deposit)
 - [`after_deposit(self, caller, receiver, assets, shares, fee)`](#ERC4626Component-after_deposit)
 - [`before_withdraw(self, caller, receiver, owner, assets, shares, fee)`](#ERC4626Component-before_withdraw)
 - [`after_withdraw(self, caller, receiver, owner, assets, shares, fee)`](#ERC4626Component-after_withdraw)
 
-AssetsManagementTrait
+#### AssetsManagementTrait [!toc] [#ERC4626Component-AssetsManagementTrait]
 
 - [`get_total_assets(self)`](#ERC4626Component-get_total_assets)
 - [`transfer_assets_in(self, from, assets)`](#ERC4626Component-transfer_assets_in)
@@ -695,7 +960,7 @@ AssetsManagementTrait
 
 Embeddable Implementations
 
-ERC4626Impl
+#### ERC4626Impl [!toc] [#ERC4626Component-Embeddable-Impls-ERC4626Impl]
 
 - [`asset(self)`](#ERC4626Component-asset)
 - [`total_assets(self)`](#ERC4626Component-total_assets)
@@ -714,7 +979,7 @@ ERC4626Impl
 - [`preview_redeem(self, shares)`](#ERC4626Component-preview_redeem)
 - [`redeem(self, shares, receiver, owner)`](#ERC4626Component-redeem)
 
-ERC20Impl
+#### ERC20Impl [!toc] [#ERC4626Component-Embeddable-Impls-ERC20Impl]
 
 - [`total_supply(self)`](#ERC20Component-total_supply)
 - [`balance_of(self, account)`](#ERC20Component-balance_of)
@@ -723,7 +988,7 @@ ERC20Impl
 - [`transfer_from(self, sender, recipient, amount)`](#ERC20Component-transfer_from)
 - [`approve(self, spender, amount)`](#ERC20Component-approve)
 
-ERC4626MetadataImpl
+#### ERC4626MetadataImpl [!toc] [#ERC4626Component-Embeddable-Impls-ERC4626MetadataImpl]
 
 - [`name(self)`](#ERC4626Component-name)
 - [`symbol(self)`](#ERC4626Component-symbol)
@@ -731,7 +996,7 @@ ERC4626MetadataImpl
 
 Internal functions
 
-InternalImpl
+#### InternalImpl [!toc] [#ERC4626Component-InternalImpl]
 
 - [`initializer(self, asset_address)`](#ERC4626Component-initializer)
 - [`_deposit(self, caller, receiver, assets, shares)`](#ERC4626Component-_deposit)
@@ -739,33 +1004,45 @@ InternalImpl
 - [`_convert_to_shares(self, assets, rounding)`](#ERC4626Component-_convert_to_shares)
 - [`_convert_to_assets(self, shares, rounding)`](#ERC4626Component-_convert_to_assets)
 
-#### [](#ERC4626Component-Immutable-Config)Immutable Config
+#### Immutable Config [!toc] [#ERC4626Component-Immutable-Config]
 
-#### [](#ERC4626Component-IC-UNDERLYING_DECIMALS)`UNDERLYING_DECIMALS: u128` constant
+<APIItem
+    functionSignature="UNDERLYING_DECIMALS: u128"
+    id="ERC4626Component-IC-UNDERLYING_DECIMALS"
+    kind="constant"
+>
+Should match the underlying asset's decimals. The default value is `18`.
+</APIItem>
 
-Should match the underlying asset’s decimals. The default value is `18`.
-
-#### [](#ERC4626Component-IC-DECIMALS_OFFSET)`DECIMALS_OFFSET: u128` constant
-
+<APIItem
+    functionSignature="DECIMALS_OFFSET: u128"
+    id="ERC4626Component-IC-DECIMALS_OFFSET"
+    kind="constant"
+>
 Corresponds to the representational offset between `UNDERLYING_DECIMALS` and the vault decimals. The greater the offset, the more expensive it is for attackers to execute an inflation attack.
+</APIItem>
 
-#### [](#ERC4626Component-IC-validate)`validate()` internal
-
-Validates the given implementation of the contract’s configuration.
+<APIItem
+    functionSignature="validate()"
+    id="ERC4626Component-IC-validate"
+    kind="internal"
+>
+Validates the given implementation of the contract's configuration.
 
 Requirements:
 
 - `UNDERLYING_DECIMALS` + `DECIMALS_OFFSET` cannot exceed 255 (max u8).
 
-This function is called by the contract’s initializer.
+This function is called by the contract's initializer.
+</APIItem>
 
-#### [](#ERC4626Component-Hooks)Hooks
+#### Hooks [!toc] [#ERC4626Component-Hooks]
 
 Hooks are functions which implementations can extend the functionality of the component source code. Every contract using ERC4626Component is expected to provide an implementation of the ERC4626HooksTrait. For basic token contracts, an empty implementation with no logic must be provided.
 
 You can use `openzeppelin_token::erc20::extensions::erc4626::ERC4626EmptyHooks` which is already available as part of the library for this purpose.
 
-#### [](#feeconfigtrait)FeeConfigTrait
+#### FeeConfigTrait [!toc] [#ERC4626Component-FeeConfigTrait]
 
 The logic for calculating entry and exit fees is expected to be defined at the contract level. Defaults to no entry or exit fees.
 
@@ -778,94 +1055,142 @@ See implementation examples:
 - Contract charging fees in assets: [ERC4626AssetsFeesMock](https://github.com/OpenZeppelin/cairo-contracts/tree/main/packages/test_common/src/mocks/erc4626.cairo#L253)
 - Contract charging fees in shares: [ERC4626SharesFeesMock](https://github.com/OpenZeppelin/cairo-contracts/tree/main/packages/test_common/src/mocks/erc4626.cairo#L426)
 
-#### [](#ERC4626Component-calculate_deposit_fee)`calculate_deposit_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>` hook
+<APIItem
+    functionSignature="calculate_deposit_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>"
+    id="ERC4626Component-calculate_deposit_fee"
+    kind="hook"
+>
+Calculates the entry fee for a deposit during [preview\_deposit](#ERC4626Component-preview_deposit). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [after\_deposit](#ERC4626Component-after_deposit) hook: asset fees should be transferred from the vault's management to the fee recipient, while share fees should be minted to the fee recipient.
+</APIItem>
 
-Calculates the entry fee for a deposit during [preview\_deposit](#ERC4626Component-preview_deposit). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [after\_deposit](#ERC4626Component-after_deposit) hook: asset fees should be transferred from the vault’s management to the fee recipient, while share fees should be minted to the fee recipient.
+<APIItem
+    functionSignature="calculate_mint_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>"
+    id="ERC4626Component-calculate_mint_fee"
+    kind="hook"
+>
+Calculates the entry fee for a mint during [preview\_mint](#ERC4626Component-preview_mint). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [after\_deposit](#ERC4626Component-after_deposit) hook: asset fees should be transferred from the vault's management to the fee recipient, while share fees should be minted to the fee recipient.
+</APIItem>
 
-#### [](#ERC4626Component-calculate_mint_fee)`calculate_mint_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>` hook
+<APIItem
+    functionSignature="calculate_withdraw_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>"
+    id="ERC4626Component-calculate_withdraw_fee"
+    kind="hook"
+>
+Calculates the exit fee for a withdraw during [preview\_withdraw](#ERC4626Component-preview_withdraw). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [before\_withdraw](#ERC4626Component-before_withdraw) hook: asset fees should be transferred from the vault's management to the fee recipient, while share fees should be transferred from the owner to the fee recipient.
+</APIItem>
 
-Calculates the entry fee for a mint during [preview\_mint](#ERC4626Component-preview_mint). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [after\_deposit](#ERC4626Component-after_deposit) hook: asset fees should be transferred from the vault’s management to the fee recipient, while share fees should be minted to the fee recipient.
+<APIItem
+    functionSignature="calculate_redeem_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>"
+    id="ERC4626Component-calculate_redeem_fee"
+    kind="hook"
+>
+Calculates the exit fee for a redeem during [preview\_redeem](#ERC4626Component-preview_redeem). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [before\_withdraw](#ERC4626Component-before_withdraw) hook: asset fees should be transferred from the vault's management to the fee recipient, while share fees should be transferred from the owner to the fee recipient.
+</APIItem>
 
-#### [](#ERC4626Component-calculate_withdraw_fee)`calculate_withdraw_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>` hook
-
-Calculates the exit fee for a withdraw during [preview\_withdraw](#ERC4626Component-preview_withdraw). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [before\_withdraw](#ERC4626Component-before_withdraw) hook: asset fees should be transferred from the vault’s management to the fee recipient, while share fees should be transferred from the owner to the fee recipient.
-
-#### [](#ERC4626Component-calculate_redeem_fee)`calculate_redeem_fee(self: @ContractState, assets: u256, shares: u256) → Option<Fee>` hook
-
-Calculates the exit fee for a redeem during [preview\_redeem](#ERC4626Component-preview_redeem). The returned fee affects the final asset and share amounts. Fees are not transferred automatically and must be handled in the [before\_withdraw](#ERC4626Component-before_withdraw) hook: asset fees should be transferred from the vault’s management to the fee recipient, while share fees should be transferred from the owner to the fee recipient.
-
-#### [](#limitconfigtrait)LimitConfigTrait
+#### LimitConfigTrait [!toc] [#ERC4626Component-LimitConfigTrait]
 
 Sets limits to the target exchange type and is expected to be defined at the contract level. These limits correspond directly to the `max_<OPERATION>` i.e. `deposit_limit` → `max_deposit`.
 
 The [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec states that the `max_<OPERATION>` methods must take into account all global and user-specific limits. If an operation is disabled (even temporarily), the corresponding limit MUST be `0` and MUST NOT panic.
 
-#### [](#ERC4626Component-deposit_limit)`deposit_limit(ref self: ContractState, receiver: ContractAddress) → Option<u256>` hook
-
+<APIItem
+    functionSignature="deposit_limit(ref self: ContractState, receiver: ContractAddress) → Option<u256>"
+    id="ERC4626Component-deposit_limit"
+    kind="hook"
+>
 The max deposit allowed.
 
 Defaults (`Option::None`) to 2 \** 256 - 1.
+</APIItem>
 
-#### [](#ERC4626Component-mint_limit)`mint_limit(ref self: ContractState, receiver: ContractAddress) → Option<u256>` hook
-
+<APIItem
+    functionSignature="mint_limit(ref self: ContractState, receiver: ContractAddress) → Option<u256>"
+    id="ERC4626Component-mint_limit"
+    kind="hook"
+>
 The max mint allowed.
 
 Defaults (`Option::None`) to 2 \** 256 - 1.
+</APIItem>
 
-#### [](#ERC4626Component-withdraw_limit)`withdraw_limit(ref self: ContractState, owner: ContractAddress) → Option<u256>` hook
-
+<APIItem
+    functionSignature="withdraw_limit(ref self: ContractState, owner: ContractAddress) → Option<u256>"
+    id="ERC4626Component-withdraw_limit"
+    kind="hook"
+>
 The max withdraw allowed.
 
 Defaults (`Option::None`) to the full asset balance of `owner` converted from shares.
+</APIItem>
 
-#### [](#ERC4626Component-redeem_limit)`redeem_limit(ref self: ContractState, owner: ContractAddress) → Option<u256>` hook
-
+<APIItem
+    functionSignature="redeem_limit(ref self: ContractState, owner: ContractAddress) → Option<u256>"
+    id="ERC4626Component-redeem_limit"
+    kind="hook"
+>
 The max redeem allowed.
 
 Defaults (`Option::None`) to the full asset balance of `owner`.
+</APIItem>
 
-#### [](#erc4626hookstrait)ERC4626HooksTrait
+#### ERC4626HooksTrait [!toc] [#ERC4626Component-ERC4626HooksTrait]
 
 Allows contracts to hook logic into deposit and withdraw transactions. This is where contracts can transfer fees.
 
 ERC4626 preview methods must be inclusive of any entry or exit fees. Fees are calculated using [FeeConfigTrait](#ERC4626Component-FeeConfigTrait) methods and automatically adjust the final asset and share amounts. Fee transfers are handled in `ERC4626HooksTrait` methods.
 
-Special care must be taken when calling external contracts in these hooks. In that case, consider implementing reentrancy protections. For example, in the `withdraw` flow, the `withdraw_limit` is checked **before** the `before_withdraw` hook is invoked. If this hook performs a reentrant call that invokes `withdraw` again, the subsequent check on `withdraw_limit` will be done before the first withdrawal’s core logic (e.g., burning shares and transferring assets) is executed. This could lead to bypassing withdrawal constraints or draining funds.
+Special care must be taken when calling external contracts in these hooks. In that case, consider implementing reentrancy protections. For example, in the `withdraw` flow, the `withdraw_limit` is checked **before** the `before_withdraw` hook is invoked. If this hook performs a reentrant call that invokes `withdraw` again, the subsequent check on `withdraw_limit` will be done before the first withdrawal's core logic (e.g., burning shares and transferring assets) is executed. This could lead to bypassing withdrawal constraints or draining funds.
 
 See the [ERC4626AssetsFeesMock](https://github.com/OpenZeppelin/cairo-contracts/tree/main/packages/test_common/src/mocks/erc4626.cairo#L253) and [ERC4626SharesFeesMock](https://github.com/OpenZeppelin/cairo-contracts/tree/main/packages/test_common/src/mocks/erc4626.cairo#L426) examples.
 
-#### [](#ERC4626Component-before_deposit)`before_deposit(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)` hook
-
+<APIItem
+    functionSignature="before_deposit(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)"
+    id="ERC4626Component-before_deposit"
+    kind="hook"
+>
 Hooks into [\_deposit](#ERC4626Component-_deposit).
 
 Executes logic before transferring assets and minting shares. The fee is calculated via [FeeConfigTrait](#ERC4626Component-FeeConfigTrait). Assets and shares represent the actual amounts the user will spend and receive, respectively. Asset fees are included in assets; share fees are excluded from shares.
+</APIItem>
 
-#### [](#ERC4626Component-after_deposit)`after_deposit(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)` hook
-
+<APIItem
+    functionSignature="after_deposit(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)"
+    id="ERC4626Component-after_deposit"
+    kind="hook"
+>
 Hooks into [\_deposit](#ERC4626Component-_deposit).
 
 Executes logic after transferring assets and minting shares. The fee is calculated via [FeeConfigTrait](#ERC4626Component-FeeConfigTrait). Assets and shares represent the actual amounts the user will spend and receive, respectively. Asset fees are included in assets; share fees are excluded from shares.
+</APIItem>
 
-#### [](#ERC4626Component-before_withdraw)`before_withdraw(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)` hook
-
+<APIItem
+    functionSignature="before_withdraw(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)"
+    id="ERC4626Component-before_withdraw"
+    kind="hook"
+>
 Hooks into [\_withdraw](#ERC4626Component-_withdraw).
 
 Executes logic before burning shares and transferring assets. The fee is calculated via [FeeConfigTrait](#ERC4626Component-FeeConfigTrait). Assets and shares represent the actual amounts the user will receive and spend, respectively. Asset fees are excluded from assets; share fees are included in shares.
+</APIItem>
 
-#### [](#ERC4626Component-after_withdraw)`after_withdraw(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)` hook
-
+<APIItem
+    functionSignature="after_withdraw(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256, fee: Option<Fee>)"
+    id="ERC4626Component-after_withdraw"
+    kind="hook"
+>
 Hooks into [\_withdraw](#ERC4626Component-_withdraw).
 
 Executes logic after burning shares and transferring assets. The fee is calculated via [FeeConfigTrait](#ERC4626Component-FeeConfigTrait). Assets and shares represent the actual amounts the user will receive and spend, respectively. Asset fees are excluded from assets; share fees are included in shares.
+</APIItem>
 
-#### [](#assetsmanagementtrait)AssetsManagementTrait
+#### AssetsManagementTrait [!toc] [#ERC4626Component-AssetsManagementTrait]
 
 Defines how the ERC4626 vault manages its underlying assets. This trait provides the core asset management functionality for the vault, abstracting the actual storage and transfer mechanisms. It enables two primary implementation patterns:
 
 1. **Self-managed assets**: The vault contract holds assets directly on its own address. This is the default behavior provided by `ERC4626SelfAssetsManagement` implementation.
 2. **External vault**: Assets are managed by an external contract, allowing for more complex asset management strategies. The exact implementation is expected to be defined by the contract implementing the ERC4626 component.
 
-The trait methods are called during deposit, withdrawal, and total assets calculations, ensuring that the vault’s share pricing remains accurate regardless of the underlying asset management strategy.
+The trait methods are called during deposit, withdrawal, and total assets calculations, ensuring that the vault's share pricing remains accurate regardless of the underlying asset management strategy.
 
 Implementations must ensure that `get_total_assets` returns the actual amount of assets that can be withdrawn by users. Inaccurate reporting can lead to incorrect share valuations and potential economic attacks.
 
@@ -874,76 +1199,115 @@ See implementation examples:
 - Self-managed vault: [ERC4626SelfAssetsManagement](https://github.com/OpenZeppelin/cairo-contracts/tree/main/packages/token/src/erc20/extensions/erc4626/erc4626.cairo#L760).
 - External vault: [ERC4626ExternalAssetsManagement](https://github.com/OpenZeppelin/cairo-contracts/tree/main/packages/test_common/src/mocks/erc4626.cairo#L92).
 
-#### [](#ERC4626Component-get_total_assets)`get_total_assets(self: @ContractState) → u256` hook
+<APIItem
+    functionSignature="get_total_assets(self: @ContractState) → u256"
+    id="ERC4626Component-get_total_assets"
+    kind="hook"
+>
+Returns the total amount of underlying assets under the vault's management. Used for share price calculations and determining the vault's total value.
 
-Returns the total amount of underlying assets under the vault’s management. Used for share price calculations and determining the vault’s total value.
-
-This method should return the actual amount of assets that the vault controls and that can be used to satisfy withdrawal requests. For self-managed vaults, this is typically the vault contract’s token balance. For external vaults, this should include any assets deposited in external protocols, minus any that are locked or unredeemable.
+This method should return the actual amount of assets that the vault controls and that can be used to satisfy withdrawal requests. For self-managed vaults, this is typically the vault contract's token balance. For external vaults, this should include any assets deposited in external protocols, minus any that are locked or unredeemable.
 
 The accuracy of this method is critical for proper vault operation: - Overreporting can lead to share dilution and user losses. - Underreporting can lead to share inflation and potential economic attacks.
+</APIItem>
 
-#### [](#ERC4626Component-transfer_assets_in)`transfer_assets_in(ref self: ContractState, from: ContractAddress, assets: u256)` hook
+<APIItem
+    functionSignature="transfer_assets_in(ref self: ContractState, from: ContractAddress, assets: u256)"
+    id="ERC4626Component-transfer_assets_in"
+    kind="hook"
+>
+Transfers assets from an external address into the vault's management. Called during `deposit` and `mint` operations.
 
-Transfers assets from an external address into the vault’s management. Called during `deposit` and `mint` operations.
-
-This method should handle the actual transfer of underlying assets from the `from` address into the vault’s control. For self-managed vaults, this typically means transferring tokens to the vault contract’s address. For external vaults, this might involve transferring into an external contract.
+This method should handle the actual transfer of underlying assets from the `from` address into the vault's control. For self-managed vaults, this typically means transferring tokens to the vault contract's address. For external vaults, this might involve transferring into an external contract.
 
 Requirements:
 
 - MUST transfer exactly `assets` amount of the underlying token.
 - SHOULD revert if the transfer fails or insufficient allowance/balance.
+</APIItem>
 
-#### [](#ERC4626Component-transfer_assets_out)`transfer_assets_out(ref self: ContractState, to: ContractAddress, assets: u256)` hook
+<APIItem
+    functionSignature="transfer_assets_out(ref self: ContractState, to: ContractAddress, assets: u256)"
+    id="ERC4626Component-transfer_assets_out"
+    kind="hook"
+>
+Transfers assets from the vault's management to an external address. Called during withdraw and redeem operations.
 
-Transfers assets from the vault’s management to an external address. Called during withdraw and redeem operations.
-
-This method should handle the actual transfer of underlying assets from the vault’s control to the `to` address. For self-managed vaults, this typically means transferring tokens from the vault contract’s address. For external vaults, this might involve withdrawing from an external contract first.
+This method should handle the actual transfer of underlying assets from the vault's control to the `to` address. For self-managed vaults, this typically means transferring tokens from the vault contract's address. For external vaults, this might involve withdrawing from an external contract first.
 
 Requirements:
 
 - MUST transfer exactly `assets` amount of the underlying token.
 - SHOULD revert if insufficient assets are available or transfer fails.
+</APIItem>
 
-#### [](#embeddable_functions)Embeddable functions
+#### Embeddable functions [!toc] [#ERC4626Component-Embeddable-Functions]
 
-#### [](#ERC4626Component-asset)`asset(self: @ContractState) → ContractAddress` external
-
+<APIItem
+    functionSignature="asset(self: @ContractState) → ContractAddress"
+    id="ERC4626Component-asset"
+    kind="external"
+>
 Returns the address of the underlying token used for the Vault for accounting, depositing, and withdrawing.
+</APIItem>
 
-#### [](#ERC4626Component-total_assets)`total_assets(self: @ContractState) → u256` external
+<APIItem
+    functionSignature="total_assets(self: @ContractState) → u256"
+    id="ERC4626Component-total_assets"
+    kind="external"
+>
+Returns the total amount of the underlying asset that is "managed" by Vault.
+</APIItem>
 
-Returns the total amount of the underlying asset that is “managed” by Vault.
-
-#### [](#ERC4626Component-convert_to_shares)`convert_to_shares(self: @ContractState, assets: u256) → u256` external
-
+<APIItem
+    functionSignature="convert_to_shares(self: @ContractState, assets: u256) → u256"
+    id="ERC4626Component-convert_to_shares"
+    kind="external"
+>
 Returns the amount of shares that the Vault would exchange for the amount of assets provided irrespective of slippage or fees.
 
-As per the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec, this may panic *only* if there’s an overflow from an unreasonably large input.
+As per the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec, this may panic *only* if there's an overflow from an unreasonably large input.
+</APIItem>
 
-#### [](#ERC4626Component-convert_to_assets)`convert_to_assets(self: @ContractState, shares: u256) → u256` external
-
+<APIItem
+    functionSignature="convert_to_assets(self: @ContractState, shares: u256) → u256"
+    id="ERC4626Component-convert_to_assets"
+    kind="external"
+>
 Returns the amount of assets that the Vault would exchange for the amount of shares provided irrespective of slippage or fees.
 
-As per the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec, this may panic *only* if there’s an overflow from an unreasonably large input.
+As per the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec, this may panic *only* if there's an overflow from an unreasonably large input.
+</APIItem>
 
-#### [](#ERC4626Component-max_deposit)`max_deposit(self: @ContractState, receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_deposit(self: @ContractState, receiver: ContractAddress) → u256"
+    id="ERC4626Component-max_deposit"
+    kind="external"
+>
 Returns the maximum amount of the underlying asset that can be deposited into the Vault for the `receiver`, through a [deposit](#ERC4626Component-deposit) call.
 
 The default max deposit value is 2 \** 256 - 1.
 
 This can be changed in the implementing contract by defining custom logic in [LimitConfigTrait::deposit\_limit](#ERC4626Component-deposit_limit).
+</APIItem>
 
-#### [](#ERC4626Component-preview_deposit)`preview_deposit(self: @ContractState, assets: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_deposit(self: @ContractState, assets: u256) → u256"
+    id="ERC4626Component-preview_deposit"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their deposit at the current block, given current on-chain conditions.
 
 The default deposit preview value is the full amount of shares. This can be changed to account for fees, for example, in the implementing contract by defining custom logic in [FeeConfigTrait::calculate\_deposit\_fee](#ERC4626Component-calculate_deposit_fee).
 
 This method must be inclusive of entry fees to be compliant with the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec.
+</APIItem>
 
-#### [](#ERC4626Component-deposit)`deposit(ref self: ContractState, assets: u256, receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="deposit(ref self: ContractState, assets: u256, receiver: ContractAddress) → u256"
+    id="ERC4626Component-deposit"
+    kind="external"
+>
 Mints Vault shares to `receiver` by depositing exactly `assets` of underlying tokens. Returns the amount of newly-minted shares.
 
 Requirements:
@@ -951,25 +1315,37 @@ Requirements:
 - `assets` is less than or equal to the max deposit amount for `receiver`.
 
 Emits a [Deposit](#IERC4626-Deposit) event.
+</APIItem>
 
-#### [](#ERC4626Component-max_mint)`max_mint(self: @ContractState, receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_mint(self: @ContractState, receiver: ContractAddress) → u256"
+    id="ERC4626Component-max_mint"
+    kind="external"
+>
 Returns the maximum amount of the Vault shares that can be minted for `receiver` through a [mint](#ERC4626Component-mint) call.
 
 The default max mint value is 2 \** 256 - 1.
 
 This can be changed in the implementing contract by defining custom logic in [LimitConfigTrait::mint\_limit](#ERC4626Component-mint_limit).
+</APIItem>
 
-#### [](#ERC4626Component-preview_mint)`preview_mint(self: @ContractState, shares: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_mint(self: @ContractState, shares: u256) → u256"
+    id="ERC4626Component-preview_mint"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their mint at the current block, given current on-chain conditions.
 
 The default mint preview value is the full amount of assets. This can be changed to account for fees, for example, in the implementing contract by defining custom logic in [FeeConfigTrait::calculate\_mint\_fee](#ERC4626Component-calculate_mint_fee).
 
 This method must be inclusive of entry fees to be compliant with the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec.
+</APIItem>
 
-#### [](#ERC4626Component-mint)`mint(self: @ContractState, shares: u256, receiver: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="mint(self: @ContractState, shares: u256, receiver: ContractAddress) → u256"
+    id="ERC4626Component-mint"
+    kind="external"
+>
 Mints exactly Vault `shares` to `receiver` by depositing amount of underlying tokens. Returns the amount deposited assets.
 
 Requirements:
@@ -977,25 +1353,37 @@ Requirements:
 - `shares` is less than or equal to the max shares amount for `receiver`.
 
 Emits a [Deposit](#IERC4626-Deposit) event.
+</APIItem>
 
-#### [](#ERC4626Component-max_withdraw)`max_withdraw(self: @ContractState, owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_withdraw(self: @ContractState, owner: ContractAddress) → u256"
+    id="ERC4626Component-max_withdraw"
+    kind="external"
+>
 Returns the maximum amount of the underlying asset that can be withdrawn from the owner balance in the Vault, through a [withdraw](#ERC4626Component-withdraw) call.
 
 The default max withdraw value is the full balance of assets for `owner` (converted from shares). This can be changed in the implementing contract by defining custom logic in [LimitConfigTrait::withdraw\_limit](#ERC4626Component-withdraw_limit).
 
 With customized limits, the maximum withdraw amount will either be the custom limit itself or `owner`'s total asset balance, whichever value is less.
+</APIItem>
 
-#### [](#ERC4626Component-preview_withdraw)`preview_withdraw(self: @ContractState, assets: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_withdraw(self: @ContractState, assets: u256) → u256"
+    id="ERC4626Component-preview_withdraw"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their withdrawal at the current block, given current on-chain conditions.
 
 The default withdraw preview value is the full amount of shares. This can be changed to account for fees, for example, in the implementing contract by defining custom logic in [FeeConfigTrait::calculate\_withdraw\_fee](#ERC4626Component-calculate_withdraw_fee).
 
 This method must be inclusive of exit fees to be compliant with the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec.
+</APIItem>
 
-#### [](#ERC4626Component-withdraw)`withdraw(self: @ContractState, assets: u256, receiver: ContractAddress, owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="withdraw(self: @ContractState, assets: u256, receiver: ContractAddress, owner: ContractAddress) → u256"
+    id="ERC4626Component-withdraw"
+    kind="external"
+>
 Burns shares from `owner` and sends exactly `assets` of underlying tokens to `receiver`.
 
 Requirements:
@@ -1003,25 +1391,37 @@ Requirements:
 - `assets` is less than or equal to the max withdraw amount of `owner`.
 
 Emits a [Withdraw](#IERC4626-Withdraw) event.
+</APIItem>
 
-#### [](#ERC4626Component-max_redeem)`max_redeem(self: @ContractState, owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="max_redeem(self: @ContractState, owner: ContractAddress) → u256"
+    id="ERC4626Component-max_redeem"
+    kind="external"
+>
 Returns the maximum amount of Vault shares that can be redeemed from the owner balance in the Vault, through a [redeem](#ERC4626Component-redeem) call.
 
 The default max redeem value is the full balance of assets for `owner`. This can be changed in the implementing contract by defining custom logic in [LimitConfigTrait::redeem\_limit](#ERC4626Component-redeem_limit).
 
 With customized limits, the maximum redeem amount will either be the custom limit itself or `owner`'s total asset balance, whichever value is less.
+</APIItem>
 
-#### [](#ERC4626Component-preview_redeem)`preview_redeem(self: @ContractState, shares: u256) → u256` external
-
+<APIItem
+    functionSignature="preview_redeem(self: @ContractState, shares: u256) → u256"
+    id="ERC4626Component-preview_redeem"
+    kind="external"
+>
 Allows an on-chain or off-chain user to simulate the effects of their redeemption at the current block, given current on-chain conditions.
 
 The default redeem preview value is the full amount of assets. This can be changed to account for fees, for example, in the implementing contract by defining custom logic in [FeeConfigTrait::calculate\_redeem\_fee](#ERC4626Component-calculate_redeem_fee).
 
 This method must be inclusive of exit fees to be compliant with the [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) spec.
+</APIItem>
 
-#### [](#ERC4626Component-redeem)`redeem(self: @ContractState, shares: u256, receiver: ContractAddress, owner: ContractAddress) → u256` external
-
+<APIItem
+    functionSignature="redeem(self: @ContractState, shares: u256, receiver: ContractAddress, owner: ContractAddress) → u256"
+    id="ERC4626Component-redeem"
+    kind="external"
+>
 Burns exactly `shares` from `owner` and sends assets of underlying tokens to `receiver`.
 
 Requirements:
@@ -1029,31 +1429,51 @@ Requirements:
 - `shares` is less than or equal to the max redeem amount of `owner`.
 
 Emits a [Withdraw](#IERC4626-Withdraw) event.
+</APIItem>
 
-#### [](#ERC4626Component-name)`name(self: @ContractState) → ByteArray` external
-
+<APIItem
+    functionSignature="name(self: @ContractState) → ByteArray"
+    id="ERC4626Component-name"
+    kind="external"
+>
 Returns the name of the token.
+</APIItem>
 
-#### [](#ERC4626Component-symbol)`symbol(self: @ContractState) → ByteArray` external
-
+<APIItem
+    functionSignature="symbol(self: @ContractState) → ByteArray"
+    id="ERC4626Component-symbol"
+    kind="external"
+>
 Returns the ticker symbol of the token, usually a shorter version of the name.
+</APIItem>
 
-#### [](#ERC4626Component-decimals)`decimals(self: @ContractState) → u8` external
-
+<APIItem
+    functionSignature="decimals(self: @ContractState) → u8"
+    id="ERC4626Component-decimals"
+    kind="external"
+>
 Returns the cumulative number of decimals which includes both `UNDERLYING_DECIMALS` and `OFFSET_DECIMALS`. Both of which must be defined in the [ImmutableConfig](#ERC4626Component-Immutable-Config) inside the implementing contract.
+</APIItem>
 
-#### [](#internal_functions)Internal functions
+#### Internal functions [!toc] [#ERC4626Component-Internal-Functions]
 
-#### [](#ERC4626Component-initializer)`initializer(ref self: ContractState, asset_address: ContractAddress)` internal
-
-Validates the [ImmutableConfig](#ERC4626Component-Immutable-Config) constants and sets the `asset_address` to the vault. This should be set in the contract’s constructor.
+<APIItem
+    functionSignature="initializer(ref self: ContractState, asset_address: ContractAddress)"
+    id="ERC4626Component-initializer"
+    kind="internal"
+>
+Validates the [ImmutableConfig](#ERC4626Component-Immutable-Config) constants and sets the `asset_address` to the vault. This should be set in the contract's constructor.
 
 Requirements:
 
 - `asset_address` cannot be the zero address.
+</APIItem>
 
-#### [](#ERC4626Component-_deposit)`_deposit(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, assets: u256, shares: u256)` internal
-
+<APIItem
+    functionSignature="_deposit(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, assets: u256, shares: u256)"
+    id="ERC4626Component-_deposit"
+    kind="internal"
+>
 Internal logic for [deposit](#ERC4626Component-deposit) and [mint](#ERC4626Component-mint).
 
 Transfers `assets` from `caller` to the Vault contract then mints `shares` to `receiver`. Fees can be transferred in the `ERC4626Hooks::after_deposit` hook which is executed after assets are transferred and shares are minted.
@@ -1065,9 +1485,13 @@ Requirements:
 Emits two [ERC20::Transfer](#ERC20Component-Transfer) events (`ERC20::mint` and `ERC20::transfer_from`).
 
 Emits a [Deposit](#IERC4626-Deposit) event.
+</APIItem>
 
-#### [](#ERC4626Component-_withdraw)`_withdraw(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256)` internal
-
+<APIItem
+    functionSignature="_withdraw(ref self: ContractState, caller: ContractAddress, receiver: ContractAddress, owner: ContractAddress, assets: u256, shares: u256)"
+    id="ERC4626Component-_withdraw"
+    kind="internal"
+>
 Internal logic for [withdraw](#ERC4626Component-withdraw) and [redeem](#ERC4626Component-redeem).
 
 Burns `shares` from `owner` and then transfers `assets` to `receiver`. Fees can be transferred in the `ERC4626Hooks::before_withdraw` hook which is executed before shares are burned and assets are transferred.
@@ -1079,18 +1503,31 @@ Requirements:
 Emits two [ERC20::Transfer](#ERC20Component-Transfer) events (`ERC20::burn` and `ERC20::transfer`).
 
 Emits a [Withdraw](#IERC4626-Withdraw) event.
+</APIItem>
 
-#### [](#ERC4626Component-_convert_to_shares)`_convert_to_shares(self: @ContractState, assets: u256, rounding: Rounding) -> u256` internal
-
+<APIItem
+    functionSignature="_convert_to_shares(self: @ContractState, assets: u256, rounding: Rounding) -> u256"
+    id="ERC4626Component-_convert_to_shares"
+    kind="internal"
+>
 Internal conversion function (from assets to shares) with support for `rounding` direction.
+</APIItem>
 
-#### [](#ERC4626Component-_convert_to_assets)`_convert_to_assets(self: @ContractState, shares: u256, rounding: Rounding) -> u256` internal
-
+<APIItem
+    functionSignature="_convert_to_assets(self: @ContractState, shares: u256, rounding: Rounding) -> u256"
+    id="ERC4626Component-_convert_to_assets"
+    kind="internal"
+>
 Internal conversion function (from shares to assets) with support for `rounding` direction.
+</APIItem>
 
-## [](#presets)Presets
+## Presets
 
-### [](#ERC20Upgradeable)`ERC20Upgradeable`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/presets/src/erc20.cairo)
+### `ERC20Upgradeable` [toc] [#ERC20Upgradeable]
+<APIGithubLinkHeader
+    moduleName="ERC20Upgradeable"
+    link={`https://github.com/OpenZeppelin/cairo-contracts/blob/release-v${UMBRELLA_VERSION}/packages/presets/src/erc20.cairo`}
+/>
 
 ```rust
 use openzeppelin_presets::ERC20Upgradeable;
@@ -1100,7 +1537,9 @@ Upgradeable ERC20 contract leveraging [ERC20Component](#ERC20Component) with a f
 
 [Sierra class hash](../presets)
 
-0x07802658d99373a4002434cbdc8897d1936c6b1beea48af0cc3b5574707f8d92
+```text
+{{ERC20UpgradeableClassHash}}
+```
 
 Constructor
 
@@ -1108,11 +1547,11 @@ Constructor
 
 Embedded Implementations
 
-ERC20MixinImpl
+#### ERC20MixinImpl [!toc] [#ERC20Upgradeable-Embedded-Impls-ERC20MixinImpl]
 
 - [`ERC20MixinImpl`](#ERC20Component-Embeddable-Mixin-Impl)
 
-OwnableMixinImpl
+#### OwnableMixinImpl [!toc] [#ERC20Upgradeable-Embedded-Impls-OwnableMixinImpl]
 
 - [`OwnableMixinImpl`](access#OwnableComponent-Mixin-Impl)
 
@@ -1120,19 +1559,27 @@ External Functions
 
 - [`upgrade(self, new_class_hash)`](#ERC20Upgradeable-upgrade)
 
-#### [](#ERC20Upgradeable-constructor-section)Constructor
+#### Constructor [!toc] [#ERC20Upgradeable-Constructor]
 
-#### [](#ERC20Upgradeable-constructor)`constructor(ref self: ContractState, name: ByteArray, symbol: ByteArray, fixed_supply: u256, recipient: ContractAddress, owner: ContractAddress)` constructor
-
+<APIItem
+    functionSignature="constructor(ref self: ContractState, name: ByteArray, symbol: ByteArray, fixed_supply: u256, recipient: ContractAddress, owner: ContractAddress)"
+    id="ERC20Upgradeable-constructor"
+    kind="constructor"
+>
 Sets the `name` and `symbol` and mints `fixed_supply` tokens to `recipient`. Assigns `owner` as the contract owner with permissions to upgrade.
+</APIItem>
 
-#### [](#ERC20Upgradeable-external-functions)External functions
+#### External functions [!toc] [#ERC20Upgradeable-External-Functions]
 
-#### [](#ERC20Upgradeable-upgrade)`upgrade(ref self: ContractState, new_class_hash: ClassHash)` external
-
+<APIItem
+    functionSignature="upgrade(ref self: ContractState, new_class_hash: ClassHash)"
+    id="ERC20Upgradeable-upgrade"
+    kind="external"
+>
 Upgrades the contract to a new implementation given by `new_class_hash`.
 
 Requirements:
 
 - The caller is the contract owner.
 - `new_class_hash` cannot be zero.
+</APIItem>

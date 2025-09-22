@@ -19,7 +19,7 @@ OpenZeppelin Contracts for Cairo provides [OwnableComponent](api/access#OwnableC
 
 Integrating this component into a contract first requires assigning an owner.
 The implementing contract’s constructor should set the initial owner by passing the owner’s address to Ownable’s
-[`initializer`](/api/access#OwnableComponent-initializer) like this:
+[`initializer`](api/access#OwnableComponent-initializer) like this:
 
 ```rust
 #[starknet::contract]
@@ -100,13 +100,13 @@ after an initial stage with centralized administration is over.
 
 <Callout type='warn'>
 Removing the owner altogether will mean that administrative tasks that are protected by `assert_only_owner`
-</Callout>
 will no longer be callable!
+</Callout>
 
 ### Two step transfer
 
 The component also offers a more robust way of transferring ownership via the
-[OwnableTwoStepImpl](/api/access#OwnableTwoStepImpl) implementation. A two step transfer mechanism helps
+[OwnableTwoStepImpl](api/access#OwnableComponent-Embeddable-Impls-OwnableTwoStepImpl) implementation. A two step transfer mechanism helps
 to prevent unintended and irreversible owner transfers. Simply replace the `OwnableMixinImpl`
 with its respective two step variant:
 
@@ -146,7 +146,7 @@ flexibility in this regard.
 
 In essence, we will be defining multiple roles, each allowed to perform different sets of actions.
 An account may have, for example, 'moderator', 'minter' or 'admin' roles, which you will then check for
-instead of simply using [`assert_only_owner`](/api/access#OwnableComponent-assert_only_owner). This check can be enforced through [`assert_only_role`](/api/access#AccessControlComponent-assert_only_role).
+instead of simply using [`assert_only_owner`](api/access#OwnableComponent-assert_only_owner). This check can be enforced through [`assert_only_role`](api/access#AccessControlComponent-assert_only_role).
 Separately, you will be able to define rules for how accounts can be granted a role, have it revoked, and more.
 
 Most software uses access control systems that are role-based: some users are regular users, some may be supervisors
@@ -155,7 +155,7 @@ or managers, and a few will often have administrative privileges.
 ### Usage
 
 For each role that you want to define, you will create a new _role identifier_ that is used to grant, revoke, and
-check if an account has that role. See [Creating role identifiers](#creating_role_identifiers) for information
+check if an account has that role. See [Creating role identifiers](#creating-role-identifiers) for information
 on creating identifiers.
 
 Here’s a simple example of implementing [AccessControl](api/access#AccessControlComponent) on a portion of an ERC20 token contract which defines
@@ -243,8 +243,8 @@ mod MyContract {
 
 <Callout type='warn'>
 Make sure you fully understand how [AccessControl](api/access#AccessControlComponent) works before
-</Callout>
 using it on your system, or copy-pasting the examples from this guide.
+</Callout>
 
 While clear and explicit, this isn’t anything we wouldn’t have been able to achieve with
 [Ownable](api/access#OwnableComponent). Where [AccessControl](api/access#AccessControlComponent) shines the most is in scenarios where granular
@@ -447,8 +447,8 @@ mod MyContract {
 
 <Callout>
 The `grant_role` and `revoke_role` functions are automatically exposed as `external` functions
-</Callout>
 from the `AccessControlImpl` by leveraging the `#[abi(embed_v0)]` annotation.
+</Callout>
 
 Note that, unlike the previous examples, no accounts are granted the 'minter' or 'burner' roles.
 However, because those roles' admin role is the default admin role, and that role was granted to the 'admin', that
