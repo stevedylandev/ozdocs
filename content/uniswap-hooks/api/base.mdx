@@ -35,7 +35,9 @@ If the hook is used for multiple pools, the ERC-6909 tokens must be separated an
 </Callout>
 independently for each pool in order to prevent draining of ERC-6909 tokens from one pool to another.
 
-NOTE: The hook only supports async exact-input swaps. Exact-output swaps will be processed normally
+<Callout>
+The hook only supports async exact-input swaps. Exact-output swaps will be processed normally
+</Callout>
 by the `PoolManager`.
 
 <Callout type="warn">
@@ -53,8 +55,8 @@ _Available since v0.1.0_
 - [_beforeSwap(sender, key, params, )](#BaseAsyncSwap-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
 - [_calculateSwapFee(key, specifiedAmount)](#BaseAsyncSwap-_calculateSwapFee-struct-PoolKey-uint256-)
 - [getHookPermissions()](#BaseAsyncSwap-getHookPermissions--)
-#### IHookEvents
-#### BaseHook
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
@@ -76,33 +78,33 @@ _Available since v0.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IHookEvents
+#### IHookEvents [!toc]
 - [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
 - [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
 - [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
 - [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
-#### BaseHook
-#### IHooks
+#### BaseHook [!toc]
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IHookEvents
-#### BaseHook
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -200,7 +202,9 @@ to calculate the liquidity modification parameters and the amount of liquidity s
 Additionally, the implementer must consider that the hook is the sole owner of the liquidity and
 manage fees over liquidity shares accordingly.
 
-NOTE: This base hook is designed to work with a single pool key. If you want to use the same custom
+<Callout>
+This base hook is designed to work with a single pool key. If you want to use the same custom
+</Callout>
 accounting hook for multiple pools, you must have multiple storage instances of this contract and
 initialize them via the `PoolManager` with their respective pool keys.
 
@@ -237,9 +241,9 @@ _Available since v0.1.0_
 - [_mint(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_mint-struct-BaseCustomAccounting-AddLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
 - [_burn(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_burn-struct-BaseCustomAccounting-RemoveLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
 - [getHookPermissions()](#BaseCustomAccounting-getHookPermissions--)
-#### IUnlockCallback
-#### IHookEvents
-#### BaseHook
+#### IUnlockCallback [!toc]
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
@@ -259,21 +263,21 @@ _Available since v0.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IUnlockCallback
-#### IHookEvents
+#### IUnlockCallback [!toc]
+#### IHookEvents [!toc]
 - [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
 - [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
 - [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
 - [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
-#### BaseHook
-#### IHooks
+#### BaseHook [!toc]
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -286,14 +290,14 @@ _Available since v0.1.0_
 - [LiquidityOnlyViaHook()](#BaseCustomAccounting-LiquidityOnlyViaHook--)
 - [InvalidNativeValue()](#BaseCustomAccounting-InvalidNativeValue--)
 - [AlreadyInitialized()](#BaseCustomAccounting-AlreadyInitialized--)
-#### IUnlockCallback
-#### IHookEvents
-#### BaseHook
+#### IUnlockCallback [!toc]
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -363,7 +367,9 @@ To cover all possible scenarios, `msg.sender` should have already given the hook
 of at least amount0Desired/amount1Desired on token0/token1. Always adds assets at the ideal ratio,
 according to the price when the transaction is executed.
 
-NOTE: The `amount0Min` and `amount1Min` parameters are relative to the principal delta, which excludes
+<Callout>
+The `amount0Min` and `amount1Min` parameters are relative to the principal delta, which excludes
+</Callout>
 fees accrued from the liquidity modification delta.
 
 </div>
@@ -701,7 +707,9 @@ concentrated liquidity implementation of the `PoolManager`. During a swap, the h
 [`BaseCustomCurve._getUnspecifiedAmount`](#BaseCustomCurve-_getUnspecifiedAmount-struct-SwapParams-) function to get the amount of tokens to be sent to the receiver. The return delta
 created from this calculation is then consumed and applied by the `PoolManager`.
 
-NOTE: This hook by default does not include fee or salt mechanisms, which can be implemented by inheriting
+<Callout>
+This hook by default does not include fee or salt mechanisms, which can be implemented by inheriting
+</Callout>
 contracts if needed.
 
 <Callout type="warn">
@@ -726,7 +734,7 @@ _Available since v0.1.0_
 - [_getAmountOut(params)](#BaseCustomCurve-_getAmountOut-struct-BaseCustomAccounting-RemoveLiquidityParams-)
 - [_getAmountIn(params)](#BaseCustomCurve-_getAmountIn-struct-BaseCustomAccounting-AddLiquidityParams-)
 - [getHookPermissions()](#BaseCustomCurve-getHookPermissions--)
-#### BaseCustomAccounting
+#### BaseCustomAccounting [!toc]
 - [poolKey()](#BaseCustomAccounting-poolKey--)
 - [addLiquidity(params)](#BaseCustomAccounting-addLiquidity-struct-BaseCustomAccounting-AddLiquidityParams-)
 - [removeLiquidity(params)](#BaseCustomAccounting-removeLiquidity-struct-BaseCustomAccounting-RemoveLiquidityParams-)
@@ -736,9 +744,9 @@ _Available since v0.1.0_
 - [_beforeRemoveLiquidity(, , , )](#BaseCustomAccounting-_beforeRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-bytes-)
 - [_mint(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_mint-struct-BaseCustomAccounting-AddLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
 - [_burn(params, callerDelta, feesAccrued, shares)](#BaseCustomAccounting-_burn-struct-BaseCustomAccounting-RemoveLiquidityParams-BalanceDelta-BalanceDelta-uint256-)
-#### IUnlockCallback
-#### IHookEvents
-#### BaseHook
+#### IUnlockCallback [!toc]
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [afterInitialize(sender, key, sqrtPriceX96, tick)](#BaseHook-afterInitialize-address-struct-PoolKey-uint160-int24-)
@@ -757,43 +765,43 @@ _Available since v0.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### BaseCustomAccounting
-#### IUnlockCallback
-#### IHookEvents
+#### BaseCustomAccounting [!toc]
+#### IUnlockCallback [!toc]
+#### IHookEvents [!toc]
 - [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
 - [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
 - [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
 - [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
-#### BaseHook
-#### IHooks
+#### BaseHook [!toc]
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### BaseCustomAccounting
+#### BaseCustomAccounting [!toc]
 - [ExpiredPastDeadline()](#BaseCustomAccounting-ExpiredPastDeadline--)
 - [PoolNotInitialized()](#BaseCustomAccounting-PoolNotInitialized--)
 - [TooMuchSlippage()](#BaseCustomAccounting-TooMuchSlippage--)
 - [LiquidityOnlyViaHook()](#BaseCustomAccounting-LiquidityOnlyViaHook--)
 - [InvalidNativeValue()](#BaseCustomAccounting-InvalidNativeValue--)
 - [AlreadyInitialized()](#BaseCustomAccounting-AlreadyInitialized--)
-#### IUnlockCallback
-#### IHookEvents
-#### BaseHook
+#### IUnlockCallback [!toc]
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -865,7 +873,9 @@ for a remove liquidity request.
 Overrides the default swap logic of the `PoolManager` and calls the [`BaseCustomCurve._getUnspecifiedAmount`](#BaseCustomCurve-_getUnspecifiedAmount-struct-SwapParams-)
 to get the amount of tokens to be sent to the receiver.
 
-NOTE: In order to take and settle tokens from the pool, the hook must hold the liquidity added
+<Callout>
+In order to take and settle tokens from the pool, the hook must hold the liquidity added
+</Callout>
 via the [`BaseCustomAccounting.addLiquidity`](#BaseCustomAccounting-addLiquidity-struct-BaseCustomAccounting-AddLiquidityParams-) function.
 
 </div>
@@ -1014,7 +1024,9 @@ Base hook implementation.
 This contract defines all hook entry points, as well as security and permission helpers.
 Based on the [Uniswap v4 periphery implementation](https://github.com/Uniswap/v4-periphery/blob/main/src/base/hooks/BaseHook.sol).
 
-NOTE: Hook entry points must be overridden and implemented by the inheriting hook to be used. Their respective
+<Callout>
+Hook entry points must be overridden and implemented by the inheriting hook to be used. Their respective
+</Callout>
 flags must be set to true in the `getHookPermissions` function as well.
 
 <Callout type="warn">
@@ -1061,7 +1073,7 @@ _Available since v0.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -1072,7 +1084,7 @@ _Available since v0.1.0_
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 

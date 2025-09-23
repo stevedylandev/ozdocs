@@ -25,7 +25,9 @@ Enables to enforce a dynamic target determined by [`BaseDynamicAfterFee._getTarg
 during [`BaseAsyncSwap._beforeSwap`](base#BaseAsyncSwap-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-), where if the swap outcome results better than the target, any positive difference is taken
 as a hook fee, being posteriorily handled or distributed by the hook via [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-).
 
-NOTE: In order to use this hook, the inheriting contract must implement [`BaseDynamicAfterFee._getTargetUnspecified`](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-) to determine the target,
+<Callout>
+In order to use this hook, the inheriting contract must implement [`BaseDynamicAfterFee._getTargetUnspecified`](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-) to determine the target,
+</Callout>
 and [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-) to handle accumulated fees.
 
 <Callout type="warn">
@@ -49,8 +51,8 @@ _Available since v0.1.0_
 - [_getTargetUnspecified(sender, key, params, hookData)](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-)
 - [_afterSwapHandler(key, params, delta, targetUnspecifiedAmount, feeAmount)](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-)
 - [getHookPermissions()](#BaseDynamicAfterFee-getHookPermissions--)
-#### IHookEvents
-#### BaseHook
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
@@ -71,33 +73,33 @@ _Available since v0.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IHookEvents
+#### IHookEvents [!toc]
 - [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
 - [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
 - [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
 - [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
-#### BaseHook
-#### IHooks
+#### BaseHook [!toc]
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IHookEvents
-#### BaseHook
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -200,7 +202,9 @@ Set the `PoolManager` address.
 
 Sets the target unspecified amount and apply flag to be used in the `afterSwap` hook.
 
-NOTE: The target unspecified amount and the apply flag are reset in the `afterSwap` hook.
+<Callout>
+The target unspecified amount and the apply flag are reset in the `afterSwap` hook.
+</Callout>
 
 </div>
 </div>
@@ -226,7 +230,9 @@ currency of the swap, regardless of the swap direction.
 
 The fees are minted to this hook as ERC-6909 tokens, which can then be distributed in [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-)
 
-NOTE: The target unspecified amount and the apply flag are reset on purpose to avoid state overlapping across swaps.
+<Callout>
+The target unspecified amount and the apply flag are reset on purpose to avoid state overlapping across swaps.
+</Callout>
 
 </div>
 </div>
@@ -316,7 +322,7 @@ _Available since v0.1.0_
 - [_afterInitialize(, key, , )](#BaseDynamicFee-_afterInitialize-address-struct-PoolKey-uint160-int24-)
 - [poke(key)](#BaseDynamicFee-poke-struct-PoolKey-)
 - [getHookPermissions()](#BaseDynamicFee-getHookPermissions--)
-#### BaseHook
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
@@ -338,7 +344,7 @@ _Available since v0.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -346,12 +352,12 @@ _Available since v0.1.0_
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [NotDynamicFee()](#BaseDynamicFee-NotDynamicFee--)
-#### BaseHook
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -505,7 +511,7 @@ _Available since v0.1.0_
 - [_getFee(sender, key, params, hookData)](#BaseOverrideFee-_getFee-address-struct-PoolKey-struct-SwapParams-bytes-)
 - [_beforeSwap(sender, key, params, hookData)](#BaseOverrideFee-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-)
 - [getHookPermissions()](#BaseOverrideFee-getHookPermissions--)
-#### BaseHook
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
@@ -526,7 +532,7 @@ _Available since v0.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -534,12 +540,12 @@ _Available since v0.1.0_
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [NotDynamicFee()](#BaseOverrideFee-NotDynamicFee--)
-#### BaseHook
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 

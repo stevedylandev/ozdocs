@@ -6,7 +6,7 @@ title: API Reference
 
 ## Base Implementations
 
-- **[Base](./base)** - Core hook base implementations and building blocks
+- **[Base](./api/base)** - Core hook base implementations and building blocks
   - `BaseAsyncSwap` - Base implementation for async swaps
   - `BaseCustomAccounting` - Base implementation for hook-owned liquidity
   - `BaseCustomCurve` - Base implementation for custom curves
@@ -14,24 +14,24 @@ title: API Reference
 
 ## Fee Management
 
-- **[Fee](./fee)** - Fee utilities and dynamic fee implementations
+- **[Fee](./api/fee)** - Fee utilities and dynamic fee implementations
   - `BaseDynamicAfterFee` - Dynamic target hook fees applied after swaps
   - `BaseDynamicFee` - Dynamic fee application via PoolManager
   - `BaseOverrideFee` - Automatic dynamic fees applied before swaps
 
 ## General Purpose Hooks
 
-- **[General](./general)** - Ready-to-use hooks for common use cases
+- **[General](./api/general)** - Ready-to-use hooks for common use cases
   - `AntiSandwichHook` - Sandwich-resistant AMM implementation
   - `LimitOrderHook` - Limit order mechanism for pools
   - `LiquidityPenaltyHook` - Just-in-time liquidity protection
 
 ## Interfaces
 
-- **[Interfaces](./interfaces)** - Standard interfaces and contract definitions
+- **[Interfaces](./api/interfaces)** - Standard interfaces and contract definitions
   - `IHookEvents` - Standard hook events interface
 
 ## Utilities
 
-- **[Utils](./utils)** - General utilities and helper libraries
+- **[Utils](./api/utils)** - General utilities and helper libraries
   - `CurrencySettler` - Library for settling PoolManager deltas
