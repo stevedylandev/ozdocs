@@ -104,7 +104,9 @@ Authorization for scheduling and canceling operations is controlled through the 
 and [`ERC7579DelayedExecutor._validateCancel`](#ERC7579DelayedExecutor-_validateCancel-address-bytes32-bytes32-bytes-) functions. These functions can be overridden to implement custom
 authorization logic, such as requiring specific signers or roles.
 
-TIP: Use [`ERC7579DelayedExecutor._scheduleAt`](#ERC7579DelayedExecutor-_scheduleAt-address-bytes32-bytes32-bytes-uint48-uint32-) to schedule operations at a specific points in time. This is
+<Callout>
+Use [`ERC7579DelayedExecutor._scheduleAt`](#ERC7579DelayedExecutor-_scheduleAt-address-bytes32-bytes32-bytes-uint48-uint32-) to schedule operations at a specific points in time. This is
+</Callout>
 useful to pre-schedule operations for non-deployed accounts (e.g. subscriptions).
 
 <div className="bg-secondary p-4 rounded-md mb-6">
@@ -135,10 +137,10 @@ useful to pre-schedule operations for non-deployed accounts (e.g. subscriptions)
 - [_cancel(account, mode, executionCalldata, salt)](#ERC7579DelayedExecutor-_cancel-address-bytes32-bytes-bytes32-)
 - [_validateStateBitmap(operationId, allowedStates)](#ERC7579DelayedExecutor-_validateStateBitmap-bytes32-bytes32-)
 - [_encodeStateBitmap(operationState)](#ERC7579DelayedExecutor-_encodeStateBitmap-enum-ERC7579DelayedExecutor-OperationState-)
-#### ERC7579Executor
+#### ERC7579Executor [!toc]
 - [isModuleType(moduleTypeId)](#ERC7579Executor-isModuleType-uint256-)
 - [execute(account, salt, mode, data)](#ERC7579Executor-execute-address-bytes32-bytes32-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -149,9 +151,9 @@ useful to pre-schedule operations for non-deployed accounts (e.g. subscriptions)
 - [ERC7579ExecutorOperationCanceled(account, operationId)](#ERC7579DelayedExecutor-ERC7579ExecutorOperationCanceled-address-bytes32-)
 - [ERC7579ExecutorDelayUpdated(account, newDelay, effectTime)](#ERC7579DelayedExecutor-ERC7579ExecutorDelayUpdated-address-uint32-uint48-)
 - [ERC7579ExecutorExpirationUpdated(account, newExpiration)](#ERC7579DelayedExecutor-ERC7579ExecutorExpirationUpdated-address-uint32-)
-#### ERC7579Executor
+#### ERC7579Executor [!toc]
 - [ERC7579ExecutorOperationExecuted(account, salt, mode, executionCalldata)](#ERC7579Executor-ERC7579ExecutorOperationExecuted-address-bytes32-bytes32-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -160,8 +162,8 @@ useful to pre-schedule operations for non-deployed accounts (e.g. subscriptions)
 <div className="font-mono">
 - [ERC7579ExecutorUnexpectedOperationState(operationId, currentState, allowedStates)](#ERC7579DelayedExecutor-ERC7579ExecutorUnexpectedOperationState-bytes32-enum-ERC7579DelayedExecutor-OperationState-bytes32-)
 - [ERC7579ExecutorModuleNotInstalled()](#ERC7579DelayedExecutor-ERC7579ExecutorModuleNotInstalled--)
-#### ERC7579Executor
-#### IERC7579Module
+#### ERC7579Executor [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -445,7 +447,9 @@ could potentially be re-executed if the module is reinstalled later. This is a d
 design choice for efficiency, but module implementations may want to override this behavior
 to clear scheduled operations during uninstallation for their specific use cases.
 
-NOTE: Calling this function directly will remove the expiration ([`ERC7579DelayedExecutor.getExpiration`](#ERC7579DelayedExecutor-getExpiration-address-)) value and
+<Callout>
+Calling this function directly will remove the expiration ([`ERC7579DelayedExecutor.getExpiration`](#ERC7579DelayedExecutor-getExpiration-address-)) value and
+</Callout>
 will schedule a reset of the delay ([`ERC7579DelayedExecutor.getDelay`](#ERC7579DelayedExecutor-getDelay-address-)) to `0` for the account. Reinstalling the
 module will not immediately reset the delay if the delay reset hasn't taken effect yet.
 
@@ -466,7 +470,9 @@ module will not immediately reset the delay if the delay reset hasn't taken effe
 
 Returns `data` as the execution calldata. See [`ERC7579Executor._execute`](#ERC7579Executor-_execute-address-bytes32-bytes32-bytes-).
 
-NOTE: This function relies on the operation state validation in [`ERC7579DelayedExecutor._execute`](#ERC7579DelayedExecutor-_execute-address-bytes32-bytes32-bytes-) for
+<Callout>
+This function relies on the operation state validation in [`ERC7579DelayedExecutor._execute`](#ERC7579DelayedExecutor-_execute-address-bytes32-bytes32-bytes-) for
+</Callout>
 authorization. Extensions of this module should override this function to implement
 additional validation logic if needed.
 
@@ -761,7 +767,9 @@ Emitted when the expiration delay is updated.
 The current state of a operation is not the expected. The `expectedStates` is a bitmap with the
 bits enabled for each OperationState enum position counting from right to left. See [`ERC7579DelayedExecutor._encodeStateBitmap`](#ERC7579DelayedExecutor-_encodeStateBitmap-enum-ERC7579DelayedExecutor-OperationState-).
 
-NOTE: If `expectedState` is `bytes32(0)`, the operation is expected to not be in any state (i.e. not exist).
+<Callout>
+If `expectedState` is `bytes32(0)`, the operation is expected to not be in any state (i.e. not exist).
+</Callout>
 
 </div>
 </div>
@@ -807,7 +815,9 @@ capabilities defined in the ERC-7579 standard. Developers can customize whether 
 can be executed with custom rules by implementing the [`ERC7579DelayedExecutor._validateExecution`](#ERC7579DelayedExecutor-_validateExecution-address-bytes32-bytes32-bytes-) function in
 derived contracts.
 
-TIP: This is a simplified executor that directly executes operations without delay or expiration
+<Callout>
+This is a simplified executor that directly executes operations without delay or expiration
+</Callout>
 mechanisms. For a more advanced implementation with time-delayed execution patterns and
 security features, see [`ERC7579DelayedExecutor`](#ERC7579DelayedExecutor).
 
@@ -818,7 +828,7 @@ security features, see [`ERC7579DelayedExecutor`](#ERC7579DelayedExecutor).
 - [execute(account, salt, mode, data)](#ERC7579Executor-execute-address-bytes32-bytes32-bytes-)
 - [_validateExecution(account, salt, mode, data)](#ERC7579Executor-_validateExecution-address-bytes32-bytes32-bytes-)
 - [_execute(account, mode, salt, executionCalldata)](#ERC7579Executor-_execute-address-bytes32-bytes32-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 - [onInstall(data)](#IERC7579Module-onInstall-bytes-)
 - [onUninstall(data)](#IERC7579Module-onUninstall-bytes-)
 </div>
@@ -828,7 +838,7 @@ security features, see [`ERC7579DelayedExecutor`](#ERC7579DelayedExecutor).
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [ERC7579ExecutorOperationExecuted(account, salt, mode, executionCalldata)](#ERC7579Executor-ERC7579ExecutorOperationExecuted-address-bytes32-bytes32-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -896,7 +906,9 @@ Example extension:
  }
 ```
 
-TIP: Pack extra data in the `data` arguments (e.g. a signature) to be used in the
+<Callout>
+Pack extra data in the `data` arguments (e.g. a signature) to be used in the
+</Callout>
 validation process. Calldata can be sliced to extract it and return only the
 execution calldata.
 
@@ -989,12 +1001,12 @@ a social recovery operation.
 - [_validateReachableThreshold(account)](#ERC7579Multisig-_validateReachableThreshold-address-)
 - [_validateSignatures(account, hash, signingSigners, signatures)](#ERC7579Multisig-_validateSignatures-address-bytes32-bytes---bytes---)
 - [_validateThreshold(account, validatingSigners)](#ERC7579Multisig-_validateThreshold-address-bytes---)
-#### ERC7579Validator
+#### ERC7579Validator [!toc]
 - [isModuleType(moduleTypeId)](#ERC7579Validator-isModuleType-uint256-)
 - [validateUserOp(userOp, userOpHash)](#ERC7579Validator-validateUserOp-struct-PackedUserOperation-bytes32-)
 - [isValidSignatureWithSender(, hash, signature)](#ERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-)
-#### IERC7579Validator
-#### IERC7579Module
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1004,9 +1016,9 @@ a social recovery operation.
 - [ERC7913SignerAdded(account, signer)](#ERC7579Multisig-ERC7913SignerAdded-address-bytes-)
 - [ERC7913SignerRemoved(account, signer)](#ERC7579Multisig-ERC7913SignerRemoved-address-bytes-)
 - [ERC7913ThresholdSet(account, threshold)](#ERC7579Multisig-ERC7913ThresholdSet-address-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1018,9 +1030,9 @@ a social recovery operation.
 - [ERC7579MultisigInvalidSigner(signer)](#ERC7579Multisig-ERC7579MultisigInvalidSigner-bytes-)
 - [ERC7579MultisigZeroThreshold()](#ERC7579Multisig-ERC7579MultisigZeroThreshold--)
 - [ERC7579MultisigUnreachableThreshold(signers, threshold)](#ERC7579Multisig-ERC7579MultisigUnreachableThreshold-uint64-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1046,7 +1058,9 @@ The initData should be encoded as:
 If no signers or threshold are provided, the multisignature functionality will be
 disabled until they are added later.
 
-NOTE: An account can only call onInstall once. If called directly by the account,
+<Callout>
+An account can only call onInstall once. If called directly by the account,
+</Callout>
 the signer will be set to the provided data. Future installations will behave as a no-op.
 
 </div>
@@ -1537,7 +1551,9 @@ This module ensures that only willing participants can be added as signers to a
 multisig by requiring each new signer to provide a valid signature confirming their
 consent to be added. Each signer must sign an EIP-712 message to confirm their addition.
 
-TIP: Use this module to ensure that all guardians in a social recovery or multisig setup have
+<Callout>
+Use this module to ensure that all guardians in a social recovery or multisig setup have
+</Callout>
 explicitly agreed to their roles.
 
 <div className="bg-secondary p-4 rounded-md mb-6">
@@ -1545,14 +1561,14 @@ explicitly agreed to their roles.
 <div className="font-mono">
 - [_signableConfirmationHash(account, deadline)](#ERC7579MultisigConfirmation-_signableConfirmationHash-address-uint256-)
 - [_addSigners(account, newSigners)](#ERC7579MultisigConfirmation-_addSigners-address-bytes---)
-#### EIP712
+#### EIP712 [!toc]
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
 - [_EIP712Name()](#EIP712-_EIP712Name--)
 - [_EIP712Version()](#EIP712-_EIP712Version--)
-#### IERC5267
-#### ERC7579Multisig
+#### IERC5267 [!toc]
+#### ERC7579Multisig [!toc]
 - [onInstall(initData)](#ERC7579Multisig-onInstall-bytes-)
 - [onUninstall()](#ERC7579Multisig-onUninstall-bytes-)
 - [getSigners(account, start, end)](#ERC7579Multisig-getSigners-address-uint64-uint64-)
@@ -1568,28 +1584,28 @@ explicitly agreed to their roles.
 - [_validateReachableThreshold(account)](#ERC7579Multisig-_validateReachableThreshold-address-)
 - [_validateSignatures(account, hash, signingSigners, signatures)](#ERC7579Multisig-_validateSignatures-address-bytes32-bytes---bytes---)
 - [_validateThreshold(account, validatingSigners)](#ERC7579Multisig-_validateThreshold-address-bytes---)
-#### ERC7579Validator
+#### ERC7579Validator [!toc]
 - [isModuleType(moduleTypeId)](#ERC7579Validator-isModuleType-uint256-)
 - [validateUserOp(userOp, userOpHash)](#ERC7579Validator-validateUserOp-struct-PackedUserOperation-bytes32-)
 - [isValidSignatureWithSender(, hash, signature)](#ERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-)
-#### IERC7579Validator
-#### IERC7579Module
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### EIP712
-#### IERC5267
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-#### ERC7579Multisig
+#### ERC7579Multisig [!toc]
 - [ERC7913SignerAdded(account, signer)](#ERC7579Multisig-ERC7913SignerAdded-address-bytes-)
 - [ERC7913SignerRemoved(account, signer)](#ERC7579Multisig-ERC7913SignerRemoved-address-bytes-)
 - [ERC7913ThresholdSet(account, threshold)](#ERC7579Multisig-ERC7913ThresholdSet-address-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1598,17 +1614,17 @@ explicitly agreed to their roles.
 <div className="font-mono">
 - [ERC7579MultisigInvalidConfirmationSignature(signer)](#ERC7579MultisigConfirmation-ERC7579MultisigInvalidConfirmationSignature-bytes-)
 - [ERC7579MultisigExpiredConfirmation(deadline)](#ERC7579MultisigConfirmation-ERC7579MultisigExpiredConfirmation-uint256-)
-#### EIP712
-#### IERC5267
-#### ERC7579Multisig
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
+#### ERC7579Multisig [!toc]
 - [ERC7579MultisigAlreadyExists(signer)](#ERC7579Multisig-ERC7579MultisigAlreadyExists-bytes-)
 - [ERC7579MultisigNonexistentSigner(signer)](#ERC7579Multisig-ERC7579MultisigNonexistentSigner-bytes-)
 - [ERC7579MultisigInvalidSigner(signer)](#ERC7579Multisig-ERC7579MultisigInvalidSigner-bytes-)
 - [ERC7579MultisigZeroThreshold()](#ERC7579Multisig-ERC7579MultisigZeroThreshold--)
 - [ERC7579MultisigUnreachableThreshold(signers, threshold)](#ERC7579Multisig-ERC7579MultisigUnreachableThreshold-uint64-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1723,7 +1739,7 @@ and the validation will check the storage mapping instead of cryptographic verif
 - [presigned(account, signer, hash)](#ERC7579MultisigStorage-presigned-address-bytes-bytes32-)
 - [presign(account, signer, hash, signature)](#ERC7579MultisigStorage-presign-address-bytes-bytes32-bytes-)
 - [_validateSignatures(account, hash, signingSigners, signatures)](#ERC7579MultisigStorage-_validateSignatures-address-bytes32-bytes---bytes---)
-#### ERC7579Multisig
+#### ERC7579Multisig [!toc]
 - [onInstall(initData)](#ERC7579Multisig-onInstall-bytes-)
 - [onUninstall()](#ERC7579Multisig-onUninstall-bytes-)
 - [getSigners(account, start, end)](#ERC7579Multisig-getSigners-address-uint64-uint64-)
@@ -1739,12 +1755,12 @@ and the validation will check the storage mapping instead of cryptographic verif
 - [_setThreshold(account, newThreshold)](#ERC7579Multisig-_setThreshold-address-uint64-)
 - [_validateReachableThreshold(account)](#ERC7579Multisig-_validateReachableThreshold-address-)
 - [_validateThreshold(account, validatingSigners)](#ERC7579Multisig-_validateThreshold-address-bytes---)
-#### ERC7579Validator
+#### ERC7579Validator [!toc]
 - [isModuleType(moduleTypeId)](#ERC7579Validator-isModuleType-uint256-)
 - [validateUserOp(userOp, userOpHash)](#ERC7579Validator-validateUserOp-struct-PackedUserOperation-bytes32-)
 - [isValidSignatureWithSender(, hash, signature)](#ERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-)
-#### IERC7579Validator
-#### IERC7579Module
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1752,28 +1768,28 @@ and the validation will check the storage mapping instead of cryptographic verif
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [ERC7579MultisigStoragePresigned(account, hash, signer)](#ERC7579MultisigStorage-ERC7579MultisigStoragePresigned-address-bytes32-bytes-)
-#### ERC7579Multisig
+#### ERC7579Multisig [!toc]
 - [ERC7913SignerAdded(account, signer)](#ERC7579Multisig-ERC7913SignerAdded-address-bytes-)
 - [ERC7913SignerRemoved(account, signer)](#ERC7579Multisig-ERC7913SignerRemoved-address-bytes-)
 - [ERC7913ThresholdSet(account, threshold)](#ERC7579Multisig-ERC7913ThresholdSet-address-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### ERC7579Multisig
+#### ERC7579Multisig [!toc]
 - [ERC7579MultisigAlreadyExists(signer)](#ERC7579Multisig-ERC7579MultisigAlreadyExists-bytes-)
 - [ERC7579MultisigNonexistentSigner(signer)](#ERC7579Multisig-ERC7579MultisigNonexistentSigner-bytes-)
 - [ERC7579MultisigInvalidSigner(signer)](#ERC7579Multisig-ERC7579MultisigInvalidSigner-bytes-)
 - [ERC7579MultisigZeroThreshold()](#ERC7579Multisig-ERC7579MultisigZeroThreshold--)
 - [ERC7579MultisigUnreachableThreshold(signers, threshold)](#ERC7579Multisig-ERC7579MultisigUnreachableThreshold-uint64-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1812,7 +1828,9 @@ The signature will be verified and if valid, the presignature will be stored.
 Emits [`ERC7579MultisigStorage.ERC7579MultisigStoragePresigned`](#ERC7579MultisigStorage-ERC7579MultisigStoragePresigned-address-bytes32-bytes-) if the signature is valid and the hash is not already
 signed, otherwise acts as a no-op.
 
-NOTE: Does not check if the signer is authorized for the account. Valid signatures from
+<Callout>
+Does not check if the signer is authorized for the account. Valid signatures from
+</Callout>
 invalid signers won't be executable. See [`ERC7579Multisig._validateSignatures`](#ERC7579Multisig-_validateSignatures-address-bytes32-bytes---bytes---) for more details.
 
 </div>
@@ -1904,7 +1922,7 @@ signatures with a total weight of at least 4 (e.g., one with weight 1 and one wi
 - [_removeSigners(account, oldSigners)](#ERC7579MultisigWeighted-_removeSigners-address-bytes---)
 - [_validateReachableThreshold(account)](#ERC7579MultisigWeighted-_validateReachableThreshold-address-)
 - [_validateThreshold(account, validatingSigners)](#ERC7579MultisigWeighted-_validateThreshold-address-bytes---)
-#### ERC7579Multisig
+#### ERC7579Multisig [!toc]
 - [getSigners(account, start, end)](#ERC7579Multisig-getSigners-address-uint64-uint64-)
 - [getSignerCount(account)](#ERC7579Multisig-getSignerCount-address-)
 - [isSigner(account, signer)](#ERC7579Multisig-isSigner-address-bytes-)
@@ -1915,12 +1933,12 @@ signatures with a total weight of at least 4 (e.g., one with weight 1 and one wi
 - [_rawERC7579Validation(account, hash, signature)](#ERC7579Multisig-_rawERC7579Validation-address-bytes32-bytes-)
 - [_setThreshold(account, newThreshold)](#ERC7579Multisig-_setThreshold-address-uint64-)
 - [_validateSignatures(account, hash, signingSigners, signatures)](#ERC7579Multisig-_validateSignatures-address-bytes32-bytes---bytes---)
-#### ERC7579Validator
+#### ERC7579Validator [!toc]
 - [isModuleType(moduleTypeId)](#ERC7579Validator-isModuleType-uint256-)
 - [validateUserOp(userOp, userOpHash)](#ERC7579Validator-validateUserOp-struct-PackedUserOperation-bytes32-)
 - [isValidSignatureWithSender(, hash, signature)](#ERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-)
-#### IERC7579Validator
-#### IERC7579Module
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1928,13 +1946,13 @@ signatures with a total weight of at least 4 (e.g., one with weight 1 and one wi
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [ERC7579MultisigWeightChanged(account, signer, weight)](#ERC7579MultisigWeighted-ERC7579MultisigWeightChanged-address-bytes-uint64-)
-#### ERC7579Multisig
+#### ERC7579Multisig [!toc]
 - [ERC7913SignerAdded(account, signer)](#ERC7579Multisig-ERC7913SignerAdded-address-bytes-)
 - [ERC7913SignerRemoved(account, signer)](#ERC7579Multisig-ERC7913SignerRemoved-address-bytes-)
 - [ERC7913ThresholdSet(account, threshold)](#ERC7579Multisig-ERC7913ThresholdSet-address-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1943,15 +1961,15 @@ signatures with a total weight of at least 4 (e.g., one with weight 1 and one wi
 <div className="font-mono">
 - [ERC7579MultisigInvalidWeight(signer, weight)](#ERC7579MultisigWeighted-ERC7579MultisigInvalidWeight-bytes-uint64-)
 - [ERC7579MultisigMismatchedLength()](#ERC7579MultisigWeighted-ERC7579MultisigMismatchedLength--)
-#### ERC7579Multisig
+#### ERC7579Multisig [!toc]
 - [ERC7579MultisigAlreadyExists(signer)](#ERC7579Multisig-ERC7579MultisigAlreadyExists-bytes-)
 - [ERC7579MultisigNonexistentSigner(signer)](#ERC7579Multisig-ERC7579MultisigNonexistentSigner-bytes-)
 - [ERC7579MultisigInvalidSigner(signer)](#ERC7579Multisig-ERC7579MultisigInvalidSigner-bytes-)
 - [ERC7579MultisigZeroThreshold()](#ERC7579Multisig-ERC7579MultisigZeroThreshold--)
 - [ERC7579MultisigUnreachableThreshold(signers, threshold)](#ERC7579Multisig-ERC7579MultisigUnreachableThreshold-uint64-uint64-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -1976,7 +1994,9 @@ The initData should be encoded as:
 
 If weights are not provided but signers are, all signers default to weight 1.
 
-NOTE: An account can only call onInstall once. If called directly by the account,
+<Callout>
+An account can only call onInstall once. If called directly by the account,
+</Callout>
 the signer will be set to the provided data. Future installations will behave as a no-op.
 
 </div>
@@ -2136,7 +2156,9 @@ Just like [`ERC7579Multisig._addSigners`](#ERC7579Multisig-_addSigners-address-b
 
 Override to validate threshold against total weight instead of signer count.
 
-NOTE: This function intentionally does not call `super._validateReachableThreshold` because the base implementation
+<Callout>
+This function intentionally does not call `super._validateReachableThreshold` because the base implementation
+</Callout>
 assumes each signer has a weight of 1, which is a subset of this weighted implementation. Consider that multiple
 implementations of this function may exist in the contract, so important side effects may be missed
 depending on the linearization order.
@@ -2159,7 +2181,9 @@ depending on the linearization order.
 Validates that the total weight of signers meets the [`ERC7579Multisig.threshold`](#ERC7579Multisig-threshold-address-) requirement.
 Overrides the base implementation to use weights instead of count.
 
-NOTE: This function intentionally does not call `super._validateThreshold` because the base implementation
+<Callout>
+This function intentionally does not call `super._validateThreshold` because the base implementation
+</Callout>
 assumes each signer has a weight of 1, which is incompatible with this weighted implementation.
 
 </div>
@@ -2180,7 +2204,9 @@ assumes each signer has a weight of 1, which is incompatible with this weighted 
 
 Emitted when a signer's weight is changed.
 
-NOTE: Not emitted in [`ERC7579Multisig._addSigners`](#ERC7579Multisig-_addSigners-address-bytes---) or [`ERC7579Multisig._removeSigners`](#ERC7579Multisig-_removeSigners-address-bytes---). Indexers must rely on [`ERC7579Multisig.ERC7913SignerAdded`](#ERC7579Multisig-ERC7913SignerAdded-address-bytes-)
+<Callout>
+Not emitted in [`ERC7579Multisig._addSigners`](#ERC7579Multisig-_addSigners-address-bytes---) or [`ERC7579Multisig._removeSigners`](#ERC7579Multisig-_removeSigners-address-bytes---). Indexers must rely on [`ERC7579Multisig.ERC7913SignerAdded`](#ERC7579Multisig-ERC7913SignerAdded-address-bytes-)
+</Callout>
 and [`ERC7579Multisig.ERC7913SignerRemoved`](#ERC7579Multisig-ERC7913SignerRemoved-address-bytes-) to index a default weight of 1. See [`ERC7579MultisigWeighted.signerWeight`](#ERC7579MultisigWeighted-signerWeight-address-bytes-).
 
 </div>
@@ -2255,11 +2281,11 @@ in the set will be allowed to execute.
 - [_addSelectors(account, newSelectors)](#ERC7579SelectorExecutor-_addSelectors-address-bytes4---)
 - [_removeSelectors(account, oldSelectors)](#ERC7579SelectorExecutor-_removeSelectors-address-bytes4---)
 - [_validateExecution(account, , , data)](#ERC7579SelectorExecutor-_validateExecution-address-bytes32-bytes32-bytes-)
-#### ERC7579Executor
+#### ERC7579Executor [!toc]
 - [isModuleType(moduleTypeId)](#ERC7579Executor-isModuleType-uint256-)
 - [execute(account, salt, mode, data)](#ERC7579Executor-execute-address-bytes32-bytes32-bytes-)
 - [_execute(account, mode, salt, executionCalldata)](#ERC7579Executor-_execute-address-bytes32-bytes32-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -2268,9 +2294,9 @@ in the set will be allowed to execute.
 <div className="font-mono">
 - [ERC7579ExecutorSelectorAuthorized(account, selector)](#ERC7579SelectorExecutor-ERC7579ExecutorSelectorAuthorized-address-bytes4-)
 - [ERC7579ExecutorSelectorRemoved(account, selector)](#ERC7579SelectorExecutor-ERC7579ExecutorSelectorRemoved-address-bytes4-)
-#### ERC7579Executor
+#### ERC7579Executor [!toc]
 - [ERC7579ExecutorOperationExecuted(account, salt, mode, executionCalldata)](#ERC7579Executor-ERC7579ExecutorOperationExecuted-address-bytes32-bytes32-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -2278,8 +2304,8 @@ in the set will be allowed to execute.
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [ERC7579ExecutorSelectorNotAuthorized(selector)](#ERC7579SelectorExecutor-ERC7579ExecutorSelectorNotAuthorized-bytes4-)
-#### ERC7579Executor
-#### IERC7579Module
+#### ERC7579Executor [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -2535,12 +2561,12 @@ backup.
 - [setSigner(signer_)](#ERC7579Signature-setSigner-bytes-)
 - [_setSigner(account, signer_)](#ERC7579Signature-_setSigner-address-bytes-)
 - [_rawERC7579Validation(account, hash, signature)](#ERC7579Signature-_rawERC7579Validation-address-bytes32-bytes-)
-#### ERC7579Validator
+#### ERC7579Validator [!toc]
 - [isModuleType(moduleTypeId)](#ERC7579Validator-isModuleType-uint256-)
 - [validateUserOp(userOp, userOpHash)](#ERC7579Validator-validateUserOp-struct-PackedUserOperation-bytes32-)
 - [isValidSignatureWithSender(, hash, signature)](#ERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-)
-#### IERC7579Validator
-#### IERC7579Module
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -2548,9 +2574,9 @@ backup.
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [ERC7579SignatureSignerSet(account, signer)](#ERC7579Signature-ERC7579SignatureSignerSet-address-bytes-)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -2558,9 +2584,9 @@ backup.
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [ERC7579SignatureInvalidSignerLength()](#ERC7579Signature-ERC7579SignatureInvalidSignerLength--)
-#### ERC7579Validator
-#### IERC7579Validator
-#### IERC7579Module
+#### ERC7579Validator [!toc]
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 </div>
 </div>
 
@@ -2595,7 +2621,9 @@ Return the ERC-7913 signer (i.e. `verifier || key`).
 
 See `IERC7579Module-onInstall`.
 
-NOTE: An account can only call onInstall once. If called directly by the account,
+<Callout>
+An account can only call onInstall once. If called directly by the account,
+</Callout>
 the signer will be set to the provided data. Future installations will behave as a no-op.
 
 </div>
@@ -2783,8 +2811,8 @@ function execute(
 - [validateUserOp(userOp, userOpHash)](#ERC7579Validator-validateUserOp-struct-PackedUserOperation-bytes32-)
 - [isValidSignatureWithSender(, hash, signature)](#ERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-)
 - [_rawERC7579Validation(account, hash, signature)](#ERC7579Validator-_rawERC7579Validation-address-bytes32-bytes-)
-#### IERC7579Validator
-#### IERC7579Module
+#### IERC7579Validator [!toc]
+#### IERC7579Module [!toc]
 - [onInstall(data)](#IERC7579Module-onInstall-bytes-)
 - [onUninstall(data)](#IERC7579Module-onUninstall-bytes-)
 </div>
@@ -2895,7 +2923,9 @@ through the internal functions [`PaymasterCore.deposit`](#PaymasterCore-deposit-
 * Deposits are used to pay for user operations.
 * Stakes are used to guarantee the paymaster's reputation and obtain more flexibility in accessing storage.
 
-NOTE: See [Paymaster's unstaked reputation rules](https://eips.ethereum.org/EIPS/eip-7562#unstaked-paymasters-reputation-rules)
+<Callout>
+See [Paymaster's unstaked reputation rules](https://eips.ethereum.org/EIPS/eip-7562#unstaked-paymasters-reputation-rules)
+</Callout>
  for more details on the paymaster's storage access limitations.
 
 <div className="bg-secondary p-4 rounded-md mb-6">
@@ -2921,7 +2951,7 @@ NOTE: See [Paymaster's unstaked reputation rules](https://eips.ethereum.org/EIPS
 - [withdrawStake(to)](#PaymasterCore-withdrawStake-address-payable-)
 - [_checkEntryPoint()](#PaymasterCore-_checkEntryPoint--)
 - [_authorizeWithdraw()](#PaymasterCore-_authorizeWithdraw--)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -2929,7 +2959,7 @@ NOTE: See [Paymaster's unstaked reputation rules](https://eips.ethereum.org/EIPS
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [PaymasterUnauthorized(sender)](#PaymasterCore-PaymasterUnauthorized-address-)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -2999,7 +3029,9 @@ Canonical entry point for the account that forwards and validates user operation
 Validates whether the paymaster is willing to pay for the user operation. See
 `IAccount-validateUserOp` for additional information on the return value.
 
-NOTE: Bundlers will reject this method if it modifies the state, unless it's whitelisted.
+<Callout>
+Bundlers will reject this method if it modifies the state, unless it's whitelisted.
+</Callout>
 
 </div>
 </div>
@@ -3060,7 +3092,9 @@ Handles post user operation execution logic. The caller must be the entry point.
 It receives the `context` returned by `_validatePaymasterUserOp`. Function is not called if no context
 is returned by [`PaymasterCore.validatePaymasterUserOp`](#PaymasterCore-validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-).
 
-NOTE: The `actualUserOpFeePerGas` is not `tx.gasprice`. A user operation can be bundled with other transactions
+<Callout>
+The `actualUserOpFeePerGas` is not `tx.gasprice`. A user operation can be bundled with other transactions
+</Callout>
 making the gas price of the user operation to differ.
 
 </div>
@@ -3254,7 +3288,7 @@ The contract follows a pre-charge and refund model:
 - [_tokenPriceDenominator()](#PaymasterERC20-_tokenPriceDenominator--)
 - [_erc20Cost(cost, feePerGas, tokenPrice)](#PaymasterERC20-_erc20Cost-uint256-uint256-uint256-)
 - [withdrawTokens(token, recipient, amount)](#PaymasterERC20-withdrawTokens-contract-IERC20-address-uint256-)
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [entryPoint()](#PaymasterCore-entryPoint--)
 - [validatePaymasterUserOp(userOp, userOpHash, maxCost)](#PaymasterCore-validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-)
 - [postOp(mode, context, actualGasCost, actualUserOpFeePerGas)](#PaymasterCore-postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-)
@@ -3265,7 +3299,7 @@ The contract follows a pre-charge and refund model:
 - [withdrawStake(to)](#PaymasterCore-withdrawStake-address-payable-)
 - [_checkEntryPoint()](#PaymasterCore-_checkEntryPoint--)
 - [_authorizeWithdraw()](#PaymasterCore-_authorizeWithdraw--)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -3273,8 +3307,8 @@ The contract follows a pre-charge and refund model:
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [UserOperationSponsored(userOpHash, token, tokenAmount, tokenPrice)](#PaymasterERC20-UserOperationSponsored-bytes32-address-uint256-uint256-)
-#### PaymasterCore
-#### IPaymaster
+#### PaymasterCore [!toc]
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -3282,9 +3316,9 @@ The contract follows a pre-charge and refund model:
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [PaymasterERC20FailedRefund(token, prefundAmount, actualAmount, prefundContext)](#PaymasterERC20-PaymasterERC20FailedRefund-contract-IERC20-uint256-uint256-bytes-)
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [PaymasterUnauthorized(sender)](#PaymasterCore-PaymasterUnauthorized-address-)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -3330,7 +3364,9 @@ which is the user operation sender by default. The `prefundAmount` is calculated
 
 Returns a `prefundContext` that's passed to the [`PaymasterCore._postOp`](#PaymasterCore-_postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-) function through its `context` return value.
 
-NOTE: Consider not reverting if the prefund fails when overriding this function. This is to avoid reverting
+<Callout>
+Consider not reverting if the prefund fails when overriding this function. This is to avoid reverting
+</Callout>
 during the validation phase of the user operation, which may penalize the paymaster's reputation according
 to ERC-7562 validation rules.
 
@@ -3564,7 +3600,7 @@ logic based on the specific requirements of the application.
 - [_refund(token, tokenPrice, actualGasCost, actualUserOpFeePerGas, prefunder, prefundAmount, prefundContext)](#PaymasterERC20Guarantor-_refund-contract-IERC20-uint256-uint256-uint256-address-uint256-bytes-)
 - [_fetchGuarantor(userOp)](#PaymasterERC20Guarantor-_fetchGuarantor-struct-PackedUserOperation-)
 - [_guaranteedPostOpCost()](#PaymasterERC20Guarantor-_guaranteedPostOpCost--)
-#### PaymasterERC20
+#### PaymasterERC20 [!toc]
 - [_validatePaymasterUserOp(userOp, userOpHash, maxCost)](#PaymasterERC20-_validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-)
 - [_postOp(, context, actualGasCost, actualUserOpFeePerGas)](#PaymasterERC20-_postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-)
 - [_fetchDetails(userOp, userOpHash)](#PaymasterERC20-_fetchDetails-struct-PackedUserOperation-bytes32-)
@@ -3572,7 +3608,7 @@ logic based on the specific requirements of the application.
 - [_tokenPriceDenominator()](#PaymasterERC20-_tokenPriceDenominator--)
 - [_erc20Cost(cost, feePerGas, tokenPrice)](#PaymasterERC20-_erc20Cost-uint256-uint256-uint256-)
 - [withdrawTokens(token, recipient, amount)](#PaymasterERC20-withdrawTokens-contract-IERC20-address-uint256-)
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [entryPoint()](#PaymasterCore-entryPoint--)
 - [validatePaymasterUserOp(userOp, userOpHash, maxCost)](#PaymasterCore-validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-)
 - [postOp(mode, context, actualGasCost, actualUserOpFeePerGas)](#PaymasterCore-postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-)
@@ -3583,7 +3619,7 @@ logic based on the specific requirements of the application.
 - [withdrawStake(to)](#PaymasterCore-withdrawStake-address-payable-)
 - [_checkEntryPoint()](#PaymasterCore-_checkEntryPoint--)
 - [_authorizeWithdraw()](#PaymasterCore-_authorizeWithdraw--)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -3591,21 +3627,21 @@ logic based on the specific requirements of the application.
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [UserOperationGuaranteed(userOpHash, guarantor, prefundAmount)](#PaymasterERC20Guarantor-UserOperationGuaranteed-bytes32-address-uint256-)
-#### PaymasterERC20
+#### PaymasterERC20 [!toc]
 - [UserOperationSponsored(userOpHash, token, tokenAmount, tokenPrice)](#PaymasterERC20-UserOperationSponsored-bytes32-address-uint256-uint256-)
-#### PaymasterCore
-#### IPaymaster
+#### PaymasterCore [!toc]
+#### IPaymaster [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### PaymasterERC20
+#### PaymasterERC20 [!toc]
 - [PaymasterERC20FailedRefund(token, prefundAmount, actualAmount, prefundContext)](#PaymasterERC20-PaymasterERC20FailedRefund-contract-IERC20-uint256-uint256-bytes-)
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [PaymasterUnauthorized(sender)](#PaymasterCore-PaymasterUnauthorized-address-)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -3647,7 +3683,9 @@ Handles the refund process for guaranteed operations.
 If the operation was guaranteed, it attempts to get repayment from the user first and then refunds the guarantor.
 Otherwise, fallback to [`PaymasterERC20._refund`](#PaymasterERC20-_refund-contract-IERC20-uint256-uint256-uint256-address-uint256-bytes-).
 
-NOTE: For guaranteed user operations where the user paid the `actualGasCost` back, this function
+<Callout>
+For guaranteed user operations where the user paid the `actualGasCost` back, this function
+</Callout>
 doesn't call `super._refund`. Consider whether there are side effects in the parent contract that need to be executed.
 
 </div>
@@ -3667,7 +3705,9 @@ doesn't call `super._refund`. Consider whether there are side effects in the par
 
 Fetches the guarantor address and validation data from the user operation.
 
-NOTE: Return `address(0)` to disable the guarantor feature. If supported, ensure
+<Callout>
+Return `address(0)` to disable the guarantor feature. If supported, ensure
+</Callout>
 explicit consent (e.g., signature verification) to prevent unauthorized use.
 
 </div>
@@ -3736,7 +3776,7 @@ during construction (or via [`PaymasterERC721Owner._setToken`](#PaymasterERC721O
 - [token()](#PaymasterERC721Owner-token--)
 - [_setToken(token_)](#PaymasterERC721Owner-_setToken-contract-IERC721-)
 - [_validatePaymasterUserOp(userOp, , )](#PaymasterERC721Owner-_validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-)
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [entryPoint()](#PaymasterCore-entryPoint--)
 - [validatePaymasterUserOp(userOp, userOpHash, maxCost)](#PaymasterCore-validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-)
 - [postOp(mode, context, actualGasCost, actualUserOpFeePerGas)](#PaymasterCore-postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-)
@@ -3748,7 +3788,7 @@ during construction (or via [`PaymasterERC721Owner._setToken`](#PaymasterERC721O
 - [withdrawStake(to)](#PaymasterCore-withdrawStake-address-payable-)
 - [_checkEntryPoint()](#PaymasterCore-_checkEntryPoint--)
 - [_authorizeWithdraw()](#PaymasterCore-_authorizeWithdraw--)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -3756,17 +3796,17 @@ during construction (or via [`PaymasterERC721Owner._setToken`](#PaymasterERC721O
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [PaymasterERC721OwnerTokenSet(token)](#PaymasterERC721Owner-PaymasterERC721OwnerTokenSet-contract-IERC721-)
-#### PaymasterCore
-#### IPaymaster
+#### PaymasterCore [!toc]
+#### IPaymaster [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [PaymasterUnauthorized(sender)](#PaymasterCore-PaymasterUnauthorized-address-)
-#### IPaymaster
+#### IPaymaster [!toc]
 </div>
 </div>
 
@@ -3834,7 +3874,9 @@ Sets the ERC-721 token used to validate the user operation.
 Internal validation of whether the paymaster is willing to pay for the user operation.
 Returns the context to be passed to postOp and the validation data.
 
-NOTE: The default `context` is `bytes(0)`. Developers that add a context when overriding this function MUST
+<Callout>
+The default `context` is `bytes(0)`. Developers that add a context when overriding this function MUST
+</Callout>
 also override [`PaymasterCore._postOp`](#PaymasterCore-_postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-) to process the context passed along.
 
 </div>
@@ -3890,7 +3932,7 @@ contract MyPaymasterECDSASigner is PaymasterSigner, SignerECDSA {
 - [_signableUserOpHash(userOp, validAfter, validUntil)](#PaymasterSigner-_signableUserOpHash-struct-PackedUserOperation-uint48-uint48-)
 - [_validatePaymasterUserOp(userOp, , )](#PaymasterSigner-_validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-)
 - [_decodePaymasterUserOp(userOp)](#PaymasterSigner-_decodePaymasterUserOp-struct-PackedUserOperation-)
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [entryPoint()](#PaymasterCore-entryPoint--)
 - [validatePaymasterUserOp(userOp, userOpHash, maxCost)](#PaymasterCore-validatePaymasterUserOp-struct-PackedUserOperation-bytes32-uint256-)
 - [postOp(mode, context, actualGasCost, actualUserOpFeePerGas)](#PaymasterCore-postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-)
@@ -3902,15 +3944,15 @@ contract MyPaymasterECDSASigner is PaymasterSigner, SignerECDSA {
 - [withdrawStake(to)](#PaymasterCore-withdrawStake-address-payable-)
 - [_checkEntryPoint()](#PaymasterCore-_checkEntryPoint--)
 - [_authorizeWithdraw()](#PaymasterCore-_authorizeWithdraw--)
-#### IPaymaster
-#### EIP712
+#### IPaymaster [!toc]
+#### EIP712 [!toc]
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
 - [_EIP712Name()](#EIP712-_EIP712Name--)
 - [_EIP712Version()](#EIP712-_EIP712Version--)
-#### IERC5267
-#### AbstractSigner
+#### IERC5267 [!toc]
+#### AbstractSigner [!toc]
 - [_rawSignatureValidation(hash, signature)](#AbstractSigner-_rawSignatureValidation-bytes32-bytes-)
 </div>
 </div>
@@ -3918,24 +3960,24 @@ contract MyPaymasterECDSASigner is PaymasterSigner, SignerECDSA {
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### PaymasterCore
-#### IPaymaster
-#### EIP712
-#### IERC5267
+#### PaymasterCore [!toc]
+#### IPaymaster [!toc]
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-#### AbstractSigner
+#### AbstractSigner [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### PaymasterCore
+#### PaymasterCore [!toc]
 - [PaymasterUnauthorized(sender)](#PaymasterCore-PaymasterUnauthorized-address-)
-#### IPaymaster
-#### EIP712
-#### IERC5267
-#### AbstractSigner
+#### IPaymaster [!toc]
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -3973,7 +4015,9 @@ this function must be used to provide a custom mechanism to authorize an user op
 Internal validation of whether the paymaster is willing to pay for the user operation.
 Returns the context to be passed to postOp and the validation data.
 
-NOTE: The `context` returned is `bytes(0)`. Developers overriding this function MUST
+<Callout>
+The `context` returned is `bytes(0)`. Developers overriding this function MUST
+</Callout>
 override [`PaymasterCore._postOp`](#PaymasterCore-_postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-) to process the context passed along.
 
 </div>

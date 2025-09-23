@@ -122,18 +122,18 @@ to enforce additional security measures for this role.
 - [_grantRole(role, account)](#AccessControl-_grantRole-bytes32-address-)
 - [_revokeRole(role, account)](#AccessControl-_revokeRole-bytes32-address-)
 - [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
-#### ERC165
-#### IERC165
-#### IAccessControl
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IAccessControl [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### ERC165
-#### IERC165
-#### IAccessControl
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IAccessControl [!toc]
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
@@ -143,9 +143,9 @@ to enforce additional security measures for this role.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### ERC165
-#### IERC165
-#### IAccessControl
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IAccessControl [!toc]
 - [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
 - [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
 </div>
@@ -666,7 +666,9 @@ The `account` is missing a role.
 
 The caller of a function is not the expected one.
 
-NOTE: Don't confuse with [`IAccessControl.AccessControlUnauthorizedAccount`](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-).
+<Callout>
+Don't confuse with [`IAccessControl.AccessControlUnauthorizedAccount`](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-).
+</Callout>
 
 </div>
 </div>
@@ -816,7 +818,9 @@ Throws if the sender is not the owner.
 Leaves the contract without owner. It will not be possible to call
 `onlyOwner` functions. Can only be called by the current owner.
 
-NOTE: Renouncing ownership will leave the contract without an owner,
+<Callout>
+Renouncing ownership will leave the contract without an owner,
+</Callout>
 thereby disabling any functionality that is only available to the owner.
 
 </div>
@@ -947,7 +951,7 @@ from parent (Ownable).
 - [transferOwnership(newOwner)](#Ownable2Step-transferOwnership-address-)
 - [_transferOwnership(newOwner)](#Ownable2Step-_transferOwnership-address-)
 - [acceptOwnership()](#Ownable2Step-acceptOwnership--)
-#### Ownable
+#### Ownable [!toc]
 - [owner()](#Ownable-owner--)
 - [_checkOwner()](#Ownable-_checkOwner--)
 - [renounceOwnership()](#Ownable-renounceOwnership--)
@@ -958,7 +962,7 @@ from parent (Ownable).
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [OwnershipTransferStarted(previousOwner, newOwner)](#Ownable2Step-OwnershipTransferStarted-address-address-)
-#### Ownable
+#### Ownable [!toc]
 - [OwnershipTransferred(previousOwner, newOwner)](#Ownable-OwnershipTransferred-address-address-)
 </div>
 </div>
@@ -966,7 +970,7 @@ from parent (Ownable).
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### Ownable
+#### Ownable [!toc]
 - [OwnableUnauthorizedAccount(account)](#Ownable-OwnableUnauthorizedAccount-address-)
 - [OwnableInvalidOwner(owner)](#Ownable-OwnableInvalidOwner-address-)
 </div>
@@ -1131,33 +1135,33 @@ contract MyToken is AccessControlDefaultAdminRules {
 - [rollbackDefaultAdminDelay()](#AccessControlDefaultAdminRules-rollbackDefaultAdminDelay--)
 - [_rollbackDefaultAdminDelay()](#AccessControlDefaultAdminRules-_rollbackDefaultAdminDelay--)
 - [_delayChangeWait(newDelay)](#AccessControlDefaultAdminRules-_delayChangeWait-uint48-)
-#### AccessControl
+#### AccessControl [!toc]
 - [hasRole(role, account)](#AccessControl-hasRole-bytes32-address-)
 - [_checkRole(role)](#AccessControl-_checkRole-bytes32-)
 - [_checkRole(role, account)](#AccessControl-_checkRole-bytes32-address-)
 - [getRoleAdmin(role)](#AccessControl-getRoleAdmin-bytes32-)
 - [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
-#### ERC165
-#### IERC165
-#### IERC5313
-#### IAccessControlDefaultAdminRules
-#### IAccessControl
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IERC5313 [!toc]
+#### IAccessControlDefaultAdminRules [!toc]
+#### IAccessControl [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### AccessControl
-#### ERC165
-#### IERC165
-#### IERC5313
-#### IAccessControlDefaultAdminRules
+#### AccessControl [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IERC5313 [!toc]
+#### IAccessControlDefaultAdminRules [!toc]
 - [DefaultAdminTransferScheduled(newAdmin, acceptSchedule)](#IAccessControlDefaultAdminRules-DefaultAdminTransferScheduled-address-uint48-)
 - [DefaultAdminTransferCanceled()](#IAccessControlDefaultAdminRules-DefaultAdminTransferCanceled--)
 - [DefaultAdminDelayChangeScheduled(newDelay, effectSchedule)](#IAccessControlDefaultAdminRules-DefaultAdminDelayChangeScheduled-uint48-uint48-)
 - [DefaultAdminDelayChangeCanceled()](#IAccessControlDefaultAdminRules-DefaultAdminDelayChangeCanceled--)
-#### IAccessControl
+#### IAccessControl [!toc]
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
@@ -1167,15 +1171,15 @@ contract MyToken is AccessControlDefaultAdminRules {
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### AccessControl
-#### ERC165
-#### IERC165
-#### IERC5313
-#### IAccessControlDefaultAdminRules
+#### AccessControl [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IERC5313 [!toc]
+#### IAccessControlDefaultAdminRules [!toc]
 - [AccessControlInvalidDefaultAdmin(defaultAdmin)](#IAccessControlDefaultAdminRules-AccessControlInvalidDefaultAdmin-address-)
 - [AccessControlEnforcedDefaultAdminRules()](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminRules--)
 - [AccessControlEnforcedDefaultAdminDelay(schedule)](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminDelay-uint48-)
-#### IAccessControl
+#### IAccessControl [!toc]
 - [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
 - [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
 </div>
@@ -1284,7 +1288,9 @@ has also passed when calling this function.
 
 After its execution, it will not be possible to call `onlyRole(DEFAULT_ADMIN_ROLE)` functions.
 
-NOTE: Renouncing `DEFAULT_ADMIN_ROLE` will leave the contract without a [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--),
+<Callout>
+Renouncing `DEFAULT_ADMIN_ROLE` will leave the contract without a [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--),
+</Callout>
 thereby disabling any functionality that is only available for it, and the possibility of reassigning a
 non-administrated role.
 
@@ -1308,7 +1314,9 @@ See [`AccessControl._grantRole`](#AccessControl-_grantRole-bytes32-address-).
 For `DEFAULT_ADMIN_ROLE`, it only allows granting if there isn't already a [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--) or if the
 role has been previously renounced.
 
-NOTE: Exposing this function through another mechanism may make the `DEFAULT_ADMIN_ROLE`
+<Callout>
+Exposing this function through another mechanism may make the `DEFAULT_ADMIN_ROLE`
+</Callout>
 assignable again. Make sure to guarantee this is the expected behavior in your implementation.
 
 </div>
@@ -1388,7 +1396,9 @@ by calling [`AccessControlDefaultAdminRules.acceptDefaultAdminTransfer`](#Access
 
 A zero value only in `acceptSchedule` indicates no pending admin transfer.
 
-NOTE: A zero address `newAdmin` means that [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--) is being renounced.
+<Callout>
+A zero address `newAdmin` means that [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--) is being renounced.
+</Callout>
 
 </div>
 </div>
@@ -1410,7 +1420,9 @@ Returns the delay required to schedule the acceptance of a [`AccessControlDefaul
 This delay will be added to the current timestamp when calling [`AccessControlDefaultAdminRules.beginDefaultAdminTransfer`](#AccessControlDefaultAdminRules-beginDefaultAdminTransfer-address-) to set
 the acceptance schedule.
 
-NOTE: If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this
+<Callout>
+If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this
+</Callout>
 function returns the new delay. See [`AccessControlDefaultAdminRules.changeDefaultAdminDelay`](#AccessControlDefaultAdminRules-changeDefaultAdminDelay-uint48-).
 
 </div>
@@ -1435,7 +1447,9 @@ new [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRu
 
 A zero value only in `effectSchedule` indicates no pending delay change.
 
-NOTE: A zero value only for `newDelay` means that the next [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--)
+<Callout>
+A zero value only for `newDelay` means that the next [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--)
+</Callout>
 will be zero after the effect schedule.
 
 </div>
@@ -1755,7 +1769,7 @@ Extension of [`AccessControl`](#AccessControl) that allows enumerating the membe
 - [getRoleMembers(role)](#AccessControlEnumerable-getRoleMembers-bytes32-)
 - [_grantRole(role, account)](#AccessControlEnumerable-_grantRole-bytes32-address-)
 - [_revokeRole(role, account)](#AccessControlEnumerable-_revokeRole-bytes32-address-)
-#### AccessControl
+#### AccessControl [!toc]
 - [hasRole(role, account)](#AccessControl-hasRole-bytes32-address-)
 - [_checkRole(role)](#AccessControl-_checkRole-bytes32-)
 - [_checkRole(role, account)](#AccessControl-_checkRole-bytes32-address-)
@@ -1765,21 +1779,21 @@ Extension of [`AccessControl`](#AccessControl) that allows enumerating the membe
 - [renounceRole(role, callerConfirmation)](#AccessControl-renounceRole-bytes32-address-)
 - [_setRoleAdmin(role, adminRole)](#AccessControl-_setRoleAdmin-bytes32-bytes32-)
 - [DEFAULT_ADMIN_ROLE()](#AccessControl-DEFAULT_ADMIN_ROLE-bytes32)
-#### ERC165
-#### IERC165
-#### IAccessControlEnumerable
-#### IAccessControl
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IAccessControlEnumerable [!toc]
+#### IAccessControl [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### AccessControl
-#### ERC165
-#### IERC165
-#### IAccessControlEnumerable
-#### IAccessControl
+#### AccessControl [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IAccessControlEnumerable [!toc]
+#### IAccessControl [!toc]
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
@@ -1789,11 +1803,11 @@ Extension of [`AccessControl`](#AccessControl) that allows enumerating the membe
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### AccessControl
-#### ERC165
-#### IERC165
-#### IAccessControlEnumerable
-#### IAccessControl
+#### AccessControl [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### IAccessControlEnumerable [!toc]
+#### IAccessControl [!toc]
 - [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
 - [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
 </div>
@@ -1949,7 +1963,7 @@ External interface of AccessControlDefaultAdminRules declared to support ERC-165
 - [changeDefaultAdminDelay(newDelay)](#IAccessControlDefaultAdminRules-changeDefaultAdminDelay-uint48-)
 - [rollbackDefaultAdminDelay()](#IAccessControlDefaultAdminRules-rollbackDefaultAdminDelay--)
 - [defaultAdminDelayIncreaseWait()](#IAccessControlDefaultAdminRules-defaultAdminDelayIncreaseWait--)
-#### IAccessControl
+#### IAccessControl [!toc]
 - [hasRole(role, account)](#IAccessControl-hasRole-bytes32-address-)
 - [getRoleAdmin(role)](#IAccessControl-getRoleAdmin-bytes32-)
 - [grantRole(role, account)](#IAccessControl-grantRole-bytes32-address-)
@@ -1965,7 +1979,7 @@ External interface of AccessControlDefaultAdminRules declared to support ERC-165
 - [DefaultAdminTransferCanceled()](#IAccessControlDefaultAdminRules-DefaultAdminTransferCanceled--)
 - [DefaultAdminDelayChangeScheduled(newDelay, effectSchedule)](#IAccessControlDefaultAdminRules-DefaultAdminDelayChangeScheduled-uint48-uint48-)
 - [DefaultAdminDelayChangeCanceled()](#IAccessControlDefaultAdminRules-DefaultAdminDelayChangeCanceled--)
-#### IAccessControl
+#### IAccessControl [!toc]
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
@@ -1978,7 +1992,7 @@ External interface of AccessControlDefaultAdminRules declared to support ERC-165
 - [AccessControlInvalidDefaultAdmin(defaultAdmin)](#IAccessControlDefaultAdminRules-AccessControlInvalidDefaultAdmin-address-)
 - [AccessControlEnforcedDefaultAdminRules()](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminRules--)
 - [AccessControlEnforcedDefaultAdminDelay(schedule)](#IAccessControlDefaultAdminRules-AccessControlEnforcedDefaultAdminDelay-uint48-)
-#### IAccessControl
+#### IAccessControl [!toc]
 - [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
 - [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
 </div>
@@ -2020,7 +2034,9 @@ by calling [`AccessControlDefaultAdminRules.acceptDefaultAdminTransfer`](#Access
 
 A zero value only in `acceptSchedule` indicates no pending admin transfer.
 
-NOTE: A zero address `newAdmin` means that [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--) is being renounced.
+<Callout>
+A zero address `newAdmin` means that [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--) is being renounced.
+</Callout>
 
 </div>
 </div>
@@ -2042,7 +2058,9 @@ Returns the delay required to schedule the acceptance of a [`AccessControlDefaul
 This delay will be added to the current timestamp when calling [`AccessControlDefaultAdminRules.beginDefaultAdminTransfer`](#AccessControlDefaultAdminRules-beginDefaultAdminTransfer-address-) to set
 the acceptance schedule.
 
-NOTE: If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this
+<Callout>
+If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this
+</Callout>
 function returns the new delay. See [`AccessControlDefaultAdminRules.changeDefaultAdminDelay`](#AccessControlDefaultAdminRules-changeDefaultAdminDelay-uint48-).
 
 </div>
@@ -2067,7 +2085,9 @@ new [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRu
 
 A zero value only in `effectSchedule` indicates no pending delay change.
 
-NOTE: A zero value only for `newDelay` means that the next [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--)
+<Callout>
+A zero value only for `newDelay` means that the next [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--)
+</Callout>
 will be zero after the effect schedule.
 
 </div>
@@ -2367,7 +2387,9 @@ At least one of the following rules was violated:
 The delay for transferring the default admin delay is enforced and
 the operation must wait until `schedule`.
 
-NOTE: `schedule` can be 0 indicating there's no transfer scheduled.
+<Callout>
+`schedule` can be 0 indicating there's no transfer scheduled.
+</Callout>
 
 </div>
 </div>
@@ -2395,7 +2417,7 @@ External interface of AccessControlEnumerable declared to support ERC-165 detect
 <div className="font-mono">
 - [getRoleMember(role, index)](#IAccessControlEnumerable-getRoleMember-bytes32-uint256-)
 - [getRoleMemberCount(role)](#IAccessControlEnumerable-getRoleMemberCount-bytes32-)
-#### IAccessControl
+#### IAccessControl [!toc]
 - [hasRole(role, account)](#IAccessControl-hasRole-bytes32-address-)
 - [getRoleAdmin(role)](#IAccessControl-getRoleAdmin-bytes32-)
 - [grantRole(role, account)](#IAccessControl-grantRole-bytes32-address-)
@@ -2407,7 +2429,7 @@ External interface of AccessControlEnumerable declared to support ERC-165 detect
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IAccessControl
+#### IAccessControl [!toc]
 - [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-)
 - [RoleGranted(role, account, sender)](#IAccessControl-RoleGranted-bytes32-address-address-)
 - [RoleRevoked(role, account, sender)](#IAccessControl-RoleRevoked-bytes32-address-address-)
@@ -2417,7 +2439,7 @@ External interface of AccessControlEnumerable declared to support ERC-165 detect
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IAccessControl
+#### IAccessControl [!toc]
 - [AccessControlUnauthorizedAccount(account, neededRole)](#IAccessControl-AccessControlUnauthorizedAccount-address-bytes32-)
 - [AccessControlBadConfirmation()](#IAccessControl-AccessControlBadConfirmation--)
 </div>
@@ -2510,14 +2532,14 @@ functions, and ideally only used in `external` functions. See [`AccessManaged.re
 - [isConsumingScheduledOp()](#AccessManaged-isConsumingScheduledOp--)
 - [_setAuthority(newAuthority)](#AccessManaged-_setAuthority-address-)
 - [_checkCanCall(caller, data)](#AccessManaged-_checkCanCall-address-bytes-)
-#### IAccessManaged
+#### IAccessManaged [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IAccessManaged
+#### IAccessManaged [!toc]
 - [AuthorityUpdated(authority)](#IAccessManaged-AuthorityUpdated-address-)
 </div>
 </div>
@@ -2525,7 +2547,7 @@ functions, and ideally only used in `external` functions. See [`AccessManaged.re
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IAccessManaged
+#### IAccessManaged [!toc]
 - [AccessManagedUnauthorized(caller)](#IAccessManaged-AccessManagedUnauthorized-address-)
 - [AccessManagedRequiredDelay(caller, delay)](#IAccessManaged-AccessManagedRequiredDelay-address-uint32-)
 - [AccessManagedInvalidAuthority(authority)](#IAccessManaged-AccessManagedInvalidAuthority-address-)
@@ -2548,17 +2570,14 @@ functions, and ideally only used in `external` functions. See [`AccessManaged.re
 Restricts access to a function as defined by the connected Authority for this contract and the
 caller and selector of the function that entered the contract.
 
-[IMPORTANT]
-====
+<Callout type="warn">
 In general, this modifier should only be used on `external` functions. It is okay to use it on `public`
 functions that are used as external entry points and are not called internally. Unless you know what you're
 doing, it should never be used on `internal` functions. Failure to follow these rules can have critical security
 implications! This is because the permissions are determined by the function that entered the contract, i.e. the
 function at the bottom of the call stack, and not the function where the modifier is visible in the source code.
-====
-
-[WARNING]
-====
+</Callout>
+<Callout type="warn">
 Avoid adding this modifier to the [`receive()`](https://docs.soliditylang.org/en/v0.8.20/contracts.html#receive-ether-function)
 function or the [`fallback()`](https://docs.soliditylang.org/en/v0.8.20/contracts.html#fallback-function). These
 functions are the only execution paths where a function selector cannot be unambiguously determined from the calldata
@@ -2566,7 +2585,7 @@ since the selector defaults to `0x00000000` in the `receive()` function and simi
 if no calldata is provided. (See [`AccessManaged._checkCanCall`](#AccessManaged-_checkCanCall-address-bytes-)).
 
 The `receive()` function will always panic whereas the `fallback()` may panic depending on the calldata length.
-====
+</Callout>
 
 </div>
 </div>
@@ -2725,11 +2744,15 @@ restricted to each role's admin (see [`AccessControl.getRoleAdmin`](#AccessContr
 Since all the permissions of the managed system can be modified by the admins of this instance, it is expected that
 they will be highly secured (e.g., a multisig or a well-configured DAO).
 
-NOTE: This contract implements a form of the [`IAuthority`](#IAuthority) interface, but [`AccessManager.canCall`](#AccessManager-canCall-address-address-bytes4-) has additional return data so it
+<Callout>
+This contract implements a form of the [`IAuthority`](#IAuthority) interface, but [`AccessManager.canCall`](#AccessManager-canCall-address-address-bytes4-) has additional return data so it
+</Callout>
 doesn't inherit `IAuthority`. It is however compatible with the `IAuthority` interface since the first 32 bytes of
 the return data are a boolean as expected by that interface.
 
-NOTE: Systems that implement other access control mechanisms (for example using [`Ownable`](#Ownable)) can be paired with an
+<Callout>
+Systems that implement other access control mechanisms (for example using [`Ownable`](#Ownable)) can be paired with an
+</Callout>
 [`AccessManager`](#AccessManager) by transferring permissions (ownership in the case of [`Ownable`](#Ownable)) directly to the [`AccessManager`](#AccessManager).
 Users will be able to interact with these contracts through the [`AccessManager.execute`](#AccessManager-execute-address-bytes-) function, following the access rules
 registered in the [`AccessManager`](#AccessManager). Keep in mind that in that context, the msg.sender seen by restricted functions
@@ -2792,8 +2815,8 @@ mindful of the danger associated with functions such as [`Ownable.renounceOwners
 - [updateAuthority(target, newAuthority)](#AccessManager-updateAuthority-address-address-)
 - [ADMIN_ROLE()](#AccessManager-ADMIN_ROLE-uint64)
 - [PUBLIC_ROLE()](#AccessManager-PUBLIC_ROLE-uint64)
-#### IAccessManager
-#### Multicall
+#### IAccessManager [!toc]
+#### Multicall [!toc]
 - [multicall(data)](#Multicall-multicall-bytes---)
 </div>
 </div>
@@ -2801,7 +2824,7 @@ mindful of the danger associated with functions such as [`Ownable.renounceOwners
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IAccessManager
+#### IAccessManager [!toc]
 - [OperationScheduled(operationId, nonce, schedule, caller, target, data)](#IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-)
 - [OperationExecuted(operationId, nonce)](#IAccessManager-OperationExecuted-bytes32-uint32-)
 - [OperationCanceled(operationId, nonce)](#IAccessManager-OperationCanceled-bytes32-uint32-)
@@ -2814,14 +2837,14 @@ mindful of the danger associated with functions such as [`Ownable.renounceOwners
 - [TargetClosed(target, closed)](#IAccessManager-TargetClosed-address-bool-)
 - [TargetFunctionRoleUpdated(target, selector, roleId)](#IAccessManager-TargetFunctionRoleUpdated-address-bytes4-uint64-)
 - [TargetAdminDelayUpdated(target, delay, since)](#IAccessManager-TargetAdminDelayUpdated-address-uint32-uint48-)
-#### Multicall
+#### Multicall [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IAccessManager
+#### IAccessManager [!toc]
 - [AccessManagerAlreadyScheduled(operationId)](#IAccessManager-AccessManagerAlreadyScheduled-bytes32-)
 - [AccessManagerNotScheduled(operationId)](#IAccessManager-AccessManagerNotScheduled-bytes32-)
 - [AccessManagerNotReady(operationId)](#IAccessManager-AccessManagerNotReady-bytes32-)
@@ -2833,7 +2856,7 @@ mindful of the danger associated with functions such as [`Ownable.renounceOwners
 - [AccessManagerUnauthorizedConsume(target)](#IAccessManager-AccessManagerUnauthorizedConsume-address-)
 - [AccessManagerUnauthorizedCancel(msgsender, caller, target, selector)](#IAccessManager-AccessManagerUnauthorizedCancel-address-address-address-bytes4-)
 - [AccessManagerInvalidInitialAdmin(initialAdmin)](#IAccessManager-AccessManagerInvalidInitialAdmin-address-)
-#### Multicall
+#### Multicall [!toc]
 </div>
 </div>
 
@@ -2895,11 +2918,15 @@ for future execution.
 If `allowed` is true, the delay can be disregarded and the operation can be immediately executed, otherwise
 the operation can be executed if and only if delay is greater than 0.
 
-NOTE: The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
+<Callout>
+The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
+</Callout>
 is backward compatible. Some contracts may thus ignore the second return argument. In that case they will fail
 to identify the indirect workflow, and will consider calls that require a delay to be forbidden.
 
-NOTE: This function does not report the permissions of the admin functions in the manager itself. These are defined by the
+<Callout>
+This function does not report the permissions of the admin functions in the manager itself. These are defined by the
+</Callout>
 [`AccessManager`](#AccessManager) documentation.
 
 </div>
@@ -2960,7 +2987,9 @@ accidental increase). Defaults to 5 days.
 
 Get whether the contract is closed disabling any access. Otherwise role permissions are applied.
 
-NOTE: When the manager itself is closed, admin functions are still accessible to avoid locking the contract.
+<Callout>
+When the manager itself is closed, admin functions are still accessible to avoid locking the contract.
+</Callout>
 
 </div>
 </div>
@@ -3331,7 +3360,9 @@ Internal version of [`AccessManager.setRoleAdmin`](#AccessManager-setRoleAdmin-u
 
 Emits a [`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-bytes32-bytes32-bytes32-) event.
 
-NOTE: Setting the admin role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
+<Callout>
+Setting the admin role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
+</Callout>
 anyone to set grant or revoke such role.
 
 </div>
@@ -3353,7 +3384,9 @@ Internal version of [`AccessManager.setRoleGuardian`](#AccessManager-setRoleGuar
 
 Emits a [`IAccessManager.RoleGuardianChanged`](#IAccessManager-RoleGuardianChanged-uint64-uint64-) event.
 
-NOTE: Setting the guardian role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
+<Callout>
+Setting the guardian role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
+</Callout>
 anyone to cancel any scheduled operation for such role.
 
 </div>
@@ -3564,7 +3597,9 @@ scheduled operation from other occurrences of the same `operationId` in invocati
 
 Emits a [`IAccessManager.OperationScheduled`](#IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-) event.
 
-NOTE: It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
+<Callout>
+It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
+</Callout>
 this is necessary, a random byte can be appended to `data` to act as a salt that will be ignored by the target
 contract if it is using standard Solidity ABI encoding.
 
@@ -4042,11 +4077,15 @@ for future execution.
 If `allowed` is true, the delay can be disregarded and the operation can be immediately executed, otherwise
 the operation can be executed if and only if delay is greater than 0.
 
-NOTE: The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
+<Callout>
+The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
+</Callout>
 is backward compatible. Some contracts may thus ignore the second return argument. In that case they will fail
 to identify the indirect workflow, and will consider calls that require a delay to be forbidden.
 
-NOTE: This function does not report the permissions of the admin functions in the manager itself. These are defined by the
+<Callout>
+This function does not report the permissions of the admin functions in the manager itself. These are defined by the
+</Callout>
 [`AccessManager`](#AccessManager) documentation.
 
 </div>
@@ -4107,7 +4146,9 @@ accidental increase). Defaults to 5 days.
 
 Get whether the contract is closed disabling any access. Otherwise role permissions are applied.
 
-NOTE: When the manager itself is closed, admin functions are still accessible to avoid locking the contract.
+<Callout>
+When the manager itself is closed, admin functions are still accessible to avoid locking the contract.
+</Callout>
 
 </div>
 </div>
@@ -4552,7 +4593,9 @@ scheduled operation from other occurrences of the same `operationId` in invocati
 
 Emits a [`IAccessManager.OperationScheduled`](#IAccessManager-OperationScheduled-bytes32-uint32-uint48-address-address-bytes-) event.
 
-NOTE: It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
+<Callout>
+It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
+</Callout>
 this is necessary, a random byte can be appended to `data` to act as a salt that will be ignored by the target
 contract if it is using standard Solidity ABI encoding.
 
@@ -4750,7 +4793,9 @@ Informational labelling for a roleId.
 
 Emitted when `account` is granted `roleId`.
 
-NOTE: The meaning of the `since` argument depends on the `newMember` argument.
+<Callout>
+The meaning of the `since` argument depends on the `newMember` argument.
+</Callout>
 If the role is granted to a new member, the `since` argument indicates when the account becomes a member of the role,
 otherwise it indicates the execution delay for this account and roleId is updated.
 
