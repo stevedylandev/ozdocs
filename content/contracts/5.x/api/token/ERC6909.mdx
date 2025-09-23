@@ -63,21 +63,21 @@ See https://eips.ethereum.org/EIPS/eip-6909
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC6909
+#### IERC6909 [!toc]
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### ERC165
-#### IERC165
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -90,9 +90,9 @@ See https://eips.ethereum.org/EIPS/eip-6909
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -149,7 +149,9 @@ Returns the amount of tokens of type `id` owned by `owner`.
 
 Returns the amount of tokens of type `id` that `spender` is allowed to spend on behalf of `owner`.
 
-NOTE: Does not include operator allowances.
+<Callout>
+Does not include operator allowances.
+</Callout>
 
 </div>
 </div>
@@ -265,7 +267,9 @@ Relies on the `_update` mechanism.
 
 Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event with `from` set to the zero address.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+<Callout>
+This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+</Callout>
 
 </div>
 </div>
@@ -288,7 +292,9 @@ Relies on the `_update` mechanism.
 
 Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+<Callout>
+This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+</Callout>
 
 </div>
 </div>
@@ -310,7 +316,9 @@ Relies on the `_update` mechanism.
 
 Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event with `to` set to the zero address.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead
+<Callout>
+This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead
+</Callout>
 
 </div>
 </div>
@@ -527,8 +535,8 @@ Implementation of the Content URI extension defined in ERC6909.
 - [tokenURI(id)](#ERC6909ContentURI-tokenURI-uint256-)
 - [_setContractURI(newContractURI)](#ERC6909ContentURI-_setContractURI-string-)
 - [_setTokenURI(id, newTokenURI)](#ERC6909ContentURI-_setTokenURI-uint256-string-)
-#### IERC6909ContentURI
-#### ERC6909
+#### IERC6909ContentURI [!toc]
+#### ERC6909 [!toc]
 - [supportsInterface(interfaceId)](#ERC6909-supportsInterface-bytes4-)
 - [balanceOf(owner, id)](#ERC6909-balanceOf-address-uint256-)
 - [allowance(owner, spender, id)](#ERC6909-allowance-address-address-uint256-)
@@ -544,9 +552,9 @@ Implementation of the Content URI extension defined in ERC6909.
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -555,31 +563,31 @@ Implementation of the Content URI extension defined in ERC6909.
 <div className="font-mono">
 - [ContractURIUpdated()](#ERC6909ContentURI-ContractURIUpdated--)
 - [URI(value, id)](#ERC6909ContentURI-URI-string-uint256-)
-#### IERC6909ContentURI
-#### ERC6909
-#### IERC6909
+#### IERC6909ContentURI [!toc]
+#### ERC6909 [!toc]
+#### IERC6909 [!toc]
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### ERC165
-#### IERC165
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IERC6909ContentURI
-#### ERC6909
+#### IERC6909ContentURI [!toc]
+#### ERC6909 [!toc]
 - [ERC6909InsufficientBalance(sender, balance, needed, id)](#ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-)
 - [ERC6909InsufficientAllowance(spender, allowance, needed, id)](#ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-)
 - [ERC6909InvalidApprover(approver)](#ERC6909-ERC6909InvalidApprover-address-)
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -717,8 +725,8 @@ Implementation of the Metadata extension defined in ERC6909. Exposes the name, s
 - [_setName(id, newName)](#ERC6909Metadata-_setName-uint256-string-)
 - [_setSymbol(id, newSymbol)](#ERC6909Metadata-_setSymbol-uint256-string-)
 - [_setDecimals(id, newDecimals)](#ERC6909Metadata-_setDecimals-uint256-uint8-)
-#### IERC6909Metadata
-#### ERC6909
+#### IERC6909Metadata [!toc]
+#### ERC6909 [!toc]
 - [supportsInterface(interfaceId)](#ERC6909-supportsInterface-bytes4-)
 - [balanceOf(owner, id)](#ERC6909-balanceOf-address-uint256-)
 - [allowance(owner, spender, id)](#ERC6909-allowance-address-address-uint256-)
@@ -734,9 +742,9 @@ Implementation of the Metadata extension defined in ERC6909. Exposes the name, s
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -746,31 +754,31 @@ Implementation of the Metadata extension defined in ERC6909. Exposes the name, s
 - [ERC6909NameUpdated(id, newName)](#ERC6909Metadata-ERC6909NameUpdated-uint256-string-)
 - [ERC6909SymbolUpdated(id, newSymbol)](#ERC6909Metadata-ERC6909SymbolUpdated-uint256-string-)
 - [ERC6909DecimalsUpdated(id, newDecimals)](#ERC6909Metadata-ERC6909DecimalsUpdated-uint256-uint8-)
-#### IERC6909Metadata
-#### ERC6909
-#### IERC6909
+#### IERC6909Metadata [!toc]
+#### ERC6909 [!toc]
+#### IERC6909 [!toc]
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### ERC165
-#### IERC165
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IERC6909Metadata
-#### ERC6909
+#### IERC6909Metadata [!toc]
+#### ERC6909 [!toc]
 - [ERC6909InsufficientBalance(sender, balance, needed, id)](#ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-)
 - [ERC6909InsufficientAllowance(spender, allowance, needed, id)](#ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-)
 - [ERC6909InvalidApprover(approver)](#ERC6909-ERC6909InvalidApprover-address-)
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -958,8 +966,8 @@ Tracks the total supply of each token id individually.
 <div className="font-mono">
 - [totalSupply(id)](#ERC6909TokenSupply-totalSupply-uint256-)
 - [_update(from, to, id, amount)](#ERC6909TokenSupply-_update-address-address-uint256-uint256-)
-#### IERC6909TokenSupply
-#### ERC6909
+#### IERC6909TokenSupply [!toc]
+#### ERC6909 [!toc]
 - [supportsInterface(interfaceId)](#ERC6909-supportsInterface-bytes4-)
 - [balanceOf(owner, id)](#ERC6909-balanceOf-address-uint256-)
 - [allowance(owner, spender, id)](#ERC6909-allowance-address-address-uint256-)
@@ -974,40 +982,40 @@ Tracks the total supply of each token id individually.
 - [_approve(owner, spender, id, amount)](#ERC6909-_approve-address-address-uint256-uint256-)
 - [_setOperator(owner, spender, approved)](#ERC6909-_setOperator-address-address-bool-)
 - [_spendAllowance(owner, spender, id, amount)](#ERC6909-_spendAllowance-address-address-uint256-uint256-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC6909TokenSupply
-#### ERC6909
-#### IERC6909
+#### IERC6909TokenSupply [!toc]
+#### ERC6909 [!toc]
+#### IERC6909 [!toc]
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### ERC165
-#### IERC165
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IERC6909TokenSupply
-#### ERC6909
+#### IERC6909TokenSupply [!toc]
+#### ERC6909 [!toc]
 - [ERC6909InsufficientBalance(sender, balance, needed, id)](#ERC6909-ERC6909InsufficientBalance-address-uint256-uint256-uint256-)
 - [ERC6909InsufficientAllowance(spender, allowance, needed, id)](#ERC6909-ERC6909InsufficientAllowance-address-uint256-uint256-uint256-)
 - [ERC6909InvalidApprover(approver)](#ERC6909-ERC6909InvalidApprover-address-)
 - [ERC6909InvalidReceiver(receiver)](#ERC6909-ERC6909InvalidReceiver-address-)
 - [ERC6909InvalidSender(sender)](#ERC6909-ERC6909InvalidSender-address-)
 - [ERC6909InvalidSpender(spender)](#ERC6909-ERC6909InvalidSpender-address-)
-#### IERC6909
-#### ERC165
-#### IERC165
+#### IERC6909 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
 </div>
 </div>
 

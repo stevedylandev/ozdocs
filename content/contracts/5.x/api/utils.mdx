@@ -38,11 +38,9 @@ Miscellaneous contracts and libraries containing utility functions you can use t
 * [`Panic`](#Panic): A library to revert with [Solidity panic codes](https://docs.soliditylang.org/en/v0.8.20/control-structures.html#panic-via-assert-and-error-via-require).
 * [`Comparators`](#Comparators): A library that contains comparator functions to use with the [`Heap`](#Heap) library.
 * [`CAIP2`](#CAIP2), [`CAIP10`](#CAIP10): Libraries for formatting and parsing CAIP-2 and CAIP-10 identifiers.
-* [`Memory`](#Memory): A utility library to manipulate memory.
-* [`InteroperableAddress`](#InteroperableAddress): Library for formatting and parsing ERC-7930 interoperable addresses.
 * [`Blockhash`](#Blockhash): A library for accessing historical block hashes beyond the standard 256 block limit utilizing EIP-2935’s historical blockhash functionality.
 * [`Time`](#Time): A library that provides helpers for manipulating time-related objects, including a `Delay` type.
-
+ 
 <Callout>
 Because Solidity does not support generic types, [`EnumerableMap`](#EnumerableMap) and [`EnumerableSet`](#EnumerableSet) are specialized to a limited number of key-value types.
 </Callout>
@@ -134,10 +132,6 @@ Ethereum contracts have no native concept of an interface, so applications must 
 [`CAIP2`](#CAIP2)
 
 [`CAIP10`](#CAIP10)
-
-[`Memory`](#Memory)
-
-[`InteroperableAddress`](#InteroperableAddress)
 
 [`Blockhash`](#Blockhash)
 
@@ -425,7 +419,9 @@ Sort an array of uint256 (in memory) following the provided comparator function.
 This function does the sorting "in place", meaning that it overrides the input. The object is returned for
 convenience, but that returned value can be discarded safely if the caller has a memory pointer to the array.
 
-NOTE: this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
+<Callout>
+this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
+</Callout>
 array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful
 when executing this as part of a transaction. If the array being sorted is too large, the sort operation may
 consume more gas than is available in a block, leading to potential DoS.
@@ -471,7 +467,9 @@ Sort an array of address (in memory) following the provided comparator function.
 This function does the sorting "in place", meaning that it overrides the input. The object is returned for
 convenience, but that returned value can be discarded safely if the caller has a memory pointer to the array.
 
-NOTE: this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
+<Callout>
+this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
+</Callout>
 array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful
 when executing this as part of a transaction. If the array being sorted is too large, the sort operation may
 consume more gas than is available in a block, leading to potential DoS.
@@ -517,7 +515,9 @@ Sort an array of bytes32 (in memory) following the provided comparator function.
 This function does the sorting "in place", meaning that it overrides the input. The object is returned for
 convenience, but that returned value can be discarded safely if the caller has a memory pointer to the array.
 
-NOTE: this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
+<Callout>
+this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
+</Callout>
 array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful
 when executing this as part of a transaction. If the array being sorted is too large, the sort operation may
 consume more gas than is available in a block, leading to potential DoS.
@@ -563,7 +563,9 @@ a value greater or equal to `element`. If no such index exists (i.e. all
 values in the array are strictly less than `element`), the array length is
 returned. Time complexity O(log n).
 
-NOTE: The `array` is expected to be sorted in ascending order, and to
+<Callout>
+The `array` is expected to be sorted in ascending order, and to
+</Callout>
 contain no repeated elements.
 
 <Callout type="warn">
@@ -1053,7 +1055,9 @@ For blocks within the last 256 blocks, it uses the native `BLOCKHASH` opcode.
 For blocks between 257 and 8191 blocks ago, it queries the EIP-2935 history storage.
 For blocks older than 8191 or future blocks, it returns zero, matching the `BLOCKHASH` behavior.
 
-NOTE: After EIP-2935 activation, it takes 8191 blocks to completely fill the history.
+<Callout>
+After EIP-2935 activation, it takes 8191 blocks to completely fill the history.
+</Callout>
 Before that, only block hashes since the fork block will be available.
 
 <div className="bg-secondary p-4 rounded-md mb-6">
@@ -1077,7 +1081,9 @@ Before that, only block hashes since the fork block will be available.
 
 Retrieves the block hash for any historical block within the supported range.
 
-NOTE: The function gracefully handles future blocks and blocks beyond the history window
+<Callout>
+The function gracefully handles future blocks and blocks beyond the history window
+</Callout>
 by returning zero, consistent with the EVM's native `BLOCKHASH` behavior.
 
 </div>
@@ -1110,15 +1116,6 @@ Bytes operations.
 - [lastIndexOf(buffer, s, pos)](#Bytes-lastIndexOf-bytes-bytes1-uint256-)
 - [slice(buffer, start)](#Bytes-slice-bytes-uint256-)
 - [slice(buffer, start, end)](#Bytes-slice-bytes-uint256-uint256-)
-- [splice(buffer, start)](#Bytes-splice-bytes-uint256-)
-- [splice(buffer, start, end)](#Bytes-splice-bytes-uint256-uint256-)
-- [equal(a, b)](#Bytes-equal-bytes-bytes-)
-- [reverseBytes32(value)](#Bytes-reverseBytes32-bytes32-)
-- [reverseBytes16(value)](#Bytes-reverseBytes16-bytes16-)
-- [reverseBytes8(value)](#Bytes-reverseBytes8-bytes8-)
-- [reverseBytes4(value)](#Bytes-reverseBytes4-bytes4-)
-- [reverseBytes2(value)](#Bytes-reverseBytes2-bytes2-)
-- [clz(buffer)](#Bytes-clz-bytes-)
 </div>
 </div>
 
@@ -1138,7 +1135,9 @@ Forward search for `s` in `buffer`
 * If `s` is present in the buffer, returns the index of the first instance
 * If `s` is not present in the buffer, returns type(uint256).max
 
-NOTE: replicates the behavior of [Javascript's `Array.indexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
+<Callout>
+replicates the behavior of [Javascript's `Array.indexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
+</Callout>
 
 </div>
 </div>
@@ -1159,7 +1158,9 @@ Forward search for `s` in `buffer` starting at position `pos`
 * If `s` is present in the buffer (at or after `pos`), returns the index of the next instance
 * If `s` is not present in the buffer (at or after `pos`), returns type(uint256).max
 
-NOTE: replicates the behavior of [Javascript's `Array.indexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
+<Callout>
+replicates the behavior of [Javascript's `Array.indexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
+</Callout>
 
 </div>
 </div>
@@ -1180,7 +1181,9 @@ Backward search for `s` in `buffer`
 * If `s` is present in the buffer, returns the index of the last instance
 * If `s` is not present in the buffer, returns type(uint256).max
 
-NOTE: replicates the behavior of [Javascript's `Array.lastIndexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)
+<Callout>
+replicates the behavior of [Javascript's `Array.lastIndexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)
+</Callout>
 
 </div>
 </div>
@@ -1201,7 +1204,9 @@ Backward search for `s` in `buffer` starting at position `pos`
 * If `s` is present in the buffer (at or before `pos`), returns the index of the previous instance
 * If `s` is not present in the buffer (at or before `pos`), returns type(uint256).max
 
-NOTE: replicates the behavior of [Javascript's `Array.lastIndexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)
+<Callout>
+replicates the behavior of [Javascript's `Array.lastIndexOf`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)
+</Callout>
 
 </div>
 </div>
@@ -1221,7 +1226,9 @@ NOTE: replicates the behavior of [Javascript's `Array.lastIndexOf`](https://deve
 Copies the content of `buffer`, from `start` (included) to the end of `buffer` into a new bytes object in
 memory.
 
-NOTE: replicates the behavior of [Javascript's `Array.slice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)
+<Callout>
+replicates the behavior of [Javascript's `Array.slice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)
+</Callout>
 
 </div>
 </div>
@@ -1239,169 +1246,11 @@ NOTE: replicates the behavior of [Javascript's `Array.slice`](https://developer.
 <div className="px-4">
 
 Copies the content of `buffer`, from `start` (included) to `end` (excluded) into a new bytes object in
-memory. The `end` argument is truncated to the length of the `buffer`.
+memory.
 
-NOTE: replicates the behavior of [Javascript's `Array.slice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)
-
-</div>
-</div>
-
-<a id="Bytes-splice-bytes-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">splice(bytes buffer, uint256 start) → bytes</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-splice-bytes-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Moves the content of `buffer`, from `start` (included) to the end of `buffer` to the start of that buffer.
-
-NOTE: This function modifies the provided buffer in place. If you need to preserve the original buffer, use [`Bytes.slice`](#Bytes-slice-bytes-uint256-uint256-) instead
-
-</div>
-</div>
-
-<a id="Bytes-splice-bytes-uint256-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">splice(bytes buffer, uint256 start, uint256 end) → bytes</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-splice-bytes-uint256-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Moves the content of `buffer`, from `start` (included) to end (excluded) to the start of that buffer. The
-`end` argument is truncated to the length of the `buffer`.
-
-NOTE: This function modifies the provided buffer in place. If you need to preserve the original buffer, use [`Bytes.slice`](#Bytes-slice-bytes-uint256-uint256-) instead
-
-</div>
-</div>
-
-<a id="Bytes-equal-bytes-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">equal(bytes a, bytes b) → bool</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-equal-bytes-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns true if the two byte buffers are equal.
-
-</div>
-</div>
-
-<a id="Bytes-reverseBytes32-bytes32-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">reverseBytes32(bytes32 value) → bytes32</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-reverseBytes32-bytes32-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Reverses the byte order of a bytes32 value, converting between little-endian and big-endian.
-Inspired in [Reverse Parallel](https://graphics.stanford.edu/~seander/bithacks.html#ReverseParallel)
-
-</div>
-</div>
-
-<a id="Bytes-reverseBytes16-bytes16-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">reverseBytes16(bytes16 value) → bytes16</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-reverseBytes16-bytes16-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Same as [`Bytes.reverseBytes32`](#Bytes-reverseBytes32-bytes32-) but optimized for 128-bit values.
-
-</div>
-</div>
-
-<a id="Bytes-reverseBytes8-bytes8-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">reverseBytes8(bytes8 value) → bytes8</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-reverseBytes8-bytes8-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Same as [`Bytes.reverseBytes32`](#Bytes-reverseBytes32-bytes32-) but optimized for 64-bit values.
-
-</div>
-</div>
-
-<a id="Bytes-reverseBytes4-bytes4-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">reverseBytes4(bytes4 value) → bytes4</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-reverseBytes4-bytes4-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Same as [`Bytes.reverseBytes32`](#Bytes-reverseBytes32-bytes32-) but optimized for 32-bit values.
-
-</div>
-</div>
-
-<a id="Bytes-reverseBytes2-bytes2-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">reverseBytes2(bytes2 value) → bytes2</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-reverseBytes2-bytes2-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Same as [`Bytes.reverseBytes32`](#Bytes-reverseBytes32-bytes32-) but optimized for 16-bit values.
-
-</div>
-</div>
-
-<a id="Bytes-clz-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">clz(bytes buffer) → uint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Bytes-clz-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Counts the number of leading zero bits a bytes array. Returns `8 * buffer.length`
-if the buffer is all zeros.
+<Callout>
+replicates the behavior of [Javascript's `Array.slice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)
+</Callout>
 
 </div>
 </div>
@@ -1477,7 +1326,9 @@ Return the CAIP-10 identifier for an account on the current (local) chain.
 
 Return the CAIP-10 identifier for a given caip2 chain and account.
 
-NOTE: This function does not verify that the inputs are properly formatted.
+<Callout>
+This function does not verify that the inputs are properly formatted.
+</Callout>
 
 </div>
 </div>
@@ -1496,7 +1347,9 @@ NOTE: This function does not verify that the inputs are properly formatted.
 
 Parse a CAIP-10 identifier into its components.
 
-NOTE: This function does not verify that the CAIP-10 input is properly formatted. The `caip2` return can be
+<Callout>
+This function does not verify that the CAIP-10 input is properly formatted. The `caip2` return can be
+</Callout>
 parsed using the [`CAIP2`](#CAIP2) library.
 
 </div>
@@ -1572,7 +1425,9 @@ Return the CAIP-2 identifier for the current (local) chain.
 
 Return the CAIP-2 identifier for a given namespace and reference.
 
-NOTE: This function does not verify that the inputs are properly formatted.
+<Callout>
+This function does not verify that the inputs are properly formatted.
+</Callout>
 
 </div>
 </div>
@@ -1591,7 +1446,9 @@ NOTE: This function does not verify that the inputs are properly formatted.
 
 Parse a CAIP-2 identifier into its components.
 
-NOTE: This function does not verify that the CAIP-2 input is properly formatted.
+<Callout>
+This function does not verify that the CAIP-2 input is properly formatted.
+</Callout>
 
 </div>
 </div>
@@ -2013,114 +1870,6 @@ A necessary precompile is missing.
 </div>
 </div>
 
-<a id="Memory"></a>
-
-<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
-
-## `Memory` 
-
-<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/utils/Memory.sol">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-</a>
-
-</div>
-
-```solidity
-import "@openzeppelin/contracts/utils/Memory.sol";
-```
-
-Utilities to manipulate memory.
-
-Memory is a contiguous and dynamic byte array in which Solidity stores non-primitive types.
-This library provides functions to manipulate pointers to this dynamic array.
-
-<Callout type="warn">
-When manipulating memory, make sure to follow the Solidity documentation
-</Callout>
-guidelines for [Memory Safety](https://docs.soliditylang.org/en/v0.8.20/assembly.html#memory-safety).
-
-<div className="bg-secondary p-4 rounded-md mb-6">
-<h3 style={{ marginTop: "0"}}>Functions</h3>
-<div className="font-mono">
-- [getFreeMemoryPointer()](#Memory-getFreeMemoryPointer--)
-- [setFreeMemoryPointer(ptr)](#Memory-setFreeMemoryPointer-Memory-Pointer-)
-- [asBytes32(ptr)](#Memory-asBytes32-Memory-Pointer-)
-- [asPointer(value)](#Memory-asPointer-bytes32-)
-</div>
-</div>
-
-<a id="Memory-getFreeMemoryPointer--"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">getFreeMemoryPointer() → Memory.Pointer ptr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Memory-getFreeMemoryPointer--">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns a `Pointer` to the current free `Pointer`.
-
-</div>
-</div>
-
-<a id="Memory-setFreeMemoryPointer-Memory-Pointer-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">setFreeMemoryPointer(Memory.Pointer ptr)</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Memory-setFreeMemoryPointer-Memory-Pointer-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Sets the free `Pointer` to a specific value.
-
-<Callout type="warn">
-Everything after the pointer may be overwritten.
-</Callout>
-
-</div>
-</div>
-
-<a id="Memory-asBytes32-Memory-Pointer-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">asBytes32(Memory.Pointer ptr) → bytes32</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Memory-asBytes32-Memory-Pointer-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-`Pointer` to `bytes32`. Expects a pointer to a properly ABI-encoded `bytes` object.
-
-</div>
-</div>
-
-<a id="Memory-asPointer-bytes32-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">asPointer(bytes32 value) → Memory.Pointer</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Memory-asPointer-bytes32-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-`bytes32` to `Pointer`. Expects a pointer to a properly ABI-encoded `bytes` object.
-
-</div>
-</div>
-
 <a id="Multicall"></a>
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
@@ -2143,7 +1892,9 @@ Consider any assumption about calldata validation performed by the sender may be
 careful about sending transactions invoking [`Multicall.multicall`](#Multicall-multicall-bytes---). For example, a relay address that filters function
 selectors won't filter calls nested within a [`Multicall.multicall`](#Multicall-multicall-bytes---) operation.
 
-NOTE: Since 5.0.1 and 4.9.4, this contract identifies non-canonical contexts (i.e. `msg.sender` is not [`Context._msgSender`](#Context-_msgSender--)).
+<Callout>
+Since 5.0.1 and 4.9.4, this contract identifies non-canonical contexts (i.e. `msg.sender` is not [`Context._msgSender`](#Context-_msgSender--)).
+</Callout>
 If a non-canonical context is identified, the following self `delegatecall` appends the last bytes of `msg.data`
 to the subcall. This makes it safe to use with [`ERC2771Context`](metatx#ERC2771Context). Contexts that don't affect the resolution of
 [`Context._msgSender`](#Context-_msgSender--) are not propagated to subcalls.
@@ -2296,7 +2047,9 @@ Alternative to [`Nonces`](#Nonces), that supports key-ed nonces.
 
 Follows the [ERC-4337's semi-abstracted nonce system](https://eips.ethereum.org/EIPS/eip-4337#semi-abstracted-nonce-support).
 
-NOTE: This contract inherits from [`Nonces`](#Nonces) and reuses its storage for the first nonce key (i.e. `0`). This
+<Callout>
+This contract inherits from [`Nonces`](#Nonces) and reuses its storage for the first nonce key (i.e. `0`). This
+</Callout>
 makes upgrading from [`Nonces`](#Nonces) to [`NoncesKeyed`](#NoncesKeyed) safe when using their upgradeable versions (e.g. `NoncesKeyedUpgradeable`).
 Doing so will NOT reset the current state of nonces, avoiding replay attacks where a nonce is reused after the upgrade.
 
@@ -2307,7 +2060,7 @@ Doing so will NOT reset the current state of nonces, avoiding replay attacks whe
 - [_useNonce(owner, key)](#NoncesKeyed-_useNonce-address-uint192-)
 - [_useCheckedNonce(owner, keyNonce)](#NoncesKeyed-_useCheckedNonce-address-uint256-)
 - [_useCheckedNonce(owner, key, nonce)](#NoncesKeyed-_useCheckedNonce-address-uint192-uint64-)
-#### Nonces
+#### Nonces [!toc]
 - [nonces(owner)](#Nonces-nonces-address-)
 - [_useNonce(owner)](#Nonces-_useNonce-address-)
 </div>
@@ -2316,7 +2069,7 @@ Doing so will NOT reset the current state of nonces, avoiding replay attacks whe
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### Nonces
+#### Nonces [!toc]
 - [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
 </div>
 </div>
@@ -6212,10 +5965,14 @@ Note that because there is a single `nonReentrant` guard, functions marked as
 those functions `private`, and then adding `external` `nonReentrant` entry
 points to them.
 
-TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,
+<Callout>
+If EIP-1153 (transient storage) is available on the chain you're deploying at,
+</Callout>
 consider using [`ReentrancyGuardTransient`](#ReentrancyGuardTransient) instead.
 
-TIP: If you would like to learn more about reentrancy and alternative ways
+<Callout>
+If you would like to learn more about reentrancy and alternative ways
+</Callout>
 to protect against it, check out our blog post
 [Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
 
@@ -6331,7 +6088,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuardTransient.sol";
 
 Variant of [`ReentrancyGuard`](#ReentrancyGuard) that uses transient storage.
 
-NOTE: This variant only works on networks where EIP-1153 is available.
+<Callout>
+This variant only works on networks where EIP-1153 is available.
+</Callout>
 
 _Available since v5.1._
 
@@ -6674,9 +6433,13 @@ contract Example {
 }
 ```
 
-TIP: Consider using this library along with [`StorageSlot`](#StorageSlot).
+<Callout>
+Consider using this library along with [`StorageSlot`](#StorageSlot).
+</Callout>
 
-NOTE: This library provides a way to manipulate storage locations in a non-standard way. Tooling for checking
+<Callout>
+This library provides a way to manipulate storage locations in a non-standard way. Tooling for checking
+</Callout>
 upgrade safety will ignore the slots accessed through this library.
 
 _Available since v5.1._
@@ -6907,7 +6670,9 @@ contract ERC1967 {
 }
 ```
 
-TIP: Consider using this library along with [`SlotDerivation`](#SlotDerivation).
+<Callout>
+Consider using this library along with [`SlotDerivation`](#SlotDerivation).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -7104,7 +6869,6 @@ String operations.
 - [toHexString(value, length)](#Strings-toHexString-uint256-uint256-)
 - [toHexString(addr)](#Strings-toHexString-address-)
 - [toChecksumHexString(addr)](#Strings-toChecksumHexString-address-)
-- [toHexString(input)](#Strings-toHexString-bytes-)
 - [equal(a, b)](#Strings-equal-string-string-)
 - [parseUint(input)](#Strings-parseUint-string-)
 - [parseUint(input, begin, end)](#Strings-parseUint-string-uint256-uint256-)
@@ -7239,23 +7003,6 @@ representation, according to EIP-55.
 </div>
 </div>
 
-<a id="Strings-toHexString-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">toHexString(bytes input) → string</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Strings-toHexString-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Converts a `bytes` buffer to its ASCII `string` hexadecimal representation.
-
-</div>
-</div>
-
 <a id="Strings-equal-string-string-"></a>
 
 <div className="border rounded-md mb-4">
@@ -7330,7 +7077,9 @@ Requirements:
 
 Variant of #Strings-parseUint-string- that returns false if the parsing fails because of an invalid character.
 
-NOTE: This function will revert if the result does not fit in a `uint256`.
+<Callout>
+This function will revert if the result does not fit in a `uint256`.
+</Callout>
 
 </div>
 </div>
@@ -7350,7 +7099,9 @@ NOTE: This function will revert if the result does not fit in a `uint256`.
 Variant of #Strings-parseUint-string-uint256-uint256- that returns false if the parsing fails because of an invalid
 character.
 
-NOTE: This function will revert if the result does not fit in a `uint256`.
+<Callout>
+This function will revert if the result does not fit in a `uint256`.
+</Callout>
 
 </div>
 </div>
@@ -7413,7 +7164,9 @@ Requirements:
 Variant of #Strings-parseInt-string- that returns false if the parsing fails because of an invalid character or if
 the result does not fit in a `int256`.
 
-NOTE: This function will revert if the absolute value of the result does not fit in a `uint256`.
+<Callout>
+This function will revert if the absolute value of the result does not fit in a `uint256`.
+</Callout>
 
 </div>
 </div>
@@ -7433,7 +7186,9 @@ NOTE: This function will revert if the absolute value of the result does not fit
 Variant of #Strings-parseInt-string-uint256-uint256- that returns false if the parsing fails because of an invalid
 character or if the result does not fit in a `int256`.
 
-NOTE: This function will revert if the absolute value of the result does not fit in a `uint256`.
+<Callout>
+This function will revert if the absolute value of the result does not fit in a `uint256`.
+</Callout>
 
 </div>
 </div>
@@ -7495,7 +7250,9 @@ Requirements:
 
 Variant of #Strings-parseHexUint-string- that returns false if the parsing fails because of an invalid character.
 
-NOTE: This function will revert if the result does not fit in a `uint256`.
+<Callout>
+This function will revert if the result does not fit in a `uint256`.
+</Callout>
 
 </div>
 </div>
@@ -7515,7 +7272,9 @@ NOTE: This function will revert if the result does not fit in a `uint256`.
 Variant of #Strings-parseHexUint-string-uint256-uint256- that returns false if the parsing fails because of an
 invalid character.
 
-NOTE: This function will revert if the result does not fit in a `uint256`.
+<Callout>
+This function will revert if the result does not fit in a `uint256`.
+</Callout>
 
 </div>
 </div>
@@ -7615,7 +7374,9 @@ Escape special characters in JSON strings. This can be useful to prevent JSON in
 This function should only be used in double quoted JSON strings. Single quotes are not escaped.
 </Callout>
 
-NOTE: This function escapes all unicode characters, and not just the ones in ranges defined in section 2.5 of
+<Callout>
+This function escapes all unicode characters, and not just the ones in ranges defined in section 2.5 of
+</Callout>
 RFC-4627 (U+0000 to U+001F, U+0022 and U+005C). ECMAScript's `JSON.parse` does recover escaped unicode
 characters that are not in this range, but other tooling may provide different results.
 
@@ -7712,7 +7473,9 @@ contract Lock {
 }
 ```
 
-TIP: Consider using this library along with [`SlotDerivation`](#SlotDerivation).
+<Callout>
+Consider using this library along with [`SlotDerivation`](#SlotDerivation).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -7990,297 +7753,6 @@ Store `value` at location `slot` in transient storage.
 </div>
 </div>
 
-<a id="InteroperableAddress"></a>
-
-<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
-
-## `InteroperableAddress` 
-
-<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/utils/draft-InteroperableAddress.sol">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-</a>
-
-</div>
-
-```solidity
-import "@openzeppelin/contracts/utils/draft-InteroperableAddress.sol";
-```
-
-Helper library to format and parse [ERC-7930](https://ethereum-magicians.org/t/erc-7930-interoperable-addresses/23365) interoperable
-addresses.
-
-<div className="bg-secondary p-4 rounded-md mb-6">
-<h3 style={{ marginTop: "0"}}>Functions</h3>
-<div className="font-mono">
-- [formatV1(chainType, chainReference, addr)](#InteroperableAddress-formatV1-bytes2-bytes-bytes-)
-- [formatEvmV1(chainid, addr)](#InteroperableAddress-formatEvmV1-uint256-address-)
-- [formatEvmV1(chainid)](#InteroperableAddress-formatEvmV1-uint256-)
-- [formatEvmV1(addr)](#InteroperableAddress-formatEvmV1-address-)
-- [parseV1(self)](#InteroperableAddress-parseV1-bytes-)
-- [parseV1Calldata(self)](#InteroperableAddress-parseV1Calldata-bytes-)
-- [tryParseV1(self)](#InteroperableAddress-tryParseV1-bytes-)
-- [tryParseV1Calldata(self)](#InteroperableAddress-tryParseV1Calldata-bytes-)
-- [parseEvmV1(self)](#InteroperableAddress-parseEvmV1-bytes-)
-- [parseEvmV1Calldata(self)](#InteroperableAddress-parseEvmV1Calldata-bytes-)
-- [tryParseEvmV1(self)](#InteroperableAddress-tryParseEvmV1-bytes-)
-- [tryParseEvmV1Calldata(self)](#InteroperableAddress-tryParseEvmV1Calldata-bytes-)
-</div>
-</div>
-
-<div className="bg-secondary p-4 rounded-md mb-6">
-<h3 style={{ marginTop: "0"}}>Errors</h3>
-<div className="font-mono">
-- [InteroperableAddressParsingError()](#InteroperableAddress-InteroperableAddressParsingError-bytes-)
-- [InteroperableAddressEmptyReferenceAndAddress()](#InteroperableAddress-InteroperableAddressEmptyReferenceAndAddress--)
-</div>
-</div>
-
-<a id="InteroperableAddress-formatV1-bytes2-bytes-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">formatV1(bytes2 chainType, bytes chainReference, bytes addr) → bytes</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-formatV1-bytes2-bytes-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Format an ERC-7930 interoperable address (version 1) from its components `chainType`, `chainReference`
-and `addr`. This is a generic function that supports any chain type, chain reference and address supported by
-ERC-7390, including interoperable addresses with empty chain reference or empty address.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-formatEvmV1-uint256-address-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">formatEvmV1(uint256 chainid, address addr) → bytes</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-formatEvmV1-uint256-address-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of #InteroperableAddress-formatV1-bytes2-bytes-bytes- specific to EVM chains. Returns the ERC-7930 interoperable
-address (version 1) for a given chainid and ethereum address.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-formatEvmV1-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">formatEvmV1(uint256 chainid) → bytes</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-formatEvmV1-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of #InteroperableAddress-formatV1-bytes2-bytes-bytes- that specifies an EVM chain without an address.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-formatEvmV1-address-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">formatEvmV1(address addr) → bytes</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-formatEvmV1-address-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of #InteroperableAddress-formatV1-bytes2-bytes-bytes- that specifies an EVM address without a chain reference.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-parseV1-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">parseV1(bytes self) → bytes2 chainType, bytes chainReference, bytes addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-parseV1-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Parse a ERC-7930 interoperable address (version 1) into its different components. Reverts if the input is
-not following a version 1 of ERC-7930
-
-</div>
-</div>
-
-<a id="InteroperableAddress-parseV1Calldata-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">parseV1Calldata(bytes self) → bytes2 chainType, bytes chainReference, bytes addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-parseV1Calldata-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of [`InteroperableAddress.parseV1`](#InteroperableAddress-parseV1-bytes-) that handles calldata slices to reduce memory copy costs.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-tryParseV1-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">tryParseV1(bytes self) → bool success, bytes2 chainType, bytes chainReference, bytes addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-tryParseV1-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of [`InteroperableAddress.parseV1`](#InteroperableAddress-parseV1-bytes-) that does not revert on invalid input. Instead, it returns `false` as the first
-return value to indicate parsing failure when the input does not follow version 1 of ERC-7930.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-tryParseV1Calldata-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">tryParseV1Calldata(bytes self) → bool success, bytes2 chainType, bytes chainReference, bytes addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-tryParseV1Calldata-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of [`InteroperableAddress.tryParseV1`](#InteroperableAddress-tryParseV1-bytes-) that handles calldata slices to reduce memory copy costs.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-parseEvmV1-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">parseEvmV1(bytes self) → uint256 chainId, address addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-parseEvmV1-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Parse a ERC-7930 interoperable address (version 1) corresponding to an EIP-155 chain. The `chainId` and
-`addr` return values will be zero if the input doesn't include a chainReference or an address, respectively.
-
-Requirements:
-
-* The input must be a valid ERC-7930 interoperable address (version 1)
-* The underlying chainType must be "eip-155"
-
-</div>
-</div>
-
-<a id="InteroperableAddress-parseEvmV1Calldata-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">parseEvmV1Calldata(bytes self) → uint256 chainId, address addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-parseEvmV1Calldata-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of [`InteroperableAddress.parseEvmV1`](#InteroperableAddress-parseEvmV1-bytes-) that handles calldata slices to reduce memory copy costs.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-tryParseEvmV1-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">tryParseEvmV1(bytes self) → bool success, uint256 chainId, address addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-tryParseEvmV1-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of [`InteroperableAddress.parseEvmV1`](#InteroperableAddress-parseEvmV1-bytes-) that does not revert on invalid input. Instead, it returns `false` as the first
-return value to indicate parsing failure when the input does not follow version 1 of ERC-7930.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-tryParseEvmV1Calldata-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">tryParseEvmV1Calldata(bytes self) → bool success, uint256 chainId, address addr</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="InteroperableAddress-tryParseEvmV1Calldata-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Variant of [`InteroperableAddress.tryParseEvmV1`](#InteroperableAddress-tryParseEvmV1-bytes-) that handles calldata slices to reduce memory copy costs.
-
-</div>
-</div>
-
-<a id="InteroperableAddress-InteroperableAddressParsingError-bytes-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">InteroperableAddressParsingError(bytes)</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">error</p>
-<a className="peer" data-card href="InteroperableAddress-InteroperableAddressParsingError-bytes-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-</div>
-</div>
-
-<a id="InteroperableAddress-InteroperableAddressEmptyReferenceAndAddress--"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">InteroperableAddressEmptyReferenceAndAddress()</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">error</p>
-<a className="peer" data-card href="InteroperableAddress-InteroperableAddressEmptyReferenceAndAddress--">#</a>
-</div>
-</div>
-<div className="px-4">
-
-</div>
-</div>
-
 <a id="ERC165"></a>
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
@@ -8312,7 +7784,7 @@ function supportsInterface(bytes4 interfaceId) public view virtual override retu
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [supportsInterface(interfaceId)](#ERC165-supportsInterface-bytes4-)
-#### IERC165
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -8585,7 +8057,6 @@ Standard math utilities missing in the Solidity language.
 - [log256(x)](#Math-log256-uint256-)
 - [log256(value, rounding)](#Math-log256-uint256-enum-Math-Rounding-)
 - [unsignedRoundsUp(rounding)](#Math-unsignedRoundsUp-enum-Math-Rounding-)
-- [clz(x)](#Math-clz-uint256-)
 </div>
 </div>
 
@@ -8949,7 +8420,9 @@ If n is not a prime, then Z/nZ is not a field, and some elements might not be in
 
 If the input value is not inversible, 0 is returned.
 
-NOTE: If you know for sure that n is (big) a prime, it may be cheaper to use Fermat's little theorem and get the
+<Callout>
+If you know for sure that n is (big) a prime, it may be cheaper to use Fermat's little theorem and get the
+</Callout>
 inverse using `Math.modExp(a, n - 2, n)`. See [`Math.invModPrime`](#Math-invModPrime-uint256-uint256-).
 
 </div>
@@ -8973,7 +8446,9 @@ From [Fermat's little theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_t
 prime, then `a**(p-1) ≡ 1 mod p`. As a consequence, we have `a * a**(p-2) ≡ 1 mod p`, which means that
 `a**(p-2)` is the modular multiplicative inverse of a in Fp.
 
-NOTE: this function does NOT check that `p` is a prime greater than `2`.
+<Callout>
+this function does NOT check that `p` is a prime greater than `2`.
+</Callout>
 
 </div>
 </div>
@@ -9228,23 +8703,6 @@ Returns 0 if given 0.
 <div className="px-4">
 
 Returns whether a provided rounding mode is considered rounding up for unsigned integers.
-
-</div>
-</div>
-
-<a id="Math-clz-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">clz(uint256 x) → uint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Math-clz-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Counts the number of leading zero bits in a uint256.
 
 </div>
 </div>
@@ -11255,14 +10713,6 @@ checkpoint for the current transaction block using the [`Checkpoints.push`](#Che
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-- [push(self, key, value)](#Checkpoints-push-struct-Checkpoints-Trace256-uint256-uint256-)
-- [lowerLookup(self, key)](#Checkpoints-lowerLookup-struct-Checkpoints-Trace256-uint256-)
-- [upperLookup(self, key)](#Checkpoints-upperLookup-struct-Checkpoints-Trace256-uint256-)
-- [upperLookupRecent(self, key)](#Checkpoints-upperLookupRecent-struct-Checkpoints-Trace256-uint256-)
-- [latest(self)](#Checkpoints-latest-struct-Checkpoints-Trace256-)
-- [latestCheckpoint(self)](#Checkpoints-latestCheckpoint-struct-Checkpoints-Trace256-)
-- [length(self)](#Checkpoints-length-struct-Checkpoints-Trace256-)
-- [at(self, pos)](#Checkpoints-at-struct-Checkpoints-Trace256-uint32-)
 - [push(self, key, value)](#Checkpoints-push-struct-Checkpoints-Trace224-uint32-uint224-)
 - [lowerLookup(self, key)](#Checkpoints-lowerLookup-struct-Checkpoints-Trace224-uint32-)
 - [upperLookup(self, key)](#Checkpoints-upperLookup-struct-Checkpoints-Trace224-uint32-)
@@ -11294,156 +10744,6 @@ checkpoint for the current transaction block using the [`Checkpoints.push`](#Che
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [CheckpointUnorderedInsertion()](#Checkpoints-CheckpointUnorderedInsertion--)
-</div>
-</div>
-
-<a id="Checkpoints-push-struct-Checkpoints-Trace256-uint256-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">push(struct Checkpoints.Trace256 self, uint256 key, uint256 value) → uint256 oldValue, uint256 newValue</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-push-struct-Checkpoints-Trace256-uint256-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Pushes a (`key`, `value`) pair into a Trace256 so that it is stored as the checkpoint.
-
-Returns previous value and new value.
-
-<Callout type="warn">
-Never accept `key` as a user input, since an arbitrary `type(uint256).max` key set will disable the
-</Callout>
-library.
-
-</div>
-</div>
-
-<a id="Checkpoints-lowerLookup-struct-Checkpoints-Trace256-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">lowerLookup(struct Checkpoints.Trace256 self, uint256 key) → uint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-lowerLookup-struct-Checkpoints-Trace256-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if
-there is none.
-
-</div>
-</div>
-
-<a id="Checkpoints-upperLookup-struct-Checkpoints-Trace256-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">upperLookup(struct Checkpoints.Trace256 self, uint256 key) → uint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-upperLookup-struct-Checkpoints-Trace256-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
-if there is none.
-
-</div>
-</div>
-
-<a id="Checkpoints-upperLookupRecent-struct-Checkpoints-Trace256-uint256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">upperLookupRecent(struct Checkpoints.Trace256 self, uint256 key) → uint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-upperLookupRecent-struct-Checkpoints-Trace256-uint256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
-if there is none.
-
-NOTE: This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
-keys).
-
-</div>
-</div>
-
-<a id="Checkpoints-latest-struct-Checkpoints-Trace256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">latest(struct Checkpoints.Trace256 self) → uint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-latest-struct-Checkpoints-Trace256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns the value in the most recent checkpoint, or zero if there are no checkpoints.
-
-</div>
-</div>
-
-<a id="Checkpoints-latestCheckpoint-struct-Checkpoints-Trace256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">latestCheckpoint(struct Checkpoints.Trace256 self) → bool exists, uint256 _key, uint256 _value</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-latestCheckpoint-struct-Checkpoints-Trace256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value
-in the most recent checkpoint.
-
-</div>
-</div>
-
-<a id="Checkpoints-length-struct-Checkpoints-Trace256-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">length(struct Checkpoints.Trace256 self) → uint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-length-struct-Checkpoints-Trace256-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns the number of checkpoints.
-
-</div>
-</div>
-
-<a id="Checkpoints-at-struct-Checkpoints-Trace256-uint32-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">at(struct Checkpoints.Trace256 self, uint32 pos) → struct Checkpoints.Checkpoint256</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="Checkpoints-at-struct-Checkpoints-Trace256-uint32-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Returns checkpoint at given position.
-
 </div>
 </div>
 
@@ -11522,7 +10822,9 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
+</Callout>
 keys).
 
 </div>
@@ -11672,7 +10974,9 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
+</Callout>
 keys).
 
 </div>
@@ -11822,7 +11126,9 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
+</Callout>
 keys).
 
 </div>
@@ -11997,7 +11303,9 @@ Initialize a new CircularBuffer of a given size.
 
 If the CircularBuffer was already setup and used, calling that function again will reset it to a blank state.
 
-NOTE: The size of the buffer will affect the execution of [`CircularBuffer.includes`](#CircularBuffer-includes-struct-CircularBuffer-Bytes32CircularBuffer-bytes32-) function, as it has a complexity of O(N).
+<Callout>
+The size of the buffer will affect the execution of [`CircularBuffer.includes`](#CircularBuffer-includes-struct-CircularBuffer-Bytes32CircularBuffer-bytes32-) function, as it has a complexity of O(N).
+</Callout>
 Consider a large buffer size may render the function unusable.
 
 </div>
@@ -12318,7 +11626,9 @@ Reverts with [`Panic.ARRAY_OUT_OF_BOUNDS`](#Panic-ARRAY_OUT_OF_BOUNDS-uint256) i
 
 Resets the queue back to being empty.
 
-NOTE: The current items are left behind in storage. This does not affect the functioning of the queue, but misses
+<Callout>
+The current items are left behind in storage. This does not affect the functioning of the queue, but misses
+</Callout>
 out on potential gas refunds.
 
 </div>
@@ -12408,15 +11718,14 @@ The following map types are supported:
 - `bytes32 -> address` (`Bytes32ToAddressMap`) since v5.1.0
 - `bytes -> bytes` (`BytesToBytesMap`) since v5.4.0
 
-[WARNING]
-====
+<Callout type="warn">
 Trying to delete such a structure from storage will likely result in data corruption, rendering the structure
 unusable.
 See [ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843) for more info.
 
 In order to clean an EnumerableMap, you can either remove all elements one by one or create a fresh instance using an
 array of EnumerableMap.
-====
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -14681,15 +13990,14 @@ The following types are supported:
 - `string` (`StringSet`) since v5.4.0
 - `bytes` (`BytesSet`) since v5.4.0
 
-[WARNING]
-====
+<Callout type="warn">
 Trying to delete such a structure from storage will likely result in data corruption, rendering the structure
 unusable.
 See [ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843) for more info.
 
 In order to clean an EnumerableSet, you can either remove all elements one by one or create a fresh instance using an
 array of EnumerableSet.
-====
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -15667,7 +14975,9 @@ Lookup the root element of the heap.
 
 Remove (and return) the root element for the heap using the default comparator.
 
-NOTE: All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+<Callout>
+All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+</Callout>
 during the lifecycle of a heap will result in undefined behavior.
 
 </div>
@@ -15687,7 +14997,9 @@ during the lifecycle of a heap will result in undefined behavior.
 
 Remove (and return) the root element for the heap using the provided comparator.
 
-NOTE: All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+<Callout>
+All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+</Callout>
 during the lifecycle of a heap will result in undefined behavior.
 
 </div>
@@ -15707,7 +15019,9 @@ during the lifecycle of a heap will result in undefined behavior.
 
 Insert a new element in the heap using the default comparator.
 
-NOTE: All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+<Callout>
+All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+</Callout>
 during the lifecycle of a heap will result in undefined behavior.
 
 </div>
@@ -15727,7 +15041,9 @@ during the lifecycle of a heap will result in undefined behavior.
 
 Insert a new element in the heap using the provided comparator.
 
-NOTE: All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+<Callout>
+All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+</Callout>
 during the lifecycle of a heap will result in undefined behavior.
 
 </div>
@@ -15748,7 +15064,9 @@ during the lifecycle of a heap will result in undefined behavior.
 Return the root element for the heap, and replace it with a new value, using the default comparator.
 This is equivalent to using [`Heap.pop`](#Heap-pop-struct-Heap-Uint256Heap-function--uint256-uint256--view-returns--bool--) and [`Heap.insert`](#Heap-insert-struct-Heap-Uint256Heap-uint256-function--uint256-uint256--view-returns--bool--), but requires only one rebalancing operation.
 
-NOTE: All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+<Callout>
+All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+</Callout>
 during the lifecycle of a heap will result in undefined behavior.
 
 </div>
@@ -15769,7 +15087,9 @@ during the lifecycle of a heap will result in undefined behavior.
 Return the root element for the heap, and replace it with a new value, using the provided comparator.
 This is equivalent to using [`Heap.pop`](#Heap-pop-struct-Heap-Uint256Heap-function--uint256-uint256--view-returns--bool--) and [`Heap.insert`](#Heap-insert-struct-Heap-Uint256Heap-uint256-function--uint256-uint256--view-returns--bool--), but requires only one rebalancing operation.
 
-NOTE: All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+<Callout>
+All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
+</Callout>
 during the lifecycle of a heap will result in undefined behavior.
 
 </div>
@@ -15837,7 +15157,9 @@ A tree is defined by the following parameters:
 * Zero value: The value that represents an empty leaf. Used to avoid regular zero values to be part of the tree.
 * Hashing function: A cryptographic hash function used to produce internal nodes. Defaults to [`Hashes.commutativeKeccak256`](cryptography#Hashes-commutativeKeccak256-bytes32-bytes32-).
 
-NOTE: Building trees using non-commutative hashing functions (i.e. `H(a, b) != H(b, a)`) is supported. However,
+<Callout>
+Building trees using non-commutative hashing functions (i.e. `H(a, b) != H(b, a)`) is supported. However,
+</Callout>
 proving the inclusion of a leaf in such trees is not possible with the [`MerkleProof`](cryptography#MerkleProof) library since it only supports
 _commutative_ hashing functions.
 
@@ -15914,7 +15236,9 @@ Providing a custom hashing function is a security-sensitive operation since it m
 </Callout>
 compromise the soundness of the tree.
 
-NOTE: Consider verifying that the hashing function does not manipulate the memory state directly and that it
+<Callout>
+Consider verifying that the hashing function does not manipulate the memory state directly and that it
+</Callout>
 follows the Solidity memory safety rules. Otherwise, it may lead to unexpected behavior.
 
 </div>

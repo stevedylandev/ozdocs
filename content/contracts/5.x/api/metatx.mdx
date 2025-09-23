@@ -197,7 +197,9 @@ throughput, relayers may run into limitations of the chain such as limits on the
 transactions in the mempool. In these cases the recommendation is to distribute the load among
 multiple accounts.
 
-NOTE: Batching requests includes an optional refund for unused `msg.value` that is achieved by
+<Callout>
+Batching requests includes an optional refund for unused `msg.value` that is achieved by
+</Callout>
 performing a call with empty calldata. While this is within the bounds of ERC-2771 compliance,
 if the refund receiver happens to consider the forwarder a trusted forwarder, it MUST properly
 handle `msg.data.length == 0`. `ERC2771Context` in OpenZeppelin Contracts versions prior to 4.9.3
@@ -228,17 +230,17 @@ used to execute arbitrary code.
 - [_recoverForwardRequestSigner(request)](#ERC2771Forwarder-_recoverForwardRequestSigner-struct-ERC2771Forwarder-ForwardRequestData-)
 - [_execute(request, requireValidRequest)](#ERC2771Forwarder-_execute-struct-ERC2771Forwarder-ForwardRequestData-bool-)
 - [_isTrustedByTarget(target)](#ERC2771Forwarder-_isTrustedByTarget-address-)
-#### Nonces
+#### Nonces [!toc]
 - [nonces(owner)](#Nonces-nonces-address-)
 - [_useNonce(owner)](#Nonces-_useNonce-address-)
 - [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
-#### EIP712
+#### EIP712 [!toc]
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
 - [_EIP712Name()](#EIP712-_EIP712Name--)
 - [_EIP712Version()](#EIP712-_EIP712Version--)
-#### IERC5267
+#### IERC5267 [!toc]
 </div>
 </div>
 
@@ -246,9 +248,9 @@ used to execute arbitrary code.
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [ExecutedForwardRequest(signer, nonce, success)](#ERC2771Forwarder-ExecutedForwardRequest-address-uint256-bool-)
-#### Nonces
-#### EIP712
-#### IERC5267
+#### Nonces [!toc]
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
 </div>
 </div>
@@ -260,10 +262,10 @@ used to execute arbitrary code.
 - [ERC2771ForwarderMismatchedValue(requestedValue, msgValue)](#ERC2771Forwarder-ERC2771ForwarderMismatchedValue-uint256-uint256-)
 - [ERC2771ForwarderExpiredRequest(deadline)](#ERC2771Forwarder-ERC2771ForwarderExpiredRequest-uint48-)
 - [ERC2771UntrustfulTarget(target, forwarder)](#ERC2771Forwarder-ERC2771UntrustfulTarget-address-address-)
-#### Nonces
+#### Nonces [!toc]
 - [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
-#### EIP712
-#### IERC5267
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
 </div>
 </div>
 
@@ -301,7 +303,9 @@ Returns `true` if a request is valid for a provided `signature` at the current b
 A transaction is considered valid when the target trusts this forwarder, the request hasn't expired
 (deadline is not met), and the signer matches the `from` parameter of the signed request.
 
-NOTE: A request may return false here but it won't cause [`TimelockController.executeBatch`](governance#TimelockController-executeBatch-address---uint256---bytes---bytes32-bytes32-) to revert if a refund
+<Callout>
+A request may return false here but it won't cause [`TimelockController.executeBatch`](governance#TimelockController-executeBatch-address---uint256---bytes---bytes32-bytes32-) to revert if a refund
+</Callout>
 receiver is provided.
 
 </div>
@@ -361,7 +365,9 @@ Requirements:
 - The sum of the requests' values should be equal to the provided `msg.value`.
 - All of the requests should be valid (see [`IERC7913SignatureVerifier.verify`](interfaces#IERC7913SignatureVerifier-verify-bytes-bytes32-bytes-)) when `refundReceiver` is the zero address.
 
-NOTE: Setting a zero `refundReceiver` guarantees an all-or-nothing requests execution only for
+<Callout>
+Setting a zero `refundReceiver` guarantees an all-or-nothing requests execution only for
+</Callout>
 the first-level forwarded calls. In case a forwarded request calls to a contract with another
 subcall, the second-level call may revert without the top-level call reverting.
 
@@ -401,7 +407,9 @@ the given `request.signature` on behalf of `request.signer`.
 Returns a tuple with the recovered the signer of an EIP712 forward request message hash
 and a boolean indicating if the signature is valid.
 
-NOTE: The signature is considered valid if [`ECDSA.tryRecover`](utils/cryptography#ECDSA-tryRecover-bytes32-uint8-bytes32-bytes32-) indicates no recover error for it.
+<Callout>
+The signature is considered valid if [`ECDSA.tryRecover`](utils/cryptography#ECDSA-tryRecover-bytes32-uint8-bytes32-bytes32-) indicates no recover error for it.
+</Callout>
 
 </div>
 </div>
@@ -454,7 +462,9 @@ Returns whether the target trusts this forwarder.
 This function performs a static call to the target contract calling the
 [`ERC2771Context.isTrustedForwarder`](#ERC2771Context-isTrustedForwarder-address-) function.
 
-NOTE: Consider the execution of this forwarder is permissionless. Without this check, anyone may transfer assets
+<Callout>
+Consider the execution of this forwarder is permissionless. Without this check, anyone may transfer assets
+</Callout>
 that are owned by, or are approved to this forwarder.
 
 </div>
@@ -475,7 +485,9 @@ that are owned by, or are approved to this forwarder.
 
 Emitted when a `ForwardRequest` is executed.
 
-NOTE: An unsuccessful forward request could be due to an invalid signature, an expired deadline,
+<Callout>
+An unsuccessful forward request could be due to an invalid signature, an expired deadline,
+</Callout>
 or simply a revert in the requested call. The contract guarantees that the relayer is not able to force
 the requested call to run out of gas.
 
