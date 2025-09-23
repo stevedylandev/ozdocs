@@ -8,42 +8,14 @@ This section contains the complete API reference for the OpenZeppelin Foundry Up
 
 ## Core Libraries
 
-### [Upgrades](./Upgrades)
+### [Upgrades](api/Upgrades)
 Library for deploying and managing upgradeable contracts from Forge scripts or tests. Requires OpenZeppelin Contracts v5 or higher.
 
-### [LegacyUpgrades](./LegacyUpgrades)
+### [LegacyUpgrades](api/LegacyUpgrades)
 Library for managing upgradeable contracts from Forge scripts or tests. Only for upgrading existing deployments using OpenZeppelin Contracts v4.
 
-### [Defender](./Defender)
+### [Defender](api/Defender)
 Library for interacting with OpenZeppelin Defender from Forge scripts or tests.
 
-### [Options](./Options)
+### [Options](api/Options)
 Configuration options and structs used throughout the upgrade libraries.
-
-## Internal Libraries
-
-### [Core](./internal/Core)
-Internal helper methods to validate/deploy implementations and perform upgrades.
-
-### [DefenderDeploy](./internal/DefenderDeploy)
-Internal helper methods for Defender deployments.
-
-### [Utils](./internal/Utils)
-Internal helper methods used by Upgrades and Defender libraries.
-
-### [StringFinder](./internal/StringFinder)
-String manipulation utilities.
-
-### [Versions](./internal/Versions)
-Version management utilities.
-
-## Interfaces
-
-### [IProxyAdmin](./internal/interfaces/IProxyAdmin)
-Interface for proxy admin contracts.
-
-### [IUpgradeableBeacon](./internal/interfaces/IUpgradeableBeacon)
-Interface for upgradeable beacon contracts.
-
-### [IUpgradeableProxy](./internal/interfaces/IUpgradeableProxy)
-Interface for upgradeable proxy contracts.
