@@ -41,11 +41,11 @@ Extension of `ERC7821` that adds an [`ERC7821WithExecutor.executor`](#ERC7821Wit
 - [executor()](#ERC7821WithExecutor-executor--)
 - [__ERC7821WithExecutor_init(executor_)](#ERC7821WithExecutor-__ERC7821WithExecutor_init-address-)
 - [_erc7821AuthorizedExecutor(caller, mode, executionData)](#ERC7821WithExecutor-_erc7821AuthorizedExecutor-address-bytes32-bytes-)
-#### ERC7821
+#### ERC7821 [!toc]
 - [execute(mode, executionData)](#ERC7821-execute-bytes32-bytes-)
 - [supportsExecutionMode(mode)](#ERC7821-supportsExecutionMode-bytes32-)
-#### IERC7821
-#### Initializable
+#### IERC7821 [!toc]
+#### Initializable [!toc]
 - [_checkInitializing()](#Initializable-_checkInitializing--)
 - [_disableInitializers()](#Initializable-_disableInitializers--)
 - [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
@@ -57,9 +57,9 @@ Extension of `ERC7821` that adds an [`ERC7821WithExecutor.executor`](#ERC7821Wit
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### ERC7821
-#### IERC7821
-#### Initializable
+#### ERC7821 [!toc]
+#### IERC7821 [!toc]
+#### Initializable [!toc]
 - [Initialized(version)](#Initializable-Initialized-uint64-)
 </div>
 </div>
@@ -67,10 +67,10 @@ Extension of `ERC7821` that adds an [`ERC7821WithExecutor.executor`](#ERC7821Wit
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### ERC7821
+#### ERC7821 [!toc]
 - [UnsupportedExecutionMode()](#ERC7821-UnsupportedExecutionMode--)
-#### IERC7821
-#### Initializable
+#### IERC7821 [!toc]
+#### Initializable [!toc]
 - [InvalidInitialization()](#Initializable-InvalidInitialization--)
 - [NotInitializing()](#Initializable-NotInitializing--)
 </div>
@@ -165,7 +165,7 @@ starts at the vesting start timestamp (see [`VestingWalletConfidential`](#Vestin
 - [__VestingWalletCliffConfidential_init(beneficiary, startTimestamp, durationSeconds, cliffSeconds)](#VestingWalletCliffConfidential-__VestingWalletCliffConfidential_init-address-uint48-uint48-uint48-)
 - [__VestingWalletCliffConfidential_init_unchained(cliffSeconds)](#VestingWalletCliffConfidential-__VestingWalletCliffConfidential_init_unchained-uint48-)
 - [_vestingSchedule(totalAllocation, timestamp)](#VestingWalletCliffConfidential-_vestingSchedule-euint128-uint48-)
-#### VestingWalletConfidential
+#### VestingWalletConfidential [!toc]
 - [start()](#VestingWalletConfidential-start--)
 - [duration()](#VestingWalletConfidential-duration--)
 - [end()](#VestingWalletConfidential-end--)
@@ -175,9 +175,9 @@ starts at the vesting start timestamp (see [`VestingWalletConfidential`](#Vestin
 - [vestedAmount(token, timestamp)](#VestingWalletConfidential-vestedAmount-address-uint48-)
 - [__VestingWalletConfidential_init(beneficiary, startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init-address-uint48-uint48-)
 - [__VestingWalletConfidential_init_unchained(startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init_unchained-uint48-uint48-)
-#### ReentrancyGuardTransient
+#### ReentrancyGuardTransient [!toc]
 - [_reentrancyGuardEntered()](#ReentrancyGuardTransient-_reentrancyGuardEntered--)
-#### OwnableUpgradeable
+#### OwnableUpgradeable [!toc]
 - [__Ownable_init(initialOwner)](#OwnableUpgradeable-__Ownable_init-address-)
 - [__Ownable_init_unchained(initialOwner)](#OwnableUpgradeable-__Ownable_init_unchained-address-)
 - [owner()](#OwnableUpgradeable-owner--)
@@ -185,13 +185,13 @@ starts at the vesting start timestamp (see [`VestingWalletConfidential`](#Vestin
 - [renounceOwnership()](#OwnableUpgradeable-renounceOwnership--)
 - [transferOwnership(newOwner)](#OwnableUpgradeable-transferOwnership-address-)
 - [_transferOwnership(newOwner)](#OwnableUpgradeable-_transferOwnership-address-)
-#### ContextUpgradeable
+#### ContextUpgradeable [!toc]
 - [__Context_init()](#ContextUpgradeable-__Context_init--)
 - [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
 - [_msgSender()](#ContextUpgradeable-_msgSender--)
 - [_msgData()](#ContextUpgradeable-_msgData--)
 - [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
-#### Initializable
+#### Initializable [!toc]
 - [_checkInitializing()](#Initializable-_checkInitializing--)
 - [_disableInitializers()](#Initializable-_disableInitializers--)
 - [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
@@ -203,13 +203,13 @@ starts at the vesting start timestamp (see [`VestingWalletConfidential`](#Vestin
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### VestingWalletConfidential
+#### VestingWalletConfidential [!toc]
 - [VestingWalletConfidentialTokenReleased(token, amount)](#VestingWalletConfidential-VestingWalletConfidentialTokenReleased-address-euint64-)
-#### ReentrancyGuardTransient
-#### OwnableUpgradeable
+#### ReentrancyGuardTransient [!toc]
+#### OwnableUpgradeable [!toc]
 - [OwnershipTransferred(previousOwner, newOwner)](#OwnableUpgradeable-OwnershipTransferred-address-address-)
-#### ContextUpgradeable
-#### Initializable
+#### ContextUpgradeable [!toc]
+#### Initializable [!toc]
 - [Initialized(version)](#Initializable-Initialized-uint64-)
 </div>
 </div>
@@ -218,14 +218,14 @@ starts at the vesting start timestamp (see [`VestingWalletConfidential`](#Vestin
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [VestingWalletCliffConfidentialInvalidCliffDuration(cliffSeconds, durationSeconds)](#VestingWalletCliffConfidential-VestingWalletCliffConfidentialInvalidCliffDuration-uint64-uint64-)
-#### VestingWalletConfidential
-#### ReentrancyGuardTransient
+#### VestingWalletConfidential [!toc]
+#### ReentrancyGuardTransient [!toc]
 - [ReentrancyGuardReentrantCall()](#ReentrancyGuardTransient-ReentrancyGuardReentrantCall--)
-#### OwnableUpgradeable
+#### OwnableUpgradeable [!toc]
 - [OwnableUnauthorizedAccount(account)](#OwnableUpgradeable-OwnableUnauthorizedAccount-address-)
 - [OwnableInvalidOwner(owner)](#OwnableUpgradeable-OwnableInvalidOwner-address-)
-#### ContextUpgradeable
-#### Initializable
+#### ContextUpgradeable [!toc]
+#### Initializable [!toc]
 - [InvalidInitialization()](#Initializable-InvalidInitialization--)
 - [NotInitializing()](#Initializable-NotInitializing--)
 </div>
@@ -338,7 +338,7 @@ The specified cliff duration is larger than the vesting duration.
 import "@openzeppelin/contracts/finance/VestingWalletConfidential.sol";
 ```
 
-A vesting wallet is an ownable contract that can receive ERC7984 tokens, and release these
+A vesting wallet is an ownable contract that can receive ConfidentialFungibleTokens, and release these
 assets to the wallet owner, also referred to as "beneficiary", according to a vesting schedule.
 
 Any assets transferred to this contract will follow the vesting schedule as if they were locked from the beginning.
@@ -348,9 +348,13 @@ be immediately releasable.
 By setting the duration to 0, one can configure this contract to behave like an asset timelock that holds tokens for
 a beneficiary until a specified time.
 
-NOTE: Since the wallet is `Ownable`, and ownership can be transferred, it is possible to sell unvested tokens.
+<Callout>
+Since the wallet is `Ownable`, and ownership can be transferred, it is possible to sell unvested tokens.
+</Callout>
 
-NOTE: When using this contract with any token whose balance is adjusted automatically (i.e. a rebase token), make
+<Callout>
+When using this contract with any token whose balance is adjusted automatically (i.e. a rebase token), make
+</Callout>
 sure to account the supply/balance adjustment in the vesting schedule to ensure the vested amount is as intended.
 
 Confidential vesting wallet contracts can be deployed (as clones) using the [`VestingWalletConfidentialFactory`](#VestingWalletConfidentialFactory).
@@ -368,9 +372,9 @@ Confidential vesting wallet contracts can be deployed (as clones) using the [`Ve
 - [__VestingWalletConfidential_init(beneficiary, startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init-address-uint48-uint48-)
 - [__VestingWalletConfidential_init_unchained(startTimestamp, durationSeconds)](#VestingWalletConfidential-__VestingWalletConfidential_init_unchained-uint48-uint48-)
 - [_vestingSchedule(totalAllocation, timestamp)](#VestingWalletConfidential-_vestingSchedule-euint128-uint48-)
-#### ReentrancyGuardTransient
+#### ReentrancyGuardTransient [!toc]
 - [_reentrancyGuardEntered()](#ReentrancyGuardTransient-_reentrancyGuardEntered--)
-#### OwnableUpgradeable
+#### OwnableUpgradeable [!toc]
 - [__Ownable_init(initialOwner)](#OwnableUpgradeable-__Ownable_init-address-)
 - [__Ownable_init_unchained(initialOwner)](#OwnableUpgradeable-__Ownable_init_unchained-address-)
 - [owner()](#OwnableUpgradeable-owner--)
@@ -378,13 +382,13 @@ Confidential vesting wallet contracts can be deployed (as clones) using the [`Ve
 - [renounceOwnership()](#OwnableUpgradeable-renounceOwnership--)
 - [transferOwnership(newOwner)](#OwnableUpgradeable-transferOwnership-address-)
 - [_transferOwnership(newOwner)](#OwnableUpgradeable-_transferOwnership-address-)
-#### ContextUpgradeable
+#### ContextUpgradeable [!toc]
 - [__Context_init()](#ContextUpgradeable-__Context_init--)
 - [__Context_init_unchained()](#ContextUpgradeable-__Context_init_unchained--)
 - [_msgSender()](#ContextUpgradeable-_msgSender--)
 - [_msgData()](#ContextUpgradeable-_msgData--)
 - [_contextSuffixLength()](#ContextUpgradeable-_contextSuffixLength--)
-#### Initializable
+#### Initializable [!toc]
 - [_checkInitializing()](#Initializable-_checkInitializing--)
 - [_disableInitializers()](#Initializable-_disableInitializers--)
 - [_getInitializedVersion()](#Initializable-_getInitializedVersion--)
@@ -397,11 +401,11 @@ Confidential vesting wallet contracts can be deployed (as clones) using the [`Ve
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
 - [VestingWalletConfidentialTokenReleased(token, amount)](#VestingWalletConfidential-VestingWalletConfidentialTokenReleased-address-euint64-)
-#### ReentrancyGuardTransient
-#### OwnableUpgradeable
+#### ReentrancyGuardTransient [!toc]
+#### OwnableUpgradeable [!toc]
 - [OwnershipTransferred(previousOwner, newOwner)](#OwnableUpgradeable-OwnershipTransferred-address-address-)
-#### ContextUpgradeable
-#### Initializable
+#### ContextUpgradeable [!toc]
+#### Initializable [!toc]
 - [Initialized(version)](#Initializable-Initialized-uint64-)
 </div>
 </div>
@@ -409,13 +413,13 @@ Confidential vesting wallet contracts can be deployed (as clones) using the [`Ve
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### ReentrancyGuardTransient
+#### ReentrancyGuardTransient [!toc]
 - [ReentrancyGuardReentrantCall()](#ReentrancyGuardTransient-ReentrancyGuardReentrantCall--)
-#### OwnableUpgradeable
+#### OwnableUpgradeable [!toc]
 - [OwnableUnauthorizedAccount(account)](#OwnableUpgradeable-OwnableUnauthorizedAccount-address-)
 - [OwnableInvalidOwner(owner)](#OwnableUpgradeable-OwnableInvalidOwner-address-)
-#### ContextUpgradeable
-#### Initializable
+#### ContextUpgradeable [!toc]
+#### Initializable [!toc]
 - [InvalidInitialization()](#Initializable-InvalidInitialization--)
 - [NotInitializing()](#Initializable-NotInitializing--)
 </div>
@@ -502,7 +506,7 @@ Amount of token already released
 <div className="px-4">
 
 Getter for the amount of releasable `token` tokens. `token` should be the address of an
-[`IERC7984`](interfaces#IERC7984) contract.
+[`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken) contract.
 
 </div>
 </div>
@@ -637,7 +641,7 @@ functions remain unimplemented to allow for custom implementations of the vestin
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [constructor()](#VestingWalletConfidentialFactory-constructor--)
-- [batchFundVestingWalletConfidential(token, vestingPlans, inputProof)](#VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-)
+- [batchFundVestingWalletConfidential(confidentialFungibleToken, vestingPlans, inputProof)](#VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-)
 - [createVestingWalletConfidential(initArgs)](#VestingWalletConfidentialFactory-createVestingWalletConfidential-bytes-)
 - [predictVestingWalletConfidential(initArgs)](#VestingWalletConfidentialFactory-predictVestingWalletConfidential-bytes-)
 - [_validateVestingWalletInitArgs(initArgs)](#VestingWalletConfidentialFactory-_validateVestingWalletInitArgs-bytes-)
@@ -650,7 +654,7 @@ functions remain unimplemented to allow for custom implementations of the vestin
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-- [VestingWalletConfidentialFunded(vestingWalletConfidential, token, transferredAmount, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-)
+- [VestingWalletConfidentialFunded(vestingWalletConfidential, confidentialFungibleToken, transferredAmount, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-)
 - [VestingWalletConfidentialCreated(vestingWalletConfidential, initArgs)](#VestingWalletConfidentialFactory-VestingWalletConfidentialCreated-address-bytes-)
 </div>
 </div>
@@ -674,7 +678,7 @@ functions remain unimplemented to allow for custom implementations of the vestin
 
 <div className="border rounded-md mb-4">
 <div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">batchFundVestingWalletConfidential(address token, struct VestingWalletConfidentialFactory.VestingPlan[] vestingPlans, bytes inputProof)</p>
+<p className="font-bold text-sm font-mono">batchFundVestingWalletConfidential(address confidentialFungibleToken, struct VestingWalletConfidentialFactory.VestingPlan[] vestingPlans, bytes inputProof)</p>
 <div className="flex flex-row items-center gap-2">
 <p className="font-light text-sm">public</p>
 <a className="peer" data-card href="VestingWalletConfidentialFactory-batchFundVestingWalletConfidential-address-struct-VestingWalletConfidentialFactory-VestingPlan---bytes-">#</a>
@@ -802,7 +806,7 @@ Gets create2 salt for a confidential vesting wallet.
 
 <div className="border rounded-md mb-4">
 <div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">VestingWalletConfidentialFunded(address indexed vestingWalletConfidential, address indexed token, euint64 transferredAmount, bytes initArgs)</p>
+<p className="font-bold text-sm font-mono">VestingWalletConfidentialFunded(address indexed vestingWalletConfidential, address indexed confidentialFungibleToken, euint64 transferredAmount, bytes initArgs)</p>
 <div className="flex flex-row items-center gap-2">
 <p className="font-light text-sm">event</p>
 <a className="peer" data-card href="VestingWalletConfidentialFactory-VestingWalletConfidentialFunded-address-address-euint64-bytes-">#</a>
