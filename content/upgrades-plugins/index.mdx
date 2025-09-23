@@ -41,7 +41,7 @@ The Foundry plugin does not keep track of implementation contracts, but requires
 
 ## Proxy patterns
 
-The plugins support the UUPS, transparent, and beacon proxy patterns. UUPS and transparent proxies are upgraded individually, whereas any number of beacon proxies can be upgraded atomically at the same time by upgrading the beacon that they point to. For more details on the different proxy patterns available, see the documentation for [Proxies](https://docs.openzeppelin.com/contracts/api/proxy).
+The plugins support the UUPS, transparent, and beacon proxy patterns. UUPS and transparent proxies are upgraded individually, whereas any number of beacon proxies can be upgraded atomically at the same time by upgrading the beacon that they point to. For more details on the different proxy patterns available, see the documentation for [Proxies](/contracts/5.x/api/proxy).
 
 For UUPS and transparent proxies, use `deployProxy` and `upgradeProxy`. For beacon proxies, use `deployBeacon`, `deployBeaconProxy`, and `upgradeBeacon`. See the documentation for [Hardhat Upgrades](upgrades-plugins/hardhat-upgrades) and [Foundry Upgrades](upgrades-plugins/foundry/foundry-upgrades) for examples.
 
@@ -55,6 +55,6 @@ The proxy admin contract also defines an _owner_ address which has the rights to
 Do not reuse an already deployed `ProxyAdmin`. Before `@openzeppelin/contracts` version 5.x, the address provided to transparent proxies was an `initialAdmin` as opposed to an `initialOwner` of a newly deployed `ProxyAdmin`. Reusing a `ProxyAdmin` will disable upgradeability in your contract.
 </Callout>
 
-UUPS and beacon proxies do not use admin addresses. UUPS proxies rely on an [`_authorizeUpgrade`](https://docs.openzeppelin.com/contracts/api/proxy#UUPSUpgradeable-_authorizeUpgrade-address-) function to be overridden to include access restriction to the upgrade mechanism, whereas beacon proxies are upgradable only by the owner of their corresponding beacon.
+UUPS and beacon proxies do not use admin addresses. UUPS proxies rely on an [`_authorizeUpgrade`](/contracts/5.x/api/proxy#UUPSUpgradeable-_authorizeUpgrade-address-) function to be overridden to include access restriction to the upgrade mechanism, whereas beacon proxies are upgradable only by the owner of their corresponding beacon.
 
 Once you have transferred the rights to upgrade a proxy or beacon to another address, you can still use your local setup to validate and deploy the implementation contract. The plugins include a `prepareUpgrade` function that will validate that the new implementation is upgrade-safe and compatible with the previous one, and deploy it using your local Ethereum account. You can then execute the upgrade itself from the admin or owner address. You can also use the `defender.proposeUpgrade` or `defender.proposeUpgradeWithApproval` functions to automatically set up the upgrade in [OpenZeppelin Defender](https://docs.openzeppelin.com/defender/).
