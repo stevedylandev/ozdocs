@@ -8,7 +8,7 @@ Both `deployProxy` and `upgradeProxy` functions will return instances of [ethers
 
 The following options are common to some functions.
 
-* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](contracts:api:proxy#transparent-vs-uups).
+* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](/contracts/5.x/api/proxy#transparent-vs-uups).
 * `unsafeAllow`: (`ValidationError[]`) Selectively disable one or more validation errors or warnings:
   * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq#why-cant-i-use-external-libraries).)
   * `"struct-definition"`, `"enum-definition"`: Used to be necessary to deploy a contract with structs or enums. No longer necessary.
@@ -87,7 +87,7 @@ If you call `deployProxy` several times for the same implementation contract, se
 * `Contract` - an ethers contract factory to use as the implementation.
 * `args` - arguments for the initializer function.
 * `opts` - an object with options:
-  * `initializer`: set a different initializer function to call (see [Specifying Fragments](`https://docs.ethers.io/v5/api/utils/abi/interface/#Interface--specifying-fragments`)), or specify `false` to disable initialization.
+  * `initializer`: set a different initializer function to call (see [Specifying Fragments](https://docs.ethers.io/v5/api/utils/abi/interface/#Interface--specifying-fragments)), or specify `false` to disable initialization.
   * additional options as described in [Common Options](#common-options).
 
 **Returns:**
