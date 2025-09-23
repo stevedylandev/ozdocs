@@ -33,26 +33,26 @@ Timelocked operations follow a specific lifecycle:
 
 ### Schedule
 
-When a proposer calls [schedule](api/governance#ITimelock-schedule), the `OperationState` moves from `Unset` to `Waiting`.
+When a proposer calls [schedule](../api/governance#ITimelock-schedule), the `OperationState` moves from `Unset` to `Waiting`.
 This starts a timer that must be greater than or equal to the minimum delay.
-The timer expires at a timestamp accessible through [get_timestamp](api/governance#ITimelock-get_timestamp).
+The timer expires at a timestamp accessible through [get_timestamp](../api/governance#ITimelock-get_timestamp).
 Once the timer expires, the `OperationState` automatically moves to the `Ready` state.
 At this point, it can be executed.
 
 ### Execute
 
-By calling [execute](api/governance#ITimelock-execute), an executor triggers the operation’s underlying transactions and moves it to the `Done` state. If the operation has a predecessor, the predecessor’s operation must be in the `Done` state for this transaction to succeed.
+By calling [execute](../api/governance#ITimelock-execute), an executor triggers the operation’s underlying transactions and moves it to the `Done` state. If the operation has a predecessor, the predecessor’s operation must be in the `Done` state for this transaction to succeed.
 
 ### Cancel
 
-The [cancel](api/governance#ITimelock-cancel) function allows cancellers to cancel any pending operations.
+The [cancel](../api/governance#ITimelock-cancel) function allows cancellers to cancel any pending operations.
 This resets the operation to the `Unset` state.
 It is therefore possible for a proposer to re-schedule an operation that has been cancelled.
 In this case, the timer restarts when the operation is re-scheduled.
 
-### Roles
+## Roles
 
-[TimelockControllerComponent](api/governance#TimelockControllerComponent) leverages an [AccessControlComponent](api/access#AccessControlComponent) setup that we need to understand in order to set up roles.
+[TimelockControllerComponent](../api/governance#TimelockControllerComponent) leverages an [AccessControlComponent](../api/access#AccessControlComponent) setup that we need to understand in order to set up roles.
 
 * `PROPOSER_ROLE` - in charge of queueing operations.
 * `CANCELLER_ROLE` - may cancel scheduled operations.
@@ -63,8 +63,8 @@ Therefore, the initial proposers may also cancel operations after they are sched
 
 <Callout type='warn'>
 The `DEFAULT_ADMIN_ROLE` is a sensitive role that will be granted automatically to the timelock itself and optionally to a second account.
-</Callout>
 The latter case may be required to ease a contract’s initial configuration; however, this role should promptly be renounced.
+</Callout>
 
 Furthermore, the timelock component supports the concept of open roles for the `EXECUTOR_ROLE`.
 This allows anyone to execute an operation once it’s in the `Ready` OperationState.
@@ -74,18 +74,18 @@ To enable the `EXECUTOR_ROLE` to be open, grant the zero address with the `EXECU
 Be very careful with enabling open roles as _anyone_ can call the function.
 </Callout>
 
-### Minimum delay
+## Minimum delay
 
 The minimum delay of the timelock acts as a buffer from when a proposer schedules an operation to the earliest point at which an executor may execute that operation.
 The idea is for users, should they disagree with a scheduled proposal, to have options such as exiting the system or making their case for cancellers to cancel the operation.
 
 After initialization, the only way to change the timelock’s minimum delay is to schedule it and execute it with the same flow as any other operation.
 
-The minimum delay of a contract is accessible through [get_min_delay](api/governance#ITimelock-get_min_delay).
+The minimum delay of a contract is accessible through [get_min_delay](../api/governance#ITimelock-get_min_delay).
 
-### Usage
+## Usage
 
-Integrating the timelock into a contract requires integrating [TimelockControllerComponent](api/governance#TimelockControllerComponent) as well as [SRC5Component](api/introspection#SRC5Component) and [AccessControlComponent](api/access#AccessControlComponent) as dependencies.
+Integrating the timelock into a contract requires integrating [TimelockControllerComponent](../api/governance#TimelockControllerComponent) as well as [SRC5Component](../api/introspection#SRC5Component) and [AccessControlComponent](../api/access#AccessControlComponent) as dependencies.
 The contract’s constructor should initialize the timelock which consists of setting the:
 
 * Proposers and executors.
@@ -150,7 +150,7 @@ mod TimelockControllerContract {
 }
 ```
 
-### Interface
+## Interface
 
 This is the full interface of the TimelockMixinImpl implementation:
 

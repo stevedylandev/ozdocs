@@ -2,6 +2,8 @@
 title: Merkle Tree
 ---
 
+import { UMBRELLA_VERSION } from "../utils/constants.js";
+
 This crate provides a set of utilities for verifying Merkle Tree proofs on-chain. The tree and the proofs can be generated using this [JavaScript library](https://github.com/ericnordelo/strk-merkle-tree).
 
 This module provides:
@@ -17,7 +19,9 @@ To use it as a standalone package, you can add it in your `Scarb.toml` as follow
 
 ## [](#modules)Modules
 
-### [](#merkle_proof)`merkle_proof`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/merkle_tree/src/merkle_proof.cairo)
+### [](#merkle_proof)`merkle_proof` [toc] [#merkle_proof]
+
+<APIGithubLinkHeader moduleName="merkle_proof" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/merkle_tree/src/merkle_proof.cairo`} />
 
 ```rust
 use openzeppelin_merkle_tree::merkle_proof;
@@ -38,10 +42,13 @@ Functions
 - [`verify_multi_proof<Hasher>(proof, proof_flags, root, leaves)`](#merkle_proof-verify_multi_proof)
 - [`process_multi_proof<Hasher>(proof, proof_flags, leaf)`](#merkle_proof-process_multi_proof)
 
-#### [](#merkle_proof-Functions)Functions
+#### [](#merkle_proof-Functions)Functions [!toc]
 
-#### [](#merkle_proof-verify)`verify<+CommutativeHasher>(proof: Span<felt252>, root: felt252, leaf: felt252) → bool` public
-
+<APIItem
+  functionSignature="verify<+CommutativeHasher>(proof: Span<felt252>, root: felt252, leaf: felt252) → bool"
+  id="merkle_proof-verify"
+  kind="public"
+>
 Returns true if a `leaf` can be proved to be a part of a Merkle tree defined by `root`.
 
 For this, a `proof` must be provided, containing sibling hashes on the branch from the leaf to the root of the tree.
@@ -51,17 +58,29 @@ Each pair of leaves and each pair of pre-images are assumed to be sorted.
 This function expects a `CommutativeHasher` implementation. See [hashes::CommutativeHasher](#hashes-CommutativeHasher) for more information.
 
 `verify_pedersen` and `verify_poseidon` already include the corresponding `Hasher` implementations.
+</APIItem>
 
-#### [](#merkle_proof-verify_pedersen)`verify_pedersen(proof: Span<felt252>, root: felt252, leaf: felt252) → bool` public
-
+<APIItem
+  functionSignature="verify_pedersen(proof: Span<felt252>, root: felt252, leaf: felt252) → bool"
+  id="merkle_proof-verify_pedersen"
+  kind="public"
+>
 Version of `verify` using Pedersen as the hashing function.
+</APIItem>
 
-#### [](#merkle_proof-verify_poseidon)`verify_poseidon(proof: Span<felt252>, root: felt252, leaf: felt252) → bool` public
-
+<APIItem
+  functionSignature="verify_poseidon(proof: Span<felt252>, root: felt252, leaf: felt252) → bool"
+  id="merkle_proof-verify_poseidon"
+  kind="public"
+>
 Version of `verify` using Poseidon as the hashing function.
+</APIItem>
 
-#### [](#merkle_proof-process_proof)`process_proof<+CommutativeHasher>(proof: Span<felt252>, leaf: felt252) → felt252` public
-
+<APIItem
+  functionSignature="process_proof<+CommutativeHasher>(proof: Span<felt252>, leaf: felt252) → felt252"
+  id="merkle_proof-process_proof"
+  kind="public"
+>
 Returns the rebuilt hash obtained by traversing a Merkle tree up from `leaf` using `proof`.
 
 A `proof` is valid if and only if the rebuilt hash matches the root of the tree.
@@ -69,9 +88,13 @@ A `proof` is valid if and only if the rebuilt hash matches the root of the tree.
 When processing the proof, the pairs of leaves &amp; pre-images are assumed to be sorted.
 
 This function expects a `CommutativeHasher` implementation. See [hashes::CommutativeHasher](#hashes-CommutativeHasher) for more information.
+</APIItem>
 
-#### [](#merkle_proof-verify_multi_proof)`verify_multi_proof<+CommutativeHasher>(proof: Span<felt252>, proof_flags: Span<bool>, root: felt252, leaves: Span<felt252>) → bool` public
-
+<APIItem
+  functionSignature="verify_multi_proof<+CommutativeHasher>(proof: Span<felt252>, proof_flags: Span<bool>, root: felt252, leaves: Span<felt252>) → bool"
+  id="merkle_proof-verify_multi_proof"
+  kind="public"
+>
 Returns true if the `leaves` can be simultaneously proven to be a part of a Merkle tree defined by `root`, according to `proof` and `proof_flags` as described in `process_multi_proof`.
 
 The `leaves` must be validated independently.
@@ -81,9 +104,13 @@ Not all Merkle trees admit multiproofs. See `process_multi_proof` for details.
 Consider the case where `root == proof.at(0) && leaves.len() == 0` as it will return `true`.
 
 This function expects a `CommutativeHasher` implementation. See [hashes::CommutativeHasher](#hashes-CommutativeHasher) for more information.
+</APIItem>
 
-#### [](#merkle_proof-process_multi_proof)`process_multi_proof<+CommutativeHasher>(proof: Span<felt252>, proof_flags: Span<bool>, leaves: Span<felt252>) → felt252` public
-
+<APIItem
+  functionSignature="process_multi_proof<+CommutativeHasher>(proof: Span<felt252>, proof_flags: Span<bool>, leaves: Span<felt252>) → felt252"
+  id="merkle_proof-process_multi_proof"
+  kind="public"
+>
 Returns the root of a tree reconstructed from `leaves` and sibling nodes in `proof`.
 
 The reconstruction proceeds by incrementally reconstructing all inner nodes by combining a leaf/inner node with either another leaf/inner node or a proof sibling node, depending on whether each `proof_flags` item is true or false respectively.
@@ -93,11 +120,14 @@ Not all Merkle trees admit multiproofs. To use multiproofs, it is sufficient to 
 1. The tree is complete (but not necessarily perfect).
 2. The leaves to be proven are in the opposite order than they are in the tree. (i.e., as seen from right to left starting at the deepest layer and continuing at the next layer).
 
-The *empty set* (i.e. the case where `proof.len() == 1 && leaves.len() == 0`) is considered a no-op, and therefore a valid multiproof (i.e. it returns `proof.at(0)`). Consider disallowing this case if you’re not validating the leaves elsewhere.
+The *empty set* (i.e. the case where `proof.len() == 1 && leaves.len() == 0`) is considered a no-op, and therefore a valid multiproof (i.e. it returns `proof.at(0)`). Consider disallowing this case if you're not validating the leaves elsewhere.
 
 This function expects a `CommutativeHasher` implementation. See [hashes::CommutativeHasher](#hashes-CommutativeHasher) for more information.
+</APIItem>
 
-### [](#hashes)`hashes`[](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v3.0.0-alpha.1/packages/merkle_tree/src/hashes.cairo)
+### [](#hashes)`hashes` [toc] [#hashes]
+
+<APIGithubLinkHeader moduleName="hashes" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/merkle_tree/src/hashes.cairo`} />
 
 ```rust
 use openzeppelin_merkle_tree::hashes;
@@ -116,10 +146,13 @@ Impls
 - [`PedersenCHasher`](#hashes-PedersenCHasher)
 - [`PoseidonCHasher`](#hashes-PoseidonCHasher)
 
-#### [](#hashes-Traits)Traits
+#### [](#hashes-Traits)Traits [!toc]
 
-#### [](#hashes-CommutativeHasher)`CommutativeHasher` trait
-
+<APIItem
+  functionSignature="CommutativeHasher trait"
+  id="hashes-CommutativeHasher"
+  kind="trait"
+>
 Declares a commutative hash function with the following signature:
 
 `commutative_hash(a: felt252, b: felt252) → felt252;`
@@ -131,13 +164,22 @@ This is usually implemented as an extension of a non-commutative hash function, 
 Frequently used when working with merkle proofs.
 
 The `commutative_hash` function MUST follow the invariant that `commutative_hash(a, b) == commutative_hash(b, a)`.
+</APIItem>
 
-#### [](#hashes-Impls)Impls
+#### [](#hashes-Impls)Impls [!toc]
 
-#### [](#hashes-PedersenCHasher)`PedersenCHasher` impl
-
+<APIItem
+  functionSignature="PedersenCHasher impl"
+  id="hashes-PedersenCHasher"
+  kind="impl"
+>
 Implementation of the `CommutativeHasher` trait which computes the Pedersen hash of chaining the two input values with the len (2), sorting the pair first.
+</APIItem>
 
-#### [](#hashes-PoseidonCHasher)`PoseidonCHasher` impl
-
+<APIItem
+  functionSignature="PoseidonCHasher impl"
+  id="hashes-PoseidonCHasher"
+  kind="impl"
+>
 Implementation of the `CommutativeHasher` trait which computes the Poseidon hash of the concatenation of two values, sorting the pair first.
+</APIItem>

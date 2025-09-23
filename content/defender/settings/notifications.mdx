@@ -11,12 +11,12 @@ Use Notification Channels to get notified about events across different Defender
 * **Webhooks**: Configure your own endpoints to receive signed notifications.
 
 ### Third Party Services
-* [**Slack**, window=_blank](https://slack.com/).
-* [**Telegram**, window=_blank](https://telegram.org/).
-* [**Discord**, window=_blank](https://discord.com/).
-* [**Datadog**, window=_blank](https://www.datadoghq.com/).
-* [**PagerDuty**, window=_blank](https://www.pagerduty.com/).
-* [**Opsgenie**, window=_blank](https://www.atlassian.com/software/opsgenie).
+* [**Slack**](https://slack.com/).
+* [**Telegram**](https://telegram.org/).
+* [**Discord**](https://discord.com/).
+* [**Datadog**](https://www.datadoghq.com/).
+* [**PagerDuty**](https://www.pagerduty.com/).
+* [**Opsgenie**](https://www.atlassian.com/software/opsgenie).
 
 ## Setup
 
@@ -35,11 +35,11 @@ Also, it is possible to customize the notification template, [see how](module/mo
 
 ### Webhook Secrets
 
-As an additional security measure, Defender implements a Hash-based Message Authentication Code ([HMAC, window=_blank](https://en.wikipedia.org/wiki/HMAC)), by adding a `Defender-Signature` and `Defender-Timestamp` request headers to the notification sent to webhook endpoints. Therefore, the endpoint receiving the notification can verify the authenticity of the request.
+As an additional security measure, Defender implements a Hash-based Message Authentication Code ([HMAC](https://en.wikipedia.org/wiki/HMAC)), by adding a `Defender-Signature` and `Defender-Timestamp` request headers to the notification sent to webhook endpoints. Therefore, the endpoint receiving the notification can verify the authenticity of the request.
 
 Each webhook notification has a secret key associated that can be accessed under **Settings -> Notification Channnels -> Webhook details**.
 
-The `Defender-Signature` is generated using [SHA256 algorithm, window=_blank](https://en.wikipedia.org/wiki/SHA-2) and `webhook secret` to sign the payload and the timestamp.
+The `Defender-Signature` is generated using [SHA256 algorithm](https://en.wikipedia.org/wiki/SHA-2) and `webhook secret` to sign the payload and the timestamp.
 
 <Callout>
 Only Admin users in the Account have permission to see the webhook secret.

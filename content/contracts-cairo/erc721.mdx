@@ -61,10 +61,10 @@ mod MyNFT {
 
 ## Interface
 
-The following interface represents the full ABI of the Contracts for Cairo [ERC721Component](/api/erc721#ERC721Component).
-The interface includes the [IERC721](/api/erc721#IERC721) standard interface and the optional [IERC721Metadata](/api/erc721#IERC721Metadata) interface.
+The following interface represents the full ABI of the Contracts for Cairo [ERC721Component](api/erc721#ERC721Component).
+The interface includes the [IERC721](api/erc721#IERC721) standard interface and the optional [IERC721Metadata](api/erc721#IERC721Metadata) interface.
 
-To support older token deployments, as mentioned in [Dual interfaces](interfaces#dual_interfaces), the component also includes implementations of the interface written in camelCase.
+To support older token deployments, as mentioned in [Dual interfaces](guides/interfaces-and-dispatchers#dual-interfaces), the component also includes implementations of the interface written in camelCase.
 
 ```rust
 #[starknet::interface]
@@ -121,7 +121,7 @@ The difference between both functions consists of accepting `data` as an argumen
 `safe_transfer_from` by default accepts the `data` argument which is interpreted as `Span<felt252>`.
 If `data` is not used, simply pass an empty array.
 * ERC721 utilizes [SRC5](introspection#src5) to declare and query interface support on Starknet as opposed to Ethereum’s [EIP165](https://eips.ethereum.org/EIPS/eip-165).
-The design for `SRC5` is similar to OpenZeppelin’s [ERC165Storage](https://docs.openzeppelin.com/contracts/4.x/api/utils#ERC165Storage).
+The design for `SRC5` is similar to OpenZeppelin’s [ERC165Storage](https://docs.openzeppelin.com/contracts/4.xapi/utils#ERC165Storage).
 * `IERC721Receiver` compliant contracts return a hardcoded interface ID according to Starknet selectors (as opposed to selector calculation in Solidity).
 
 ## Token transfers
@@ -154,11 +154,11 @@ pub trait IERC721Receiver {
 ```
 
 Implementing the `IERC721Receiver` interface exposes the [on_erc721_received](api/erc721#IERC721Receiver-on_erc721_received) method.
-When safe methods such as [safe_transfer_from](api/erc721#IERC721-safe_transfer_from) and [safe_mint](api/erc721#ERC721-safe_mint) are called, they invoke the recipient contract’s `on_erc721_received` method which **must** return the [IERC721Receiver interface ID](/api/erc721#IERC721Receiver).
+When safe methods such as [safe_transfer_from](api/erc721#IERC721-safe_transfer_from) and [safe_mint](api/erc721#ERC721-safe_mint) are called, they invoke the recipient contract’s `on_erc721_received` method which **must** return the [IERC721Receiver interface ID](api/erc721#IERC721Receiver).
 Otherwise, the transaction will fail.
 
 <Callout>
-For information on how to calculate interface IDs, see [Computing the interface ID](introspection#computing_the_interface_id).
+For information on how to calculate interface IDs, see [Computing the interface ID](introspection#computing-the-interface-id).
 </Callout>
 
 ### Creating a token receiver contract
@@ -209,5 +209,5 @@ mod MyTokenReceiver {
 ## Storing ERC721 URIs
 
 Token URIs were previously stored as single field elements prior to Cairo v0.2.5.
-ERC721Component now stores only the base URI as a `ByteArray` and the full token URI is returned as the `ByteArray` concatenation of the base URI and the token ID through the [token_uri](/api/erc721#IERC721Metadata-token_uri) method.
+ERC721Component now stores only the base URI as a `ByteArray` and the full token URI is returned as the `ByteArray` concatenation of the base URI and the token ID through the [token_uri](api/erc721#IERC721Metadata-token_uri) method.
 This design mirrors OpenZeppelin’s default [Solidity implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/932fddf69a699a9a80fd2396fd1a2ab91cdda123/contracts/token/ERC721/ERC721.sol#L85-L93) for ERC721.

@@ -4,7 +4,7 @@ title: Upgrades
 
 In different blockchains, multiple patterns have been developed for making a contract upgradeable including the widely adopted proxy patterns.
 
-Starknet has native upgradeability through a syscall that updates the contract source code, removing [the need for proxies](#proxies_in_starknet).
+Starknet has native upgradeability through a syscall that updates the contract source code, removing [the need for proxies](#proxies-in-starknet).
 
 <Callout type='warn'>
 Make sure you follow [our security recommendations](#security) before upgrading.
@@ -39,7 +39,7 @@ OpenZeppelin Contracts for Cairo provides [Upgradeable](https://github.com/OpenZ
 ### Usage
 
 Upgrades are often very sensitive operations, and some form of access control is usually required to
-avoid unauthorized upgrades. The [Ownable](access#ownership_and_ownable) module is used in this example.
+avoid unauthorized upgrades. The [Ownable](access#ownership-and-ownable) module is used in this example.
 
 <Callout>
 We will be using the following module to implement the [IUpgradeable](api/upgrades#IUpgradeable) interface described in the API Reference section.

@@ -2,12 +2,12 @@
 title: Securely deploy and upgrade a smart contract
 ---
 
-Defender allows you to easily deploy and upgrade smart contracts across chains while maintaining the best security practices. This tutorial shows how to use a [Relayer](:settings#relayers) to deploy a contract called Box and upgrade it with the UUPS proxy pattern via a [Safe wallet, window=_blank](https://safe.global/) (multisig).
+Defender allows you to easily deploy and upgrade smart contracts across chains while maintaining the best security practices. This tutorial shows how to use a [Relayer](:settings#relayers) to deploy a contract called Box and upgrade it with the UUPS proxy pattern via a [Safe wallet](https://safe.global/) (multisig).
 
 ## Pre-requisites
 
 * OpenZeppelin Defender account.
-* [NodeJS and NPM, window=_blank](https://nodejs.org/en)
+* [NodeJS and NPM](https://nodejs.org/en)
 * Any IDE or text editor
 * Web browser with Metamask (or any other compatible wallet), funded with Sepolia ETH.
 
@@ -17,7 +17,7 @@ Defender allows you to easily deploy and upgrade smart contracts across chains w
 
 First, you need to create Safe wallet to manage the upgrade process. To do so, follow these steps:
 
-1. Open the [Safe app, window=_blank](https://app.safe.global/welcome) in a web browser and connect your wallet (make sure you are connected to the [Sepolia testnet, window=_blank](https://sepolia.etherscan.io/)).
+1. Open the [Safe app](https://app.safe.global/welcome) in a web browser and connect your wallet (make sure you are connected to the [Sepolia testnet](https://sepolia.etherscan.io/)).
 2. Click on **Create new Account** and follow the steps.
 3. Note the address of the Safe wallet you created, you will need it later.
 
@@ -27,7 +27,7 @@ First, you need to create Safe wallet to manage the upgrade process. To do so, f
 
 Now, you will create a Defender test environment with the Sepolia testnet, where you will deploy and upgrade the smart contracts. To do so, follow these steps:
 
-1. Open [Defender Deploy, window=_blank](https://defender.openzeppelin.com/v2/#/deploy).
+1. Open [Defender Deploy](https://defender.openzeppelin.com/v2/#/deploy).
 2. Click on **Setup**.
 
    ![Deploy environments page](/defender/tutorial-deploy-environments.png)
@@ -61,7 +61,7 @@ Defender supports both Hardhat and Foundry integrations. Pick the one that suits
 
 ### Foundry setup
 
-First, make sure you have [Foundry, window=_blank](https://book.getfoundry.sh/getting-started/installation) installed. Follow these steps to create a new directory and project:
+First, make sure you have [Foundry](https://book.getfoundry.sh/getting-started/installation) installed. Follow these steps to create a new directory and project:
 
 1. Run the this command in your terminal:
 
@@ -86,7 +86,7 @@ First, make sure you have [Foundry, window=_blank](https://book.getfoundry.sh/ge
 
 ### Hardhat setup
 
-First, make sure you have [Hardhat, window=_blank](https://hardhat.org/hardhat-runner/docs/getting-started#installation) installed with ethers v6. Follow these steps to create a new directory and project:
+First, make sure you have [Hardhat](https://hardhat.org/hardhat-runner/docs/getting-started#installation) installed with ethers v6. Follow these steps to create a new directory and project:
 
 1. Run the this command in your terminal:
 
@@ -274,7 +274,7 @@ image::tutorial-deploy-directory.png[Deploy directory structure,185,300]
    ```
 
    <Callout>
-   You should use `deployProxy()`, `deployBeacon()` and `deployImplementation()` for upgradeable contracts, and `deployContract()` for non-upgradeable contracts. To forcefully use `deployContract()`, set the `unsafeAllowDeployContract` option to `true`. More information [here, window=_blank](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/docs/modules/ROOT/pages/defender-deploy).
+   You should use `deployProxy()`, `deployBeacon()` and `deployImplementation()` for upgradeable contracts, and `deployContract()` for non-upgradeable contracts. To forcefully use `deployContract()`, set the `unsafeAllowDeployContract` option to `true`. More information [here](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/docs/modules/ROOT/pages/defender-deploy).
    </Callout>
 2. Deploy your box by running the following command which executes your deployment script:
 
@@ -415,6 +415,6 @@ After deploying a contract, we recommended using Defender to monitor its state a
 ## References
 
 * [Deploy Documentation](:module/deploy)
-* [Foundry Upgrades Package, window=_blank](https://github.com/OpenZeppelin/openzeppelin-foundry-upgrades)
-* [Hardhat Upgrades Package, window=_blank](https://www.npmjs.com/package/@openzeppelin/hardhat-upgrades)
-* [Upgrades Core Package, window=_blank](https://www.npmjs.com/package/@openzeppelin/upgrades-core)
+* [Foundry Upgrades Package](https://github.com/OpenZeppelin/openzeppelin-foundry-upgrades)
+* [Hardhat Upgrades Package](https://www.npmjs.com/package/@openzeppelin/hardhat-upgrades)
+* [Upgrades Core Package](https://www.npmjs.com/package/@openzeppelin/upgrades-core)

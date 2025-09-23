@@ -21,7 +21,7 @@ Actions are automated Javascript pieces of code that can be executed via trigger
 
 The following triggers are supported:
 
-* **Schedule**: Choose a frequency, and Defender will invoke the function at the specified interval. Note that the specified interval is between two consecutive execution starts, _not_ between the end of one run and the beginning of the next one. Alternatively, it’s possible to specify when the action should run using [cron expressions, window=_blank](https://crontab.cronhub.io/).
+* **Schedule**: Choose a frequency, and Defender will invoke the function at the specified interval. Note that the specified interval is between two consecutive execution starts, _not_ between the end of one run and the beginning of the next one. Alternatively, it’s possible to specify when the action should run using [cron expressions](https://crontab.cronhub.io/).
 * **Webhook**: Defender will create a webhook URL for the action, which will be executed whenever an HTTP POST request is sent to that endpoint. The URL can be regenerated at any time. When invoked, the HTTP request information will be injected into the action, and the HTTP response will include the action run info along with any data returned from the action.
 
 <Callout type='warn'>
@@ -32,7 +32,7 @@ When sending requests to the webhook, make sure to include the `Content-Type: ap
 
 ### Environment
 
-Actions run in a [node 20 environment, window=_blank](https://nodejs.org/dist/latest-v20.x/docs/api/) with 256mb RAM and a 5-minute timeout. The code for each action must be smaller than 5mb in size. For ease-of-use, a set of common dependencies are pre-installed in the environment. The latest action dependenacy version `v2025-01-16` has the following dependencies:
+Actions run in a [node 20 environment](https://nodejs.org/dist/latest-v20.x/docs/api/) with 256mb RAM and a 5-minute timeout. The code for each action must be smaller than 5mb in size. For ease-of-use, a set of common dependencies are pre-installed in the environment. The latest action dependenacy version `v2025-01-16` has the following dependencies:
 
 ```jsx
 "@datadog/datadog-api-client": "^1.0.0-beta.5",
@@ -60,11 +60,11 @@ Defender dependencies that are not under the `@openzeppelin` namespace are now d
 </Callout>
 
 <Callout>
-If other dependencies are needed, a JavaScript module bundler, such as rollup or webpack, can be used. Refer to [this sample project, window=_blank](https://github.com/OpenZeppelin/defender-sdk/tree/main/examples/custom-ethers-pkg) to learn how. Contact us to add a dependacy you think other users would find useful!
+If other dependencies are needed, a JavaScript module bundler, such as rollup or webpack, can be used. Refer to [this sample project](https://github.com/OpenZeppelin/defender-sdk/tree/main/examples/custom-ethers-pkg) to learn how. Contact us to add a dependacy you think other users would find useful!
 </Callout>
 
 <Callout>
-We love [Typescript, window=_blank](https://www.typescriptlang.org/) in the OpenZeppelin development team, and we hope you do too! If you want to write your actions in TypeScript, you’ll need to first compile them using `tsc` or via your bundler of choice, and then upload the resulting JavaScript code. Unfortunately, we don’t support coding directly in TypeScript in the user interface. All `defender-sdk` packages are coded in TypeScript and are packaged with their type declarations. You can also use the [openzeppelin/defender-sdk-action-client, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk-action-client) package for type definitions for the event payload.
+We love [Typescript](https://www.typescriptlang.org/) in the OpenZeppelin development team, and we hope you do too! If you want to write your actions in TypeScript, you’ll need to first compile them using `tsc` or via your bundler of choice, and then upload the resulting JavaScript code. Unfortunately, we don’t support coding directly in TypeScript in the user interface. All `defender-sdk` packages are coded in TypeScript and are packaged with their type declarations. You can also use the [openzeppelin/defender-sdk-action-client](https://www.npmjs.com/package/@openzeppelin/defender-sdk-action-client) package for type definitions for the event payload.
 </Callout>
 
 ### Runtime Upgrades
@@ -192,7 +192,7 @@ Actions triggered from a Monitor can have two types of body properties and schem
 
 * In the case of a Defender monitor, the body will contain the [monitor event schema](module/monitor#monitor_event_schema).
 
-If the action is written in TypeScript, `BlockTriggerEvent` type from the [defender-sdk-action-client, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk-action-client) package can be used.
+If the action is written in TypeScript, `BlockTriggerEvent` type from the [defender-sdk-action-client](https://www.npmjs.com/package/@openzeppelin/defender-sdk-action-client) package can be used.
 
 ```jsx
 exports.handler = async function(params)
@@ -426,7 +426,7 @@ Remember to send any other value that your action expects in the `event` object,
 
 ### Updating code
 
-You can edit an action’s code via the Defender interface, or programmatically via API using the [`defender-sdk`, window=_blank](https://www.npmjs.com/package/@openzeppelin/defender-sdk) npm package. The latter allows to upload a code bundle with more than a single file:
+You can edit an action’s code via the Defender interface, or programmatically via API using the [`defender-sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) npm package. The latter allows to upload a code bundle with more than a single file:
 
 <Callout>
 The code bundle must not exceed 5MB in size after being compressed and base64-encoded, and it must always include an `index.js` at the root of the zip file to act as the entrypoint.
