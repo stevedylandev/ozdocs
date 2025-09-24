@@ -216,17 +216,16 @@ Upgrades.upgradeBeacon(beacon, "MyContractV2.sol");
 
 <Callout type='warn'>
 When upgrading a proxy or beacon, ensure that the new contract either has its `@custom:oz-upgrades-from <reference>` annotation set to the name of the old implementation contract used by the proxy or beacon, or set it with the `referenceContract` option, for example:
-</Callout>
 ```solidity
 Options memory opts;
 opts.referenceContract = "MyContractV1.sol";
 Upgrades.upgradeProxy(proxy, "MyContractV2.sol", "", opts);
 // or Upgrades.upgradeBeacon(beacon, "MyContractV2.sol", opts);
 ```
+</Callout>
 
 <Callout>
 If possible, keep the old version of the implementation contract’s source code somewhere in your project to use as a reference as above. This requires the new version to be in a different directory, Solidity file, or using a different contract name. Otherwise, if you want to use the same directory and name for the new version, keep the build info directory from the previous deployment (or build it from an older branch of your project repository) and reference it as follows:
-</Callout>
 ```solidity
 Options memory opts;
 opts.referenceBuildInfoDir = "/old-builds/build-info-v1";
@@ -234,6 +233,7 @@ opts.referenceContract = "build-info-v1:MyContract";
 Upgrades.upgradeProxy(proxy, "MyContract.sol", "", opts);
 // or Upgrades.upgradeBeacon(beacon, "MyContract.sol", opts);
 ```
+</Callout>
 
 ## Coverage Testing
 

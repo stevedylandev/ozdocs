@@ -159,9 +159,9 @@ Requirements:
 
 <Callout>
 Native strings and string operations aren’t supported within the Compact language, e.g. concatenating a base URI + token ID is not possible like in other NFT implementations.
-</Callout>
 Therefore, we propose the URI storage approach; whereby, NFTs may or may not have unique "base" URIs.
 It’s up to the implementation to decide on how to handle this.
+</Callout>
 
 Constraints:
 
@@ -282,8 +282,8 @@ Transfers `tokenId` token from `from` to `to`.
 
 <Callout>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -310,9 +310,9 @@ Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contra
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -466,9 +466,9 @@ Requirements:
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Constraints:
 
@@ -507,8 +507,8 @@ Transfers `tokenId` from `from` to `to`. As opposed to [transferFrom](#transferf
 
 <Callout>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -535,8 +535,8 @@ Transfers `tokenId` from `from` to `to`. As opposed to [_unsafeTransferFrom](#_u
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported. Tokens sent to a contract address may become irretrievable.
-</Callout>
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 

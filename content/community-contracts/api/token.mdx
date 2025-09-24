@@ -1661,8 +1661,8 @@ See [`IERC7943.setFrozen`](interfaces#IERC7943-setFrozen-address-uint256-uint256
 
 <Callout>
 The `amount` is capped to the balance of the `user` to ensure the [`IERC7943.Frozen`](interfaces#IERC7943-Frozen-address-uint256-uint256-) event
-</Callout>
 emits values that consistently reflect the actual amount of tokens that are frozen.
+</Callout>
 
 </div>
 </div>
@@ -1686,10 +1686,10 @@ to the new balance after the transfer.
 
 <Callout>
 This function uses [`ERC20Allowlist._update`](#ERC20Allowlist-_update-address-address-uint256-) to perform the transfer, ensuring all standard ERC20
-</Callout>
 side effects (such as balance updates and events) are preserved. If you override [`ERC20Allowlist._update`](#ERC20Allowlist-_update-address-address-uint256-)
 to add additional restrictions or logic, those changes will also apply here.
 Consider overriding this function to bypass newer restrictions if needed.
+</Callout>
 
 </div>
 </div>

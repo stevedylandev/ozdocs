@@ -6,7 +6,7 @@ description: "Smart contract ERC20 utilities and implementations"
 This set of interfaces, contracts, and utilities are all related to the [ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
 
 <Callout>
-For an overview of ERC-20 tokens and a walk through on how to create a token contract read our [ERC-20 guide](ROOT:erc20.adoc).
+For an overview of ERC-20 tokens and a walk through on how to create a token contract read our [ERC-20 guide](../../erc20).
 </Callout>
 
 There are a few core contracts that implement the behavior specified in the ERC-20 standard:
@@ -104,9 +104,9 @@ that a supply mechanism has to be added in a derived contract using [`ERC1155._m
 
 <Callout>
 For a detailed writeup see our guide
-</Callout>
 [How
 to implement supply mechanisms](https://forum.openzeppelin.com/t/how-to-implement-erc20-supply-mechanisms/226).
+</Callout>
 
 The default value of [`IERC6909Metadata.decimals`](../interfaces#IERC6909Metadata-decimals-uint256-) is 18. To change this, you should override
 this function so it returns a different value.
@@ -244,9 +244,9 @@ it's overridden.
 
 <Callout>
 This information is only used for _display_ purposes: it in
-</Callout>
 no way affects any of the arithmetic of the contract, including
 [`IERC20.balanceOf`](#IERC20-balanceOf-address-) and [`IERC20.transfer`](#IERC20-transfer-address-uint256-).
+</Callout>
 
 </div>
 </div>
@@ -344,8 +344,8 @@ See [`IERC20.approve`](#IERC20-approve-address-uint256-).
 
 <Callout>
 If `value` is the maximum `uint256`, the allowance is not updated on
-</Callout>
 `transferFrom`. This is semantically equivalent to an infinite approval.
+</Callout>
 
 Requirements:
 
@@ -373,8 +373,8 @@ required by the ERC. See [_approve](#ERC20-_approve-address-address-uint256-bool
 
 <Callout>
 Does not update the allowance if the current allowance
-</Callout>
 is the maximum `uint256`.
+</Callout>
 
 Requirements:
 
@@ -697,12 +697,12 @@ Returns a boolean value indicating whether the operation succeeded.
 
 <Callout type="warn">
 Beware that changing an allowance with this method brings the risk
-</Callout>
 that someone may use both the old and the new allowance by unfortunate
 transaction ordering. One possible solution to mitigate this race
 condition is to first reduce the spender's allowance to 0 and set the
 desired value afterwards:
 https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+</Callout>
 
 Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
 
@@ -1381,9 +1381,9 @@ level. By default there is no fee, but this can be changed by overriding [`IERC3
 
 <Callout>
 When this extension is used along with the [`ERC20Capped`](#ERC20Capped) or [`ERC20Votes`](#ERC20Votes) extensions,
-</Callout>
 [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLender-maxFlashLoan-address-) will not correctly reflect the maximum that can be flash minted. We recommend
 overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLender-maxFlashLoan-address-) so that it correctly reflects the supply cap.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1620,11 +1620,11 @@ event of a large bug.
 
 <Callout type="warn">
 This contract does not include public pause and unpause functions. In
-</Callout>
 addition to inheriting this contract, you must define both functions, invoking the
 [`Pausable._pause`](../utils#Pausable-_pause--) and [`Pausable._unpause`](../utils#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
 make the contract pause mechanism of the contract unreachable, and thus unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1853,8 +1853,8 @@ given ``owner``'s signed approval.
 
 <Callout type="warn">
 The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
-</Callout>
 ordering also apply here.
+</Callout>
 
 Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
 
@@ -2146,8 +2146,8 @@ Returns the voting units of an `account`.
 
 <Callout type="warn">
 Overriding this function may compromise the internal vote accounting.
-</Callout>
 `ERC20Votes` assumes tokens map to voting units 1:1 and this is not easy to change.
+</Callout>
 
 </div>
 </div>
@@ -2227,10 +2227,10 @@ wrapping of an existing "basic" ERC-20 into a governance token.
 
 <Callout type="warn">
 Any mechanism in which the underlying token changes the [`IERC777.balanceOf`](../interfaces#IERC777-balanceOf-address-) of an account without an explicit transfer
-</Callout>
 may desynchronize this contract's supply and its underlying balance. Please exercise caution when wrapping tokens that
 may undercollateralize the wrapper (i.e. wrapper's total supply is higher than its underlying balance). See [`ERC20Wrapper._recover`](#ERC20Wrapper-_recover-address-)
 for recovering value accrued to the wrapper.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2448,7 +2448,7 @@ itself determines the initial exchange rate. While not fully preventing the atta
 offset (0) makes it non-profitable even if an attacker is able to capture value from multiple user deposits, as a result
 of the value being captured by the virtual shares (out of the attacker's donation) matching the attacker's expected gains.
 With a larger offset, the attack becomes orders of magnitude more expensive than it is profitable. More details about the
-underlying math can be found xref:ROOT:erc4626.adoc#inflation-attack[here].
+underlying math can be found [here](../../erc4626#security-concern-inflation-attack).
 
 The drawback of this approach is that the virtual shares do capture (a very small) part of the value being accrued
 to the vault. Also, if the vault experiences losses, the users try to exit the vault, the virtual shares and assets
@@ -2456,7 +2456,7 @@ will cause the first user to exit to experience reduced losses in detriment to t
 bigger losses. Developers willing to revert back to the pre-v4.9 behavior just need to override the
 `_convertToShares` and `_convertToAssets` functions.
 
-To learn more, check out our xref:ROOT:erc4626.adoc[ERC-4626 guide].
+To learn more, check out our [ERC-4626 guide](../../erc4626).
 </Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
@@ -2645,9 +2645,9 @@ scenario where all the conditions are met.
 
 <Callout>
 This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
-</Callout>
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -2674,9 +2674,9 @@ scenario where all the conditions are met.
 
 <Callout>
 This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
-</Callout>
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -2791,8 +2791,8 @@ current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -2822,8 +2822,8 @@ current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by minting.
+</Callout>
 
 </div>
 </div>
@@ -2854,8 +2854,8 @@ given current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -2885,8 +2885,8 @@ given current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by redeeming.
+</Callout>
 
 </div>
 </div>
@@ -2993,8 +2993,8 @@ Burns exactly shares from owner and sends assets of underlying tokens to receive
 
 <Callout>
 some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
-</Callout>
 Those methods should be performed separately.
+</Callout>
 
 </div>
 </div>
@@ -3321,8 +3321,8 @@ given ``owner``'s signed approval.
 
 <Callout type="warn">
 The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
-</Callout>
 ordering also apply here.
+</Callout>
 
 Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
 
@@ -3756,8 +3756,8 @@ Does NOT emit an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-a
 to consuming the persistent allowance.
 <Callout>
 This function skips calling `super._spendAllowance` if the temporary allowance
-</Callout>
 is enough to cover the spending.
+</Callout>
 
 </div>
 </div>
@@ -4012,10 +4012,10 @@ non-reverting calls are assumed to be successful.
 
 <Callout type="warn">
 If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-</Callout>
 smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
 this function. Performing a [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) or [`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) operation on a token contract
 that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+</Callout>
 
 </div>
 </div>
@@ -4037,10 +4037,10 @@ value, non-reverting calls are assumed to be successful.
 
 <Callout type="warn">
 If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-</Callout>
 smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
 this function. Performing a [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) or [`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) operation on a token contract
 that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+</Callout>
 
 </div>
 </div>
@@ -4063,9 +4063,9 @@ to be set to zero before setting it to a non-zero value, such as USDT.
 
 <Callout>
 If the token implements ERC-7674, this function will not modify any temporary allowance. This function
-</Callout>
 only sets the "standard" allowance. Any temporary allowance will remain active, in addition to the value being
 set here.
+</Callout>
 
 </div>
 </div>
@@ -4130,9 +4130,9 @@ targeting contracts.
 
 <Callout>
 When the recipient address (`to`) has no code (i.e. is an EOA), this function behaves as [`SafeERC20.forceApprove`](#SafeERC20-forceApprove-contract-IERC20-address-uint256-).
-</Callout>
 Opposedly, when the recipient address (`to`) has code, this function only attempts to call [`ERC1363.approveAndCall`](#ERC1363-approveAndCall-address-uint256-bytes-)
 once without retrying, and relies on the returned value to be true.
+</Callout>
 
 Reverts if the returned value is other than `true`.
 

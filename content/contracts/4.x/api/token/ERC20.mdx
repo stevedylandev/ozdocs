@@ -740,12 +740,12 @@ Returns a boolean value indicating whether the operation succeeded.
 
 <Callout type="warn">
 Beware that changing an allowance with this method brings the risk
-</Callout>
 that someone may use both the old and the new allowance by unfortunate
 transaction ordering. One possible solution to mitigate this race
 condition is to first reduce the spender's allowance to 0 and set the
 desired value afterwards:
 https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+</Callout>
 
 Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
@@ -1216,11 +1216,11 @@ event of a large bug.
 
 <Callout type="warn">
 This contract does not include public pause and unpause functions. In
-</Callout>
 addition to inheriting this contract, you must define both functions, invoking the
 [`Pausable._pause`](../security#Pausable-_pause--) and [`Pausable._unpause`](../security#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
 make the contract unpausable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1404,8 +1404,8 @@ given ``owner``'s signed approval.
 
 <Callout type="warn">
 The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
-</Callout>
 ordering also apply here.
+</Callout>
 
 Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 
@@ -3092,8 +3092,8 @@ given ``owner``'s signed approval.
 
 <Callout type="warn">
 The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
-</Callout>
 ordering also apply here.
+</Callout>
 
 Emits an [`IERC20.Approval`](#IERC20-Approval-address-address-uint256-) event.
 

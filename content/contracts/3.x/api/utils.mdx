@@ -138,9 +138,9 @@ points to them.
 
 <Callout>
 If you would like to learn more about reentrancy and alternative ways
-</Callout>
 to protect against it, check out our blog post
 [Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
+</Callout>
 
 **Modifiers**
 
@@ -221,10 +221,10 @@ imposed by `transfer`, making them unable to receive funds via
 
 <Callout type='warn'>
 because control is transferred to `recipient`, care must be
-</Callout>
 taken to not create reentrancy vulnerabilities. Consider using
 ReentrancyGuard or the
 [checks-effects-interactions pattern](https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern).
+</Callout>
 
 <a id="Pausable-functionCall"></a>
 
@@ -515,8 +515,8 @@ Same as get, with a custom error message when `key` is not in the map.
 
 <Callout type='warn'>
 This function is deprecated because it requires allocating memory for the error
-</Callout>
 message unnecessarily. For custom revert reasons use tryGet.
+</Callout>
 
 ### ``EnumerableSet``
 

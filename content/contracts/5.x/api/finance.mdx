@@ -41,22 +41,22 @@ a beneficiary until a specified time.
 
 <Callout>
 Since the wallet is [`Ownable`](access#Ownable), and ownership can be transferred, it is possible to sell unvested tokens.
-</Callout>
 Preventing this in a smart contract is difficult, considering that: 1) a beneficiary address could be a
 counterfactually deployed contract, 2) there is likely to be a migration path for EOAs to become contracts in the
 near future.
+</Callout>
 
 <Callout>
 When using this contract with any token whose balance is adjusted automatically (i.e. a rebase token), make
-</Callout>
 sure to account the supply/balance adjustment in the vesting schedule to ensure the vested amount is as intended.
+</Callout>
 
 <Callout>
 Chains with support for native ERC20s may allow the vesting wallet to withdraw the underlying asset as both an
-</Callout>
 ERC20 and as native currency. For example, if chain C supports token A and the wallet gets deposited 100 A, then
 at 50% of the vesting period, the beneficiary can withdraw 50 A as ERC20 and 25 A as native currency (totaling 75 A).
 Consider disabling one of the withdrawal methods.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -501,9 +501,9 @@ an asset given its total historical allocation. Returns 0 if the [`VestingWallet
 
 <Callout type="warn">
 The cliff not only makes the schedule return 0, but it also ignores every possible side
-</Callout>
 effect from calling the inherited implementation (i.e. `super._vestingSchedule`). Carefully consider
 this caveat if the overridden implementation of this function has any (e.g. writing to memory or reverting).
+</Callout>
 
 </div>
 </div>

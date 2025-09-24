@@ -35,25 +35,25 @@ to determine how to handle the collected fees from the anti-sandwich mechanism.
 
 <Callout>
 The Anti-sandwich mechanism only protects swaps in the zeroForOne swap direction.
-</Callout>
 Swaps in the !zeroForOne direction are not protected by this hook design.
+</Callout>
 
 <Callout type="warn">
 Since this hook makes MEV not profitable, there's not as much arbitrage in
-</Callout>
 the pool, making prices at beginning of the block not necessarily close to market price.
+</Callout>
 
 <Callout type="warn">
 In `_beforeSwap`, the hook iterates over all ticks between last tick and current tick.
-</Callout>
 Developers must be aware that for large price changes in pools with small tick spacing, the `for`
 loop will iterate over a large number of ticks, which could lead to `MemoryOOG` error.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v1.1.0_
 
@@ -314,15 +314,15 @@ Once completely filled, the resulting liquidity can be withdrawn from the pool.
 
 <Callout type="warn">
 When cancelling or adding more liquidity into an existing order, it's possible that fees
-</Callout>
 have been accrued. In those cases, the accrued fees are added to the order info, benefitting the remaining
 limit order placers.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v1.1.0_
 
@@ -942,28 +942,28 @@ See [`LiquidityPenaltyHook._calculateLiquidityPenalty`](#LiquidityPenaltyHook-_c
 
 <Callout>
 If a long term liquidity provider adds liquidity continuously, a pause of `blockNumberOffset`
-</Callout>
 before removing will be needed if `feesAccrued` collection is intended, in order to avoid getting
 penalized by the JIT protection mechanism.
+</Callout>
 
 <Callout type="warn">
 Altrough this hook achieves it's objective of protecting long term LP's in most scenarios,
-</Callout>
 low liquidity pools and long-tail assets may still be vulnerable depending on the configured `blockNumberOffset`.
 Larger values of such are recommended in those cases in order to decrease the profitability of the attack.
+</Callout>
 
 <Callout type="warn">
 In low liquidity pools, this hook may be vulnerable to multi-account strategies: attackers may bypass JIT protection
-</Callout>
 by using a secondary account to add minimal liquidity at a target tick with no other liquidity, then moving the price there after a JIT attack.
 This allows penalty fees to be redirected to the attacker's secondary account. While technically feasible, this attack is rarely profitable in practice,
 due to the cost associated with moving the price to the target tick.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.1_
 
@@ -1076,15 +1076,15 @@ liquidity was recently added to the position.
 
 <Callout>
 The penalty is applied on both `withheldFees` and `feeDelta` equally.
-</Callout>
 Therefore, regardless of how many times liquidity was added to the position within the `blockNumberOffset` period,
 all accrued fees are penalized as if the liquidity was added only once during that period. This ensures that
 splitting liquidity additions within the `blockNumberOffset` period does not reduce or increase the penalty.
+</Callout>
 
 <Callout type="warn">
 The penalty is donated to the pool's liquidity providers in range at the time of liquidity removal,
-</Callout>
 which may be different from the liquidity providers in range at the time of liquidity addition.
+</Callout>
 
 </div>
 </div>

@@ -128,9 +128,9 @@ eliminates reentrancy concerns.
 
 <Callout>
 If you would like to learn more about reentrancy and alternative ways
-</Callout>
 to protect against it, check out our blog post
 [Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
+</Callout>
 
 To use, derive from the `PullPayment` contract, and use _asyncTransfer
 instead of Solidity’s `transfer` function. Payees can query their due
@@ -160,9 +160,9 @@ withdrawPayments.
 
 <Callout type='warn'>
 Forwarding all gas opens the door to reentrancy vulnerabilities.
-</Callout>
 Make sure you trust the recipient, or are either following the
 checks-effects-interactions pattern or using ReentrancyGuard.
+</Callout>
 
 <a id="PaymentSplitter-payments"></a>
 
@@ -234,9 +234,9 @@ recipient.
 
 <Callout type='warn'>
 Forwarding all gas opens the door to reentrancy vulnerabilities.
-</Callout>
 Make sure you trust the recipient, or are either following the
 checks-effects-interactions pattern or using ReentrancyGuard.
+</Callout>
 
 <a id="PaymentSplitter-Deposited"></a>
 
