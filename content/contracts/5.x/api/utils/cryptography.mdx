@@ -381,9 +381,9 @@ The meaning of `name` and `version` is specified in
 - `version`: the current major version of the signing domain.
 
 <Callout>
-These parameters cannot be changed except through a xref:learn::upgrading-smart-contracts.adoc[smart
+These parameters cannot be changed except through a [smart
+contract upgrade](../../learn/upgrading-smart-contracts).
 </Callout>
-contract upgrade].
 
 </div>
 </div>
@@ -1591,7 +1591,7 @@ Utilities to process [ERC-7739](https://ercs.ethereum.org/ERCS/erc-7739) typed d
 that are specific to an EIP-712 domain.
 
 This library provides methods to wrap, unwrap and operate over typed data signatures with a defensive
-rehashing mechanism that includes the app's xref:api:utils/cryptography#EIP712-_domainSeparatorV4[EIP-712]
+rehashing mechanism that includes the app's [EIP-712](#EIP712-_domainSeparatorV4--)
 and preserves readability of the signed content using an EIP-712 nested approach.
 
 A smart contract domain can validate a signature for a typed data structure in two ways:
@@ -1604,8 +1604,8 @@ A provider for a smart contract wallet would need to return this signature as th
 </Callout>
 result of a call to `personal_sign` or `eth_signTypedData`, and this may be unsupported by
 API clients that expect a return value of 129 bytes, or specifically the `r,s,v` parameters
-of an xref:api:utils/cryptography#ECDSA[ECDSA] signature, as is for example specified for
-xref:api:utils/cryptography#EIP712[EIP-712].
+of an [ECDSA](#ECDSA) signature, as is for example specified for
+[EIP-712](#EIP712).
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1818,8 +1818,7 @@ Signature validation algorithm.
 Implementing a signature validation algorithm is a security-sensitive operation as it involves
 </Callout>
 cryptographic verification. It is important to review and test thoroughly before deployment. Consider
-using one of the signature verification libraries (xref:api:utils/cryptography#ECDSA[ECDSA],
-xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
+using one of the signature verification libraries ([ECDSA](#ECDSA), [P256](#P256), or [RSA](#RSA)).
 
 </div>
 </div>
@@ -2673,7 +2672,7 @@ Thrown when the arrays lengths don't match. See [`MultiSignerERC7913Weighted._se
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerECDSA.sol";
 ```
 
-Implementation of [`AbstractSigner`](#AbstractSigner) using xref:api:utils/cryptography#ECDSA[ECDSA] signatures.
+Implementation of [`AbstractSigner`](#AbstractSigner) using [ECDSA](#ECDSA) signatures.
 
 For [`Account`](../account#Account) usage, a [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) function is provided to set the [`SignerECDSA.signer`](#SignerECDSA-signer--) address.
 Doing so is easier for a factory, who is likely to use initializable clones of this contract.
@@ -2770,10 +2769,9 @@ Signature validation algorithm.
 
 <Callout type="warn">
 Implementing a signature validation algorithm is a security-sensitive operation as it involves
-</Callout>
 cryptographic verification. It is important to review and test thoroughly before deployment. Consider
-using one of the signature verification libraries (xref:api:utils/cryptography#ECDSA[ECDSA],
-xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
+using one of the signature verification libraries ([ECDSA](#ECDSA), [P256](#P256), or [RSA](#RSA)).
+</Callout>
 
 </div>
 </div>
@@ -2960,7 +2958,7 @@ with [`SignerECDSA.signer`](#SignerECDSA-signer--), `hash` and `signature`.
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerP256.sol";
 ```
 
-Implementation of [`AbstractSigner`](#AbstractSigner) using xref:api:utils/cryptography#P256[P256] signatures.
+Implementation of [`AbstractSigner`](#AbstractSigner) using [P256](#P256) signatures.
 
 For [`Account`](../account#Account) usage, a [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) function is provided to set the [`SignerECDSA.signer`](#SignerECDSA-signer--) public key.
 Doing so is easier for a factory, who is likely to use initializable clones of this contract.
@@ -3065,10 +3063,9 @@ Signature validation algorithm.
 
 <Callout type="warn">
 Implementing a signature validation algorithm is a security-sensitive operation as it involves
-</Callout>
 cryptographic verification. It is important to review and test thoroughly before deployment. Consider
-using one of the signature verification libraries (xref:api:utils/cryptography#ECDSA[ECDSA],
-xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
+using one of the signature verification libraries ([ECDSA](#ECDSA), [P256](#P256), or [RSA](#RSA)).
+</Callout>
 
 </div>
 </div>
@@ -3104,7 +3101,7 @@ xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerRSA.sol";
 ```
 
-Implementation of [`AbstractSigner`](#AbstractSigner) using xref:api:utils/cryptography#RSA[RSA] signatures.
+Implementation of [`AbstractSigner`](#AbstractSigner) using [RSA](#RSA) signatures.
 
 For [`Account`](../account#Account) usage, a [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) function is provided to set the [`SignerECDSA.signer`](#SignerECDSA-signer--) public key.
 Doing so is easier for a factory, who is likely to use initializable clones of this contract.
@@ -3198,7 +3195,7 @@ Return the signer's RSA public key.
 <div className="px-4">
 
 See [`AbstractSigner._rawSignatureValidation`](#AbstractSigner-_rawSignatureValidation-bytes32-bytes-). Verifies a PKCSv1.5 signature by calling
-xref:api:utils/cryptography.adoc#RSA-pkcs1Sha256-bytes-bytes-bytes-bytes-[RSA.pkcs1Sha256].
+[RSA.pkcs1Sha256](#RSA-pkcs1Sha256-bytes-bytes-bytes-bytes-).
 
 <Callout type="warn">
 Following the RSASSA-PKCS1-V1_5-VERIFY procedure outlined in RFC8017 (section 8.2.2), the
@@ -3234,11 +3231,11 @@ This contract requires implementing the [`AccountERC7579._rawSignatureValidation
 which may be either an typed data or a personal sign nested type.
 
 <Callout>
-xref:api:utils/cryptography#EIP712[EIP-712] uses xref:api:utils/cryptography#ShortStrings[ShortStrings] to
-</Callout>
+[EIP-712](#EIP712) uses [ShortStrings](../utils#ShortStrings) to
 optimize gas costs for short strings (up to 31 characters). Consider that strings longer than that will use storage,
 which may limit the ability of the signer to be used within the ERC-4337 validation phase (due to
 [ERC-7562 storage access rules](https://eips.ethereum.org/EIPS/eip-7562#storage-rules)).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>

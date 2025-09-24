@@ -3,7 +3,7 @@ title: "Proxy"
 description: "Smart contract proxy utilities and implementations"
 ---
 
-This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](upgrades-plugins::proxies.adoc) page.
+This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](/upgrades-plugins/proxies) page.
 
 Most of the proxies below are built on an abstract base contract.
 
@@ -20,7 +20,7 @@ There are two alternative ways to add upgradeability to an ERC-1967 proxy. Their
 * [`UUPSUpgradeable`](#UUPSUpgradeable): An upgradeability mechanism to be included in the implementation contract.
 
 **🔥 CAUTION**\
-Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index.adoc) for Hardhat and Foundry.
+Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](/upgrades-plugins) for Hardhat and Foundry.
 
 A different family of proxies are beacon proxies. This pattern, popularized by Dharma, allows multiple proxies to be upgraded to a different implementation in a single transaction.
 
@@ -2032,7 +2032,7 @@ See [`UUPSUpgradeable.notDelegated`](#UUPSUpgradeable-notDelegated--).
 Function that should revert when `msg.sender` is not authorized to upgrade the contract. Called by
 [`ERC1967Utils.upgradeToAndCall`](#ERC1967Utils-upgradeToAndCall-address-bytes-).
 
-Normally, this function will use an xref:access.adoc[access control] modifier such as [`Ownable.onlyOwner`](access#Ownable-onlyOwner--).
+Normally, this function will use an [access control](access) modifier such as [`Ownable.onlyOwner`](access#Ownable-onlyOwner--).
 
 ```solidity
 function _authorizeUpgrade(address) internal onlyOwner {}
