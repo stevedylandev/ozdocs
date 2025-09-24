@@ -745,9 +745,9 @@ Unsafe write access to the balances, used by extensions that "mint" tokens using
 
 <Callout type="warn">
 Anyone calling this MUST ensure that the balances remain consistent with the ownership. The invariant
-</Callout>
 being that for any address `a` the value returned by `balanceOf(a)` must be equal to the number of tokens such
 that `ownerOf(tokenId)` is `a`.
+</Callout>
 
 </div>
 </div>
@@ -906,9 +906,9 @@ Transfers `tokenId` token from `from` to `to`.
 
 <Callout type="warn">
 Note that the caller is responsible to confirm that the recipient is capable of receiving ERC721
-</Callout>
 or else they may be permanently lost. Usage of [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) prevents loss, though the caller must
 understand this adds an external call which potentially creates a reentrancy vulnerability.
+</Callout>
 
 Requirements:
 
@@ -1236,15 +1236,15 @@ regained after construction. During construction, only batch minting is allowed.
 
 <Callout type="warn">
 This extension bypasses the hooks [`ERC1155._beforeTokenTransfer`](ERC1155#ERC1155-_beforeTokenTransfer-address-address-address-uint256---uint256---bytes-) and [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-) for tokens minted in
-</Callout>
 batch. When using this extension, you should consider the `_beforeConsecutiveTokenTransfer` and
 `_afterConsecutiveTokenTransfer` hooks in addition to [`ERC1155._beforeTokenTransfer`](ERC1155#ERC1155-_beforeTokenTransfer-address-address-address-uint256---uint256---bytes-) and [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-).
+</Callout>
 
 <Callout type="warn">
 When overriding [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-), be careful about call ordering. [`ERC721.ownerOf`](#ERC721-ownerOf-uint256-) may return invalid
-</Callout>
 values during the [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-) execution if the super call is not called first. To be safe, execute the
 super call before your custom logic.
+</Callout>
 
 _Available since v4.8._
 
@@ -1602,11 +1602,11 @@ event of a large bug.
 
 <Callout type="warn">
 This contract does not include public pause and unpause functions. In
-</Callout>
 addition to inheriting this contract, you must define both functions, invoking the
 [`Pausable._pause`](../security#Pausable-_pause--) and [`Pausable._unpause`](../security#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
 make the contract unpausable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1716,9 +1716,9 @@ specific token ids via [`ERC2981._setTokenRoyalty`](common#ERC2981-_setTokenRoya
 
 <Callout type="warn">
 ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See
-</Callout>
 [Rationale](https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments) in the EIP. Marketplaces are expected to
 voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.
+</Callout>
 
 _Available since v4.5._
 
@@ -2280,8 +2280,8 @@ is accepted from [`ERC20Wrapper.depositFor`](ERC20#ERC20Wrapper-depositFor-addre
 
 <Callout type="warn">
 Doesn't work with unsafe transfers (eg. [`IERC721.transferFrom`](#IERC721-transferFrom-address-address-uint256-)). Use [`ERC721Wrapper._recover`](#ERC721Wrapper-_recover-address-uint256-)
-</Callout>
 for recovering in that scenario.
+</Callout>
 
 </div>
 </div>

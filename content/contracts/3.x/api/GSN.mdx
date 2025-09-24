@@ -30,12 +30,12 @@ and enables GSN support on all contracts in the inheritance tree.
 
 <Callout>
 This contract is abstract. The functions IRelayRecipient-acceptRelayedCall,
-</Callout>
  _preRelayedCall, and _postRelayedCall are not implemented and must be
 provided by derived contracts. See the
 [GSN strategies](ROOT:gsn-strategies#gsn-strategies) for more
 information on how to use the pre-built GSNRecipientSignature and
 GSNRecipientERC20Fee, or how to write your own.
+</Callout>
 
 **Functions**
 
@@ -77,8 +77,8 @@ use the default instance.
 
 <Callout type='warn'>
 After upgrading, the GSNRecipient will no longer be able to receive relayed calls from the old
-</Callout>
 IRelayHub instance. Additionally, all funds should be previously withdrawn via _withdrawDeposits.
+</Callout>
 
 <a id="GSNRecipient-relayHubVersion"></a>
 

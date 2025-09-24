@@ -32,19 +32,19 @@ underlying currency by using the `settle` function from the `CurrencySettler` li
 
 <Callout type="warn">
 If the hook is used for multiple pools, the ERC-6909 tokens must be separated and managed
-</Callout>
 independently for each pool in order to prevent draining of ERC-6909 tokens from one pool to another.
+</Callout>
 
 <Callout>
 The hook only supports async exact-input swaps. Exact-output swaps will be processed normally
-</Callout>
 by the `PoolManager`.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.0_
 
@@ -204,15 +204,15 @@ manage fees over liquidity shares accordingly.
 
 <Callout>
 This base hook is designed to work with a single pool key. If you want to use the same custom
-</Callout>
 accounting hook for multiple pools, you must have multiple storage instances of this contract and
 initialize them via the `PoolManager` with their respective pool keys.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.0_
 
@@ -369,8 +369,8 @@ according to the price when the transaction is executed.
 
 <Callout>
 The `amount0Min` and `amount1Min` parameters are relative to the principal delta, which excludes
-</Callout>
 fees accrued from the liquidity modification delta.
+</Callout>
 
 </div>
 </div>
@@ -709,14 +709,14 @@ created from this calculation is then consumed and applied by the `PoolManager`.
 
 <Callout>
 This hook by default does not include fee or salt mechanisms, which can be implemented by inheriting
-</Callout>
 contracts if needed.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.0_
 
@@ -875,8 +875,8 @@ to get the amount of tokens to be sent to the receiver.
 
 <Callout>
 In order to take and settle tokens from the pool, the hook must hold the liquidity added
-</Callout>
 via the [`BaseCustomAccounting.addLiquidity`](#BaseCustomAccounting-addLiquidity-struct-BaseCustomAccounting-AddLiquidityParams-) function.
+</Callout>
 
 </div>
 </div>
@@ -1026,14 +1026,14 @@ Based on the [Uniswap v4 periphery implementation](https://github.com/Uniswap/v4
 
 <Callout>
 Hook entry points must be overridden and implemented by the inheriting hook to be used. Their respective
-</Callout>
 flags must be set to true in the `getHookPermissions` function as well.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.0_
 

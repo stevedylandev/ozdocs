@@ -156,9 +156,9 @@ This function uses the create opcode, which should never revert.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 </div>
 </div>
@@ -180,14 +180,14 @@ to the new contract.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 <Callout>
 Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-</Callout>
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
+</Callout>
 
 </div>
 </div>
@@ -212,9 +212,9 @@ the clones cannot be deployed twice at the same address.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 </div>
 </div>
@@ -236,14 +236,14 @@ a `value` parameter to send native currency to the new contract.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 <Callout>
 Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-</Callout>
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
+</Callout>
 
 </div>
 </div>
@@ -302,9 +302,9 @@ This function uses the create opcode, which should never revert.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 </div>
 </div>
@@ -326,14 +326,14 @@ parameter to send native currency to the new contract.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 <Callout>
 Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-</Callout>
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
+</Callout>
 
 </div>
 </div>
@@ -360,9 +360,9 @@ at the same address.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 </div>
 </div>
@@ -384,14 +384,14 @@ but with a `value` parameter to send native currency to the new contract.
 
 <Callout type="warn">
 This function does not check if `implementation` has code. A clone that points to an address
-</Callout>
 without code cannot be initialized. Initialization calls may appear to be successful when, in reality, they
 have no effect and leave the clone uninitialized, allowing a third party to initialize it later.
+</Callout>
 
 <Callout>
 Using a non-zero value at creation will require the contract using this function (e.g. a factory)
-</Callout>
 to always have enough balance for new deployments. Consider exposing this function under a payable method.
+</Callout>
 
 </div>
 </div>
@@ -543,9 +543,9 @@ Returns the current implementation address.
 
 <Callout>
 To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using
-</Callout>
 the [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
 `0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc`
+</Callout>
 
 </div>
 </div>
@@ -645,9 +645,9 @@ Returns the current admin.
 
 <Callout>
 To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using
-</Callout>
 the [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
 `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`
+</Callout>
 
 </div>
 </div>
@@ -917,8 +917,8 @@ the beacon to not upgrade the implementation maliciously.
 
 <Callout type="warn">
 Do not use the implementation logic to modify the beacon storage slot. Doing so would leave the proxy in
-</Callout>
 an inconsistent state where the beacon storage slot does not match the beacon address.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1394,31 +1394,31 @@ interface of the proxy, including the ability to change who can trigger upgrades
 
 <Callout>
 The real interface of this proxy is that defined in `ITransparentUpgradeableProxy`. This contract does not
-</Callout>
 inherit from that interface, and instead `upgradeToAndCall` is implicitly implemented using a custom dispatch
 mechanism in `_fallback`. Consequently, the compiler will not produce an ABI for this contract. This is necessary to
 fully implement transparency without decoding reverts caused by selector clashes between the proxy and the
 implementation.
+</Callout>
 
 <Callout>
 This proxy does not inherit from [`Context`](utils#Context) deliberately. The [`ProxyAdmin`](#ProxyAdmin) of this contract won't send a
-</Callout>
 meta-transaction in any way, and any other meta-transaction setup should be made in the implementation contract.
+</Callout>
 
 <Callout type="warn">
 This contract avoids unnecessary storage reads by setting the admin only during construction as an
-</Callout>
 immutable variable, preventing any changes thereafter. However, the admin slot defined in ERC-1967 can still be
 overwritten by the implementation logic pointed to by this proxy. In such cases, the contract may end up in an
 undesirable state where the admin slot is different from the actual admin. Relying on the value of the admin slot
 is generally fine if the implementation is trusted.
+</Callout>
 
 <Callout type="warn">
 It is not recommended to extend this contract to add additional external functions. If you do so, the
-</Callout>
 compiler will not check that there are no selector conflicts, due to the note above. A selector clash between any new
 function and the functions declared in [`ITransparentUpgradeableProxy`](#ITransparentUpgradeableProxy) will be resolved in favor of the new one. This
 could render the `upgradeToAndCall` function inaccessible, preventing upgradeability and compromising transparency.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1557,8 +1557,8 @@ contract MyTokenV2 is MyToken, ERC20PermitUpgradeable {
 
 <Callout>
 To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as
-</Callout>
 possible by providing the encoded function call as the `_data` argument to [`ERC1967Proxy.constructor`](#ERC1967Proxy-constructor-address-bytes-).
+</Callout>
 
 CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure
 that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.
@@ -1952,9 +1952,9 @@ implementation. It is used to validate the implementation's compatibility when p
 
 <Callout type="warn">
 A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
-</Callout>
 bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this
 function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier.
+</Callout>
 
 </div>
 </div>

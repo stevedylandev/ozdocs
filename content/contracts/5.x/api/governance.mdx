@@ -840,8 +840,8 @@ will revert.
 
 <Callout>
 Calling this function directly will NOT check the current state of the proposal, or emit the
-</Callout>
 `ProposalQueued` event. Queuing a proposal should be done using [`Governor.queue`](#Governor-queue-address---uint256---bytes---bytes32-).
+</Callout>
 
 </div>
 </div>
@@ -888,8 +888,8 @@ performed (for example adding a vault/timelock).
 
 <Callout>
 Calling this function directly will NOT check the current state of the proposal, set the executed flag to
-</Callout>
 true or emit the `ProposalExecuted` event. Executing a proposal should be done using [`AccessManager.execute`](access#AccessManager-execute-address-bytes-).
+</Callout>
 
 </div>
 </div>
@@ -1367,8 +1367,8 @@ proposal starts.
 
 <Callout>
 While this interface returns a uint256, timepoints are stored as uint48 following the ERC-6372 clock type.
-</Callout>
 Consequently this value must fit in a uint48 (when added to the current clock). See [`IERC6372.clock`](interfaces#IERC6372-clock--).
+</Callout>
 
 </div>
 </div>
@@ -1390,14 +1390,14 @@ Delay between the vote start and vote end. The unit this duration is expressed i
 
 <Callout>
 The [`Governor.votingDelay`](#Governor-votingDelay--) can delay the start of the vote. This must be considered when setting the voting
-</Callout>
 duration compared to the voting delay.
+</Callout>
 
 <Callout>
 This value is stored when the proposal is submitted so that possible changes to the value do not affect
-</Callout>
 proposals that have already been submitted. The type used to save it is a uint32. Consequently, while this
 interface returns a uint256, the value it returns should fit in a uint32.
+</Callout>
 
 </div>
 </div>
@@ -1418,8 +1418,8 @@ Minimum number of cast voted required for a proposal to be successful.
 
 <Callout>
 The `timepoint` parameter corresponds to the snapshot used for counting vote. This allows to scale the
-</Callout>
 quorum depending on values such as the totalSupply of a token at this timepoint (see [`ERC20Votes`](token/ERC20#ERC20Votes)).
+</Callout>
 
 </div>
 </div>
@@ -1474,8 +1474,8 @@ Interface of the [`Governor`](#Governor) core.
 
 <Callout>
 Event parameters lack the `indexed` keyword for compatibility with GovernorBravo events.
-</Callout>
 Making event parameters `indexed` affects how events are decoded, potentially breaking existing indexers.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1617,9 +1617,9 @@ name that describes the behavior. For example:
 
 <Callout>
 The string can be decoded by the standard
-</Callout>
 [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 JavaScript class.
+</Callout>
 
 </div>
 </div>
@@ -1806,8 +1806,8 @@ proposal starts.
 
 <Callout>
 While this interface returns a uint256, timepoints are stored as uint48 following the ERC-6372 clock type.
-</Callout>
 Consequently this value must fit in a uint48 (when added to the current clock). See [`IERC6372.clock`](interfaces#IERC6372-clock--).
+</Callout>
 
 </div>
 </div>
@@ -1829,14 +1829,14 @@ Delay between the vote start and vote end. The unit this duration is expressed i
 
 <Callout>
 The [`Governor.votingDelay`](#Governor-votingDelay--) can delay the start of the vote. This must be considered when setting the voting
-</Callout>
 duration compared to the voting delay.
+</Callout>
 
 <Callout>
 This value is stored when the proposal is submitted so that possible changes to the value do not affect
-</Callout>
 proposals that have already been submitted. The type used to save it is a uint32. Consequently, while this
 interface returns a uint256, the value it returns should fit in a uint32.
+</Callout>
 
 </div>
 </div>
@@ -1857,8 +1857,8 @@ Minimum number of cast voted required for a proposal to be successful.
 
 <Callout>
 The `timepoint` parameter corresponds to the snapshot used for counting vote. This allows to scale the
-</Callout>
 quorum depending on values such as the totalSupply of a token at this timepoint (see [`ERC20Votes`](token/ERC20#ERC20Votes)).
+</Callout>
 
 </div>
 </div>
@@ -1936,11 +1936,11 @@ Emits a [`IGovernor.ProposalCreated`](#IGovernor-ProposalCreated-uint256-address
 
 <Callout>
 The state of the Governor and `targets` may change between the proposal creation and its execution.
-</Callout>
 This may be the result of third party actions on the targeted contracts, or other governor proposals.
 For example, the balance of this contract could be updated or its access control permissions may be modified,
 possibly compromising the proposal's ability to execute successfully (e.g. the governor doesn't have enough
 value to cover a proposal with multiple transfers).
+</Callout>
 
 </div>
 </div>
@@ -2318,8 +2318,8 @@ counting from right to left.
 
 <Callout>
 If `expectedState` is `bytes32(0)`, the proposal is expected to not be in any state (i.e. not exist).
-</Callout>
 This is the case when a proposal that is expected to be unset is already initiated (the proposal is duplicated).
+</Callout>
 
 See [`Governor._encodeStateBitmap`](#Governor-_encodeStateBitmap-enum-IGovernor-ProposalState-).
 
@@ -2668,10 +2668,10 @@ Initializes the contract with the following parameters:
 
 <Callout type="warn">
 The optional admin can aid with initial configuration of roles after deployment
-</Callout>
 without being subject to delay, but this role should be subsequently renounced in favor of
 administration through timelocked proposals. Previous versions of this contract would assign
 this admin to the deployer automatically and should be renounced as well.
+</Callout>
 
 </div>
 </div>
@@ -3475,9 +3475,9 @@ name that describes the behavior. For example:
 
 <Callout>
 The string can be decoded by the standard
-</Callout>
 [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 JavaScript class.
+</Callout>
 
 </div>
 </div>
@@ -3604,11 +3604,11 @@ their checkpointed total weight minus votes already cast on the proposal). This 
 
 <Callout>
 Consider that fractional voting restricts the number of casted votes (in each category) to 128 bits.
-</Callout>
 Depending on how many decimals the underlying token has, a single voter may require to split their vote into
 multiple vote operations. For precision higher than ~30 decimals, large token holders may require a
 potentially large number of calls to cast all their votes. The voter has the possibility to cast all the
 remaining votes in a single operation using the traditional "bravo" vote.
+</Callout>
 
 </div>
 </div>
@@ -3830,9 +3830,9 @@ name that describes the behavior. For example:
 
 <Callout>
 The string can be decoded by the standard
-</Callout>
 [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 JavaScript class.
+</Callout>
 
 </div>
 </div>
@@ -3853,10 +3853,10 @@ See [`IGovernor.hasVoted`](#IGovernor-hasVoted-uint256-address-).
 
 <Callout>
 Calling [`Governor.castVote`](#Governor-castVote-uint256-uint8-) (or similar) casts a vote using the voting power that is delegated to the voter.
-</Callout>
 Conversely, calling [`GovernorCountingOverridable.castOverrideVote`](#GovernorCountingOverridable-castOverrideVote-uint256-uint8-string-) (or similar) uses the voting power of the account itself, from its asset
 balances. Casting an "override vote" does not count as voting and won't be reflected by this getter. Consider
 using [`GovernorCountingOverridable.hasVotedOverride`](#GovernorCountingOverridable-hasVotedOverride-uint256-address-) to check if an account has casted an "override vote" for a given proposal id.
+</Callout>
 
 </div>
 </div>
@@ -3945,8 +3945,8 @@ See [`Governor._countVote`](#Governor-_countVote-uint256-address-uint8-uint256-b
 
 <Callout>
 called by [`Governor._castVote`](#Governor-_castVote-uint256-address-uint8-string-bytes-) which emits the [`IGovernor.VoteCast`](#IGovernor-VoteCast-address-uint256-uint8-uint256-string-) (or [`IGovernor.VoteCastWithParams`](#IGovernor-VoteCastWithParams-address-uint256-uint8-uint256-string-bytes-))
-</Callout>
 event.
+</Callout>
 
 </div>
 </div>
@@ -4274,9 +4274,9 @@ name that describes the behavior. For example:
 
 <Callout>
 The string can be decoded by the standard
-</Callout>
 [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 JavaScript class.
+</Callout>
 
 </div>
 </div>
@@ -4563,8 +4563,8 @@ Check the signature against keyed nonce and falls back to the traditional nonce.
 
 <Callout>
 This function won't call `super._validateVoteSig` if the keyed nonce is valid.
-</Callout>
 Side effects may be skipped depending on the linearization of the function.
+</Callout>
 
 </div>
 </div>
@@ -4585,8 +4585,8 @@ Check the signature against keyed nonce and falls back to the traditional nonce.
 
 <Callout>
 This function won't call `super._validateExtendedVoteSig` if the keyed nonce is valid.
-</Callout>
 Side effects may be skipped depending on the linearization of the function.
+</Callout>
 
 </div>
 </div>
@@ -6261,13 +6261,13 @@ without waiting for the proposal deadline.
 
 <Callout>
 The `timepoint` parameter corresponds to the snapshot used for counting the vote. This enables scaling of the
-</Callout>
 quorum depending on values such as the `totalSupply` of a token at this timepoint (see [`ERC20Votes`](token/ERC20#ERC20Votes)).
+</Callout>
 
 <Callout>
 Make sure the value specified for the super quorum is greater than [`Governor.quorum`](#Governor-quorum-uint256-), otherwise, it may be
-</Callout>
 possible to pass a proposal with less votes than the default quorum.
+</Callout>
 
 </div>
 </div>
@@ -6307,12 +6307,12 @@ quorum.
 
 <Callout>
 If the proposal reaches super quorum but [`Governor._voteSucceeded`](#Governor-_voteSucceeded-uint256-) returns false, eg, assuming the super quorum
-</Callout>
 has been set low enough that both FOR and AGAINST votes have exceeded it and AGAINST votes exceed FOR votes,
 the proposal continues to be active until [`Governor._voteSucceeded`](#Governor-_voteSucceeded-uint256-) returns true or the proposal deadline is reached.
 This means that with a low super quorum it is also possible that a vote can succeed prematurely before enough
 AGAINST voters have a chance to vote. Hence, it is recommended to set a high enough super quorum to avoid these
 types of scenarios.
+</Callout>
 
 </div>
 </div>
@@ -6359,8 +6359,8 @@ possible. All of the governor's own functions (e.g., [`GovernorTimelockAccess.se
 
 <Callout>
 `AccessManager` does not support scheduling more than one operation with the same target and calldata at
-</Callout>
 the same time. See [`AccessManager.schedule`](access#AccessManager-schedule-address-bytes-uint48-) for a workaround.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -6565,8 +6565,8 @@ demanded by the authority.
 
 <Callout>
 Execution delays are processed by the `AccessManager` contracts, and according to that contract are
-</Callout>
 expressed in seconds. Therefore, the base delay is also in seconds, regardless of the governor's clock mode.
+</Callout>
 
 </div>
 </div>
@@ -6725,8 +6725,8 @@ Mechanism to queue a proposal, potentially scheduling some of its operations in 
 
 <Callout>
 The execution delay is chosen based on the delay information retrieved in [`Governor.propose`](#Governor-propose-address---uint256---bytes---string-). This value may be
-</Callout>
 off if the delay was updated since proposal creation. In this case, the proposal needs to be recreated.
+</Callout>
 
 </div>
 </div>
@@ -7235,10 +7235,10 @@ inaccessible from a proposal, unless executed via [`Governor.relay`](#Governor-r
 
 <Callout type="warn">
 Setting up the TimelockController to have additional proposers or cancelers besides the governor is very
-</Callout>
 risky, as it grants them the ability to: 1) execute operations as the timelock, and thus possibly performing
 operations or accessing funds that are expected to only be accessible through a vote, and 2) block governance
 proposals that have been approved by the voters, effectively executing a Denial of Service attack.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -8492,12 +8492,12 @@ quorum.
 
 <Callout>
 If the proposal reaches super quorum but [`Governor._voteSucceeded`](#Governor-_voteSucceeded-uint256-) returns false, eg, assuming the super quorum
-</Callout>
 has been set low enough that both FOR and AGAINST votes have exceeded it and AGAINST votes exceed FOR votes,
 the proposal continues to be active until [`Governor._voteSucceeded`](#Governor-_voteSucceeded-uint256-) returns true or the proposal deadline is reached.
 This means that with a low super quorum it is also possible that a vote can succeed prematurely before enough
 AGAINST voters have a chance to vote. Hence, it is recommended to set a high enough super quorum to avoid these
 types of scenarios.
+</Callout>
 
 </div>
 </div>
@@ -8666,9 +8666,9 @@ configured to use block numbers, this will return the value at the end of the co
 
 <Callout>
 This value is the sum of all available votes, which is not necessarily the sum of all delegated votes.
-</Callout>
 Votes that have not been delegated are still part of total supply, even though they would not participate in a
 vote.
+</Callout>
 
 </div>
 </div>
@@ -8984,9 +8984,9 @@ configured to use block numbers, this will return the value at the end of the co
 
 <Callout>
 This value is the sum of all available votes, which is not necessarily the sum of all delegated votes.
-</Callout>
 Votes that have not been delegated are still part of total supply, even though they would not participate in a
 vote.
+</Callout>
 
 Requirements:
 
@@ -9222,9 +9222,9 @@ Extension of [`Votes`](#Votes) that adds checkpoints for delegations and balance
 
 <Callout type="warn">
 While this contract extends [`Votes`](#Votes), valid uses of [`Votes`](#Votes) may not be compatible with
-</Callout>
 [`VotesExtended`](#VotesExtended) without additional considerations. This implementation of [`Votes._transferVotingUnits`](#Votes-_transferVotingUnits-address-address-uint256-) must
 run AFTER the voting weight movement is registered, such that it is reflected on [`Votes._getVotingUnits`](#Votes-_getVotingUnits-address-).
+</Callout>
 
 Said differently, [`VotesExtended`](#VotesExtended) MUST be integrated in a way that calls [`Votes._transferVotingUnits`](#Votes-_transferVotingUnits-address-address-uint256-) AFTER the
 asset transfer is registered and balances are updated:

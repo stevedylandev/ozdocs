@@ -150,8 +150,8 @@ Moves a `value` amount of tokens from the caller’s account to `to`.
 
 <Callout>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -174,8 +174,8 @@ Unsafe variant of [transfer](#transfer) which allows transfers to contract addre
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported. Tokens sent to a contract address may become irretrievable.
-</Callout>
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -232,8 +232,8 @@ Moves `value` tokens from `from` to `to` using the allowance mechanism.
 
 <Callout>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -258,9 +258,9 @@ Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contra
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -286,8 +286,8 @@ implement automatic token fees, slashing mechanisms, etc.
 
 <Callout>
 Transfers to contract addresses are currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents assets from being inadvertently locked in contracts that cannot currently handle token receipt.
+</Callout>
 
 Requirements:
 
@@ -311,8 +311,8 @@ Unsafe variant of [_transfer](#_transfer) which allows transfers to contract add
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported. Tokens sent to a contract address may become irretrievable.
-</Callout>
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 
@@ -370,9 +370,9 @@ Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
 
 <Callout type='warn'>
 Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Tokens sent to a contract address may become irretrievable.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Requirements:
 

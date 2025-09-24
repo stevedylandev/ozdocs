@@ -31,9 +31,9 @@ The library currently does not include a wrapper for tokens, but it will be adde
 
 <Callout>
 Currently, the clock mode is fixed to block timestamps, since the Votes component uses the block timestamp to track
-</Callout>
 checkpoints. We plan to add support for more flexible clock modes in Votes in a future release, allowing to use, for example,
 block numbers instead.
+</Callout>
 
 ### Governor
 
@@ -228,8 +228,8 @@ GovernorTimelockExecution extension.
 
 <Callout type='warn'>
 When using a timelock, it is the timelock that will execute proposals and thus the timelock that should
-</Callout>
 hold any funds, ownership, and access control roles.
+</Callout>
 
 TimelockController uses an [AccessControl](access#role_based_accesscontrol) setup that we need to understand in order to set up roles.
 

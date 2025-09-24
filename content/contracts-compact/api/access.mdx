@@ -130,8 +130,8 @@ Grants `roleId` to `account`.
 
 <Callout>
 Granting roles to contract addresses is currently disallowed until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents permanently disabling access to a circuit.
+</Callout>
 
 Requirements:
 
@@ -207,8 +207,8 @@ Internal circuit without access restriction.
 
 <Callout>
 Granting roles to contract addresses is currently disallowed in this circuit until contract-to-contract interactions are supported in Compact.
-</Callout>
 This restriction prevents permanently disabling access to a circuit.
+</Callout>
 
 Requirements:
 
@@ -228,9 +228,9 @@ Unsafe variant of [_grantRole](#_grantrole).
 
 <Callout type='warn'>
 Granting roles to contract addresses is considered unsafe because contract-to-contract calls are not currently supported.
-</Callout>
 Granting a role to a smart contract may render a circuit permanently inaccessible.
 Once contract-to-contract calls are supported, this circuit may be deprecated.
+</Callout>
 
 Constraints:
 

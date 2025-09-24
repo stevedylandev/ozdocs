@@ -347,9 +347,9 @@ by `operator` from `from`, this function is called.
 
 <Callout>
 To accept the transfer, this must return
-</Callout>
 `bytes4(keccak256("onTransferReceived(address,address,uint256,bytes)"))`
 (i.e. 0x88a7ca5c, or its own function selector).
+</Callout>
 
 </div>
 </div>
@@ -397,9 +397,9 @@ to spend their tokens, this function is called.
 
 <Callout>
 To accept the approval, this must return
-</Callout>
 `bytes4(keccak256("onApprovalReceived(address,uint256,bytes)"))`
 (i.e. 0x7b04a2d0, or its own function selector).
+</Callout>
 
 </div>
 </div>
@@ -896,8 +896,8 @@ exchange. The royalty amount is denominated and should be paid in that same unit
 
 <Callout>
 ERC-2981 allows setting the royalty to 100% of the price. In that case all the price would be sent to the
-</Callout>
 royalty receiver and 0 tokens to the seller. Contracts dealing with royalty should consider empty transfers.
+</Callout>
 
 </div>
 </div>
@@ -1151,9 +1151,9 @@ scenario where all the conditions are met.
 
 <Callout>
 This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
-</Callout>
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -1180,9 +1180,9 @@ scenario where all the conditions are met.
 
 <Callout>
 This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
-</Callout>
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -1234,8 +1234,8 @@ current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -1312,8 +1312,8 @@ current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by minting.
+</Callout>
 
 </div>
 </div>
@@ -1392,8 +1392,8 @@ given current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -1471,8 +1471,8 @@ given current on-chain conditions.
 
 <Callout>
 any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
-</Callout>
 share price or some other type of condition, meaning the depositor will lose assets by redeeming.
+</Callout>
 
 </div>
 </div>
@@ -1499,8 +1499,8 @@ Burns exactly shares from owner and sends assets of underlying tokens to receive
 
 <Callout>
 some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
-</Callout>
 Those methods should be performed separately.
+</Callout>
 
 </div>
 </div>
@@ -2486,9 +2486,9 @@ address.
 
 <Callout type="warn">
 A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
-</Callout>
 bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this
 function revert if invoked through a proxy.
+</Callout>
 
 </div>
 </div>

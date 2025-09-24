@@ -133,8 +133,8 @@ Emits a [`IDKIMRegistry.KeyHashRegistered`](../interfaces#IDKIMRegistry-KeyHashR
 
 <Callout>
 This function does not validate that keyHash is non-zero. Consider adding
-</Callout>
 validation in derived contracts if needed.
+</Callout>
 
 </div>
 </div>
@@ -158,8 +158,8 @@ Emits a [`IDKIMRegistry.KeyHashRegistered`](../interfaces#IDKIMRegistry-KeyHashR
 
 <Callout>
 This function does not validate that the keyHashes array is non-empty.
-</Callout>
 Consider adding validation in derived contracts if needed.
+</Callout>
 
 </div>
 </div>
@@ -299,8 +299,8 @@ returns true and the calldata view at the object. Otherwise, returns false and a
 
 <Callout>
 The returned `auth` object should not be accessed if `success` is false. Trying to access the data may
-</Callout>
 cause revert/panic.
+</Callout>
 
 </div>
 </div>
@@ -426,8 +426,8 @@ returns true and the calldata view at the object. Otherwise, returns false and a
 
 <Callout>
 The returned `emailProof` object should not be accessed if `success` is false. Trying to access the data may
-</Callout>
 cause revert/panic.
+</Callout>
 
 </div>
 </div>
@@ -488,8 +488,8 @@ contract MyAccountWebAuthn is Account, SignerWebAuthn, Initializable {
 
 <Callout type="warn">
 Failing to call [`ERC7579Signature._setSigner`](../account#ERC7579Signature-_setSigner-address-bytes-) either during construction (if used standalone)
-</Callout>
 or during initialization (if used as a clone) may leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -582,9 +582,9 @@ contract MyAccountZKEmail is Account, SignerZKEmail, Initializable {
 
 <Callout type="warn">
 Failing to call [`SignerZKEmail._setAccountSalt`](#SignerZKEmail-_setAccountSalt-bytes32-), [`SignerZKEmail._setDKIMRegistry`](#SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-), and [`SignerZKEmail._setVerifier`](#SignerZKEmail-_setVerifier-contract-IGroth16Verifier-)
-</Callout>
 either during construction (if used standalone) or during initialization (if used as a clone) may
 leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>

@@ -48,8 +48,8 @@ Therefore, the initial proposers may also cancel operations after they are sched
 
 <Callout type='warn'>
 The `DEFAULT_ADMIN_ROLE` is a sensitive role that will be granted automatically to the timelock itself and optionally to a second account.
-</Callout>
 The latter case may be required to ease a contract’s initial configuration; however, this role should promptly be renounced.
+</Callout>
 
 Furthermore, the timelock component supports the concept of open roles for the `EXECUTOR_ROLE`.
 This allows anyone to execute an operation once it’s in the `Ready` OperationState.

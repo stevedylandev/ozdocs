@@ -101,12 +101,12 @@ Returns a boolean value indicating whether the operation succeeded.
 
 <Callout type='warn'>
 Beware that changing an allowance with this method brings the risk
-</Callout>
 that someone may use both the old and the new allowance by unfortunate
 transaction ordering. One possible solution to mitigate this race
 condition is to first reduce the spender’s allowance to 0 and set the
 desired value afterwards:
 https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+</Callout>
 
 Emits an Approval event.
 
@@ -148,9 +148,9 @@ For a generic mechanism see ERC20PresetMinterPauser.
 
 <Callout>
 For a detailed writeup see our guide
-</Callout>
 https://forum.zeppelin.solutions/t/how-to-implement-erc20-supply-mechanisms/226[How
 to implement supply mechanisms].
+</Callout>
 
 We have followed general OpenZeppelin guidelines: functions revert instead
 of returning `false` on failure. This behavior is nonetheless conventional
@@ -232,9 +232,9 @@ called.
 
 <Callout>
 This information is only used for _display_ purposes: it in
-</Callout>
 no way affects any of the arithmetic of the contract, including
 IERC20-balanceOf and IERC20-transfer.
+</Callout>
 
 <a id="IERC20-totalSupply"></a>
 
@@ -391,9 +391,9 @@ Sets decimals to a value other than the default one of 18.
 
 <Callout type='warn'>
 This function should only be called from the constructor. Most
-</Callout>
 applications that interact with token contracts will not expect
 decimals to ever change, and may work incorrectly if it does.
+</Callout>
 
 <a id="IERC20-_beforeTokenTransfer"></a>
 

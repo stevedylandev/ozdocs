@@ -95,10 +95,10 @@ roles. More complex role relationships can be created by using
 
 <Callout type="warn">
 The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to
-</Callout>
 grant and revoke this role. Extra precautions should be taken to secure
 accounts that have been granted it. We recommend using [`AccessControlDefaultAdminRules`](#AccessControlDefaultAdminRules)
 to enforce additional security measures for this role.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -820,8 +820,8 @@ Leaves the contract without owner. It will not be possible to call
 
 <Callout>
 Renouncing ownership will leave the contract without an owner,
-</Callout>
 thereby disabling any functionality that is only available to the owner.
+</Callout>
 
 </div>
 </div>
@@ -1290,9 +1290,9 @@ After its execution, it will not be possible to call `onlyRole(DEFAULT_ADMIN_ROL
 
 <Callout>
 Renouncing `DEFAULT_ADMIN_ROLE` will leave the contract without a [`AccessControlDefaultAdminRules.defaultAdmin`](#AccessControlDefaultAdminRules-defaultAdmin--),
-</Callout>
 thereby disabling any functionality that is only available for it, and the possibility of reassigning a
 non-administrated role.
+</Callout>
 
 </div>
 </div>
@@ -1316,8 +1316,8 @@ role has been previously renounced.
 
 <Callout>
 Exposing this function through another mechanism may make the `DEFAULT_ADMIN_ROLE`
-</Callout>
 assignable again. Make sure to guarantee this is the expected behavior in your implementation.
+</Callout>
 
 </div>
 </div>
@@ -1422,8 +1422,8 @@ the acceptance schedule.
 
 <Callout>
 If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this
-</Callout>
 function returns the new delay. See [`AccessControlDefaultAdminRules.changeDefaultAdminDelay`](#AccessControlDefaultAdminRules-changeDefaultAdminDelay-uint48-).
+</Callout>
 
 </div>
 </div>
@@ -1449,8 +1449,8 @@ A zero value only in `effectSchedule` indicates no pending delay change.
 
 <Callout>
 A zero value only for `newDelay` means that the next [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--)
-</Callout>
 will be zero after the effect schedule.
+</Callout>
 
 </div>
 </div>
@@ -1477,9 +1477,9 @@ be overrode for a custom [`AccessControlDefaultAdminRules.defaultAdminDelay`](#A
 
 <Callout type="warn">
 Make sure to add a reasonable amount of time while overriding this value, otherwise,
-</Callout>
 there's a risk of setting a high new delay that goes into effect almost immediately without the
 possibility of human intervention in the case of an input error (eg. set milliseconds instead of seconds).
+</Callout>
 
 </div>
 </div>
@@ -1848,10 +1848,10 @@ change at any point.
 
 <Callout type="warn">
 When using [`AccessControlEnumerable.getRoleMember`](#AccessControlEnumerable-getRoleMember-bytes32-uint256-) and [`AccessControlEnumerable.getRoleMemberCount`](#AccessControlEnumerable-getRoleMemberCount-bytes32-), make sure
-</Callout>
 you perform all queries on the same block. See the following
 [forum post](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)
 for more information.
+</Callout>
 
 </div>
 </div>
@@ -1890,10 +1890,10 @@ Return all accounts that have `role`
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -2060,8 +2060,8 @@ the acceptance schedule.
 
 <Callout>
 If a delay change has been scheduled, it will take effect as soon as the schedule passes, making this
-</Callout>
 function returns the new delay. See [`AccessControlDefaultAdminRules.changeDefaultAdminDelay`](#AccessControlDefaultAdminRules-changeDefaultAdminDelay-uint48-).
+</Callout>
 
 </div>
 </div>
@@ -2087,8 +2087,8 @@ A zero value only in `effectSchedule` indicates no pending delay change.
 
 <Callout>
 A zero value only for `newDelay` means that the next [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--)
-</Callout>
 will be zero after the effect schedule.
+</Callout>
 
 </div>
 </div>
@@ -2255,9 +2255,9 @@ be overrode for a custom [`AccessControlDefaultAdminRules.defaultAdminDelay`](#A
 
 <Callout type="warn">
 Make sure to add a reasonable amount of time while overriding this value, otherwise,
-</Callout>
 there's a risk of setting a high new delay that goes into effect almost immediately without the
 possibility of human intervention in the case of an input error (eg. set milliseconds instead of seconds).
+</Callout>
 
 </div>
 </div>
@@ -2465,10 +2465,10 @@ change at any point.
 
 <Callout type="warn">
 When using [`AccessControlEnumerable.getRoleMember`](#AccessControlEnumerable-getRoleMember-bytes32-uint256-) and [`AccessControlEnumerable.getRoleMemberCount`](#AccessControlEnumerable-getRoleMemberCount-bytes32-), make sure
-</Callout>
 you perform all queries on the same block. See the following
 [forum post](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)
 for more information.
+</Callout>
 
 </div>
 </div>
@@ -2513,8 +2513,8 @@ implementing a policy that allows certain callers to access certain functions.
 
 <Callout type="warn">
 The `restricted` modifier should never be used on `internal` functions, judiciously used in `public`
-</Callout>
 functions, and ideally only used in `external` functions. See [`AccessManaged.restricted`](#AccessManaged-restricted--).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -2746,23 +2746,23 @@ they will be highly secured (e.g., a multisig or a well-configured DAO).
 
 <Callout>
 This contract implements a form of the [`IAuthority`](#IAuthority) interface, but [`AccessManager.canCall`](#AccessManager-canCall-address-address-bytes4-) has additional return data so it
-</Callout>
 doesn't inherit `IAuthority`. It is however compatible with the `IAuthority` interface since the first 32 bytes of
 the return data are a boolean as expected by that interface.
+</Callout>
 
 <Callout>
 Systems that implement other access control mechanisms (for example using [`Ownable`](#Ownable)) can be paired with an
-</Callout>
 [`AccessManager`](#AccessManager) by transferring permissions (ownership in the case of [`Ownable`](#Ownable)) directly to the [`AccessManager`](#AccessManager).
 Users will be able to interact with these contracts through the [`AccessManager.execute`](#AccessManager-execute-address-bytes-) function, following the access rules
 registered in the [`AccessManager`](#AccessManager). Keep in mind that in that context, the msg.sender seen by restricted functions
 will be [`AccessManager`](#AccessManager) itself.
+</Callout>
 
 <Callout type="warn">
 When granting permissions over an [`Ownable`](#Ownable) or [`AccessControl`](#AccessControl) contract to an [`AccessManager`](#AccessManager), be very
-</Callout>
 mindful of the danger associated with functions such as [`Ownable.renounceOwnership`](#Ownable-renounceOwnership--) or
 [`AccessControl.renounceRole`](#AccessControl-renounceRole-bytes32-address-).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -2920,14 +2920,14 @@ the operation can be executed if and only if delay is greater than 0.
 
 <Callout>
 The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
-</Callout>
 is backward compatible. Some contracts may thus ignore the second return argument. In that case they will fail
 to identify the indirect workflow, and will consider calls that require a delay to be forbidden.
+</Callout>
 
 <Callout>
 This function does not report the permissions of the admin functions in the manager itself. These are defined by the
-</Callout>
 [`AccessManager`](#AccessManager) documentation.
+</Callout>
 
 </div>
 </div>
@@ -2948,8 +2948,8 @@ Expiration delay for scheduled proposals. Defaults to 1 week.
 
 <Callout type="warn">
 Avoid overriding the expiration with 0. Otherwise every contract proposal will be expired immediately,
-</Callout>
 disabling any scheduling usage.
+</Callout>
 
 </div>
 </div>
@@ -3362,8 +3362,8 @@ Emits a [`IAccessControl.RoleAdminChanged`](#IAccessControl-RoleAdminChanged-byt
 
 <Callout>
 Setting the admin role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
-</Callout>
 anyone to set grant or revoke such role.
+</Callout>
 
 </div>
 </div>
@@ -3386,8 +3386,8 @@ Emits a [`IAccessManager.RoleGuardianChanged`](#IAccessManager-RoleGuardianChang
 
 <Callout>
 Setting the guardian role as the `PUBLIC_ROLE` is allowed, but it will effectively allow
-</Callout>
 anyone to cancel any scheduled operation for such role.
+</Callout>
 
 </div>
 </div>
@@ -3599,9 +3599,9 @@ Emits a [`IAccessManager.OperationScheduled`](#IAccessManager-OperationScheduled
 
 <Callout>
 It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
-</Callout>
 this is necessary, a random byte can be appended to `data` to act as a salt that will be ignored by the target
 contract if it is using standard Solidity ABI encoding.
+</Callout>
 
 </div>
 </div>
@@ -4079,14 +4079,14 @@ the operation can be executed if and only if delay is greater than 0.
 
 <Callout>
 The IAuthority interface does not include the `uint32` delay. This is an extension of that interface that
-</Callout>
 is backward compatible. Some contracts may thus ignore the second return argument. In that case they will fail
 to identify the indirect workflow, and will consider calls that require a delay to be forbidden.
+</Callout>
 
 <Callout>
 This function does not report the permissions of the admin functions in the manager itself. These are defined by the
-</Callout>
 [`AccessManager`](#AccessManager) documentation.
+</Callout>
 
 </div>
 </div>
@@ -4107,8 +4107,8 @@ Expiration delay for scheduled proposals. Defaults to 1 week.
 
 <Callout type="warn">
 Avoid overriding the expiration with 0. Otherwise every contract proposal will be expired immediately,
-</Callout>
 disabling any scheduling usage.
+</Callout>
 
 </div>
 </div>
@@ -4595,9 +4595,9 @@ Emits a [`IAccessManager.OperationScheduled`](#IAccessManager-OperationScheduled
 
 <Callout>
 It is not possible to concurrently schedule more than one operation with the same `target` and `data`. If
-</Callout>
 this is necessary, a random byte can be appended to `data` to act as a salt that will be ignored by the target
 contract if it is using standard Solidity ABI encoding.
+</Callout>
 
 </div>
 </div>
@@ -4795,9 +4795,9 @@ Emitted when `account` is granted `roleId`.
 
 <Callout>
 The meaning of the `since` argument depends on the `newMember` argument.
-</Callout>
 If the role is granted to a new member, the `since` argument indicates when the account becomes a member of the role,
 otherwise it indicates the execution delay for this account and roleId is updated.
+</Callout>
 
 </div>
 </div>

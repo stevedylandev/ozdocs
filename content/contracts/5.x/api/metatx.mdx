@@ -36,17 +36,17 @@ Context variant with ERC-2771 support.
 
 <Callout type="warn">
 Avoid using this pattern in contracts that rely in a specific calldata length as they'll
-</Callout>
 be affected by any forwarder whose `msg.data` is suffixed with the `from` address according to the ERC-2771
 specification adding the address size in bytes (20) to the calldata size. An example of an unexpected
 behavior could be an unintended fallback (or another function) invocation while trying to invoke the `receive`
 function only accessible if `msg.data.length == 0`.
+</Callout>
 
 <Callout type="warn">
 The usage of `delegatecall` in this contract is dangerous and may result in context corruption.
-</Callout>
 Any forwarded request to this contract triggering a `delegatecall` to itself will result in an invalid [`ERC2771Context._msgSender`](#ERC2771Context-_msgSender--)
 recovery.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -199,11 +199,11 @@ multiple accounts.
 
 <Callout>
 Batching requests includes an optional refund for unused `msg.value` that is achieved by
-</Callout>
 performing a call with empty calldata. While this is within the bounds of ERC-2771 compliance,
 if the refund receiver happens to consider the forwarder a trusted forwarder, it MUST properly
 handle `msg.data.length == 0`. `ERC2771Context` in OpenZeppelin Contracts versions prior to 4.9.3
 do not handle this properly.
+</Callout>
 
 ==== Security Considerations
 
@@ -305,8 +305,8 @@ A transaction is considered valid when the target trusts this forwarder, the req
 
 <Callout>
 A request may return false here but it won't cause [`TimelockController.executeBatch`](governance#TimelockController-executeBatch-address---uint256---bytes---bytes32-bytes32-) to revert if a refund
-</Callout>
 receiver is provided.
+</Callout>
 
 </div>
 </div>
@@ -367,9 +367,9 @@ Requirements:
 
 <Callout>
 Setting a zero `refundReceiver` guarantees an all-or-nothing requests execution only for
-</Callout>
 the first-level forwarded calls. In case a forwarded request calls to a contract with another
 subcall, the second-level call may revert without the top-level call reverting.
+</Callout>
 
 </div>
 </div>
@@ -439,8 +439,8 @@ Emits an [`ERC2771Forwarder.ExecutedForwardRequest`](#ERC2771Forwarder-ExecutedF
 
 <Callout type="warn">
 Using this function doesn't check that all the `msg.value` was sent, potentially
-</Callout>
 leaving value stuck in the contract.
+</Callout>
 
 </div>
 </div>
@@ -464,8 +464,8 @@ This function performs a static call to the target contract calling the
 
 <Callout>
 Consider the execution of this forwarder is permissionless. Without this check, anyone may transfer assets
-</Callout>
 that are owned by, or are approved to this forwarder.
+</Callout>
 
 </div>
 </div>
@@ -487,9 +487,9 @@ Emitted when a `ForwardRequest` is executed.
 
 <Callout>
 An unsuccessful forward request could be due to an invalid signature, an expired deadline,
-</Callout>
 or simply a revert in the requested call. The contract guarantees that the relayer is not able to force
 the requested call to run out of gas.
+</Callout>
 
 </div>
 </div>

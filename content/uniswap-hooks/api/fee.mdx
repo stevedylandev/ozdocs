@@ -27,14 +27,14 @@ as a hook fee, being posteriorily handled or distributed by the hook via [`BaseD
 
 <Callout>
 In order to use this hook, the inheriting contract must implement [`BaseDynamicAfterFee._getTargetUnspecified`](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-) to determine the target,
-</Callout>
 and [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-) to handle accumulated fees.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.0_
 
@@ -308,9 +308,9 @@ Base implementation to apply a dynamic fee via the `PoolManager`'s `updateDynami
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.0_
 
@@ -429,12 +429,12 @@ that contains this hook's address.
 
 <Callout type="warn">
 This function can be called by anyone at any time. If `_getFee` implementation
-</Callout>
 depends on external conditions (e.g., oracle prices, other pool states, token balances),
 it may be vulnerable to manipulation. An attacker could potentially:
 1. Manipulate the external conditions that `_getFee` depends on
 2. Call `poke()` to update the fee to a more favorable rate
 3. Execute trades at the manipulated fee rate
+</Callout>
 
 Inheriting contracts should consider implementing access controls on this function,
 make the logic in `_getFee` resistant to short-term manipulation, or accept the risk
@@ -497,9 +497,9 @@ Base implementation for automatic dynamic fees applied before swaps.
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.0_
 
