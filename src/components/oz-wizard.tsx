@@ -14,7 +14,7 @@ declare global {
 				style?: React.CSSProperties;
 				"data-tab"?: string;
 				"data-lang"?: string;
-				"version"?: string;
+				version?: string;
 			};
 		}
 	}
