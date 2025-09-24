@@ -722,58 +722,6 @@
 						"type": "page",
 						"name": "Options",
 						"url": "/upgrades-plugins/foundry/api/Options"
-					},
-					{
-						"type": "folder",
-						"name": "Internal",
-						"children": [
-							{
-								"type": "page",
-								"name": "Core",
-								"url": "/upgrades-plugins/foundry/api/internal/Core"
-							},
-							{
-								"type": "page",
-								"name": "DefenderDeploy",
-								"url": "/upgrades-plugins/foundry/api/internal/DefenderDeploy"
-							},
-							{
-								"type": "page",
-								"name": "Utils",
-								"url": "/upgrades-plugins/foundry/api/internal/Utils"
-							},
-							{
-								"type": "page",
-								"name": "StringFinder",
-								"url": "/upgrades-plugins/foundry/api/internal/StringFinder"
-							},
-							{
-								"type": "page",
-								"name": "Versions",
-								"url": "/upgrades-plugins/foundry/api/internal/Versions"
-							},
-							{
-								"type": "folder",
-								"name": "Interfaces",
-								"children": [
-									{
-										"type": "page",
-										"name": "IProxyAdmin",
-										"url": "/upgrades-plugins/foundry/api/internal/interfaces/IProxyAdmin"
-									},
-									{
-										"type": "page",
-										"name": "IUpgradeableBeacon",
-										"url": "/upgrades-plugins/foundry/api/internal/interfaces/IUpgradeableBeacon"
-									},
-									{
-										"type": "page",
-										"name": "IUpgradeableProxy",
-										"url": "/upgrades-plugins/foundry/api/internal/interfaces/IUpgradeableProxy"
-									}
-								]
-							}
-						]
 					}
 				]
 			},

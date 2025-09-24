@@ -6,14 +6,14 @@ title: OpenZeppelin Truffle Upgrades API
 This package is deprecated. The recommended alternative is to use [Hardhat](https://hardhat.org/) along with the [Hardhat Upgrades](hardhat-upgrades) plugin.
 </Callout>
 
-Both `deployProxy` and `upgradeProxy` functions will return instances of [Truffle contracts](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions), and require Truffle contract classes (retrieved via `artifacts.require`) as arguments. For [beacons](https://docs.openzeppelin.com/contracts/4.x/api/proxy#beacon), `deployBeacon` and `upgradeBeacon` will both return an upgradable beacon instance that can be used with a beacon proxy. All deploy and upgrade functions validate that the implementation contract is upgrade-safe, and will fail otherwise.
+Both `deployProxy` and `upgradeProxy` functions will return instances of [Truffle contracts](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions), and require Truffle contract classes (retrieved via `artifacts.require`) as arguments. For [beacons](/contracts/4.x/api/proxy#beacon), `deployBeacon` and `upgradeBeacon` will both return an upgradable beacon instance that can be used with a beacon proxy. All deploy and upgrade functions validate that the implementation contract is upgrade-safe, and will fail otherwise.
 
 ## Common Options
 
 The following options are common to some functions.
 
 * `deployer`: Should be set to the Truffle migration deployer during migrations.
-* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](contracts:api:proxy#transparent-vs-uups).
+* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](/contracts/5.x/api/proxy#transparent-vs-uups).
 * `unsafeAllow`: (`ValidationError[]`) Selectively disable one or more validation errors:
   * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq#why-cant-i-use-external-libraries).)
   * `"struct-definition"`, `"enum-definition"`: Used to be necessary to deploy a contract with structs or enums. No longer necessary.
@@ -130,7 +130,7 @@ async function deployBeacon(
 ): Promise<ContractInstance>
 ```
 
-Creates an [upgradable beacon](https://docs.openzeppelin.com/contracts/4.x/api/proxy#UpgradeableBeacon) given a Truffle contract class to use as implementation, and returns the beacon contract instance.
+Creates an [upgradable beacon](/contracts/4.x/api/proxy#UpgradeableBeacon) given a Truffle contract class to use as implementation, and returns the beacon contract instance.
 
 **Parameters:**
 
@@ -166,7 +166,7 @@ async function upgradeBeacon(
 ): Promise<ContractInstance>
 ```
 
-Upgrades an [upgradable beacon](https://docs.openzeppelin.com/contracts/4.x/api/proxy#UpgradeableBeacon) at a specified address to a new implementation contract, and returns the beacon contract instance.
+Upgrades an [upgradable beacon](/contracts/4.x/api/proxy#UpgradeableBeacon) at a specified address to a new implementation contract, and returns the beacon contract instance.
 
 **Parameters:**
 
@@ -198,7 +198,7 @@ async function deployBeaconProxy(
 ): Promise<ContractInstance>
 ```
 
-Creates a [Beacon proxy](https://docs.openzeppelin.com/contracts/4.x/api/proxy#BeaconProxy) given an existing beacon contract address and a Truffle contract class corresponding to the beacon’s current implementation contract, and returns a contract instance with the beacon proxy address and the implementation interface. If `args` is set, will call an initializer function `initialize` with the supplied args during proxy deployment.
+Creates a [Beacon proxy](/contracts/4.x/api/proxy#BeaconProxy) given an existing beacon contract address and a Truffle contract class corresponding to the beacon’s current implementation contract, and returns a contract instance with the beacon proxy address and the implementation interface. If `args` is set, will call an initializer function `initialize` with the supplied args during proxy deployment.
 
 **Parameters:**
 
@@ -234,7 +234,7 @@ Forces the import of an existing proxy, beacon, or implementation contract deplo
 When importing a proxy or beacon, the `deployedImpl` argument must be the contract class of the **current** implementation contract version that is being used, not the version that you are planning to upgrade to.
 </Callout>
 
-Use this function to recreate a lost [network file](https://docs.openzeppelin.com/upgrades-plugins/1.x/network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
+Use this function to recreate a lost [network file](network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
 
 **Parameters:**
 
@@ -403,7 +403,7 @@ async function deployProxyAdmin(
 ): Promise<string>
 ```
 
-Deploys a [proxy admin](https://docs.openzeppelin.com/contracts/4.x/api/proxy#ProxyAdmin) contract and returns its address if one was not already deployed on the current network, or just returns the address of the proxy admin if one was already deployed. Note that this plugin currently only supports using one proxy admin per network.
+Deploys a [proxy admin](/contracts/4.x/api/proxy#ProxyAdmin) contract and returns its address if one was not already deployed on the current network, or just returns the address of the proxy admin if one was already deployed. Note that this plugin currently only supports using one proxy admin per network.
 
 **Parameters:**
 

@@ -2,13 +2,13 @@
 title: OpenZeppelin Hardhat Upgrades API
 ---
 
-Both `deployProxy` and `upgradeProxy` functions will return instances of [ethers.js contracts](https://docs.ethers.io/v5/api/contract/contract), and require [ethers.js contract factories](https://docs.ethers.io/v5/api/contract/contract-factory) as arguments. For [beacons](https://docs.openzeppelin.com/contracts/api/proxy#beacon), `deployBeacon` and `upgradeBeacon` will both return an upgradable beacon instance that can be used with a beacon proxy. All deploy and upgrade functions validate that the implementation contract is upgrade-safe, and will fail otherwise.
+Both `deployProxy` and `upgradeProxy` functions will return instances of [ethers.js contracts](https://docs.ethers.io/v5/api/contract/contract), and require [ethers.js contract factories](https://docs.ethers.io/v5/api/contract/contract-factory) as arguments. For [beacons](/contracts/5.x/api/proxy#beacon), `deployBeacon` and `upgradeBeacon` will both return an upgradable beacon instance that can be used with a beacon proxy. All deploy and upgrade functions validate that the implementation contract is upgrade-safe, and will fail otherwise.
 
 ## Common Options
 
 The following options are common to some functions.
 
-* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](contracts:api:proxy#transparent-vs-uups).
+* `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](/contracts/5.x/api/proxy#transparent-vs-uups).
 * `unsafeAllow`: (`ValidationError[]`) Selectively disable one or more validation errors or warnings:
   * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq#why-cant-i-use-external-libraries).)
   * `"struct-definition"`, `"enum-definition"`: Used to be necessary to deploy a contract with structs or enums. No longer necessary.
@@ -39,8 +39,8 @@ The following options are common to some functions.
 * `useDefenderDeploy`: (`boolean`) Deploy contracts using OpenZeppelin Defender instead of ethers.js. See [Using with OpenZeppelin Defender](defender-deploy).
 * `verifySourceCode`: (`boolean`) When using OpenZeppelin Defender deployments, whether to verify source code on block explorers. Defaults to `true`.
 * `relayerId`: (`string`) When using OpenZeppelin Defender deployments, the ID of the relayer to use for the deployment. Defaults to the relayer configured for your deployment environment on Defender.
-* `salt`: (`string`) When using OpenZeppelin Defender deployments, if this is not set, deployments will be performed using the CREATE opcode. If this is set, deployments will be performed using the CREATE2 opcode with the provided salt. Note that deployments using a Safe are done using CREATE2 and require a salt. ***Warning:*** CREATE2 affects `msg.sender` behavior. See [Caveats](https://docs.openzeppelin.com/defender/tutorial/deploy#deploy-caveat) for more information.
-* `metadata`: (` commitHash?: string; tag?: string; [k: string]: any; `) When using OpenZeppelin Defender deployments, you can use this to identify, tag, or classify deployments. See [Metadata](https://docs.openzeppelin.com/defender/module/deploy#metadata).
+* `salt`: (`string`) When using OpenZeppelin Defender deployments, if this is not set, deployments will be performed using the CREATE opcode. If this is set, deployments will be performed using the CREATE2 opcode with the provided salt. Note that deployments using a Safe are done using CREATE2 and require a salt. ***Warning:*** CREATE2 affects `msg.sender` behavior. See [Caveats](/defender/tutorial/deploy#deploy-caveat) for more information.
+* `metadata`: (` commitHash?: string; tag?: string; [k: string]: any; `) When using OpenZeppelin Defender deployments, you can use this to identify, tag, or classify deployments. See [Metadata](/defender/module/deploy#metadata).
 * `proxyFactory`: (`ethers.ContractFactory`) Customizes the ethers contract factory to use for deploying the proxy, allowing a custom proxy contract to be deployed. See [factories.ts](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/packages/plugin-hardhat/src/utils/factories.ts) for the default contract factory for each kind of proxy.
   * **Since:** `@openzeppelin/hardhat-upgrades@3.7.0`
 * `deployFunction`: (`(hre, opts, factory, ...args) => Promise<EthersOrDefenderDeployment>`) Customizes the function used to deploy the proxy. Can be used along with the `proxyFactory` option to override constructor parameters for custom proxy deployments. See [deploy.ts](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/packages/plugin-hardhat/src/utils/deploy.ts) for the default deploy function.
@@ -87,7 +87,7 @@ If you call `deployProxy` several times for the same implementation contract, se
 * `Contract` - an ethers contract factory to use as the implementation.
 * `args` - arguments for the initializer function.
 * `opts` - an object with options:
-  * `initializer`: set a different initializer function to call (see [Specifying Fragments](`https://docs.ethers.io/v5/api/utils/abi/interface/#Interface--specifying-fragments`)), or specify `false` to disable initialization.
+  * `initializer`: set a different initializer function to call (see [Specifying Fragments](https://docs.ethers.io/v5/api/utils/abi/interface/#Interface--specifying-fragments)), or specify `false` to disable initialization.
   * additional options as described in [Common Options](#common-options).
 
 **Returns:**
@@ -146,7 +146,7 @@ async function deployBeacon(
 ): Promise<ethers.Contract>
 ```
 
-Creates an [upgradable beacon](https://docs.openzeppelin.com/contracts/api/proxy#UpgradeableBeacon) given an ethers contract factory to use as implementation, and returns the beacon contract instance.
+Creates an [upgradable beacon](/contracts/5.x/api/proxy#UpgradeableBeacon) given an ethers contract factory to use as implementation, and returns the beacon contract instance.
 
 **Parameters:**
 
@@ -181,7 +181,7 @@ async function upgradeBeacon(
 ): Promise<ethers.Contract>
 ```
 
-Upgrades an [upgradable beacon](https://docs.openzeppelin.com/contracts/api/proxy#UpgradeableBeacon) at a specified address to a new implementation contract, and returns the beacon contract instance.
+Upgrades an [upgradable beacon](/contracts/5.x/api/proxy#UpgradeableBeacon) at a specified address to a new implementation contract, and returns the beacon contract instance.
 
 **Parameters:**
 
@@ -215,7 +215,7 @@ async function deployBeaconProxy(
 ): Promise<ethers.Contract>
 ```
 
-Creates a [Beacon proxy](https://docs.openzeppelin.com/contracts/api/proxy#BeaconProxy) given an existing beacon contract address and an ethers contract factory corresponding to the beacon’s current implementation contract, and returns a contract instance with the beacon proxy address and the implementation interface. If `args` is set, will call an initializer function `initialize` with the supplied args during proxy deployment.
+Creates a [Beacon proxy](/contracts/5.x/api/proxy#BeaconProxy) given an existing beacon contract address and an ethers contract factory corresponding to the beacon’s current implementation contract, and returns a contract instance with the beacon proxy address and the implementation interface. If `args` is set, will call an initializer function `initialize` with the supplied args during proxy deployment.
 
 **Parameters:**
 
@@ -252,7 +252,7 @@ Forces the import of an existing proxy, beacon, or implementation contract deplo
 When importing a proxy or beacon, the `deployedImpl` argument must be the contract factory of the **current** implementation contract version that is being used, not the version that you are planning to upgrade to.
 </Callout>
 
-Use this function to recreate a lost [network file](https://docs.openzeppelin.com/upgrades-plugins/network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
+Use this function to recreate a lost [network file](network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
 
 **Parameters:**
 
@@ -652,9 +652,9 @@ The arguments are the same as for hardhat-verify’s `verify` task.  If the prov
 The following contracts will be verified when you run this task on your proxy address:
 
 * Your implementation contract
-* [ERC1967Proxy](https://docs.openzeppelin.com/contracts/api/proxy#ERC1967Proxy) or [TransparentUpgradeableProxy](https://docs.openzeppelin.com/contracts/api/proxy#TransparentUpgradeableProxy) or [BeaconProxy](https://docs.openzeppelin.com/contracts/api/proxy#BeaconProxy) (for UUPS, transparent, or beacon proxies, respectively)
-* [ProxyAdmin](https://docs.openzeppelin.com/contracts/api/proxy#ProxyAdmin) (with transparent proxies)
-* [UpgradeableBeacon](https://docs.openzeppelin.com/contracts/api/proxy#UpgradeableBeacon) (with beacon proxies)
+* [ERC1967Proxy](/contracts/5.x/api/proxy#ERC1967Proxy) or [TransparentUpgradeableProxy](/contracts/5.x/api/proxy#TransparentUpgradeableProxy) or [BeaconProxy](/contracts/5.x/api/proxy#BeaconProxy) (for UUPS, transparent, or beacon proxies, respectively)
+* [ProxyAdmin](/contracts/5.x/api/proxy#ProxyAdmin) (with transparent proxies)
+* [UpgradeableBeacon](/contracts/5.x/api/proxy#UpgradeableBeacon) (with beacon proxies)
 
 **Since:**
 
