@@ -227,9 +227,9 @@ Only the admin can call this function. See ProxyAdmin-getProxyAdmin.
 
 <Callout>
 To get this value clients can read directly from the storage slot shown below (specified by EIP1967) using the
-</Callout>
 [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
 `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`
+</Callout>
 
 <a id="Proxy-implementation"></a>
 
@@ -243,9 +243,9 @@ Only the admin can call this function. See ProxyAdmin-getProxyImplementation.
 
 <Callout>
 To get this value clients can read directly from the storage slot shown below (specified by EIP1967) using the
-</Callout>
 [`eth_getStorageAt`](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC call.
 `0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc`
+</Callout>
 
 <a id="Proxy-changeAdmin"></a>
 
@@ -503,13 +503,13 @@ function so it can only be called once. The initializer modifier provided by thi
 
 <Callout>
 To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as
-</Callout>
 possible by providing the encoded function call as the `_data` argument to UpgradeableProxy-constructor.
+</Callout>
 
 <Callout type='warn'>
 When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure
-</Callout>
 that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.
+</Callout>
 
 **Modifiers**
 

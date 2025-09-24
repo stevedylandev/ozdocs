@@ -199,10 +199,10 @@ imposed by `transfer`, making them unable to receive funds via
 
 <Callout type="warn">
 because control is transferred to `recipient`, care must be
-</Callout>
 taken to not create reentrancy vulnerabilities. Consider using
 [`ReentrancyGuard`](#ReentrancyGuard) or the
 [checks-effects-interactions pattern](https://solidity.readthedocs.io/en/v0.8.20/security-considerations.html#use-the-checks-effects-interactions-pattern).
+</Callout>
 
 </div>
 </div>
@@ -421,10 +421,10 @@ convenience, but that returned value can be discarded safely if the caller has a
 
 <Callout>
 this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
-</Callout>
 array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful
 when executing this as part of a transaction. If the array being sorted is too large, the sort operation may
 consume more gas than is available in a block, leading to potential DoS.
+</Callout>
 
 <Callout type="warn">
 Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.
@@ -469,10 +469,10 @@ convenience, but that returned value can be discarded safely if the caller has a
 
 <Callout>
 this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
-</Callout>
 array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful
 when executing this as part of a transaction. If the array being sorted is too large, the sort operation may
 consume more gas than is available in a block, leading to potential DoS.
+</Callout>
 
 <Callout type="warn">
 Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.
@@ -517,10 +517,10 @@ convenience, but that returned value can be discarded safely if the caller has a
 
 <Callout>
 this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the
-</Callout>
 array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful
 when executing this as part of a transaction. If the array being sorted is too large, the sort operation may
 consume more gas than is available in a block, leading to potential DoS.
+</Callout>
 
 <Callout type="warn">
 Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.
@@ -565,14 +565,14 @@ returned. Time complexity O(log n).
 
 <Callout>
 The `array` is expected to be sorted in ascending order, and to
-</Callout>
 contain no repeated elements.
+</Callout>
 
 <Callout type="warn">
 Deprecated. This implementation behaves as [`Arrays.lowerBound`](#Arrays-lowerBound-uint256---uint256-) but lacks
-</Callout>
 support for repeated elements in the array. The [`Arrays.lowerBound`](#Arrays-lowerBound-uint256---uint256-) function should
 be used instead.
+</Callout>
 
 </div>
 </div>
@@ -1057,8 +1057,8 @@ For blocks older than 8191 or future blocks, it returns zero, matching the `BLOC
 
 <Callout>
 After EIP-2935 activation, it takes 8191 blocks to completely fill the history.
-</Callout>
 Before that, only block hashes since the fork block will be available.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1083,8 +1083,8 @@ Retrieves the block hash for any historical block within the supported range.
 
 <Callout>
 The function gracefully handles future blocks and blocks beyond the history window
-</Callout>
 by returning zero, consistent with the EVM's native `BLOCKHASH` behavior.
+</Callout>
 
 </div>
 </div>
@@ -1280,11 +1280,11 @@ account_address:   [-.%a-zA-Z0-9]{1,128}
 
 <Callout type="warn">
 According to [CAIP-10's canonicalization section](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-10.md#canonicalization),
-</Callout>
 the implementation remains at the developer's discretion. Please note that case variations may introduce ambiguity.
 For example, when building hashes to identify accounts or data associated to them, multiple representations of the
 same account would derive to different hashes. For EVM chains, we recommend using checksummed addresses for the
 "account_address" part. They can be generated onchain using [`Strings.toChecksumHexString`](#Strings-toChecksumHexString-address-).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1349,8 +1349,8 @@ Parse a CAIP-10 identifier into its components.
 
 <Callout>
 This function does not verify that the CAIP-10 input is properly formatted. The `caip2` return can be
-</Callout>
 parsed using the [`CAIP2`](#CAIP2) library.
+</Callout>
 
 </div>
 </div>
@@ -1380,10 +1380,10 @@ reference:   [-_a-zA-Z0-9]{1,32}
 
 <Callout type="warn">
 In some cases, multiple CAIP-2 identifiers may all be valid representation of a single chain.
-</Callout>
 For EVM chains, it is recommended to use `eip155:xxx` as the canonical representation (where `xxx` is
 the EIP-155 chain id). Consider the possible ambiguity when processing CAIP-2 identifiers or when using them
 in the context of hashes.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1787,8 +1787,8 @@ Collection of common custom errors used in multiple contracts
 
 <Callout type="warn">
 Backwards compatibility is not guaranteed in future versions of the library.
-</Callout>
 It is recommended to avoid relying on the error API for critical functionality.
+</Callout>
 
 _Available since v5.1._
 
@@ -1894,10 +1894,10 @@ selectors won't filter calls nested within a [`Multicall.multicall`](#Multicall-
 
 <Callout>
 Since 5.0.1 and 4.9.4, this contract identifies non-canonical contexts (i.e. `msg.sender` is not [`Context._msgSender`](#Context-_msgSender--)).
-</Callout>
 If a non-canonical context is identified, the following self `delegatecall` appends the last bytes of `msg.data`
 to the subcall. This makes it safe to use with [`ERC2771Context`](metatx#ERC2771Context). Contexts that don't affect the resolution of
 [`Context._msgSender`](#Context-_msgSender--) are not propagated to subcalls.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2049,9 +2049,9 @@ Follows the [ERC-4337's semi-abstracted nonce system](https://eips.ethereum.org/
 
 <Callout>
 This contract inherits from [`Nonces`](#Nonces) and reuses its storage for the first nonce key (i.e. `0`). This
-</Callout>
 makes upgrading from [`Nonces`](#Nonces) to [`NoncesKeyed`](#NoncesKeyed) safe when using their upgradeable versions (e.g. `NoncesKeyedUpgradeable`).
 Doing so will NOT reset the current state of nonces, avoiding replay attacks where a nonce is reused after the upgrade.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -5967,14 +5967,14 @@ points to them.
 
 <Callout>
 If EIP-1153 (transient storage) is available on the chain you're deploying at,
-</Callout>
 consider using [`ReentrancyGuardTransient`](#ReentrancyGuardTransient) instead.
+</Callout>
 
 <Callout>
 If you would like to learn more about reentrancy and alternative ways
-</Callout>
 to protect against it, check out our blog post
 [Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -6355,8 +6355,8 @@ Return the length of a string that was encoded to `ShortString` or written to st
 
 <Callout type="warn">
 This will return the "byte length" of the string. This may not reflect the actual length in terms of
-</Callout>
 actual characters as the UTF-8 encoding of a single character can span over multiple bytes.
+</Callout>
 
 </div>
 </div>
@@ -6439,8 +6439,8 @@ Consider using this library along with [`StorageSlot`](#StorageSlot).
 
 <Callout>
 This library provides a way to manipulate storage locations in a non-standard way. Tooling for checking
-</Callout>
 upgrade safety will ignore the slots accessed through this library.
+</Callout>
 
 _Available since v5.1._
 
@@ -7376,9 +7376,9 @@ This function should only be used in double quoted JSON strings. Single quotes a
 
 <Callout>
 This function escapes all unicode characters, and not just the ones in ranges defined in section 2.5 of
-</Callout>
 RFC-4627 (U+0000 to U+001F, U+0022 and U+005C). ECMAScript's `JSON.parse` does recover escaped unicode
 characters that are not in this range, but other tooling may provide different results.
+</Callout>
 
 </div>
 </div>
@@ -8250,9 +8250,9 @@ Branchless ternary evaluation for `a ? b : c`. Gas costs are constant.
 
 <Callout type="warn">
 This function may reduce bytecode size and consume less gas when used standalone.
-</Callout>
 However, the compiler may optimize Solidity ternary operations (i.e. `a ? b : c`) to only compute
 one branch when needed, making this function more expensive.
+</Callout>
 
 </div>
 </div>
@@ -8422,8 +8422,8 @@ If the input value is not inversible, 0 is returned.
 
 <Callout>
 If you know for sure that n is (big) a prime, it may be cheaper to use Fermat's little theorem and get the
-</Callout>
 inverse using `Math.modExp(a, n - 2, n)`. See [`Math.invModPrime`](#Math-invModPrime-uint256-uint256-).
+</Callout>
 
 </div>
 </div>
@@ -8473,11 +8473,11 @@ Requirements:
 
 <Callout type="warn">
 The result is only valid if the underlying call succeeds. When using this function, make
-</Callout>
 sure the chain you're using it on supports the precompiled contract for modular exponentiation
 at address 0x05 as specified in [EIP-198](https://eips.ethereum.org/EIPS/eip-198). Otherwise,
 the underlying function will succeed given the lack of a revert, but the result may be incorrectly
 interpreted as 0.
+</Callout>
 
 </div>
 </div>
@@ -8500,10 +8500,10 @@ to operate modulo 0 or if the underlying precompile reverted.
 
 <Callout type="warn">
 The result is only valid if the success flag is true. When using this function, make sure the chain
-</Callout>
 you're using it on supports the precompiled contract for modular exponentiation at address 0x05 as specified in
 [EIP-198](https://eips.ethereum.org/EIPS/eip-198). Otherwise, the underlying function will succeed given the lack
 of a revert, but the result may be incorrectly interpreted as 0.
+</Callout>
 
 </div>
 </div>
@@ -10506,9 +10506,9 @@ Branchless ternary evaluation for `a ? b : c`. Gas costs are constant.
 
 <Callout type="warn">
 This function may reduce bytecode size and consume less gas when used standalone.
-</Callout>
 However, the compiler may optimize Solidity ternary operations (i.e. `a ? b : c`) to only compute
 one branch when needed, making this function more expensive.
+</Callout>
 
 </div>
 </div>
@@ -10765,8 +10765,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint32).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -10824,8 +10824,8 @@ if there is none.
 
 <Callout>
 This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
-</Callout>
 keys).
+</Callout>
 
 </div>
 </div>
@@ -10917,8 +10917,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint48).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -10976,8 +10976,8 @@ if there is none.
 
 <Callout>
 This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
-</Callout>
 keys).
+</Callout>
 
 </div>
 </div>
@@ -11069,8 +11069,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint96).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -11128,8 +11128,8 @@ if there is none.
 
 <Callout>
 This is a variant of [`Checkpoints.upperLookup`](#Checkpoints-upperLookup-struct-Checkpoints-Trace160-uint96-) that is optimized to find "recent" checkpoint (checkpoints with high
-</Callout>
 keys).
+</Callout>
 
 </div>
 </div>
@@ -11305,8 +11305,8 @@ If the CircularBuffer was already setup and used, calling that function again wi
 
 <Callout>
 The size of the buffer will affect the execution of [`CircularBuffer.includes`](#CircularBuffer-includes-struct-CircularBuffer-Bytes32CircularBuffer-bytes32-) function, as it has a complexity of O(N).
-</Callout>
 Consider a large buffer size may render the function unusable.
+</Callout>
 
 </div>
 </div>
@@ -11628,8 +11628,8 @@ Resets the queue back to being empty.
 
 <Callout>
 The current items are left behind in storage. This does not affect the functioning of the queue, but misses
-</Callout>
 out on potential gas refunds.
+</Callout>
 
 </div>
 </div>
@@ -11897,8 +11897,8 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 Developers should keep in mind that this function has an unbounded cost and using it may render the
-</Callout>
 function uncallable if the map grows to the point where clearing it consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12016,10 +12016,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12040,10 +12040,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12104,9 +12104,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12223,10 +12223,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12247,10 +12247,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12311,9 +12311,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12430,10 +12430,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12454,10 +12454,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12518,9 +12518,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12637,10 +12637,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12661,10 +12661,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12725,9 +12725,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12844,10 +12844,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12868,10 +12868,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -12932,9 +12932,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13051,10 +13051,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13075,10 +13075,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13139,9 +13139,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13258,10 +13258,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13282,10 +13282,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13346,9 +13346,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13465,10 +13465,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13489,10 +13489,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13553,9 +13553,9 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 This function has an unbounded cost that scales with map size. Developers should keep in mind that
-</Callout>
 using it may render the function uncallable if the map grows to the point where clearing it consumes too much
 gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13672,10 +13672,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13696,10 +13696,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13760,8 +13760,8 @@ Removes all the entries from a map. O(n).
 
 <Callout type="warn">
 Developers should keep in mind that this function has an unbounded cost and using it may render the
-</Callout>
 function uncallable if the map grows to the point where clearing it consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13879,10 +13879,10 @@ Returns an array containing all the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -13903,10 +13903,10 @@ Returns an array containing a slice of the keys
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the map grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14101,8 +14101,8 @@ Removes all the values from a set. O(n).
 
 <Callout type="warn">
 Developers should keep in mind that this function has an unbounded cost and using it may render the
-</Callout>
 function uncallable if the set grows to the point where clearing it consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14181,10 +14181,10 @@ Return the entire set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14205,10 +14205,10 @@ Return a slice of the set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14269,8 +14269,8 @@ Removes all the values from a set. O(n).
 
 <Callout type="warn">
 Developers should keep in mind that this function has an unbounded cost and using it may render the
-</Callout>
 function uncallable if the set grows to the point where clearing it consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14349,10 +14349,10 @@ Return the entire set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14373,10 +14373,10 @@ Return a slice of the set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14437,8 +14437,8 @@ Removes all the values from a set. O(n).
 
 <Callout type="warn">
 Developers should keep in mind that this function has an unbounded cost and using it may render the
-</Callout>
 function uncallable if the set grows to the point where clearing it consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14517,10 +14517,10 @@ Return the entire set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14541,10 +14541,10 @@ Return a slice of the set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14605,8 +14605,8 @@ Removes all the values from a set. O(n).
 
 <Callout type="warn">
 Developers should keep in mind that this function has an unbounded cost and using it may render the
-</Callout>
 function uncallable if the set grows to the point where clearing it consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14685,10 +14685,10 @@ Return the entire set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14709,10 +14709,10 @@ Return a slice of the set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14773,8 +14773,8 @@ Removes all the values from a set. O(n).
 
 <Callout type="warn">
 Developers should keep in mind that this function has an unbounded cost and using it may render the
-</Callout>
 function uncallable if the set grows to the point where clearing it consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14853,10 +14853,10 @@ Return the entire set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14877,10 +14877,10 @@ Return a slice of the set in an array
 
 <Callout type="warn">
 This operation will copy the entire storage to memory, which can be quite expensive. This is designed
-</Callout>
 to mostly be used by view accessors that are queried without any gas fees. Developers should keep in mind that
 this function has an unbounded cost, and using it as part of a state-changing function may render the function
 uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
+</Callout>
 
 </div>
 </div>
@@ -14923,9 +14923,9 @@ The structure is designed to perform the following operations with the correspon
 
 <Callout type="warn">
 This library allows for the use of custom comparator functions. Given that manipulating
-</Callout>
 memory can lead to unexpected behavior. Consider verifying that the comparator does not manipulate
 the Heap's state directly and that it follows the Solidity memory safety rules.
+</Callout>
 
 _Available since v5.1._
 
@@ -14977,8 +14977,8 @@ Remove (and return) the root element for the heap using the default comparator.
 
 <Callout>
 All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
-</Callout>
 during the lifecycle of a heap will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -14999,8 +14999,8 @@ Remove (and return) the root element for the heap using the provided comparator.
 
 <Callout>
 All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
-</Callout>
 during the lifecycle of a heap will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -15021,8 +15021,8 @@ Insert a new element in the heap using the default comparator.
 
 <Callout>
 All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
-</Callout>
 during the lifecycle of a heap will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -15043,8 +15043,8 @@ Insert a new element in the heap using the provided comparator.
 
 <Callout>
 All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
-</Callout>
 during the lifecycle of a heap will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -15066,8 +15066,8 @@ This is equivalent to using [`Heap.pop`](#Heap-pop-struct-Heap-Uint256Heap-funct
 
 <Callout>
 All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
-</Callout>
 during the lifecycle of a heap will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -15089,8 +15089,8 @@ This is equivalent to using [`Heap.pop`](#Heap-pop-struct-Heap-Uint256Heap-funct
 
 <Callout>
 All inserting and removal from a heap should always be done using the same comparator. Mixing comparator
-</Callout>
 during the lifecycle of a heap will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -15159,9 +15159,9 @@ A tree is defined by the following parameters:
 
 <Callout>
 Building trees using non-commutative hashing functions (i.e. `H(a, b) != H(b, a)`) is supported. However,
-</Callout>
 proving the inclusion of a leaf in such trees is not possible with the [`MerkleProof`](cryptography#MerkleProof) library since it only supports
 _commutative_ hashing functions.
+</Callout>
 
 _Available since v5.1._
 
@@ -15208,8 +15208,8 @@ should be pushed to it using the default [push](#MerkleTree-push-struct-MerkleTr
 
 <Callout type="warn">
 The zero value should be carefully chosen since it will be stored in the tree representing
-</Callout>
 empty leaves. It should be a value that is not expected to be part of the tree.
+</Callout>
 
 </div>
 </div>
@@ -15233,13 +15233,13 @@ should be pushed to it using the custom push function, which should be the same 
 
 <Callout type="warn">
 Providing a custom hashing function is a security-sensitive operation since it may
-</Callout>
 compromise the soundness of the tree.
+</Callout>
 
 <Callout>
 Consider verifying that the hashing function does not manipulate the memory state directly and that it
-</Callout>
 follows the Solidity memory safety rules. Otherwise, it may lead to unexpected behavior.
+</Callout>
 
 </div>
 </div>

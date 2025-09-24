@@ -228,9 +228,9 @@ This function emits:
 
 <Callout>
 interface requires this function to be payable. Even if we don't expect any value, a gateway may pass
-</Callout>
 some value for unknown reason. In that case we want to register this gateway having delivered the message and
 not revert. Any value accrued that way can be recovered by the admin using the [`ERC7786OpenBridge.sweep`](#ERC7786OpenBridge-sweep-address-payable-) function.
+</Callout>
 
 </div>
 </div>
@@ -741,11 +741,11 @@ workflow into the standard ERC-7786.
 
 <Callout>
 While both ERC-7786 and Axelar do support non-evm chains, this adaptor does not. This limitation comes from
-</Callout>
 the translation of the ERC-7930 interoperable address (binary objects -- bytes) to strings. This is necessary
 because Axelar uses string to represent addresses. For EVM network, this adapter uses a checksum hex string
 representation. Other networks would require a different encoding. Ideally we would have a single encoding for all
 networks (could be base58, base64, ...) but Axelar doesn't support that.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>

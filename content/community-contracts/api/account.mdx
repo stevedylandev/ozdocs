@@ -106,8 +106,8 @@ authorization logic, such as requiring specific signers or roles.
 
 <Callout>
 Use [`ERC7579DelayedExecutor._scheduleAt`](#ERC7579DelayedExecutor-_scheduleAt-address-bytes32-bytes32-bytes-uint48-uint32-) to schedule operations at a specific points in time. This is
-</Callout>
 useful to pre-schedule operations for non-deployed accounts (e.g. subscriptions).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -442,16 +442,16 @@ and respecting the previous delay and expiration values.
 
 <Callout type="warn">
 This function does not clean up scheduled operations. This means operations
-</Callout>
 could potentially be re-executed if the module is reinstalled later. This is a deliberate
 design choice for efficiency, but module implementations may want to override this behavior
 to clear scheduled operations during uninstallation for their specific use cases.
+</Callout>
 
 <Callout>
 Calling this function directly will remove the expiration ([`ERC7579DelayedExecutor.getExpiration`](#ERC7579DelayedExecutor-getExpiration-address-)) value and
-</Callout>
 will schedule a reset of the delay ([`ERC7579DelayedExecutor.getDelay`](#ERC7579DelayedExecutor-getDelay-address-)) to `0` for the account. Reinstalling the
 module will not immediately reset the delay if the delay reset hasn't taken effect yet.
+</Callout>
 
 </div>
 </div>
@@ -472,9 +472,9 @@ Returns `data` as the execution calldata. See [`ERC7579Executor._execute`](#ERC7
 
 <Callout>
 This function relies on the operation state validation in [`ERC7579DelayedExecutor._execute`](#ERC7579DelayedExecutor-_execute-address-bytes32-bytes32-bytes-) for
-</Callout>
 authorization. Extensions of this module should override this function to implement
 additional validation logic if needed.
+</Callout>
 
 </div>
 </div>
@@ -817,9 +817,9 @@ derived contracts.
 
 <Callout>
 This is a simplified executor that directly executes operations without delay or expiration
-</Callout>
 mechanisms. For a more advanced implementation with time-delayed execution patterns and
 security features, see [`ERC7579DelayedExecutor`](#ERC7579DelayedExecutor).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -908,9 +908,9 @@ Example extension:
 
 <Callout>
 Pack extra data in the `data` arguments (e.g. a signature) to be used in the
-</Callout>
 validation process. Calldata can be sliced to extract it and return only the
 execution calldata.
+</Callout>
 
 </div>
 </div>
@@ -1060,8 +1060,8 @@ disabled until they are added later.
 
 <Callout>
 An account can only call onInstall once. If called directly by the account,
-</Callout>
 the signer will be set to the provided data. Future installations will behave as a no-op.
+</Callout>
 
 </div>
 </div>
@@ -1085,8 +1085,8 @@ See [`ERC7579DelayedExecutor.onUninstall`](#ERC7579DelayedExecutor-onUninstall-b
 
 <Callout type="warn">
 This function has unbounded gas costs and may become uncallable if the set grows too large.
-</Callout>
 See `EnumerableSet-clear`.
+</Callout>
 
 </div>
 </div>
@@ -1109,9 +1109,9 @@ Using `start = 0` and `end = type(uint64).max` will return the entire set of sig
 
 <Callout type="warn">
 Depending on the `start` and `end`, this operation can copy a large amount of data to memory, which
-</Callout>
 can be expensive. This is designed for view accessors queried without gas fees. Using it in state-changing
 functions may become uncallable if the slice grows too large.
+</Callout>
 
 </div>
 </div>
@@ -1553,8 +1553,8 @@ consent to be added. Each signer must sign an EIP-712 message to confirm their a
 
 <Callout>
 Use this module to ensure that all guardians in a social recovery or multisig setup have
-</Callout>
 explicitly agreed to their roles.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1830,8 +1830,8 @@ signed, otherwise acts as a no-op.
 
 <Callout>
 Does not check if the signer is authorized for the account. Valid signatures from
-</Callout>
 invalid signers won't be executable. See [`ERC7579Multisig._validateSignatures`](#ERC7579Multisig-_validateSignatures-address-bytes32-bytes---bytes---) for more details.
+</Callout>
 
 </div>
 </div>
@@ -1905,9 +1905,9 @@ after the time delay has passed.
 
 <Callout type="warn">
 When setting a threshold value, ensure it matches the scale used for signer weights.
-</Callout>
 For example, if signers have weights like 1, 2, or 3, then a threshold of 4 would require
 signatures with a total weight of at least 4 (e.g., one with weight 1 and one with weight 3).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1996,8 +1996,8 @@ If weights are not provided but signers are, all signers default to weight 1.
 
 <Callout>
 An account can only call onInstall once. If called directly by the account,
-</Callout>
 the signer will be set to the provided data. Future installations will behave as a no-op.
+</Callout>
 
 </div>
 </div>
@@ -2158,10 +2158,10 @@ Override to validate threshold against total weight instead of signer count.
 
 <Callout>
 This function intentionally does not call `super._validateReachableThreshold` because the base implementation
-</Callout>
 assumes each signer has a weight of 1, which is a subset of this weighted implementation. Consider that multiple
 implementations of this function may exist in the contract, so important side effects may be missed
 depending on the linearization order.
+</Callout>
 
 </div>
 </div>
@@ -2183,8 +2183,8 @@ Overrides the base implementation to use weights instead of count.
 
 <Callout>
 This function intentionally does not call `super._validateThreshold` because the base implementation
-</Callout>
 assumes each signer has a weight of 1, which is incompatible with this weighted implementation.
+</Callout>
 
 </div>
 </div>
@@ -2206,8 +2206,8 @@ Emitted when a signer's weight is changed.
 
 <Callout>
 Not emitted in [`ERC7579Multisig._addSigners`](#ERC7579Multisig-_addSigners-address-bytes---) or [`ERC7579Multisig._removeSigners`](#ERC7579Multisig-_removeSigners-address-bytes---). Indexers must rely on [`ERC7579Multisig.ERC7913SignerAdded`](#ERC7579Multisig-ERC7913SignerAdded-address-bytes-)
-</Callout>
 and [`ERC7579Multisig.ERC7913SignerRemoved`](#ERC7579Multisig-ERC7913SignerRemoved-address-bytes-) to index a default weight of 1. See [`ERC7579MultisigWeighted.signerWeight`](#ERC7579MultisigWeighted-signerWeight-address-bytes-).
+</Callout>
 
 </div>
 </div>
@@ -2340,8 +2340,8 @@ Returns the set of authorized selectors for the specified account.
 
 <Callout type="warn">
 This operation copies the entire selectors set to memory, which
-</Callout>
 can be expensive or may result in unbounded computation.
+</Callout>
 
 </div>
 </div>
@@ -2381,8 +2381,8 @@ Clears all selectors.
 
 <Callout type="warn">
 This function has unbounded gas costs and may become uncallable if the set grows too large.
-</Callout>
 See [`EnumerableSetExtended.clear`](utils#EnumerableSetExtended-clear-struct-EnumerableSetExtended-Bytes32x2Set-).
+</Callout>
 
 </div>
 </div>
@@ -2623,8 +2623,8 @@ See `IERC7579Module-onInstall`.
 
 <Callout>
 An account can only call onInstall once. If called directly by the account,
-</Callout>
 the signer will be set to the provided data. Future installations will behave as a no-op.
+</Callout>
 
 </div>
 </div>
@@ -2645,9 +2645,9 @@ See `IERC7579Module-onUninstall`.
 
 <Callout type="warn">
 The signer's key will be removed if the account calls this function, potentially
-</Callout>
 making the account unusable. As an account operator, make sure to uninstall to a predefined path
 in your account that properly handles side effects of uninstallation.  See `AccountERC7579-uninstallModule`.
+</Callout>
 
 </div>
 </div>
@@ -2889,8 +2889,8 @@ Validation algorithm.
 
 <Callout type="warn">
 Validation is a critical security function. Implementations must carefully
-</Callout>
 handle cryptographic verification to prevent unauthorized access.
+</Callout>
 
 </div>
 </div>
@@ -2925,8 +2925,8 @@ through the internal functions [`PaymasterCore.deposit`](#PaymasterCore-deposit-
 
 <Callout>
 See [Paymaster's unstaked reputation rules](https://eips.ethereum.org/EIPS/eip-7562#unstaked-paymasters-reputation-rules)
-</Callout>
  for more details on the paymaster's storage access limitations.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -3094,8 +3094,8 @@ is returned by [`PaymasterCore.validatePaymasterUserOp`](#PaymasterCore-validate
 
 <Callout>
 The `actualUserOpFeePerGas` is not `tx.gasprice`. A user operation can be bundled with other transactions
-</Callout>
 making the gas price of the user operation to differ.
+</Callout>
 
 </div>
 </div>
@@ -3366,9 +3366,9 @@ Returns a `prefundContext` that's passed to the [`PaymasterCore._postOp`](#Payma
 
 <Callout>
 Consider not reverting if the prefund fails when overriding this function. This is to avoid reverting
-</Callout>
 during the validation phase of the user operation, which may penalize the paymaster's reputation according
 to ERC-7562 validation rules.
+</Callout>
 
 </div>
 </div>
@@ -3391,9 +3391,9 @@ Reverts with [`PaymasterERC20.PaymasterERC20FailedRefund`](#PaymasterERC20-Payma
 
 <Callout type="warn">
 This function may revert after the user operation has been executed without
-</Callout>
 reverting the user operation itself. Consider implementing a mechanism to handle
 this case gracefully.
+</Callout>
 
 </div>
 </div>
@@ -3685,8 +3685,8 @@ Otherwise, fallback to [`PaymasterERC20._refund`](#PaymasterERC20-_refund-contra
 
 <Callout>
 For guaranteed user operations where the user paid the `actualGasCost` back, this function
-</Callout>
 doesn't call `super._refund`. Consider whether there are side effects in the parent contract that need to be executed.
+</Callout>
 
 </div>
 </div>
@@ -3707,8 +3707,8 @@ Fetches the guarantor address and validation data from the user operation.
 
 <Callout>
 Return `address(0)` to disable the guarantor feature. If supported, ensure
-</Callout>
 explicit consent (e.g., signature verification) to prevent unauthorized use.
+</Callout>
 
 </div>
 </div>
@@ -3876,8 +3876,8 @@ Returns the context to be passed to postOp and the validation data.
 
 <Callout>
 The default `context` is `bytes(0)`. Developers that add a context when overriding this function MUST
-</Callout>
 also override [`PaymasterCore._postOp`](#PaymasterCore-_postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-) to process the context passed along.
+</Callout>
 
 </div>
 </div>
@@ -4017,8 +4017,8 @@ Returns the context to be passed to postOp and the validation data.
 
 <Callout>
 The `context` returned is `bytes(0)`. Developers overriding this function MUST
-</Callout>
 override [`PaymasterCore._postOp`](#PaymasterCore-_postOp-enum-IPaymaster-PostOpMode-bytes-uint256-uint256-) to process the context passed along.
+</Callout>
 
 </div>
 </div>

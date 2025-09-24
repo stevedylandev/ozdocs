@@ -6,7 +6,7 @@ description: "Smart contract ERC721 utilities and implementations"
 This set of interfaces, contracts, and utilities is all related to the [ERC-721 Non-Fungible Token Standard](https://eips.ethereum.org/EIPS/eip-721).
 
 <Callout>
-For a walk through on how to create an ERC-721 token read our [ERC-721 guide](ROOT:erc721.adoc).
+For a walk through on how to create an ERC-721 token read our [ERC-721 guide](../../erc721).
 </Callout>
 
 The ERC specifies four interfaces:
@@ -422,9 +422,9 @@ Transfers `tokenId` token from `from` to `to`.
 
 <Callout type="warn">
 Note that the caller is responsible to confirm that the recipient is capable of receiving ERC-721
-</Callout>
 or else they may be permanently lost. Usage of [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) prevents loss, though the caller must
 understand this adds an external call which potentially creates a reentrancy vulnerability.
+</Callout>
 
 Requirements:
 
@@ -512,10 +512,10 @@ Returns the owner of the `tokenId`. Does NOT revert if token doesn't exist
 
 <Callout type="warn">
 Any overrides to this function that add ownership of tokens not tracked by the
-</Callout>
 core ERC-721 logic MUST be matched with the use of [`ERC721._increaseBalance`](#ERC721-_increaseBalance-address-uint128-) to keep balances
 consistent with ownership. The invariant to preserve is that for any address `a` the value returned by
 `balanceOf(a)` must be equal to the number of tokens such that `_ownerOf(tokenId)` is `a`.
+</Callout>
 
 </div>
 </div>
@@ -554,8 +554,8 @@ particular (ignoring whether it is owned by `owner`).
 
 <Callout type="warn">
 This function assumes that `owner` is the actual owner of `tokenId` and does not verify this
-</Callout>
 assumption.
+</Callout>
 
 </div>
 </div>
@@ -579,8 +579,8 @@ Reverts if:
 
 <Callout type="warn">
 This function assumes that `owner` is the actual owner of `tokenId` and does not verify this
-</Callout>
 assumption.
+</Callout>
 
 </div>
 </div>
@@ -601,14 +601,14 @@ Unsafe write access to the balances, used by extensions that "mint" tokens using
 
 <Callout>
 the value is limited to type(uint128).max. This protect against _balance overflow. It is unrealistic that
-</Callout>
 a uint256 would ever overflow from increments when these increments are bounded to uint128 values.
+</Callout>
 
 <Callout type="warn">
 Increasing an account's balance using this function tends to be paired with an override of the
-</Callout>
 [`ERC721._ownerOf`](#ERC721-_ownerOf-uint256-) function to resolve the ownership of the corresponding tokens so that balances and ownership
 remain consistent with one another.
+</Callout>
 
 </div>
 </div>
@@ -1052,9 +1052,9 @@ Transfers `tokenId` token from `from` to `to`.
 
 <Callout type="warn">
 Note that the caller is responsible to confirm that the recipient is capable of receiving ERC-721
-</Callout>
 or else they may be permanently lost. Usage of [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) prevents loss, though the caller must
 understand this adds an external call which potentially creates a reentrancy vulnerability.
+</Callout>
 
 Requirements:
 
@@ -1407,15 +1407,15 @@ regained after construction. During construction, only batch minting is allowed.
 
 <Callout type="warn">
 This extension does not call the [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) function for tokens minted in batch. Any logic added to this
-</Callout>
 function through overrides will not be triggered when token are minted in batch. You may want to also override
 [`ERC721._increaseBalance`](#ERC721-_increaseBalance-address-uint128-) or [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-) to account for these mints.
+</Callout>
 
 <Callout type="warn">
 When overriding [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-), be careful about call ordering. [`ERC721.ownerOf`](#ERC721-ownerOf-uint256-) may return invalid
-</Callout>
 values during the [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-) execution if the super call is not called first. To be safe, execute the
 super call before your custom logic.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1524,8 +1524,8 @@ tokens.
 
 <Callout>
 Overriding the default value of 5000 will not cause on-chain issues, but may result in the asset not being
-</Callout>
 correctly supported by off-chain indexing services (including marketplaces).
+</Callout>
 
 </div>
 </div>
@@ -1594,8 +1594,8 @@ See [`ERC721._update`](#ERC721-_update-address-uint256-address-). Override versi
 
 <Callout type="warn">
 Using [`ERC721Consecutive`](#ERC721Consecutive) prevents minting during construction in favor of [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-).
-</Callout>
 After construction, [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-) is no longer available and minting through [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) becomes available.
+</Callout>
 
 </div>
 </div>
@@ -1974,11 +1974,11 @@ event of a large bug.
 
 <Callout type="warn">
 This contract does not include public pause and unpause functions. In
-</Callout>
 addition to inheriting this contract, you must define both functions, invoking the
 [`Pausable._pause`](../utils#Pausable-_pause--) and [`Pausable._unpause`](../utils#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
 make the contract pause mechanism of the contract unreachable, and thus unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2115,9 +2115,9 @@ for specific token ids via [`ERC2981._setTokenRoyalty`](common#ERC2981-_setToken
 
 <Callout type="warn">
 ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See
-</Callout>
 [Rationale](https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments) in the ERC. Marketplaces are expected to
 voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2775,8 +2775,8 @@ is accepted from [`ERC20Wrapper.depositFor`](ERC20#ERC20Wrapper-depositFor-addre
 
 <Callout type="warn">
 Doesn't work with unsafe transfers (eg. [`IERC721.transferFrom`](#IERC721-transferFrom-address-address-uint256-)). Use [`ERC721Wrapper._recover`](#ERC721Wrapper-_recover-address-uint256-)
-</Callout>
 for recovering in that scenario.
+</Callout>
 
 </div>
 </div>

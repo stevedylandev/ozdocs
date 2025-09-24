@@ -38,9 +38,9 @@ fee is specified in basis points by default.
 
 <Callout type="warn">
 ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See
-</Callout>
 [Rationale](https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments) in the ERC. Marketplaces are expected to
 voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -110,8 +110,8 @@ exchange. The royalty amount is denominated and should be paid in that same unit
 
 <Callout>
 ERC-2981 allows setting the royalty to 100% of the price. In that case all the price would be sent to the
-</Callout>
 royalty receiver and 0 tokens to the seller. Contracts dealing with royalty should consider empty transfers.
+</Callout>
 
 </div>
 </div>

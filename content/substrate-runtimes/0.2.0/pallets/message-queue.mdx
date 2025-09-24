@@ -40,8 +40,8 @@ Execute an overweight message.
 
 <Callout>
 Temporary processing errors will be propagated whereas permanent errors are treated
-</Callout>
 as success condition.
+</Callout>
 
 <Callout type='warn'>
 The `weight_limit` passed to this function does not affect the `weight_limit` set in other parts of the pallet.
@@ -106,8 +106,8 @@ Remove a page which has no more messages remaining to be processed or is stale.
 
 <Callout type='warn'>
 The pallet utilizes the [`sp_weights::WeightMeter`] to manually track its consumption to always stay within
-</Callout>
 the required limit. This implies that the message processor hook can calculate the weight of a message without executing it.
+</Callout>
 
 #### How does this pallet work under the hood?
 

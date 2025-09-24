@@ -53,15 +53,15 @@ Developers must implement the [`AbstractSigner._rawSignatureValidation`](utils/c
 
 <Callout>
 This core account doesn't include any mechanism for performing arbitrary external calls. This is an essential
-</Callout>
 feature that all Account should have. We leave it up to the developers to implement the mechanism of their choice.
 Common choices include ERC-6900, ERC-7579 and ERC-7821 (among others).
+</Callout>
 
 <Callout type="warn">
 Implementing a mechanism to validate signatures is a security-sensitive operation as it may allow an
-</Callout>
 attacker to bypass the account's security measures. Check out [`SignerECDSA`](utils/cryptography#SignerECDSA), [`SignerP256`](utils/cryptography#SignerP256), or [`SignerRSA`](utils/cryptography#SignerRSA) for
 digital signature validation implementations.
+</Callout>
 
 @custom:stateless
 
@@ -234,8 +234,8 @@ signable hash (produced by [`Account._signableUserOpHash`](#Account-_signableUse
 
 <Callout>
 The userOpHash is assumed to be correct. Calling this function with a userOpHash that does not match the
-</Callout>
 userOp will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -672,8 +672,8 @@ Implement ERC-1271 through IERC7579Validator modules. If module based validation
 
 <Callout>
 when combined with [`ERC7739`](utils/cryptography#ERC7739), resolution ordering may have an impact ([`ERC7739`](utils/cryptography#ERC7739) does not call super).
-</Callout>
 Manual resolution might be necessary.
+</Callout>
 
 </div>
 </div>
@@ -847,10 +847,10 @@ To construct a nonce key, set nonce as follows:
 ```
 <Callout>
 The default behavior of this function replicates the behavior of
-</Callout>
 [Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L266),
 [Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L227), and
 [ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L247).
+</Callout>
 
 This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
 
@@ -883,11 +883,11 @@ signature data:
 
 <Callout>
 The default behavior of this function replicates the behavior of
-</Callout>
 [Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L350),
 [Biconomy's Nexus](https://github.com/bcnmy/nexus/blob/54f4e19baaff96081a8843672977caf712ef19f4/contracts/Nexus.sol#L239),
 [Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L252), and
 [ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L296).
+</Callout>
 
 This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
 
@@ -910,11 +910,11 @@ Extract the function selector from initData/deInitData for MODULE_TYPE_FALLBACK
 
 <Callout>
 If we had calldata here, we could use calldata slice which are cheaper to manipulate and don't require
-</Callout>
 actual copy. However, this would require `_installModule` to get a calldata bytes object instead of a memory
 bytes object. This would prevent calling `_installModule` from a contract constructor and would force the use
 of external initializers. That may change in the future, as most accounts will probably be deployed as
 clones/proxy/ERC-7702 delegates and therefore rely on initializers anyway.
+</Callout>
 
 </div>
 </div>
@@ -976,11 +976,11 @@ with [`AccountERC7579._execute`](#AccountERC7579-_execute-Mode-bytes-) (includin
 
 <Callout>
 Hook modules break the check-effect-interaction pattern. In particular, the [`IERC7579Hook.preCheck`](interfaces#IERC7579Hook-preCheck-address-uint256-bytes-) hook can
-</Callout>
 lead to potentially dangerous reentrancy. Using the `withHook()` modifier is safe if no effect is performed
 before the preHook or after the postHook. That is the case on all functions here, but it may not be the case if
 functions that have this modifier are overridden. Developers should be extremely careful when implementing hook
 modules or further overriding functions that involve hooks.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -1295,8 +1295,8 @@ Executes the calls in `executionData` with no optional `opData` support.
 
 <Callout>
 Access to this function is controlled by [`ERC7821._erc7821AuthorizedExecutor`](#ERC7821-_erc7821AuthorizedExecutor-address-bytes32-bytes-). Changing access permissions, for
-</Callout>
 example to approve calls by the ERC-4337 entrypoint, should be implemented by overriding it.
+</Callout>
 
 Reverts and bubbles up error if any call fails.
 

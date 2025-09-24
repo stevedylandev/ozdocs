@@ -298,9 +298,9 @@ an asset given its total historical allocation. Returns 0 if the [`VestingWallet
 
 <Callout type="warn">
 The cliff not only makes the schedule return 0, but it also ignores every possible side
-</Callout>
 effect from calling the inherited implementation (i.e. `super._vestingSchedule`). Carefully consider
 this caveat if the overridden implementation of this function has any (e.g. writing to memory or reverting).
+</Callout>
 
 </div>
 </div>
@@ -354,8 +354,8 @@ Since the wallet is `Ownable`, and ownership can be transferred, it is possible 
 
 <Callout>
 When using this contract with any token whose balance is adjusted automatically (i.e. a rebase token), make
-</Callout>
 sure to account the supply/balance adjustment in the vesting schedule to ensure the vested amount is as intended.
+</Callout>
 
 Confidential vesting wallet contracts can be deployed (as clones) using the [`VestingWalletConfidentialFactory`](#VestingWalletConfidentialFactory).
 

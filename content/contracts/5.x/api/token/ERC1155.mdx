@@ -286,10 +286,10 @@ Transfers a `value` amount of tokens of type `id` from `from` to `to`.
 
 <Callout type="warn">
 This function can potentially allow a reentrancy attack when transferring tokens
-</Callout>
 to an untrusted contract, when invoking [`IERC1155Receiver.onERC1155Received`](#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-) on the receiver.
 Ensure to follow the checks-effects-interactions pattern and consider employing
 reentrancy guards when interacting with untrusted contracts.
+</Callout>
 
 Emits a [`IERC1155.TransferSingle`](#IERC1155-TransferSingle-address-address-address-uint256-uint256-) event.
 
@@ -316,14 +316,14 @@ acceptance magic value.
 </div>
 <div className="px-4">
 
-xref:ROOT:erc1155.adoc#batch-operations[Batched] version of [`ERC1155.safeTransferFrom`](#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-).
+[Batched](../../erc1155#batch-operations) version of [`ERC1155.safeTransferFrom`](#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-).
 
 <Callout type="warn">
 This function can potentially allow a reentrancy attack when transferring tokens
-</Callout>
 to an untrusted contract, when invoking [`IERC1155Receiver.onERC1155BatchReceived`](#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-) on the receiver.
 Ensure to follow the checks-effects-interactions pattern and consider employing
 reentrancy guards when interacting with untrusted contracts.
+</Callout>
 
 Emits either a [`IERC1155.TransferSingle`](#IERC1155-TransferSingle-address-address-address-uint256-uint256-) or a [`IERC1155.TransferBatch`](#IERC1155-TransferBatch-address-address-address-uint256---uint256---) event, depending on the length of the array arguments.
 
@@ -384,9 +384,9 @@ contains code (eg. is a smart contract at the moment of execution).
 
 <Callout type="warn">
 Overriding this function is discouraged because it poses a reentrancy risk from the receiver. So any
-</Callout>
 update to the contract state after this function would break the check-effect-interaction pattern. Consider
 overriding [`ERC1155._update`](#ERC1155-_update-address-address-uint256---uint256---) instead.
+</Callout>
 
 </div>
 </div>
@@ -429,7 +429,7 @@ acceptance magic value.
 </div>
 <div className="px-4">
 
-xref:ROOT:erc1155.adoc#batch-operations[Batched] version of [`ERC1155._safeTransferFrom`](#ERC1155-_safeTransferFrom-address-address-uint256-uint256-bytes-).
+[Batched](../../erc1155#batch-operations) version of [`ERC1155._safeTransferFrom`](#ERC1155-_safeTransferFrom-address-address-uint256-uint256-bytes-).
 
 Emits a [`IERC1155.TransferBatch`](#IERC1155-TransferBatch-address-address-address-uint256---uint256---) event.
 
@@ -512,7 +512,7 @@ acceptance magic value.
 </div>
 <div className="px-4">
 
-xref:ROOT:erc1155.adoc#batch-operations[Batched] version of [`ERC1155._mint`](#ERC1155-_mint-address-uint256-uint256-bytes-).
+[Batched](../../erc1155#batch-operations) version of [`ERC1155._mint`](#ERC1155-_mint-address-uint256-uint256-bytes-).
 
 Emits a [`IERC1155.TransferBatch`](#IERC1155-TransferBatch-address-address-address-uint256---uint256---) event.
 
@@ -562,7 +562,7 @@ Requirements:
 </div>
 <div className="px-4">
 
-xref:ROOT:erc1155.adoc#batch-operations[Batched] version of [`ERC1155._burn`](#ERC1155-_burn-address-uint256-uint256-).
+[Batched](../../erc1155#batch-operations) version of [`ERC1155._burn`](#ERC1155-_burn-address-uint256-uint256-).
 
 Emits a [`IERC1155.TransferBatch`](#IERC1155-TransferBatch-address-address-address-uint256---uint256---) event.
 
@@ -671,7 +671,7 @@ Returns the value of tokens of token type `id` owned by `account`.
 </div>
 <div className="px-4">
 
-xref:ROOT:erc1155.adoc#batch-operations[Batched] version of [`IERC777.balanceOf`](../interfaces#IERC777-balanceOf-address-).
+[Batched](../../erc1155#batch-operations) version of [`IERC777.balanceOf`](../interfaces#IERC777-balanceOf-address-).
 
 Requirements:
 
@@ -738,10 +738,10 @@ Transfers a `value` amount of tokens of type `id` from `from` to `to`.
 
 <Callout type="warn">
 This function can potentially allow a reentrancy attack when transferring tokens
-</Callout>
 to an untrusted contract, when invoking [`IERC1155Receiver.onERC1155Received`](#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-) on the receiver.
 Ensure to follow the checks-effects-interactions pattern and consider employing
 reentrancy guards when interacting with untrusted contracts.
+</Callout>
 
 Emits a [`IERC1155.TransferSingle`](#IERC1155-TransferSingle-address-address-address-uint256-uint256-) event.
 
@@ -768,14 +768,14 @@ acceptance magic value.
 </div>
 <div className="px-4">
 
-xref:ROOT:erc1155.adoc#batch-operations[Batched] version of [`ERC1155.safeTransferFrom`](#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-).
+[Batched](../../erc1155#batch-operations) version of [`ERC1155.safeTransferFrom`](#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-).
 
 <Callout type="warn">
 This function can potentially allow a reentrancy attack when transferring tokens
-</Callout>
 to an untrusted contract, when invoking [`IERC1155Receiver.onERC1155BatchReceived`](#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-) on the receiver.
 Ensure to follow the checks-effects-interactions pattern and consider employing
 reentrancy guards when interacting with untrusted contracts.
+</Callout>
 
 Emits either a [`IERC1155.TransferSingle`](#IERC1155-TransferSingle-address-address-address-uint256-uint256-) or a [`IERC1155.TransferBatch`](#IERC1155-TransferBatch-address-address-address-uint256---uint256---) event, depending on the length of the array arguments.
 
@@ -909,9 +909,9 @@ called at the end of a `safeTransferFrom` after the balance has been updated.
 
 <Callout>
 To accept the transfer, this must return
-</Callout>
 `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`
 (i.e. 0xf23a6e61, or its own function selector).
+</Callout>
 
 </div>
 </div>
@@ -934,9 +934,9 @@ been updated.
 
 <Callout>
 To accept the transfer(s), this must return
-</Callout>
 `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`
 (i.e. 0xbc197c81, or its own function selector).
+</Callout>
 
 </div>
 </div>
@@ -1081,11 +1081,11 @@ event of a large bug.
 
 <Callout type="warn">
 This contract does not include public pause and unpause functions. In
-</Callout>
 addition to inheriting this contract, you must define both functions, invoking the
 [`Pausable._pause`](../utils#Pausable-_pause--) and [`Pausable._unpause`](../utils#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
 make the contract pause mechanism of the contract unreachable, and thus unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1210,8 +1210,8 @@ same id are not going to be minted.
 
 <Callout>
 This contract implies a global limit of 2**256 - 1 to the number of tokens
-</Callout>
 that can be minted.
+</Callout>
 
 CAUTION: This extension should not be added in an upgrade to an already deployed contract.
 
@@ -1603,8 +1603,8 @@ Simple implementation of `IERC1155Receiver` that will allow a contract to hold E
 
 <Callout type="warn">
 When inheriting this contract, you must include a way to use the received tokens, otherwise they will be
-</Callout>
 stuck.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>

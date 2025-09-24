@@ -132,11 +132,11 @@ half order, and the `v` value to be either 27 or 28.
 
 <Callout type="warn">
 `hash` _must_ be the result of a hash operation for the
-</Callout>
 verification to be secure: it is possible to craft signatures that
 recover to arbitrary addresses for non-hashed data. A safe way to ensure
 this is by receiving a hash of the original message (which may otherwise
 be too long), and then calling [`MessageHashUtils.toEthSignedMessageHash`](#MessageHashUtils-toEthSignedMessageHash-bytes-) on it.
+</Callout>
 
 Documentation for signature generation:
 - with [Web3.js](https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign)
@@ -166,11 +166,11 @@ half order, and the `v` value to be either 27 or 28.
 
 <Callout type="warn">
 `hash` _must_ be the result of a hash operation for the
-</Callout>
 verification to be secure: it is possible to craft signatures that
 recover to arbitrary addresses for non-hashed data. A safe way to ensure
 this is by receiving a hash of the original message (which may otherwise
 be too long), and then calling [`MessageHashUtils.toEthSignedMessageHash`](#MessageHashUtils-toEthSignedMessageHash-bytes-) on it.
+</Callout>
 
 </div>
 </div>
@@ -330,14 +330,14 @@ the chain id to protect against replay attacks on an eventual fork of the chain.
 
 <Callout>
 This contract implements the version of the encoding known as "v4", as implemented by the JSON RPC method
-</Callout>
 [`eth_signTypedDataV4` in MetaMask](https://docs.metamask.io/guide/signing-data.html).
+</Callout>
 
 <Callout>
 In the upgradeable version of this contract, the cached values will correspond to the address, and the domain
-</Callout>
 separator of the implementation contract. This will cause the [`EIP712._domainSeparatorV4`](#EIP712-_domainSeparatorV4--) function to always rebuild the
 separator from the immutable values, which is cheaper than accessing a cached version in cold storage.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -381,9 +381,9 @@ The meaning of `name` and `version` is specified in
 - `version`: the current major version of the signing domain.
 
 <Callout>
-These parameters cannot be changed except through a xref:learn::upgrading-smart-contracts.adoc[smart
+These parameters cannot be changed except through a [smart
+contract upgrade](../../learn/upgrading-smart-contracts).
 </Callout>
-contract upgrade].
 
 </div>
 </div>
@@ -468,8 +468,8 @@ The name parameter for the EIP712 domain.
 
 <Callout>
 By default this function reads _name which is an immutable value.
-</Callout>
 It only reads from storage if necessary (in case the value is too large to fit in a ShortString).
+</Callout>
 
 </div>
 </div>
@@ -490,8 +490,8 @@ The version parameter for the EIP712 domain.
 
 <Callout>
 By default this function reads _version which is an immutable value.
-</Callout>
 It only reads from storage if necessary (in case the value is too large to fit in a ShortString).
+</Callout>
 
 </div>
 </div>
@@ -586,24 +586,24 @@ You will find a quickstart guide in the readme.
 
 <Callout type="warn">
 You should avoid using leaf values that are 64 bytes long prior to
-</Callout>
 hashing, or use a hash function other than keccak256 for hashing leaves.
 This is because the concatenation of a sorted pair of internal nodes in
 the Merkle tree could be reinterpreted as a leaf value.
 OpenZeppelin's JavaScript library generates Merkle trees that are safe
 against this attack out of the box.
+</Callout>
 
 <Callout type="warn">
 Consider memory side-effects when using custom hashing functions
-</Callout>
 that access memory in an unsafe way.
+</Callout>
 
 <Callout>
 This library supports proof verification for merkle trees built using
-</Callout>
 custom _commutative_ hashing functions (i.e. `H(a, b) == H(b, a)`). Proving
 leaf inclusion in trees built using non-commutative hashing functions requires
 additional logic that is not supported by this library.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -831,8 +831,8 @@ CAUTION: Not all Merkle trees admit multiproofs. See [`MerkleProof.processMultiP
 
 <Callout>
 Consider the case where `root == proof[0] && leaves.length == 0` as it will return `true`.
-</Callout>
 The `leaves` must be validated independently. See [`MerkleProof.processMultiProof`](#MerkleProof-processMultiProof-bytes32---bool---bytes32---function--bytes32-bytes32--view-returns--bytes32--).
+</Callout>
 
 </div>
 </div>
@@ -862,9 +862,9 @@ tree (i.e., as seen from right to left starting at the deepest layer and continu
 
 <Callout>
 The _empty set_ (i.e. the case where `proof.length == 1 && leaves.length == 0`) is considered a no-op,
-</Callout>
 and therefore a valid multiproof (i.e. it returns `proof[0]`). Consider disallowing this case if you're not
 validating the leaves elsewhere.
+</Callout>
 
 </div>
 </div>
@@ -890,8 +890,8 @@ CAUTION: Not all Merkle trees admit multiproofs. See [`MerkleProof.processMultiP
 
 <Callout>
 Consider the case where `root == proof[0] && leaves.length == 0` as it will return `true`.
-</Callout>
 The `leaves` must be validated independently. See [`MerkleProof.processMultiProof`](#MerkleProof-processMultiProof-bytes32---bool---bytes32---function--bytes32-bytes32--view-returns--bytes32--).
+</Callout>
 
 </div>
 </div>
@@ -921,9 +921,9 @@ tree (i.e., as seen from right to left starting at the deepest layer and continu
 
 <Callout>
 The _empty set_ (i.e. the case where `proof.length == 1 && leaves.length == 0`) is considered a no-op,
-</Callout>
 and therefore a valid multiproof (i.e. it returns `proof[0]`). Consider disallowing this case if you're not
 validating the leaves elsewhere.
+</Callout>
 
 </div>
 </div>
@@ -949,8 +949,8 @@ CAUTION: Not all Merkle trees admit multiproofs. See [`MerkleProof.processMultiP
 
 <Callout>
 Consider the case where `root == proof[0] && leaves.length == 0` as it will return `true`.
-</Callout>
 The `leaves` must be validated independently. See [`MerkleProof.processMultiProofCalldata`](#MerkleProof-processMultiProofCalldata-bytes32---bool---bytes32---function--bytes32-bytes32--view-returns--bytes32--).
+</Callout>
 
 </div>
 </div>
@@ -980,9 +980,9 @@ tree (i.e., as seen from right to left starting at the deepest layer and continu
 
 <Callout>
 The _empty set_ (i.e. the case where `proof.length == 1 && leaves.length == 0`) is considered a no-op,
-</Callout>
 and therefore a valid multiproof (i.e. it returns `proof[0]`). Consider disallowing this case if you're not
 validating the leaves elsewhere.
+</Callout>
 
 </div>
 </div>
@@ -1008,8 +1008,8 @@ CAUTION: Not all Merkle trees admit multiproofs. See [`MerkleProof.processMultiP
 
 <Callout>
 Consider the case where `root == proof[0] && leaves.length == 0` as it will return `true`.
-</Callout>
 The `leaves` must be validated independently. See [`MerkleProof.processMultiProofCalldata`](#MerkleProof-processMultiProofCalldata-bytes32---bool---bytes32---function--bytes32-bytes32--view-returns--bytes32--).
+</Callout>
 
 </div>
 </div>
@@ -1039,9 +1039,9 @@ tree (i.e., as seen from right to left starting at the deepest layer and continu
 
 <Callout>
 The _empty set_ (i.e. the case where `proof.length == 1 && leaves.length == 0`) is considered a no-op,
-</Callout>
 and therefore a valid multiproof (i.e. it returns `proof[0]`). Consider disallowing this case if you're not
 validating the leaves elsewhere.
+</Callout>
 
 </div>
 </div>
@@ -1117,9 +1117,9 @@ hash signed when using the [`eth_sign`](https://ethereum.org/en/developers/docs/
 
 <Callout>
 The `messageHash` parameter is intended to be the result of hashing a raw message with
-</Callout>
 keccak256, although any bytes32 value can be safely used because the final digest will
 be re-hashed.
+</Callout>
 
 See [`ECDSA.recover`](#ECDSA-recover-bytes32-uint8-bytes32-bytes32-).
 
@@ -1412,20 +1412,20 @@ support for explicit or implicit NULL parameters in the DigestInfo (no other opt
 
 <Callout type="warn">
 For security reason, this function requires the signature and modulus to have a length of at least
-</Callout>
 2048 bits. If you use a smaller key, consider replacing it with a larger, more secure, one.
+</Callout>
 
 <Callout type="warn">
 This verification algorithm doesn't prevent replayability. If called multiple times with the same
-</Callout>
 digest, public key and (valid signature), it will return true every time. Consider including an onchain nonce
 or unique identifier in the message to prevent replay attacks.
+</Callout>
 
 <Callout type="warn">
 This verification algorithm supports any exponent. NIST recommends using `65537` (or higher).
-</Callout>
 That is the default value many libraries use, such as OpenSSL. Developers may choose to reject public keys
 using a low exponent out of security concerns.
+</Callout>
 
 </div>
 </div>
@@ -1481,8 +1481,8 @@ signature is validated against it using ERC-1271, otherwise it's validated using
 
 <Callout>
 Unlike ECDSA signatures, contract signatures are revocable, and the outcome of this function can thus
-</Callout>
 change through time. It could return true at block N and false at block N+1 (or the opposite).
+</Callout>
 
 <Callout>
 For an extended version of this function that supports ERC-7913 signatures, see #SignatureChecker-isValidSignatureNow-bytes-bytes32-bytes-.
@@ -1508,8 +1508,8 @@ against the signer smart contract using ERC-1271.
 
 <Callout>
 Unlike ECDSA signatures, contract signatures are revocable, and the outcome of this function can thus
-</Callout>
 change through time. It could return true at block N and false at block N+1 (or the opposite).
+</Callout>
 
 </div>
 </div>
@@ -1539,8 +1539,8 @@ Verification is done as follows:
 
 <Callout>
 Unlike ECDSA signatures, contract signatures are revocable, and the outcome of this function can thus
-</Callout>
 change through time. It could return true at block N and false at block N+1 (or the opposite).
+</Callout>
 
 </div>
 </div>
@@ -1565,8 +1565,8 @@ signers are supported, but the uniqueness check will be more expensive.
 
 <Callout>
 Unlike ECDSA signatures, contract signatures are revocable, and the outcome of this function can thus
-</Callout>
 change through time. It could return true at block N and false at block N+1 (or the opposite).
+</Callout>
 
 </div>
 </div>
@@ -1591,7 +1591,7 @@ Utilities to process [ERC-7739](https://ercs.ethereum.org/ERCS/erc-7739) typed d
 that are specific to an EIP-712 domain.
 
 This library provides methods to wrap, unwrap and operate over typed data signatures with a defensive
-rehashing mechanism that includes the app's xref:api:utils/cryptography#EIP712-_domainSeparatorV4[EIP-712]
+rehashing mechanism that includes the app's [EIP-712](#EIP712-_domainSeparatorV4--)
 and preserves readability of the signed content using an EIP-712 nested approach.
 
 A smart contract domain can validate a signature for a typed data structure in two ways:
@@ -1601,11 +1601,11 @@ A smart contract domain can validate a signature for a typed data structure in t
 
 <Callout>
 A provider for a smart contract wallet would need to return this signature as the
-</Callout>
 result of a call to `personal_sign` or `eth_signTypedData`, and this may be unsupported by
 API clients that expect a return value of 129 bytes, or specifically the `r,s,v` parameters
-of an xref:api:utils/cryptography#ECDSA[ECDSA] signature, as is for example specified for
-xref:api:utils/cryptography#EIP712[EIP-712].
+of an [ECDSA](#ECDSA) signature, as is for example specified for
+[EIP-712](#EIP712).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1666,8 +1666,8 @@ Constructed as follows:
 
 <Callout>
 This function returns empty if the input format is invalid instead of reverting.
-</Callout>
 data instead.
+</Callout>
 
 </div>
 </div>
@@ -1816,10 +1816,9 @@ Signature validation algorithm.
 
 <Callout type="warn">
 Implementing a signature validation algorithm is a security-sensitive operation as it involves
-</Callout>
 cryptographic verification. It is important to review and test thoroughly before deployment. Consider
-using one of the signature verification libraries (xref:api:utils/cryptography#ECDSA[ECDSA],
-xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
+using one of the signature verification libraries ([ECDSA](#ECDSA), [P256](#P256), or [RSA](#RSA)).
+</Callout>
 
 </div>
 </div>
@@ -1872,9 +1871,9 @@ contract MyMultiSignerAccount is Account, MultiSignerERC7913, Initializable {
 
 <Callout type="warn">
 Failing to properly initialize the signers and threshold either during construction
-</Callout>
 (if used standalone) or during initialization (if used as a clone) may leave the contract
 either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1950,9 +1949,9 @@ Using `start = 0` and `end = type(uint64).max` will return the entire set of sig
 
 <Callout type="warn">
 Depending on the `start` and `end`, this operation can copy a large amount of data to memory, which
-</Callout>
 can be expensive. This is designed for view accessors queried without gas fees. Using it in state-changing
 functions may become uncallable if the slice grows too large.
+</Callout>
 
 </div>
 </div>
@@ -2161,8 +2160,8 @@ Returns whether the signers are authorized and the signatures are valid for the 
 
 <Callout type="warn">
 Sorting the signers by their `keccak256` hash will improve the gas efficiency of this function.
-</Callout>
 See [`SignatureChecker.areValidSignaturesNow`](#SignatureChecker-areValidSignaturesNow-bytes32-bytes---bytes---) for more details.
+</Callout>
 
 Requirements:
 
@@ -2378,9 +2377,9 @@ contract MyWeightedMultiSignerAccount is Account, MultiSignerERC7913Weighted, In
 
 <Callout type="warn">
 When setting a threshold value, ensure it matches the scale used for signer weights.
-</Callout>
 For example, if signers have weights like 1, 2, or 3, then a threshold of 4 would require at
 least two signers (e.g., one with weight 1 and one with weight 3). See [`MultiSignerERC7913Weighted.signerWeight`](#MultiSignerERC7913Weighted-signerWeight-bytes-).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2568,10 +2567,10 @@ Requirements:
 
 <Callout>
 This function intentionally does not call `super._validateReachableThreshold` because the base implementation
-</Callout>
 assumes each signer has a weight of 1, which is a subset of this weighted implementation. Consider that multiple
 implementations of this function may exist in the contract, so important side effects may be missed
 depending on the linearization order.
+</Callout>
 
 </div>
 </div>
@@ -2592,10 +2591,10 @@ Validates that the total weight of signers meets the threshold requirement.
 
 <Callout>
 This function intentionally does not call `super._validateThreshold` because the base implementation
-</Callout>
 assumes each signer has a weight of 1, which is a subset of this weighted implementation. Consider that multiple
 implementations of this function may exist in the contract, so important side effects may be missed
 depending on the linearization order.
+</Callout>
 
 </div>
 </div>
@@ -2617,8 +2616,8 @@ Emitted when a signer's weight is changed.
 
 <Callout>
 Not emitted in [`MultiSignerERC7913._addSigners`](#MultiSignerERC7913-_addSigners-bytes---) or [`MultiSignerERC7913._removeSigners`](#MultiSignerERC7913-_removeSigners-bytes---). Indexers must rely on [`MultiSignerERC7913.ERC7913SignerAdded`](#MultiSignerERC7913-ERC7913SignerAdded-bytes-)
-</Callout>
 and [`MultiSignerERC7913.ERC7913SignerRemoved`](#MultiSignerERC7913-ERC7913SignerRemoved-bytes-) to index a default weight of 1. See [`MultiSignerERC7913Weighted.signerWeight`](#MultiSignerERC7913Weighted-signerWeight-bytes-).
+</Callout>
 
 </div>
 </div>
@@ -2673,7 +2672,7 @@ Thrown when the arrays lengths don't match. See [`MultiSignerERC7913Weighted._se
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerECDSA.sol";
 ```
 
-Implementation of [`AbstractSigner`](#AbstractSigner) using xref:api:utils/cryptography#ECDSA[ECDSA] signatures.
+Implementation of [`AbstractSigner`](#AbstractSigner) using [ECDSA](#ECDSA) signatures.
 
 For [`Account`](../account#Account) usage, a [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) function is provided to set the [`SignerECDSA.signer`](#SignerECDSA-signer--) address.
 Doing so is easier for a factory, who is likely to use initializable clones of this contract.
@@ -2690,8 +2689,8 @@ contract MyAccountECDSA is Account, SignerECDSA, Initializable {
 
 <Callout type="warn">
 Failing to call [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) either during construction (if used standalone)
-</Callout>
 or during initialization (if used as a clone) may leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2770,10 +2769,9 @@ Signature validation algorithm.
 
 <Callout type="warn">
 Implementing a signature validation algorithm is a security-sensitive operation as it involves
-</Callout>
 cryptographic verification. It is important to review and test thoroughly before deployment. Consider
-using one of the signature verification libraries (xref:api:utils/cryptography#ECDSA[ECDSA],
-xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
+using one of the signature verification libraries ([ECDSA](#ECDSA), [P256](#P256), or [RSA](#RSA)).
+</Callout>
 
 </div>
 </div>
@@ -2863,8 +2861,8 @@ contract MyAccountERC7913 is Account, SignerERC7913, Initializable {
 
 <Callout type="warn">
 Failing to call [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) either during construction (if used standalone)
-</Callout>
 or during initialization (if used as a clone) may leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2960,7 +2958,7 @@ with [`SignerECDSA.signer`](#SignerECDSA-signer--), `hash` and `signature`.
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerP256.sol";
 ```
 
-Implementation of [`AbstractSigner`](#AbstractSigner) using xref:api:utils/cryptography#P256[P256] signatures.
+Implementation of [`AbstractSigner`](#AbstractSigner) using [P256](#P256) signatures.
 
 For [`Account`](../account#Account) usage, a [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) function is provided to set the [`SignerECDSA.signer`](#SignerECDSA-signer--) public key.
 Doing so is easier for a factory, who is likely to use initializable clones of this contract.
@@ -2977,8 +2975,8 @@ contract MyAccountP256 is Account, SignerP256, Initializable {
 
 <Callout type="warn">
 Failing to call [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) either during construction (if used standalone)
-</Callout>
 or during initialization (if used as a clone) may leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -3065,10 +3063,9 @@ Signature validation algorithm.
 
 <Callout type="warn">
 Implementing a signature validation algorithm is a security-sensitive operation as it involves
-</Callout>
 cryptographic verification. It is important to review and test thoroughly before deployment. Consider
-using one of the signature verification libraries (xref:api:utils/cryptography#ECDSA[ECDSA],
-xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
+using one of the signature verification libraries ([ECDSA](#ECDSA), [P256](#P256), or [RSA](#RSA)).
+</Callout>
 
 </div>
 </div>
@@ -3104,7 +3101,7 @@ xref:api:utils/cryptography#P256[P256] or xref:api:utils/cryptography#RSA[RSA]).
 import "@openzeppelin/contracts/utils/cryptography/signers/SignerRSA.sol";
 ```
 
-Implementation of [`AbstractSigner`](#AbstractSigner) using xref:api:utils/cryptography#RSA[RSA] signatures.
+Implementation of [`AbstractSigner`](#AbstractSigner) using [RSA](#RSA) signatures.
 
 For [`Account`](../account#Account) usage, a [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) function is provided to set the [`SignerECDSA.signer`](#SignerECDSA-signer--) public key.
 Doing so is easier for a factory, who is likely to use initializable clones of this contract.
@@ -3121,8 +3118,8 @@ contract MyAccountRSA is Account, SignerRSA, Initializable {
 
 <Callout type="warn">
 Failing to call [`SignerECDSA._setSigner`](#SignerECDSA-_setSigner-address-) either during construction (if used standalone)
-</Callout>
 or during initialization (if used as a clone) may leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -3198,13 +3195,13 @@ Return the signer's RSA public key.
 <div className="px-4">
 
 See [`AbstractSigner._rawSignatureValidation`](#AbstractSigner-_rawSignatureValidation-bytes32-bytes-). Verifies a PKCSv1.5 signature by calling
-xref:api:utils/cryptography.adoc#RSA-pkcs1Sha256-bytes-bytes-bytes-bytes-[RSA.pkcs1Sha256].
+[RSA.pkcs1Sha256](#RSA-pkcs1Sha256-bytes-bytes-bytes-bytes-).
 
 <Callout type="warn">
 Following the RSASSA-PKCS1-V1_5-VERIFY procedure outlined in RFC8017 (section 8.2.2), the
-</Callout>
 provided `hash` is used as the `M` (message) and rehashed using SHA256 according to EMSA-PKCS1-v1_5
 encoding as per section 9.2 (step 1) of the RFC.
+</Callout>
 
 </div>
 </div>
@@ -3234,11 +3231,11 @@ This contract requires implementing the [`AccountERC7579._rawSignatureValidation
 which may be either an typed data or a personal sign nested type.
 
 <Callout>
-xref:api:utils/cryptography#EIP712[EIP-712] uses xref:api:utils/cryptography#ShortStrings[ShortStrings] to
-</Callout>
+[EIP-712](#EIP712) uses [ShortStrings](../utils#ShortStrings) to
 optimize gas costs for short strings (up to 31 characters). Consider that strings longer than that will use storage,
 which may limit the ability of the signer to be used within the ERC-4337 validation phase (due to
 [ERC-7562 storage access rules](https://eips.ethereum.org/EIPS/eip-7562#storage-rules)).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>

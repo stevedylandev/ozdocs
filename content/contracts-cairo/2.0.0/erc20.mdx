@@ -7,9 +7,9 @@ The ERC20 token standard is a specification for [fungible tokens](https://docs.o
 
 <Callout type='warn'>
 Prior to [Contracts v0.7.0](https://github.com/OpenZeppelin/cairo-contracts/releases/tag/v0.7.0), ERC20 contracts store and read `decimals` from storage; however, this implementation returns a static `18`.
-</Callout>
 If upgrading an older ERC20 contract that has a decimals value other than `18`, the upgraded contract **must** use a custom `decimals` implementation.
 See the [Customizing decimals](/erc20#customizing_decimals) guide.
+</Callout>
 
 ## Usage
 
