@@ -178,13 +178,13 @@ However, this is not the only way to split your code into modules. You can also 
 
 ## Using OpenZeppelin Contracts
 
-Reusable modules and libraries are the cornerstone of great software. [**OpenZeppelin Contracts**](contracts::index) contains lots of useful building blocks for smart contracts to build on. And you can rest easy when building on them: they’ve been the subject of multiple audits, with their security and correctness battle-tested.
+Reusable modules and libraries are the cornerstone of great software. [**OpenZeppelin Contracts**](/contracts) contains lots of useful building blocks for smart contracts to build on. And you can rest easy when building on them: they’ve been the subject of multiple audits, with their security and correctness battle-tested.
 
 ### About inheritance
 
 Many of the contracts in the library are not standalone, that is, you’re not expected to deploy them as-is. Instead, you will use them as a starting point to build your own contracts by adding features to them. Solidity provides _multiple inheritance_ as a mechanism to achieve this: take a look at the [Solidity documentation](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance) for more details.
 
-For example, the [`Ownable`](contracts:api:access#Ownable) contract marks the deployer account as the contract’s owner, and provides a modifier called `onlyOwner`. When applied to a function, `onlyOwner` will cause all function calls that do not originate from the owner account to revert. Functions to [transfer](contracts:api:access#Ownable-transferOwnership-address-) and [renounce](contracts:api:access#Ownable-renounceOwnership--) ownership are also available.
+For example, the [`Ownable`](/contracts/5.x/api/access#Ownable) contract marks the deployer account as the contract’s owner, and provides a modifier called `onlyOwner`. When applied to a function, `onlyOwner` will cause all function calls that do not originate from the owner account to revert. Functions to [transfer](contracts:api:access#Ownable-transferOwnership-address-) and [renounce](contracts:api:access#Ownable-renounceOwnership--) ownership are also available.
 
 When used this way, inheritance becomes a powerful mechanism that allows for modularization, without forcing you to deploy and manage multiple contracts.
 
@@ -227,7 +227,7 @@ contract Box is Ownable
 }
 ```
 
-The [OpenZeppelin Contracts documentation](contracts::index) is a great place to learn about developing secure smart contract systems. It features both guides and a detailed API reference: see for example the [Access Control](contracts::access-control) guide to know more about the `Ownable` contract used in the code sample above.
+The [OpenZeppelin Contracts documentation](/contracts) is a great place to learn about developing secure smart contract systems. It features both guides and a detailed API reference: see for example the [Access Control](/contracts/5.x/access-control) guide to know more about the `Ownable` contract used in the code sample above.
 
 ## Next steps
 

@@ -83,7 +83,7 @@ A good option for securing admin accounts is to use a special contract, such as 
 
 ### Upgrades admin
 
-A special administrator account in an [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) project is the account with the power to [_upgrade_](upgrading-smart-contracts) other contracts. This defaults to the externally owned account used to deploy the contracts: while this is good enough for a local or testnet deployment, in mainnet you need to better secure your contracts. An attacker who gets hold of your upgrade admin account can change any contract in your system!
+A special administrator account in an [OpenZeppelin Upgrades Plugins](/upgrades-plugins) project is the account with the power to [_upgrade_](upgrading-smart-contracts) other contracts. This defaults to the externally owned account used to deploy the contracts: while this is good enough for a local or testnet deployment, in mainnet you need to better secure your contracts. An attacker who gets hold of your upgrade admin account can change any contract in your system!
 
 With this in mind, it is a good idea to ***change the ownership of the ProxyAdmin*** after deployment  - for example, to a multisig. To do this, you can use `admin.transferProxyAdminOwnership` to transfer ownership of our `ProxyAdmin` contract.
 
@@ -93,7 +93,7 @@ When you need to upgrade your contracts, we can use `prepareUpgrade` to validate
 
 It can be argued that admin accounts reflect that a project is not actually _decentralized_. After all, if an account can single-handedly change any contract in the system, we are not exactly creating a trustless environment.
 
-Here is where _governance_ comes in. In many cases there will be some operations in your project that require special privileges, from fine-tuning system parameters, to running full contract upgrades. You will need to choose how those actions will be decided upon: whether it is by a [small group](https://safe.global/wallet) of trusted developers, or by [public voting](contracts::governance) of all project stakeholders.
+Here is where _governance_ comes in. In many cases there will be some operations in your project that require special privileges, from fine-tuning system parameters, to running full contract upgrades. You will need to choose how those actions will be decided upon: whether it is by a [small group](https://safe.global/wallet) of trusted developers, or by [public voting](/contracts/5.x/governance) of all project stakeholders.
 
 There is no right answer here. Which governance scheme you pick for your project will largely depend on what you are building and who your community is.
 
