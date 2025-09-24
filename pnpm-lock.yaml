@@ -77,6 +77,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      next-validate-link:
+        specifier: ^1.6.3
+        version: 1.6.3
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -2479,6 +2482,9 @@ packages:
     peerDependencies:
       react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
       react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+
+  next-validate-link@1.6.3:
+    resolution: {integrity: sha512-batZxYlkQQSa8jl0gi1AQd5BlJDY3FG41yecpvBWVIM1t/FnBmbo3cMZZx8sSt4UdrsbLuRE2P3p5s+TsQ8m1A==}
 
   next@15.5.3:
     resolution: {integrity: sha512-r/liNAx16SQj4D+XH/oI1dlpv9tdKJ6cONYPwwcCC46f2NjpaRWY+EKCzULfgQYV6YKXjHBchff2IZBSlZmJNw==}
@@ -5716,6 +5722,18 @@ snapshots:
     dependencies:
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
+
+  next-validate-link@1.6.3:
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      remark: 15.0.1
+      remark-gfm: 4.0.1
+      remark-mdx: 3.1.1
+      tinyglobby: 0.2.15
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
 
   next@15.5.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
