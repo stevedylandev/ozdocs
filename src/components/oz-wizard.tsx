@@ -14,6 +14,7 @@ declare global {
 				style?: React.CSSProperties;
 				"data-tab"?: string;
 				"data-lang"?: string;
+				"version"?: string;
 			};
 		}
 	}
@@ -22,12 +23,13 @@ declare global {
 interface OZWizardProps {
 	tab?: string;
 	lang?: string;
+	version?: string;
 }
 
 // Global flag to prevent multiple script loads
 let wizardScriptLoaded = false;
 
-function OZWizardComponent({ tab, lang }: OZWizardProps) {
+function OZWizardComponent({ tab, lang, version }: OZWizardProps) {
 	const wizardRef = useRef<HTMLElement>(null);
 
 	useEffect(() => {
@@ -57,6 +59,7 @@ function OZWizardComponent({ tab, lang }: OZWizardProps) {
 			ref={wizardRef}
 			data-tab={tab}
 			data-lang={lang}
+			version={version}
 			style={{
 				display: "block",
 				minHeight: "40rem",
