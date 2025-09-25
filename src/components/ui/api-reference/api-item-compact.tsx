@@ -24,7 +24,8 @@ export async function APIItemCompact({
 	};
 
 	const circuitName = getCircuitName(circuitSig);
-  	const anchorId = id ?? (modulePrefix ? `${modulePrefix}-${circuitName}` : circuitName);
+	const anchorId =
+		id ?? (modulePrefix ? `${modulePrefix}-${circuitName}` : circuitName);
 
 	const parseParameters = (params: string): string[] => {
 		const result: string[] = [];
