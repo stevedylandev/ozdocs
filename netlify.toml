@@ -36,12 +36,72 @@ status = 301
 
 [[redirects]]
 from = "/contracts-cairo/2.0.0-alpha.1/*"
-to = "/contracts-cairo/2.0.0/:splat"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/2.0.0-alpha.1/:splat"
 status = 301
 
 [[redirects]]
 from = "/contracts-cairo/0.20.0/*"
-to = "/contracts-cairo/:splat"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.20.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.19.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.19.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.18.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.18.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.17.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.17.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.16.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.16.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.15.1/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.15.1/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.15.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.15.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.14.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.14.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.13.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.13.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.12.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.12.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.11.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.11.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/0.10.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/0.10.0/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-cairo/1.0.0/*"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/1.0.0/:splat"
 status = 301
 
 # Community Contracts
