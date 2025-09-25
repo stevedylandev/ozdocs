@@ -515,7 +515,7 @@ import "@openzeppelin/confidential-contracts/utils/structs/temporary-Checkpoints
 ```
 
 This library defines the `Trace*` struct, for checkpointing values as they change at different points in
-time, and later looking up past values by block number. See [`VotesConfidential`](governance#VotesConfidential) as an example.
+time, and later looking up past values by block number. See [`VotesConfidential`](./governance#VotesConfidential) as an example.
 
 To create a history of checkpoints define a variable type `Checkpoints.Trace*` in your contract, and store a new
 checkpoint for the current transaction block using the [`CheckpointsConfidential.push`](#CheckpointsConfidential-push-struct-CheckpointsConfidential-TraceEuint64-uint256-euint64-) function.
