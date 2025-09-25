@@ -1,10 +1,9 @@
 import "@/app/global.css";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { Provider } from "./provider";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({
 	subsets: ["latin"],
