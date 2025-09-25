@@ -5,6 +5,7 @@ type Props = React.PropsWithChildren<{
 	kind: string;
 	complexity?: string | string[] | React.ReactNode;
 	stackParams?: boolean;
+	modulePrefix?: string;
 	id?: string;
 }>;
 
@@ -13,6 +14,7 @@ export async function APIItemCompact({
 	kind,
 	complexity,
 	stackParams = false,
+	modulePrefix,
 	id,
 	children,
 }: Props) {
@@ -22,7 +24,7 @@ export async function APIItemCompact({
 	};
 
 	const circuitName = getCircuitName(circuitSig);
-	const anchorId = id ?? circuitName;
+  	const anchorId = id ?? (modulePrefix ? `${modulePrefix}-${circuitName}` : circuitName);
 
 	const parseParameters = (params: string): string[] => {
 		const result: string[] = [];
