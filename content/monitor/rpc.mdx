@@ -17,25 +17,22 @@ The OpenZeppelin Monitor includes a robust RPC client implementation with automa
 ### RPC URLs
 
 RPC endpoints are configured in the network configuration files with weights for load balancing:
-
 ```json
-
+{
   "rpc_urls": [
     {
       "type_": "rpc",
-      "url": {"type": "plain", "value": "https://primary-endpoint.example.com",
+      "url": {"type": "plain", "value": "https://primary-endpoint.example.com"},
       "weight": 100
     },
-
+    {
       "type_": "rpc",
-      "url": {"type": "plain", "value": "https://backup-endpoint.example.com",
+      "url": {"type": "plain", "value": "https://backup-endpoint.example.com"},
       "weight": 50
     }
   ]
 }
 ```
-
-
 
 For high-availability setups, configure at least 3 (private) RPC endpoints with appropriate weights to ensure continuous operation even if multiple endpoints fail.
 
@@ -51,7 +48,7 @@ For high-availability setups, configure at least 3 (private) RPC endpoints with 
 
 ## Endpoint Management
 
-The endpoint manager handles
+The endpoint manager handles:
 
 * Initial endpoint selection based on weights
 * Automatic rotation on failures
@@ -121,7 +118,7 @@ let retry_policy = ExponentialBackoff::builder()
 The configurable options are defined in the `RetryConfig` struct:
 ```rust
 // In utils::http
-pub struct RetryConfig
+pub struct RetryConfig {
     /// Maximum number of retries for transient errors (after the initial attempt).
     pub max_retries: u32,
     /// Initial backoff duration before the first retry.
@@ -132,7 +129,7 @@ pub struct RetryConfig
     pub base_for_backoff: u64,
     /// Jitter to apply to the backoff duration.
     pub jitter: Jitter,
-
+}
 ```
 
 The client architecture ensures efficient resource use and consistent retry behavior:
@@ -145,11 +142,11 @@ Each transport client may define its own retry policy:
 
 ```rust
 // src/services/transports/http.rs
-pub struct HttpTransportClient
+pub struct HttpTransportClient {
   pub client: ClientWithMiddleware,
   endpoint_manager: EndpointManager,
   test_connection_payload: Option<String>,
-
+}
 
 // Example of client creation with retry mechanism
 // Use default retry policy
@@ -170,7 +167,6 @@ let retryable_client = create_retryable_http_client(
   base_http_client,
   Some(TransientErrorRetryStrategy), // Use custom or default retry strategy
 );
-
 ```
 
 ### Implementation Details

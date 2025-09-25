@@ -22,28 +22,34 @@ The storage slots are calculated as follows:
 
 ```rust
 // 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc_U256
-const IMPLEMENTATION_SLOT: U256 =
+pub const IMPLEMENTATION_SLOT: B256 = {
     const HASH: [u8; 32] = keccak_const::Keccak256::new()
         .update(b"eip1967.proxy.implementation")
         .finalize();
-    U256::from_be_bytes(HASH).wrapping_sub(uint!(1_U256))
-;
+    B256::new(
+        U256::from_be_bytes(HASH).wrapping_sub(uint!(1_U256)).to_be_bytes(),
+    )
+};
 
 // 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103_U256
-const ADMIN_SLOT: U256 =
+pub const ADMIN_SLOT: B256 = {
     const HASH: [u8; 32] = keccak_const::Keccak256::new()
         .update(b"eip1967.proxy.admin")
         .finalize();
-    U256::from_be_bytes(HASH).wrapping_sub(uint!(1_U256))
-;
+    B256::new(
+        U256::from_be_bytes(HASH).wrapping_sub(uint!(1_U256)).to_be_bytes(),
+    )
+};
 
 // 0xa3f0ad74e5423aebfd80d3ef4346578335a9a72aeaee59ff6cb3582b35133d50_U256
-const BEACON_SLOT: U256 =
+pub const BEACON_SLOT: B256 = {
     const HASH: [u8; 32] = keccak_const::Keccak256::new()
         .update(b"eip1967.proxy.beacon")
         .finalize();
-    U256::from_be_bytes(HASH).wrapping_sub(uint!(1_U256))
-;
+    B256::new(
+        U256::from_be_bytes(HASH).wrapping_sub(uint!(1_U256)).to_be_bytes(),
+    )
+};
 ```
 
 ## Basic ERC-1967 Proxy Implementation
@@ -51,43 +57,42 @@ const BEACON_SLOT: U256 =
 Here’s how to implement a basic ERC-1967 proxy:
 
 ```rust
-use openzeppelin_stylus::proxy::
-    erc1967::{self, Erc1967Proxy,
+use openzeppelin_stylus::proxy::{
+    erc1967::{self, Erc1967Proxy},
     IProxy,
 };
-use stylus_sdk::
+use stylus_sdk::{
     abi::Bytes,
     alloy_primitives::Address,
     prelude::*,
     ArbResult,
-;
+};
 
 #[entrypoint]
 #[storage]
-struct MyErc1967Proxy
+struct MyErc1967Proxy {
     erc1967: Erc1967Proxy,
-
+}
 
 #[public]
-impl MyErc1967Proxy
+impl MyErc1967Proxy {
     #[constructor]
-    fn constructor(
+    pub fn constructor(
         &mut self,
         implementation: Address,
         data: Bytes,
     ) -> Result<(), erc1967::utils::Error> {
         self.erc1967.constructor(implementation, &data)
+    }
 
-
-    /// Get the current implementation address
-    fn implementation(&self) -> Result<Address, Vec<u8>>
+    fn implementation(&self) -> Result<Address, Vec<u8>> {
         self.erc1967.implementation()
+    }
 
-
-    /// Fallback function that delegates all calls to the implementation
+    #[payable]
     #[fallback]
-    fn fallback(&mut self, calldata: &[u8]) -> ArbResult
-        unsafe { self.erc1967.do_fallback(calldata)
+    fn fallback(&mut self, calldata: &[u8]) -> ArbResult {
+        unsafe { self.erc1967.do_fallback(calldata) }
     }
 }
 ```
@@ -115,9 +120,9 @@ let beacon = Erc1967Utils::get_beacon();
 
 ```rust
 use openzeppelin_stylus::proxy::erc1967::utils::Erc1967Utils;
-use stylus_sdk::abi::Bytes, prelude::*;
+use stylus_sdk::{abi::Bytes, prelude::*};
 
-impl MyErc1967Proxy
+impl MyErc1967Proxy {
     /// Upgrade to a new implementation
     fn upgrade_implementation(
         &mut self,
@@ -125,7 +130,7 @@ impl MyErc1967Proxy
         data: Bytes,
     ) -> Result<(), erc1967::utils::Error> {
         Erc1967Utils::upgrade_to_and_call(self, new_implementation, &data)
-
+    }
 }
 ```
 
@@ -134,11 +139,11 @@ impl MyErc1967Proxy
 ```rust
 use openzeppelin_stylus::proxy::erc1967::utils::Erc1967Utils;
 
-impl MyErc1967Proxy
+impl MyErc1967Proxy {
     /// Change the admin address
     fn change_admin(&mut self, new_admin: Address) -> Result<(), erc1967::utils::Error> {
         Erc1967Utils::change_admin(new_admin)
-
+    }
 }
 ```
 
@@ -146,9 +151,9 @@ impl MyErc1967Proxy
 
 ```rust
 use openzeppelin_stylus::proxy::erc1967::utils::Erc1967Utils;
-use stylus_sdk::abi::Bytes, prelude::*;
+use stylus_sdk::{abi::Bytes, prelude::*};
 
-impl MyErc1967Proxy
+impl MyErc1967Proxy {
     /// Upgrade to a new beacon
     fn upgrade_beacon(
         &mut self,
@@ -156,7 +161,7 @@ impl MyErc1967Proxy
         data: Bytes,
     ) -> Result<(), erc1967::utils::Error> {
         Erc1967Utils::upgrade_beacon_to_and_call(self, new_beacon, &data)
-
+    }
 }
 ```
 
@@ -165,7 +170,7 @@ impl MyErc1967Proxy
 The ERC-1967 proxy constructor accepts optional initialization data:
 
 ```rust
-impl MyErc1967Proxy
+impl MyErc1967Proxy {
     #[constructor]
     fn constructor(
         &mut self,
@@ -175,7 +180,7 @@ impl MyErc1967Proxy
         // If data is provided, it will be passed to the implementation
         // during construction via delegatecall
         self.erc1967.constructor(implementation, &data)
-
+    }
 }
 ```
 
@@ -192,10 +197,10 @@ The `data` parameter can be used to:
 use alloy_sol_macro::sol;
 use alloy_sol_types::SolCall;
 
-sol!
+sol! {
     interface IERC20 {
         function mint(address to, uint256 amount) external;
-
+    }
 }
 
 // In your deployment script or test
@@ -204,10 +209,10 @@ let initial_owner = alice;
 let initial_supply = U256::from(1000000);
 
 // Encode the mint call
-let mint_data = IERC20::mintCall
+let mint_data = IERC20::mintCall {
     to: initial_owner,
     amount: initial_supply,
-.abi_encode();
+}.abi_encode();
 
 // Deploy proxy with initialization data
 let proxy = MyErc1967Proxy::deploy(
@@ -234,7 +239,7 @@ Your implementation contract can use any storage layout without worrying about c
 ```rust
 #[entrypoint]
 #[storage]
-struct MyToken
+struct MyToken {
     // These fields are safe to use - they won't conflict with ERC-1967 slots
     balances: StorageMapping<Address, U256>,
     allowances: StorageMapping<(Address, Address), U256>,
@@ -243,7 +248,7 @@ struct MyToken
     symbol: StorageString,
     decimals: StorageU8,
     // ... any other storage fields
-
+}
 ```
 
 ## Best Practices
@@ -266,6 +271,6 @@ struct MyToken
 
 ## Related Patterns
 
-* [Basic Proxy](proxy): Basic proxy pattern using `delegate_call` for upgradeable contracts.
-* [Beacon Proxy](beacon-proxy): Multiple proxies pointing to a single beacon contract for mass upgrades of the implementation contract address.
-* [UUPS Proxy](uups-proxy): The Universal Upgradeable Proxy Standard (UUPS) that is a minimal and gas-efficient pattern for upgradeable contracts.
+* [Basic Proxy](/contracts-stylus/proxy): Basic proxy pattern using `delegate_call` for upgradeable contracts.
+* [Beacon Proxy](/contracts-stylus/beacon-proxy): Multiple proxies pointing to a single beacon contract for mass upgrades of the implementation contract address.
+* [UUPS Proxy](/contracts-stylus/uups-proxy): The Universal Upgradeable Proxy Standard (UUPS) that is a minimal and gas-efficient pattern for upgradeable contracts.

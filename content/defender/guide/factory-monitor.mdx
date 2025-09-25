@@ -6,7 +6,7 @@ The factory-clone pattern can be advantageous for minimizing gas costs. However,
 
 This guide shows how to use Defender to monitor a factory contract as well as the clone contracts created by it. Monitor automation is achieved through the following structure of Defender modules:
 
-* A Monitor watches for successful event emitted by the factory contract that creates a clone. If detected, it triggers an [Action](module/actions) and [passes along information](module/actions#monitor_invocations) about the transaction.
+* A Monitor watches for successful event emitted by the factory contract that creates a clone. If detected, it triggers an [Action](/defender/module/actions) and [passes along information](module/actions#monitor_invocations) about the transaction.
 * The Action makes use of the [`defender-sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the address of the newly created contract to the [address book](module/address-book) for easier monitoring.
 * Aditionally, the Action uses the [`defender-sdk`](https://www.npmjs.com/package/@openzeppelin/defender-sdk) to add the clone address to the list of addresses watched by a Monitor.
 

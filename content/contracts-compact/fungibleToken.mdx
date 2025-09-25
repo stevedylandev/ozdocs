@@ -66,6 +66,7 @@ constructor(
 ```
 
 Next, expose the circuits that users may call in the contract.
+
 This library enables extensibility by following the rules of the [Module/Contract Pattern].
 Note that circuits with a preceding underscore (`_likeThis`) are meant to be building blocks for implementing contracts.
 Exposing [_mint] without some sort of access control, for example, would allow ANYONE to mint tokens.

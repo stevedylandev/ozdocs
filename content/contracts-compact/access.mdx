@@ -80,7 +80,6 @@ export circuit mint(recipient: Either<ZswapCoinPublicKey, ContractAddress>, valu
 }
 
 ```
-
 <Callout>
 Make sure you fully understand how [AccessControl] works before using it on your system,
 or copy-pasting the examples from this guide.
@@ -90,7 +89,8 @@ While clear and explicit, this isn’t anything we wouldn’t have been able to 
 Indeed, where `AccessControl` shines is in scenarios where granular permissions are required,
 which can be implemented by defining _multiple_ roles.
 
-Let’s augment our FungibleToken example by also defining a 'burner' role, which lets accounts destroy tokens.
+
+Let's augment our FungibleToken example by also defining a 'burner' role, which lets accounts destroy tokens.
 
 ```ts
 pragma language_version >= 0.16.0;
@@ -221,6 +221,7 @@ or may be prohibitively expensive to include in a single transaction.
 ### Experimental features
 
 This module offers an experimental circuit that allow access control permissions to be granted to contract addresses [_unsafeGrantRole].
+
 Note that the circuit name is very explicit ("unsafe") with this experimental circuit.
 Until contract-to-contract calls are supported,
 there is no direct way for a contract to call permissioned circuits of other contracts or grant/revoke role permissions.

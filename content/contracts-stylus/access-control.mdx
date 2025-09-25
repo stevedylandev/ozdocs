@@ -8,24 +8,24 @@ Access control—that is, "who is allowed to do this thing"—is incredibly impo
 
 The most common and basic form of access control is the concept of _ownership_: there’s an account that is the `owner` of a contract and can do administrative tasks on it. This approach is perfectly reasonable for contracts that have a single administrative user.
 
-OpenZeppelin Contracts for Stylus provides [`Ownable`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/access/ownable/struct.Ownable.html) for implementing ownership in your contracts.
+OpenZeppelin Contracts for Stylus provides [`Ownable`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/access/ownable/struct.Ownable.html) for implementing ownership in your contracts.
 
 ```rust
-use openzeppelin_stylus::access::ownable::self, Ownable;
+use openzeppelin_stylus::access::ownable::{self, Ownable};
 
 #[derive(SolidityError, Debug)]
-enum Error
+enum Error {
     UnauthorizedAccount(ownable::OwnableUnauthorizedAccount),
     InvalidOwner(ownable::OwnableInvalidOwner),
     // other custom errors...
+}
 
-
-impl From<ownable::Error> for Error
+impl From<ownable::Error> for Error {
     fn from(value: ownable::Error) -> Self {
         match value {
             ownable::Error::UnauthorizedAccount(e) => {
                 Error::UnauthorizedAccount(e)
-
+            }
             ownable::Error::InvalidOwner(e) => Error::InvalidOwner(e),
         }
     }
@@ -33,53 +33,53 @@ impl From<ownable::Error> for Error
 
 #[entrypoint]
 #[storage]
-struct OwnableExample
+struct OwnableExample {
     ownable: Ownable,
-
+}
 
 #[public]
 #[implements(IOwnable<Error = Error>)]
-impl MyContract
+impl MyContract {
     fn normal_thing(&self) {
         // anyone can call this normal_thing()
+    }
 
-
-    fn special_thing(&mut self) -> Result<(), Error>
+    fn special_thing(&mut self) -> Result<(), Error> {
         self.ownable.only_owner()?;
 
         // only the owner can call special_thing()!
 
         Ok(())
-
+    }
 }
 
 #[public]
-impl IOwnable for MyContract
+impl IOwnable for MyContract {
     type Error = Error;
 
     fn owner(&self) -> Address {
         self.ownable.owner()
-
+    }
 
     fn transfer_ownership(
         &mut self,
         new_owner: Address,
-    ) -> Result<(), Self::Error>
+    ) -> Result<(), Self::Error> {
         Ok(self.ownable.transfer_ownership(new_owner)?)
+    }
 
-
-    fn renounce_ownership(&mut self) -> Result<(), Self::Error>
+    fn renounce_ownership(&mut self) -> Result<(), Self::Error> {
         Ok(self.ownable.renounce_ownership()?)
-
+    }
 }
 ```
 
-At deployment, the [`owner`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/access/ownable/struct.Ownable.html#method.owner) of an `Ownable` contract is set to the provided `initial_owner` parameter.
+At deployment, the [`owner`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/access/ownable/struct.Ownable.html#method.owner) of an `Ownable` contract is set to the provided `initial_owner` parameter.
 
 Ownable also lets you:
 
-* [`transfer_ownership`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/access/ownable/struct.Ownable.html#method.transfer_ownership) from the owner account to a new one, and
-* [`renounce_ownership`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/access/ownable/struct.Ownable.html#method.renounce_ownership) for the owner to relinquish this administrative privilege, a common pattern after an initial stage with centralized administration is over.
+* [`transfer_ownership`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/access/ownable/struct.Ownable.html#method.transfer_ownership) from the owner account to a new one, and
+* [`renounce_ownership`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/access/ownable/struct.Ownable.html#method.renounce_ownership) for the owner to relinquish this administrative privilege, a common pattern after an initial stage with centralized administration is over.
 
 <Callout type='warn'>
 Removing the owner altogether will mean that administrative tasks that are protected by `only_owner` will no longer be callable!
@@ -99,19 +99,19 @@ Most software uses access control systems that are role-based: some users are re
 
 ### Using `AccessControl`
 
-OpenZeppelin Contracts provides [`AccessControl`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/access/control/struct.AccessControl.html) for implementing role-based access control. Its usage is straightforward: for each role that you want to define,
+OpenZeppelin Contracts provides [`AccessControl`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/access/control/struct.AccessControl.html) for implementing role-based access control. Its usage is straightforward: for each role that you want to define,
 you will create a new _role identifier_ that is used to grant, revoke, and check if an account has that role.
 
-Here’s a simple example of using `AccessControl` in an [ERC-20 token](erc20) to define a 'minter' role, which allows accounts that have it create new tokens. Note that the example is unassuming of the way you construct your contract.
+Here’s a simple example of using `AccessControl` in an [ERC-20 token](/contracts-stylus/erc20) to define a 'minter' role, which allows accounts that have it create new tokens. Note that the example is unassuming of the way you construct your contract.
 
 ```rust
-use openzeppelin_stylus::
-    access::control::{self, AccessControl, IAccessControl,
-    token::erc20::self, Erc20, IErc20,
+use openzeppelin_stylus::{
+    access::control::{self, AccessControl, IAccessControl},
+    token::erc20::{self, Erc20, IErc20},
 };
 
 #[derive(SolidityError, Debug)]
-enum Error
+enum Error {
     UnauthorizedAccount(control::AccessControlUnauthorizedAccount),
     BadConfirmation(control::AccessControlBadConfirmation),
     InsufficientBalance(erc20::ERC20InsufficientBalance),
@@ -120,30 +120,30 @@ enum Error
     InsufficientAllowance(erc20::ERC20InsufficientAllowance),
     InvalidSpender(erc20::ERC20InvalidSpender),
     InvalidApprover(erc20::ERC20InvalidApprover),
+}
 
-
-impl From<control::Error> for Error
+impl From<control::Error> for Error {
     fn from(value: control::Error) -> Self {
         match value {
             control::Error::UnauthorizedAccount(e) => {
                 Error::UnauthorizedAccount(e)
-
+            }
             control::Error::BadConfirmation(e) => Error::BadConfirmation(e),
         }
     }
 }
 
-impl From<erc20::Error> for Error
+impl From<erc20::Error> for Error {
     fn from(value: erc20::Error) -> Self {
         match value {
             erc20::Error::InsufficientBalance(e) => {
                 Error::InsufficientBalance(e)
-
+            }
             erc20::Error::InvalidSender(e) => Error::InvalidSender(e),
             erc20::Error::InvalidReceiver(e) => Error::InvalidReceiver(e),
-            erc20::Error::InsufficientAllowance(e) =>
+            erc20::Error::InsufficientAllowance(e) => {
                 Error::InsufficientAllowance(e)
-
+            }
             erc20::Error::InvalidSpender(e) => Error::InvalidSpender(e),
             erc20::Error::InvalidApprover(e) => Error::InvalidApprover(e),
         }
@@ -152,110 +152,110 @@ impl From<erc20::Error> for Error
 
 #[entrypoint]
 #[storage]
-struct Example
+struct Example {
     erc20: Erc20,
     access: AccessControl,
-
+}
 
 const MINTER_ROLE: [u8; 32] =
     keccak_const::Keccak256::new().update(b"MINTER_ROLE").finalize();
 
 #[public]
 #[implements(IErc20<Error = Error>, IAccessControl<Error = Error>)]
-impl Example
+impl Example {
     fn mint(&mut self, to: Address, amount: U256) -> Result<(), Error> {
         self.access.only_role(MINTER_ROLE.into())?;
         self.erc20._mint(to, amount)?;
         Ok(())
-
+    }
 }
 
 #[public]
-impl IErc20 for Example
+impl IErc20 for Example {
     type Error = Error;
 
     fn total_supply(&self) -> U256 {
         self.erc20.total_supply()
+    }
 
-
-    fn balance_of(&self, account: Address) -> U256
+    fn balance_of(&self, account: Address) -> U256 {
         self.erc20.balance_of(account)
-
+    }
 
     fn transfer(
         &mut self,
         to: Address,
         value: U256,
-    ) -> Result<bool, Self::Error>
+    ) -> Result<bool, Self::Error> {
         Ok(self.erc20.transfer(to, value)?)
+    }
 
-
-    fn allowance(&self, owner: Address, spender: Address) -> U256
+    fn allowance(&self, owner: Address, spender: Address) -> U256 {
         self.erc20.allowance(owner, spender)
-
+    }
 
     fn approve(
         &mut self,
         spender: Address,
         value: U256,
-    ) -> Result<bool, Self::Error>
+    ) -> Result<bool, Self::Error> {
         Ok(self.erc20.approve(spender, value)?)
-
+    }
 
     fn transfer_from(
         &mut self,
         from: Address,
         to: Address,
         value: U256,
-    ) -> Result<bool, Self::Error>
+    ) -> Result<bool, Self::Error> {
         Ok(self.erc20.transfer_from(from, to, value)?)
-
+    }
 }
 
 #[public]
-impl IAccessControl for Example
+impl IAccessControl for Example {
     type Error = Error;
 
     fn has_role(&self, role: B256, account: Address) -> bool {
         self.access.has_role(role, account)
+    }
 
-
-    fn only_role(&self, role: B256) -> Result<(), Self::Error>
+    fn only_role(&self, role: B256) -> Result<(), Self::Error> {
         Ok(self.access.only_role(role)?)
+    }
 
-
-    fn get_role_admin(&self, role: B256) -> B256
+    fn get_role_admin(&self, role: B256) -> B256 {
         self.access.get_role_admin(role)
-
+    }
 
     fn grant_role(
         &mut self,
         role: B256,
         account: Address,
-    ) -> Result<(), Self::Error>
+    ) -> Result<(), Self::Error> {
         Ok(self.access.grant_role(role, account)?)
-
+    }
 
     fn revoke_role(
         &mut self,
         role: B256,
         account: Address,
-    ) -> Result<(), Self::Error>
+    ) -> Result<(), Self::Error> {
         Ok(self.access.revoke_role(role, account)?)
-
+    }
 
     fn renounce_role(
         &mut self,
         role: B256,
         confirmation: Address,
-    ) -> Result<(), Self::Error>
+    ) -> Result<(), Self::Error> {
         Ok(self.access.renounce_role(role, confirmation)?)
-
+    }
 }
 ```
 
 <Callout>
-Make sure you fully understand how [`AccessControl`](https://docs.rs/openzeppelin-stylus/0.3.0-alpha.1/openzeppelin_stylus/access/control/struct.AccessControl.html) works before using it on your system, or copy-pasting the examples from this guide.
+Make sure you fully understand how [`AccessControl`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/access/control/struct.AccessControl.html) works before using it on your system, or copy-pasting the examples from this guide.
 </Callout>
 
 While clear and explicit, this isn’t anything we wouldn’t have been able to achieve with `Ownable`. Indeed, where `AccessControl` shines is in scenarios where granular permissions are required, which can be implemented by defining _multiple_ roles.
@@ -263,23 +263,23 @@ While clear and explicit, this isn’t anything we wouldn’t have been able to 
 Let’s augment our ERC-20 token example by also defining a 'burner' role, which lets accounts destroy tokens, and by using the `only_role` modifier:
 
 ```rust
-use openzeppelin_stylus::
-    access::control::{self, AccessControl, IAccessControl,
-    token::erc20::self, Erc20, IErc20,
+use openzeppelin_stylus::{
+    access::control::{self, AccessControl, IAccessControl},
+    token::erc20::{self, Erc20, IErc20},
 };
 
 #[derive(SolidityError, Debug)]
-enum Error
+enum Error {
     AccessControl(control::Error),
     Erc20(erc20::Error),
-
+}
 
 #[entrypoint]
 #[storage]
-struct Example
+struct Example {
     erc20: Erc20,
     access: AccessControl,
-
+}
 
 const MINTER_ROLE: [u8; 32] =
     keccak_const::Keccak256::new().update(b"MINTER_ROLE").finalize();
@@ -289,29 +289,29 @@ const BURNER_ROLE: [u8; 32] =
 
 #[public]
 #[implements(IErc20<Error = Error>, IAccessControl<Error = Error>)]
-impl Example
+impl Example {
     fn mint(&mut self, to: Address, amount: U256) -> Result<(), Error> {
         self.access.only_role(MINTER_ROLE.into())?;
         self.erc20._mint(to, amount)?;
         Ok(())
+    }
 
-
-    fn burn(&mut self, from: Address, amount: U256) -> Result<(), Error>
+    fn burn(&mut self, from: Address, amount: U256) -> Result<(), Error> {
         self.access.only_role(BURNER_ROLE.into())?;
         self.erc20._burn(from, amount)?;
         Ok(())
-
+    }
 }
 
 #[public]
-impl IErc20 for Example
+impl IErc20 for Example {
     // ...
-
+}
 
 #[public]
-impl IAccessControl for Example
+impl IAccessControl for Example {
     // ...
-
+}
 ```
 
 So clean! By splitting concerns this way, more granular levels of permission may be implemented than were possible with the simpler _ownership_ approach to access control. Limiting what each component of a system is able to do is known as the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege), and is a good security practice. Note that each account may still have more than one role, if so desired.

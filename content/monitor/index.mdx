@@ -31,7 +31,7 @@ In the rapidly evolving world of blockchain technology, effective monitoring is 
 
 
 
-To get started immediately, see [Quickstart](quickstart).
+To get started immediately, see [Quickstart](/monitor/quickstart).
 
 
 ## Installation
@@ -142,25 +142,24 @@ By default, predefined metrics within a dashboard is populated in grafana.
 
   ```json
   // networks/ethereum_mainnet.json
-
+  {
     "slug": "ethereum_mainnet",
     ...
-
+  }
 
   // triggers/slack_notifications.json
-
+  {
     "large_transfer_slack": {
       ...
-
+    }
   }
 
   // monitors/usdc_transfer_monitor.json
-
+  {
     "networks": ["ethereum_mainnet"],
     "triggers": ["large_transfer_slack"],
     ...
-
-
+  }
   ```
 
 <Callout type='warn'>
@@ -279,24 +278,24 @@ The monitor supports three types of secret sources:
 Secrets can be configured in the JSON files using the following format:
 
 ```json
-
+{
   "type": "Plain",
   "value": "my-secret-value"
-
+}
 ```
 
 ```json
-
+{
   "type": "Environment",
   "value": "MY_SECRET_ENV_VAR"
-
+}
 ```
 
 ```json
-
+{
   "type": "HashicorpCloudVault",
   "value": "my-secret-name"
-
+}
 ```
 
 ##### Hashicorp Cloud Vault Integration
@@ -406,7 +405,7 @@ A Network configuration defines connection details and operational parameters fo
 **Example Network Configuration**
 
 ```json
-
+{
   "network_type": "Stellar",
   "slug": "stellar_mainnet",
   "name": "Stellar Mainnet",
@@ -416,7 +415,7 @@ A Network configuration defines connection details and operational parameters fo
       "url": {
         "type": "plain",
         "value": "https://soroban.stellar.org"
-      ,
+      },
       "weight": 100
     }
   ],
@@ -456,7 +455,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 **Example Trigger Configuration**
 
 ```json
-
+{
   "evm_large_transfer_usdc_slack": {
     "name": "Large Transfer Slack Notification",
     "trigger_type": "slack",
@@ -464,24 +463,24 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
       "slack_url": {
         "type": "plain",
         "value": "https://hooks.slack.com/services/A/B/C"
-      ,
-      "message":
+      },
+      "message": {
         "title": "large_transfer_slack triggered",
-        "body": "Large transfer of ${events.0.args.value USDC from $events.0.args.from to $events.0.args.to | https://etherscan.io/tx/$transaction.hash#eventlog"
+        "body": "Large transfer of ${events.0.args.value} USDC from $events.0.args.from to $events.0.args.to | https://etherscan.io/tx/$transaction.hash#eventlog"
       }
     }
   },
-  "stellar_large_transfer_usdc_slack":
+  "stellar_large_transfer_usdc_slack": {
     "name": "Large Transfer Slack Notification",
     "trigger_type": "slack",
     "config": {
       "slack_url": {
         "type": "environment",
         "value": "SLACK_WEBHOOK_URL"
-      ,
-      "message":
+      },
+      "message": {
         "title": "large_transfer_usdc_slack triggered",
-        "body": "${monitor.name triggered because of a large transfer of $functions.0.args.amount USDC to $functions.0.args.to | https://stellar.expert/explorer/testnet/tx/$transaction.hash"
+        "body": "${monitor.name} triggered because of a large transfer of $functions.0.args.amount USDC to $functions.0.args.to | https://stellar.expert/explorer/testnet/tx/$transaction.hash"
       }
     }
   }
@@ -492,14 +491,14 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 
 ##### Slack Notifications
 ```json
-
+{
   "slack_url": {
     "type": "HashicorpCloudVault",
     "value": "slack-webhook-url"
-  ,
-  "message":
+  },
+  "message": {
     "title": "Alert Title",
-    "body": "Alert message for ${transaction.hash"
+    "body": "Alert message for ${transaction.hash}"
   }
 }
 ```
@@ -516,20 +515,20 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 
 ##### Email Notifications
 ```json
-
+{
   "host": "smtp.gmail.com",
   "port": 465,
   "username": {
     "type": "plain",
     "value": "sender@example.com"
-  ,
-  "password":
+  },
+  "password": {
     "type": "environment",
     "value": "SMTP_PASSWORD"
-  ,
-  "message":
+  },
+  "message": {
     "title": "Alert Subject",
-    "body": "Alert message for ${transaction.hash",
+    "body": "Alert message for ${transaction.hash}"
   },
   "sender": "sender@example.com",
   "recipients": ["recipient@example.com"]
@@ -554,22 +553,22 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 
 ##### Webhook Notifications
 ```json
-
+{
   "url": {
     "type": "HashicorpCloudVault",
     "value": "webhook-url"
-  ,
+  },
   "method": "POST",
-  "secret":
+  "secret": {
     "type": "environment",
     "value": "WEBHOOK_SECRET"
-  ,
-  "headers":
+  },
+  "headers": {
     "Content-Type": "application/json"
-  ,
-  "message":
+  },
+  "message": {
     "title": "Alert Title",
-    "body": "Alert message for ${transaction.hash"
+    "body": "Alert message for ${transaction.hash}"
   }
 }
 ```
@@ -590,14 +589,14 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 
 ##### Discord Notifications
 ```json
-
+{
   "discord_url": {
     "type": "plain",
     "value": "https://discord.com/api/webhooks/123-456-789"
-  ,
-  "message":
+  },
+  "message": {
     "title": "Alert Title",
-    "body": "Alert message for ${transaction.hash"
+    "body": "Alert message for ${transaction.hash}"
   }
 }
 ```
@@ -614,15 +613,15 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 
 ##### Telegram Notifications
 ```json
-
+{
   "token": {
     "type": "HashicorpCloudVault",
     "value": "telegram-bot-token"
-  ,
+  },
   "chat_id": "9876543210",
-  "message":
+  "message": {
     "title": "Alert Title",
-    "body": "Alert message for ${transaction.hash"
+    "body": "Alert message for ${transaction.hash}"
   }
 }
 ```
@@ -641,12 +640,12 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 
 ##### Custom Script Notifications
 ```json
-
+{
   "language": "Bash",
   "script_path": "./config/triggers/scripts/custom_notification.sh",
   "arguments": ["--verbose"],
   "timeout_ms": 1000
-
+}
 ```
 
 ##### Script Notification Fields
@@ -659,7 +658,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 | `**arguments**` | `Array[String]` | The arguments of the script (optional). |
 | `**timeout_ms**` | `Number` | The timeout of the script is important to avoid infinite loops during the execution. If the script takes longer than the timeout, it will be killed. |
 
-For more information about custom scripts, see [Custom Scripts Section](scripts).
+For more information about custom scripts, see [Custom Scripts Section](/monitor/scripts).
 
 
 
@@ -706,18 +705,18 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
 
 ##### Example Email Notification with Markdown
 ```json
-
+{
   "email_notification": {
     "name": "Formatted Alert",
     "trigger_type": "email",
     "config": {
       "host": "smtp.example.com",
       "port": 465,
-      "username": {"type": "plain", "value": "alerts@example.com",
-      "password": "type": "plain", "value": "password",
-      "message":
+      "username": {"type": "plain", "value": "alerts@example.com"},
+      "password": {"type": "plain", "value": "password"},
+      "message": {
         "title": "**High Value Transfer Alert**",
-        "body": "### Transaction Details\n\n* **Amount:** ${events.0.args.value USDC\n* **From:** `$events.0.args.from`\n* **To:** `$events.0.args.to`\n\n> Transaction Hash: $transaction.hash\n\n[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
+        "body": "### Transaction Details\n\n* **Amount:** ${events.0.args.value} USDC\n* **From:** `$events.0.args.from`\n* **To:** `$events.0.args.to`\n\n> Transaction Hash: $transaction.hash\n\n[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
       },
       "sender": "alerts@example.com",
       "recipients": ["recipient@example.com"]
@@ -728,15 +727,15 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
 
 ##### Example Slack Notification with Markdown
 ```json
-
+{
   "slack_notification": {
     "name": "Formatted Alert",
     "trigger_type": "slack",
     "config": {
-      "slack_url": {"type": "plain", "value": "https://hooks.slack.com/services/XXX/YYY/ZZZ",
-      "message":
+      "slack_url": {"type": "plain", "value": "https://hooks.slack.com/services/XXX/YYY/ZZZ"},
+      "message": {
         "title": "*🚨 High Value Transfer Alert*",
-        "body": "*Transaction Details*\n\n• *Amount:* `${events.0.args.value` USDC\n• *From:* `$events.0.args.from`\n• *To:* `$events.0.args.to`\n\n>Transaction Hash: `$transaction.hash`\n\n<https://etherscan.io/tx/$transaction.hash|View on Explorer>"
+        "body": "*Transaction Details*\n\n• *Amount:* `${events.0.args.value}` USDC\n• *From:* `$events.0.args.from`\n• *To:* `$events.0.args.to`\n\n>Transaction Hash: `$transaction.hash`\n\n<https://etherscan.io/tx/$transaction.hash|View on Explorer>"
       }
     }
   }
@@ -745,15 +744,15 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
 
 ##### Example Discord Notification with Markdown
 ```json
-
+{
   "discord_notification": {
     "name": "Formatted Alert",
     "trigger_type": "discord",
     "config": {
-      "discord_url": {"type": "plain", "value": "https://discord.com/api/webhooks/XXX/YYY",
-      "message":
+      "discord_url": {"type": "plain", "value": "https://discord.com/api/webhooks/XXX/YYY"},
+      "message": {
         "title": "**🚨 High Value Transfer Alert**",
-        "body": "# Transaction Details\n\n* **Amount:** `${events.0.args.value` USDC\n* **From:** `$events.0.args.from`\n* **To:** `$events.0.args.to`\n\n>>> Transaction Hash: `$transaction.hash`\n\n**[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
+        "body": "# Transaction Details\n\n* **Amount:** `${events.0.args.value}` USDC\n* **From:** `$events.0.args.from`\n* **To:** `$events.0.args.to`\n\n>>> Transaction Hash: `$transaction.hash`\n\n**[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
       }
     }
   }
@@ -762,16 +761,16 @@ Slack, Discord, Telegram, Email and Webhook support Markdown formatting in their
 
 ##### Example Telegram Notification with Markdown
 ```json
-
+{
   "telegram_notification": {
     "name": "Formatted Alert",
     "trigger_type": "telegram",
     "config": {
-      "token": {"type": "plain", "value": "1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "token": {"type": "plain", "value": "1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
       "chat_id": "9876543210",
-      "message":
+      "message": {
         "title": "*🚨 High Value Transfer Alert*",
-        "body": "*Transaction Details*\n\n• *Amount:* `${events.0.args.value` USDC\n• *From:* `$events.0.args.from`\n• *To:* `$events.0.args.to`\n\n`Transaction Hash: $transaction.hash`\n\n[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
+        "body": "*Transaction Details*\n\n• *Amount:* `${events.0.args.value}` USDC\n• *From:* `$events.0.args.from`\n• *To:* `$events.0.args.to`\n\n`Transaction Hash: $transaction.hash`\n\n[View on Explorer](https://etherscan.io/tx/$transaction.hash)"
       }
     }
   }
@@ -801,7 +800,7 @@ A Monitor defines what blockchain activity to watch and what actions to take whe
 **Example Monitor Configuration**
 
 ```json
-
+{
   "name": "Large USDC Transfers",
   "networks": ["ethereum_mainnet"],
   "paused": false,
@@ -809,35 +808,35 @@ A Monitor defines what blockchain activity to watch and what actions to take whe
     {
       "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
       "contract_spec": [ ... ]
-
+    }
   ],
-  "match_conditions":
+  "match_conditions": {
     "functions": [
       {
         "signature": "transfer(address,uint256)",
         "expression": "value > 1000000"
-
+      }
     ],
     "events": [
-
+      {
         "signature": "Transfer(address,address,uint256)",
         "expression": "value > 1000000"
-
+      }
     ],
     "transactions": [
-
+      {
         "status": "Success",
         "expression": "value > 1500000000000000000"
-
+      }
     ]
   },
   "trigger_conditions": [
-
+    {
       "script_path": "./config/filters/evm_filter_block_number.sh",
       "language": "bash",
-      "arguments": "--verbose",
+      "arguments": ["--verbose"],
       "timeout_ms": 1000
-
+    }
   ],
   "triggers": ["evm_large_transfer_usdc_slack", "evm_large_transfer_usdc_email"]
 }
@@ -863,12 +862,12 @@ Monitors support three types of match conditions that can be combined:
 Match specific function calls to monitored contracts:
 
 ```json
-
+{
   "functions": [
     {
       "signature": "transfer(address,uint256)",
       "expression": "value > 1000"
-
+    }
   ]
 }
 ```
@@ -877,12 +876,12 @@ Match specific function calls to monitored contracts:
 Match events emitted by monitored contracts:
 
 ```json
-
+{
   "events": [
     {
       "signature": "Transfer(address,address,uint256)",
       "expression": "value > 1000000"
-
+    }
   ]
 }
 ```
@@ -891,12 +890,12 @@ Match events emitted by monitored contracts:
 Match transaction properties. The available fields and expression syntax depend on the network type (EVM/Stellar)
 
 ```json
-
+{
   "transactions": [
     {
       "status": "Success", // Only match successful transactions
       "expression": "value > 1500000000000000000" // Match transactions with value greater than 1.5 ETH
-
+    }
   ]
 }
 ```
@@ -1207,7 +1206,7 @@ You can find the contract specification through Stellar contract explorer tool. 
 
 Custom filters allow you to create sophisticated filtering logic for processing monitor matches. These filters act as additional validation layers that determine whether a match should trigger the execution of a trigger or not.
 
-For more information about custom scripts, see [Custom Scripts Section](scripts).
+For more information about custom scripts, see [Custom Scripts Section](/monitor/scripts).
 
 
 
@@ -1217,12 +1216,12 @@ For more information about custom scripts, see [Custom Scripts Section](scripts)
 **Example Trigger Conditions Configuration**
 
 ```json
-
+{
   "script_path": "./config/filters/evm_filter_block_number.sh",
   "language": "Bash",
   "arguments": ["--verbose"],
   "timeout_ms": 1000
-
+}
 ```
 
 #### Available Fields
@@ -1398,21 +1397,21 @@ Specific Block Mode requires both parameters:
 
 ## Error Handling
 
-The monitor implements a comprehensive error handling system with rich context and tracing capabilities. For detailed information about error handling, see [Error Handling Guide](error).
+The monitor implements a comprehensive error handling system with rich context and tracing capabilities. For detailed information about error handling, see [Error Handling Guide](/monitor/error).
 
 ## Important Considerations
 
 ### Performance Considerations
 
 * Monitor performance depends on network congestion and RPC endpoint reliability.
-  * View the [list of RPC calls](rpc#list_of_rpc_calls) made by the monitor.
+  * View the [list of RPC calls](/monitor/rpc#list_of_rpc_calls) made by the monitor.
 * The `max_past_blocks` configuration is critical:
   * Calculate as: `(cron_interval_ms/block_time_ms) + confirmation_blocks + 1` (defaults to this calculation if not specified).
   * Example for 1-minute Ethereum cron: `(60000/12000) + 12 + 1 = 18 blocks`.
   * Too low settings may result in missed blocks.
 * Trigger conditions are executed sequentially based on their position in the trigger conditions array. Proper execution also depends on the number of available file descriptors on your system. To ensure optimal performance, it is recommended to increase the limit for open file descriptors to at least 2048 or higher. On Unix-based systems you can check the current limit by running `ulimit -n` and _***temporarily***_ increase it with `ulimit -n 2048`.
 * Since scripts are loaded at startup, any modifications to script files require restarting the monitor to take effect.
-* See performance considerations about custom scripts [here](scripts#performance_considerations).
+* See performance considerations about custom scripts [here](/monitor/scripts#performance_considerations).
 
 ### Notification Considerations
 

@@ -33,30 +33,31 @@ Once installed, you can use the contracts in the library by importing them:
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-import BaseDynamicFee, IPoolManager, PoolKey from "src/fee/BaseDynamicFee.sol";
-import Ownable from "@openzeppelin/contracts/access/Ownable.sol";
+import {BaseDynamicFee, IPoolManager, PoolKey} from "src/fee/BaseDynamicFee.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @dev A hook that allows the owner to dynamically update the LP fee.
  */
-contract DynamicLPFeeHook is BaseDynamicFee, Ownable
+contract DynamicLPFeeHook is BaseDynamicFee, Ownable {
     uint24 public fee;
 
     constructor(IPoolManager _poolManager) BaseDynamicFee(_poolManager) Ownable(msg.sender) {
+    }
 
     /**
      * @inheritdoc BaseDynamicFee
      */
-    function _getFee(PoolKey calldata) internal view override returns (uint24)
+    function _getFee(PoolKey calldata) internal view override returns (uint24) {
         return fee;
-
+    }
 
     /**
      * @notice Sets the LP fee, denominated in hundredths of a bip.
      */
-    function setFee(uint24 _fee) external onlyOwner
+    function setFee(uint24 _fee) external onlyOwner {
         fee = _fee;
-
+    }
 }
 ```
 
@@ -71,4 +72,4 @@ In order to facilitate understanding of Uniswap Hooks and help start building wi
 
 Contracts in the hooks library are provided as is, with no particular guarantees, including backward compatibility.
 
-We kindly ask to report any issue directly to our security mailto:security@openzeppelin.org[contact]. The team will do its best to assist and mitigate any potential misuses of the library.
+We kindly ask to report any issue directly to our security [contact](mailto:security@openzeppelin.org). The team will do its best to assist and mitigate any potential misuses of the library.

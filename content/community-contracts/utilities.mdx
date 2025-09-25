@@ -42,9 +42,9 @@ The standard defines a verifier interface that can be implemented to support dif
 ```solidity
 using ERC7913Utils for bytes;
 
-function _verify(bytes memory signer, bytes32 hash, bytes memory signature) internal view returns (bool)
+function _verify(bytes memory signer, bytes32 hash, bytes memory signature) internal view returns (bool){
     return signer.isValidSignatureNow(hash, signature);
-
+}
 ```
 
 The verification process works as follows:

@@ -18,7 +18,7 @@ There are three main changes from ERC-1155 which are as follows:
 
 ## Constructing an ERC-6909 Token Contract
 
-We’ll use ERC-6909 to track multiple items in a game, each having their own unique attributes. All item types will by minted to the deployer of the contract, which we can later transfer to players. We’ll also use the [`ERC6909Metadata`](contracts/v5.x/api/token/ERC6909#ERC6909Metadata) extension to add decimals to our fungible items (the vanilla ERC-6909 implementation does not have decimals).
+We’ll use ERC-6909 to track multiple items in a game, each having their own unique attributes. All item types will by minted to the deployer of the contract, which we can later transfer to players. We’ll also use the [`ERC6909Metadata`](/contracts/5.x/api/token/ERC6909#ERC6909Metadata) extension to add decimals to our fungible items (the vanilla ERC-6909 implementation does not have decimals).
 
 For simplicity, we will mint all items in the constructor--however, minting functionality could be added to the contract to mint on demand to players.
 
@@ -30,7 +30,7 @@ Here’s what a contract for tokenized items might look like:
 
 <include cwd lang='solidity'>./examples/token/ERC6909/ERC6909GameItems.sol</include>
 
-Note that there is no content URI functionality in the base implementation, but the [`ERC6909ContentURI`](contracts/v5.x/api/token/ERC6909#ERC6909ContentURI) extension adds it. Additionally, the base implementation does not track total supplies, but the [`ERC6909TokenSupply`](contracts/v5.x/api/token/ERC6909#ERC6909TokenSupply) extension tracks the total supply of each token id.
+Note that there is no content URI functionality in the base implementation, but the [`ERC6909ContentURI`](/contracts/5.x/api/token/ERC6909#ERC6909ContentURI) extension adds it. Additionally, the base implementation does not track total supplies, but the [`ERC6909TokenSupply`](/contracts/5.x/api/token/ERC6909#ERC6909TokenSupply) extension tracks the total supply of each token id.
 
 Once the contract is deployed, we will be able to query the deployer’s balance:
 ```javascript

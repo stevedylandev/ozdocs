@@ -1,7 +1,7 @@
 [
 	{
 		"type": "page",
-		"name": "Overview",
+		"name": "Getting Started",
 		"url": "/contracts"
 	},
 	{
@@ -19,7 +19,7 @@
 			},
 			{
 				"type": "page",
-				"name": "Wizard",
+				"name": "Contracts Wizard",
 				"url": "/contracts/5.x/wizard"
 			},
 			{
@@ -642,7 +642,7 @@
 	},
 	{
 		"type": "folder",
-		"name": "Upgrade Plugins",
+		"name": "Upgrades Plugins",
 		"index": {
 			"type": "page",
 			"name": "Overview",
@@ -734,7 +734,7 @@
 	},
 	{
 		"type": "page",
-		"name": "Wizard",
+		"name": "Contracts Wizard",
 		"url": "/wizard"
 	},
 	{
@@ -852,169 +852,205 @@
 				},
 				"children": [
 					{
-						"type": "page",
-						"name": "Call Plugin",
-						"url": "/relayer/api/callPlugin"
+						"type": "folder",
+						"name": "Relayers",
+						"children": [
+							{
+								"type": "page",
+								"name": "List Relayers",
+								"url": "/relayer/api/listRelayers"
+							},
+							{
+								"type": "page",
+								"name": "Create Relayer",
+								"url": "/relayer/api/createRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Get Relayer",
+								"url": "/relayer/api/getRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Delete Relayer",
+								"url": "/relayer/api/deleteRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Update Relayer",
+								"url": "/relayer/api/updateRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Get Relayer Balance",
+								"url": "/relayer/api/getRelayerBalance"
+							},
+							{
+								"type": "page",
+								"name": "RPC",
+								"url": "/relayer/api/rpc"
+							},
+							{
+								"type": "page",
+								"name": "Sign",
+								"url": "/relayer/api/sign"
+							},
+							{
+								"type": "page",
+								"name": "Sign Transaction",
+								"url": "/relayer/api/signTransaction"
+							},
+							{
+								"type": "page",
+								"name": "Sign Typed Data",
+								"url": "/relayer/api/signTypedData"
+							},
+							{
+								"type": "page",
+								"name": "Get Relayer Status",
+								"url": "/relayer/api/getRelayerStatus"
+							},
+							{
+								"type": "page",
+								"name": "Send Transaction",
+								"url": "/relayer/api/sendTransaction"
+							},
+							{
+								"type": "page",
+								"name": "List Transactions",
+								"url": "/relayer/api/listTransactions"
+							},
+							{
+								"type": "page",
+								"name": "Get Transaction by Nonce",
+								"url": "/relayer/api/getTransactionByNonce"
+							},
+							{
+								"type": "page",
+								"name": "Delete Pending Transactions",
+								"url": "/relayer/api/deletePendingTransactions"
+							},
+							{
+								"type": "page",
+								"name": "Get Transaction by ID",
+								"url": "/relayer/api/getTransactionById"
+							},
+							{
+								"type": "page",
+								"name": "Replace Transaction",
+								"url": "/relayer/api/replaceTransaction"
+							},
+							{
+								"type": "page",
+								"name": "Cancel Transaction",
+								"url": "/relayer/api/cancelTransaction"
+							}
+						]
 					},
 					{
-						"type": "page",
-						"name": "Cancel Transaction",
-						"url": "/relayer/api/cancelTransaction"
+						"type": "folder",
+						"name": "Plugins",
+						"children": [
+							{
+								"type": "page",
+								"name": "Call Plugin",
+								"url": "/relayer/api/callPlugin"
+							}
+						]
 					},
 					{
-						"type": "page",
-						"name": "Create Notification",
-						"url": "/relayer/api/createNotification"
+						"type": "folder",
+						"name": "Notifications",
+						"children": [
+							{
+								"type": "page",
+								"name": "List Notifications",
+								"url": "/relayer/api/listNotifications"
+							},
+							{
+								"type": "page",
+								"name": "Create Notification",
+								"url": "/relayer/api/createNotification"
+							},
+							{
+								"type": "page",
+								"name": "Get Notification",
+								"url": "/relayer/api/getNotification"
+							},
+							{
+								"type": "page",
+								"name": "Delete Notification",
+								"url": "/relayer/api/deleteNotification"
+							},
+							{
+								"type": "page",
+								"name": "Update Notification",
+								"url": "/relayer/api/updateNotification"
+							}
+						]
 					},
 					{
-						"type": "page",
-						"name": "Create Relayer",
-						"url": "/relayer/api/createRelayer"
+						"type": "folder",
+						"name": "Signers",
+						"children": [
+							{
+								"type": "page",
+								"name": "List Signers",
+								"url": "/relayer/api/listSigners"
+							},
+							{
+								"type": "page",
+								"name": "Create Signer",
+								"url": "/relayer/api/createSigner"
+							},
+							{
+								"type": "page",
+								"name": "Get Signer",
+								"url": "/relayer/api/getSigner"
+							},
+							{
+								"type": "page",
+								"name": "Delete Signer",
+								"url": "/relayer/api/deleteSigner"
+							},
+							{
+								"type": "page",
+								"name": "Update Signer",
+								"url": "/relayer/api/updateSigner"
+							}
+						]
 					},
 					{
-						"type": "page",
-						"name": "Create Signer",
-						"url": "/relayer/api/createSigner"
+						"type": "folder",
+						"name": "Metrics",
+						"children": [
+							{
+								"type": "page",
+								"name": "Scrape Metrics",
+								"url": "/relayer/api/scrape_metrics"
+							},
+							{
+								"type": "page",
+								"name": "List Metrics",
+								"url": "/relayer/api/list_metrics"
+							},
+							{
+								"type": "page",
+								"name": "Metric Detail",
+								"url": "/relayer/api/metric_detail"
+							}
+						]
 					},
 					{
-						"type": "page",
-						"name": "Delete Notification",
-						"url": "/relayer/api/deleteNotification"
-					},
-					{
-						"type": "page",
-						"name": "Delete Pending Transactions",
-						"url": "/relayer/api/deletePendingTransactions"
-					},
-					{
-						"type": "page",
-						"name": "Delete Relayer",
-						"url": "/relayer/api/deleteRelayer"
-					},
-					{
-						"type": "page",
-						"name": "Delete Signer",
-						"url": "/relayer/api/deleteSigner"
-					},
-					{
-						"type": "page",
-						"name": "Get Notification",
-						"url": "/relayer/api/getNotification"
-					},
-					{
-						"type": "page",
-						"name": "Get Relayer",
-						"url": "/relayer/api/getRelayer"
-					},
-					{
-						"type": "page",
-						"name": "Get Relayer Balance",
-						"url": "/relayer/api/getRelayerBalance"
-					},
-					{
-						"type": "page",
-						"name": "Get Relayer Status",
-						"url": "/relayer/api/getRelayerStatus"
-					},
-					{
-						"type": "page",
-						"name": "Get Signer",
-						"url": "/relayer/api/getSigner"
-					},
-					{
-						"type": "page",
-						"name": "Get Transaction by ID",
-						"url": "/relayer/api/getTransactionById"
-					},
-					{
-						"type": "page",
-						"name": "Get Transaction by Nonce",
-						"url": "/relayer/api/getTransactionByNonce"
-					},
-					{
-						"type": "page",
+						"type": "folder",
 						"name": "Health",
-						"url": "/relayer/api/health"
-					},
-					{
-						"type": "page",
-						"name": "List Notifications",
-						"url": "/relayer/api/listNotifications"
-					},
-					{
-						"type": "page",
-						"name": "List Relayers",
-						"url": "/relayer/api/listRelayers"
-					},
-					{
-						"type": "page",
-						"name": "List Signers",
-						"url": "/relayer/api/listSigners"
-					},
-					{
-						"type": "page",
-						"name": "List Transactions",
-						"url": "/relayer/api/listTransactions"
-					},
-					{
-						"type": "page",
-						"name": "List Metrics",
-						"url": "/relayer/api/list_metrics"
-					},
-					{
-						"type": "page",
-						"name": "Metric Detail",
-						"url": "/relayer/api/metric_detail"
-					},
-					{
-						"type": "page",
-						"name": "Replace Transaction",
-						"url": "/relayer/api/replaceTransaction"
-					},
-					{
-						"type": "page",
-						"name": "RPC",
-						"url": "/relayer/api/rpc"
-					},
-					{
-						"type": "page",
-						"name": "Scrape Metrics",
-						"url": "/relayer/api/scrape_metrics"
-					},
-					{
-						"type": "page",
-						"name": "Send Transaction",
-						"url": "/relayer/api/sendTransaction"
-					},
-					{
-						"type": "page",
-						"name": "Sign",
-						"url": "/relayer/api/sign"
-					},
-					{
-						"type": "page",
-						"name": "Sign Transaction",
-						"url": "/relayer/api/signTransaction"
-					},
-					{
-						"type": "page",
-						"name": "Sign Typed Data",
-						"url": "/relayer/api/signTypedData"
-					},
-					{
-						"type": "page",
-						"name": "Update Notification",
-						"url": "/relayer/api/updateNotification"
-					},
-					{
-						"type": "page",
-						"name": "Update Relayer",
-						"url": "/relayer/api/updateRelayer"
-					},
-					{
-						"type": "page",
-						"name": "Update Signer",
-						"url": "/relayer/api/updateSigner"
+						"children": [
+							{
+								"type": "page",
+								"name": "Health",
+								"url": "/relayer/api/health"
+							}
+						]
 					}
 				]
 			},
@@ -1041,7 +1077,7 @@
 			{
 				"type": "page",
 				"name": "Rust Book",
-				"url": "https://release-v1-1-0--relayer.netlify.app/openzeppelin_relayer/",
+				"url": "https://docs-v1-1--openzeppelin-relayer.netlify.app/openzeppelin_relayer/",
 				"external": true
 			}
 		]
@@ -1110,42 +1146,42 @@
 			{
 				"type": "page",
 				"name": "Quickstart",
-				"url": "/contracts-ui-builder"
+				"url": "/ui-builder"
 			},
 			{
 				"type": "page",
 				"name": "Networks",
-				"url": "/contracts-ui-builder/networks"
+				"url": "/ui-builder/networks"
 			},
 			{
 				"type": "page",
 				"name": "Loading Contracts",
-				"url": "/contracts-ui-builder/loading-contracts"
+				"url": "/ui-builder/loading-contracts"
 			},
 			{
 				"type": "page",
 				"name": "Functions",
-				"url": "/contracts-ui-builder/functions"
+				"url": "/ui-builder/functions"
 			},
 			{
 				"type": "page",
 				"name": "Customization",
-				"url": "/contracts-ui-builder/customization"
+				"url": "/ui-builder/customization"
 			},
 			{
 				"type": "page",
 				"name": "Exporting and History",
-				"url": "/contracts-ui-builder/exporting-and-history"
+				"url": "/ui-builder/exporting-and-history"
 			},
 			{
 				"type": "page",
 				"name": "Building Adapters",
-				"url": "/contracts-ui-builder/building-adapters"
+				"url": "/ui-builder/building-adapters"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/contracts-ui-builder/changelog"
+				"url": "/ui-builder/changelog"
 			}
 		]
 	},

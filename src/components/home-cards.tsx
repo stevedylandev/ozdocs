@@ -194,6 +194,7 @@ function CommunityCard({
 	return (
 		<a
 			href={href}
+			target="_blank"
 			className={cn(
 				"group block p-5 sm:p-6 lg:p-7 bg-gradient-to-br from-card to-card/50 border rounded-xl hover:border-primary hover:shadow-sm hover:-translate-y-0.5 transition-all",
 				className,

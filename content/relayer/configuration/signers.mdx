@@ -13,7 +13,7 @@ Each signer is referenced by its `id` in relayer configurations.
 Example signer configuration:
 ```json
 "signers": [
-
+  {
     "id": "my_id",
     "type": "local",
     "config": {
@@ -21,7 +21,7 @@ Example signer configuration:
       "passphrase": {
         "type": "env",
         "value": "KEYSTORE_PASSPHRASE"
-
+      }
     }
   }
 ]
@@ -78,7 +78,7 @@ All signer types share these common configuration fields:
 The local signer uses encrypted keystore files stored on the filesystem.
 
 ```json
-
+{
   "id": "local-signer",
   "type": "local",
   "config": {
@@ -86,7 +86,7 @@ The local signer uses encrypted keystore files stored on the filesystem.
     "passphrase": {
       "type": "env",
       "value": "KEYSTORE_PASSPHRASE"
-    
+    }
   }
 }
 ```
@@ -105,7 +105,7 @@ Configuration fields:
 Uses HashiCorp Vault’s secret engine to store private keys.
 
 ```json
-
+{
   "id": "vault-signer",
   "type": "vault",
   "config": {
@@ -113,11 +113,11 @@ Uses HashiCorp Vault’s secret engine to store private keys.
     "role_id": {
       "type": "env",
       "value": "VAULT_ROLE_ID"
-    ,
-    "secret_id": 
+    },
+    "secret_id": {
       "type": "env",
       "value": "VAULT_SECRET_ID"
-    ,
+    },
     "key_name": "relayer-key",
     "mount_point": "secret"
   }
@@ -140,7 +140,7 @@ Configuration fields:
 Uses HashiCorp Vault’s Transit secrets engine for cryptographic operations.
 
 ```json
-
+{
   "id": "vault-transit-signer",
   "type": "vault_transit",
   "config": {
@@ -148,11 +148,11 @@ Uses HashiCorp Vault’s Transit secrets engine for cryptographic operations.
     "role_id": {
       "type": "env",
       "value": "VAULT_ROLE_ID"
-    ,
-    "secret_id": 
+    },
+    "secret_id": {
       "type": "env",
       "value": "VAULT_SECRET_ID"
-    ,
+    },
     "key_name": "relayer-transit-key",
     "mount_point": "transit",
     "namespace": "production",
@@ -179,7 +179,7 @@ Configuration fields:
 Uses Turnkey’s secure key management infrastructure.
 
 ```json
-
+{
   "id": "turnkey-signer",
   "type": "turnkey",
   "config": {
@@ -187,7 +187,7 @@ Uses Turnkey’s secure key management infrastructure.
     "api_private_key": {
       "type": "env",
       "value": "TURNKEY_API_PRIVATE_KEY"
-    ,
+    },
     "organization_id": "your-org-id",
     "private_key_id": "your-private-key-id",
     "public_key": "your-public-key"
@@ -209,8 +209,6 @@ Configuration fields:
 
 Uses Google Cloud Key Management Service for secure key operations.
 
-
-
 For EVM transaction signing, ensure your Google Cloud KMS key is created with:
 - Protection level: HSM
 - Purpose: Asymmetric sign
@@ -220,7 +218,7 @@ This provides secp256k1 compatibility required for Ethereum transactions.
 
 
 ```json
-
+{
   "id": "gcp-kms-signer",
   "type": "google_cloud_kms",
   "config": {
@@ -229,23 +227,23 @@ This provides secp256k1 compatibility required for Ethereum transactions.
       "private_key_id": {
         "type": "env",
         "value": "GCP_PRIVATE_KEY_ID"
-      ,
-      "private_key": 
+      },
+      "private_key": {
         "type": "env",
         "value": "GCP_PRIVATE_KEY"
-      ,
-      "client_email": 
+      },
+      "client_email": {
         "type": "env",
         "value": "GCP_CLIENT_EMAIL"
-      ,
+      },
       "client_id": "your-client-id"
     },
-    "key": 
+    "key": {
       "location": "us-west2",
       "key_ring_id": "relayer-keyring",
       "key_id": "relayer-key",
       "key_version": 1
-    
+    }
   }
 }
 ```
@@ -271,13 +269,13 @@ Configuration fields:
 Uses Amazon Web Services Key Management Service for cryptographic operations.
 
 ```json
-
+{
   "id": "aws-kms-signer",
   "type": "aws_kms",
   "config": {
     "region": "us-west-2",
     "key_id": "arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-123456789012"
-  
+  }
 }
 ```
 

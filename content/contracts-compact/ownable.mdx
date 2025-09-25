@@ -26,6 +26,7 @@ This can later be changed with [transferOwnership].
 ### Ownership transfers
 
 Ownership can only be transferred to `ZswapCoinPublicKeys` through the main transfer circuits ([transferOwnership] and [_transferOwnership]).
+
 In other words, ownership transfers to contract addresses are disallowed through these circuits.
 This is because Compact currently does not support contract-to-contract calls which means if a contract is granted ownership,
 the owner contract cannot directly call the protected circuit.
@@ -33,6 +34,7 @@ the owner contract cannot directly call the protected circuit.
 ### Experimental features
 
 This module offers experimental circuits that allow ownership to be granted to contract addresses ([_unsafeTransferOwnership] and [_unsafeUncheckedTransferOwnership]).
+
 Note that the circuit names are very explicit ("unsafe") with these experimental circuits.
 Until contract-to-contract calls are supported,
 there is no direct way for a contract to call circuits of other contracts or transfer ownership back to a user.
@@ -390,4 +392,5 @@ const generateInstanceSalt = (): Uint8Array => {
 <Callout type="info">
   Another way to get the user ID is to expose [_computeOwnerId] in the contract and call this circuit off chain through a contract simulator.
   Be on the lookout for future tooling that makes this process easier.
+
 </Callout>

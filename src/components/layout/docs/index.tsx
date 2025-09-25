@@ -131,7 +131,16 @@ export function DocsLayout(props: DocsLayoutProps) {
 		const rootToggle = (
 			<>
 				{tabMode === "sidebar" && tabs.length > 0 && (
-					<RootToggle className="mb-2" options={tabs} />
+					<>
+						<p
+							style={{ marginTop: "8px" }}
+							className="text-fd-muted-foreground text-xs"
+						>
+							Select Ecosystem
+						</p>
+
+						<RootToggle className="mb-2" options={tabs} />
+					</>
 				)}
 				{tabMode === "navbar" && tabs.length > 0 && (
 					<RootToggle options={tabs} className="lg:hidden" />
