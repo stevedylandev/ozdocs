@@ -29,7 +29,7 @@ The `IProxy` trait provides the core functionality for implementing proxy patter
 use openzeppelin_stylus::proxy::IProxy;
 use stylus_sdk::prelude::*;
 
-pub unsafe trait IProxy: TopLevelStorage + Sized
+pub unsafe trait IProxy: TopLevelStorage + Sized {
     /// Delegates the current call to a specific implementation
     fn delegate(
         &mut self,
@@ -42,7 +42,7 @@ pub unsafe trait IProxy: TopLevelStorage + Sized
 
     /// Fallback function that delegates calls to the implementation
     fn do_fallback(&mut self, calldata: &[u8]) -> Result<Vec<u8>, Vec<u8>>;
-
+}
 ```
 
 ## Basic Proxy Implementation
@@ -51,37 +51,37 @@ Here’s a minimal example of how to implement a basic proxy contract:
 
 ```rust
 use openzeppelin_stylus::proxy::IProxy;
-use stylus_sdk::
+use stylus_sdk::{
     alloy_primitives::Address,
     prelude::*,
     storage::StorageAddress,
     ArbResult,
-;
+};
 
 #[entrypoint]
 #[storage]
-struct MyProxy
+struct MyProxy {
     implementation: StorageAddress,
-
+}
 
 #[public]
-impl MyProxy
+impl MyProxy {
     #[constructor]
     fn constructor(&mut self, implementation: Address) {
         self.implementation.set(implementation);
-
+    }
 
     /// Fallback function that delegates all calls to the implementation
     #[fallback]
-    fn fallback(&mut self, calldata: &[u8]) -> ArbResult
-        unsafe { self.do_fallback(calldata)
+    fn fallback(&mut self, calldata: &[u8]) -> ArbResult {
+        unsafe { self.do_fallback(calldata) }
     }
 }
 
-impl IProxy for MyProxy
+impl IProxy for MyProxy {
     fn implementation(&self) -> Result<Address, Vec<u8>> {
         Ok(self.implementation.get())
-
+    }
 }
 ```
 
@@ -93,44 +93,44 @@ For production use, you’ll typically want to add admin controls for upgrading 
 
 ```rust
 use openzeppelin_stylus::proxy::IProxy;
-use stylus_sdk::
+use stylus_sdk::{
     alloy_primitives::Address,
     prelude::*,
-    storage::{StorageAddress, StorageBool,
+    storage::{StorageAddress, StorageBool},
     ArbResult,
 };
 
 #[entrypoint]
 #[storage]
-struct MyUpgradeableProxy
+struct MyUpgradeableProxy {
     implementation: StorageAddress,
     admin: StorageAddress,
-
+}
 
 #[public]
-impl MyUpgradeableProxy
+impl MyUpgradeableProxy {
     #[constructor]
     fn constructor(&mut self, implementation: Address, admin: Address) {
         self.implementation.set(implementation);
         self.admin.set(admin);
-
+    }
 
     /// Admin function to update the implementation
-    fn upgrade_implementation(&mut self, new_implementation: Address) -> Result<(), Vec<u8>>
+    fn upgrade_implementation(&mut self, new_implementation: Address) -> Result<(), Vec<u8>> {
         // Only admin can upgrade
         if self.admin.get() != msg::sender() {
             return Err("Only admin can upgrade".abi_encode());
-
+        }
 
         self.implementation.set(new_implementation);
         Ok(())
     }
 
     /// Admin function to transfer admin rights
-    fn transfer_admin(&mut self, new_admin: Address) -> Result<(), Vec<u8>>
+    fn transfer_admin(&mut self, new_admin: Address) -> Result<(), Vec<u8>> {
         if self.admin.get() != msg::sender() {
             return Err("Only admin can transfer admin".abi_encode());
-
+        }
 
         self.admin.set(new_admin);
         Ok(())
@@ -138,17 +138,17 @@ impl MyUpgradeableProxy
 
     /// Fallback function that delegates all calls to the implementation
     #[fallback]
-    fn fallback(&mut self, calldata: &[u8]) -> ArbResult
+    fn fallback(&mut self, calldata: &[u8]) -> ArbResult {
         self.do_fallback(calldata)
-
+    }
 }
 
-impl IProxy for MyUpgradeableProxy
+impl IProxy for MyUpgradeableProxy {
     fn implementation(&self) -> Result<Address, Vec<u8>> {
         let impl_addr = self.implementation.get();
         if impl_addr == Address::ZERO {
             return Err("Implementation not set".abi_encode());
-
+        }
         Ok(impl_addr)
     }
 }
@@ -161,7 +161,7 @@ The implementation contract contains the actual business logic. Here’s an exam
 ```rust
 #[entrypoint]
 #[storage]
-struct MyToken
+struct MyToken {
     // ⚠️ The storage layout here must match the proxy's storage layout exactly.
     // For example, if the proxy defines implementation and admin addresses,
     // the implementation must define them in the same order and type.
@@ -170,27 +170,27 @@ struct MyToken
     admin: StorageAddress,
     // Now you can set the actual implementation-specific state fields.
     erc20: Erc20,
-
+}
 
 #[public]
 #[implements(IErc20<Error = erc20::Error>)]
-impl MyToken
+impl MyToken {
     #[constructor]
     fn constructor(&mut self, name: String, symbol: String) {
         // Initialize the ERC-20 with metadata
         self.erc20.constructor(name, symbol);
-
+    }
 
     /// Mint tokens to a specific address (only for demonstration)
-    fn mint(&mut self, to: Address, amount: U256) -> Result<(), erc20::Error>
+    fn mint(&mut self, to: Address, amount: U256) -> Result<(), erc20::Error> {
         self.erc20._mint(to, amount)
-
+    }
 }
 
 #[public]
-impl IErc20 for MyToken
+impl IErc20 for MyToken {
     // ...
-
+}
 ```
 
 ## Advanced Proxy Features
@@ -200,7 +200,7 @@ impl IErc20 for MyToken
 You can also delegate calls directly to different implementations using the `delegate` method from the `IProxy` trait:
 
 ```rust
-impl MyProxy
+impl MyProxy {
     /// Delegate to a specific implementation (useful for testing or special cases)
     fn delegate_to_implementation(
         &mut self,
@@ -208,7 +208,7 @@ impl MyProxy
         calldata: &[u8],
     ) -> Result<Vec<u8>, Vec<u8>> {
         Ok(IProxy::delegate(self, target_implementation, calldata)?)
-
+    }
 }
 ```
 
@@ -222,7 +222,7 @@ Here’s what the storage struct for a proxy might look like under the hood in p
 
 ```rust
 #[storage]
-struct MyUpgradeableProxy
+struct MyUpgradeableProxy {
     // Proxy-specific storage
     implementation: StorageAddress,
     admin: StorageAddress,
@@ -234,7 +234,7 @@ struct MyUpgradeableProxy
     allowances: StorageMapping<(Address, Address), U256>,
     total_supply: StorageU256,
     // ... any additional state used by the implementation
-
+}
 ```
 
 ### Important Notes About Storage Initialization
