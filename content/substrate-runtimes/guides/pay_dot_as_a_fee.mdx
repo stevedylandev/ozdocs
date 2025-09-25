@@ -68,12 +68,12 @@ while true; do
     # Generate random price between $10-15
     PRICE=$((RANDOM % 5000 + 10000))
     PRICE_WITH_DECIMALS="${PRICE}000000000000000"
-    
+
     subxt tx --url "ws://localhost:9944" \
         --suri "<oracle-member-key>" \
         orml-oracle feed_values \
         --values "[[1, \"$PRICE_WITH_DECIMALS\"]]"
-        
+
     sleep 60  # Wait 1 minute before next update
 done
 ```
@@ -82,9 +82,11 @@ done
 
 If you want to opt out of this feature, then you can just replace the `pallet_asset_tx_payment` with `pallet_transaction_payment` piece in `SignedExtra`:
 
+```
 pub type SignedExtra = (
 ...
 -    pallet_asset_tx_payment::ChargeAssetTxPayment<Runtime>,
 +    pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
 ...
 );
+```
