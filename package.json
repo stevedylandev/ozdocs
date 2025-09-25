@@ -9,6 +9,8 @@
 		"start": "next start",
 		"postinstall": "fumadocs-mdx",
 		"lint": "biome lint src/",
+		"lint:links": "tsx scripts/link-validation.ts",
+		"lint:links-save": "tsx scripts/link-validation.ts > broken-links.md",
 		"lint:fix": "biome lint --write src/",
 		"format": "biome format src/",
 		"format:fix": "biome format --write src/",
@@ -29,7 +31,7 @@
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"fumadocs-core": "15.7.11",
-		"fumadocs-mdx": "11.9.1",
+		"fumadocs-mdx": "12.0.1",
 		"fumadocs-openapi": "^9.3.8",
 		"fumadocs-ui": "15.7.11",
 		"glob": "^11.0.3",
@@ -62,6 +64,7 @@
 		"@types/react-dom": "^19.1.9",
 		"postcss": "^8.5.6",
 		"tailwindcss": "^4.1.13",
+		"tsx": "^4.20.5",
 		"tw-animate-css": "^1.3.8",
 		"typescript": "^5.9.2"
 	}
