@@ -190,7 +190,7 @@ exports.handler = async function(event)
 
 Actions triggered from a Monitor can have two types of body properties and scheme, depending what type of Monitor triggered the action:
 
-* In the case of a Defender monitor, the body will contain the [monitor event schema](module/monitor#monitor_event_schema).
+* In the case of a Defender monitor, the body will contain the [monitor event schema](module/monitor#monitor-event-schema).
 
 If the action is written in TypeScript, `BlockTriggerEvent` type from the [defender-sdk-action-client](https://www.npmjs.com/package/@openzeppelin/defender-sdk-action-client) package can be used.
 
