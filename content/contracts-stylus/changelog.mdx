@@ -2,6 +2,41 @@
 title: Changelog
 ---
 
+<a id="v0.3.0"></a>
+# [v0.3.0](https://github.com/OpenZeppelin/rust-contracts-stylus/releases/tag/v0.3.0) - 2025-09-10
+
+### Added
+
+- **UUPS Proxy**: `UUPSUpgradeable` contract and `IErc1822Proxiable` trait for user-controlled upgradeable proxies.
+- **Beacon Proxy**: `BeaconProxy` contract and `IBeacon` interface, supporting the beacon proxy pattern for upgradeable contracts.
+- **Upgradeable Beacon**: `UpgradeableBeacon` contract, allowing upgradeable beacon-based proxies with owner-controlled implementation upgrades.
+- **Enumerable Sets**: Generic `EnumerableSet` type with implementations for `Address`, `B256`, `U8`, `U16`, `U32`, `U64`, `U128`, `U256`.
+- **Token Receivers**: `IErc1155Receiver` and `IErc721Receiver` traits with corresponding `Erc1155Holder` and `Erc721Holder` contracts.
+- **Access Control Extensions**: `AccessControlEnumerable` extension that supports role member enumeration.
+- **Enhanced SafeERC20**: Additional methods including `try_safe_transfer`, `try_safe_transfer_from`, and relaxed call variants.
+- **Cryptography**: EDDSA (Ed25519) signature scheme, Twisted-Edwards Curves, and enhanced elliptic curve configurations (secp256k1, Baby Jubjub, Bandersnatch, Curve25519, Jubjub).
+- **Precompiles**: Enhanced `Precompiles` trait with `p256_verify` wrapper function for ergonomic precompile invocation.
+- **Type Conversions**: Bidirectional conversions between `ruint::Uint` and crypto library `Uint` types, plus conversions between `Uint` and primitive integer types.
+
+### Changed
+
+- **Type Aliases**: Standardized `FixedBytes<4>` to `B32`, `FixedBytes<32>` to `B256`, and `StorageFixedBytes<32>` to `StorageB256`.
+- **API Simplifications**: Simplified Pedersen hash API to accept any type implementing `Into<P::BaseField>`.
+- **Interface Compliance**: Removed redundant interface ID checks in `Erc1155Supply`.
+
+### Changed (Breaking)
+
+- **Interface Naming**: Renamed Solidity interfaces for consistency (`IERC721Receiver` → `IErc721ReceiverInterface`, `IERC1155Receiver` → `IErc1155ReceiverInterface`).
+- **Trait Bounds**: Added `IErc721Receiver` trait bound to `IErc721Wrapper` trait.
+- **Error Handling**: Replaced associated error types with raw byte output (`Vec<u8>`) in receiver traits for ABI compliance.
+- **Deref Removal**: Removed `Deref` implementations for extension contracts to improve API clarity.
+- **API Simplifications**: Prefix `ct_` removed for constant functions at  `openzeppelin-crypto`.
+
+**Full Changelog**: https://github.com/OpenZeppelin/rust-contracts-stylus/compare/v0.2.0...v0.3.0.
+
+[Changes][v0.3.0]
+
+
 <a id="v0.2.0"></a>
 # [v0.2.0](https://github.com/OpenZeppelin/rust-contracts-stylus/releases/tag/v0.2.0) - 2025-06-20
 
@@ -61,7 +96,7 @@ title: Changelog
 
 ## Summary
 
-### Changed
+### Changed 
 - Mini alloc is now used by default via the stylus-sdk. This avoids conflicts with duplicate `#[global_allocator]` definitions. [#373](https://github.com/OpenZeppelin/rust-contracts-stylus/issues/373)
 - Removed the panic handler from the library, making it easier for `std` and `no_std` projects to use the library. [#373](https://github.com/OpenZeppelin/rust-contracts-stylus/issues/373)
 
@@ -84,6 +119,7 @@ First release 🎉
 [Changes][v0.1.0]
 
 
+[v0.3.0]: https://github.com/OpenZeppelin/rust-contracts-stylus/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/OpenZeppelin/rust-contracts-stylus/compare/v0.1.2...v0.2.0
 [v0.1.2]: https://github.com/OpenZeppelin/rust-contracts-stylus/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/OpenZeppelin/rust-contracts-stylus/compare/v0.1.0...v0.1.1
