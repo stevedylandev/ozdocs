@@ -6,8 +6,18 @@ import {
 } from "next-validate-link";
 import type { InferPageType } from "fumadocs-core/source";
 import { source } from "@/lib/source";
+import { writeFileSync } from "fs";
 
 async function checkLinks() {
+	// Parse command line arguments
+	const outputFile = process.argv.includes("--output")
+		? process.argv[process.argv.indexOf("--output") + 1]
+		: null;
+
+	const scope = process.argv.includes("--scope")
+		? process.argv[process.argv.indexOf("--scope") + 1]
+		: null;
+
 	const pages = await Promise.all(
 		source.getPages().map(async (page) => {
 			return {
@@ -27,20 +37,47 @@ async function checkLinks() {
 		},
 	});
 
-	printErrors(
-		await validateFiles(await getFiles(), {
-			scanned,
-			// check `href` attributes in different MDX components
-			markdown: {
-				components: {
-					Card: { attributes: ["href"] },
-				},
+	const validationResults = await validateFiles(await getFiles(scope), {
+		scanned,
+		// check `href` attributes in different MDX components
+		markdown: {
+			components: {
+				Card: { attributes: ["href"] },
 			},
-			// check relative paths
-			checkRelativePaths: "as-url",
-		}),
-		true,
-	);
+		},
+		// check relative paths
+		checkRelativePaths: "as-url",
+	});
+
+	if (outputFile) {
+		// Generate custom output format for file
+		let output = "";
+		let totalErrors = 0;
+		let totalFiles = 0;
+
+		for (const result of validationResults) {
+			totalFiles++;
+			if (result.errors.length > 0) {
+				output += `Invalid URLs in ${result.file}:\n`;
+				for (const error of result.errors) {
+					totalErrors++;
+					output += `${error.url}: ${error.type} at line ${error.line} column ${error.column}\n`;
+				}
+				output += "------\n";
+			}
+		}
+
+		output += `\nSummary: ${totalErrors} errors found in ${validationResults.filter((r) => r.errors.length > 0).length} files out of ${totalFiles} total files\n`;
+
+		writeFileSync(outputFile, output);
+		console.log(`Results saved to ${outputFile}`);
+		console.log(
+			`${totalErrors} errors found in ${validationResults.filter((r) => r.errors.length > 0).length} files`,
+		);
+	} else {
+		// Use default printErrors for console output
+		printErrors(validationResults, true);
+	}
 }
 
 async function getHeadings({
@@ -50,8 +87,26 @@ async function getHeadings({
 	return pageData.toc.map((item) => item.url.slice(1));
 }
 
-function getFiles() {
-	const promises = source.getPages().map(
+function getFiles(scope?: string | null) {
+	let pages = source.getPages();
+
+	// Filter pages based on scope if provided
+	if (scope) {
+		pages = pages.filter((page) => {
+			// Convert scope pattern to regex
+			// /contracts/* becomes ^/contracts/.*
+			// contracts/* becomes ^.*contracts/.*
+			const pattern = scope
+				.replace(/\*/g, ".*")
+				.replace(/^\//, "^/")
+				.replace(/^(?!\^)/, "^.*");
+
+			const regex = new RegExp(pattern);
+			return regex.test(page.url) || regex.test(page.absolutePath);
+		});
+	}
+
+	const promises = pages.map(
 		async (page): Promise<FileObject> => ({
 			path: page.absolutePath,
 			content: await page.data.getText("raw"),
