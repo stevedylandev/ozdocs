@@ -344,7 +344,7 @@ See the dedicated [Network Configuration](network_configuration) guide.
 Full `config/config.json` example with evm and solana relayers definitions using keystore signer:
 
 ```json
-
+{
   "relayers": [
     {
       "id": "sepolia-example",
@@ -358,18 +358,18 @@ Full `config/config.json` example with evm and solana relayers definitions using
         {
           "url": "https://primary-rpc.example.com",
           "weight": 2
-        ,
-
+        },
+        {
           "url": "https://backup-rpc.example.com",
           "weight": 1
-
+        }
       ],
-      "policies":
+      "policies": {
         "gas_price_cap": 30000000000000,
         "eip1559_pricing": true
-
+      }
     },
-
+    {
       "id": "solana-example",
       "name": "Solana Example",
       "network": "devnet",
@@ -381,27 +381,27 @@ Full `config/config.json` example with evm and solana relayers definitions using
         {
           "url": "https://primary-solana-rpc.example.com",
           "weight": 2
-        ,
-
+        },
+        {
           "url": "https://backup-solana-rpc.example.com",
           "weight": 1
-
+        }
       ],
-      "policies":
+      "policies": {
         "fee_payment_strategy": "user",
         "min_balance": 0,
         "allowed_tokens": [
           {
             "mint": "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr",
             "max_allowed_fee": 100000000
-          ,
-
+          },
+          {
             "mint": "So11111111111111111111111111111111111111112"
-
+          }
         ]
       }
     },
-
+    {
       "id": "solana-mainnet-example",
       "name": "Solana Mainnet Example",
       "network": "mainnet-beta",
@@ -417,37 +417,37 @@ Full `config/config.json` example with evm and solana relayers definitions using
           "cron_schedule": "0 0 * * * *",
           "min_balance_threshold": 0,
           "strategy": "jupiter-ultra"
-        ,
+        },
         "allowed_tokens": [
-
+          {
             "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
             "max_allowed_fee": 100000000,
             "swap_config": {
               "min_amount": 0,
               "max_amount": 0,
               "retain_min_amount": 0
-
+            }
           },
-
+          {
             "mint": "So11111111111111111111111111111111111111112"
-
+          }
         ]
       }
     }
   ],
   "notifications": [
-
+    {
       "id": "notification-example",
       "type": "webhook",
       "url": "https://webhook.site/1384d4d9-21b1-40a0-bcd1-d3f3b66be955",
       "signing_key": {
         "type": "env",
         "value": "WEBHOOK_SIGNING_KEY"
-
+      }
     }
   ],
   "signers": [
-
+    {
       "id": "local-signer",
       "type": "local",
       "config": {
@@ -455,12 +455,12 @@ Full `config/config.json` example with evm and solana relayers definitions using
         "passphrase": {
           "type": "env",
           "value": "KEYSTORE_PASSPHRASE"
-
+        }
       }
     }
   ],
   "networks": [
-
+    {
       "average_blocktime_ms": 12000,
       "chain_id": 11155111,
       "explorer_urls": [
@@ -484,23 +484,23 @@ Full `config/config.json` example with evm and solana relayers definitions using
         "deprecated"
       ],
       "type": "evm"
-    ,
-
+    },
+    {
       "type": "solana",
       "network": "devnet",
       "rpc_urls": ["https://api.devnet.solana.com"],
       "explorer_urls": ["https://explorer.solana.com?cluster=devnet"],
       "average_blocktime_ms": 400,
       "is_testnet": true
-    ,
-
+    },
+    {
       "type": "solana",
       "network": "mainnet-beta",
       "rpc_urls": ["https://api.mainnet-beta.solana.com"],
       "explorer_urls": ["https://explorer.solana.com"],
       "average_blocktime_ms": 400,
       "is_testnet": false
-
+    }
   ]
 }
 ```

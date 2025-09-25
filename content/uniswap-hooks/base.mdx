@@ -18,10 +18,10 @@ import PoolKey from "v4-core/src/types/PoolKey.sol";
 import IPoolManager from "v4-core/src/interfaces/IPoolManager.sol";
 import BeforeSwapDelta, toBeforeSwapDelta from "v4-core/src/types/BeforeSwapDelta.sol";
 
-contract CounterHook is BaseHook
+contract CounterHook is BaseHook {
     uint256 public counter;
 
-    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {
+    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
 
     /**
      * @inheritdoc BaseHook
@@ -31,9 +31,10 @@ contract CounterHook is BaseHook
         virtual
         override
         returns (bytes4, BeforeSwapDelta, uint24)
-
-        counter;
+    {
+        counter++;
         return (this.beforeSwap.selector, toBeforeSwapDelta(0, 0), 0);
+    }
 
 
     /**
@@ -80,11 +81,11 @@ import BalanceDelta from "v4-core/src/types/BalanceDelta.sol";
 import SafeCast from "v4-core/src/libraries/SafeCast.sol";
 import StateLibrary from "v4-core/src/libraries/StateLibrary.sol";
 
-contract SimpleAccounting is BaseCustomAccounting, ERC20
+contract SimpleAccounting is BaseCustomAccounting, ERC20 {
     using SafeCast for uint256;
     using StateLibrary for IPoolManager;
 
-    constructor(IPoolManager _poolManager) BaseCustomAccounting(_poolManager) ERC20("Mock", "MOCK") {
+    constructor(IPoolManager _poolManager) BaseCustomAccounting(_poolManager) ERC20("Mock", "MOCK") {}
 
     /// @inheritdoc BaseCustomAccounting
     function _getAddLiquidity(uint160 sqrtPriceX96, AddLiquidityParams memory params)
@@ -92,6 +93,7 @@ contract SimpleAccounting is BaseCustomAccounting, ERC20
         pure
         override
         returns (bytes memory modify, uint256 liquidity)
+    {
 
         liquidity = LiquidityAmounts.getLiquidityForAmounts(
             sqrtPriceX96,
@@ -120,6 +122,7 @@ contract SimpleAccounting is BaseCustomAccounting, ERC20
         view
         override
         returns (bytes memory, uint256 liquidity)
+    {
 
         liquidity = FullMath.mulDiv(params.liquidity, poolManager.getLiquidity(poolKey.toId()), totalSupply());
 
@@ -137,13 +140,14 @@ contract SimpleAccounting is BaseCustomAccounting, ERC20
     }
 
     /// @inheritdoc BaseCustomAccounting
-    function _mint(AddLiquidityParams memory params, BalanceDelta, uint256 liquidity) internal override
+    function _mint(AddLiquidityParams memory params, BalanceDelta, uint256 liquidity) internal override {
         _mint(params.to, liquidity);
-
+    }
 
     /// @inheritdoc BaseCustomAccounting
-    function _burn(RemoveLiquidityParams memory, BalanceDelta, uint256 liquidity) internal override
+    function _burn(RemoveLiquidityParams memory, BalanceDelta, uint256 liquidity) internal override {
         _burn(msg.sender, liquidity);
+    }
 
 }
 ```

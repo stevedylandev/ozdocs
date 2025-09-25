@@ -153,7 +153,7 @@ Consider the following contract:
 ```solidity
 // WARNING: Unaudited code.
 // Consider performing a security review before going to production.
-contract PaymasterUSDCChainlink is PaymasterERC20, Ownable
+contract PaymasterUSDCChainlink is PaymasterERC20, Ownable {
     // Values for sepolia
     // See https://docs.chain.link/data-feeds/price-feeds/addresses
     AggregatorV3Interface public constant USDC_USD_ORACLE =
@@ -165,25 +165,25 @@ contract PaymasterUSDCChainlink is PaymasterERC20, Ownable
     IERC20 private constant USDC =
         IERC20(0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238);
 
-    constructor(address initialOwner) Ownable(initialOwner)
+    constructor(address initialOwner) Ownable(initialOwner) {}
 
-    function _authorizeWithdraw() internal virtual override onlyOwner
+    function _authorizeWithdraw() internal virtual override onlyOwner {}
 
-    function liveness() public view virtual returns (uint256)
+    function liveness() public view virtual returns (uint256) {
         return 15 minutes; // Tolerate stale data
-
+    }
 
     function _fetchDetails(
         PackedUserOperation calldata userOp,
         bytes32 /* userOpHash */
-    ) internal view virtual override returns (uint256 validationData, IERC20 token, uint256 tokenPrice)
+    ) internal view virtual override returns (uint256 validationData, IERC20 token, uint256 tokenPrice) {
         (uint256 validationData_, uint256 price) = _fetchOracleDetails(userOp);
         return (
             validationData_,
             USDC,
             price
         );
-
+    }
 
     function _fetchOracleDetails(
         PackedUserOperation calldata /* userOp */
@@ -192,10 +192,10 @@ contract PaymasterUSDCChainlink is PaymasterERC20, Ownable
         view
         virtual
         returns (uint256 validationData, uint256 tokenPrice)
-
+    {
       // ...
-
-
+    }
+}
 ```
 
 <Callout>
@@ -231,7 +231,7 @@ function _fetchOracleDetails(
     view
     virtual
     returns (uint256 validationData, uint256 tokenPrice)
-
+{
     (uint256 ETHUSDValidationData, int256 ETHUSD) = _fetchPrice(
         ETH_USD_ORACLE
     );
@@ -239,10 +239,10 @@ function _fetchOracleDetails(
         USDC_USD_ORACLE
     );
 
-    if (ETHUSD <= 0 || USDCUSD <= 0)
+    if (ETHUSD <= 0 || USDCUSD <= 0) {
         // No negative prices
         return (ERC4337Utils.SIG_VALIDATION_FAILED, 0);
-
+    }
 
     // eth / usdc = (usdc / usd) / (eth / usd) = usdc * usd / eth * usd = usdc / eth
     int256 scale = _tokenPriceDenominator().toInt256();
@@ -253,11 +253,11 @@ function _fetchOracleDetails(
         ETHUSDValidationData.combineValidationData(USDCUSDValidationData),
         uint256(scaledUSDCETH) // Safe upcast
     );
-
+}
 
 function _fetchPrice(
     AggregatorV3Interface oracle
-) internal view virtual returns (uint256 validationData, int256 price)
+) internal view virtual returns (uint256 validationData, int256 price) {
     (
         uint80 roundId,
         int256 price_,
@@ -270,11 +270,12 @@ function _fetchPrice(
         answeredInRound < roundId || // Not answered in round
         timestamp == 0 || // Incomplete round
         block.timestamp - timestamp > liveness() // Stale data
-    )
+    ) {
         return (ERC4337Utils.SIG_VALIDATION_FAILED, 0);
+    }
 
     return (ERC4337Utils.SIG_VALIDATION_SUCCESS, price_);
-
+}
 ```
 
 <Callout>
@@ -346,15 +347,15 @@ To implement guarantor functionality, your paymaster needs to extend the Paymast
 ```solidity
 function _fetchGuarantor(
     PackedUserOperation calldata userOp
-) internal view override returns (address guarantor)
+) internal view override returns (address guarantor){
     // Implement logic to fetch and validate the guarantor from userOp
-
+}
 ```
 
 Let’s create a guarantor-enabled paymaster by extending our previous example:
 
 ```solidity
-contract PaymasterUSDCGuaranteed is EIP712, PaymasterERC20Guarantor, Ownable
+contract PaymasterUSDCGuaranteed is EIP712, PaymasterERC20Guarantor, Ownable {
 
     // Keep the same oracle code as before...
 
@@ -365,28 +366,28 @@ contract PaymasterUSDCGuaranteed is EIP712, PaymasterERC20Guarantor, Ownable
 
     constructor(
         address initialOwner
-    ) EIP712("PaymasterUSDCGuaranteed", "1") Ownable(initialOwner)
+    ) EIP712("PaymasterUSDCGuaranteed", "1") Ownable(initialOwner) {}
 
     // Other functions from PaymasterUSDCChainlink...
 
     function _fetchGuarantor(
         PackedUserOperation calldata userOp
-    ) internal view override returns (address guarantor)
+    ) internal view override returns (address guarantor) {
         bytes calldata paymasterData = userOp.paymasterData();
 
         // Check guarantor data (should be at least 22 bytes: 20 for address + 2 for sig length)
         // If no guarantor specified, return early
-        if (paymasterData.length < 22 || guarantor == address(0))
+        if (paymasterData.length < 22 || guarantor == address(0)) {
             return address(0);
-
+        }
 
         guarantor = address(bytes20(paymasterData[:20]));
         uint16 guarantorSigLength = uint16(bytes2(paymasterData[20:22]));
 
         // Ensure the signature fits in the data
-        if (paymasterData.length < 22 + guarantorSigLength)
+        if (paymasterData.length < 22 + guarantorSigLength) {
             return address(0);
-
+        }
 
         bytes calldata guarantorSignature = paymasterData[22:22 + guarantorSigLength];
 
@@ -399,11 +400,11 @@ contract PaymasterUSDCGuaranteed is EIP712, PaymasterERC20Guarantor, Ownable
             hash,
             guarantorSignature
         ) ? guarantor : address(0);
-
+    }
 
     function _getGuaranteedOperationStructHash(
         PackedUserOperation calldata userOp
-    ) internal pure returns (bytes32)
+    ) internal pure returns (bytes32) {
         return keccak256(
             abi.encode(
                 GUARANTEED_USER_OPERATION_TYPEHASH,
@@ -417,8 +418,8 @@ contract PaymasterUSDCGuaranteed is EIP712, PaymasterERC20Guarantor, Ownable
                 keccak256(bytes(userOp.paymasterData()[:20])) // Just the guarantor address part
             )
         );
-
-
+    }
+}
 ```
 
 With this implementation, a guarantor would sign a user operation to authorize backing it:

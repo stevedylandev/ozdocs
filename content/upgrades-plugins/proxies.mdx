@@ -33,7 +33,7 @@ The most immediate problem that proxies need to solve is how the proxy exposes t
 // is recommended to use the `Proxy` contract from the `@openzeppelin/contracts` library.
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.2/contracts/proxy/Proxy.sol
 
-assembly
+assembly {
   // (1) copy incoming call data
   calldatacopy(0, 0, calldatasize())
 
@@ -47,10 +47,10 @@ assembly
   switch result
   case 0 {
       revert(0, returndatasize())
-
-  default
+  }
+  default {
       return(0, returndatasize())
-
+  }
 }
 ```
 
@@ -146,7 +146,7 @@ pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract MyContract is Initializable
+contract MyContract is Initializable {
     function initialize(
         address arg1,
         uint256 arg2,
@@ -154,6 +154,7 @@ contract MyContract is Initializable
     ) public payable initializer {
         // "constructor" code...
 
+    }
 }
 ```
 

@@ -88,14 +88,14 @@ function sendMessage(
     string memory receiver,
     bytes memory payload,
     bytes[] memory attributes
-) public payable virtual whenNotPaused returns (bytes32 outboxId)
+) public payable virtual whenNotPaused returns (bytes32 outboxId) {
 
     // ... Initialize variables and prepare payload ...
 
     // Post on all gateways
     Outbox[] memory outbox = new Outbox[](_gateways.length());
     bool needsId = false;
-    for (uint256 i = 0; i < outbox.length; `i)
+    for (uint256 i = 0; i < outbox.length; ++i) {
         address gateway = _gateways.at(i);
         // send message
         bytes32 id = IERC7786GatewaySource(gateway).sendMessage(
@@ -105,14 +105,14 @@ function sendMessage(
             attributes
         );
         // if ID, track it
-        if (id != bytes32(0))
+        if (id != bytes32(0)) {
             outbox[i] = Outbox(gateway, id);
             needsId = true;
-
-
+        }
+    }
 
     // ... Handle message tracking and return value ...
-
+}
 ```
 
 On the receiving end, the bridge implements a threshold-based confirmation system. Messages are only executed after receiving enough confirmations from the gateways, ensuring message validity and preventing double execution. The [`receiveMessage`](/community-contracts/api/crosschain#ERC7786OpenBridge-receiveMessage-string-string-string-bytes-bytes---) function handles this process:
@@ -124,42 +124,44 @@ function receiveMessage(
     string calldata sender, // CAIP-10 account address (does not include the chain identifier)
     bytes calldata payload,
     bytes[] calldata attributes
-) public payable virtual whenNotPaused returns (bytes4)
+) public payable virtual whenNotPaused returns (bytes4) {
 
     // ... Validate message format and extract message ID ...
 
     // If call is first from a trusted gateway
-    if (_gateways.contains(msg.sender) && !tracker.receivedBy[msg.sender])
+    if (_gateways.contains(msg.sender) && !tracker.receivedBy[msg.sender]) {
         // Count number of time received
         tracker.receivedBy[msg.sender] = true;
-        `tracker.countReceived;
+        tracker.countReceived++;
         emit Received(id, msg.sender);
+    }
 
     // if already executed, leave gracefully
     if (tracker.executed) return IERC7786Receiver.receiveMessage.selector;
-    se if (tracker.executed)
-    revert ERC7786OpenBridgeAlreadyExecuted();
+    else if (tracker.executed) {
+        revert ERC7786OpenBridgeAlreadyExecuted();
+    }
 
-
-    .. Validate sender and prepare payload for execution ...
+    // .. Validate sender and prepare payload for execution ...
 
     // If ready to execute, and not yet executed
-    if (tracker.countReceived >= getThreshold())
+    if (tracker.countReceived >= getThreshold()) {
         // prevent re-entry
         tracker.executed = true;
 
-    // ... Prepare execution context and validate state ...
-    bytes memory call = abi.encodeCall(
-        IERC7786Receiver.receiveMessage,
-        (uint256(id).toHexString(32), sourceChain, originalSender, unwrappedPayload, attributes)
-    );
+        // ... Prepare execution context and validate state ...
+        bytes memory call = abi.encodeCall(
+            IERC7786Receiver.receiveMessage,
+            (uint256(id).toHexString(32), sourceChain, originalSender, unwrappedPayload, attributes)
+        );
 
-    (bool success, bytes memory returndata) = receiver.parseAddress().call(call);
+        (bool success, bytes memory returndata) = receiver.parseAddress().call(call);
 
-    // ... Handle the result ...
+        // ... Handle the result ...
+    }
 
     return IERC7786Receiver.receiveMessage.selector;
-
+}
 ```
 
 The bridge is designed to be configurable. As an `Ownable` contract, it allows the owner to manage the list of trusted gateways and adjust the confirmation threshold. The `_gateways` list and threshold are initially set during contract deployment using the [`_addGateway`](/community-contracts/api/crosschain#ERC7786OpenBridge-_addGateway-address-) and [`_setThreshold`](/community-contracts/api/crosschain#ERC7786OpenBridge-_setThreshold-uint8-) functions. The owner can update these settings as needed to adapt to changing requirements or add new gateways.

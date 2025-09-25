@@ -67,13 +67,13 @@ This part assumes you have already set up a project. If you haven’t, head over
 We need to update our configuration file with a new network connection to the testnet. Here we will use Sepolia, but you can use whichever you want:
 ```diff
 // hardhat.config.js
-+ const  alchemyApiKey, mnemonic  = require('./secrets.json');
++ const { alchemyApiKey, mnemonic } = require('./secrets.json');
 ...
-  module.exports =
+  module.exports = {
 +    networks: {
 +     sepolia: {
-+       url: `https://eth-sepolia.g.alchemy.com/v2/${alchemyApiKey`,
-+       accounts:  mnemonic: mnemonic ,
++       url: `https://eth-sepolia.g.alchemy.com/v2/${alchemyApiKey}`,
++       accounts: { mnemonic: mnemonic },
 +     },
 +   },
 ...

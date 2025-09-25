@@ -18,23 +18,24 @@ import Ownable from "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @dev A hook that allows the owner to dynamically update the LP fee.
  */
-contract DynamicLPFeeHook is BaseDynamicFee, Ownable
+contract DynamicLPFeeHook is BaseDynamicFee, Ownable {
     uint24 public fee;
 
-    constructor(IPoolManager _poolManager) BaseDynamicFee(_poolManager) Ownable(msg.sender) {
+    constructor(IPoolManager _poolManager) BaseDynamicFee(_poolManager) Ownable(msg.sender) {}
 
     /**
      * @inheritdoc BaseDynamicFee
      */
-    function _getFee(PoolKey calldata) internal view override returns (uint24)
+    function _getFee(PoolKey calldata) internal view override returns (uint24) {
         return fee;
-
+    }
 
     /**
      * @notice Sets the LP fee, denominated in hundredths of a bip.
      */
-    function setFee(uint24 _fee) external onlyOwner
+    function setFee(uint24 _fee) external onlyOwner {
         fee = _fee;
+    }
 
 }
 ```
@@ -57,10 +58,10 @@ import Ownable from "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @dev A hook that allows the owner to dynamically update the swap fee.
  */
-contract DynamicSwapFeeHook is BaseOverrideFee, Ownable
+contract DynamicSwapFeeHook is BaseOverrideFee, Ownable {
     uint24 public fee;
 
-    constructor(IPoolManager _poolManager) BaseOverrideFee(_poolManager) Ownable(msg.sender) {
+    constructor(IPoolManager _poolManager) BaseOverrideFee(_poolManager) Ownable(msg.sender) {}
 
     /**
      * @inheritdoc BaseOverrideFee
@@ -70,15 +71,16 @@ contract DynamicSwapFeeHook is BaseOverrideFee, Ownable
         view
         override
         returns (uint24)
-
+    {
         return fee;
-
+    }
 
     /**
      * @notice Sets the swap fee, denominated in hundredths of a bip.
      */
-    function setFee(uint24 _fee) external onlyOwner
+    function setFee(uint24 _fee) external onlyOwner {
         fee = _fee;
+    }
 
 }
 ```
