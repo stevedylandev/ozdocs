@@ -120,56 +120,80 @@ export function Footer() {
 					{/* Products */}
 					<div className="text-sm lg:col-span-1">
 						<h3 className="font-medium text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
-							Products
+							Developers
 						</h3>
 						<div className="space-y-2 sm:space-y-3">
 							<Link
-								href="/contracts"
+								href="https://www.openzeppelin.com/contracts"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Contracts Library
 							</Link>
 							<Link
-								href="/wizard"
+								href="https://wizard.openzeppelin.com/"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Contracts Wizard
 							</Link>
 							<Link
-								href="/upgrades-plugins"
-								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
-							>
-								Upgrade Plugins
-							</Link>
-							<Link
-								href="https://mcp.openzeppelin.com"
+								href="https://mcp.openzeppelin.com/"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Contracts MCP
 							</Link>
 							<Link
-								href="/contracts-ui-builder"
+								href="/upgrades-plugins"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
-								Contracts UI Builder
+								Upgrades Plugins
 							</Link>
 							<Link
-								href="/relayer"
+								href="https://www.openzeppelin.com/open-source-stack#operate"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Relayer
 							</Link>
 							<Link
-								href="/monitor"
+								href="https://www.openzeppelin.com/open-source-stack#operate"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Monitor
 							</Link>
 							<Link
-								href="/defender"
+								href="https://builder.openzeppelin.com/"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
-								Defender
+								UI Builder
+							</Link>
+							<Link
+								href="https://safeutils.openzeppelin.com/"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Safe Utils
+							</Link>
+							<Link
+								href="https://access-manager.openzeppelin.com/explorer/11155111"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Access Control
+							</Link>
+							<Link
+								href="https://docs.openzeppelin.com/"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Documentation
+							</Link>
+							<Link
+								href="https://ethernaut.openzeppelin.com/"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Ethernaut CTF
+							</Link>
+							<Link
+								href="https://forum.openzeppelin.com/"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Forum
 							</Link>
 						</div>
 					</div>
@@ -181,22 +205,22 @@ export function Footer() {
 						</h3>
 						<div className="space-y-2 sm:space-y-3">
 							<Link
-								href="https://openzeppelin.com/security-audits"
+								href="https://www.openzeppelin.com/security-audits"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Smart Contract Security Audit
 							</Link>
 							<Link
-								href="https://openzeppelin.com/blockchain-infrastructure-audits"
+								href="https://www.openzeppelin.com/blockchain-infrastructure"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Blockchain Infrastructure Audit
 							</Link>
 							<Link
-								href="https://openzeppelin.com/zkp-practice"
+								href="https://www.openzeppelin.com/zkp"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
-								ZKP Practice
+								ZKP Audit
 							</Link>
 						</div>
 					</div>
@@ -208,13 +232,46 @@ export function Footer() {
 						</h3>
 						<div className="space-y-2 sm:space-y-3">
 							<Link
-								href="https://openzeppelin.com/ecosystem-stack"
+								href="https://www.openzeppelin.com/ecosystems"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Ecosystem Stack
 							</Link>
 							<Link
-								href="https://openzeppelin.com/financial-institutions-stack"
+								href="https://www.openzeppelin.com/customers-stories"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Customer Stories
+							</Link>
+						</div>
+					</div>
+
+					{/* Institutions */}
+					<div className="text-sm lg:col-span-1">
+						<h3 className="font-medium text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
+							Institutions
+						</h3>
+						<div className="space-y-2 sm:space-y-3">
+							<Link
+								href="https://www.openzeppelin.com/security-audits"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Smart Contract Security Audit
+							</Link>
+							<Link
+								href="https://www.openzeppelin.com/blockchain-infrastructure"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								Blockchain Infrastructure Audit
+							</Link>
+							<Link
+								href="https://www.openzeppelin.com/zkp"
+								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+							>
+								ZKP Audit
+							</Link>
+							<Link
+								href="https://www.openzeppelin.com/financial-institutions"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Financial Institutions Stack
@@ -222,68 +279,47 @@ export function Footer() {
 						</div>
 					</div>
 
-					{/* Resources */}
+					{/* Research */}
 					<div className="text-sm lg:col-span-1">
 						<h3 className="font-medium text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
-							Resources
+							Research &amp; Resources
 						</h3>
 						<div className="space-y-2 sm:space-y-3">
 							<Link
-								href="/"
+								href="https://www.openzeppelin.com/research"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
-								Documentation
+								Research
 							</Link>
 							<Link
-								href="https://blog.openzeppelin.com"
+								href="https://www.openzeppelin.com/news"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
-								Blog
+								News
 							</Link>
 							<Link
-								href="https://forum.openzeppelin.com"
+								href="https://www.openzeppelin.com/stats"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
-								Forum
+								Stats
 							</Link>
 							<Link
-								href="https://ethernaut.openzeppelin.com"
+								href="https://www.openzeppelin.com/about"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
-								Ethernaut CTF
-							</Link>
-						</div>
-					</div>
-
-					{/* Company */}
-					<div className="text-sm lg:col-span-1">
-						<h3 className="font-medium text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
-							Company
-						</h3>
-						<div className="space-y-2 sm:space-y-3">
-							<Link
-								href="https://openzeppelin.com/about"
-								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
-							>
-								About us
+								About
 							</Link>
 							<Link
-								href="https://openzeppelin.com/careers"
+								href="https://www.openzeppelin.com/careers"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Careers
 							</Link>
 							<Link
-								href="https://openzeppelin.com/brand-kit"
+								href="https://www.openzeppelin.com/brand-kit"
 								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
 							>
 								Brand Kit
-							</Link>
-							<Link
-								href="https://openzeppelin.com/trust"
-								className="block text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
-							>
-								Trust
 							</Link>
 						</div>
 					</div>

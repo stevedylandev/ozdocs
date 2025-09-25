@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { Provider } from "./provider";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -86,6 +88,8 @@ export default function Layout({ children }: { children: ReactNode }) {
 	return (
 		<html lang="en" className={inter.className} suppressHydrationWarning>
 			<body className="flex flex-col min-h-screen">
+				<GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />
+				<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
 				<Provider>{children}</Provider>
 			</body>
 		</html>

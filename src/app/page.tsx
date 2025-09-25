@@ -90,34 +90,34 @@ export default function HomePage() {
 					<div className="mt-6 group bg-card border rounded-xl p-4 sm:p-6 transition-all duration-300 cursor-pointer hover:shadow-sm hover:-translate-y-0.5 relative overflow-hidden hover:border-accent before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#4945ff] before:to-[#627eea] before:opacity-0 hover:before:opacity-100 before:transition-opacity">
 						<a
 							href="#ecosystems"
-							className="flex items-center justify-between text-inherit no-underline"
+							className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-inherit no-underline gap-4 sm:gap-0"
 						>
-							<div className="flex items-center gap-4 sm:gap-5 flex-1">
-								<div className="flex gap-2">
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
-										<EthereumIcon color className="w-4 h-4" />
+							<div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 md:gap-5 flex-1">
+								<div className="flex gap-1.5 sm:gap-2">
+									<div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
+										<EthereumIcon color className="w-3 h-3 sm:w-4 sm:h-4" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
-										<StarknetIcon color className="w-4 h-4" />
+									<div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
+										<StarknetIcon color className="w-3 h-3 sm:w-4 sm:h-4" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
-										<StellarIcon className="w-3 h-3" />
+									<div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
+										<StellarIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
-										<ZamaIcon color className="w-3 h-3" />
+									<div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
+										<ZamaIcon color className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center text-xs text-muted-foreground transition-all duration-300 group-hover:bg-muted/70">
+									<div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted/50 rounded-lg flex items-center justify-center text-xs text-muted-foreground transition-all duration-300 group-hover:bg-muted/70">
 										+4
 									</div>
 								</div>
-								<div className="text-sm text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
+								<div className="text-xs sm:text-sm text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
 									Contracts libraries are also available for Starknet, Stellar,
-									Zama FHEVM, and 4 more blockchains
+									Zama FHEVM, and more blockchains
 								</div>
 							</div>
-							<div className="px-3 py-2 rounded-lg bg-fd-primary text-fd-primary-foreground text-sm font-medium transition-all duration-300  flex items-center gap-2">
+							<div className="px-3 py-2 rounded-lg text-xs sm:text-sm bg-fd-muted text-fd-muted-foreground font-medium transition-all duration-300 flex items-center gap-2 self-start sm:self-auto">
 								Explore all
-								<ArrowDown />
+								<ArrowDown className="w-3 h-3 sm:w-4 sm:h-4" />
 							</div>
 						</a>
 					</div>
@@ -171,15 +171,15 @@ export default function HomePage() {
 				</div>
 
 				{/* Divider */}
-				<div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+				<div
+					id="ecosystems"
+					className="h-px bg-gradient-to-r from-transparent via-border to-transparent"
+				/>
 
 				{/* Blockchains and Developer Ecosystems */}
 				<div className="mb-12 sm:mb-15">
 					<div className="mb-4 sm:mb-6 px-2 sm:px-0">
-						<h2
-							id="ecosystems"
-							className="text-base sm:text-lg font-semibold mb-2"
-						>
+						<h2 className="text-base sm:text-lg font-semibold mb-2">
 							Blockchains and Developer Ecosystems
 						</h2>
 						<p className="text-sm text-muted-foreground">
