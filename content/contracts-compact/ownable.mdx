@@ -4,10 +4,11 @@ title: Ownable
 
 {/* links */}
 [initialize]: api/ownable#initialize
-[transferOwnership]: api/ownable#transferownership
-[_transferOwnership]: api/ownable#_transferownership
-[_unsafeTransferOwnership]: api/ownable#_unsafetransferownership
-[_unsafeUncheckedTransferOwnership]: api/ownable#_unsafeuncheckedtransferownership
+[transferOwnership]: api/ownable#Ownable-transferownership
+[_transferOwnership]: api/ownable#Ownable-_transferownership
+[_unsafeTransferOwnership]: api/ownable#Ownable-_unsafetransferownership
+[_unsafeUncheckedTransferOwnership]: api/ownable#Ownable-_unsafeuncheckedtransferownership
+[_computeOwnerId]: api/ownable#ZOwnablePK-_computeOwnerId
 
 [ed25519]: https://ed25519.cr.yp.to/
 [rfc6979]: https://datatracker.ietf.org/doc/html/rfc6979
@@ -387,6 +388,6 @@ const generateInstanceSalt = (): Uint8Array => {
 ```
 
 <Callout type="info">
-  Another way to get the user ID is to expose `_computeOwnerId` in the contract and call this circuit off chain through a contract simulator.
+  Another way to get the user ID is to expose [_computeOwnerId] in the contract and call this circuit off chain through a contract simulator.
   Be on the lookout for future tooling that makes this process easier.
 </Callout>
