@@ -3,7 +3,7 @@ import { usePathname } from "fumadocs-core/framework";
 import Link from "fumadocs-core/link";
 import { useSidebar } from "fumadocs-ui/contexts/sidebar";
 import type { SidebarTab } from "fumadocs-ui/utils/get-sidebar-tabs";
-import { Check, ChevronDown, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { type ComponentProps, type ReactNode, useMemo, useState } from "react";
 import { cn } from "../lib/cn";
 import { isTabActive } from "../lib/is-active";

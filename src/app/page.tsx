@@ -27,8 +27,8 @@ import {
 	UniswapIcon,
 	ZamaIcon,
 } from "@/components/icons";
-import { baseOptions } from "./layout.config";
 import { DefenderIcon } from "@/components/icons/defender-icon";
+import { baseOptions } from "./layout.config";
 
 export default function HomePage() {
 	return (
