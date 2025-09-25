@@ -61,7 +61,7 @@ async function checkLinks() {
 				output += `Invalid URLs in ${result.file}:\n`;
 				for (const error of result.errors) {
 					totalErrors++;
-					output += `${error.url}: ${error.type} at line ${error.line} column ${error.column}\n`;
+					output += `${error.url}: ${error.reason} at line ${error.line} column ${error.column}\n`;
 				}
 				output += "------\n";
 			}
