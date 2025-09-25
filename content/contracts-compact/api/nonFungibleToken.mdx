@@ -5,7 +5,7 @@ title: NonFungibleToken API
 This module provides the full NonFungibleToken module API.
 
 <Callout type='info'>
-  For an overview of the module, read the [NonFungibleToken guide](../nonfungibletoken).
+  For an overview of the module, read the [NonFungibleToken guide](../nonFungibleToken).
 </Callout>
 
 ## Core
@@ -262,7 +262,7 @@ None.
   modulePrefix="NonFungibleToken"
 >
   Approve or remove `operator` as an operator for the caller.
-  Operators can call [transferFrom](#transferfrom) for any token owned by the caller.
+  Operators can call [transferFrom](#NonFungibleToken-transferFrom) for any token owned by the caller.
 
   Requirements:
 
@@ -309,7 +309,7 @@ None.
   * `to` is not the zero address.
   * `to` is not a ContractAddress.
   * `tokenId` token must be owned by `from`.
-  * If the caller is not `from`, it must be approved to move this token by either [approve](#approve) or [setApprovalForAll](#setapprovalforall).
+  * If the caller is not `from`, it must be approved to move this token by either [approve](#NonFungibleToken-approve) or [setApprovalForAll](#NonFungibleToken-setApprovalForAll).
 </APIItemCompact>
 
 #### _unsafeTransferFrom [toc] [#NonFungibleToken-_unsafeTransferFrom]
@@ -321,7 +321,7 @@ None.
   stackParams="true"
   modulePrefix="NonFungibleToken"
 >
-  Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
+  Unsafe variant of [transferFrom](#NonFungibleToken-transferFrom) which allows transfers to contract addresses.
 
   <Callout type='warn'>
     Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
@@ -335,7 +335,7 @@ None.
   * `from` is not the zero address.
   * `to` is not the zero address.
   * `tokenId` token must be owned by `from`.
-  * If the caller is not `from`, it must be approved to move this token by either [approve](#approve) or [setApprovalForAll](#setapprovalforall).
+  * If the caller is not `from`, it must be approved to move this token by either [approve](#NonFungibleToken-approve) or [setApprovalForAll](#NonFungibleToken-setApprovalForAll).
 </APIItemCompact>
 
 #### _ownerOf [toc] [#NonFungibleToken-_ownerOf]
@@ -457,7 +457,7 @@ None.
   complexity="k=10, rows=1010"
   modulePrefix="NonFungibleToken"
 >
-  Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
+  Unsafe variant of [_mint](#NonFungibleToken-_mint) which allows transfers to contract addresses.
 
   Requirements:
 
@@ -499,7 +499,7 @@ None.
   stackParams="true"
   modulePrefix="NonFungibleToken"
 >
-  Transfers `tokenId` from `from` to `to`. As opposed to [transferFrom](#transferfrom),
+  Transfers `tokenId` from `from` to `to`. As opposed to [transferFrom](#NonFungibleToken-transferFrom),
   this imposes no restrictions on `ownPublicKey()`.
 
   <Callout type='info'>
@@ -524,9 +524,9 @@ None.
   stackParams="true"
   modulePrefix="NonFungibleToken"
 >
-  Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
+  Unsafe variant of [_transfer](#NonFungibleToken-_transfer) which allows transfers to contract addresses.
 
-  Transfers `tokenId` from `from` to `to`. As opposed to [_unsafeTransferFrom](#_unsafetransferfrom), this imposes no restrictions on `ownPublicKey()`. It does NOT check if the recipient is a `ContractAddress`.
+  Transfers `tokenId` from `from` to `to`. As opposed to [_unsafeTransferFrom](#NonFungibleToken-_unsafeTransferFrom), this imposes no restrictions on `ownPublicKey()`. It does NOT check if the recipient is a `ContractAddress`.
 
   <Callout type='warn'>
     Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.

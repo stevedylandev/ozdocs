@@ -20,7 +20,7 @@ constructor() {
 }
 ```
 
-To restrict access to a circuit, use [assertOnlyRole](#assertonlyrole):
+To restrict access to a circuit, use [assertOnlyRole](#AccessControl-assertOnlyRole):
 
 ```typescript
 circuit foo(): [] {
@@ -28,9 +28,9 @@ circuit foo(): [] {
 }
 ```
 
-Roles can be granted and revoked dynamically via the [grantRole](##AccessControl-grantRole) and [revokeRole](##AccessControl-revokeRole) circuits.
+Roles can be granted and revoked dynamically via the [grantRole](#AccessControl-grantRole) and [revokeRole](#AccessControl-revokeRole) circuits.
 Each role has an associated admin role,
-and only accounts that have a role’s admin role can call [grantRole](##AccessControl-grantRole) and [revokeRole](##AccessControl-revokeRole).
+and only accounts that have a role’s admin role can call [grantRole](#AccessControl-grantRole) and [revokeRole](#AccessControl-revokeRole).
 
 By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`,
 which means that only accounts with this role will be able to grant or revoke other roles.
@@ -148,7 +148,7 @@ None.
   id="AccessControl-getRoleAdmin"
 >
   Returns the admin role that controls `roleId` or a byte array with all zero bytes if `roleId` doesn’t exist.
-  See [grantRole](##AccessControl-grantRole) and [revokeRole](#AccessControl-revokeRole).
+  See [grantRole](#AccessControl-grantRole) and [revokeRole](#AccessControl-revokeRole).
 
   To change a role's admin use [_setRoleAdmin](#AccessControl-_setRoleAdmin).
 </APIItemCompact>
