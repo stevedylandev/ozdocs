@@ -24,7 +24,7 @@ The [`CurrencySettler`](/uniswap-hooks/api/utils#CurrencySettler) library provid
         virtual
         override
         returns (bytes4, BeforeSwapDelta, uint24)
-
+    {
         // Async swaps are only possible on exact-input swaps, so exact-output swaps are executed by the `PoolManager` as normal
         if (params.amountSpecified < 0) {
             // Determine which currency is specified
@@ -38,9 +38,9 @@ The [`CurrencySettler`](/uniswap-hooks/api/utils#CurrencySettler) library provid
 
             // Return delta that nets out specified amount to 0.
             return (this.beforeSwap.selector, toBeforeSwapDelta(specifiedAmount.toInt128(), 0), 0);
-         else
+        } else {
             return (this.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
-
+        }
     }
 
 ...
