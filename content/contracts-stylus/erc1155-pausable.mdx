@@ -2,13 +2,13 @@
 title: ERC-1155 Pausable
 ---
 
-[ERC-1155](erc1155) token with pausable token transfers, minting, and burning.
+[ERC-1155](/contracts-stylus/erc1155) token with pausable token transfers, minting, and burning.
 
 Useful for scenarios such as preventing trades until the end of an evaluation period, or having an emergency switch for freezing all token transfers in the event of a large bug.
 
 ## Usage
 
-In order to make your [ERC-1155](erc1155) token `pausable`, you need to use the [`Pausable`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/utils/pausable/index.html) contract and apply its mechanisms to ERC1155 token functions as follows:
+In order to make your [ERC-1155](/contracts-stylus/erc1155) token `pausable`, you need to use the [`Pausable`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/utils/pausable/index.html) contract and apply its mechanisms to ERC1155 token functions as follows:
 
 ```rust
 use openzeppelin_stylus::{

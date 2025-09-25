@@ -7,18 +7,18 @@ This modules provides a basic access control mechanism, where there is an owner
 that can be granted exclusive access to specific circuits.
 This approach is perfectly reasonable for contracts that have a single administrative user.
 
-The initial owner must be set by using the [initialize](api/ownable#Ownable-initialize) circuit during construction.
-This can later be changed with [transferOwnership](api/ownable#Ownable-transferOwnership).
+The initial owner must be set by using the [initialize](/contracts-compact/api/ownable#Ownable-initialize) circuit during construction.
+This can later be changed with [transferOwnership](/contracts-compact/api/ownable#Ownable-transferOwnership).
 
 ## Ownership transfers
 
-Ownership can only be transferred to `ZswapCoinPublicKeys` through the main transfer circuits ([transferOwnership](api/ownable#Ownable-transferOwnership) and [_transferOwnership](api/ownable#Ownable-_transferOwnership)).
+Ownership can only be transferred to `ZswapCoinPublicKeys` through the main transfer circuits ([transferOwnership](/contracts-compact/api/ownable#Ownable-transferOwnership) and [_transferOwnership](/contracts-compact/api/ownable#Ownable-_transferOwnership)).
 In other words, ownership transfers to contract addresses are disallowed through these circuits.
 This is because Compact currently does not support contract-to-contract calls which means if a contract is granted ownership, the owner contract cannot directly call the protected circuit.
 
 ### Experimental features
 
-This module offers experimental circuits that allow ownership to be granted to contract addresses ([_unsafeTransferOwnership](api/ownable#Ownable-_unsafeTransferOwnership) and [_unsafeUncheckedTransferOwnership](api/ownable#Ownable-_unsafeUncheckedTransferOwnership)).
+This module offers experimental circuits that allow ownership to be granted to contract addresses ([_unsafeTransferOwnership](/contracts-compact/api/ownable#Ownable-_unsafeTransferOwnership) and [_unsafeUncheckedTransferOwnership](/contracts-compact/api/ownable#Ownable-_unsafeUncheckedTransferOwnership)).
 Note that the circuit names are very explicit ("unsafe") with these experimental circuits.
 Until contract-to-contract calls are supported,
 there is no direct way for a contract to call circuits of other contracts or transfer ownership back to a user.
@@ -52,11 +52,11 @@ export circuit mySensitiveCircuit(): []
   Ownable_assertOnlyOwner();
 
   // Do something
-```
+  ```
 
-Contracts may expose [transferOwnership](api/ownable#Ownable-transferOwnership) to allow the owner to transfer ownership.
+  Contracts may expose [transferOwnership](/contracts-compact/api/ownable#Ownable-transferOwnership) to allow the owner to transfer ownership.
 
-```ts
+  ```ts
 export circuit transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>): []
   Ownable_transferOwnership(newOwner);
 ```
@@ -105,8 +105,7 @@ export circuit mySensitiveCircuit(): []
 
   // Do something
 ```
-
 <Callout>
-For more complex logic, contracts may transfer ownership to another user irrespective of the caller by leveraging [_transferOwnership](api/ownable#Ownable-_transferOwnership).
+For more complex logic, contracts may transfer ownership to another user irrespective of the caller by leveraging [_transferOwnership](/contracts-compact/api/ownable#Ownable-_transferOwnership).
 This is generally more useful when contract addresses are the owner or when a contract has a unique deployment process.
 </Callout>
