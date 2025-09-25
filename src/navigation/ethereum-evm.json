@@ -1146,42 +1146,42 @@
 			{
 				"type": "page",
 				"name": "Quickstart",
-				"url": "/contracts-ui-builder"
+				"url": "/ui-builder"
 			},
 			{
 				"type": "page",
 				"name": "Networks",
-				"url": "/contracts-ui-builder/networks"
+				"url": "/ui-builder/networks"
 			},
 			{
 				"type": "page",
 				"name": "Loading Contracts",
-				"url": "/contracts-ui-builder/loading-contracts"
+				"url": "/ui-builder/loading-contracts"
 			},
 			{
 				"type": "page",
 				"name": "Functions",
-				"url": "/contracts-ui-builder/functions"
+				"url": "/ui-builder/functions"
 			},
 			{
 				"type": "page",
 				"name": "Customization",
-				"url": "/contracts-ui-builder/customization"
+				"url": "/ui-builder/customization"
 			},
 			{
 				"type": "page",
 				"name": "Exporting and History",
-				"url": "/contracts-ui-builder/exporting-and-history"
+				"url": "/ui-builder/exporting-and-history"
 			},
 			{
 				"type": "page",
 				"name": "Building Adapters",
-				"url": "/contracts-ui-builder/building-adapters"
+				"url": "/ui-builder/building-adapters"
 			},
 			{
 				"type": "page",
 				"name": "Changelog",
-				"url": "/contracts-ui-builder/changelog"
+				"url": "/ui-builder/changelog"
 			}
 		]
 	},

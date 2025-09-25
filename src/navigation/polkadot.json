@@ -196,17 +196,17 @@
 		"children": [
 			{
 				"type": "folder",
-				"name": "v0.2.0",
+				"name": "v2.0.2",
 				"children": [
 					{
 						"type": "page",
 						"name": "Overview",
-						"url": "/substrate-runtimes/0.2.0"
+						"url": "/substrate-runtimes/2.0.2"
 					},
 					{
 						"type": "page",
 						"name": "Quick Start",
-						"url": "/substrate-runtimes/0.2.0/guides/quick_start"
+						"url": "/substrate-runtimes/2.0.2/guides/quick_start"
 					},
 					{
 						"type": "folder",
@@ -215,62 +215,62 @@
 							{
 								"type": "page",
 								"name": "Assets",
-								"url": "/substrate-runtimes/0.2.0/pallets/assets"
+								"url": "/substrate-runtimes/2.0.2/pallets/assets"
 							},
 							{
 								"type": "page",
 								"name": "Aura Ext",
-								"url": "/substrate-runtimes/0.2.0/pallets/aura_ext"
+								"url": "/substrate-runtimes/2.0.2/pallets/aura_ext"
 							},
 							{
 								"type": "page",
 								"name": "Balances",
-								"url": "/substrate-runtimes/0.2.0/pallets/balances"
+								"url": "/substrate-runtimes/2.0.2/pallets/balances"
 							},
 							{
 								"type": "page",
 								"name": "Collator Selection",
-								"url": "/substrate-runtimes/0.2.0/pallets/collator-selection"
+								"url": "/substrate-runtimes/2.0.2/pallets/collator-selection"
 							},
 							{
 								"type": "page",
 								"name": "Message Queue",
-								"url": "/substrate-runtimes/0.2.0/pallets/message-queue"
+								"url": "/substrate-runtimes/2.0.2/pallets/message-queue"
 							},
 							{
 								"type": "page",
 								"name": "Multisig",
-								"url": "/substrate-runtimes/0.2.0/pallets/multisig"
+								"url": "/substrate-runtimes/2.0.2/pallets/multisig"
 							},
 							{
 								"type": "page",
 								"name": "Parachain System",
-								"url": "/substrate-runtimes/0.2.0/pallets/parachain-system"
+								"url": "/substrate-runtimes/2.0.2/pallets/parachain-system"
 							},
 							{
 								"type": "page",
 								"name": "Proxy",
-								"url": "/substrate-runtimes/0.2.0/pallets/proxy"
+								"url": "/substrate-runtimes/2.0.2/pallets/proxy"
 							},
 							{
 								"type": "page",
 								"name": "Transaction Payment",
-								"url": "/substrate-runtimes/0.2.0/pallets/transaction_payment"
+								"url": "/substrate-runtimes/2.0.2/pallets/transaction_payment"
 							},
 							{
 								"type": "page",
 								"name": "Treasury",
-								"url": "/substrate-runtimes/0.2.0/pallets/treasury"
+								"url": "/substrate-runtimes/2.0.2/pallets/treasury"
 							},
 							{
 								"type": "page",
 								"name": "XCM",
-								"url": "/substrate-runtimes/0.2.0/pallets/xcm"
+								"url": "/substrate-runtimes/2.0.2/pallets/xcm"
 							},
 							{
 								"type": "page",
 								"name": "XCMP Queue",
-								"url": "/substrate-runtimes/0.2.0/pallets/xcmp-queue"
+								"url": "/substrate-runtimes/2.0.2/pallets/xcmp-queue"
 							}
 						]
 					},
@@ -281,17 +281,17 @@
 							{
 								"type": "page",
 								"name": "EVM",
-								"url": "/substrate-runtimes/0.2.0/runtimes/evm"
+								"url": "/substrate-runtimes/2.0.2/runtimes/evm"
 							},
 							{
 								"type": "page",
 								"name": "Generic",
-								"url": "/substrate-runtimes/0.2.0/runtimes/generic"
+								"url": "/substrate-runtimes/2.0.2/runtimes/generic"
 							},
 							{
 								"type": "page",
 								"name": "XCM Executor",
-								"url": "/substrate-runtimes/0.2.0/runtime/xcm_executor"
+								"url": "/substrate-runtimes/2.0.2/runtime/xcm_executor"
 							}
 						]
 					},
@@ -302,14 +302,14 @@
 							{
 								"type": "page",
 								"name": "Multisig Accounts",
-								"url": "/substrate-runtimes/0.2.0/misc/multisig-accounts"
+								"url": "/substrate-runtimes/2.0.2/misc/multisig-accounts"
 							}
 						]
 					},
 					{
 						"type": "page",
 						"name": "Glossary",
-						"url": "/substrate-runtimes/0.2.0/glossary"
+						"url": "/substrate-runtimes/2.0.2/glossary"
 					},
 					{
 						"type": "separator",
@@ -318,37 +318,37 @@
 					{
 						"type": "page",
 						"name": "Async Backing",
-						"url": "/substrate-runtimes/0.2.0/guides/async_backing"
+						"url": "/substrate-runtimes/2.0.2/guides/async_backing"
 					},
 					{
 						"type": "page",
 						"name": "Contract Migration",
-						"url": "/substrate-runtimes/0.2.0/guides/contract_migration"
+						"url": "/substrate-runtimes/2.0.2/guides/contract_migration"
 					},
 					{
 						"type": "page",
 						"name": "HRMP Channels",
-						"url": "/substrate-runtimes/0.2.0/guides/hrmp_channels"
+						"url": "/substrate-runtimes/2.0.2/guides/hrmp_channels"
 					},
 					{
 						"type": "page",
 						"name": "Predeployed Contracts",
-						"url": "/substrate-runtimes/0.2.0/guides/predeployed_contracts"
+						"url": "/substrate-runtimes/2.0.2/guides/predeployed_contracts"
 					},
 					{
 						"type": "page",
 						"name": "RPC Differences",
-						"url": "/substrate-runtimes/0.2.0/guides/rpc_differences"
+						"url": "/substrate-runtimes/2.0.2/guides/rpc_differences"
 					},
 					{
 						"type": "page",
 						"name": "Testing with Zombienet",
-						"url": "/substrate-runtimes/0.2.0/guides/testing_with_zombienet"
+						"url": "/substrate-runtimes/2.0.2/guides/testing_with_zombienet"
 					},
 					{
 						"type": "page",
 						"name": "Weights & Fees",
-						"url": "/substrate-runtimes/0.2.0/guides/weights_fees"
+						"url": "/substrate-runtimes/2.0.2/guides/weights_fees"
 					}
 				]
 			}

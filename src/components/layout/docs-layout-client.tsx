@@ -40,7 +40,7 @@ export function DocsLayoutClient({ children }: DocsLayoutClientProps) {
 							"/wizard",
 							"/relayer",
 							"/monitor",
-							"/contracts-ui-builder",
+							"/ui-builder",
 							"/upgrades",
 							"/defender",
 							"/tools",

@@ -5,6 +5,20 @@ publish = ".next"
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 
+# OpenZeppelin Contracts
+
+[[redirects]]
+from = "/contracts/2.x/*"
+to = "/contracts/:splat"
+status = 301
+
+# Community Contracts
+
+[[redirects]]
+from = "/community-contracts/0.0.1/*"
+to = "/community-contracts/:splat"
+status = 301
+
 # Stellar Contracts
 
 [[redirects]]
@@ -104,18 +118,11 @@ from = "/contracts-cairo/1.0.0/*"
 to = "https://old-docs.openzeppelin.com/contracts-cairo/1.0.0/:splat"
 status = 301
 
-# Community Contracts
-
-[[redirects]]
-from = "/community-contracts/0.0.1/*"
-to = "/community-contracts/:splat"
-status = 301
-
 # Midnight Compact
 
 [[redirects]]
 from = "/contracts-compact/0.0.1/*"
-to = "/community-contracts/:splat"
+to = "/contracts-compact/:splat"
 status = 301
 
 # Stylus
@@ -132,6 +139,12 @@ from = "/substrate-runtimes/3.0.0-rc/*"
 to = "/substrate-runtimes/:splat"
 status = 301
 
+[[redirects]]
+from = "/substrate-runtimes/1.0.0/*"
+to = "/substrate-runtimes/:splat"
+status = 301
+
+
 # Uniswap Hooks
 
 [[redirects]]
@@ -147,6 +160,11 @@ to = "/confidential-contracts/:splat"
 status = 301
 
 # Tools redirects
+
+[[redirects]]
+from = "/open-source-tools"
+to = "/#open-source-tools"
+status = 301
 
 [[redirects]]
 from = "/subgraphs/0.1.x/*"
@@ -195,7 +213,17 @@ status = 301
 
 [[redirects]]
 from = "/contracts-ui-builder/1.0.x/*"
-to = "/contracts-ui-builder/:splat"
+to = "/ui-builder/:splat"
+status = 301
+
+[[redirects]]
+from = "/contracts-ui-builder/*"
+to = "/ui-builder/:splat"
+status = 301
+
+[[redirects]]
+from = "/ui-builder/1.0.x/*"
+to = "/ui-builder/:splat"
 status = 301
 
 [[redirects]]

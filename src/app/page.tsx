@@ -127,7 +127,10 @@ export default function HomePage() {
 
 				{/* Open Source Tools Section */}
 				<div className="mb-12 sm:mb-15">
-					<h2 className="text-base sm:text-lg font-semibold mb-2">
+					<h2
+						id="open-source-tools"
+						className="text-base sm:text-lg font-semibold mb-2"
+					>
 						Open Source Tools
 					</h2>
 
@@ -153,7 +156,7 @@ export default function HomePage() {
 					{/* Minor Tools */}
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 						<FeatureCard
-							href="/contracts-ui-builder"
+							href="/ui-builder"
 							icon={
 								<TransactionProposalIcon className="h-6 w-6 sm:h-8 sm:w-8" />
 							}

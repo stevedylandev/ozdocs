@@ -44,7 +44,7 @@ content/
 ├── contracts-cairo/        # Cairo contracts for StarkNet
 ├── contracts-compact/      # Compact contract implementations
 ├── contracts-stylus/       # Stylus contracts for Arbitrum
-├── contracts-ui-builder/   # UI Builder documentation
+├── ui-builder/   # UI Builder documentation
 ├── defender/               # Defender platform documentation
 ├── monitor/                # Monitoring tools documentation
 ├── relayer/                # Relayer service documentation
