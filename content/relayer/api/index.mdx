@@ -2,61 +2,113 @@
 title: Relayer API Reference
 ---
 
-## Authentication
+## Relayers
 
-### [Call Plugin](./callPlugin)
-Calls a plugin method.
+### [List Relayers](./api/listRelayers)
+Lists all relayers with pagination support
 
-## Core Management
+### [Create Relayer](./api/createRelayer)
+Creates a new relayer
 
-### Relayers
-- [Create Relayer](./createRelayer) - Creates a new relayer
-- [List Relayers](./listRelayers) - Lists all relayers with pagination support
-- [Get Relayer](./getRelayer) - Retrieves details of a specific relayer by ID
-- [Update Relayer](./updateRelayer) - Updates a relayer's information
-- [Delete Relayer](./deleteRelayer) - Deletes a relayer by ID
-- [Get Relayer Balance](./getRelayerBalance) - Retrieves the balance of a specific relayer
-- [Get Relayer Status](./getRelayerStatus) - Fetches the current status of a specific relayer
+### [Get Relayer](./api/getRelayer)
+Retrieves details of a specific relayer by ID
 
-### Signers
-- [Create Signer](./createSigner) - Creates a new signer
-- [List Signers](./listSigners) - Lists all signers with pagination support
-- [Get Signer](./getSigner) - Retrieves details of a specific signer by ID
-- [Update Signer](./updateSigner) - Updates an existing signer
-- [Delete Signer](./deleteSigner) - Deletes a signer by ID
+### [Delete Relayer](./api/deleteRelayer)
+Deletes a relayer by ID
 
-### Notifications
-- [Create Notification](./createNotification) - Creates a new notification
-- [List Notifications](./listNotifications) - Lists all notifications with pagination support
-- [Get Notification](./getNotification) - Retrieves details of a specific notification by ID
-- [Update Notification](./updateNotification) - Updates an existing notification
-- [Delete Notification](./deleteNotification) - Deletes a notification by ID
+### [Update Relayer](./api/updateRelayer)
+Updates a relayer's information
 
-## Transaction Management
+### [Get Relayer Balance](./api/getRelayerBalance)
+Retrieves the balance of a specific relayer
 
-### Transaction Operations
-- [Send Transaction](./sendTransaction) - Sends a transaction through the specified relayer
-- [List Transactions](./listTransactions) - Lists all transactions for a specific relayer with pagination
-- [Get Transaction by ID](./getTransactionById) - Retrieves a specific transaction by its ID
-- [Get Transaction by Nonce](./getTransactionByNonce) - Retrieves a transaction by its nonce value
-- [Replace Transaction](./replaceTransaction) - Replaces a specific transaction with a new one
-- [Cancel Transaction](./cancelTransaction) - Cancels a specific transaction by its ID
-- [Delete Pending Transactions](./deletePendingTransactions) - Deletes all pending transactions for a specific relayer
+### [RPC](./api/rpc)
+Performs a JSON-RPC call using the specified relayer
 
-### Signing Operations
-- [Sign](./sign) - Signs data using the specified relayer
-- [Sign Transaction](./signTransaction) - Signs a transaction using the specified relayer (Stellar only)
-- [Sign Typed Data](./signTypedData) - Signs typed data using the specified relayer
+### [Sign](./api/sign)
+Signs data using the specified relayer
 
-### RPC Operations
-- [RPC](./rpc) - Performs a JSON-RPC call using the specified relayer
+### [Sign Transaction](./api/signTransaction)
+Signs a transaction using the specified relayer (Stellar only)
 
-## Monitoring
+### [Sign Typed Data](./api/signTypedData)
+Signs typed data using the specified relayer
 
-### Health Check
-- [Health](./health) - Health routes implementation
+### [Get Relayer Status](./api/getRelayerStatus)
+Fetches the current status of a specific relayer
 
-### Metrics
-- [List Metrics](./list_metrics) - Returns a list of all available metric names in JSON format
-- [Metric Detail](./metric_detail) - Returns the details of a specific metric in plain text format
-- [Scrape Metrics](./scrape_metrics) - Triggers an update of system metrics and returns the result in plain text format
+### [Send Transaction](./api/sendTransaction)
+Sends a transaction through the specified relayer
+
+### [List Transactions](./api/listTransactions)
+Lists all transactions for a specific relayer with pagination
+
+### [Get Transaction by Nonce](./api/getTransactionByNonce)
+Retrieves a transaction by its nonce value
+
+### [Delete Pending Transactions](./api/deletePendingTransactions)
+Deletes all pending transactions for a specific relayer
+
+### [Get Transaction by ID](./api/getTransactionById)
+Retrieves a specific transaction by its ID
+
+### [Replace Transaction](./api/replaceTransaction)
+Replaces a specific transaction with a new one
+
+### [Cancel Transaction](./api/cancelTransaction)
+Cancels a specific transaction by its ID
+
+## Plugins
+
+### [Call Plugin](./api/callPlugin)
+Calls a plugin method
+
+## Notifications
+
+### [List Notifications](./api/listNotifications)
+Lists all notifications with pagination support
+
+### [Create Notification](./api/createNotification)
+Creates a new notification
+
+### [Get Notification](./api/getNotification)
+Retrieves details of a specific notification by ID
+
+### [Delete Notification](./api/deleteNotification)
+Deletes a notification by ID
+
+### [Update Notification](./api/updateNotification)
+Updates an existing notification
+
+## Signers
+
+### [List Signers](./api/listSigners)
+Lists all signers with pagination support
+
+### [Create Signer](./api/createSigner)
+Creates a new signer
+
+### [Get Signer](./api/getSigner)
+Retrieves details of a specific signer by ID
+
+### [Delete Signer](./api/deleteSigner)
+Deletes a signer by ID
+
+### [Update Signer](./api/updateSigner)
+Updates an existing signer
+
+## Metrics
+
+### [Scrape Metrics](./api/scrape_metrics)
+Triggers an update of system metrics and returns the result in plain text format
+
+### [List Metrics](./api/list_metrics)
+Returns a list of all available metric names in JSON format
+
+### [Metric Detail](./api/metric_detail)
+Returns the details of a specific metric in plain text format
+
+## Health
+
+### [Health](./api/health)
+Health routes implementation

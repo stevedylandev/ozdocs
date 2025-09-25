@@ -43,13 +43,13 @@ Update your hardhat configuration:
 const  etherscanApiKey, projectId, mnemonic  = require('./secrets.json');
 require("@nomicfoundation/hardhat-verify");
 ...
-module.exports =
+module.exports = {
   networks: {
-    mainnet: { ...
+    mainnet: { ... }
   },
-  etherscan:
+  etherscan:{
     apiKey: etherscanApiKey
-
+  }
 };
 ```
 Finally run the `verify` task, passing the address of the contract, the network where it’s deployed, and the constructor arguments that were used to deploy it (if any):

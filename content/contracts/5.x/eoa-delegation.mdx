@@ -4,7 +4,7 @@ title: EOA Delegation
 
 [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702) introduces a new transaction type (`0x4`) that grants [Externally Owned Accounts (EOAs)](https://ethereum.org/en/developers/docs/accounts/) the ability to delegate execution to an smart contract. This is particularly useful to enable traditional EVM accounts to:
 
-* Batch multiple operations in a single transaction (e.g. [`approve`](contracts/v5.x/api/token/ERC20#IERC20-approve-address-uint256-) + [`transfer`](contracts/v5.x/api/token/ERC20#IERC20-transfer-address-uint256-), yey!)
+* Batch multiple operations in a single transaction (e.g. [`approve`](/contracts/5.x/api/token/ERC20#IERC20-approve-address-uint256-) + [`transfer`](/contracts/5.x/api/token/ERC20#IERC20-transfer-address-uint256-), yey!)
 * Sponsoring transactions for other users.
 * Implementing privilege de-escalation (e.g., sub-keys with limited permissions)
 
@@ -12,12 +12,12 @@ This section walks you through the process of delegating an EOA to a contract fo
 
 ## Delegating execution
 
-EIP-7702 enables EOAs to delegate their execution capabilities to smart contracts, effectively bridging the gap between traditional and [Smart Accounts](accounts). The [`SignerERC7702`](contracts/v5.x/api/utils/cryptography) utility facilitates this delegation by verifying signatures against the EOA’s address (`address(this)`), making it easier to implement EIP-7702 in smart contract accounts.
+EIP-7702 enables EOAs to delegate their execution capabilities to smart contracts, effectively bridging the gap between traditional and [Smart Accounts](accounts). The [`SignerERC7702`](/contracts/5.x/api/utils/cryptography) utility facilitates this delegation by verifying signatures against the EOA’s address (`address(this)`), making it easier to implement EIP-7702 in smart contract accounts.
 
 <include cwd lang='solidity'>./examples/account/MyAccountERC7702.sol</include>
 
 <Callout>
-Users can delegate to an instance of [`ERC-7821`](contracts/v5.x/api/account#ERC7821) for a minimal batch executor that does not use ERC-4337 related code.
+Users can delegate to an instance of [`ERC-7821`](/contracts/5.x/api/account#ERC7821) for a minimal batch executor that does not use ERC-4337 related code.
 </Callout>
 
 ### Signing Authorization
@@ -89,13 +89,13 @@ Updating the delegation designator may render your EOA unusable due to potential
 
 ## Using with ERC-4337
 
-The ability to set code to execute logic on an EOA allows users to leverage ERC-4337 infrastructure to process user operations. Developers only need to combine an [`Account`](contracts/v5.x/api/account#Account) contract with an [`SignerERC7702`](contracts/v5.x/api/utils/cryptography#SignerERC7702) to accomplish ERC-4337 compliance out of the box.
+The ability to set code to execute logic on an EOA allows users to leverage ERC-4337 infrastructure to process user operations. Developers only need to combine an [`Account`](/contracts/5.x/api/account#Account) contract with an [`SignerERC7702`](/contracts/5.x/api/utils/cryptography#SignerERC7702) to accomplish ERC-4337 compliance out of the box.
 
 ### Sending a UserOp
 
 Once your EOA is delegated to an ERC-4337 compatible account, you can send user operations through the entry point contract. The user operation includes all the necessary fields for execution, including gas limits, fees, and the actual call data to execute. The entry point will validate the operation and execute it in the context of your delegated account.
 
-Similar to how [sending a UserOp](accounts#bundle_a_useroperation) is achieved for factory accounts, here’s how you can construct a UserOp for an EOA who’s delegated to an [`Account`](contracts/v5.x/api/account#Account) contract.
+Similar to how [sending a UserOp](accounts#bundle_a_useroperation) is achieved for factory accounts, here’s how you can construct a UserOp for an EOA who’s delegated to an [`Account`](/contracts/5.x/api/account#Account) contract.
 
 ```typescript
 const userOp = {

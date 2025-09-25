@@ -130,16 +130,16 @@ There are 3 handlers that may be configured as hooks to implement automated logi
 
 Each follows a similar interface:
 ```rust
-pub trait HandleHrmpNewChannelOpenRequest 
+pub trait HandleHrmpNewChannelOpenRequest {
 	fn handle(sender: u32, max_message_size: u32, max_capacity: u32) -> XcmResult;
+}
 
-
-pub trait HandleHrmpChannelAccepted 
+pub trait HandleHrmpChannelAccepted {
 	fn handle(recipient: u32) -> XcmResult;
+}
 
-
-pub trait HandleHrmpChannelClosing 
+pub trait HandleHrmpChannelClosing {
 	fn handle(initiator: u32, sender: u32, recipient: u32) -> XcmResult;
-
+}
 ```
 The default implementation `()` returns `Ok(())` without executing any effects. Read more in the [Polkadot documentation](https://wiki.polkadot.network/docs/build-hrmp-channels).

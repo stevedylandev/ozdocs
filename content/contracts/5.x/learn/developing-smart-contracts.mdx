@@ -64,7 +64,7 @@ We will save this file as `contracts/Box.sol`. Each `.sol` file should have the 
 ```solidity
 pragma solidity ^0.8.0;
 
-contract Box
+contract Box {
     uint256 private _value;
 
     // Emitted when the stored value changes
@@ -74,12 +74,12 @@ contract Box
     function store(uint256 value) public {
         _value = value;
         emit ValueChanged(value);
-
+    }
 
     // Reads the last stored value
-    function retrieve() public view returns (uint256)
+    function retrieve() public view returns (uint256) {
         return _value;
-
+    }
 }
 ```
 
@@ -128,17 +128,17 @@ Because the compiler will pick up all files in the `contracts` directory and sub
 ```solidity
 pragma solidity ^0.8.0;
 
-contract Auth
+contract Auth {
     address private _administrator;
 
     constructor(address deployer) {
         // Make the deployer of the contract the administrator
         _administrator = deployer;
+    }
 
-
-    function isAdministrator(address user) public view returns (bool)
+    function isAdministrator(address user) public view returns (bool) {
         return user == _administrator;
-
+    }
 }
 ```
 
@@ -149,7 +149,7 @@ pragma solidity ^0.8.0;
 
 import "./access-control/Auth.sol";
 
-contract Box
+contract Box {
     uint256 private _value;
     Auth private _auth;
 
@@ -157,18 +157,19 @@ contract Box
 
     constructor() {
         _auth = new Auth(msg.sender);
+    }
 
-
-    function store(uint256 value) public
+    function store(uint256 value) public {
         // Require that the caller is registered as an administrator in Auth
         require(_auth.isAdministrator(msg.sender), "Unauthorized");
 
-    _value = value;
-    emit ValueChanged(value);
+        _value = value;
+        emit ValueChanged(value);
+    }
 
     function retrieve() public view returns (uint256) {
         return _value;
-
+    }
 }
 ```
 
@@ -208,22 +209,22 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Box is Ownable
+contract Box is Ownable {
     uint256 private _value;
 
     event ValueChanged(uint256 value);
 
-    constructor() Ownable(msg.sender) {
+    constructor() Ownable(msg.sender) {}
 
     // The onlyOwner modifier restricts who can call the store function
-    function store(uint256 value) public onlyOwner
+    function store(uint256 value) public onlyOwner {
         _value = value;
         emit ValueChanged(value);
+    }
 
-
-    function retrieve() public view returns (uint256)
+    function retrieve() public view returns (uint256) {
         return _value;
-
+    }
 }
 ```
 
