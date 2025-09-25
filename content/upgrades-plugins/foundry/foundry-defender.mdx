@@ -17,7 +17,7 @@ See [Using with Foundry - Installation](foundry-upgrades#installation).
 1. Install [Node.js](https://nodejs.org/).
 2. Configure your `foundry.toml` to enable ffi, ast, build info and storage layout:
 
-```json
+```toml
 [profile.default]
 ffi = true
 ast = true
@@ -26,7 +26,7 @@ extra_output = ["storageLayout"]
 ```
 
 <Callout>
-Metadata must also be included in the compiler output, which it is by default.  
+Metadata must also be included in the compiler output, which it is by default.
 </Callout>
 
 1. Set the following environment variables in your `.env` file at your project root, using your Team API key and secret from OpenZeppelin Defender:
@@ -65,23 +65,23 @@ To deploy a UUPS proxy, create a script called `Defender.s.sol` like the followi
 ```solidity
 pragma solidity ^0.8.20;
 
-import Script from "forge-std/Script.sol";
-import console from "forge-std/console.sol";
+import {Script} from "forge-std/Script.sol";
+import {console} from "forge-std/console.sol";
 
-import Defender, ApprovalProcessResponse from "openzeppelin-foundry-upgrades/Defender.sol";
-import Upgrades, Options from "openzeppelin-foundry-upgrades/Upgrades.sol";
+import {Defender, ApprovalProcessResponse} from "openzeppelin-foundry-upgrades/Defender.sol";
+import {Upgrades, Options} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 
-import MyContract from "../src/MyContract.sol";
+import {MyContract} from "../src/MyContract.sol";
 
-contract DefenderScript is Script 
-    function setUp() public {
+contract DefenderScript is Script {
+    function setUp() public {}
 
-    function run() public 
+    function run() public {
         ApprovalProcessResponse memory upgradeApprovalProcess = Defender.getUpgradeApprovalProcess();
 
         if (upgradeApprovalProcess.via == address(0)) {
             revert(string.concat("Upgrade approval process with id ", upgradeApprovalProcess.approvalProcessId, " has no assigned address"));
-        
+        }
 
         Options memory opts;
         opts.defender.useDefenderDeploy = true;
@@ -116,17 +116,17 @@ To propose an upgrade through Defender, create a script like the following:
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import Script from "forge-std/Script.sol";
-import console from "forge-std/console.sol";
+import {Script} from "forge-std/Script.sol";
+import {console} from "forge-std/console.sol";
 
-import MyContractV2 from "../src/MyContractV2.sol";
+import {MyContractV2} from "../src/MyContractV2.sol";
 
-import ProposeUpgradeResponse, Defender, Options from "openzeppelin-foundry-upgrades/Defender.sol";
+import {ProposeUpgradeResponse, Defender, Options} from "openzeppelin-foundry-upgrades/Defender.sol";
 
-contract DefenderScript is Script 
-    function setUp() public {
+contract DefenderScript is Script {
+    function setUp() public {}
 
-    function run() public 
+    function run() public {
         Options memory opts;
         ProposeUpgradeResponse memory response = Defender.proposeUpgrade(
             <MY_PROXY_ADDRESS>,
@@ -135,7 +135,7 @@ contract DefenderScript is Script
         );
         console.log("Proposal id", response.proposalId);
         console.log("Url", response.url);
-    
+    }
 }
 ```
 
@@ -151,20 +151,20 @@ To deploy a non-upgradeable contract, create a script called `Defender.s.sol` li
 ```solidity
 pragma solidity ^0.8.20;
 
-import Script from "forge-std/Script.sol";
-import console from "forge-std/console.sol";
+import {Script} from "forge-std/Script.sol";
+import {console} from "forge-std/console.sol";
 
-import MyContract from "../src/MyContract.sol";
+import {MyContract} from "../src/MyContract.sol";
 
-import Defender from "openzeppelin-foundry-upgrades/Defender.sol";
+import {Defender} from "openzeppelin-foundry-upgrades/Defender.sol";
 
-contract DefenderScript is Script 
-    function setUp() public {
+contract DefenderScript is Script {
+    function setUp() public {}
 
-    function run() public 
+    function run() public {
         address deployed = Defender.deployContract("MyContract.sol", abi.encode("arguments for the constructor"));
         console.log("Deployed contract to address", deployed);
-    
+    }
 }
 ```
 
