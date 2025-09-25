@@ -94,19 +94,19 @@ export default function HomePage() {
 						>
 							<div className="flex items-center gap-4 sm:gap-5 flex-1">
 								<div className="flex gap-2">
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70 group-hover:[animation-delay:0s] group-hover:animate-[bounce_0.5s_ease]">
+									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
 										<EthereumIcon color className="w-4 h-4" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70 group-hover:[animation-delay:0.05s] group-hover:animate-[bounce_0.5s_ease]">
+									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
 										<StarknetIcon color className="w-4 h-4" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70 group-hover:[animation-delay:0.1s] group-hover:animate-[bounce_0.5s_ease]">
+									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
 										<StellarIcon className="w-3 h-3" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70 group-hover:[animation-delay:0.15s] group-hover:animate-[bounce_0.5s_ease]">
+									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-muted/70">
 										<ZamaIcon color className="w-3 h-3" />
 									</div>
-									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center text-xs text-muted-foreground transition-all duration-300 group-hover:bg-muted/70 group-hover:[animation-delay:0.2s] group-hover:animate-[bounce_0.5s_ease]">
+									<div className="w-8 h-8 bg-muted/50 rounded-lg flex items-center justify-center text-xs text-muted-foreground transition-all duration-300 group-hover:bg-muted/70">
 										+4
 									</div>
 								</div>
@@ -115,11 +115,9 @@ export default function HomePage() {
 									Zama FHEVM, and 4 more blockchains
 								</div>
 							</div>
-							<div className="px-3 py-2 bg-muted/50 rounded-lg text-muted-foreground text-sm font-medium transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground flex items-center gap-2">
+							<div className="px-3 py-2 rounded-lg text-muted-foreground text-sm font-medium transition-all duration-300  flex items-center gap-2">
 								Explore all
-								<span className="transition-transform duration-300 group-hover:translate-x-1">
-									<ArrowDown />
-								</span>
+								<ArrowDown />
 							</div>
 						</a>
 					</div>
