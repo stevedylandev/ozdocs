@@ -49,14 +49,17 @@ As Compact matures, this pattern will likely evolve as well.
 ### Example contract implementing modules
 
 ```ts
-/** FungibleTokenMintablePausableOwnableContract */
+// FungibleTokenMintablePausableOwnableContract
+
 pragma language_version >= 0.16.0;
 
 import CompactStandardLibrary;
-
-import FungibleToken prefix FungibleToken_;
-import Pausable prefix Pausable_;
-import Ownable prefix Ownable_;
+import "./node_modules/@openzeppelin-compact/contracts/src/access/Ownable"
+  prefix Ownable_;
+import "./node_modules/@openzeppelin-compact/contracts/src/security/Pausable"
+  prefix Pausable_;
+import "./node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
+  prefix FungibleToken_;
 
 constructor(
   _name: Maybe<Opaque<"string">>,
@@ -134,7 +137,7 @@ export circuit mint(
 ): [] {
   Pausable_assertNotPaused();
   Ownable_assertOnlyOwner();
-  return FungibleToken__mint(account, value);
+  FungibleToken__mint(account, value);
 }
 
 /** IPausable */
@@ -145,12 +148,12 @@ export circuit isPaused(): Boolean {
 
 export circuit pause(): [] {
   Ownable_assertOnlyOwner();
-  return Pausable__pause();
+  Pausable__pause();
 }
 
 export circuit unpause(): [] {
   Ownable_assertOnlyOwner();
-  return Pausable__unpause();
+  Pausable__unpause();
 }
 
 /** IOwnable */
@@ -162,11 +165,11 @@ export circuit owner(): Either<ZswapCoinPublicKey, ContractAddress> {
 export circuit transferOwnership(
   newOwner: Either<ZswapCoinPublicKey, ContractAddress>
 ): [] {
-  return Ownable_transferOwnership(newOwner);
+  Ownable_transferOwnership(newOwner);
 }
 
 export circuit renounceOwnership(): [] {
-  return Ownable_renounceOwnership();
+  Ownable_renounceOwnership();
 }
 
 ```
