@@ -56,7 +56,7 @@ Key prerequisites:
 
 Example configuration for an EVM relayer:
 ```json
-
+{
   "id": "sepolia-example",
   "name": "Sepolia Example",
   "network": "sepolia",
@@ -68,23 +68,23 @@ Example configuration for an EVM relayer:
     {
       "url": "https://primary-rpc.example.com",
       "weight": 100
-    ,
-
+    },
+    {
       "url": "https://backup-rpc.example.com",
       "weight": 100
-
+    }
   ],
-  "policies":
-     "gas_price_cap": 100000000000,
-      "eip1559_pricing": true,
-      "gas_limit_estimation": true,
-      "whitelist_receivers": [
-        "0x1234567890123456789012345678901234567890",
-        "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
-      ],
-      "min_balance": 1000000000000000000
-
-},
+  "policies": {
+    "gas_price_cap": 100000000000,
+    "eip1559_pricing": true,
+    "gas_limit_estimation": true,
+    "whitelist_receivers": [
+      "0x1234567890123456789012345678901234567890",
+      "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+    ],
+    "min_balance": 1000000000000000000
+  }
+}
 ```
 
 For more configuration examples, visit the [OpenZeppelin Relayer examples repository](https://github.com/OpenZeppelin/openzeppelin-relayer/tree/main/examples).
@@ -109,10 +109,10 @@ You can check all options in [User Documentation - Relayers](index#3_relayers).
 Set a maximum gas price to protect against extreme network congestion:
 
 ```json
-
+{
   "policies": {
-    "gas_price_cap": 100000000000  // 100 Gwei maximum
-
+    "gas_price_cap": 100000000000
+  }
 }
 ```
 
@@ -120,10 +120,10 @@ Set a maximum gas price to protect against extreme network congestion:
 Enable or disable automatic gas limit estimation:
 
 ```json
-
+{
   "policies": {
-    "gas_limit_estimation": true  // Enable automatic estimation
-
+    "gas_limit_estimation": true
+  }
 }
 ```
 
@@ -149,13 +149,13 @@ For advanced users working with complex transactions or custom contracts, it is 
 Restrict transactions to specific contract addresses:
 
 ```json
-
+{
   "policies": {
     "whitelist_receivers": [
       "0x1234567890123456789012345678901234567890",
       "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
     ]
-
+  }
 }
 ```
 
@@ -175,13 +175,11 @@ Common endpoints:
 curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-example/transactions' \
 --header 'Authorization: Bearer <api_key>' \
 --header 'Content-Type: application/json' \
---data-raw '
- {
-    "value": 1,
-    "data": "0x",
-    "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
-    "speed": "average"
-
+--data-raw '{
+  "value": 1,
+  "data": "0x",
+  "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
+  "speed": "average"
 }'
 ```
 
@@ -191,14 +189,12 @@ curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-exa
 curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-example/transactions' \
 --header 'Authorization: Bearer <api_key>' \
 --header 'Content-Type: application/json' \
---data-raw '
- {
-    "value": 1,
-    "data": "0x",
-    "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
-    "speed": "average",
-    "gas_limit": 21000
-
+--data-raw '{
+  "value": 1,
+  "data": "0x",
+  "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
+  "speed": "average",
+  "gas_limit": 21000
 }'
 ```
 
@@ -208,14 +204,12 @@ curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-exa
 curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-example/transactions' \
 --header 'Authorization: Bearer <api_key>' \
 --header 'Content-Type: application/json' \
---data-raw '
- {
-    "value": 1,
-    "data": "0x",
-    "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
-    "max_fee_per_gas": 30000000000,
-    "max_priority_fee_per_gas": 20000000000,
-
+--data-raw '{
+  "value": 1,
+  "data": "0x",
+  "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
+  "max_fee_per_gas": 30000000000,
+  "max_priority_fee_per_gas": 20000000000
 }'
 ```
 
@@ -225,13 +219,11 @@ curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-exa
 curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-example/transactions' \
 --header 'Authorization: Bearer <api_key>' \
 --header 'Content-Type: application/json' \
---data-raw '
- {
-    "value": 1,
-    "data": "0x",
-    "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
-    "gas_price": "12312313123"
-
+--data-raw '{
+  "value": 1,
+  "data": "0x",
+  "to": "0xd9b55a2ba539031e3c18c9528b0dc3a7f603a93b",
+  "gas_price": "12312313123"
 }'
 ```
 

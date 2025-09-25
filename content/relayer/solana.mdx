@@ -26,7 +26,7 @@ Solana networks are defined via JSON configuration files, providing flexibility 
 Example Solana network configurations:
 
 ```json
-
+{
   "networks": [
     {
       "type": "solana",
@@ -35,21 +35,21 @@ Example Solana network configurations:
       "explorer_urls": ["https://explorer.solana.com"],
       "is_testnet": false,
       "tags": ["mainnet", "solana"]
-    ,
-
+    },
+    {
       "type": "solana",
       "network": "solana-devnet",
       "rpc_urls": ["https://api.devnet.solana.com"],
       "explorer_urls": ["https://explorer.solana.com?cluster=devnet"],
       "is_testnet": true,
       "tags": ["devnet", "solana"]
-    ,
-
+    },
+    {
       "type": "solana",
       "network": "solana-custom",
       "rpc_urls": ["https://your-custom-solana-rpc.example.com"],
       "tags": ["custom", "solana"]
-
+    }
   ]
 }
 ```
@@ -80,7 +80,7 @@ Key prerequisites:
 
 Example configuration for a Solana relayer:
 ```json
-
+{
   "id": "solana-example",
   "name": "Solana Example",
   "network": "devnet",
@@ -89,16 +89,25 @@ Example configuration for a Solana relayer:
   "signer_id": "local-signer",
   "network_type": "solana",
   "custom_rpc_urls": [
-    { "url": "https://primary-solana-rpc.example.com", "weight": 100 ,
-     "url": "https://backup-solana-rpc.example.com", "weight": 100
+    {
+      "url": "https://primary-solana-rpc.example.com",
+      "weight": 100
+    },
+    {
+      "url": "https://backup-solana-rpc.example.com",
+      "weight": 100
+    }
   ],
-  "policies":
+  "policies": {
     "fee_payment_strategy": "user",
     "min_balance": 0,
     "allowed_tokens": [
-      { "mint": "So111...", "max_allowed_fee": 100000000
+      {
+        "mint": "So111...",
+        "max_allowed_fee": 100000000
+      }
     ],
-    "swap_config":
+    "swap_config": {
       "strategy": "jupiter-swap",
       "cron_schedule": "0 0 * * * *",
       "min_balance_threshold": 1000000,
@@ -106,7 +115,7 @@ Example configuration for a Solana relayer:
         "dynamic_compute_unit_limit": true,
         "priority_level": "high",
         "priority_fee_max_lamports": 1000000000
-
+      }
     }
   }
 }
@@ -174,13 +183,13 @@ Example: Estimate fee for a transaction
 curl --location --request POST 'http://localhost:8080/api/v1/relayers/solana-example/rpc' \
 --header 'Authorization: Bearer <api_key>' \
 --header 'Content-Type: application/json' \
---data-raw '
+--data-raw '{
   "jsonrpc": "2.0",
   "method": "feeEstimate",
   "params": {
     "transaction": "<base64-encoded-tx>",
     "fee_token": "<mint-address>"
-  ,
+  },
   "id": 1
 }'
 ```

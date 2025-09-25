@@ -142,14 +142,14 @@ See the ***API Reference*** page for detailed endpoints documentation.
 
 ```json
 "notifications": [
-
+  {
     "id": "notification-test",
     "type": "webhook",
     "url": "https://webhook.site/f95cf78d-742d-4b21-88b7-d683e6fd147b",
     "signing_key": {
       "type": "env",
       "value": "WEBHOOK_SIGNING_KEY"
-
+    }
   }
 ]
 ```
@@ -309,10 +309,10 @@ For more information on how to write a plugin, please refer to the [Plugins](plu
 
 ```json
 "plugins": [
-
+  {
     "id": "my-plugin",
     "path": "my-plugin.ts"
-
+  }
 ]
 ```
 
