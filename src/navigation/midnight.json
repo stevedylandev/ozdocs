@@ -9,59 +9,74 @@
 		"url": "/contracts-compact"
 	},
 	{
-		"type": "separator",
-		"name": "Guides"
-	},
-	{
-		"type": "page",
-		"name": "ZK Circuits 101",
-		"url": "/contracts-compact/zkCircuits101"
-	},
-	{
-		"type": "page",
-		"name": "Extensibility",
-		"url": "/contracts-compact/extensibility"
-	},
-	{
-		"type": "separator",
-		"name": "Modules"
-	},
-
-	{
-		"type": "page",
-		"name": "Access",
-		"url": "/contracts-compact/access"
-	},
-	{
-		"type": "page",
-		"name": "Ownable",
-		"url": "/contracts-compact/ownable"
-	},
-	{
 		"type": "folder",
-		"name": "Tokens",
+		"name": "Learn",
+		"defaultOpen": true,
 		"children": [
 			{
 				"type": "page",
-				"name": "FungibleToken",
-				"url": "/contracts-compact/fungibleToken"
+				"name": "Extensibility",
+				"url": "/contracts-compact/extensibility"
 			},
 			{
 				"type": "page",
-				"name": "NonFungibleToken",
-				"url": "/contracts-compact/nonFungibleToken"
-			},
-			{
-				"type": "page",
-				"name": "MultiToken",
-				"url": "/contracts-compact/multitoken"
+				"name": "ZK Circuits 101",
+				"url": "/contracts-compact/zkCircuits101"
 			}
 		]
 	},
 	{
-		"type": "page",
-		"name": "Utils",
-		"url": "/contracts-compact/utils"
+		"type": "folder",
+		"name": "Modules",
+		"children": [
+			{
+				"type": "folder",
+				"name": "Access",
+				"children": [
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts-compact/access"
+					},
+					{
+						"type": "page",
+						"name": "Ownable",
+						"url": "/contracts-compact/ownable"
+					}
+				]
+			},
+			{
+				"type": "page",
+				"name": "Security",
+				"url": "/contracts-compact/security"
+			},
+			{
+				"type": "folder",
+				"name": "Tokens",
+				"children": [
+					{
+						"type": "page",
+						"name": "FungibleToken",
+						"url": "/contracts-compact/fungibleToken"
+					},
+					{
+						"type": "page",
+						"name": "NonFungibleToken",
+						"url": "/contracts-compact/nonFungibleToken"
+					},
+					{
+						"type": "page",
+						"name": "MultiToken",
+						"url": "/contracts-compact/multitoken"
+					}
+				]
+			},
+			{
+				"type": "page",
+				"name": "Utils",
+				"url": "/contracts-compact/utils"
+			}
+		]
 	},
 	{
 		"type": "folder",
@@ -91,6 +106,11 @@
 				"type": "page",
 				"name": "Ownable API",
 				"url": "/contracts-compact/api/ownable"
+			},
+			{
+				"type": "page",
+				"name": "Security API",
+				"url": "/contracts-compact/api/security"
 			},
 			{
 				"type": "page",

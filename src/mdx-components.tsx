@@ -22,12 +22,14 @@ import { openapi } from "@/lib/openapi";
 import OZWizard from "./components/oz-wizard";
 import { APIGithubLinkHeader } from "./components/ui/api-reference/api-github-link-header";
 import { APIItem } from "./components/ui/api-reference/api-item";
+import { APIItemCompact } from "./components/ui/api-reference/api-item-compact";
 
 // use this function to get MDX components, you will need it for rendering MDX
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
 	return {
 		...defaultMdxComponents,
 		OZWizard,
+		APIItemCompact,
 		APIGithubLinkHeader,
 		APIItem,
 		FileTextIcon,
