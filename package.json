@@ -10,7 +10,7 @@
 		"postinstall": "fumadocs-mdx",
 		"lint": "biome lint src/",
 		"lint:links": "tsx scripts/link-validation.ts",
-		"lint:links-save": "tsx scripts/link-validation.ts > broken-links.md",
+		"lint:links-save": "tsx scripts/link-validation.ts --output broken-links.md",
 		"lint:fix": "biome lint --write src/",
 		"format": "biome format src/",
 		"format:fix": "biome format --write src/",
