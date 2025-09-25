@@ -4,7 +4,7 @@ title: OpenZeppelin Contracts for Stylus
 
 **A secure, modular smart contract library for [Stylus](https://docs.arbitrum.io/stylus/gentle-introduction), written in Rust.**
 
-OpenZeppelin Contracts for Stylus brings time-tested smart contract patterns to Arbitrum’s WASM-based execution environment. This library provides `no_std`-compatible modules for building secure, reusable contracts in [Stylus](https://docs.arbitrum.io/stylus/gentle-introduction).
+OpenZeppelin Contracts for Stylus brings time-tested smart contract patterns to Arbitrum's WASM-based execution environment. This library provides `no_std`-compatible modules for building secure, reusable contracts in [Stylus](https://docs.arbitrum.io/stylus/gentle-introduction).
 
 ## Features
 
@@ -42,7 +42,7 @@ use stylus_sdk::
 
 #[entrypoint]
 #[storage]
-struct Erc20Example 
+struct Erc20Example
     erc20: Erc20,
 
 
@@ -51,7 +51,7 @@ struct Erc20Example
 impl Erc20Example {}
 
 #[public]
-impl IErc20 for Erc20Example 
+impl IErc20 for Erc20Example
     // ERC-20 logic implementation...
 
 ```
@@ -64,7 +64,7 @@ This library is designed to work with `no_std`. To keep your contracts compatibl
 
 ```toml
 [dependencies]
-alloy-primitives =  version = "=0.8.20", default-features = false 
+alloy-primitives =  version = "=0.8.20", default-features = false
 stylus-sdk = "=0.9.0"
 ```
 
@@ -72,7 +72,7 @@ stylus-sdk = "=0.9.0"
 
 See what’s planned or in development in our [roadmap](https://github.com/orgs/OpenZeppelin/projects/35).
 
-Interested in contributing? Read the [contribution guide](https://github.com/OpenZeppelin/rust-contracts-stylus/blob/main/CONTRIBUTING.md).
+Interested in contributing? Read the [contribution guide](/contracts-stylus/CONTRIBUTING.md).
 
 ## Security
 
