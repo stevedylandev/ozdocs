@@ -271,3 +271,13 @@ status = 301
 from = "/starter-kits/*"
 to = "/"
 status = 301
+
+[[redirects]]
+from = "/sdk/*"
+to = "/"
+status = 301
+
+[[redirects]]
+from = "/openzeppelin/*"
+to = "/:splat"
+status = 301
