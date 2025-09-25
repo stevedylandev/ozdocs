@@ -10,50 +10,73 @@
 	},
 	{
 		"type": "folder",
-		"name": "Access",
+		"name": "Learn",
+		"defaultOpen": true,
 		"children": [
 			{
 				"type": "page",
-				"name": "Access Control",
-				"url": "/contracts-compact/access"
+				"name": "Extensibility",
+				"url": "/contracts-compact/extensibility"
 			},
 			{
 				"type": "page",
-				"name": "Ownable",
-				"url": "/contracts-compact/ownable"
+				"name": "ZK Circuits 101",
+				"url": "/contracts-compact/zkCircuits101"
 			}
 		]
-	},
-	{
-		"type": "page",
-		"name": "Security",
-		"url": "/contracts-compact/security"
 	},
 	{
 		"type": "folder",
-		"name": "Tokens",
+		"name": "Modules",
 		"children": [
 			{
-				"type": "page",
-				"name": "FungibleToken",
-				"url": "/contracts-compact/fungibleToken"
+				"type": "folder",
+				"name": "Access",
+				"children": [
+					{
+						"type": "page",
+						"name": "Access Control",
+						"url": "/contracts-compact/access"
+					},
+					{
+						"type": "page",
+						"name": "Ownable",
+						"url": "/contracts-compact/ownable"
+					}
+				]
 			},
 			{
 				"type": "page",
-				"name": "NonFungibleToken",
-				"url": "/contracts-compact/nonFungibleToken"
+				"name": "Security",
+				"url": "/contracts-compact/security"
+			},
+			{
+				"type": "folder",
+				"name": "Tokens",
+				"children": [
+					{
+						"type": "page",
+						"name": "FungibleToken",
+						"url": "/contracts-compact/fungibleToken"
+					},
+					{
+						"type": "page",
+						"name": "NonFungibleToken",
+						"url": "/contracts-compact/nonFungibleToken"
+					},
+					{
+						"type": "page",
+						"name": "MultiToken",
+						"url": "/contracts-compact/multitoken"
+					}
+				]
 			},
 			{
 				"type": "page",
-				"name": "MultiToken",
-				"url": "/contracts-compact/multitoken"
+				"name": "Utils",
+				"url": "/contracts-compact/utils"
 			}
 		]
-	},
-	{
-		"type": "page",
-		"name": "Utils",
-		"url": "/contracts-compact/utils"
 	},
 	{
 		"type": "folder",
