@@ -115,7 +115,7 @@ export default function HomePage() {
 									Zama FHEVM, and 4 more blockchains
 								</div>
 							</div>
-							<div className="px-3 py-2 rounded-lg text-muted-foreground text-sm font-medium transition-all duration-300  flex items-center gap-2">
+							<div className="px-3 py-2 rounded-lg bg-fd-primary text-fd-primary-foreground text-sm font-medium transition-all duration-300  flex items-center gap-2">
 								Explore all
 								<ArrowDown />
 							</div>
@@ -201,7 +201,7 @@ export default function HomePage() {
 							href="/contracts-cairo"
 							icon={<StarknetIcon color className="w-7 h-7" />}
 							title="Starknet"
-							description="Deploy Cairo smart contracts on Starknet zero-knowledge Layer 2"
+							description="Develop Cairo smart contracts to build apps on Starknet zero-knowledge Layer 2"
 							glowColor="starknet"
 						/>
 
