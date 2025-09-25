@@ -51,15 +51,17 @@ user operations.
 
 Developers must implement the [`AbstractSigner._rawSignatureValidation`](utils/cryptography#AbstractSigner-_rawSignatureValidation-bytes32-bytes-) function to define the account's validation logic.
 
-NOTE: This core account doesn't include any mechanism for performing arbitrary external calls. This is an essential
+<Callout>
+This core account doesn't include any mechanism for performing arbitrary external calls. This is an essential
 feature that all Account should have. We leave it up to the developers to implement the mechanism of their choice.
 Common choices include ERC-6900, ERC-7579 and ERC-7821 (among others).
+</Callout>
 
 <Callout type="warn">
 Implementing a mechanism to validate signatures is a security-sensitive operation as it may allow an
-</Callout>
 attacker to bypass the account's security measures. Check out [`SignerECDSA`](utils/cryptography#SignerECDSA), [`SignerP256`](utils/cryptography#SignerP256), or [`SignerRSA`](utils/cryptography#SignerRSA) for
 digital signature validation implementations.
+</Callout>
 
 @custom:stateless
 
@@ -84,8 +86,8 @@ digital signature validation implementations.
 - [_checkEntryPoint()](#Account-_checkEntryPoint--)
 - [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
 - [receive()](#Account-receive--)
-#### IAccount
-#### AbstractSigner
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 - [_rawSignatureValidation(hash, signature)](#AbstractSigner-_rawSignatureValidation-bytes32-bytes-)
 </div>
 </div>
@@ -94,8 +96,8 @@ digital signature validation implementations.
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
-#### IAccount
-#### AbstractSigner
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -230,8 +232,10 @@ Returns an encoded packed validation data that is composed of the following elem
 Returns the validationData for a given user operation. By default, this checks the signature of the
 signable hash (produced by [`Account._signableUserOpHash`](#Account-_signableUserOpHash-struct-PackedUserOperation-bytes32-)) using the abstract signer ([`AbstractSigner._rawSignatureValidation`](utils/cryptography#AbstractSigner-_rawSignatureValidation-bytes32-bytes-)).
 
-NOTE: The userOpHash is assumed to be correct. Calling this function with a userOpHash that does not match the
+<Callout>
+The userOpHash is assumed to be correct. Calling this function with a userOpHash that does not match the
 userOp will result in undefined behavior.
+</Callout>
 
 </div>
 </div>
@@ -383,7 +387,6 @@ contract MyAccountERC7579 is AccountERC7579, Initializable {
   call super). Manual resolution might be necessary.
 * Static calls (using callType `0xfe`) are currently NOT supported.
 </Callout>
-
 <Callout type="warn">
 Removing all validator modules will render the account inoperable, as no user operations can be validated thereafter.
 </Callout>
@@ -419,11 +422,11 @@ Removing all validator modules will render the account inoperable, as no user op
 - [_extractSignatureValidator(signature)](#AccountERC7579-_extractSignatureValidator-bytes-)
 - [_decodeFallbackData(data)](#AccountERC7579-_decodeFallbackData-bytes-)
 - [_rawSignatureValidation(, )](#AccountERC7579-_rawSignatureValidation-bytes32-bytes-)
-#### IERC7579ModuleConfig
-#### IERC7579AccountConfig
-#### IERC7579Execution
-#### IERC1271
-#### Account
+#### IERC7579ModuleConfig [!toc]
+#### IERC7579AccountConfig [!toc]
+#### IERC7579Execution [!toc]
+#### IERC1271 [!toc]
+#### Account [!toc]
 - [entryPoint()](#Account-entryPoint--)
 - [getNonce()](#Account-getNonce--)
 - [getNonce(key)](#Account-getNonce-uint192-)
@@ -433,23 +436,23 @@ Removing all validator modules will render the account inoperable, as no user op
 - [_checkEntryPoint()](#Account-_checkEntryPoint--)
 - [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
 - [receive()](#Account-receive--)
-#### IAccount
-#### AbstractSigner
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC7579ModuleConfig
+#### IERC7579ModuleConfig [!toc]
 - [ModuleInstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleInstalled-uint256-address-)
 - [ModuleUninstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleUninstalled-uint256-address-)
-#### IERC7579AccountConfig
-#### IERC7579Execution
-#### IERC1271
-#### Account
-#### IAccount
-#### AbstractSigner
+#### IERC7579AccountConfig [!toc]
+#### IERC7579Execution [!toc]
+#### IERC1271 [!toc]
+#### Account [!toc]
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -457,14 +460,14 @@ Removing all validator modules will render the account inoperable, as no user op
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [ERC7579MissingFallbackHandler(selector)](#AccountERC7579-ERC7579MissingFallbackHandler-bytes4-)
-#### IERC7579ModuleConfig
-#### IERC7579AccountConfig
-#### IERC7579Execution
-#### IERC1271
-#### Account
+#### IERC7579ModuleConfig [!toc]
+#### IERC7579AccountConfig [!toc]
+#### IERC7579Execution [!toc]
+#### IERC1271 [!toc]
+#### Account [!toc]
 - [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
-#### IAccount
-#### AbstractSigner
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -667,8 +670,10 @@ Executes a transaction on behalf of the account.
 Implement ERC-1271 through IERC7579Validator modules. If module based validation fails, fallback to
 "native" validation by the abstract signer.
 
-NOTE: when combined with [`ERC7739`](utils/cryptography#ERC7739), resolution ordering may have an impact ([`ERC7739`](utils/cryptography#ERC7739) does not call super).
+<Callout>
+when combined with [`ERC7739`](utils/cryptography#ERC7739), resolution ordering may have an impact ([`ERC7739`](utils/cryptography#ERC7739) does not call super).
 Manual resolution might be necessary.
+</Callout>
 
 </div>
 </div>
@@ -840,10 +845,12 @@ To construct a nonce key, set nonce as follows:
 ```
 <module address (20 bytes)> | <key (4 bytes)> | <nonce (8 bytes)>
 ```
-NOTE: The default behavior of this function replicates the behavior of
+<Callout>
+The default behavior of this function replicates the behavior of
 [Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L266),
 [Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L227), and
 [ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L247).
+</Callout>
 
 This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
 
@@ -874,11 +881,13 @@ signature data:
 <module address (20 bytes)> | <signature data>
 ```
 
-NOTE: The default behavior of this function replicates the behavior of
+<Callout>
+The default behavior of this function replicates the behavior of
 [Safe adapter](https://github.com/rhinestonewtf/safe7579/blob/bb29e8b1a66658790c4169e72608e27d220f79be/src/Safe7579.sol#L350),
 [Biconomy's Nexus](https://github.com/bcnmy/nexus/blob/54f4e19baaff96081a8843672977caf712ef19f4/contracts/Nexus.sol#L239),
 [Etherspot's Prime Account](https://github.com/etherspot/etherspot-prime-contracts/blob/cfcdb48c4172cea0d66038324c0bae3288aa8caa/src/modular-etherspot-wallet/wallet/ModularEtherspotWallet.sol#L252), and
 [ERC7579 reference implementation](https://github.com/erc7579/erc7579-implementation/blob/16138d1afd4e9711f6c1425133538837bd7787b5/src/MSAAdvanced.sol#L296).
+</Callout>
 
 This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts may want to override these internal functions.
 
@@ -899,11 +908,13 @@ This is not standardized in ERC-7579 (or in any follow-up ERC). Some accounts ma
 
 Extract the function selector from initData/deInitData for MODULE_TYPE_FALLBACK
 
-NOTE: If we had calldata here, we could use calldata slice which are cheaper to manipulate and don't require
+<Callout>
+If we had calldata here, we could use calldata slice which are cheaper to manipulate and don't require
 actual copy. However, this would require `_installModule` to get a calldata bytes object instead of a memory
 bytes object. This would prevent calling `_installModule` from a contract constructor and would force the use
 of external initializers. That may change in the future, as most accounts will probably be deployed as
 clones/proxy/ERC-7702 delegates and therefore rely on initializers anyway.
+</Callout>
 
 </div>
 </div>
@@ -963,11 +974,13 @@ Extension of [`AccountERC7579`](#AccountERC7579) with support for a single hook 
 If installed, this extension will call the hook module's [`IERC7579Hook.preCheck`](interfaces#IERC7579Hook-preCheck-address-uint256-bytes-) before executing any operation
 with [`AccountERC7579._execute`](#AccountERC7579-_execute-Mode-bytes-) (including [`AccessManager.execute`](access#AccessManager-execute-address-bytes-) and [`AccountERC7579.executeFromExecutor`](#AccountERC7579-executeFromExecutor-bytes32-bytes-) by default) and [`IERC7579Hook.postCheck`](interfaces#IERC7579Hook-postCheck-bytes-) thereafter.
 
-NOTE: Hook modules break the check-effect-interaction pattern. In particular, the [`IERC7579Hook.preCheck`](interfaces#IERC7579Hook-preCheck-address-uint256-bytes-) hook can
+<Callout>
+Hook modules break the check-effect-interaction pattern. In particular, the [`IERC7579Hook.preCheck`](interfaces#IERC7579Hook-preCheck-address-uint256-bytes-) hook can
 lead to potentially dangerous reentrancy. Using the `withHook()` modifier is safe if no effect is performed
 before the preHook or after the postHook. That is the case on all functions here, but it may not be the case if
 functions that have this modifier are overridden. Developers should be extremely careful when implementing hook
 modules or further overriding functions that involve hooks.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -987,7 +1000,7 @@ modules or further overriding functions that involve hooks.
 - [_uninstallModule(moduleTypeId, module, deInitData)](#AccountERC7579Hooked-_uninstallModule-uint256-address-bytes-)
 - [_execute(mode, executionCalldata)](#AccountERC7579Hooked-_execute-Mode-bytes-)
 - [_fallback()](#AccountERC7579Hooked-_fallback--)
-#### AccountERC7579
+#### AccountERC7579 [!toc]
 - [fallback()](#AccountERC7579-fallback-bytes-)
 - [supportsExecutionMode(encodedMode)](#AccountERC7579-supportsExecutionMode-bytes32-)
 - [installModule(moduleTypeId, module, initData)](#AccountERC7579-installModule-uint256-address-bytes-)
@@ -1002,11 +1015,11 @@ modules or further overriding functions that involve hooks.
 - [_extractSignatureValidator(signature)](#AccountERC7579-_extractSignatureValidator-bytes-)
 - [_decodeFallbackData(data)](#AccountERC7579-_decodeFallbackData-bytes-)
 - [_rawSignatureValidation(, )](#AccountERC7579-_rawSignatureValidation-bytes32-bytes-)
-#### IERC7579ModuleConfig
-#### IERC7579AccountConfig
-#### IERC7579Execution
-#### IERC1271
-#### Account
+#### IERC7579ModuleConfig [!toc]
+#### IERC7579AccountConfig [!toc]
+#### IERC7579Execution [!toc]
+#### IERC1271 [!toc]
+#### Account [!toc]
 - [entryPoint()](#Account-entryPoint--)
 - [getNonce()](#Account-getNonce--)
 - [getNonce(key)](#Account-getNonce-uint192-)
@@ -1016,24 +1029,24 @@ modules or further overriding functions that involve hooks.
 - [_checkEntryPoint()](#Account-_checkEntryPoint--)
 - [_checkEntryPointOrSelf()](#Account-_checkEntryPointOrSelf--)
 - [receive()](#Account-receive--)
-#### IAccount
-#### AbstractSigner
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### AccountERC7579
-#### IERC7579ModuleConfig
+#### AccountERC7579 [!toc]
+#### IERC7579ModuleConfig [!toc]
 - [ModuleInstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleInstalled-uint256-address-)
 - [ModuleUninstalled(moduleTypeId, module)](#IERC7579ModuleConfig-ModuleUninstalled-uint256-address-)
-#### IERC7579AccountConfig
-#### IERC7579Execution
-#### IERC1271
-#### Account
-#### IAccount
-#### AbstractSigner
+#### IERC7579AccountConfig [!toc]
+#### IERC7579Execution [!toc]
+#### IERC1271 [!toc]
+#### Account [!toc]
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -1041,16 +1054,16 @@ modules or further overriding functions that involve hooks.
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [ERC7579HookModuleAlreadyPresent(hook)](#AccountERC7579Hooked-ERC7579HookModuleAlreadyPresent-address-)
-#### AccountERC7579
+#### AccountERC7579 [!toc]
 - [ERC7579MissingFallbackHandler(selector)](#AccountERC7579-ERC7579MissingFallbackHandler-bytes4-)
-#### IERC7579ModuleConfig
-#### IERC7579AccountConfig
-#### IERC7579Execution
-#### IERC1271
-#### Account
+#### IERC7579ModuleConfig [!toc]
+#### IERC7579AccountConfig [!toc]
+#### IERC7579Execution [!toc]
+#### IERC1271 [!toc]
+#### Account [!toc]
 - [AccountUnauthorized(sender)](#Account-AccountUnauthorized-address-)
-#### IAccount
-#### AbstractSigner
+#### IAccount [!toc]
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -1254,7 +1267,7 @@ Only supports supports single batch mode (`0x01000000000000000000`). Does not su
 - [execute(mode, executionData)](#ERC7821-execute-bytes32-bytes-)
 - [supportsExecutionMode(mode)](#ERC7821-supportsExecutionMode-bytes32-)
 - [_erc7821AuthorizedExecutor(caller, , )](#ERC7821-_erc7821AuthorizedExecutor-address-bytes32-bytes-)
-#### IERC7821
+#### IERC7821 [!toc]
 </div>
 </div>
 
@@ -1262,7 +1275,7 @@ Only supports supports single batch mode (`0x01000000000000000000`). Does not su
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [UnsupportedExecutionMode()](#ERC7821-UnsupportedExecutionMode--)
-#### IERC7821
+#### IERC7821 [!toc]
 </div>
 </div>
 
@@ -1280,8 +1293,10 @@ Only supports supports single batch mode (`0x01000000000000000000`). Does not su
 
 Executes the calls in `executionData` with no optional `opData` support.
 
-NOTE: Access to this function is controlled by [`ERC7821._erc7821AuthorizedExecutor`](#ERC7821-_erc7821AuthorizedExecutor-address-bytes32-bytes-). Changing access permissions, for
+<Callout>
+Access to this function is controlled by [`ERC7821._erc7821AuthorizedExecutor`](#ERC7821-_erc7821AuthorizedExecutor-address-bytes32-bytes-). Changing access permissions, for
 example to approve calls by the ERC-4337 entrypoint, should be implemented by overriding it.
+</Callout>
 
 Reverts and bubbles up error if any call fails.
 
@@ -2094,7 +2109,9 @@ Encodes a batch of executions. See [`ERC7579Utils.decodeBatch`](#ERC7579Utils-de
 
 Decodes a batch of executions. See [`ERC7579Utils.encodeBatch`](#ERC7579Utils-encodeBatch-struct-Execution---).
 
-NOTE: This function runs some checks and will throw a [`ERC7579Utils.ERC7579DecodingError`](#ERC7579Utils-ERC7579DecodingError--) if the input is not properly formatted.
+<Callout>
+This function runs some checks and will throw a [`ERC7579Utils.ERC7579DecodingError`](#ERC7579Utils-ERC7579DecodingError--) if the input is not properly formatted.
+</Callout>
 
 </div>
 </div>

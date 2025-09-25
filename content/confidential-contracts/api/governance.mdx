@@ -57,18 +57,18 @@ to activate checkpoints and have their voting power tracked.
 - [_moveDelegateVotes(from, to, amount)](#VotesConfidential-_moveDelegateVotes-address-address-euint64-)
 - [_validateTimepoint(timepoint)](#VotesConfidential-_validateTimepoint-uint256-)
 - [_getVotingUnits()](#VotesConfidential-_getVotingUnits-address-)
-#### HandleAccessManager
+#### HandleAccessManager [!toc]
 - [getHandleAllowance(handle, account, persistent)](#HandleAccessManager-getHandleAllowance-bytes32-address-bool-)
 - [_validateHandleAllowance(handle)](#HandleAccessManager-_validateHandleAllowance-bytes32-)
-#### IERC6372
-#### EIP712
+#### IERC6372 [!toc]
+#### EIP712 [!toc]
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
 - [_EIP712Name()](#EIP712-_EIP712Name--)
 - [_EIP712Version()](#EIP712-_EIP712Version--)
-#### IERC5267
-#### Nonces
+#### IERC5267 [!toc]
+#### Nonces [!toc]
 - [nonces(owner)](#Nonces-nonces-address-)
 - [_useNonce(owner)](#Nonces-_useNonce-address-)
 - [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
@@ -80,12 +80,12 @@ to activate checkpoints and have their voting power tracked.
 <div className="font-mono">
 - [DelegateVotesChanged(delegate, previousVotes, newVotes)](#VotesConfidential-DelegateVotesChanged-address-euint64-euint64-)
 - [DelegateChanged(delegator, fromDelegate, toDelegate)](#VotesConfidential-DelegateChanged-address-address-address-)
-#### HandleAccessManager
-#### IERC6372
-#### EIP712
-#### IERC5267
+#### HandleAccessManager [!toc]
+#### IERC6372 [!toc]
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-#### Nonces
+#### Nonces [!toc]
 </div>
 </div>
 
@@ -95,11 +95,11 @@ to activate checkpoints and have their voting power tracked.
 - [VotesExpiredSignature(expiry)](#VotesConfidential-VotesExpiredSignature-uint256-)
 - [ERC6372InconsistentClock()](#VotesConfidential-ERC6372InconsistentClock--)
 - [ERC5805FutureLookup(timepoint, clock)](#VotesConfidential-ERC5805FutureLookup-uint256-uint48-)
-#### HandleAccessManager
-#### IERC6372
-#### EIP712
-#### IERC5267
-#### Nonces
+#### HandleAccessManager [!toc]
+#### IERC6372 [!toc]
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
+#### Nonces [!toc]
 - [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
 </div>
 </div>
@@ -193,9 +193,11 @@ Requirements:
 Returns the total supply of votes available at a specific moment in the past. If the [`VotesConfidential.clock`](#VotesConfidential-clock--) is
 configured to use block numbers, this will return the value at the end of the corresponding block.
 
-NOTE: This value is the sum of all available votes, which is not necessarily the sum of all delegated votes.
+<Callout>
+This value is the sum of all available votes, which is not necessarily the sum of all delegated votes.
 Votes that have not been delegated are still part of total supply, even though they would not participate in a
 vote.
+</Callout>
 
 Requirements:
 

@@ -97,8 +97,8 @@ Finally, `migrate` should include a reinitialization check to ensure that it can
 
 <Callout type='warn'>
 If the original contract implemented `Initializable` at any point and called the `initialize` method, the `InitializableComponent` will not be usable at this time.
-</Callout>
 Instead, the contract can take inspiration from `InitializableComponent` and create its own initialization mechanism.
+</Callout>
 
 ```cairo
 #[starknet::contract]

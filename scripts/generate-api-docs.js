@@ -167,19 +167,19 @@ async function generateApiDocs(options) {
 			}
 
 			// Generate index file
-			console.log("📝 Generating API index...");
-			const indexContent = `---
-title: API Reference
----
+			// 			console.log("📝 Generating API index...");
+			// 			const indexContent = `---
+			// title: API Reference
+			// ---
 
-# API Reference
-`;
+			// # API Reference
+			// `;
 
-			await fs.writeFile(
-				path.join(originalDir, apiOutputDir, "index.mdx"),
-				indexContent,
-				"utf8",
-			);
+			// 			await fs.writeFile(
+			// 				path.join(originalDir, apiOutputDir, "index.mdx"),
+			// 				indexContent,
+			// 				"utf8",
+			// 			);
 		} finally {
 			// Go back to original directory
 			process.chdir(originalDir);

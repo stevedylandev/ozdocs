@@ -49,8 +49,8 @@ They describe a contract’s complete interface. This is useful to interface wit
 
 <Callout>
 The library offers an ABI trait for most components, providing all external function signatures
-</Callout>
 even when most of the time all of them don’t need to be implemented at the same time. This can be helpful when interacting with a contract implementing the component, instead of defining a new dispatcher.
+</Callout>
 
 ```cairo
 #[starknet::interface]
@@ -92,16 +92,16 @@ Other types of dispatchers are also auto-generated from the annotated trait. See
 
 <Callout>
 In the example, the `IERC20Dispatcher` is the one used to interact with contracts, but the
-</Callout>
 `IERC20DispatcherTrait` needs to be in scope for the functions to be available.
+</Callout>
 
 ## Dual interfaces
 
 <Callout type='warn'>
 `camelCase` functions are deprecated and maintained only for Backwards Compatibility.
-</Callout>
 It’s recommended to only use `snake_case` interfaces with contracts and components. The `camelCase` functions will be removed in
 future versions.
+</Callout>
 
 Following the [Great Interface Migration](https://community.starknet.io/t/the-great-interface-migration/92107) plan, we added `snake_case` functions to all of our preexisting `camelCase` contracts with the goal of eventually dropping support for the latter.
 

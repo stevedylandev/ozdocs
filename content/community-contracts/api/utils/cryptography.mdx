@@ -85,14 +85,14 @@ contract MyDKIMRegistry is DKIMRegistry, Ownable {
 - [_setKeyHash(domainHash, keyHash)](#DKIMRegistry-_setKeyHash-bytes32-bytes32-)
 - [_setKeyHashes(domainHash, keyHashes)](#DKIMRegistry-_setKeyHashes-bytes32-bytes32---)
 - [_revokeKeyHash(domainHash, keyHash)](#DKIMRegistry-_revokeKeyHash-bytes32-bytes32-)
-#### IDKIMRegistry
+#### IDKIMRegistry [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IDKIMRegistry
+#### IDKIMRegistry [!toc]
 - [KeyHashRegistered(domainHash, keyHash)](#IDKIMRegistry-KeyHashRegistered-bytes32-bytes32-)
 - [KeyHashRevoked(domainHash)](#IDKIMRegistry-KeyHashRevoked-bytes32-)
 </div>
@@ -131,8 +131,10 @@ Sets a DKIM key hash as valid for a domain. Internal version without access cont
 
 Emits a [`IDKIMRegistry.KeyHashRegistered`](../interfaces#IDKIMRegistry-KeyHashRegistered-bytes32-bytes32-) event.
 
-NOTE: This function does not validate that keyHash is non-zero. Consider adding
+<Callout>
+This function does not validate that keyHash is non-zero. Consider adding
 validation in derived contracts if needed.
+</Callout>
 
 </div>
 </div>
@@ -154,8 +156,10 @@ Internal version without access control.
 
 Emits a [`IDKIMRegistry.KeyHashRegistered`](../interfaces#IDKIMRegistry-KeyHashRegistered-bytes32-bytes32-) event for each key hash.
 
-NOTE: This function does not validate that the keyHashes array is non-empty.
+<Callout>
+This function does not validate that the keyHashes array is non-empty.
 Consider adding validation in derived contracts if needed.
+</Callout>
 
 </div>
 </div>
@@ -293,8 +297,10 @@ Verifies:
 Verifies that calldata bytes (`input`) represents a valid `WebAuthnAuth` object. If encoding is valid,
 returns true and the calldata view at the object. Otherwise, returns false and an invalid calldata object.
 
-NOTE: The returned `auth` object should not be accessed if `success` is false. Trying to access the data may
+<Callout>
+The returned `auth` object should not be accessed if `success` is false. Trying to access the data may
 cause revert/panic.
+</Callout>
 
 </div>
 </div>
@@ -377,7 +383,9 @@ as inputs. It performs several validation checks and returns an [`ZKEmailUtils.E
 Returns `EmailProofError.NoError` if all validations pass, or a specific [`ZKEmailUtils.EmailProofError`](#ZKEmailUtils-EmailProofError) indicating
 which validation check failed.
 
-NOTE: Attempts to validate the command for all possible string [`ZKEmailUtils.Case`](#ZKEmailUtils-Case) values.
+<Callout>
+Attempts to validate the command for all possible string [`ZKEmailUtils.Case`](#ZKEmailUtils-Case) values.
+</Callout>
 
 </div>
 </div>
@@ -416,8 +424,10 @@ Useful for templates with Ethereum address matchers (i.e. ``ethAddr``), which ar
 Verifies that calldata bytes (`input`) represents a valid `EmailProof` object. If encoding is valid,
 returns true and the calldata view at the object. Otherwise, returns false and an invalid calldata object.
 
-NOTE: The returned `emailProof` object should not be accessed if `success` is false. Trying to access the data may
+<Callout>
+The returned `emailProof` object should not be accessed if `success` is false. Trying to access the data may
 cause revert/panic.
+</Callout>
 
 </div>
 </div>
@@ -478,26 +488,26 @@ contract MyAccountWebAuthn is Account, SignerWebAuthn, Initializable {
 
 <Callout type="warn">
 Failing to call [`ERC7579Signature._setSigner`](../account#ERC7579Signature-_setSigner-address-bytes-) either during construction (if used standalone)
-</Callout>
 or during initialization (if used as a clone) may leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [_rawSignatureValidation(hash, signature)](#SignerWebAuthn-_rawSignatureValidation-bytes32-bytes-)
-#### SignerP256
+#### SignerP256 [!toc]
 - [_setSigner(qx, qy)](#SignerP256-_setSigner-bytes32-bytes32-)
 - [signer()](#SignerP256-signer--)
-#### AbstractSigner
+#### AbstractSigner [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### SignerP256
+#### SignerP256 [!toc]
 - [SignerP256InvalidPublicKey(qx, qy)](#SignerP256-SignerP256InvalidPublicKey-bytes32-bytes32-)
-#### AbstractSigner
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -572,9 +582,9 @@ contract MyAccountZKEmail is Account, SignerZKEmail, Initializable {
 
 <Callout type="warn">
 Failing to call [`SignerZKEmail._setAccountSalt`](#SignerZKEmail-_setAccountSalt-bytes32-), [`SignerZKEmail._setDKIMRegistry`](#SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-), and [`SignerZKEmail._setVerifier`](#SignerZKEmail-_setVerifier-contract-IGroth16Verifier-)
-</Callout>
 either during construction (if used standalone) or during initialization (if used as a clone) may
 leave the signer either front-runnable or unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -586,7 +596,7 @@ leave the signer either front-runnable or unusable.
 - [_setDKIMRegistry(registry_)](#SignerZKEmail-_setDKIMRegistry-contract-IDKIMRegistry-)
 - [_setVerifier(verifier_)](#SignerZKEmail-_setVerifier-contract-IGroth16Verifier-)
 - [_rawSignatureValidation(hash, signature)](#SignerZKEmail-_rawSignatureValidation-bytes32-bytes-)
-#### AbstractSigner
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -594,7 +604,7 @@ leave the signer either front-runnable or unusable.
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [InvalidEmailProof(err)](#SignerZKEmail-InvalidEmailProof-enum-ZKEmailUtils-EmailProofError-)
-#### AbstractSigner
+#### AbstractSigner [!toc]
 </div>
 </div>
 
@@ -778,13 +788,15 @@ The signature is expected to be an abi-encoded [`WebAuthn.WebAuthnAuth`](#WebAut
 Uses `WebAuthn-verifyMinimal` for signature verification, which performs the essential
 WebAuthn checks: type validation, challenge matching, and cryptographic signature verification.
 
-NOTE: Wallets that may require default P256 validation may install a P256 verifier separately.
+<Callout>
+Wallets that may require default P256 validation may install a P256 verifier separately.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [verify(key, hash, signature)](#ERC7913WebAuthnVerifier-verify-bytes-bytes32-bytes-)
-#### IERC7913SignatureVerifier
+#### IERC7913SignatureVerifier [!toc]
 </div>
 </div>
 
@@ -855,7 +867,7 @@ Example of overriding _decodeKey to enforce a specific verifier, registry:
 <div className="font-mono">
 - [verify(key, hash, signature)](#ERC7913ZKEmailVerifier-verify-bytes-bytes32-bytes-)
 - [_decodeKey(key)](#ERC7913ZKEmailVerifier-_decodeKey-bytes-)
-#### IERC7913SignatureVerifier
+#### IERC7913SignatureVerifier [!toc]
 </div>
 </div>
 

@@ -1258,10 +1258,10 @@ implementation.
 
 <Callout type="warn">
 It is not recommended to extend this contract to add additional external functions. If you do so, the compiler
-</Callout>
 will not check that there are no selector conflicts, due to the note above. A selector clash between any new function
 and the functions declared in [`ITransparentUpgradeableProxy`](#ITransparentUpgradeableProxy) will be resolved in favor of the new one. This could
 render the admin operations inaccessible, which could prevent upgradeability. Transparency may also be compromised.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Modifiers</h3>
@@ -1752,9 +1752,9 @@ implementation. It is used to validate the implementation's compatibility when p
 
 <Callout type="warn">
 A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
-</Callout>
 bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this
 function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier.
+</Callout>
 
 </div>
 </div>

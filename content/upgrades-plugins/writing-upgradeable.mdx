@@ -145,7 +145,7 @@ contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20Upgradeabl
 
 Whether using OpenZeppelin Contracts or another smart contract library, always make sure that the package is set up to handle upgradeable contracts.
 
-Learn more about OpenZeppelin Contracts Upgradeable in [Contracts: Using with Upgrades](contracts::upgradeable).
+Learn more about OpenZeppelin Contracts Upgradeable in [Contracts: Using with Upgrades](/contracts/5.x/upgradeable).
 
 ### Avoiding Initial Values in Field Declarations
 
@@ -430,7 +430,7 @@ contract Base
 
 ```
 
-To help determine the proper storage gap size in the new version of your contract, you can simply attempt an upgrade using `upgradeProxy` or just run the validations with `validateUpgrade` (see docs for [Hardhat Upgrades](api-hardhat-upgrades) or [Foundry Upgrades](api-foundry-upgrades)). If a storage gap is not being reduced properly, you will see an error message indicating the expected size of the storage gap.
+To help determine the proper storage gap size in the new version of your contract, you can simply attempt an upgrade using `upgradeProxy` or just run the validations with `validateUpgrade` (see docs for [Hardhat Upgrades](api-hardhat-upgrades) or [Foundry Upgrades](foundry/api)). If a storage gap is not being reduced properly, you will see an error message indicating the expected size of the storage gap.
 
 ### Namespaced Storage Layout
 

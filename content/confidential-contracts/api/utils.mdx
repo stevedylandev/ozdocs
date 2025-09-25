@@ -44,8 +44,6 @@ to handle potential overflows in FHE operations.
 <div className="font-mono">
 - [tryIncrease(oldValue, delta)](#FHESafeMath-tryIncrease-euint64-euint64-)
 - [tryDecrease(oldValue, delta)](#FHESafeMath-tryDecrease-euint64-euint64-)
-- [tryAdd(a, b)](#FHESafeMath-tryAdd-euint64-euint64-)
-- [trySub(a, b)](#FHESafeMath-trySub-euint64-euint64-)
 </div>
 </div>
 
@@ -83,42 +81,6 @@ and `updated` will be the original value.
 Try to decrease the encrypted value `oldValue` by `delta`. If the operation is successful,
 `success` will be true and `updated` will be the new value. Otherwise, `success` will be false
 and `updated` will be the original value.
-
-</div>
-</div>
-
-<a id="FHESafeMath-tryAdd-euint64-euint64-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">tryAdd(euint64 a, euint64 b) → ebool success, euint64 res</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="FHESafeMath-tryAdd-euint64-euint64-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Try to add `a` and `b`. If the operation is successful, `success` will be true and `res`
-will be the sum of `a` and `b`. Otherwise, `success` will be false, and `res` will be 0.
-
-</div>
-</div>
-
-<a id="FHESafeMath-trySub-euint64-euint64-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">trySub(euint64 a, euint64 b) → ebool success, euint64 res</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">internal</p>
-<a className="peer" data-card href="FHESafeMath-trySub-euint64-euint64-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Try to subtract `b` from `a`. If the operation is successful, `success` will be true and `res`
-will be `a - b`. Otherwise, `success` will be false, and `res` will be 0.
 
 </div>
 </div>
@@ -162,8 +124,10 @@ import "@openzeppelin/contracts/utils/HandleAccessManager.sol";
 Get handle access for the given handle `handle`. Access will be given to the
 account `account` with the given persistence flag.
 
-NOTE: This function call is gated by `msg.sender` and validated by the
+<Callout>
+This function call is gated by `msg.sender` and validated by the
 [`HandleAccessManager._validateHandleAllowance`](#HandleAccessManager-_validateHandleAllowance-bytes32-) function.
+</Callout>
 
 </div>
 </div>
@@ -248,8 +212,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint256).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -305,8 +269,10 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
 keys).
+</Callout>
 
 </div>
 </div>
@@ -398,8 +364,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint256).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -455,8 +421,10 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
 keys).
+</Callout>
 
 </div>
 </div>
@@ -615,8 +583,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint256).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -672,8 +640,10 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
 keys).
+</Callout>
 
 </div>
 </div>
@@ -765,8 +735,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint32).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -822,8 +792,10 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
 keys).
+</Callout>
 
 </div>
 </div>
@@ -915,8 +887,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint48).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -972,8 +944,10 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
 keys).
+</Callout>
 
 </div>
 </div>
@@ -1065,8 +1039,8 @@ Returns previous value and new value.
 
 <Callout type="warn">
 Never accept `key` as a user input, since an arbitrary `type(uint96).max` key set will disable the
-</Callout>
 library.
+</Callout>
 
 </div>
 </div>
@@ -1122,8 +1096,10 @@ if there is none.
 Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero
 if there is none.
 
-NOTE: This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
+<Callout>
+This is a variant of [`CheckpointsConfidential.upperLookup`](#CheckpointsConfidential-upperLookup-struct-CheckpointsConfidential-TraceEuint64-uint256-) that is optimized to find "recent" checkpoint (checkpoints with high
 keys).
+</Callout>
 
 </div>
 </div>

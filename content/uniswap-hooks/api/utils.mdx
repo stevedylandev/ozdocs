@@ -25,7 +25,9 @@ To settle a negative delta (a debt on the user), a user may transfer or burn to 
 
 Based on the [Uniswap v4 test utils implementation](https://github.com/Uniswap/v4-core/blob/main/test/utils/CurrencySettler.sol).
 
-NOTE: Deltas are synced before any ERC-20 transfers in [`CurrencySettler.settle`](#CurrencySettler-settle-Currency-contract-IPoolManager-address-uint256-bool-) function.
+<Callout>
+Deltas are synced before any ERC-20 transfers in [`CurrencySettler.settle`](#CurrencySettler-settle-Currency-contract-IPoolManager-address-uint256-bool-) function.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>

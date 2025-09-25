@@ -2,7 +2,7 @@
 title: Upgrading smart contracts
 ---
 
-Smart contracts deployed using [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) can be ***upgraded*** to modify their code, while preserving their address, state, and balance. This allows you to iteratively add new features to your project, or fix any bugs you may find [in production](preparing-for-mainnet).
+Smart contracts deployed using [OpenZeppelin Upgrades Plugins](/upgrades-plugins) can be ***upgraded*** to modify their code, while preserving their address, state, and balance. This allows you to iteratively add new features to your project, or fix any bugs you may find [in production](preparing-for-mainnet).
 
 Throughout this guide, we will learn:
 
@@ -28,7 +28,7 @@ To avoid going through this mess, we have built contract upgrades directly into 
 
 ## Upgrading using the Upgrades Plugins
 
-Whenever you deploy a new contract using `deployProxy` in the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index), that contract instance can be ***upgraded*** later. By default, only the address that originally deployed the contract has the rights to upgrade it.
+Whenever you deploy a new contract using `deployProxy` in the [OpenZeppelin Upgrades Plugins](/upgrades-plugins), that contract instance can be ***upgraded*** later. By default, only the address that originally deployed the contract has the rights to upgrade it.
 
 `deployProxy` will create the following transactions:
 
@@ -62,7 +62,7 @@ contract Box
 
 We first need to install the Upgrades Plugin.
 
-Install the [Hardhat Upgrades](upgrades-plugins::hardhat-upgrades) plugin.
+Install the [Hardhat Upgrades](/upgrades-plugins/hardhat-upgrades) plugin.
 ```bash
 npm install --save-dev @openzeppelin/hardhat-upgrades
 ```
@@ -83,7 +83,7 @@ In order to upgrade a contract like `Box` we need to first deploy it as an upgra
 
 With Hardhat, we use [scripts](https://hardhat.org/hardhat-runner/docs/advanced/scripts#writing-scripts-with-hardhat) to deploy upgradeable contracts.
 
-We will create a script to deploy our upgradeable Box contract using [`deployProxy`](upgrades-plugins::api-hardhat-upgrades#deploy-proxy).  We will save this file as `scripts/deploy_upgradeable_box.js`.
+We will create a script to deploy our upgradeable Box contract using [`deployProxy`](/upgrades-plugins/api-hardhat-upgrades#deploy-proxy).  We will save this file as `scripts/deploy_upgradeable_box.js`.
 
 ```js
 const  ethers, upgrades  = require('hardhat');
@@ -150,7 +150,7 @@ After creating the Solidity file, we can now upgrade the instance we had deploye
 1. Deploy the implementation contract (our `BoxV2` contract)
 2. Call the `ProxyAdmin` to update the proxy contract to use the new implementation.
 
-We will create a script to upgrade our `Box` contract to use `BoxV2` using [`upgradeProxy`](upgrades-plugins::api-hardhat-upgrades#upgrade-proxy).  We will save this file as `scripts/upgrade_box.js`.
+We will create a script to upgrade our `Box` contract to use `BoxV2` using [`upgradeProxy`](/upgrades-plugins/api-hardhat-upgrades#upgrade-proxy).  We will save this file as `scripts/upgrade_box.js`.
 We need to specify the address of our proxy contract from when we deployed our `Box` contract.
 
 ```js
@@ -199,13 +199,13 @@ undefined
 
 That’s it! Notice how the `value` of the `Box` was preserved throughout the upgrade, as well as its address. And this process is the same regardless of whether you are working on a local blockchain, a testnet, or the main network.
 
-Let’s see how the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) accomplish this.
+Let’s see how the [OpenZeppelin Upgrades Plugins](/upgrades-plugins) accomplish this.
 
 ## How upgrades work
 
 _This section will be more theory-heavy than others: feel free to skip over it and return later if you are curious._
 
-When you create a new upgradeable contract instance, the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) actually deploys three contracts:
+When you create a new upgradeable contract instance, the [OpenZeppelin Upgrades Plugins](/upgrades-plugins) actually deploys three contracts:
 
 1. The contract you have written, which is known as the _implementation contract_ containing the _logic_.
 2. A _proxy_ to the _implementation contract_, which is the contract that you actually interact with.
@@ -227,7 +227,7 @@ You can have multiple proxies using the same implementation contract, so you can
 Any user of the smart contract always interacts with the proxy, **which never changes its address**. This allows you to roll out an upgrade or fix a bug without requesting your users to change anything on their end - they just keep interacting with the same address as always.
 
 <Callout>
-If you want to learn more about how OpenZeppelin proxies work, check out [Proxies](upgrades-plugins::proxies).
+If you want to learn more about how OpenZeppelin proxies work, check out [Proxies](/upgrades-plugins/proxies).
 </Callout>
 
 ## Limitations of contract upgrades
@@ -236,7 +236,7 @@ While any smart contract can be made upgradeable, some restrictions of the Solid
 
 ### Initialization
 
-Upgradeable contracts cannot have a `constructor`. To help you run initialization code, [**OpenZeppelin Contracts**](contracts::index) provides the [`Initializable`](contracts:api:proxy#Initializable) base contract that allows you to tag a method as [`initializer`](contracts:api:proxy#Initializable-initializer--), ensuring it can be run only once.
+Upgradeable contracts cannot have a `constructor`. To help you run initialization code, [**OpenZeppelin Contracts**](/contracts) provides the [`Initializable`](contracts:api:proxy#Initializable) base contract that allows you to tag a method as [`initializer`](contracts:api:proxy#Initializable-initializer--), ensuring it can be run only once.
 
 As an example, let’s write a new version of the `Box` contract with an initializer, storing the address of an `admin` who will be the only one allowed to change its contents.
 
@@ -293,7 +293,7 @@ For all practical purposes, the initializer acts as a constructor. However, keep
 
 You may have noticed that we included a constructor as well as an initializer. This constructor serves the purpose of leaving the implementation contract in an initialized state, which is a mitigation against certain potential attacks.
 
-To learn more about this and other caveats when writing upgradeable contracts, check out our [Writing Upgradeable Contracts](upgrades-plugins::writing-upgradeable) guide.
+To learn more about this and other caveats when writing upgradeable contracts, check out our [Writing Upgradeable Contracts](/upgrades-plugins/writing-upgradeable) guide.
 
 ### Upgrading
 
@@ -318,7 +318,7 @@ Fortunately, this limitation only affects state variables. You can change the co
 If you accidentally mess up with your contract’s storage layout, the Upgrades Plugins will warn you when you try to upgrade.
 </Callout>
 
-To learn more about this limitation, head over to the [Modifying Your Contracts](upgrades-plugins::writing-upgradeable#modifying-your-contracts) guide.
+To learn more about this limitation, head over to the [Modifying Your Contracts](/upgrades-plugins/writing-upgradeable#modifying-your-contracts) guide.
 
 ## Testing
 

@@ -33,25 +33,27 @@ decreasing the offer price according to xy=k.
 In order to use this hook, the inheriting contract must implement the `_handleCollectedFees` function
 to determine how to handle the collected fees from the anti-sandwich mechanism.
 
-NOTE: The Anti-sandwich mechanism only protects swaps in the zeroForOne swap direction.
+<Callout>
+The Anti-sandwich mechanism only protects swaps in the zeroForOne swap direction.
 Swaps in the !zeroForOne direction are not protected by this hook design.
+</Callout>
 
 <Callout type="warn">
 Since this hook makes MEV not profitable, there's not as much arbitrage in
-</Callout>
 the pool, making prices at beginning of the block not necessarily close to market price.
+</Callout>
 
 <Callout type="warn">
 In `_beforeSwap`, the hook iterates over all ticks between last tick and current tick.
-</Callout>
 Developers must be aware that for large price changes in pools with small tick spacing, the `for`
 loop will iterate over a large number of ticks, which could lead to `MemoryOOG` error.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v1.1.0_
 
@@ -63,15 +65,15 @@ _Available since v1.1.0_
 - [_getBlockNumber()](#AntiSandwichHook-_getBlockNumber--)
 - [_getTargetUnspecified(, key, params, )](#AntiSandwichHook-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-)
 - [getHookPermissions()](#AntiSandwichHook-getHookPermissions--)
-#### BaseDynamicAfterFee
+#### BaseDynamicAfterFee [!toc]
 - [_transientTargetUnspecifiedAmount()](#BaseDynamicAfterFee-_transientTargetUnspecifiedAmount--)
 - [_transientApplyTarget()](#BaseDynamicAfterFee-_transientApplyTarget--)
 - [_setTransientTargetUnspecifiedAmount(value)](#BaseDynamicAfterFee-_setTransientTargetUnspecifiedAmount-uint256-)
 - [_setTransientApplyTarget(value)](#BaseDynamicAfterFee-_setTransientApplyTarget-bool-)
 - [_afterSwap(sender, key, params, delta, )](#BaseDynamicAfterFee-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-)
 - [_afterSwapHandler(key, params, delta, targetUnspecifiedAmount, feeAmount)](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-)
-#### IHookEvents
-#### BaseHook
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
@@ -92,35 +94,35 @@ _Available since v1.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### BaseDynamicAfterFee
-#### IHookEvents
+#### BaseDynamicAfterFee [!toc]
+#### IHookEvents [!toc]
 - [HookSwap(poolId, sender, amount0, amount1, hookLPfeeAmount0, hookLPfeeAmount1)](#IHookEvents-HookSwap-bytes32-address-int128-int128-uint128-uint128-)
 - [HookFee(poolId, sender, feeAmount0, feeAmount1)](#IHookEvents-HookFee-bytes32-address-uint128-uint128-)
 - [HookModifyLiquidity(poolId, sender, amount0, amount1)](#IHookEvents-HookModifyLiquidity-bytes32-address-int128-int128-)
 - [HookBonus(poolId, amount0, amount1)](#IHookEvents-HookBonus-bytes32-uint128-uint128-)
-#### BaseHook
-#### IHooks
+#### BaseHook [!toc]
+#### IHooks [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### BaseDynamicAfterFee
-#### IHookEvents
-#### BaseHook
+#### BaseDynamicAfterFee [!toc]
+#### IHookEvents [!toc]
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -312,15 +314,15 @@ Once completely filled, the resulting liquidity can be withdrawn from the pool.
 
 <Callout type="warn">
 When cancelling or adding more liquidity into an existing order, it's possible that fees
-</Callout>
 have been accrued. In those cases, the accrued fees are added to the order info, benefitting the remaining
 limit order placers.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v1.1.0_
 
@@ -346,8 +348,8 @@ _Available since v1.1.0_
 - [_getTick(poolId)](#LimitOrderHook-_getTick-PoolId-)
 - [getOrderInfo(orderId)](#LimitOrderHook-getOrderInfo-OrderIdLibrary-OrderId-)
 - [getHookPermissions()](#LimitOrderHook-getHookPermissions--)
-#### IUnlockCallback
-#### BaseHook
+#### IUnlockCallback [!toc]
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
@@ -368,7 +370,7 @@ _Available since v1.1.0_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -379,9 +381,9 @@ _Available since v1.1.0_
 - [Fill(orderId, key, tickLower, zeroForOne)](#LimitOrderHook-Fill-OrderIdLibrary-OrderId-struct-PoolKey-int24-bool-)
 - [Cancel(owner, orderId, key, tickLower, zeroForOne, liquidity)](#LimitOrderHook-Cancel-address-OrderIdLibrary-OrderId-struct-PoolKey-int24-bool-uint128-)
 - [Withdraw(owner, orderId, liquidity)](#LimitOrderHook-Withdraw-address-OrderIdLibrary-OrderId-uint128-)
-#### IUnlockCallback
-#### BaseHook
-#### IHooks
+#### IUnlockCallback [!toc]
+#### BaseHook [!toc]
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -393,13 +395,13 @@ _Available since v1.1.0_
 - [CrossedRange()](#LimitOrderHook-CrossedRange--)
 - [Filled()](#LimitOrderHook-Filled--)
 - [NotFilled()](#LimitOrderHook-NotFilled--)
-#### IUnlockCallback
-#### BaseHook
+#### IUnlockCallback [!toc]
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -938,28 +940,30 @@ The penalty is donated to the pool's liquidity providers in range at the time of
 
 See [`LiquidityPenaltyHook._calculateLiquidityPenalty`](#LiquidityPenaltyHook-_calculateLiquidityPenalty-BalanceDelta-uint48-) for penalty calculation.
 
-NOTE: If a long term liquidity provider adds liquidity continuously, a pause of `blockNumberOffset`
+<Callout>
+If a long term liquidity provider adds liquidity continuously, a pause of `blockNumberOffset`
 before removing will be needed if `feesAccrued` collection is intended, in order to avoid getting
 penalized by the JIT protection mechanism.
+</Callout>
 
 <Callout type="warn">
 Altrough this hook achieves it's objective of protecting long term LP's in most scenarios,
-</Callout>
 low liquidity pools and long-tail assets may still be vulnerable depending on the configured `blockNumberOffset`.
 Larger values of such are recommended in those cases in order to decrease the profitability of the attack.
+</Callout>
 
 <Callout type="warn">
 In low liquidity pools, this hook may be vulnerable to multi-account strategies: attackers may bypass JIT protection
-</Callout>
 by using a secondary account to add minimal liquidity at a target tick with no other liquidity, then moving the price there after a JIT attack.
 This allows penalty fees to be redirected to the attacker's secondary account. While technically feasible, this attack is rarely profitable in practice,
 due to the cost associated with moving the price to the target tick.
+</Callout>
 
 <Callout type="warn">
 This is experimental software and is provided on an "as is" and "as available" basis. We do
-</Callout>
 not give any warranties and will not be liable for any losses incurred through any use of this code
 base.
+</Callout>
 
 _Available since v0.1.1_
 
@@ -979,7 +983,7 @@ _Available since v0.1.1_
 - [getHookPermissions()](#LiquidityPenaltyHook-getHookPermissions--)
 - [MIN_BLOCK_NUMBER_OFFSET()](#LiquidityPenaltyHook-MIN_BLOCK_NUMBER_OFFSET-uint48)
 - [blockNumberOffset()](#LiquidityPenaltyHook-blockNumberOffset-uint48)
-#### BaseHook
+#### BaseHook [!toc]
 - [_validateHookAddress(hook)](#BaseHook-_validateHookAddress-contract-BaseHook-)
 - [beforeInitialize(sender, key, sqrtPriceX96)](#BaseHook-beforeInitialize-address-struct-PoolKey-uint160-)
 - [_beforeInitialize(, , )](#BaseHook-_beforeInitialize-address-struct-PoolKey-uint160-)
@@ -1000,7 +1004,7 @@ _Available since v0.1.1_
 - [afterDonate(sender, key, amount0, amount1, hookData)](#BaseHook-afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [_afterDonate(, , , , )](#BaseHook-_afterDonate-address-struct-PoolKey-uint256-uint256-bytes-)
 - [poolManager()](#BaseHook-poolManager-contract-IPoolManager)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -1009,12 +1013,12 @@ _Available since v0.1.1_
 <div className="font-mono">
 - [BlockNumberOffsetTooLow()](#LiquidityPenaltyHook-BlockNumberOffsetTooLow--)
 - [NoLiquidityToReceiveDonation()](#LiquidityPenaltyHook-NoLiquidityToReceiveDonation--)
-#### BaseHook
+#### BaseHook [!toc]
 - [NotSelf()](#BaseHook-NotSelf--)
 - [InvalidPool()](#BaseHook-InvalidPool--)
 - [HookNotImplemented()](#BaseHook-HookNotImplemented--)
 - [NotPoolManager()](#BaseHook-NotPoolManager--)
-#### IHooks
+#### IHooks [!toc]
 </div>
 </div>
 
@@ -1070,15 +1074,17 @@ See [`BaseHook._afterRemoveLiquidity`](base#BaseHook-_afterRemoveLiquidity-addre
 Penalizes the collection of any existing LP `feesDelta` and `withheldFees` after liquidity removal if
 liquidity was recently added to the position.
 
-NOTE: The penalty is applied on both `withheldFees` and `feeDelta` equally.
+<Callout>
+The penalty is applied on both `withheldFees` and `feeDelta` equally.
 Therefore, regardless of how many times liquidity was added to the position within the `blockNumberOffset` period,
 all accrued fees are penalized as if the liquidity was added only once during that period. This ensures that
 splitting liquidity additions within the `blockNumberOffset` period does not reduce or increase the penalty.
+</Callout>
 
 <Callout type="warn">
 The penalty is donated to the pool's liquidity providers in range at the time of liquidity removal,
-</Callout>
 which may be different from the liquidity providers in range at the time of liquidity addition.
+</Callout>
 
 </div>
 </div>
@@ -1173,7 +1179,9 @@ liquidityPenalty = feeDelta * ( 1 - (currentBlockNumber - lastAddedLiquidityBloc
 
 As a result, the penalty is 100% at the same block where liquidity was last added and zero after the `blockNumberOffset` block time window.
 
-NOTE: Won't overflow if `currentBlockNumber - lastAddedLiquidityBlock < blockNumberOffset` is verified prior to calling this function.
+<Callout>
+Won't overflow if `currentBlockNumber - lastAddedLiquidityBlock < blockNumberOffset` is verified prior to calling this function.
+</Callout>
 
 </div>
 </div>

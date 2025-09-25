@@ -54,8 +54,8 @@ const authorization = await eoaClient.signAuthorization({
 
 <Callout>
 When implementing delegate contracts, ensure they require signatures that avoid replayability (e.g. a domain separator, nonce).
-</Callout>
 A poorly implemented delegate can allow a malicious actor to take near complete control over a signer’s EOA.
+</Callout>
 
 ### Send a Set Code Transaction
 

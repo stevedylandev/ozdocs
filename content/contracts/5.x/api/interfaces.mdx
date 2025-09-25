@@ -45,7 +45,6 @@ are useful to interact with third party contracts that implement them.
 * [`IERC6909Metadata`](#IERC6909Metadata)
 * [`IERC6909TokenSupply`](#IERC6909TokenSupply)
 * [`IERC7674`](#IERC7674)
-* [`IERC7786GatewaySource`](#IERC7786GatewaySource)
 * [`IERC7802`](#IERC7802)
 
 ## Detailed ABI
@@ -99,8 +98,6 @@ are useful to interact with third party contracts that implement them.
 [`IERC6909TokenSupply`](#IERC6909TokenSupply)
 
 [`IERC7674`](#IERC7674)
-
-[`IERC7786GatewaySource`](#IERC7786GatewaySource)
 
 [`IERC7802`](#IERC7802)
 
@@ -177,9 +174,9 @@ after `transfer` or `transferFrom`, or code on a spender contract after `approve
 - [transferFromAndCall(from, to, value, data)](#IERC1363-transferFromAndCall-address-address-uint256-bytes-)
 - [approveAndCall(spender, value)](#IERC1363-approveAndCall-address-uint256-)
 - [approveAndCall(spender, value, data)](#IERC1363-approveAndCall-address-uint256-bytes-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
-#### IERC20
+#### IERC20 [!toc]
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
 - [transfer(to, value)](#IERC20-transfer-address-uint256-)
@@ -192,8 +189,8 @@ after `transfer` or `transferFrom`, or code on a spender contract after `approve
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC165
-#### IERC20
+#### IERC165 [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -348,9 +345,11 @@ from ERC-1363 token contracts.
 Whenever ERC-1363 tokens are transferred to this contract via `transferAndCall` or `transferFromAndCall`
 by `operator` from `from`, this function is called.
 
-NOTE: To accept the transfer, this must return
+<Callout>
+To accept the transfer, this must return
 `bytes4(keccak256("onTransferReceived(address,address,uint256,bytes)"))`
 (i.e. 0x88a7ca5c, or its own function selector).
+</Callout>
 
 </div>
 </div>
@@ -396,9 +395,11 @@ from ERC-1363 token contracts.
 Whenever an ERC-1363 token `owner` approves this contract via `approveAndCall`
 to spend their tokens, this function is called.
 
-NOTE: To accept the approval, this must return
+<Callout>
+To accept the approval, this must return
 `bytes4(keccak256("onApprovalReceived(address,uint256,bytes)"))`
 (i.e. 0x7b04a2d0, or its own function selector).
+</Callout>
 
 </div>
 </div>
@@ -841,7 +842,7 @@ import "@openzeppelin/contracts/interfaces/IERC2612.sol";
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-#### IERC20Permit
+#### IERC20Permit [!toc]
 - [permit(owner, spender, value, deadline, v, r, s)](#IERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 - [nonces(owner)](#IERC20Permit-nonces-address-)
 - [DOMAIN_SEPARATOR()](#IERC20Permit-DOMAIN_SEPARATOR--)
@@ -873,7 +874,7 @@ support for royalty payments across all NFT marketplaces and ecosystem participa
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [royaltyInfo(tokenId, salePrice)](#IERC2981-royaltyInfo-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
 </div>
 </div>
@@ -893,8 +894,10 @@ support for royalty payments across all NFT marketplaces and ecosystem participa
 Returns how much royalty is owed and to whom, based on a sale price that may be denominated in any unit of
 exchange. The royalty amount is denominated and should be paid in that same unit of exchange.
 
-NOTE: ERC-2981 allows setting the royalty to 100% of the price. In that case all the price would be sent to the
+<Callout>
+ERC-2981 allows setting the royalty to 100% of the price. In that case all the price would be sent to the
 royalty receiver and 0 tokens to the seller. Contracts dealing with royalty should consider empty transfers.
+</Callout>
 
 </div>
 </div>
@@ -1059,11 +1062,11 @@ Interface of the ERC-4626 "Tokenized Vault Standard", as defined in
 - [maxRedeem(owner)](#IERC4626-maxRedeem-address-)
 - [previewRedeem(shares)](#IERC4626-previewRedeem-uint256-)
 - [redeem(shares, receiver, owner)](#IERC4626-redeem-uint256-address-address-)
-#### IERC20Metadata
+#### IERC20Metadata [!toc]
 - [name()](#IERC20Metadata-name--)
 - [symbol()](#IERC20Metadata-symbol--)
 - [decimals()](#IERC20Metadata-decimals--)
-#### IERC20
+#### IERC20 [!toc]
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
 - [transfer(to, value)](#IERC20-transfer-address-uint256-)
@@ -1078,8 +1081,8 @@ Interface of the ERC-4626 "Tokenized Vault Standard", as defined in
 <div className="font-mono">
 - [Deposit(sender, owner, assets, shares)](#IERC4626-Deposit-address-address-uint256-uint256-)
 - [Withdraw(sender, receiver, owner, assets, shares)](#IERC4626-Withdraw-address-address-address-uint256-uint256-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -1146,9 +1149,11 @@ scenario where all the conditions are met.
 - MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
 - MUST NOT revert.
 
-NOTE: This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
+<Callout>
+This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -1173,9 +1178,11 @@ scenario where all the conditions are met.
 - MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
 - MUST NOT revert.
 
-NOTE: This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
+<Callout>
+This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -1225,8 +1232,10 @@ current on-chain conditions.
 - MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -1251,7 +1260,9 @@ Mints shares Vault shares to receiver by depositing exactly amount of underlying
 - MUST revert if all of assets cannot be deposited (due to deposit limit being reached, slippage, the user not
   approving enough underlying tokens to the Vault contract, etc).
 
-NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+<Callout>
+most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+</Callout>
 
 </div>
 </div>
@@ -1299,8 +1310,10 @@ current on-chain conditions.
 - MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by minting.
+</Callout>
 
 </div>
 </div>
@@ -1325,7 +1338,9 @@ Mints exactly shares Vault shares to receiver by depositing amount of underlying
 - MUST revert if all of shares cannot be minted (due to deposit limit being reached, slippage, the user not
   approving enough underlying tokens to the Vault contract, etc).
 
-NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+<Callout>
+most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+</Callout>
 
 </div>
 </div>
@@ -1375,8 +1390,10 @@ given current on-chain conditions.
 - MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -1452,8 +1469,10 @@ given current on-chain conditions.
 - MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by redeeming.
+</Callout>
 
 </div>
 </div>
@@ -1478,8 +1497,10 @@ Burns exactly shares from owner and sends assets of underlying tokens to receive
 - MUST revert if all of shares cannot be redeemed (due to withdrawal limit being reached, slippage, the owner
   not having enough shares, etc).
 
-NOTE: some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
+<Callout>
+some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
 Those methods should be performed separately.
+</Callout>
 
 </div>
 </div>
@@ -1534,7 +1555,7 @@ import "@openzeppelin/contracts/interfaces/IERC4906.sol";
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-#### IERC721
+#### IERC721 [!toc]
 - [balanceOf(owner)](#IERC721-balanceOf-address-)
 - [ownerOf(tokenId)](#IERC721-ownerOf-uint256-)
 - [safeTransferFrom(from, to, tokenId, data)](#IERC721-safeTransferFrom-address-address-uint256-bytes-)
@@ -1544,7 +1565,7 @@ import "@openzeppelin/contracts/interfaces/IERC4906.sol";
 - [setApprovalForAll(operator, approved)](#IERC721-setApprovalForAll-address-bool-)
 - [getApproved(tokenId)](#IERC721-getApproved-uint256-)
 - [isApprovedForAll(owner, operator)](#IERC721-isApprovedForAll-address-address-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
 </div>
 </div>
@@ -1554,11 +1575,11 @@ import "@openzeppelin/contracts/interfaces/IERC4906.sol";
 <div className="font-mono">
 - [MetadataUpdate(_tokenId)](#IERC4906-MetadataUpdate-uint256-)
 - [BatchMetadataUpdate(_fromTokenId, _toTokenId)](#IERC4906-BatchMetadataUpdate-uint256-uint256-)
-#### IERC721
+#### IERC721 [!toc]
 - [Transfer(from, to, tokenId)](#IERC721-Transfer-address-address-uint256-)
 - [Approval(owner, approved, tokenId)](#IERC721-Approval-address-address-uint256-)
 - [ApprovalForAll(owner, operator, approved)](#IERC721-ApprovalForAll-address-address-bool-)
-#### IERC165
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -1730,14 +1751,14 @@ import "@openzeppelin/contracts/interfaces/IERC5805.sol";
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-#### IVotes
+#### IVotes [!toc]
 - [getVotes(account)](#IVotes-getVotes-address-)
 - [getPastVotes(account, timepoint)](#IVotes-getPastVotes-address-uint256-)
 - [getPastTotalSupply(timepoint)](#IVotes-getPastTotalSupply-uint256-)
 - [delegates(account)](#IVotes-delegates-address-)
 - [delegate(delegatee)](#IVotes-delegate-address-)
 - [delegateBySig(delegatee, nonce, expiry, v, r, s)](#IVotes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-)
-#### IERC6372
+#### IERC6372 [!toc]
 - [clock()](#IERC6372-clock--)
 - [CLOCK_MODE()](#IERC6372-CLOCK_MODE--)
 </div>
@@ -1746,19 +1767,19 @@ import "@openzeppelin/contracts/interfaces/IERC5805.sol";
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IVotes
+#### IVotes [!toc]
 - [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
 - [DelegateVotesChanged(delegate, previousVotes, newVotes)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
-#### IERC6372
+#### IERC6372 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IVotes
+#### IVotes [!toc]
 - [VotesExpiredSignature(expiry)](#IVotes-VotesExpiredSignature-uint256-)
-#### IERC6372
+#### IERC6372 [!toc]
 </div>
 </div>
 
@@ -2465,9 +2486,9 @@ address.
 
 <Callout type="warn">
 A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks
-</Callout>
 bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this
 function revert if invoked through a proxy.
+</Callout>
 
 </div>
 </div>
@@ -2817,14 +2838,14 @@ User operations are validated and executed by this contract.
 <div className="font-mono">
 - [handleOps(ops, beneficiary)](#IEntryPoint-handleOps-struct-PackedUserOperation---address-payable-)
 - [handleAggregatedOps(opsPerAggregator, beneficiary)](#IEntryPoint-handleAggregatedOps-struct-IEntryPoint-UserOpsPerAggregator---address-payable-)
-#### IEntryPointStake
+#### IEntryPointStake [!toc]
 - [balanceOf(account)](#IEntryPointStake-balanceOf-address-)
 - [depositTo(account)](#IEntryPointStake-depositTo-address-)
 - [withdrawTo(withdrawAddress, withdrawAmount)](#IEntryPointStake-withdrawTo-address-payable-uint256-)
 - [addStake(unstakeDelaySec)](#IEntryPointStake-addStake-uint32-)
 - [unlockStake()](#IEntryPointStake-unlockStake--)
 - [withdrawStake(withdrawAddress)](#IEntryPointStake-withdrawStake-address-payable-)
-#### IEntryPointNonces
+#### IEntryPointNonces [!toc]
 - [getNonce(sender, key)](#IEntryPointNonces-getNonce-address-uint192-)
 </div>
 </div>
@@ -2834,8 +2855,8 @@ User operations are validated and executed by this contract.
 <div className="font-mono">
 - [FailedOp(opIndex, reason)](#IEntryPoint-FailedOp-uint256-string-)
 - [FailedOpWithRevert(opIndex, reason, inner)](#IEntryPoint-FailedOpWithRevert-uint256-string-bytes-)
-#### IEntryPointStake
-#### IEntryPointNonces
+#### IEntryPointStake [!toc]
+#### IEntryPointNonces [!toc]
 </div>
 </div>
 
@@ -3022,7 +3043,9 @@ import "@openzeppelin/contracts/interfaces/draft-IERC4337.sol";
 
 Interface for a paymaster contract that agrees to pay for the gas costs of a user operation.
 
-NOTE: A paymaster must hold a stake to cover the required entrypoint stake and also the gas for the transaction.
+<Callout>
+A paymaster must hold a stake to cover the required entrypoint stake and also the gas for the transaction.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -3047,7 +3070,9 @@ NOTE: A paymaster must hold a stake to cover the required entrypoint stake and a
 Validates whether the paymaster is willing to pay for the user operation. See
 [`IAccount.validateUserOp`](#IAccount-validateUserOp-struct-PackedUserOperation-bytes32-uint256-) for additional information on the return value.
 
-NOTE: Bundlers will reject this method if it modifies the state, unless it's whitelisted.
+<Callout>
+Bundlers will reject this method if it modifies the state, unless it's whitelisted.
+</Callout>
 
 </div>
 </div>
@@ -3553,7 +3578,7 @@ Required interface of an ERC-6909 compliant contract, as defined in the
 - [setOperator(spender, approved)](#IERC6909-setOperator-address-bool-)
 - [transfer(receiver, id, amount)](#IERC6909-transfer-address-uint256-uint256-)
 - [transferFrom(sender, receiver, id, amount)](#IERC6909-transferFrom-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
 </div>
 </div>
@@ -3564,7 +3589,7 @@ Required interface of an ERC-6909 compliant contract, as defined in the
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -3599,7 +3624,9 @@ Returns the amount of tokens of type `id` owned by `owner`.
 
 Returns the amount of tokens of type `id` that `spender` is allowed to spend on behalf of `owner`.
 
-NOTE: Does not include operator allowances.
+<Callout>
+Does not include operator allowances.
+</Callout>
 
 </div>
 </div>
@@ -3775,7 +3802,7 @@ Optional extension of [`IERC6909`](#IERC6909) that adds metadata functions.
 - [name(id)](#IERC6909Metadata-name-uint256-)
 - [symbol(id)](#IERC6909Metadata-symbol-uint256-)
 - [decimals(id)](#IERC6909Metadata-decimals-uint256-)
-#### IERC6909
+#### IERC6909 [!toc]
 - [balanceOf(owner, id)](#IERC6909-balanceOf-address-uint256-)
 - [allowance(owner, spender, id)](#IERC6909-allowance-address-address-uint256-)
 - [isOperator(owner, spender)](#IERC6909-isOperator-address-address-)
@@ -3783,7 +3810,7 @@ Optional extension of [`IERC6909`](#IERC6909) that adds metadata functions.
 - [setOperator(spender, approved)](#IERC6909-setOperator-address-bool-)
 - [transfer(receiver, id, amount)](#IERC6909-transfer-address-uint256-uint256-)
 - [transferFrom(sender, receiver, id, amount)](#IERC6909-transferFrom-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
 </div>
 </div>
@@ -3791,11 +3818,11 @@ Optional extension of [`IERC6909`](#IERC6909) that adds metadata functions.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC6909
+#### IERC6909 [!toc]
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -3873,7 +3900,7 @@ Optional extension of [`IERC6909`](#IERC6909) that adds content URI functions.
 <div className="font-mono">
 - [contractURI()](#IERC6909ContentURI-contractURI--)
 - [tokenURI(id)](#IERC6909ContentURI-tokenURI-uint256-)
-#### IERC6909
+#### IERC6909 [!toc]
 - [balanceOf(owner, id)](#IERC6909-balanceOf-address-uint256-)
 - [allowance(owner, spender, id)](#IERC6909-allowance-address-address-uint256-)
 - [isOperator(owner, spender)](#IERC6909-isOperator-address-address-)
@@ -3881,7 +3908,7 @@ Optional extension of [`IERC6909`](#IERC6909) that adds content URI functions.
 - [setOperator(spender, approved)](#IERC6909-setOperator-address-bool-)
 - [transfer(receiver, id, amount)](#IERC6909-transfer-address-uint256-uint256-)
 - [transferFrom(sender, receiver, id, amount)](#IERC6909-transferFrom-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
 </div>
 </div>
@@ -3889,11 +3916,11 @@ Optional extension of [`IERC6909`](#IERC6909) that adds content URI functions.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC6909
+#### IERC6909 [!toc]
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -3953,7 +3980,7 @@ Optional extension of [`IERC6909`](#IERC6909) that adds a token supply function.
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [totalSupply(id)](#IERC6909TokenSupply-totalSupply-uint256-)
-#### IERC6909
+#### IERC6909 [!toc]
 - [balanceOf(owner, id)](#IERC6909-balanceOf-address-uint256-)
 - [allowance(owner, spender, id)](#IERC6909-allowance-address-address-uint256-)
 - [isOperator(owner, spender)](#IERC6909-isOperator-address-address-)
@@ -3961,7 +3988,7 @@ Optional extension of [`IERC6909`](#IERC6909) that adds a token supply function.
 - [setOperator(spender, approved)](#IERC6909-setOperator-address-bool-)
 - [transfer(receiver, id, amount)](#IERC6909-transfer-address-uint256-uint256-)
 - [transferFrom(sender, receiver, id, amount)](#IERC6909-transferFrom-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
 </div>
 </div>
@@ -3969,11 +3996,11 @@ Optional extension of [`IERC6909`](#IERC6909) that adds a token supply function.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC6909
+#### IERC6909 [!toc]
 - [Approval(owner, spender, id, amount)](#IERC6909-Approval-address-address-uint256-uint256-)
 - [OperatorSet(owner, spender, approved)](#IERC6909-OperatorSet-address-address-bool-)
 - [Transfer(caller, sender, receiver, id, amount)](#IERC6909-Transfer-address-address-address-uint256-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 </div>
 </div>
 
@@ -4193,7 +4220,7 @@ A module that implements logic to validate user operations and signatures.
 <div className="font-mono">
 - [validateUserOp(userOp, userOpHash)](#IERC7579Validator-validateUserOp-struct-PackedUserOperation-bytes32-)
 - [isValidSignatureWithSender(sender, hash, signature)](#IERC7579Validator-isValidSignatureWithSender-address-bytes32-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 - [onInstall(data)](#IERC7579Module-onInstall-bytes-)
 - [onUninstall(data)](#IERC7579Module-onUninstall-bytes-)
 - [isModuleType(moduleTypeId)](#IERC7579Module-isModuleType-uint256-)
@@ -4260,7 +4287,7 @@ either individually or batched.
 <div className="font-mono">
 - [preCheck(msgSender, value, msgData)](#IERC7579Hook-preCheck-address-uint256-bytes-)
 - [postCheck(hookData)](#IERC7579Hook-postCheck-bytes-)
-#### IERC7579Module
+#### IERC7579Module [!toc]
 - [onInstall(data)](#IERC7579Module-onInstall-bytes-)
 - [onUninstall(data)](#IERC7579Module-onUninstall-bytes-)
 - [isModuleType(moduleTypeId)](#IERC7579Module-isModuleType-uint256-)
@@ -4601,7 +4628,7 @@ Temporary Approval Extension for ERC-20 ([ERC-7674](https://github.com/ethereum/
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [temporaryApprove(spender, value)](#IERC7674-temporaryApprove-address-uint256-)
-#### IERC20
+#### IERC20 [!toc]
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
 - [transfer(to, value)](#IERC20-transfer-address-uint256-)
@@ -4614,7 +4641,7 @@ Temporary Approval Extension for ERC-20 ([ERC-7674](https://github.com/ethereum/
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC20
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -4634,171 +4661,6 @@ Temporary Approval Extension for ERC-20 ([ERC-7674](https://github.com/ethereum/
 
 Set the temporary allowance, allowing `spender` to withdraw (within the same transaction) assets
 held by the caller.
-
-</div>
-</div>
-
-<a id="IERC7786GatewaySource"></a>
-
-<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
-
-## `IERC7786GatewaySource` 
-
-<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/interfaces/draft-IERC7786.sol">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-</a>
-
-</div>
-
-```solidity
-import "@openzeppelin/contracts/interfaces/draft-IERC7786.sol";
-```
-
-Interface for ERC-7786 source gateways.
-
-See ERC-7786 for more details
-
-<div className="bg-secondary p-4 rounded-md mb-6">
-<h3 style={{ marginTop: "0"}}>Functions</h3>
-<div className="font-mono">
-- [supportsAttribute(selector)](#IERC7786GatewaySource-supportsAttribute-bytes4-)
-- [sendMessage(recipient, payload, attributes)](#IERC7786GatewaySource-sendMessage-bytes-bytes-bytes---)
-</div>
-</div>
-
-<div className="bg-secondary p-4 rounded-md mb-6">
-<h3 style={{ marginTop: "0"}}>Events</h3>
-<div className="font-mono">
-- [MessageSent(sendId, sender, receiver, payload, value, attributes)](#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---)
-</div>
-</div>
-
-<div className="bg-secondary p-4 rounded-md mb-6">
-<h3 style={{ marginTop: "0"}}>Errors</h3>
-<div className="font-mono">
-- [UnsupportedAttribute(selector)](#IERC7786GatewaySource-UnsupportedAttribute-bytes4-)
-</div>
-</div>
-
-<a id="IERC7786GatewaySource-supportsAttribute-bytes4-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">supportsAttribute(bytes4 selector) → bool</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">external</p>
-<a className="peer" data-card href="IERC7786GatewaySource-supportsAttribute-bytes4-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Getter to check whether an attribute is supported or not.
-
-</div>
-</div>
-
-<a id="IERC7786GatewaySource-sendMessage-bytes-bytes-bytes---"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">sendMessage(bytes recipient, bytes payload, bytes[] attributes) → bytes32 sendId</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">external</p>
-<a className="peer" data-card href="IERC7786GatewaySource-sendMessage-bytes-bytes-bytes---">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Endpoint for creating a new message. If the message requires further (gateway specific) processing before
-it can be sent to the destination chain, then a non-zero `outboxId` must be returned. Otherwise, the
-message MUST be sent and this function must return 0.
-
-* MUST emit a [`IERC7786GatewaySource.MessageSent`](#IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---) event.
-
-If any of the `attributes` is not supported, this function SHOULD revert with an [`IERC7786GatewaySource.UnsupportedAttribute`](#IERC7786GatewaySource-UnsupportedAttribute-bytes4-) error.
-Other errors SHOULD revert with errors not specified in ERC-7786.
-
-</div>
-</div>
-
-<a id="IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">MessageSent(bytes32 indexed sendId, bytes sender, bytes receiver, bytes payload, uint256 value, bytes[] attributes)</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">event</p>
-<a className="peer" data-card href="IERC7786GatewaySource-MessageSent-bytes32-bytes-bytes-bytes-uint256-bytes---">#</a>
-</div>
-</div>
-
-<div className="px-4">
-
-Event emitted when a message is created. If `outboxId` is zero, no further processing is necessary. If
-`outboxId` is not zero, then further (gateway specific, and non-standardized) action is required.
-
-</div>
-</div>
-
-<a id="IERC7786GatewaySource-UnsupportedAttribute-bytes4-"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">UnsupportedAttribute(bytes4 selector)</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">error</p>
-<a className="peer" data-card href="IERC7786GatewaySource-UnsupportedAttribute-bytes4-">#</a>
-</div>
-</div>
-<div className="px-4">
-
-This error is thrown when a message creation fails because of an unsupported attribute being specified.
-
-</div>
-</div>
-
-<a id="IERC7786Receiver"></a>
-
-<div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
-
-## `IERC7786Receiver` 
-
-<a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/interfaces/draft-IERC7786.sol">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-</a>
-
-</div>
-
-```solidity
-import "@openzeppelin/contracts/interfaces/draft-IERC7786.sol";
-```
-
-Interface for the ERC-7786 client contract (receiver).
-
-See ERC-7786 for more details
-
-<div className="bg-secondary p-4 rounded-md mb-6">
-<h3 style={{ marginTop: "0"}}>Functions</h3>
-<div className="font-mono">
-- [executeMessage(receiveId, sender, payload, attributes)](#IERC7786Receiver-executeMessage-bytes32-bytes-bytes-bytes---)
-</div>
-</div>
-
-<a id="IERC7786Receiver-executeMessage-bytes32-bytes-bytes-bytes---"></a>
-
-<div className="border rounded-md mb-4">
-<div className="bg-secondary flex w-full justify-between px-4">
-<p className="font-bold text-sm font-mono">executeMessage(bytes32 receiveId, bytes sender, bytes payload, bytes[] attributes) → bytes4</p>
-<div className="flex flex-row items-center gap-2">
-<p className="font-light text-sm">external</p>
-<a className="peer" data-card href="IERC7786Receiver-executeMessage-bytes32-bytes-bytes-bytes---">#</a>
-</div>
-</div>
-<div className="px-4">
-
-Endpoint for receiving cross-chain message.
-
-This function may be called directly by the gateway.
 
 </div>
 </div>
@@ -4824,7 +4686,7 @@ import "@openzeppelin/contracts/interfaces/draft-IERC7802.sol";
 <div className="font-mono">
 - [crosschainMint(_to, _amount)](#IERC7802-crosschainMint-address-uint256-)
 - [crosschainBurn(_from, _amount)](#IERC7802-crosschainBurn-address-uint256-)
-#### IERC165
+#### IERC165 [!toc]
 - [supportsInterface(interfaceId)](#IERC165-supportsInterface-bytes4-)
 </div>
 </div>
@@ -4834,7 +4696,7 @@ import "@openzeppelin/contracts/interfaces/draft-IERC7802.sol";
 <div className="font-mono">
 - [CrosschainMint(to, amount, sender)](#IERC7802-CrosschainMint-address-uint256-address-)
 - [CrosschainBurn(from, amount, sender)](#IERC7802-CrosschainBurn-address-uint256-address-)
-#### IERC165
+#### IERC165 [!toc]
 </div>
 </div>
 

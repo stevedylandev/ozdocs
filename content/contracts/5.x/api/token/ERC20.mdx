@@ -6,7 +6,7 @@ description: "Smart contract ERC20 utilities and implementations"
 This set of interfaces, contracts, and utilities are all related to the [ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
 
 <Callout>
-For an overview of ERC-20 tokens and a walk through on how to create a token contract read our [ERC-20 guide](ROOT:erc20).
+For an overview of ERC-20 tokens and a walk through on how to create a token contract read our [ERC-20 guide](../../erc20).
 </Callout>
 
 There are a few core contracts that implement the behavior specified in the ERC-20 standard:
@@ -85,7 +85,7 @@ This core set of contracts is designed to be unopinionated, allowing developers 
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20`
+## `ERC20` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/ERC20.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -102,9 +102,11 @@ Implementation of the [`IERC20`](#IERC20) interface.
 This implementation is agnostic to the way tokens are created. This means
 that a supply mechanism has to be added in a derived contract using [`ERC1155._mint`](ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-).
 
-TIP: For a detailed writeup see our guide
+<Callout>
+For a detailed writeup see our guide
 [How
 to implement supply mechanisms](https://forum.openzeppelin.com/t/how-to-implement-erc20-supply-mechanisms/226).
+</Callout>
 
 The default value of [`IERC6909Metadata.decimals`](../interfaces#IERC6909Metadata-decimals-uint256-) is 18. To change this, you should override
 this function so it returns a different value.
@@ -134,18 +136,18 @@ applications.
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -154,15 +156,15 @@ applications.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IERC20Errors
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -240,9 +242,11 @@ Tokens usually opt for a value of 18, imitating the relationship between
 Ether and Wei. This is the default value returned by this function, unless
 it's overridden.
 
-NOTE: This information is only used for _display_ purposes: it in
+<Callout>
+This information is only used for _display_ purposes: it in
 no way affects any of the arithmetic of the contract, including
 [`IERC20.balanceOf`](#IERC20-balanceOf-address-) and [`IERC20.transfer`](#IERC20-transfer-address-uint256-).
+</Callout>
 
 </div>
 </div>
@@ -338,8 +342,10 @@ This value changes when [`IERC6909.approve`](../interfaces#IERC6909-approve-addr
 
 See [`IERC20.approve`](#IERC20-approve-address-uint256-).
 
-NOTE: If `value` is the maximum `uint256`, the allowance is not updated on
+<Callout>
+If `value` is the maximum `uint256`, the allowance is not updated on
 `transferFrom`. This is semantically equivalent to an infinite approval.
+</Callout>
 
 Requirements:
 
@@ -365,8 +371,10 @@ See [`IERC20.transferFrom`](#IERC20-transferFrom-address-address-uint256-).
 Skips emitting an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event indicating an allowance update. This is not
 required by the ERC. See [_approve](#ERC20-_approve-address-address-uint256-bool-).
 
-NOTE: Does not update the allowance if the current allowance
+<Callout>
+Does not update the allowance if the current allowance
 is the maximum `uint256`.
+</Callout>
 
 Requirements:
 
@@ -397,7 +405,9 @@ e.g. implement automatic token fees, slashing mechanisms, etc.
 
 Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+<Callout>
+This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+</Callout>
 
 </div>
 </div>
@@ -440,7 +450,9 @@ Relies on the `_update` mechanism
 
 Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event with `from` set to the zero address.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+<Callout>
+This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead.
+</Callout>
 
 </div>
 </div>
@@ -462,7 +474,9 @@ Relies on the `_update` mechanism.
 
 Emits a [`IERC6909.Transfer`](../interfaces#IERC6909-Transfer-address-address-address-uint256-uint256-) event with `to` set to the zero address.
 
-NOTE: This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead
+<Callout>
+This function is not virtual, [`ERC1155._update`](ERC1155#ERC1155-_update-address-address-uint256---uint256---) should be overridden instead
+</Callout>
 
 </div>
 </div>
@@ -554,7 +568,7 @@ Does not emit an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-a
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC20`
+## `IERC20` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/IERC20.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -683,12 +697,12 @@ Returns a boolean value indicating whether the operation succeeded.
 
 <Callout type="warn">
 Beware that changing an allowance with this method brings the risk
-</Callout>
 that someone may use both the old and the new allowance by unfortunate
 transaction ordering. One possible solution to mitigate this race
 condition is to first reduce the spender's allowance to 0 and set the
 desired value afterwards:
 https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+</Callout>
 
 Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
 
@@ -761,7 +775,7 @@ a call to [`IERC6909.approve`](../interfaces#IERC6909-approve-address-uint256-ui
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC1363`
+## `ERC1363` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC1363.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -789,10 +803,10 @@ _Available since v5.1._
 - [transferFromAndCall(from, to, value, data)](#ERC1363-transferFromAndCall-address-address-uint256-bytes-)
 - [approveAndCall(spender, value)](#ERC1363-approveAndCall-address-uint256-)
 - [approveAndCall(spender, value, data)](#ERC1363-approveAndCall-address-uint256-bytes-)
-#### IERC1363
-#### ERC165
-#### IERC165
-#### ERC20
+#### IERC1363 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -809,22 +823,22 @@ _Available since v5.1._
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC1363
-#### ERC165
-#### IERC165
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC1363 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -836,19 +850,19 @@ _Available since v5.1._
 - [ERC1363TransferFailed(receiver, value)](#ERC1363-ERC1363TransferFailed-address-uint256-)
 - [ERC1363TransferFromFailed(sender, receiver, value)](#ERC1363-ERC1363TransferFromFailed-address-address-uint256-)
 - [ERC1363ApproveFailed(spender, value)](#ERC1363-ERC1363ApproveFailed-address-uint256-)
-#### IERC1363
-#### ERC165
-#### IERC165
-#### ERC20
-#### IERC20Errors
+#### IERC1363 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -1061,7 +1075,7 @@ Indicates a failure within the [`IERC6909.approve`](../interfaces#IERC6909-appro
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20Burnable`
+## `ERC20Burnable` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Burnable.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1082,7 +1096,7 @@ recognized off-chain (via event analysis).
 <div className="font-mono">
 - [burn(value)](#ERC20Burnable-burn-uint256-)
 - [burnFrom(account, value)](#ERC20Burnable-burnFrom-address-uint256-)
-#### ERC20
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -1099,19 +1113,19 @@ recognized off-chain (via event analysis).
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -1120,16 +1134,16 @@ recognized off-chain (via event analysis).
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### ERC20
-#### IERC20Errors
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -1181,7 +1195,7 @@ Requirements:
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20Capped`
+## `ERC20Capped` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Capped.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1201,7 +1215,7 @@ Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 - [constructor(cap_)](#ERC20Capped-constructor-uint256-)
 - [cap()](#ERC20Capped-cap--)
 - [_update(from, to, value)](#ERC20Capped-_update-address-address-uint256-)
-#### ERC20
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -1217,19 +1231,19 @@ Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -1240,16 +1254,16 @@ Extension of [`ERC20`](#ERC20) that adds a cap to the supply of tokens.
 <div className="font-mono">
 - [ERC20ExceededCap(increasedSupply, cap)](#ERC20Capped-ERC20ExceededCap-uint256-uint256-)
 - [ERC20InvalidCap(cap)](#ERC20Capped-ERC20InvalidCap-uint256-)
-#### ERC20
-#### IERC20Errors
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -1347,7 +1361,7 @@ The supplied cap is not a valid cap.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20FlashMint`
+## `ERC20FlashMint` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20FlashMint.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1365,9 +1379,11 @@ Implementation of the ERC-3156 Flash loans extension, as defined in
 Adds the [`IERC3156FlashLender.flashLoan`](../interfaces#IERC3156FlashLender-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-) method, which provides flash loan support at the token
 level. By default there is no fee, but this can be changed by overriding [`IERC3156FlashLender.flashFee`](../interfaces#IERC3156FlashLender-flashFee-address-uint256-).
 
-NOTE: When this extension is used along with the [`ERC20Capped`](#ERC20Capped) or [`ERC20Votes`](#ERC20Votes) extensions,
+<Callout>
+When this extension is used along with the [`ERC20Capped`](#ERC20Capped) or [`ERC20Votes`](#ERC20Votes) extensions,
 [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLender-maxFlashLoan-address-) will not correctly reflect the maximum that can be flash minted. We recommend
 overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLender-maxFlashLoan-address-) so that it correctly reflects the supply cap.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -1377,8 +1393,8 @@ overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLende
 - [_flashFee(token, value)](#ERC20FlashMint-_flashFee-address-uint256-)
 - [_flashFeeReceiver()](#ERC20FlashMint-_flashFeeReceiver--)
 - [flashLoan(receiver, token, value, data)](#ERC20FlashMint-flashLoan-contract-IERC3156FlashBorrower-address-uint256-bytes-)
-#### IERC3156FlashLender
-#### ERC20
+#### IERC3156FlashLender [!toc]
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -1395,20 +1411,20 @@ overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLende
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC3156FlashLender
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC3156FlashLender [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -1420,17 +1436,17 @@ overriding [`IERC3156FlashLender.maxFlashLoan`](../interfaces#IERC3156FlashLende
 - [ERC3156UnsupportedToken(token)](#ERC20FlashMint-ERC3156UnsupportedToken-address-)
 - [ERC3156ExceededMaxLoan(maxLoan)](#ERC20FlashMint-ERC3156ExceededMaxLoan-uint256-)
 - [ERC3156InvalidReceiver(receiver)](#ERC20FlashMint-ERC3156InvalidReceiver-address-)
-#### IERC3156FlashLender
-#### ERC20
-#### IERC20Errors
+#### IERC3156FlashLender [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -1584,7 +1600,7 @@ The receiver of a flashloan is not a valid [`IERC3156FlashBorrower.onFlashLoan`]
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20Pausable`
+## `ERC20Pausable` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Pausable.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1604,23 +1620,23 @@ event of a large bug.
 
 <Callout type="warn">
 This contract does not include public pause and unpause functions. In
-</Callout>
 addition to inheriting this contract, you must define both functions, invoking the
 [`Pausable._pause`](../utils#Pausable-_pause--) and [`Pausable._unpause`](../utils#Pausable-_unpause--) internal functions, with appropriate
 access control, e.g. using [`AccessControl`](../access#AccessControl) or [`Ownable`](../access#Ownable). Not doing so will
 make the contract pause mechanism of the contract unreachable, and thus unusable.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
 - [_update(from, to, value)](#ERC20Pausable-_update-address-address-uint256-)
-#### Pausable
+#### Pausable [!toc]
 - [paused()](#Pausable-paused--)
 - [_requireNotPaused()](#Pausable-_requireNotPaused--)
 - [_requirePaused()](#Pausable-_requirePaused--)
 - [_pause()](#Pausable-_pause--)
 - [_unpause()](#Pausable-_unpause--)
-#### ERC20
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -1636,22 +1652,22 @@ make the contract pause mechanism of the contract unreachable, and thus unusable
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### Pausable
+#### Pausable [!toc]
 - [Paused(account)](#Pausable-Paused-address-)
 - [Unpaused(account)](#Pausable-Unpaused-address-)
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -1660,19 +1676,19 @@ make the contract pause mechanism of the contract unreachable, and thus unusable
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### Pausable
+#### Pausable [!toc]
 - [EnforcedPause()](#Pausable-EnforcedPause--)
 - [ExpectedPause()](#Pausable-ExpectedPause--)
-#### ERC20
-#### IERC20Errors
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -1701,7 +1717,7 @@ Requirements:
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20Permit`
+## `ERC20Permit` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Permit.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1727,18 +1743,18 @@ need to send a transaction, and thus is not required to hold Ether at all.
 - [permit(owner, spender, value, deadline, v, r, s)](#ERC20Permit-permit-address-address-uint256-uint256-uint8-bytes32-bytes32-)
 - [nonces(owner)](#ERC20Permit-nonces-address-)
 - [DOMAIN_SEPARATOR()](#ERC20Permit-DOMAIN_SEPARATOR--)
-#### Nonces
+#### Nonces [!toc]
 - [_useNonce(owner)](#Nonces-_useNonce-address-)
 - [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
-#### EIP712
+#### EIP712 [!toc]
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
 - [_EIP712Name()](#EIP712-_EIP712Name--)
 - [_EIP712Version()](#EIP712-_EIP712Version--)
-#### IERC5267
-#### IERC20Permit
-#### ERC20
+#### IERC5267 [!toc]
+#### IERC20Permit [!toc]
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -1755,24 +1771,24 @@ need to send a transaction, and thus is not required to hold Ether at all.
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### Nonces
-#### EIP712
-#### IERC5267
+#### Nonces [!toc]
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-#### IERC20Permit
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Permit [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -1783,21 +1799,21 @@ need to send a transaction, and thus is not required to hold Ether at all.
 <div className="font-mono">
 - [ERC2612ExpiredSignature(deadline)](#ERC20Permit-ERC2612ExpiredSignature-uint256-)
 - [ERC2612InvalidSigner(signer, owner)](#ERC20Permit-ERC2612InvalidSigner-address-address-)
-#### Nonces
+#### Nonces [!toc]
 - [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
-#### EIP712
-#### IERC5267
-#### IERC20Permit
-#### ERC20
-#### IERC20Errors
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
+#### IERC20Permit [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -1837,8 +1853,8 @@ given ``owner``'s signed approval.
 
 <Callout type="warn">
 The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
-</Callout>
 ordering also apply here.
+</Callout>
 
 Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
 
@@ -1935,7 +1951,7 @@ Mismatched signature.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20Votes`
+## `ERC20Votes` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Votes.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1950,7 +1966,9 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 Extension of ERC-20 to support Compound-like voting and delegation. This version is more generic than Compound's,
 and supports token supply up to 2^208^ - 1, while COMP is limited to 2^96^ - 1.
 
-NOTE: This contract does not provide interface compatibility with Compound's COMP token.
+<Callout>
+This contract does not provide interface compatibility with Compound's COMP token.
+</Callout>
 
 This extension keeps a history (checkpoints) of each account's vote power. Vote power can be delegated either
 by calling the [`Votes.delegate`](../governance#Votes-delegate-address-) function directly, or by providing a signature to be used with [`Votes.delegateBySig`](../governance#Votes-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-). Voting
@@ -1967,7 +1985,7 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 - [_getVotingUnits(account)](#ERC20Votes-_getVotingUnits-address-)
 - [numCheckpoints(account)](#ERC20Votes-numCheckpoints-address-)
 - [checkpoints(account, pos)](#ERC20Votes-checkpoints-address-uint32-)
-#### Votes
+#### Votes [!toc]
 - [clock()](#Votes-clock--)
 - [CLOCK_MODE()](#Votes-CLOCK_MODE--)
 - [_validateTimepoint(timepoint)](#Votes-_validateTimepoint-uint256-)
@@ -1983,21 +2001,21 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 - [_moveDelegateVotes(from, to, amount)](#Votes-_moveDelegateVotes-address-address-uint256-)
 - [_numCheckpoints(account)](#Votes-_numCheckpoints-address-)
 - [_checkpoints(account, pos)](#Votes-_checkpoints-address-uint32-)
-#### IERC5805
-#### IVotes
-#### IERC6372
-#### Nonces
+#### IERC5805 [!toc]
+#### IVotes [!toc]
+#### IERC6372 [!toc]
+#### Nonces [!toc]
 - [nonces(owner)](#Nonces-nonces-address-)
 - [_useNonce(owner)](#Nonces-_useNonce-address-)
 - [_useCheckedNonce(owner, nonce)](#Nonces-_useCheckedNonce-address-uint256-)
-#### EIP712
+#### EIP712 [!toc]
 - [_domainSeparatorV4()](#EIP712-_domainSeparatorV4--)
 - [_hashTypedDataV4(structHash)](#EIP712-_hashTypedDataV4-bytes32-)
 - [eip712Domain()](#EIP712-eip712Domain--)
 - [_EIP712Name()](#EIP712-_EIP712Name--)
 - [_EIP712Version()](#EIP712-_EIP712Version--)
-#### IERC5267
-#### ERC20
+#### IERC5267 [!toc]
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -2013,29 +2031,29 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### Votes
-#### IERC5805
-#### IVotes
+#### Votes [!toc]
+#### IERC5805 [!toc]
+#### IVotes [!toc]
 - [DelegateChanged(delegator, fromDelegate, toDelegate)](#IVotes-DelegateChanged-address-address-address-)
 - [DelegateVotesChanged(delegate, previousVotes, newVotes)](#IVotes-DelegateVotesChanged-address-uint256-uint256-)
-#### IERC6372
-#### Nonces
-#### EIP712
-#### IERC5267
+#### IERC6372 [!toc]
+#### Nonces [!toc]
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
 - [EIP712DomainChanged()](#IERC5267-EIP712DomainChanged--)
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -2045,27 +2063,27 @@ requires users to delegate to themselves in order to activate checkpoints and ha
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [ERC20ExceededSafeSupply(increasedSupply, cap)](#ERC20Votes-ERC20ExceededSafeSupply-uint256-uint256-)
-#### Votes
+#### Votes [!toc]
 - [ERC6372InconsistentClock()](#Votes-ERC6372InconsistentClock--)
 - [ERC5805FutureLookup(timepoint, clock)](#Votes-ERC5805FutureLookup-uint256-uint48-)
-#### IERC5805
-#### IVotes
+#### IERC5805 [!toc]
+#### IVotes [!toc]
 - [VotesExpiredSignature(expiry)](#IVotes-VotesExpiredSignature-uint256-)
-#### IERC6372
-#### Nonces
+#### IERC6372 [!toc]
+#### Nonces [!toc]
 - [InvalidAccountNonce(account, currentNonce)](#Nonces-InvalidAccountNonce-address-uint256-)
-#### EIP712
-#### IERC5267
-#### ERC20
-#### IERC20Errors
+#### EIP712 [!toc]
+#### IERC5267 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -2128,8 +2146,8 @@ Returns the voting units of an `account`.
 
 <Callout type="warn">
 Overriding this function may compromise the internal vote accounting.
-</Callout>
 `ERC20Votes` assumes tokens map to voting units 1:1 and this is not easy to change.
+</Callout>
 
 </div>
 </div>
@@ -2189,7 +2207,7 @@ Total supply cap has been exceeded, introducing a risk of votes overflowing.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20Wrapper`
+## `ERC20Wrapper` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC20Wrapper.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -2209,10 +2227,10 @@ wrapping of an existing "basic" ERC-20 into a governance token.
 
 <Callout type="warn">
 Any mechanism in which the underlying token changes the [`IERC777.balanceOf`](../interfaces#IERC777-balanceOf-address-) of an account without an explicit transfer
-</Callout>
 may desynchronize this contract's supply and its underlying balance. Please exercise caution when wrapping tokens that
 may undercollateralize the wrapper (i.e. wrapper's total supply is higher than its underlying balance). See [`ERC20Wrapper._recover`](#ERC20Wrapper-_recover-address-)
 for recovering value accrued to the wrapper.
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2223,7 +2241,7 @@ for recovering value accrued to the wrapper.
 - [depositFor(account, value)](#ERC20Wrapper-depositFor-address-uint256-)
 - [withdrawTo(account, value)](#ERC20Wrapper-withdrawTo-address-uint256-)
 - [_recover(account)](#ERC20Wrapper-_recover-address-)
-#### ERC20
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [totalSupply()](#ERC20-totalSupply--)
@@ -2239,19 +2257,19 @@ for recovering value accrued to the wrapper.
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -2261,16 +2279,16 @@ for recovering value accrued to the wrapper.
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 - [ERC20InvalidUnderlying(token)](#ERC20Wrapper-ERC20InvalidUnderlying-address-)
-#### ERC20
-#### IERC20Errors
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -2394,7 +2412,7 @@ The underlying token couldn't be wrapped.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC4626`
+## `ERC4626` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/ERC4626.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -2414,8 +2432,7 @@ underlying "assets" through standardized [`IERC4626.deposit`](../interfaces#IERC
 the ERC-20 standard. Any additional extensions included along it would affect the "shares" token represented by this
 contract and not the "assets" token which is an independent contract.
 
-[CAUTION]
-====
+<Callout type="warn">
 In empty (or nearly empty) ERC-4626 vaults, deposits are at high risk of being stolen through frontrunning
 with a "donation" to the vault that inflates the price of a share. This is variously known as a donation or inflation
 attack and is essentially a problem of slippage. Vault deployers can protect against this attack by making an initial
@@ -2431,7 +2448,7 @@ itself determines the initial exchange rate. While not fully preventing the atta
 offset (0) makes it non-profitable even if an attacker is able to capture value from multiple user deposits, as a result
 of the value being captured by the virtual shares (out of the attacker's donation) matching the attacker's expected gains.
 With a larger offset, the attack becomes orders of magnitude more expensive than it is profitable. More details about the
-underlying math can be found xref:ROOT:erc4626#inflation-attack[here].
+underlying math can be found [here](../../erc4626#security-concern-inflation-attack).
 
 The drawback of this approach is that the virtual shares do capture (a very small) part of the value being accrued
 to the vault. Also, if the vault experiences losses, the users try to exit the vault, the virtual shares and assets
@@ -2439,8 +2456,8 @@ will cause the first user to exit to experience reduced losses in detriment to t
 bigger losses. Developers willing to revert back to the pre-v4.9 behavior just need to override the
 `_convertToShares` and `_convertToAssets` functions.
 
-To learn more, check out our xref:ROOT:erc4626[ERC-4626 guide].
-====
+To learn more, check out our [ERC-4626 guide](../../erc4626).
+</Callout>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
@@ -2468,8 +2485,8 @@ To learn more, check out our xref:ROOT:erc4626[ERC-4626 guide].
 - [_deposit(caller, receiver, assets, shares)](#ERC4626-_deposit-address-address-uint256-uint256-)
 - [_withdraw(caller, receiver, owner, assets, shares)](#ERC4626-_withdraw-address-address-address-uint256-uint256-)
 - [_decimalsOffset()](#ERC4626-_decimalsOffset--)
-#### IERC4626
-#### ERC20
+#### IERC4626 [!toc]
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [totalSupply()](#ERC20-totalSupply--)
@@ -2485,22 +2502,22 @@ To learn more, check out our xref:ROOT:erc4626[ERC-4626 guide].
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC4626
+#### IERC4626 [!toc]
 - [Deposit(sender, owner, assets, shares)](#IERC4626-Deposit-address-address-uint256-uint256-)
 - [Withdraw(sender, receiver, owner, assets, shares)](#IERC4626-Withdraw-address-address-address-uint256-uint256-)
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -2513,17 +2530,17 @@ To learn more, check out our xref:ROOT:erc4626[ERC-4626 guide].
 - [ERC4626ExceededMaxMint(receiver, shares, max)](#ERC4626-ERC4626ExceededMaxMint-address-uint256-uint256-)
 - [ERC4626ExceededMaxWithdraw(owner, assets, max)](#ERC4626-ERC4626ExceededMaxWithdraw-address-uint256-uint256-)
 - [ERC4626ExceededMaxRedeem(owner, shares, max)](#ERC4626-ERC4626ExceededMaxRedeem-address-uint256-uint256-)
-#### IERC4626
-#### ERC20
-#### IERC20Errors
+#### IERC4626 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -2626,9 +2643,11 @@ scenario where all the conditions are met.
 - MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
 - MUST NOT revert.
 
-NOTE: This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
+<Callout>
+This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -2653,9 +2672,11 @@ scenario where all the conditions are met.
 - MUST NOT reflect slippage or other on-chain conditions, when performing the actual exchange.
 - MUST NOT revert.
 
-NOTE: This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
+<Callout>
+This calculation MAY NOT reflect the “per-user” price-per-share, and instead should reflect the
 “average-user’s” price-per-share, meaning what the average user should expect to see when exchanging to and
 from.
+</Callout>
 
 </div>
 </div>
@@ -2768,8 +2789,10 @@ current on-chain conditions.
 - MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToShares and previewDeposit SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -2797,8 +2820,10 @@ current on-chain conditions.
 - MUST be inclusive of deposit fees. Integrators should be aware of the existence of deposit fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToAssets and previewMint SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by minting.
+</Callout>
 
 </div>
 </div>
@@ -2827,8 +2852,10 @@ given current on-chain conditions.
 - MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToShares and previewWithdraw SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by depositing.
+</Callout>
 
 </div>
 </div>
@@ -2856,8 +2883,10 @@ given current on-chain conditions.
 - MUST be inclusive of withdrawal fees. Integrators should be aware of the existence of withdrawal fees.
 - MUST NOT revert.
 
-NOTE: any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
+<Callout>
+any unfavorable discrepancy between convertToAssets and previewRedeem SHOULD be considered slippage in
 share price or some other type of condition, meaning the depositor will lose assets by redeeming.
+</Callout>
 
 </div>
 </div>
@@ -2882,7 +2911,9 @@ Mints shares Vault shares to receiver by depositing exactly amount of underlying
 - MUST revert if all of assets cannot be deposited (due to deposit limit being reached, slippage, the user not
   approving enough underlying tokens to the Vault contract, etc).
 
-NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+<Callout>
+most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+</Callout>
 
 </div>
 </div>
@@ -2907,7 +2938,9 @@ Mints exactly shares Vault shares to receiver by depositing amount of underlying
 - MUST revert if all of shares cannot be minted (due to deposit limit being reached, slippage, the user not
   approving enough underlying tokens to the Vault contract, etc).
 
-NOTE: most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+<Callout>
+most implementations will require pre-approval of the Vault with the Vault’s underlying asset token.
+</Callout>
 
 </div>
 </div>
@@ -2958,8 +2991,10 @@ Burns exactly shares from owner and sends assets of underlying tokens to receive
 - MUST revert if all of shares cannot be redeemed (due to withdrawal limit being reached, slippage, the owner
   not having enough shares, etc).
 
-NOTE: some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
+<Callout>
+some implementations will require pre-requesting to the Vault before a withdrawal may be performed.
 Those methods should be performed separately.
+</Callout>
 
 </div>
 </div>
@@ -3119,7 +3154,7 @@ Attempted to redeem more shares than the max amount for `receiver`.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC20Metadata`
+## `IERC20Metadata` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/IERC20Metadata.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -3139,7 +3174,7 @@ Interface for the optional metadata functions from the ERC-20 standard.
 - [name()](#IERC20Metadata-name--)
 - [symbol()](#IERC20Metadata-symbol--)
 - [decimals()](#IERC20Metadata-decimals--)
-#### IERC20
+#### IERC20 [!toc]
 - [totalSupply()](#IERC20-totalSupply--)
 - [balanceOf(account)](#IERC20-balanceOf-address-)
 - [transfer(to, value)](#IERC20-transfer-address-uint256-)
@@ -3152,7 +3187,7 @@ Interface for the optional metadata functions from the ERC-20 standard.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC20
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -3213,7 +3248,7 @@ Returns the decimals places of the token.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC20Permit`
+## `IERC20Permit` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/IERC20Permit.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -3286,8 +3321,8 @@ given ``owner``'s signed approval.
 
 <Callout type="warn">
 The same issues [`IERC20.approve`](#IERC20-approve-address-uint256-) has related to transaction
-</Callout>
 ordering also apply here.
+</Callout>
 
 Emits an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-address-uint256-uint256-) event.
 
@@ -3350,7 +3385,7 @@ Returns the domain separator used in the encoding of the signature for [`ERC20Pe
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20Bridgeable`
+## `ERC20Bridgeable` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/draft-ERC20Bridgeable.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -3379,10 +3414,10 @@ ERC20 extension that implements the standard token interface according to
 - [crosschainMint(to, value)](#ERC20Bridgeable-crosschainMint-address-uint256-)
 - [crosschainBurn(from, value)](#ERC20Bridgeable-crosschainBurn-address-uint256-)
 - [_checkTokenBridge(caller)](#ERC20Bridgeable-_checkTokenBridge-address-)
-#### IERC7802
-#### ERC165
-#### IERC165
-#### ERC20
+#### IERC7802 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -3399,24 +3434,24 @@ ERC20 extension that implements the standard token interface according to
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC7802
+#### IERC7802 [!toc]
 - [CrosschainMint(to, amount, sender)](#IERC7802-CrosschainMint-address-uint256-address-)
 - [CrosschainBurn(from, amount, sender)](#IERC7802-CrosschainBurn-address-uint256-address-)
-#### ERC165
-#### IERC165
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -3425,19 +3460,19 @@ ERC20 extension that implements the standard token interface according to
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IERC7802
-#### ERC165
-#### IERC165
-#### ERC20
-#### IERC20Errors
+#### IERC7802 [!toc]
+#### ERC165 [!toc]
+#### IERC165 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -3539,7 +3574,7 @@ customizing the list of allowed senders. Consider using [`AccessControl`](../acc
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC20TemporaryApproval`
+## `ERC20TemporaryApproval` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/extensions/draft-ERC20TemporaryApproval.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -3567,8 +3602,8 @@ _Available since v5.1._
 - [temporaryApprove(spender, value)](#ERC20TemporaryApproval-temporaryApprove-address-uint256-)
 - [_temporaryApprove(owner, spender, value)](#ERC20TemporaryApproval-_temporaryApprove-address-address-uint256-)
 - [_spendAllowance(owner, spender, value)](#ERC20TemporaryApproval-_spendAllowance-address-address-uint256-)
-#### IERC7674
-#### ERC20
+#### IERC7674 [!toc]
+#### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
@@ -3583,20 +3618,20 @@ _Available since v5.1._
 - [_burn(account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-#### IERC7674
-#### ERC20
-#### IERC20Errors
-#### IERC20Metadata
-#### IERC20
+#### IERC7674 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 - [Transfer(from, to, value)](#IERC20-Transfer-address-address-uint256-)
 - [Approval(owner, spender, value)](#IERC20-Approval-address-address-uint256-)
 </div>
@@ -3605,17 +3640,17 @@ _Available since v5.1._
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-#### IERC7674
-#### ERC20
-#### IERC20Errors
+#### IERC7674 [!toc]
+#### ERC20 [!toc]
+#### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
 - [ERC20InvalidSender(sender)](#IERC20Errors-ERC20InvalidSender-address-)
 - [ERC20InvalidReceiver(receiver)](#IERC20Errors-ERC20InvalidReceiver-address-)
 - [ERC20InsufficientAllowance(spender, allowance, needed)](#IERC20Errors-ERC20InsufficientAllowance-address-uint256-uint256-)
 - [ERC20InvalidApprover(approver)](#IERC20Errors-ERC20InvalidApprover-address-)
 - [ERC20InvalidSpender(spender)](#IERC20Errors-ERC20InvalidSpender-address-)
-#### IERC20Metadata
-#### IERC20
+#### IERC20Metadata [!toc]
+#### IERC20 [!toc]
 </div>
 </div>
 
@@ -3719,8 +3754,10 @@ Does NOT emit an [`IERC6909.Approval`](../interfaces#IERC6909-Approval-address-a
 
 [`ERC20._spendAllowance`](#ERC20-_spendAllowance-address-address-uint256-) override that consumes the temporary allowance (if any) before eventually falling back
 to consuming the persistent allowance.
-NOTE: This function skips calling `super._spendAllowance` if the temporary allowance
+<Callout>
+This function skips calling `super._spendAllowance` if the temporary allowance
 is enough to cover the spending.
+</Callout>
 
 </div>
 </div>
@@ -3729,7 +3766,7 @@ is enough to cover the spending.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `ERC1363Utils`
+## `ERC1363Utils` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/utils/ERC1363Utils.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -3845,7 +3882,7 @@ Indicates a failure with the token `spender`. Used in approvals.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `SafeERC20`
+## `SafeERC20` 
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.4.0/contracts/token/ERC20/utils/SafeERC20.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -3975,10 +4012,10 @@ non-reverting calls are assumed to be successful.
 
 <Callout type="warn">
 If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-</Callout>
 smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
 this function. Performing a [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) or [`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) operation on a token contract
 that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+</Callout>
 
 </div>
 </div>
@@ -4000,10 +4037,10 @@ value, non-reverting calls are assumed to be successful.
 
 <Callout type="warn">
 If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-</Callout>
 smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
 this function. Performing a [`SafeERC20.safeIncreaseAllowance`](#SafeERC20-safeIncreaseAllowance-contract-IERC20-address-uint256-) or [`SafeERC20.safeDecreaseAllowance`](#SafeERC20-safeDecreaseAllowance-contract-IERC20-address-uint256-) operation on a token contract
 that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+</Callout>
 
 </div>
 </div>
@@ -4024,9 +4061,11 @@ Set the calling contract's allowance toward `spender` to `value`. If `token` ret
 non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval
 to be set to zero before setting it to a non-zero value, such as USDT.
 
-NOTE: If the token implements ERC-7674, this function will not modify any temporary allowance. This function
+<Callout>
+If the token implements ERC-7674, this function will not modify any temporary allowance. This function
 only sets the "standard" allowance. Any temporary allowance will remain active, in addition to the value being
 set here.
+</Callout>
 
 </div>
 </div>
@@ -4089,9 +4128,11 @@ Performs an [`ERC1363`](#ERC1363) approveAndCall, with a fallback to the simple 
 code. This can be used to implement an [`ERC721`](ERC721#ERC721)-like safe transfer that rely on [`ERC1363`](#ERC1363) checks when
 targeting contracts.
 
-NOTE: When the recipient address (`to`) has no code (i.e. is an EOA), this function behaves as [`SafeERC20.forceApprove`](#SafeERC20-forceApprove-contract-IERC20-address-uint256-).
+<Callout>
+When the recipient address (`to`) has no code (i.e. is an EOA), this function behaves as [`SafeERC20.forceApprove`](#SafeERC20-forceApprove-contract-IERC20-address-uint256-).
 Opposedly, when the recipient address (`to`) has code, this function only attempts to call [`ERC1363.approveAndCall`](#ERC1363-approveAndCall-address-uint256-bytes-)
 once without retrying, and relies on the returned value to be true.
+</Callout>
 
 Reverts if the returned value is other than `true`.
 
@@ -4131,3 +4172,4 @@ Indicates a failed `decreaseAllowance` request.
 
 </div>
 </div>
+
