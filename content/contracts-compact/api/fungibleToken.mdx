@@ -20,81 +20,82 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/FungibleToken";
 
 ---
 
-### Ledger [!toc]
+### Ledger [!toc] [#FungibleToken-Ledger]
 
-#### _balances [toc] [#_balances]
-#### [!toc] [#_balances]
+#### _balances [toc] [#FungibleToken-_balances]
+#### [!toc] [#FungibleToken-_balances]
 <APIItemCompact
   circuitSig='_balances: Map<Either<ZswapCoinPublicKey, ContractAddress>, Uint<128>>'
   kind="ledger"
-  id="_balances"
+  id="FungibleToken-_balances"
 >
   Mapping from account addresses to their token balances.
 </APIItemCompact>
 
-#### _allowances [toc] [#_allowances]
-#### [!toc] [#_allowances]
+#### _allowances [toc] [#FungibleToken-_allowances]
+#### [!toc] [#FungibleToken-_allowances]
 <APIItemCompact
   circuitSig='_allowances: Map<Either<ZswapCoinPublicKey, ContractAddress>, Map<Either<ZswapCoinPublicKey, ContractAddress>, Uint<128>>>'
   kind="ledger"
-  id="_allowances"
+  id="FungibleToken-_allowances"
 >
   Mapping from owner accounts to spender accounts and their allowances.
 </APIItemCompact>
 
-#### _totalSupply [toc] [#_totalSupply]
-#### [!toc] [#_totalSupply]
+#### _totalSupply [toc] [#FungibleToken-_totalSupply]
+#### [!toc] [#FungibleToken-_totalSupply]
 <APIItemCompact
   circuitSig='_totalSupply: Uint<128>'
   kind="ledger"
-  id="_totalSupply"
+  id="FungibleToken-_totalSupply"
 >
   The total token supply.
 </APIItemCompact>
 
-#### _name [toc] [#_name]
-#### [!toc] [#_name]
+#### _name [toc] [#FungibleToken-_name]
+#### [!toc] [#FungibleToken-_name]
 <APIItemCompact
   circuitSig='_name: Opaque<"string">'
   kind="sealed ledger"
-  id="_name"
+  id="FungibleToken-_name"
 >
   The immutable token name.
 </APIItemCompact>
 
-#### _symbol [toc] [#_symbol]
-#### [!toc] [#_symbol]
+#### _symbol [toc] [#FungibleToken-_symbol]
+#### [!toc] [#FungibleToken-_symbol]
 <APIItemCompact
   circuitSig='_symbol: Opaque<"string">'
   kind="sealed ledger"
-  id="_symbol"
+  id="FungibleToken-_symbol"
 >
   The immutable token symbol.
 </APIItemCompact>
 
-#### _decimals [toc] [#_decimals]
-#### [!toc] [#_decimals]
+#### _decimals [toc] [#FungibleToken-_decimals]
+#### [!toc] [#FungibleToken-_decimals]
 <APIItemCompact
   circuitSig='_decimals: Uint<8>'
   kind="sealed ledger"
-  id="_decimals"
+  id="FungibleToken-_decimals"
 >
   The immutable token decimals.
 </APIItemCompact>
 
-### Witnesses [!toc]
+### Witnesses [!toc] [#FungibleToken-Witnesses]
 
 None.
 
-### Circuits [!toc]
+### Circuits [!toc] [#FungibleToken-Circuits]
 
-#### initialize [toc] [#initialize]
-#### [!toc] [#initialize]
+#### initialize [toc] [#FungibleToken-initialize]
+#### [!toc] [#FungibleToken-initialize]
 <APIItemCompact
   circuitSig='initialize(name_: Opaque<"string">, symbol_: Opaque<"string">, decimals_: Uint<8>) → []'
   kind="circuit"
   complexity="k=10, rows=71"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
   Initializes the contract by setting the name, symbol, and decimals.
 
@@ -106,12 +107,13 @@ None.
   * Contract is not initialized.
 </APIItemCompact>
 
-#### name [toc] [#name]
-#### [!toc] [#name]
+#### name [toc] [#FungibleToken-name]
+#### [!toc] [#FungibleToken-name]
 <APIItemCompact
   circuitSig='name() → Opaque<"string">'
   kind="circuit"
   complexity="k=10, rows=37"
+  modulePrefix="FungibleToken"
 >
   Returns the token name.
 
@@ -120,12 +122,13 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### symbol [toc] [#symbol]
-#### [!toc] [#symbol]
+#### symbol [toc] [#FungibleToken-symbol]
+#### [!toc] [#FungibleToken-symbol]
 <APIItemCompact
   circuitSig='symbol() → Opaque<"string">'
   kind="circuit"
   complexity="k=10, rows=37"
+  modulePrefix="FungibleToken"
 >
   Returns the symbol of the token.
 
@@ -134,11 +137,13 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### decimals [toc] [#decimals]
+#### decimals [toc] [#FungibleToken-decimals]
+#### [!toc] [#FungibleToken-decimals]
 <APIItemCompact
   circuitSig="decimals() → Uint<8>"
   kind="circuit"
   complexity="k=10, rows=36"
+  modulePrefix="FungibleToken"
 >
   Returns the number of decimals used to get its user representation.
 
@@ -147,12 +152,13 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### totalSupply [toc] [#totalSupply]
-#### [!toc] [#totalSupply]
+#### totalSupply [toc] [#FungibleToken-totalSupply]
+#### [!toc] [#FungibleToken-totalSupply]
 <APIItemCompact
   circuitSig="totalSupply() → Uint<128>"
   kind="circuit"
   complexity="k=10, rows=36"
+  modulePrefix="FungibleToken"
 >
   Returns the value of tokens in existence.
 
@@ -161,12 +167,13 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### balanceOf [toc] [#balanceOf]
-#### [!toc] [#balanceOf]
+#### balanceOf [toc] [#FungibleToken-balanceOf]
+#### [!toc] [#FungibleToken-balanceOf]
 <APIItemCompact
   circuitSig="balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>) → Uint<128>"
   kind="circuit"
   complexity="k=10, rows=310"
+  modulePrefix="FungibleToken"
 >
   Returns the value of tokens owned by `account`.
 
@@ -175,12 +182,13 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### transfer [toc] [#transfer]
-#### [!toc] [#transfer]
+#### transfer [toc] [#FungibleToken-transfer]
+#### [!toc] [#FungibleToken-transfer]
 <APIItemCompact
   circuitSig="transfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
   kind="circuit"
   complexity="k=11, rows=1173"
+  modulePrefix="FungibleToken"
 >
   Moves a `value` amount of tokens from the caller’s account to `to`.
 
@@ -197,14 +205,15 @@ None.
   * The caller has a balance of at least `value`.
 </APIItemCompact>
 
-#### _unsafeTransfer [toc] [#_unsafeTransfer]
-#### [!toc] [#_unsafeTransfer]
+#### _unsafeTransfer [toc] [#FungibleToken-_unsafeTransfer]
+#### [!toc] [#FungibleToken-_unsafeTransfer]
 <APIItemCompact
   circuitSig="_unsafeTransfer(to: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
   kind="circuit"
   complexity="k=11, rows=1170"
+  modulePrefix="FungibleToken"
 >
-  Unsafe variant of [transfer](#transfer) which allows transfers to contract addresses.
+  Unsafe variant of [transfer](#FungibleToken-transfer) which allows transfers to contract addresses.
 
   <Callout type='warn'>
     Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
@@ -219,8 +228,8 @@ None.
   * The caller has a balance of at least `value`.
 </APIItemCompact>
 
-#### allowance [toc] [#allowance]
-#### [!toc] [#allowance]
+#### allowance [toc] [#FungibleToken-allowance]
+#### [!toc] [#FungibleToken-allowance]
 <APIItemCompact
   circuitSig="allowance(
     owner: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -229,21 +238,23 @@ None.
   kind="circuit"
   complexity="k=10, rows=624"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
-  Returns the remaining number of tokens that `spender` will be allowed to spend on behalf of `owner` through [transferFrom](#transferFrom).
-  This value changes when [approve](#approve) or [transferFrom](#transferFrom) are called.
+  Returns the remaining number of tokens that `spender` will be allowed to spend on behalf of `owner` through [transferFrom](#FungibleToken-transferFrom).
+  This value changes when [approve](#FungibleToken-approve) or [transferFrom](#FungibleToken-transferFrom) are called.
 
   Requirements:
 
   * Contract is initialized.
 </APIItemCompact>
 
-#### approve [toc] [#approve]
-#### [!toc] [#approve]
+#### approve [toc] [#FungibleToken-approve]
+#### [!toc] [#FungibleToken-approve]
 <APIItemCompact
   circuitSig="approve(spender: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → Boolean"
   kind="circuit"
   complexity="k=10, rows=452"
+  modulePrefix="FungibleToken"
 >
   Sets a `value` amount of tokens as allowance of `spender` over the caller’s tokens.
 
@@ -253,8 +264,8 @@ None.
   * `spender` is not the zero address.
 </APIItemCompact>
 
-#### transferFrom [toc] [#transferFrom]
-#### [!toc] [#transferFrom]
+#### transferFrom [toc] [#FungibleToken-transferFrom]
+#### [!toc] [#FungibleToken-transferFrom]
 <APIItemCompact
   circuitSig="transferFrom(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -264,6 +275,7 @@ None.
   kind="circuit"
   complexity="k=11, rows=1821"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
   Moves `value` tokens from `from` to `to` using the allowance mechanism.
   `value` is the deducted from the caller’s allowance.
@@ -283,8 +295,8 @@ None.
   * The caller has an allowance of `from`’s tokens of at least `value`.
 </APIItemCompact>
 
-#### _unsafeTransferFrom [toc] [#_unsafeTransferFrom]
-#### [!toc] [#_unsafeTransferFrom]
+#### _unsafeTransferFrom [toc] [#FungibleToken-_unsafeTransferFrom]
+#### [!toc] [#FungibleToken-_unsafeTransferFrom]
 <APIItemCompact
   circuitSig="_unsafeTransferFrom(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -294,8 +306,9 @@ None.
   kind="circuit"
   complexity="k=11, rows=1818"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
-  Unsafe variant of [transferFrom](#transferFrom) which allows transfers to contract addresses.
+  Unsafe variant of [transferFrom](#FungibleToken-transferFrom) which allows transfers to contract addresses.
 
   <Callout type='warn'>
     Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
@@ -312,8 +325,8 @@ None.
   * The caller has an allowance of `from`’s tokens of at least `value`.
 </APIItemCompact>
 
-#### _transfer [toc] [#_transfer]
-#### [!toc] [#_transfer]
+#### _transfer [toc] [#FungibleToken-_transfer]
+#### [!toc] [#FungibleToken-_transfer]
 <APIItemCompact
   circuitSig="_transfer(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -323,9 +336,10 @@ None.
   kind="circuit"
   complexity="k=11, rows=1312"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
   Moves a `value` amount of tokens from `from` to `to`.
-  This circuit is equivalent to [transfer](#transfer), and can be used to e.g.
+  This circuit is equivalent to [transfer](#FungibleToken-transfer), and can be used to e.g.
   implement automatic token fees, slashing mechanisms, etc.
 
   <Callout type='info'>
@@ -342,8 +356,8 @@ None.
   * `to` must not be a ContractAddress.
 </APIItemCompact>
 
-#### _unsafeUncheckedTransfer [toc] [#_unsafeUncheckedTransfer]
-#### [!toc] [#_unsafeUncheckedTransfer]
+#### _unsafeUncheckedTransfer [toc] [#FungibleToken-_unsafeUncheckedTransfer]
+#### [!toc] [#FungibleToken-_unsafeUncheckedTransfer]
 <APIItemCompact
   circuitSig="_unsafeUncheckedTransfer(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -353,8 +367,9 @@ None.
   kind="circuit"
   complexity="k=11, rows=1309"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
-  Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
+  Unsafe variant of [_transfer](#FungibleToken-_transfer) which allows transfers to contract addresses.
 
   <Callout type='warn'>
     Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
@@ -369,8 +384,8 @@ None.
   * `to` is not the zero address.
 </APIItemCompact>
 
-#### _update [toc] [#_update]
-#### [!toc] [#_update]
+#### _update [toc] [#FungibleToken-_update]
+#### [!toc] [#FungibleToken-_update]
 <APIItemCompact
   circuitSig="_update(
     from: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -380,6 +395,7 @@ None.
   kind="internal"
   complexity="k=11, rows=1305"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
   Transfers a `value` amount of tokens from `from` to `to`,
   or alternatively mints (or burns) if `from` (or `to`) is the zero address.
@@ -389,12 +405,13 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### _mint [toc] [#_mint]
-#### [!toc] [#_mint]
+#### _mint [toc] [#FungibleToken-_mint]
+#### [!toc] [#FungibleToken-_mint]
 <APIItemCompact
   circuitSig="_mint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=10, rows=752"
+  modulePrefix="FungibleToken"
 >
   Creates a `value` amount of tokens and assigns them to `account`, by transferring it from the zero address.
   Relies on the `update` mechanism.
@@ -406,14 +423,15 @@ None.
   * `account` is not the zero address.
 </APIItemCompact>
 
-#### _unsafeMint [toc] [#_unsafeMint]
-#### [!toc] [#_unsafeMint]
+#### _unsafeMint [toc] [#FungibleToken-_unsafeMint]
+#### [!toc] [#FungibleToken-_unsafeMint]
 <APIItemCompact
   circuitSig="_unsafeMint(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=10, rows=749"
+  modulePrefix="FungibleToken"
 >
-  Unsafe variant of [_mint](#_mint) which allows transfers to contract addresses.
+  Unsafe variant of [_mint](#FungibleToken-_mint) which allows transfers to contract addresses.
 
   <Callout type='warn'>
     Transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
@@ -427,12 +445,13 @@ None.
   * `account` is not the zero address.
 </APIItemCompact>
 
-#### _burn [toc] [#_burn]
-#### [!toc] [#_burn]
+#### _burn [toc] [#FungibleToken-_burn]
+#### [!toc] [#FungibleToken-_burn]
 <APIItemCompact
   circuitSig="_burn(account: Either<ZswapCoinPublicKey, ContractAddress>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=10, rows=773"
+  modulePrefix="FungibleToken"
 >
   Destroys a `value` amount of tokens from `account`, lowering the total supply.
   Relies on the `_update` mechanism.
@@ -444,8 +463,8 @@ None.
   * `account` must have at least a balance of `value`.
 </APIItemCompact>
 
-#### _approve [toc] [#_approve]
-#### [!toc] [#_approve]
+#### _approve [toc] [#FungibleToken-_approve]
+#### [!toc] [#FungibleToken-_approve]
 <APIItemCompact
   circuitSig="_approve(
     owner: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -455,6 +474,7 @@ None.
   kind="circuit"
   complexity="k=10, rows=583"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
   Sets `value` as the allowance of `spender` over the `owner`’s tokens.
   This circuit is equivalent to `approve`, and can be used to e.g. set automatic allowances for certain subsystems, etc.
@@ -466,8 +486,8 @@ None.
   * `spender` is not the zero address.
 </APIItemCompact>
 
-#### _spendAllowance [toc] [#_spendAllowance]
-#### [!toc] [#_spendAllowance]
+#### _spendAllowance [toc] [#FungibleToken-_spendAllowance]
+#### [!toc] [#FungibleToken-_spendAllowance]
 <APIItemCompact
   circuitSig="_spendAllowance(
     owner: Either<ZswapCoinPublicKey, ContractAddress>,
@@ -477,6 +497,7 @@ None.
   kind="circuit"
   complexity="k=10, rows=931"
   stackParams="true"
+  modulePrefix="FungibleToken"
 >
   Updates `owner`’s allowance for `spender` based on spent `value`.
   Does not update the allowance value in case of infinite allowance.

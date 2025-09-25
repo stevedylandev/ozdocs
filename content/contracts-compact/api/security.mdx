@@ -20,30 +20,31 @@ import "./node-modules/@openzeppelin-compact/contracts/src/security/Initializabl
 
 ---
 
-### Ledger [!toc]
+### Ledger [!toc] [#Initializable-Ledger]
 
-#### _isInitialized [toc] [#_isInitialized]
-#### [!toc] [#_isInitialized]
+#### _isInitialized [toc] [#Initializable-_isInitialized]
+#### [!toc] [#Initializable-_isInitialized]
 <APIItemCompact
   circuitSig='_isInitialized: Boolean'
   kind="ledger"
-  id="_isInitialized"
+  id="Initializable-_isInitialized"
 >
   Boolean indicating if initialized.
 </APIItemCompact>
 
-### Witnesses [!toc]
+### Witnesses [!toc] (#Initializable-Witnesses)
 
 None.
 
-### Circuits [!toc]
+### Circuits [!toc] [#Initializable-Circuits]
 
-#### initialize [toc] [#initialize]
-#### [!toc] [#initialize]
+#### initialize [toc] [#Initializable-initialize]
+#### [!toc] [#Initializable-initialize]
 <APIItemCompact
   circuitSig='initialize() → []'
   kind="circuit"
   complexity="k=10, rows=38"
+  modulePrefix="Initializable"
 >
   Initializes the state thus ensuring the calling circuit can only be called once.
 
@@ -52,12 +53,13 @@ None.
   * Contract must not be initialized.
 </APIItemCompact>
 
-#### assertInitialized [toc] [#assertInitialized]
-#### [!toc] [#assertInitialized]
+#### assertInitialized [toc] [#Initializable-assertInitialized]
+#### [!toc] [#Initializable-assertInitialized]
 <APIItemCompact
   circuitSig='assertInitialized() → []'
   kind="circuit"
   complexity="k=10, rows=31"
+  modulePrefix="Initializable"
 >
   Asserts that the contract has been initialized, throwing an error if not.
 
@@ -66,12 +68,13 @@ None.
   * Contract must not be initialized.
 </APIItemCompact>
 
-#### assertNotInitialized [toc] [#assertNotInitialized]
-#### [!toc] [#assertNotInitialized]
+#### assertNotInitialized [toc] [#Initializable-assertNotInitialized]
+#### [!toc] [#Initializable-assertNotInitialized]
 <APIItemCompact
   circuitSig='assertNotInitialized() → []'
   kind="circuit"
   complexity="k=10, rows=35"
+  modulePrefix="Initializable"
 >
   Asserts that the contract has not been initialized, throwing an error if it has.
 
@@ -90,36 +93,42 @@ None.
 import "./node-modules/@openzeppelin-compact/contracts/src/security/Pausable";
 ```
 
-### Ledger [!toc]
+### Ledger [!toc] [#Pausable-Ledger]
 
-#### _isPaused [toc] [#_isPaused]
-#### [!toc] [#_isPaused]
+#### _isPaused [toc] [#Pausable-_isPaused]
+#### [!toc] [#Pausable-_isPaused]
 <APIItemCompact
   circuitSig='_isPaused: Boolean'
   kind="ledger"
-  id="_isPaused"
+  id="Pausable-_isPaused"
 >
   Boolean indicating if paused.
 </APIItemCompact>
 
-### Circuits [!toc]
+### Witnesses [!toc] [#Pausable-Witnesses]
 
-#### isPaused [toc] [#isPaused]
-#### [!toc] [#isPaused]
+None.
+
+### Circuits [!toc] [#Pausable-Circuits]
+
+#### isPaused [toc] [#Pausable-isPaused]
+#### [!toc] [#Pausable-isPaused]
 <APIItemCompact
   circuitSig='isPaused() → Boolean'
   kind="circuit"
   complexity="k=10, rows=32"
+  modulePrefix="Pausable"
 >
   Returns true if the contract is paused, and false otherwise.
 </APIItemCompact>
 
-#### assertPaused [toc] [#assertPaused]
-#### [!toc] [#assertPaused]
+#### assertPaused [toc] [#Pausable-assertPaused]
+#### [!toc] [#Pausable-assertPaused]
 <APIItemCompact
   circuitSig='assertPaused() → []'
   kind="circuit"
   complexity="k=10, rows=31"
+  modulePrefix="Pausable"
 >
   Makes a circuit only callable when the contract is paused.
 
@@ -128,12 +137,13 @@ import "./node-modules/@openzeppelin-compact/contracts/src/security/Pausable";
   * Contract must be paused.
 </APIItemCompact>
 
-#### assertNotPaused [toc] [#assertNotPaused]
-#### [!toc] [#assertNotPaused]
+#### assertNotPaused [toc] [#Pausable-assertNotPaused]
+#### [!toc] [#Pausable-assertNotPaused]
 <APIItemCompact
   circuitSig='assertNotPaused() → []'
   kind="circuit"
   complexity="k=10, rows=35"
+  modulePrefix="Pausable"
 >
   Makes a circuit only callable when the contract is not paused.
 
@@ -142,12 +152,13 @@ import "./node-modules/@openzeppelin-compact/contracts/src/security/Pausable";
   * Contract must not be paused.
 </APIItemCompact>
 
-#### _pause [toc] [#_pause]
-#### [!toc] [#_pause]
+#### _pause [toc] [#Pausable-_pause]
+#### [!toc] [#Pausable-_pause]
 <APIItemCompact
   circuitSig='_pause() → []'
   kind="circuit"
   complexity="k=10, rows=38"
+  modulePrefix="Pausable"
 >
   Triggers a stopped state.
 
@@ -156,12 +167,13 @@ import "./node-modules/@openzeppelin-compact/contracts/src/security/Pausable";
   * Contract must not be paused.
 </APIItemCompact>
 
-#### _unpause [toc] [#_unpause]
-#### [!toc] [#_unpause]
+#### _unpause [toc] [#Pausable-_unpause]
+#### [!toc] [#Pausable-_unpause]
 <APIItemCompact
   circuitSig='_unpause() → []'
   kind="circuit"
   complexity="k=10, rows=34"
+  modulePrefix="Pausable"
 >
   Lifts the pause on the contract.
 

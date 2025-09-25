@@ -20,50 +20,51 @@ import "./node-modules/@openzeppelin-compact/contracts/src/token/MultiToken";
 
 ---
 
-### Ledger [!toc]
+### Ledger [!toc] [#MultiToken-Ledger]
 
-#### _balances [toc] [#_balances]
-#### [!toc] [#_balances]
+#### _balances [toc] [#MultiToken-_balances]
+#### [!toc] [#MultiToken-_balances]
 <APIItemCompact
   circuitSig='_balances: Map<Uint<128>, Map<Either<ZswapCoinPublicKey, ContractAddress>, Uint<128>>>'
   kind="ledger"
-  id="_balances"
+  id="MultiToken-_balances"
 >
   Mapping from token ID to account balances.
 </APIItemCompact>
 
-#### _operatorApprovals [toc] [#_operatorApprovals]
-#### [!toc] [#_operatorApprovals]
+#### _operatorApprovals [toc] [#MultiToken-_operatorApprovals]
+#### [!toc] [#MultiToken-_operatorApprovals]
 <APIItemCompact
   circuitSig='_operatorApprovals: Map<Either<ZswapCoinPublicKey, ContractAddress>, Map<Either<ZswapCoinPublicKey, ContractAddress>, Boolean>>'
   kind="ledger"
-  id="_operatorApprovals"
+  id="MultiToken-_operatorApprovals"
 >
   Mapping from account to operator approvals.
 </APIItemCompact>
 
-#### _uri [toc] [#_uri]
-#### [!toc] [#_uri]
+#### _uri [toc] [#MultiToken-_uri]
+#### [!toc] [#MultiToken-_uri]
 <APIItemCompact
   circuitSig='_uri: Opaque<"string">'
   kind="ledger"
-  id="_uri"
+  id="MultiToken-_uri"
 >
   Base URI for computing token URIs.
 </APIItemCompact>
 
-### Witnesses [!toc]
+### Witnesses [!toc] [#MultiToken-Witnesses]
 
 None.
 
-### Circuits [!toc]
+### Circuits [!toc] [#MultiToken-Circuits]
 
-#### initialize [toc] [#initialize]
-#### [!toc] [#initialize]
+#### initialize [toc] [#MultiToken-initialize]
+#### [!toc] [#MultiToken-initialize]
 <APIItemCompact
   circuitSig='initialize(uri_: Opaque<"string">) → []'
   kind="circuit"
   complexity="k=10, rows=45"
+  modulePrefix="MultiToken"
 >
   Initializes the contract by setting the base URI for all tokens.
 
@@ -75,12 +76,13 @@ None.
   * Contract is not initialized.
 </APIItemCompact>
 
-#### uri [toc] [#uri]
-#### [!toc] [#uri]
+#### uri [toc] [#MultiToken-uri]
+#### [!toc] [#MultiToken-uri]
 <APIItemCompact
   circuitSig='uri(id: Uint<128>) → Opaque<"string">'
   kind="circuit"
   complexity="k=10, rows=90"
+  modulePrefix="MultiToken"
 >
   This implementation returns the same URI for **all** token types.
   It relies on the token type ID substitution mechanism defined in the EIP: [ERC1155-Metadata](https://eips.ethereum.org/EIPS/eip-1155#metadata).
@@ -91,12 +93,13 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### balanceOf [toc] [#balanceOf]
-#### [!toc] [#balanceOf]
+#### balanceOf [toc] [#MultiToken-balanceOf]
+#### [!toc] [#MultiToken-balanceOf]
 <APIItemCompact
   circuitSig="balanceOf(account: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>) → Uint<128>"
   kind="circuit"
   complexity="k=10, rows=439"
+  modulePrefix="MultiToken"
 >
   Returns the amount of `id` tokens owned by `account`.
 
@@ -105,13 +108,14 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### setApprovalForAll [toc] [#setApprovalForAll]
-#### [!toc] [#setApprovalForAll]
+#### setApprovalForAll [toc] [#MultiToken-setApprovalForAll]
+#### [!toc] [#MultiToken-setApprovalForAll]
 <APIItemCompact
   circuitSig="setApprovalForAll(operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []"
   kind="circuit"
   complexity="k=10, rows=404"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Enables or disables approval for `operator` to manage all of the caller’s assets.
 
@@ -121,13 +125,14 @@ None.
   * `operator` is not the zero address.
 </APIItemCompact>
 
-#### isApprovedForAll [toc] [#isApprovedForAll]
-#### [!toc] [#isApprovedForAll]
+#### isApprovedForAll [toc] [#MultiToken-isApprovedForAll]
+#### [!toc] [#MultiToken-isApprovedForAll]
 <APIItemCompact
   circuitSig="isApprovedForAll(account: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="circuit"
   complexity="k=10, rows=619"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Queries if `operator` is an authorized operator for `owner`.
 
@@ -136,13 +141,14 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### transferFrom [toc] [#transferFrom]
-#### [!toc] [#transferFrom]
+#### transferFrom [toc] [#MultiToken-transferFrom]
+#### [!toc] [#MultiToken-transferFrom]
 <APIItemCompact
   circuitSig="transferFrom( from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=11, rows=1882"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
   The caller must be `from` or approved to transfer on their behalf.
@@ -158,17 +164,18 @@ None.
   * `to` is not a ContractAddress.
   * `to` is not the zero address.
   * `from` is not the zero address.
-  * Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
+  * Caller must be `from` or approved via [setApprovalForAll](#MulitToken-setapprovalforall).
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-#### _transfer [toc] [#_transfer]
-#### [!toc] [#_transfer]
+#### _transfer [toc] [#MultiToken-_transfer]
+#### [!toc] [#MultiToken-_transfer]
 <APIItemCompact
   circuitSig="_transfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>): []"
   kind="circuit"
   complexity="k=11, rows=1487"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Transfers ownership of `value` amount of `id` tokens from `from` to `to`.
   Does not impose restrictions on the caller, making it suitable for composition in higher-level contract logic.
@@ -187,13 +194,14 @@ None.
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-#### _update [toc] [#_update]
-#### [!toc] [#_update]
+#### _update [toc] [#MultiToken-_update]
+#### [!toc] [#MultiToken-_update]
 <APIItemCompact
   circuitSig="_update(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>): []"
   kind="circuit"
   complexity="k=11, rows=1482"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Transfers a value amount of tokens of type id from from to to.
   This circuit will mint (or burn) if `from` (or `to`) is the zero address.
@@ -204,15 +212,16 @@ None.
   * If `from` is not zero, the balance of `id` of `from` must be >= `value`.
 </APIItemCompact>
 
-#### _unsafeTransferFrom [toc] [#_unsafeTransferFrom]
-#### [!toc] [#_unsafeTransferFrom]
+#### _unsafeTransferFrom [toc] [#MultiToken-_unsafeTransferFrom]
+#### [!toc] [#MultiToken-_unsafeTransferFrom]
 <APIItemCompact
   circuitSig="_unsafeTransferFrom(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=11, rows=1881"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
-  Unsafe variant of [transferFrom](#transferfrom) which allows transfers to contract addresses.
+  Unsafe variant of [transferFrom](#MulitToken-transferfrom) which allows transfers to contract addresses.
   The caller must be `from` or approved to transfer on their behalf.
 
   <Callout type='warn'>
@@ -226,19 +235,20 @@ None.
   * Contract is initialized.
   * `to` is not the zero address.
   * `from` is not the zero address.
-  * Caller must be `from` or approved via [setApprovalForAll](#setapprovalforall).
+  * Caller must be `from` or approved via [setApprovalForAll](#MulitToken-setapprovalforall).
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-#### _unsafeTransfer [toc] [#_unsafeTransfer]
-#### [!toc] [#_unsafeTransfer]
+#### _unsafeTransfer [toc] [#MultiToken-_unsafeTransfer]
+#### [!toc] [#MultiToken-_unsafeTransfer]
 <APIItemCompact
   circuitSig="_unsafeTransfer(from: Either<ZswapCoinPublicKey, ContractAddress>, to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=11, rows=1486"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
-  Unsafe variant of [_transfer](#_transfer) which allows transfers to contract addresses.
+  Unsafe variant of [_transfer](#MulitToken-_transfer) which allows transfers to contract addresses.
   Does not impose restrictions on the caller, making it suitable as a low-level building block for advanced contract logic.
 
   <Callout type='warn'>
@@ -255,12 +265,13 @@ None.
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-#### _setURI [toc] [#_setURI]
-#### [!toc] [#_setURI]
+#### _setURI [toc] [#MultiToken-_setURI]
+#### [!toc] [#MultiToken-_setURI]
 <APIItemCompact
   circuitSig='_setURI(newURI: Opaque<"string">) → []'
   kind="circuit"
   complexity="k=10, rows=39"
+  modulePrefix="MultiToken"
 >
   Sets a new URI for all token types, by relying on the token type ID substitution mechanism defined in the MultiToken standard.
   See https://eips.ethereum.org/EIPS/eip-1155#metadata.
@@ -276,13 +287,14 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-#### _mint [toc] [#_mint]
-#### [!toc] [#_mint]
+#### _mint [toc] [#MultiToken-_mint]
+#### [!toc] [#MultiToken-_mint]
 <APIItemCompact
   circuitSig="_mint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=10, rows=912"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Creates a `value` amount of tokens of type `token_id`, and assigns them to `to`.
 
@@ -298,13 +310,14 @@ None.
   * `to` is not a ContractAddress
 </APIItemCompact>
 
-#### _unsafeMint [toc] [#_unsafeMint]
-#### [!toc] [#_unsafeMint]
+#### _unsafeMint [toc] [#MultiToken-_unsafeMint]
+#### [!toc] [#MultiToken-_unsafeMint]
 <APIItemCompact
   circuitSig="_unsafeMint(to: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=10, rows=911"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Unsafe variant of `_mint` which allows transfers to contract addresses.
 
@@ -320,13 +333,14 @@ None.
   * `to` is not the zero address.
 </APIItemCompact>
 
-#### _burn [toc] [#_burn]
-#### [!toc] [#_burn]
+#### _burn [toc] [#MultiToken-_burn]
+#### [!toc] [#MultiToken-_burn]
 <APIItemCompact
   circuitSig="_burn(from: Either<ZswapCoinPublicKey, ContractAddress>, id: Uint<128>, value: Uint<128>) → []"
   kind="circuit"
   complexity="k=10, rows=688"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Destroys a `value` amount of tokens of type `token_id` from `from`.
 
@@ -337,13 +351,14 @@ None.
   * `from` must have an `id` balance of at least `value`.
 </APIItemCompact>
 
-#### _setApprovalForAll [toc] [#_setApprovalForAll]
-#### [!toc] [#_setApprovalForAll]
+#### _setApprovalForAll [toc] [#MultiToken-_setApprovalForAll]
+#### [!toc] [#MultiToken-_setApprovalForAll]
 <APIItemCompact
   circuitSig="_setApprovalForAll(owner: Either<ZswapCoinPublicKey, ContractAddress>, operator: Either<ZswapCoinPublicKey, ContractAddress>, approved: Boolean) → []"
   kind="circuit"
   complexity="k=10, rows=518"
   stackParams="true"
+  modulePrefix="MultiToken"
 >
   Enables or disables approval for `operator` to manage all of the caller’s assets.
   This circuit does not check for access permissions but can be useful as a building block for more complex contract logic.

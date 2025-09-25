@@ -20,7 +20,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/Ownable";
 
 ---
 
-### Ledger [!toc]
+### Ledger [!toc] (#Ownable-Ledger)
 
 #### _owner [toc] [#Ownable-_owner]
 #### [!toc] [#Ownable-_owner]
@@ -32,11 +32,11 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/Ownable";
   Either a `ZswapCoinPublicKey` or `ContractAddress` representing the owner.
 </APIItemCompact>
 
-### Witnesses [!toc] [#Ownable-witnesses]
+### Witnesses [!toc] [#Ownable-Witnesses]
 
 None.
 
-### Circuits [!toc] [#Ownable-circuits]
+### Circuits [!toc] [#Ownable-Circuits]
 
 #### initialize [toc] [#Ownable-initialize]
 #### [!toc] [#Ownable-initialize]
@@ -62,7 +62,7 @@ None.
   circuitSig='owner() → Either<ZswapCoinPublicKey, ContractAddress>'
   kind="circuit"
   complexity="k=10, rows=84"
-  id="Ownable-owner"
+  modulePrefix="Ownable"
 >
   Returns the current contract owner.
 
@@ -77,7 +77,7 @@ None.
   circuitSig='transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []'
   kind="circuit"
   complexity="k=10, rows=338"
-  id="Ownable-transferOwnership"
+  modulePrefix="Ownable"
 >
   Transfers ownership of the contract to `newOwner`.
 
@@ -100,9 +100,9 @@ None.
   circuitSig='_unsafeTransferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []'
   kind="circuit"
   complexity="k=10, rows=335"
-  id="Ownable-_unsafeTransferOwnership"
+  modulePrefix="Ownable"
 >
-  Unsafe variant of [`transferOwnership`](#transferOwnership).
+  Unsafe variant of [`transferOwnership`](#Ownable-transferOwnership).
 
   <Callout type='warn'>
     Ownership transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
@@ -123,10 +123,10 @@ None.
   circuitSig='renounceOwnership() → []'
   kind="circuit"
   complexity="k=10, rows=124"
-  id="Ownable-renounceOwnership"
+  modulePrefix="Ownable"
 >
   Leaves the contract without an owner.
-  It will not be possible to call [`assertOnlyOwner`](#assertOnlyOwner) circuits anymore.
+  It will not be possible to call [`assertOnlyOwner`](#Ownable-assertOnlyOwner) circuits anymore.
   Can only be called by the current owner.
 
   Requirements:
@@ -141,7 +141,7 @@ None.
   circuitSig='assertOnlyOwner() → []'
   kind="circuit"
   complexity="k=10, rows=115"
-  id="Ownable-assertOnlyOwner"
+  modulePrefix="Ownable"
 >
   Throws if called by any account other than the owner.
   Use this to restrict access of specific circuits to the owner.
@@ -158,7 +158,7 @@ None.
   circuitSig='_transferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []'
   kind="circuit"
   complexity="k=10, rows=219"
-  id="Ownable-_transferOwnership"
+  modulePrefix="Ownable"
 >
   Transfers ownership of the contract to a `newOwner` without enforcing permission checks on the caller.
 
@@ -179,9 +179,9 @@ None.
   circuitSig='_unsafeUncheckedTransferOwnership(newOwner: Either<ZswapCoinPublicKey, ContractAddress>) → []'
   kind="circuit"
   complexity="k=10, rows=216"
-  id="Ownable-_unsafeUncheckedTransferOwnership"
+  modulePrefix="Ownable"
 >
-  Unsafe variant of [`_transferOwnership`](#_transferOwnership).
+  Unsafe variant of [`_transferOwnership`](#Ownable-_transferOwnership).
 
   <Callout type='warn'>
     Ownership transfers to contract addresses are considered unsafe because contract-to-contract calls are not currently supported.
@@ -251,7 +251,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='wit_secretNonce(): Bytes<32>'
   kind="witness"
-  id="ZOwnablePK-wit_secretNonce"
+  modulePrefix="ZOwnablePK"
 >
   A private per-user nonce used in deriving the shielded owner identifier.
 
@@ -266,8 +266,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='initialize(ownerId: Bytes<32>, instanceSalt: Bytes<32>): []'
   kind="circuit"
-  id="ZOwnablePK-initialize"
   complexity="k=14, rows=14933"
+  modulePrefix="ZOwnablePK"
 >
   Initializes the contract by setting the initial owner via `ownerId`
   and storing the `instanceSalt` that acts as a privacy additive
@@ -285,8 +285,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='owner(): Bytes<32>'
   kind="circuit"
-  id="ZOwnablePK-owner"
   complexity="k=10, rows=57"
+  modulePrefix="ZOwnablePK"
 >
   Returns the current commitment representing the contract owner.
   The full commitment is: `SHA256(SHA256(pk, nonce), instanceSalt, counter, domain)`.
@@ -297,8 +297,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='transferOwnership(newOwnerId: Bytes<32>): []'
   kind="circuit"
-  id="ZOwnablePK-transferOwnership"
   complexity="k=16, rows=39240"
+  modulePrefix="ZOwnablePK"
 >
   Transfers ownership to `newOwnerId`.
   `newOwnerId` must be precalculated and given to the current owner off chain.
@@ -313,8 +313,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='renounceOwnership(): []'
   kind="circuit"
-  id="ZOwnablePK-renounceOwnership"
   complexity="k=15, rows=24442"
+  modulePrefix="ZOwnablePK"
 >
   Leaves the contract without an owner.
   It will not be possible to call `assertOnlyOwner` circuits anymore.
@@ -326,8 +326,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='assertOnlyOwner(): []'
   kind="circuit"
-  id="ZOwnablePK-assertOnlyOwner"
   complexity="k=15, rows=24437"
+  modulePrefix="ZOwnablePK"
 >
   Throws if called by any account whose id hash `SHA256(pk, nonce)` does not match
   the stored owner commitment.
@@ -339,8 +339,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='_computeOwnerCommitment(id: Bytes<32>, counter: Uint<64>): Bytes<32>'
   kind="circuit"
-  id="ZOwnablePK-_computeOwnerCommitment"
   complexity="k=14, rows=14853"
+  modulePrefix="ZOwnablePK"
 >
   Computes the owner commitment from the given `id` and `counter`.
 
@@ -358,8 +358,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 #### [!toc] [#ZOwnablePK-_computeOwnerId]
 <APIItemCompact
   circuitSig='_computeOwnerId(pk: Either<ZswapCoinPublicKey, ContractAddress>, nonce: Bytes<32>): Bytes<32>'
-  kind="pure circuit"
-  id="ZOwnablePK-_computeOwnerId"
+  kind="circuit"
+  modulePrefix="ZOwnablePK"
 >
   Computes the unique identifier (`id`) of the owner from their public key and a secret nonce.
 
@@ -376,8 +376,8 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 <APIItemCompact
   circuitSig='_transferOwnership(newOwnerId: Bytes<32>): []'
   kind="circuit"
-  id="ZOwnablePK-_transferOwnership"
   complexity="k=14, rows=14823"
+  modulePrefix="ZOwnablePK"
 >
   Transfers ownership to owner id `newOwnerId` without enforcing permission checks on the caller.
 
