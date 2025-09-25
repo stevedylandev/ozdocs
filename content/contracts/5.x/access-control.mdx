@@ -8,22 +8,22 @@ Access control—that is, "who is allowed to do this thing"—is incredibly impo
 
 The most common and basic form of access control is the concept of _ownership_: there’s an account that is the `owner` of a contract and can do administrative tasks on it. This approach is perfectly reasonable for contracts that have a single administrative user.
 
-OpenZeppelin Contracts provides [`Ownable`](contracts/v5.x/api/access#Ownable) for implementing ownership in your contracts.
+OpenZeppelin Contracts provides [`Ownable`](/contracts/5.x/api/access#Ownable) for implementing ownership in your contracts.
 
 <include cwd lang='solidity'>./examples/access-control/MyContractOwnable.sol</include>
 
-At deployment, the [`owner`](contracts/v5.x/api/access#Ownable-owner--) of an `Ownable` contract is set to the provided `initialOwner` parameter.
+At deployment, the [`owner`](/contracts/5.x/api/access#Ownable-owner--) of an `Ownable` contract is set to the provided `initialOwner` parameter.
 
 Ownable also lets you:
 
-* [`transferOwnership`](contracts/v5.x/api/access#Ownable-transferOwnership-address-) from the owner account to a new one, and
-* [`renounceOwnership`](contracts/v5.x/api/access#Ownable-renounceOwnership--) for the owner to relinquish this administrative privilege, a common pattern after an initial stage with centralized administration is over.
+* [`transferOwnership`](/contracts/5.x/api/access#Ownable-transferOwnership-address-) from the owner account to a new one, and
+* [`renounceOwnership`](/contracts/5.x/api/access#Ownable-renounceOwnership--) for the owner to relinquish this administrative privilege, a common pattern after an initial stage with centralized administration is over.
 
 <Callout type='warn'>
 Removing the owner altogether will mean that administrative tasks that are protected by `onlyOwner` will no longer be callable!
 </Callout>
 
-Ownable is a simple and effective way to implement access control, but you should be mindful of the dangers associated with transferring the ownership to an incorrect account that can’t interact with this contract anymore. An alternative to this problem is using [`Ownable2Step`](contracts/v5.x/api/access#Ownable2Step); a variant of Ownable that requires the new owner to explicitly accept the ownership transfer by calling [`acceptOwnership`](contracts/v5.x/api/access#Ownable2Step-acceptOwnership--).
+Ownable is a simple and effective way to implement access control, but you should be mindful of the dangers associated with transferring the ownership to an incorrect account that can’t interact with this contract anymore. An alternative to this problem is using [`Ownable2Step`](/contracts/5.x/api/access#Ownable2Step); a variant of Ownable that requires the new owner to explicitly accept the ownership transfer by calling [`acceptOwnership`](/contracts/5.x/api/access#Ownable2Step-acceptOwnership--).
 
 Note that **a contract can also be the owner of another one**! This opens the door to using, for example, a [Gnosis Safe](https://safe.global), an [Aragon DAO](https://aragon.org), or a totally custom contract that _you_ create.
 
@@ -39,7 +39,7 @@ Most software uses access control systems that are role-based: some users are re
 
 ### Using `AccessControl`
 
-OpenZeppelin Contracts provides [`AccessControl`](contracts/v5.x/api/access#AccessControl) for implementing role-based access control. Its usage is straightforward: for each role that you want to define,
+OpenZeppelin Contracts provides [`AccessControl`](/contracts/5.x/api/access#AccessControl) for implementing role-based access control. Its usage is straightforward: for each role that you want to define,
 you will create a new _role identifier_ that is used to grant, revoke, and check if an account has that role.
 
 Here’s a simple example of using `AccessControl` in an [ERC-20 token](erc20) to define a 'minter' role, which allows accounts that have it create new tokens:
@@ -47,7 +47,7 @@ Here’s a simple example of using `AccessControl` in an [ERC-20 token](erc20) t
 <include cwd lang='solidity'>./examples/access-control/AccessControlERC20MintBase.sol</include>
 
 <Callout>
-Make sure you fully understand how [`AccessControl`](contracts/v5.x/api/access#AccessControl) works before using it on your system, or copy-pasting the examples from this guide.
+Make sure you fully understand how [`AccessControl`](/contracts/5.x/api/access#AccessControl) works before using it on your system, or copy-pasting the examples from this guide.
 </Callout>
 
 While clear and explicit, this isn’t anything we wouldn’t have been able to achieve with `Ownable`. Indeed, where `AccessControl` shines is in scenarios where granular permissions are required, which can be implemented by defining _multiple_ roles.
@@ -68,7 +68,7 @@ Every role has an associated admin role, which grants permission to call the `gr
 
 This mechanism can be used to create complex permissioning structures resembling organizational charts, but it also provides an easy way to manage simpler applications. `AccessControl` includes a special role, called `DEFAULT_ADMIN_ROLE`, which acts as the ***default admin role for all roles***. An account with this role will be able to manage any other role, unless `_setRoleAdmin` is used to select a new admin role.
 
-Since it is the admin for all roles by default, and in fact it is also its own admin, this role carries significant risk. To mitigate this risk we provide [`AccessControlDefaultAdminRules`](contracts/v5.x/api/access#AccessControlDefaultAdminRules), a recommended extension of `AccessControl` that adds a number of enforced security measures for this role: the admin is restricted to a single account, with a 2-step transfer procedure with a delay in between steps.
+Since it is the admin for all roles by default, and in fact it is also its own admin, this role carries significant risk. To mitigate this risk we provide [`AccessControlDefaultAdminRules`](/contracts/5.x/api/access#AccessControlDefaultAdminRules), a recommended extension of `AccessControl` that adds a number of enforced security measures for this role: the admin is restricted to a single account, with a 2-step transfer procedure with a delay in between steps.
 
 Let’s take a look at the ERC-20 token example, this time taking advantage of the default admin role:
 
@@ -95,19 +95,19 @@ for (let i = 0; i < minterCount; ++i) {
 
 ## Delayed operation
 
-Access control is essential to prevent unauthorized access to critical functions. These functions may be used to mint tokens, freeze transfers or perform an upgrade that completely changes the smart contract logic. While [`Ownable`](contracts/v5.x/api/access#Ownable) and [`AccessControl`](contracts/v5.x/api/access#AccessControl) can prevent unauthorized access, they do not address the issue of a misbehaving administrator attacking their own system to the prejudice of their users.
+Access control is essential to prevent unauthorized access to critical functions. These functions may be used to mint tokens, freeze transfers or perform an upgrade that completely changes the smart contract logic. While [`Ownable`](/contracts/5.x/api/access#Ownable) and [`AccessControl`](/contracts/5.x/api/access#AccessControl) can prevent unauthorized access, they do not address the issue of a misbehaving administrator attacking their own system to the prejudice of their users.
 
-This is the issue the [`TimelockController`](contracts/v5.x/api/governance#TimelockController) is addressing.
+This is the issue the [`TimelockController`](/contracts/5.x/api/governance#TimelockController) is addressing.
 
-The [`TimelockController`](contracts/v5.x/api/governance#TimelockController) is a proxy that is governed by proposers and executors. When set as the owner/admin/controller of a smart contract, it ensures that whichever maintenance operation is ordered by the proposers is subject to a delay. This delay protects the users of the smart contract by giving them time to review the maintenance operation and exit the system if they consider it is in their best interest to do so.
+The [`TimelockController`](/contracts/5.x/api/governance#TimelockController) is a proxy that is governed by proposers and executors. When set as the owner/admin/controller of a smart contract, it ensures that whichever maintenance operation is ordered by the proposers is subject to a delay. This delay protects the users of the smart contract by giving them time to review the maintenance operation and exit the system if they consider it is in their best interest to do so.
 
 ### Using `TimelockController`
 
-By default, the address that deployed the [`TimelockController`](contracts/v5.x/api/governance#TimelockController) gets administration privileges over the timelock. This role grants the right to assign proposers, executors, and other administrators.
+By default, the address that deployed the [`TimelockController`](/contracts/5.x/api/governance#TimelockController) gets administration privileges over the timelock. This role grants the right to assign proposers, executors, and other administrators.
 
-The first step in configuring the [`TimelockController`](contracts/v5.x/api/governance#TimelockController) is to assign at least one proposer and one executor. These can be assigned during construction or later by anyone with the administrator role. These roles are not exclusive, meaning an account can have both roles.
+The first step in configuring the [`TimelockController`](/contracts/5.x/api/governance#TimelockController) is to assign at least one proposer and one executor. These can be assigned during construction or later by anyone with the administrator role. These roles are not exclusive, meaning an account can have both roles.
 
-Roles are managed using the [`AccessControl`](contracts/v5.x/api/access#AccessControl) interface and the `bytes32` values for each role are accessible through the `ADMIN_ROLE`, `PROPOSER_ROLE` and `EXECUTOR_ROLE` constants.
+Roles are managed using the [`AccessControl`](/contracts/5.x/api/access#AccessControl) interface and the `bytes32` values for each role are accessible through the `ADMIN_ROLE`, `PROPOSER_ROLE` and `EXECUTOR_ROLE` constants.
 
 There is an additional feature built on top of `AccessControl`: giving the executor role to `address(0)` opens access to anyone to execute a proposal once the timelock has expired. This feature, while useful, should be used with caution.
 
@@ -127,15 +127,15 @@ A recommended configuration is to grant both roles to a secure governance contra
 
 ### Minimum delay
 
-Operations executed by the [`TimelockController`](contracts/v5.x/api/governance#TimelockController) are not subject to a fixed delay but rather a minimum delay. Some major updates might call for a longer delay. For example, if a delay of just a few days might be sufficient for users to audit a minting operation, it makes sense to use a delay of a few weeks, or even a few months, when scheduling a smart contract upgrade.
+Operations executed by the [`TimelockController`](/contracts/5.x/api/governance#TimelockController) are not subject to a fixed delay but rather a minimum delay. Some major updates might call for a longer delay. For example, if a delay of just a few days might be sufficient for users to audit a minting operation, it makes sense to use a delay of a few weeks, or even a few months, when scheduling a smart contract upgrade.
 
-The minimum delay (accessible through the [`getMinDelay`](contracts/v5.x/api/governance#TimelockController-getMinDelay--) method) can be updated by calling the [`updateDelay`](contracts/v5.x/api/governance#TimelockController-updateDelay-uint256-) function. Bear in mind that access to this function is only accessible by the timelock itself, meaning this maintenance operation has to go through the timelock itself.
+The minimum delay (accessible through the [`getMinDelay`](/contracts/5.x/api/governance#TimelockController-getMinDelay--) method) can be updated by calling the [`updateDelay`](/contracts/5.x/api/governance#TimelockController-updateDelay-uint256-) function. Bear in mind that access to this function is only accessible by the timelock itself, meaning this maintenance operation has to go through the timelock itself.
 
 ## Access Management
 
-For a system of contracts, better integrated role management can be achieved with an [`AccessManager`](contracts/v5.x/api/access#AccessManager) instance. Instead of managing each contract’s permission separately, AccessManager stores all the permissions in a single contract, making your protocol easier to audit and maintain.
+For a system of contracts, better integrated role management can be achieved with an [`AccessManager`](/contracts/5.x/api/access#AccessManager) instance. Instead of managing each contract’s permission separately, AccessManager stores all the permissions in a single contract, making your protocol easier to audit and maintain.
 
-Although [`AccessControl`](contracts/v5.x/api/access#AccessControl) offers a more dynamic solution for adding permissions to your contracts than Ownable, decentralized protocols tend to become more complex after integrating new contract instances and requires you to keep track of permissions separately in each contract. This increases the complexity of permissions management and monitoring across the system.
+Although [`AccessControl`](/contracts/5.x/api/access#AccessControl) offers a more dynamic solution for adding permissions to your contracts than Ownable, decentralized protocols tend to become more complex after integrating new contract instances and requires you to keep track of permissions separately in each contract. This increases the complexity of permissions management and monitoring across the system.
 
 ![Access Control multiple](/access-control-multiple.svg)
 
@@ -154,16 +154,16 @@ For a call to be authorized, the caller must bear the role that is assigned to t
 
 ### Using `AccessManager`
 
-OpenZeppelin Contracts provides [`AccessManager`](contracts/v5.x/api/access#AccessManager) for managing roles across any number of contracts. The `AccessManager` itself is a contract that can be deployed and used out of the box. It sets an initial admin in the constructor who will be allowed to perform management operations.
+OpenZeppelin Contracts provides [`AccessManager`](/contracts/5.x/api/access#AccessManager) for managing roles across any number of contracts. The `AccessManager` itself is a contract that can be deployed and used out of the box. It sets an initial admin in the constructor who will be allowed to perform management operations.
 
-In order to restrict access to some functions of your contract, you should inherit from the [`AccessManaged`](contracts/v5.x/api/access#AccessManaged) contract provided along with the manager. This provides the `restricted` modifier that can be used to protect any externally facing function. Note that you will have to specify the address of the AccessManager instance ([`initialAuthority`](contracts/v5.x/api/access#AccessManaged-constructor-address-)) in the constructor so the `restricted` modifier knows which manager to use for checking permissions.
+In order to restrict access to some functions of your contract, you should inherit from the [`AccessManaged`](/contracts/5.x/api/access#AccessManaged) contract provided along with the manager. This provides the `restricted` modifier that can be used to protect any externally facing function. Note that you will have to specify the address of the AccessManager instance ([`initialAuthority`](/contracts/5.x/api/access#AccessManaged-constructor-address-)) in the constructor so the `restricted` modifier knows which manager to use for checking permissions.
 
-Here’s a simple example of an [ERC-20 token](tokens#ERC20) that defines a `mint` function that is restricted by an [`AccessManager`](contracts/v5.x/api/access#AccessManager):
+Here’s a simple example of an [ERC-20 token](tokens#ERC20) that defines a `mint` function that is restricted by an [`AccessManager`](/contracts/5.x/api/access#AccessManager):
 
 <include cwd lang='solidity'>./examples/access-control/AccessManagedERC20MintBase.sol</include>
 
 <Callout>
-Make sure you fully understand how [`AccessManager`](contracts/v5.x/api/access#AccessManager) works before using it or copy-pasting the examples from this guide.
+Make sure you fully understand how [`AccessManager`](/contracts/5.x/api/access#AccessManager) works before using it or copy-pasting the examples from this guide.
 </Callout>
 
 Once the managed contract has been deployed, it is now under the manager’s control. The initial admin can then assign the minter role to an address and also allow the role to call the `mint` function. For example, this is demonstrated in the following Javascript code using Ethers.js:
@@ -180,7 +180,7 @@ await manager.setTargetFunctionRole(
 );
 ```
 
-Even though each role has its own list of function permissions, each role member (`address`) has an execution delay that will dictate how long the account should wait to execute a function that requires its role. Delayed operations must have the [`schedule`](contracts/v5.x/api/access#AccessManager-schedule-address-bytes-uint48-) function called on them first in the AccessManager before they can be executed, either by calling to the target function or using the AccessManager’s [`execute`](contracts/v5.x/api/access#AccessManager-execute-address-bytes-) function.
+Even though each role has its own list of function permissions, each role member (`address`) has an execution delay that will dictate how long the account should wait to execute a function that requires its role. Delayed operations must have the [`schedule`](/contracts/5.x/api/access#AccessManager-schedule-address-bytes-uint48-) function called on them first in the AccessManager before they can be executed, either by calling to the target function or using the AccessManager’s [`execute`](/contracts/5.x/api/access#AccessManager-execute-address-bytes-) function.
 
 Additionally, roles can have a granting delay that prevents adding members immediately. The AccessManager admins can set this grant delay as follows:
 
@@ -196,7 +196,7 @@ await manager.connect(initialAdmin).setGrantDelay(MINTER, GRANT_DELAY);
 await manager.connect(initialAdmin).grantRole(MINTER, ACCOUNT, EXECUTION_DELAY);
 ```
 
-Note that roles do not define a name. As opposed to the [`AccessControl`](contracts/v5.x/api/access#AccessControl) case, roles are identified as numeric values instead of being hardcoded in the contract as `bytes32` values. It is still possible to allow for tooling discovery (e.g. for role exploration) using role labeling with the [`labelRole`](contracts/v5.x/api/access#AccessManager-labelRole-uint64-string-) function.
+Note that roles do not define a name. As opposed to the [`AccessControl`](/contracts/5.x/api/access#AccessControl) case, roles are identified as numeric values instead of being hardcoded in the contract as `bytes32` values. It is still possible to allow for tooling discovery (e.g. for role exploration) using role labeling with the [`labelRole`](/contracts/5.x/api/access#AccessManager-labelRole-uint64-string-) function.
 
 ```javascript
 await manager.labelRole(MINTER, "MINTER");
@@ -219,14 +219,14 @@ await manager.setTargetClosed(target, false);
 ```
 
 <Callout type='warn'>
-Even if an `AccessManager` defines permissions for a target function, these won’t be applied if the managed contract instance is not using the [`restricted`](contracts/v5.x/api/access#AccessManaged-restricted--) modifier for that function, or if its manager is a different one.
+Even if an `AccessManager` defines permissions for a target function, these won’t be applied if the managed contract instance is not using the [`restricted`](/contracts/5.x/api/access#AccessManaged-restricted--) modifier for that function, or if its manager is a different one.
 </Callout>
 
 ### Role Admins and Guardians
 
 An important aspect of the AccessControl contract is that roles aren’t granted nor revoked by role members. Instead, it relies on the concept of a role admin for granting and revoking.
 
-In the case of the `AccessManager`, the same rule applies and only the role’s admins are able to call [grant](contracts/v5.x/api/access#AccessManager-grantRole-uint64-address-uint32-) and [revoke](contracts/v5.x/api/access#AccessManager-revokeRole-uint64-address-) functions. Note that calling these functions will be subject to the execution delay that the executing role admin has.
+In the case of the `AccessManager`, the same rule applies and only the role’s admins are able to call [grant](/contracts/5.x/api/access#AccessManager-grantRole-uint64-address-uint32-) and [revoke](/contracts/5.x/api/access#AccessManager-revokeRole-uint64-address-) functions. Note that calling these functions will be subject to the execution delay that the executing role admin has.
 
 Additionally, the `AccessManager` stores a _guardian_ as an extra protection for each role. This guardian has the ability to cancel operations that have been scheduled by any role member with an execution delay. Consider that a role will have its initial admin and guardian default to the `ADMIN_ROLE` (`0`).
 
@@ -240,23 +240,23 @@ The `AccessManager` provides a built-in interface for configuring permission set
 
 This configuration interface includes the following functions:
 
-* Add a label to a role using the [`labelRole`](contracts/v5.x/api/access#AccessManager-labelRole-uint64-string-) function.
-* Assign the admin and guardian of a role with [`setRoleAdmin`](contracts/v5.x/api/access#AccessManager-setRoleAdmin-uint64-uint64-) and [`setRoleGuardian`](contracts/v5.x/api/access#AccessManager-setRoleGuardian-uint64-uint64-).
-* Set each role’s grant delay via [`setGrantDelay`](contracts/v5.x/api/access#AccessManager-setGrantDelay-uint64-uint32-).
+* Add a label to a role using the [`labelRole`](/contracts/5.x/api/access#AccessManager-labelRole-uint64-string-) function.
+* Assign the admin and guardian of a role with [`setRoleAdmin`](/contracts/5.x/api/access#AccessManager-setRoleAdmin-uint64-uint64-) and [`setRoleGuardian`](/contracts/5.x/api/access#AccessManager-setRoleGuardian-uint64-uint64-).
+* Set each role’s grant delay via [`setGrantDelay`](/contracts/5.x/api/access#AccessManager-setGrantDelay-uint64-uint32-).
 
-As an admin, some actions will require a delay. Similar to each member’s execution delay, some admin operations require waiting for execution and should follow the [`schedule`](contracts/v5.x/api/access#AccessManager-schedule-address-bytes-uint48-) and [`execute`](contracts/v5.x/api/access#AccessManager-execute-address-bytes-) workflow.
+As an admin, some actions will require a delay. Similar to each member’s execution delay, some admin operations require waiting for execution and should follow the [`schedule`](/contracts/5.x/api/access#AccessManager-schedule-address-bytes-uint48-) and [`execute`](/contracts/5.x/api/access#AccessManager-execute-address-bytes-) workflow.
 
-More specifically, these delayed functions are those for configuring the settings of a specific target contract. The delay applied to these functions can be adjusted by the manager admins with [`setTargetAdminDelay`](contracts/v5.x/api/access#AccessManager-setTargetAdminDelay-address-uint32-).
+More specifically, these delayed functions are those for configuring the settings of a specific target contract. The delay applied to these functions can be adjusted by the manager admins with [`setTargetAdminDelay`](/contracts/5.x/api/access#AccessManager-setTargetAdminDelay-address-uint32-).
 
 The delayed admin actions are:
 
-* Updating an `AccessManaged` contract [authority](contracts/v5.x/api/access#AccessManaged-authority--) using [`updateAuthority`](contracts/v5.x/api/access#AccessManager-updateAuthority-address-address-).
-* Closing or opening a target via [`setTargetClosed`](contracts/v5.x/api/access#AccessManager-setTargetClosed-address-bool-).
-* Changing permissions of whether a role can call a target function with [`setTargetFunctionRole`](contracts/v5.x/api/access#AccessManager-setTargetFunctionRole-address-bytes4---uint64-).
+* Updating an `AccessManaged` contract [authority](/contracts/5.x/api/access#AccessManaged-authority--) using [`updateAuthority`](/contracts/5.x/api/access#AccessManager-updateAuthority-address-address-).
+* Closing or opening a target via [`setTargetClosed`](/contracts/5.x/api/access#AccessManager-setTargetClosed-address-bool-).
+* Changing permissions of whether a role can call a target function with [`setTargetFunctionRole`](/contracts/5.x/api/access#AccessManager-setTargetFunctionRole-address-bytes4---uint64-).
 
 ### Using with Ownable
 
-Contracts already inheriting from [`Ownable`](contracts/v5.x/api/access#Ownable) can migrate to AccessManager by transferring ownership to the manager. After that, all calls to functions with the `onlyOwner` modifier should be called through the manager’s [`execute`](contracts/v5.x/api/access#AccessManager-execute-address-bytes-) function, even if the caller doesn’t require a delay.
+Contracts already inheriting from [`Ownable`](/contracts/5.x/api/access#Ownable) can migrate to AccessManager by transferring ownership to the manager. After that, all calls to functions with the `onlyOwner` modifier should be called through the manager’s [`execute`](/contracts/5.x/api/access#AccessManager-execute-address-bytes-) function, even if the caller doesn’t require a delay.
 
 ```javascript
 await ownable.connect(owner).transferOwnership(accessManager);
@@ -264,7 +264,7 @@ await ownable.connect(owner).transferOwnership(accessManager);
 
 ### Using with AccessControl
 
-For systems already using [`AccessControl`](contracts/v5.x/api/access#AccessControl), the `DEFAULT_ADMIN_ROLE` can be granted to the `AccessManager` after revoking every other role. Subsequent calls should be made through the manager’s [`execute`](contracts/v5.x/api/access#AccessManager-execute-address-bytes-) method, similar to the Ownable case.
+For systems already using [`AccessControl`](/contracts/5.x/api/access#AccessControl), the `DEFAULT_ADMIN_ROLE` can be granted to the `AccessManager` after revoking every other role. Subsequent calls should be made through the manager’s [`execute`](/contracts/5.x/api/access#AccessManager-execute-address-bytes-) method, similar to the Ownable case.
 
 ```javascript
 await accessControl.connect(admin).revokeRole(MINTER_ROLE, account);
