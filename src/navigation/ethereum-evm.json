@@ -1,7 +1,7 @@
 [
 	{
 		"type": "page",
-		"name": "Overview",
+		"name": "Getting Started",
 		"url": "/contracts"
 	},
 	{
@@ -19,7 +19,7 @@
 			},
 			{
 				"type": "page",
-				"name": "Wizard",
+				"name": "Contracts Wizard",
 				"url": "/contracts/5.x/wizard"
 			},
 			{
@@ -642,7 +642,7 @@
 	},
 	{
 		"type": "folder",
-		"name": "Upgrade Plugins",
+		"name": "Upgrades Plugins",
 		"index": {
 			"type": "page",
 			"name": "Overview",
@@ -734,7 +734,7 @@
 	},
 	{
 		"type": "page",
-		"name": "Wizard",
+		"name": "Contracts Wizard",
 		"url": "/wizard"
 	},
 	{
