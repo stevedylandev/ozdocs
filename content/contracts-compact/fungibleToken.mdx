@@ -3,7 +3,7 @@ title: FungibleToken
 ---
 
 {/* links */}
-[fungible tokens]: https://docs.openzeppelin.com/contracts/5.x/tokens#different-kinds-of-tokens
+[fungible tokens]: ../contracts/5.x/tokens.mdx#different-kinds-of-tokens
 [EIP-20]: https://eips.ethereum.org/EIPS/eip-20
 [Module/Contract Pattern]: ./extensibility.mdx#the_module_contract_pattern
 [_mint]: api/fungibleToken#FungibleToken-_mint
@@ -52,7 +52,7 @@ It’s recommended to prefix the module with `FungibleToken_` to avoid circuit s
 pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 constructor(
@@ -93,7 +93,7 @@ The following example is a simple token contract with a fixed supply that’s mi
 pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 constructor(
