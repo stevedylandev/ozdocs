@@ -9,7 +9,7 @@ title: Access Control
 [FungibleToken]: ./fungibleToken.mdx
 [Ownable]: ./ownable.mdx
 [Initializable]: ./security#initializable
-[AccessControl]: api/accessControl.mdx#accessControl
+[AccessControl]: api/access
 
 [assertOnlyRole]: api/access#AccessControl-assertOnlyRole
 [grantRole]: api/access#AccessControl-grantRole
@@ -53,9 +53,9 @@ which allows accounts that have this role to create new tokens:
 pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
@@ -96,9 +96,9 @@ Let's augment our FungibleToken example by also defining a 'burner' role, which 
 pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
@@ -172,9 +172,9 @@ Let’s take a look at the FungibleToken example, this time taking advantage of 
 pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
