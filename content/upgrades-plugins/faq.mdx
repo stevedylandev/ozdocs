@@ -16,7 +16,7 @@ However, if you are using OpenZeppelin Contracts proxies programmatically you co
 
 When deploying a proxy for a contract, there are some limitations to the contract code. In particular, the contract cannot have a constructor, and should not use the `selfdestruct` or `delegatecall` operations for security reasons.
 
-As a replacement for the constructor, it is common to set up an `initialize` function to take care of the contract’s initialization. You can use the [`Initializable`](writing-upgradeable#initializers) base contract to have access to an `initializer` modifier that ensures the function is only called once.
+As a replacement for the constructor, it is common to set up an `initialize` function to take care of the contract’s initialization. You can use the [`Initializable`](./writing-upgradeable#initializers) base contract to have access to an `initializer` modifier that ensures the function is only called once.
 
 ```solidity
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -29,7 +29,7 @@ contract MyContract is Initializable {
 }
 ```
 
-Both plugins will validate that the contract you are trying to deploy complies with these rules. You can read more about how to write upgrade safe contracts [here](writing-upgradeable).
+Both plugins will validate that the contract you are trying to deploy complies with these rules. You can read more about how to write upgrade safe contracts [here](./writing-upgradeable).
 
 ## How can I disable some of the checks?
 
@@ -132,7 +132,7 @@ When upgrading a proxy from one implementation to another, the _storage layout_ 
 
 Both plugins will validate that the new implementation contract is compatible with the previous one.
 
-You can read more about how to make storage-compatible changes to an implementation contract [here](writing-upgradeable#modifying-your-contracts).
+You can read more about how to make storage-compatible changes to an implementation contract [here](./writing-upgradeable#modifying-your-contracts).
 
 ## What is a proxy admin?
 

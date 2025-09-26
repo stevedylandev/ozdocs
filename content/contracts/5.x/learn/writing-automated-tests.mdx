@@ -12,7 +12,7 @@ We’ll cover the following topics:
 
 ## About testing
 
-There is a wide range of testing techniques, from [simple manual verifications](deploying-and-interacting#interacting-from-the-console) to complex end-to-end setups, all of them useful in their own way.
+There is a wide range of testing techniques, from [simple manual verifications](./deploying-and-interacting#interacting-from-the-console) to complex end-to-end setups, all of them useful in their own way.
 
 When it comes to smart contract development though, practice has shown that contract [_unit testing_](https://en.wikipedia.org/wiki/Unit_testing) is exceptionally worthwhile. These tests are simple to write and quick to run, and let you add features and fix bugs in your code with confidence.
 
@@ -32,9 +32,9 @@ We’ll use [Chai](https://www.chaijs.com/) assertions for our unit tests, which
 $ npm install --save-dev @nomicfoundation/hardhat-toolbox
 ```
 
-We will keep our test files in a `test` directory. Tests are best structured by mirroring the [`contracts` directory](developing-smart-contracts#first-contract): for each `.sol` file there, create a corresponding test file.
+We will keep our test files in a `test` directory. Tests are best structured by mirroring the [`contracts` directory](./developing-smart-contracts#first-contract): for each `.sol` file there, create a corresponding test file.
 
-Time to write our first tests! These will test properties of the `Box` contract [from previous guides](developing-smart-contracts#box-contract): a simple contract that lets you `retrieve` a value the owner previously `store` d.
+Time to write our first tests! These will test properties of the `Box` contract [from previous guides](./developing-smart-contracts#box-contract): a simple contract that lets you `retrieve` a value the owner previously `store` d.
 
 Create a `test` directory in your project root.  We will save the test as `test/Box.test.js`. Each test `.js` file commonly has the tests for a single contract, and is named after it.
 
@@ -96,6 +96,6 @@ We recommend using [Hardhat Chai Matchers](https://hardhat.org/hardhat-chai-matc
 
 Once you have thoroughly tested your contracts and are reasonably sure of their correctness, you’ll want to deploy them to a real network and start interacting with them. The following guides will get you up to speed on these topics:
 
-* [Connecting to Public Test Networks](connecting-to-public-test-networks)
-* [Deploying and Interacting](deploying-and-interacting)
-* [Preparing for Mainnet](preparing-for-mainnet)
+* [Connecting to Public Test Networks](./connecting-to-public-test-networks)
+* [Deploying and Interacting](./deploying-and-interacting)
+* [Preparing for Mainnet](./preparing-for-mainnet)

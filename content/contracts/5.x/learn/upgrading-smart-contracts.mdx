@@ -2,7 +2,7 @@
 title: Upgrading smart contracts
 ---
 
-Smart contracts deployed using [OpenZeppelin Upgrades Plugins](/upgrades-plugins) can be ***upgraded*** to modify their code, while preserving their address, state, and balance. This allows you to iteratively add new features to your project, or fix any bugs you may find [in production](preparing-for-mainnet).
+Smart contracts deployed using [OpenZeppelin Upgrades Plugins](/upgrades-plugins) can be ***upgraded*** to modify their code, while preserving their address, state, and balance. This allows you to iteratively add new features to your project, or fix any bugs you may find [in production](./preparing-for-mainnet).
 
 Throughout this guide, we will learn:
 
@@ -36,7 +36,7 @@ Whenever you deploy a new contract using `deployProxy` in the [OpenZeppelin Upgr
 2. Deploy the proxy contract and run any initializer function.
    * The proxy deployment automatically deploys a `ProxyAdmin` contract (the admin for our proxy) in the scenario below.
 
-Let’s see how it works, by deploying an upgradeable version of our `Box` contract, using the same setup as when [we deployed earlier](deploying-and-interacting#deploying-a-smart-contract):
+Let’s see how it works, by deploying an upgradeable version of our `Box` contract, using the same setup as when [we deployed earlier](./deploying-and-interacting#deploying-a-smart-contract):
 
 ```solidity
 pragma solidity ^0.8.0;
@@ -236,7 +236,7 @@ While any smart contract can be made upgradeable, some restrictions of the Solid
 
 ### Initialization
 
-Upgradeable contracts cannot have a `constructor`. To help you run initialization code, [**OpenZeppelin Contracts**](/contracts) provides the [`Initializable`](contracts:api:proxy#Initializable) base contract that allows you to tag a method as [`initializer`](contracts:api:proxy#Initializable-initializer--), ensuring it can be run only once.
+Upgradeable contracts cannot have a `constructor`. To help you run initialization code, [**OpenZeppelin Contracts**](/contracts) provides the [`Initializable`](/contracts/5.x/api/proxy#Initializable) base contract that allows you to tag a method as [`initializer`](/contracts/5.x/api/proxy#Initializable-initializer--), ensuring it can be run only once.
 
 As an example, let’s write a new version of the `Box` contract with an initializer, storing the address of an `admin` who will be the only one allowed to change its contents.
 
@@ -334,4 +334,4 @@ Stop the node ctrl+C which was ran with `npx hardhat node`. Execute a clean: `np
 
 ## Next steps
 
-Now that you know how to upgrade your smart contracts, and can iteratively develop your project, it’s time to take your project to [testnet](connecting-to-public-test-networks) and to [production](preparing-for-mainnet)! You can rest with the confidence that, should a bug appear, you have the tools to modify your contract and change it.
+Now that you know how to upgrade your smart contracts, and can iteratively develop your project, it’s time to take your project to [testnet](./connecting-to-public-test-networks) and to [production](./preparing-for-mainnet)! You can rest with the confidence that, should a bug appear, you have the tools to modify your contract and change it.

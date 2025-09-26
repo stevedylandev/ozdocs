@@ -21,7 +21,7 @@ A GSN recipient contract needs the following to work:
 2. It needs to handle `msg.sender` and `msg.data` differently.
 3. It needs to decide how to approve and reject relayed calls.
 
-Depositing funds for the GSN recipient contract can be done via the [GSN Dapp tool](https://gsn.openzeppelin.com/recipients) or programmatically with [**OpenZeppelin GSN Helpers**](gsn-helpers::api#javascript_interface).
+Depositing funds for the GSN recipient contract can be done via the [GSN Dapp tool] or programmatically with [**OpenZeppelin GSN Helpers**].
 
 The actual user’s `msg.sender` and `msg.data` can be obtained safely via [`_msgSender()`](contracts/v3.x/api/GSN#GSNRecipient-_msgSender--) and [`_msgData()`](contracts/v3.x/api/GSN#GSNRecipient-_msgData--) of [`GSNRecipient`](contracts/v3.x/api/GSN#GSNRecipient).
 
