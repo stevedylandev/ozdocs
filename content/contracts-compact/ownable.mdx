@@ -13,6 +13,13 @@ title: Ownable
 [ed25519]: https://ed25519.cr.yp.to/
 [rfc6979]: https://datatracker.ietf.org/doc/html/rfc6979
 
+## Access Control Defined
+
+Access control—that is, "who is allowed to do this thing"—is incredibly important in the world of smart contracts.
+The access control of your contract may govern who can mint tokens, vote on proposals, freeze transfers, and many other things.
+It is therefore critical to understand how you implement it, lest someone else steals your whole system.
+OpenZeppelin Contracts for Compact provides a variety of access control modules to suit your application and privacy needs.
+
 ## Ownership and `Ownable`
 
 The most common and basic form of access control is the concept of ownership:
