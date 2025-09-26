@@ -18,6 +18,8 @@ async function checkLinks() {
 		? process.argv[process.argv.indexOf("--scope") + 1]
 		: null;
 
+	const ignoreFragments = !process.argv.includes("--no-ignore-fragments");
+
 	const pages = await Promise.all(
 		source.getPages().map(async (page) => {
 			return {
@@ -45,7 +47,7 @@ async function checkLinks() {
 				Card: { attributes: ["href"] },
 			},
 		},
-		ignoreFragment: true,
+		ignoreFragment: ignoreFragments,
 		// check relative paths
 		checkRelativePaths: "as-url",
 	});
