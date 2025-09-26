@@ -2,7 +2,7 @@
 title: OpenZeppelin Defender with Foundry
 ---
 
-OpenZeppelin Foundry Upgrades can be used for performing deployments through [OpenZeppelin Defender](/defender/), which allows for features such as gas pricing estimation, resubmissions, and automated bytecode and source code verification.
+OpenZeppelin Foundry Upgrades can be used for performing deployments through [OpenZeppelin Defender](/defender), which allows for features such as gas pricing estimation, resubmissions, and automated bytecode and source code verification.
 
 <Callout type='warn'>
 Defender deployments are ***always*** broadcast to a live network, regardless of whether you are using the `broadcast` cheatcode.
@@ -11,7 +11,7 @@ The recommended pattern is to separate Defender scripts from scripts that rely o
 
 ## Installation
 
-See [Using with Foundry - Installation](foundry-upgrades#installation).
+See [Using with Foundry - Installation](/upgrades-plugins/foundry/foundry-upgrades#installation).
 
 ## Prerequisites
 1. Install [Node.js](https://nodejs.org/).
@@ -58,7 +58,7 @@ This is required if you have multiple forked networks in Defender with the same 
 
 ### Upgradeable Contracts
 
-If you are deploying upgradeable contracts, use the `Upgrades` library as described in [Using with Foundry - Installation](foundry-upgrades#installation) but set the option `defender.useDefenderDeploy = true` when calling functions to cause all deployments to occur through OpenZeppelin Defender.
+If you are deploying upgradeable contracts, use the `Upgrades` library as described in [Using with Foundry - Installation](/upgrades-plugins/foundry/foundry-upgrades#installation) but set the option `defender.useDefenderDeploy = true` when calling functions to cause all deployments to occur through OpenZeppelin Defender.
 
 ***Example 1 - Deploying a proxy***:
 To deploy a UUPS proxy, create a script called `Defender.s.sol` like the following:

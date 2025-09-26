@@ -2,7 +2,7 @@
 title: OpenZeppelin Defender with Hardhat
 ---
 
-The Hardhat Upgrades package can use [OpenZeppelin Defender](/defender/) for deployments instead of ethers.js, which allows for features such as gas pricing estimation, resubmissions, and automated bytecode and source code verification.
+The Hardhat Upgrades package can use [OpenZeppelin Defender](/defender) for deployments instead of ethers.js, which allows for features such as gas pricing estimation, resubmissions, and automated bytecode and source code verification.
 
 ## Configuration
 
@@ -42,7 +42,7 @@ This is required if you have multiple forked networks in Defender with the same 
 
 ## Usage
 
-When using the [Hardhat Upgrades API functions](api-hardhat-upgrades), enable OpenZeppelin Defender deployments using any of the ways below.
+When using the [Hardhat Upgrades API functions](/upgrades-plugins/api-hardhat-upgrades), enable OpenZeppelin Defender deployments using any of the ways below.
 
 <Callout>
 Only functions that have the `useDefenderDeploy` option in their API reference support deployments through OpenZeppelin Defender. If you enable the following but use functions that do not support `useDefenderDeploy`, the first way below will cause those functions to deploy using ethers.js, whereas the second and third ways will cause those functions to give an error.

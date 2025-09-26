@@ -3,7 +3,7 @@ title: OpenZeppelin Truffle Upgrades API
 ---
 
 <Callout type='warn'>
-This package is deprecated. The recommended alternative is to use [Hardhat](https://hardhat.org/) along with the [Hardhat Upgrades](hardhat-upgrades) plugin.
+This package is deprecated. The recommended alternative is to use [Hardhat](https://hardhat.org/) along with the [Hardhat Upgrades](/upgrades-plugins/hardhat-upgrades) plugin.
 </Callout>
 
 Both `deployProxy` and `upgradeProxy` functions will return instances of [Truffle contracts](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions), and require Truffle contract classes (retrieved via `artifacts.require`) as arguments. For [beacons](/contracts/4.x/api/proxy#beacon), `deployBeacon` and `upgradeBeacon` will both return an upgradable beacon instance that can be used with a beacon proxy. All deploy and upgrade functions validate that the implementation contract is upgrade-safe, and will fail otherwise.
@@ -15,12 +15,12 @@ The following options are common to some functions.
 * `deployer`: Should be set to the Truffle migration deployer during migrations.
 * `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](/contracts/5.x/api/proxy#transparent-vs-uups).
 * `unsafeAllow`: (`ValidationError[]`) Selectively disable one or more validation errors:
-  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq#why-cant-i-use-external-libraries).)
+  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](/upgrades-plugins/faq#why-cant-i-use-external-libraries).)
   * `"struct-definition"`, `"enum-definition"`: Used to be necessary to deploy a contract with structs or enums. No longer necessary.
   * `"state-variable-assignment"`: Allows assigning state variables in a contract even though they will be stored in the implementation.
   * `"state-variable-immutable"`: Allows use of immutable variables, which are not unsafe
   * `"constructor"`: Allows defining a constructor. See `constructorArgs`.
-  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](faq#delegatecall-selfdestruct)
+  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](/upgrades-plugins/faq#delegatecall-selfdestruct)
   * `"missing-public-upgradeto"`: Allow UUPS implementations that do not contain a public `upgradeTo` or `upgradeToAndCall` function. Enabling this option is likely to cause a revert due to the built-in UUPS safety mechanism.
 * `unsafeAllowRenames`: (`boolean`) Configure storage layout check to allow variable renaming.
 * `unsafeSkipStorageCheck`: (`boolean`) upgrades the proxy or beacon without first checking for storage layout compatibility errors. This is a dangerous option meant to be used as a last resort.
@@ -31,7 +31,7 @@ The following options are common to some functions.
   * If set to `"onchange"`, the implementation contract is redeployed only if the bytecode has changed from previous deployments.
 * `txOverrides`: (`TruffleTxOptions`) A Truffle [options](https://trufflesuite.com/docs/truffle/how-to/contracts/run-migrations/#deployerdeploycontract-args-options) object to override transaction parameters, such as `gas` and `gasPrice`. Applies to all transactions sent by a function with this option, even if the function sends multiple transactions.
 
-Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](faq#how-can-i-disable-checks)
+Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](/upgrades-plugins/faq#how-can-i-disable-checks)
 
 The following options have been deprecated.
 
@@ -234,7 +234,7 @@ Forces the import of an existing proxy, beacon, or implementation contract deplo
 When importing a proxy or beacon, the `deployedImpl` argument must be the contract class of the **current** implementation contract version that is being used, not the version that you are planning to upgrade to.
 </Callout>
 
-Use this function to recreate a lost [network file](network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
+Use this function to recreate a lost [network file](/upgrades-plugins/network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
 
 **Parameters:**
 
