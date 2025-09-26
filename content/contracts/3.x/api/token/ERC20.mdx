@@ -9,7 +9,7 @@ This document is better viewed at https://docs.openzeppelin.com/contracts/api/to
 This set of interfaces, contracts, and utilities are all related to the [ERC20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
 
 <Callout>
-For an overview of ERC20 tokens and a walk through on how to create a token contract read our [ERC20 guide](ROOT:erc20).
+For an overview of ERC20 tokens and a walk through on how to create a token contract read our [ERC20 guide](/contracts/3.x/erc20).
 </Callout>
 
 There a few core contracts that implement the behavior specified in the EIP:
@@ -36,7 +36,7 @@ The following related EIPs are in draft status and can be found in the drafts di
 * ERC20Permit
 
 <Callout>
-This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC20 (such as [`_mint`](#`_mint(address-account,-uint256-amount) *internal*`)) and expose them as external functions in the way they prefer. On the other hand, [ERC20 Presets](ROOT:erc20#Presets) (such as ERC20PresetMinterPauser) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
+This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC20 (such as [`_mint`](#`_mint(address-account,-uint256-amount) *internal*`)) and expose them as external functions in the way they prefer. On the other hand, [ERC20 Presets](/contracts/3.x/erc20#Presets) (such as ERC20PresetMinterPauser) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
 </Callout>
 
 ## Core
@@ -410,7 +410,7 @@ will be to transferred to `to`.
 * when `to` is zero, `amount` of ``from`’s tokens will be burned.
 * `from` and `to` are never both zero.
 
-To learn more about hooks, head to [Using Hooks](ROOT:extending-contracts#using-hooks).
+To learn more about hooks, head to [Using Hooks](/contracts/3.x/extending-contracts#using-hooks).
 
 ## Extensions
 

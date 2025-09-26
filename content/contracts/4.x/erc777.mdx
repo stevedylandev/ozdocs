@@ -51,7 +51,7 @@ That’s it for a basic token contract! We can now deploy it, and use the same [
 1000
 ```
 
-To move tokens from one account to another, we can use both [``ERC20`’s `transfer`](/contracts/4.x/api/token/ERC777#ERC777-transfer-address-uint256-) method, or the new [``ERC777`’s `send`](/contracts/4.x/api/token/ERC777#ERC777-send-address-uint256-bytes-), which fulfills a very similar role, but adds an optional `data` field:
+To move tokens from one account to another, we can use both [`ERC20`s `transfer`](/contracts/4.x/api/token/ERC777#ERC777-transfer-address-uint256-) method, or the new [`ERC777`’s `send`](/contracts/4.x/api/token/ERC777#ERC777-send-address-uint256-bytes-), which fulfills a very similar role, but adds an optional `data` field:
 
 ```javascript
 > GLDToken.transfer(otherAddress, 300)
