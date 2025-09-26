@@ -8,7 +8,7 @@ The ERC20 token standard is a specification for [fungible tokens](https://docs.o
 <Callout type='warn'>
 Prior to [Contracts v0.7.0](https://github.com/OpenZeppelin/cairo-contracts/releases/tag/v0.7.0), ERC20 contracts store and read `decimals` from storage; however, this implementation returns a static `18`.
 If upgrading an older ERC20 contract that has a decimals value other than `18`, the upgraded contract **must** use a custom `decimals` implementation.
-See the [Customizing decimals](/erc20#customizing_decimals) guide.
+See the [Customizing decimals](/contracts-cairo/2.0.0/erc20#customizing_decimals) guide.
 </Callout>
 
 ## Usage
@@ -63,15 +63,15 @@ The above example also includes the `ERC20InternalImpl` instance.
 This allows the contract’s constructor to initialize the contract and create an initial supply of tokens.
 
 <Callout>
-For a more complete guide on ERC20 token mechanisms, see [Creating ERC20 Supply](/guides/erc20-supply).
+For a more complete guide on ERC20 token mechanisms, see [Creating ERC20 Supply](/contracts-cairo/2.0.0/guides/erc20-supply).
 </Callout>
 
 ## Interface
 
-The following interface represents the full ABI of the Contracts for Cairo [ERC20Component](./api/erc20#ERC20Component).
-The interface includes the [IERC20](./api/erc20#IERC20) standard interface as well as the optional [IERC20Metadata](./api/erc20#IERC20Metadata).
+The following interface represents the full ABI of the Contracts for Cairo [ERC20Component](/contracts-cairo/api/erc20#ERC20Component).
+The interface includes the [IERC20](/contracts-cairo/api/erc20#IERC20) standard interface as well as the optional [IERC20Metadata](/contracts-cairo/api/erc20#IERC20Metadata).
 
-To support older token deployments, as mentioned in [Dual interfaces](/guides/interfaces-and-dispatchers#dual-interfaces), the component also includes an implementation of the interface written in camelCase.
+To support older token deployments, as mentioned in [Dual interfaces], the component also includes an implementation of the interface written in camelCase.
 
 ```cairo
 #[starknet::interface]
@@ -106,7 +106,7 @@ Although Starknet is not EVM compatible, this component aims to be as close as p
 Some notable differences, however, can still be found, such as:
 
 * The `ByteArray` type is used to represent strings in Cairo.
-* The component offers a [dual interface](/guides/interfaces-and-dispatchers#dual-interfaces) which supports both snake_case and camelCase methods, as opposed to just camelCase in Solidity.
+* The component offers a [dual interface] which supports both snake_case and camelCase methods, as opposed to just camelCase in Solidity.
 * `transfer`, `transfer_from` and `approve` will never return anything different from `true` because they will revert on any error.
 * Function selectors are calculated differently between [Cairo](https://github.com/starkware-libs/cairo/blob/7dd34f6c57b7baf5cd5a30c15e00af39cb26f7e1/crates/cairo-lang-starknet/src/contract.rs#L39-L48) and [Solidity](https://solidity-by-example.org/function-selector/).
 
