@@ -41,12 +41,12 @@ Once it is done, register the plugin in the Hardhat config file by adding these 
 ```jsx
 require('@openzeppelin/hardhat-upgrades');
 
-module.exports = 
+module.exports =
   // ...
 ;
 ```
 
-Install Truffle, and initialize your project.  
+Install Truffle, and initialize your project.
 
 <Callout type='warn'>
 Choose not to overwrite contracts or test directories when Truffle asks. By not overwriting, you won’t get an [initial migration](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations#initial-migration). Make sure you create `Migrations.sol` and the initial migration.
@@ -86,9 +86,9 @@ These were your project’s compiler options:
     "optimizer": {
       "enabled": false,
       "runs": "200"
-    
+
   },
-  "typechain": 
+  "typechain":
     "enabled": false
   ,
   "manager": "openzeppelin",
@@ -106,7 +106,7 @@ Copy compiler settings into the [`solidity` field](https://hardhat.org/config/#a
 
 ```json
 
-module.exports = 
+module.exports =
   // ...
   solidity: {
     version: "0.6.12",
@@ -114,7 +114,7 @@ module.exports =
       optimizer: {
         enabled: false,
         runs: 200
-      
+
     }
   }
 }
@@ -124,7 +124,7 @@ Copy compiler settings into the [`compilers` field](https://www.trufflesuite.com
 
 ```json
 
-module.exports = 
+module.exports =
   // ...
   compilers: {
     solc: {
@@ -133,7 +133,7 @@ module.exports =
         optimizer: {
           enabled: false,
           runs: 200
-        
+
       }
     }
   }
@@ -162,14 +162,14 @@ Let’s say we had a `Box` contract in our CLI project, deployed to the Rinkeby 
             "implementation": "0x038B86d9d8FAFdd0a02ebd1A476432877b0107C8",
             "admin": "0x1A1FEe7EeD918BD762173e4dc5EfDB8a78C924A8",
             "kind": "Upgradeable"
-          
+
         ]
       }
     }
   },
-  "compiler": 
+  "compiler":
     // we’ll ignore compiler settings for this
-  
+
 }
 ```
 
@@ -183,14 +183,14 @@ And this is how it would look like if we decided to upgrade our `Box` contract t
 
 These scripts are just examples of how to use the exported data. We make no suggestions on whether to keep that file as it is or how to handle its data. This is up to the user now.
 
-With Hardhat, we would write a script (**you can read more about Hardhat scripts [here](https://hardhat.org/guides/scripts.html) and about using the `hardhat-upgrades` plugin [here](hardhat-upgrades)**):
+With Hardhat, we would write a script (**you can read more about Hardhat scripts [here](https://hardhat.org/guides/scripts.html) and about using the `hardhat-upgrades` plugin [here](/upgrades-plugins/hardhat-upgrades)**):
 
 ```jsx
 
 const  ethers, upgrades  = require("hardhat");
 const OZ_SDK_EXPORT = require("../openzeppelin-cli-export.json");
 
-async function main() 
+async function main()
   const [ Box ] = OZ_SDK_EXPORT.networks.rinkeby.proxies["openzeppelin-upgrades-migration-example/Box"];
   const BoxV2 = await ethers.getContractFactory("BoxV2");
   await upgrades.upgradeProxy(Box.address, BoxV2);
@@ -203,7 +203,7 @@ main();
 $ npx hardhat run scripts/upgradeBoxToV2.js --network rinkeby
 ```
 
-With Truffle, we would write a migration (**you can read more about Truffle migrations [here](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations) and about using the `truffle-upgrades` plugin [here](truffle-upgrades)**):
+With Truffle, we would write a migration (**you can read more about Truffle migrations [here](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations) and about using the `truffle-upgrades` plugin [here](/upgrades-plugins/truffle-upgrades)**):
 
 ```jsx
 
@@ -212,7 +212,7 @@ const OZ_SDK_EXPORT = require("../openzeppelin-cli-export.json");
 
 const BoxV2 = artifacts.require('BoxV2');
 
-module.exports = async function (deployer) 
+module.exports = async function (deployer)
   const [ Box ] = OZ_SDK_EXPORT.networks.rinkeby.proxies["openzeppelin-upgrades-migration-example/Box"];
   const instance = await upgradeProxy(Box.address, BoxV2, { deployer );
   console.log("Upgraded", instance.address);

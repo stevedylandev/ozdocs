@@ -21,7 +21,7 @@ documented here are contained in the `openzeppelin_interfaces` package version `
 use openzeppelin_interfaces::erc2981::IERC2981;
 ```
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0x2d3414e45a8700c29f119a54b9f11dca0e29e06ddcb214018fc37340e165ed6
@@ -267,7 +267,7 @@ The returned tuple contains:
 
 #### [](#ERC2981Component-ERC2981AdminOwnableImpl)ERC2981AdminOwnableImpl [!toc]
 
-Provides admin functions for managing royalty settings that are restricted to be called only by the contract's owner. Requires the contract to implement [OwnableComponent](access#OwnableComponent).
+Provides admin functions for managing royalty settings that are restricted to be called only by the contract's owner. Requires the contract to implement [OwnableComponent](./access#OwnableComponent).
 
 <APIItem
   functionSignature="set_default_royalty(ref self: ContractState, receiver: ContractAddress, fee_numerator: u128)"
@@ -323,7 +323,7 @@ Requirements:
 
 #### [](#ERC2981Component-ERC2981AdminAccessControlImpl)ERC2981AdminAccessControlImpl [!toc]
 
-Provides admin functions for managing royalty settings that require `ROYALTY_ADMIN_ROLE` to be granted to the caller. Requires the contract to implement [AccessControlComponent](access#AccessControlComponent).
+Provides admin functions for managing royalty settings that require `ROYALTY_ADMIN_ROLE` to be granted to the caller. Requires the contract to implement [AccessControlComponent](./access#AccessControlComponent).
 
 <APIItem
   functionSignature="ROYALTY_ADMIN_ROLE: felt252"

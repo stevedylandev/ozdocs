@@ -19,7 +19,7 @@ but writing additional ones is simple, and we will be adding new features as req
 ### Token
 
 The voting power of each account in our governance setup will be determined by an ERC20 or an ERC721 token. The token has
-to implement the [VotesComponent](api/governance#VotesComponent) extension. This extension will keep track of historical balances so that voting power
+to implement the [VotesComponent](/contracts-cairo/api/governance#VotesComponent) extension. This extension will keep track of historical balances so that voting power
 is retrieved from past snapshots rather than current balance, which is an important protection that prevents double voting.
 
 If your project already has a live token that does not include Votes and is not upgradeable, you can wrap it in a
@@ -37,7 +37,7 @@ block numbers instead.
 
 ### Governor
 
-We will initially build a Governor without a timelock. The core logic is given by the [GovernorComponent](api/governance#GovernorComponent), but we
+We will initially build a Governor without a timelock. The core logic is given by the [GovernorComponent](/contracts-cairo/api/governance#GovernorComponent), but we
 still need to choose:
 
 1) how voting power is determined,
@@ -51,11 +51,11 @@ still need to choose:
 Each of these aspects is customizable by writing your own extensions,
 or more easily choosing one from the library.
 
-***For 1)*** we will use the GovernorVotes extension, which hooks to an [IVotes](api/governance#IVotes) instance to determine the voting power
+***For 1)*** we will use the GovernorVotes extension, which hooks to an [IVotes](/contracts-cairo/api/governance#IVotes) instance to determine the voting power
 of an account based on the token balance they hold when a proposal becomes active.
 This module requires the address of the token to be passed as an argument to the initializer.
 
-***For 2)*** we will use GovernorVotesQuorumFraction. This works together with the [IVotes](api/governance#IVotes) instance to define the quorum as a
+***For 2)*** we will use GovernorVotesQuorumFraction. This works together with the [IVotes](/contracts-cairo/api/governance#IVotes) instance to define the quorum as a
 percentage of the total supply at the block when a proposal’s voting power is retrieved. This requires an initializer
 parameter to set the percentage besides the votes token address. Most Governors nowadays use 4%. Since the quorum denominator
 is 1000 for precision, we initialize the module with a numerator of 40, resulting in a 4% quorum (40/1000 = 0.04 or 4%).
@@ -223,7 +223,7 @@ mod MyGovernor {
 ### Timelock
 
 It is good practice to add a timelock to governance decisions. This allows users to exit the system if they disagree
-with a decision before it is executed. We will use OpenZeppelin’s [TimelockController](governance/timelock) in combination with the
+with a decision before it is executed. We will use OpenZeppelin’s [TimelockController](/contracts-cairo/1.0.0/governance/timelock) in combination with the
 GovernorTimelockExecution extension.
 
 <Callout type='warn'>
@@ -231,7 +231,7 @@ When using a timelock, it is the timelock that will execute proposals and thus t
 hold any funds, ownership, and access control roles.
 </Callout>
 
-TimelockController uses an [AccessControl](access#role_based_accesscontrol) setup that we need to understand in order to set up roles.
+TimelockController uses an [AccessControl](/contracts-cairo/1.0.0/access#role_based_accesscontrol) setup that we need to understand in order to set up roles.
 
 The Proposer role is in charge of queueing operations: this is the role the Governor instance must be granted,
 and it MUST be the only proposer (and canceller) in the system.

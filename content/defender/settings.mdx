@@ -15,7 +15,7 @@ Approval processes act as a wrapper for transactions to be executed on-chain. Th
 * Timelock contracts
 * Fireblocks
 
-They are defined per network, and are used throughout Defender to execute transactions, such as in the [Deploy](module/deploy) wizard, [Actions](module/actions) and [Workflows](module/actions#workflows).
+They are defined per network, and are used throughout Defender to execute transactions, such as in the [Deploy](/defender/module/deploy) wizard, [Actions](/defender/module/actions) and [Workflows](/defender/module/actions#workflows).
 
 ![Manage Approval Processes](/defender/manage-approvals.png)
 
@@ -114,7 +114,7 @@ To avoid overwhelming the receiving webhook with many concurrent requests under 
 
 ```
 
-For more information on the event schema see the documentation on [Monitor](module/monitor) or [Actions](module/actions).
+For more information on the event schema see the documentation on [Monitor](/defender/module/monitor) or [Actions](/defender/module/actions).
 
 ### OpsGenie Configuration
 
@@ -268,7 +268,7 @@ Navigate through the "Private Networks" section to effectively manage and overse
 To set up a private network, simply click the "Create Private Network" button.  This action prompts you to define a name for the private network and select the currency symbol ("ETH") for your network. Additionally, provide the RPC URL, and optionally, an API key if access requires it.
 
 <Callout>
-The chain ID of a private network must not conflict with the chain ID of an [officially supported Defender network](index#networks).
+The chain ID of a private network must not conflict with the chain ID of an [officially supported Defender network](#networks).
 </Callout>
 
 For an enhanced user experience, customize your setup by including the block explorer URL, Safe contract deployment addresses, and a subgraph URL.
@@ -282,7 +282,7 @@ For an enhanced user experience, customize your setup by including the block exp
 
 You can [deploy these contracts](https://github.com/safe-global/safe-deployments) on your private network, providing the contract addresses in the creation form to leverage them in Defender, especially when deploying using `CREATE2`.
 
-Defender utilizes Subgraph for GraphQL-based querying of blockchain data, primarily for the Access Control module. Create your own [Subgraph](https://thegraph.com/docs/en/developing/creating-a-subgraph/), and input the endpoint in the creation form to activate this functionality in Defender. You can find an example configuration for the Access Control subgraph [here](_attachments/oz-mainnet-graphql-config-example.zip).
+Defender utilizes Subgraph for GraphQL-based querying of blockchain data, primarily for the Access Control module. Create your own [Subgraph](https://thegraph.com/docs/en/developing/creating-a-subgraph/), and input the endpoint in the creation form to activate this functionality in Defender. You can find an example configuration for the Access Control subgraph [here]().
 
 Once created, the network becomes accessible for utilization in any Defender module requiring network selection. This proves invaluable when engaging in tasks such as establishing an approval process, configuring a relayer, or deploying a contract.
 

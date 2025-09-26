@@ -27,7 +27,7 @@ use openzeppelin_interfaces::erc721::IERC721;
 
 Interface of the IERC721 standard as defined in [EIP721](https://eips.ethereum.org/EIPS/eip-721).
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0x33eb2f84c309543403fd69f0d0f363781ef06ef6faeb0131ff16ea3175bd943
@@ -164,7 +164,7 @@ use openzeppelin_interfaces::erc721::IERC721Metadata;
 
 Interface for the optional metadata functions in [EIP721](https://eips.ethereum.org/EIPS/eip-721).
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0xabbcd595a567dce909050a1038e055daccb3c42af06f0add544fa90ee91f25
@@ -214,7 +214,7 @@ use openzeppelin_interfaces::erc721::IERC721Receiver;
 
 Interface for contracts that support receiving `safe_transfer_from` transfers.
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0x3a0dff5f70d80458ad14ae37bb182a728e3c8cdda0402a5daa86620bdf910bc
@@ -242,7 +242,7 @@ Whenever an IERC721 `token_id` token is transferred to this non-account contract
 
 Interface for the optional enumerable functions in [EIP721](https://eips.ethereum.org/EIPS/eip-721).
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0x16bc0f502eeaf65ce0b3acb5eea656e2f26979ce6750e8502a82f377e538c87
@@ -294,7 +294,7 @@ use openzeppelin_token::erc721::ERC721Component;
 
 ERC721 component implementing [IERC721](#IERC721) and [IERC721Metadata](#IERC721Metadata).
 
-Implementing [SRC5Component](introspection#SRC5Component) is a requirement for this component to be implemented.
+Implementing [SRC5Component](./introspection#SRC5Component) is a requirement for this component to be implemented.
 
 See [Hooks](#ERC721Component-Hooks) to understand how are hooks used.
 
@@ -313,7 +313,7 @@ Hooks
 - [`ERC721MetadataImpl`](#ERC721Component-Embeddable-Impls-ERC721MetadataImpl)
 - [`ERC721CamelOnlyImpl`](#ERC721Component-Embeddable-Impls-ERC721CamelOnlyImpl)
 - [`ERC721MetadataCamelOnlyImpl`](#ERC721Component-Embeddable-Impls-ERC721MetadataCamelOnlyImpl)
-- [`SRC5Impl`](introspection#SRC5Component-Embeddable-Impls)
+- [`SRC5Impl`](./introspection#SRC5Component-Embeddable-Impls)
 
 Embeddable Implementations
 
@@ -350,7 +350,7 @@ Embeddable Implementations
 
 #### SRC5Impl [!toc] [#ERC721Component-Embeddable-Impls-SRC5Impl]
 
-- [`supports_interface(self, interface_id: felt252)`](introspection#ISRC5-supports_interface)
+- [`supports_interface(self, interface_id: felt252)`](./introspection#ISRC5-supports_interface)
 
 Internal functions
 
@@ -873,7 +873,7 @@ use openzeppelin_token::erc721::ERC721ReceiverComponent;
 
 ERC721Receiver component implementing [IERC721Receiver](#IERC721Receiver).
 
-Implementing [SRC5Component](introspection#SRC5Component) is a requirement for this component to be implemented.
+Implementing [SRC5Component](./introspection#SRC5Component) is a requirement for this component to be implemented.
 
 [Embeddable Mixin Implementations](../components#mixins)
 
@@ -881,7 +881,7 @@ Implementing [SRC5Component](introspection#SRC5Component) is a requirement for t
 
 - [`ERC721ReceiverImpl`](#ERC721ReceiverComponent-Embeddable-Impls-ERC721ReceiverImpl)
 - [`ERC721ReceiverCamelImpl`](#ERC721ReceiverComponent-Embeddable-Impls-ERC721ReceiverCamelImpl)
-- [`SRC5Impl`](introspection#SRC5Component-Embeddable-Impls)
+- [`SRC5Impl`](./introspection#SRC5Component-Embeddable-Impls)
 
 Embeddable Implementations
 
@@ -1127,7 +1127,7 @@ ERC721MixinImpl
 
 OwnableMixinImpl
 
-- [`OwnableMixinImpl`](access#OwnableComponent-Mixin-Impl)
+- [`OwnableMixinImpl`](./access#OwnableComponent-Mixin-Impl)
 
 External Functions
 

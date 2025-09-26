@@ -5,7 +5,7 @@ title: Network Files
 OpenZeppelin Hardhat Upgrades, by default, keeps track of all the contract versions you have deployed in an `.openzeppelin` folder in the project root. You will find one file per network there. It is advised that you commit to source control the files for all networks except the development ones (you may see them as `.openzeppelin/unknown-*.json`).
 
 <Callout>
-The format of the files within the `.openzeppelin` folder is not compatible with those of the OpenZeppelin CLI. If you want to use these plugins for an existing OpenZeppelin CLI project, you have to migrate it first. See [Migrate from CLI](migrate-from-cli) for instructions.
+The format of the files within the `.openzeppelin` folder is not compatible with those of the OpenZeppelin CLI. If you want to use these plugins for an existing OpenZeppelin CLI project, you have to migrate it first. See [Migrate from CLI](/upgrades-plugins/migrate-from-cli) for instructions.
 </Callout>
 
 ## `<network_name>.json`
@@ -40,7 +40,7 @@ OpenZeppelin Hardhat Upgrades will generate a file for each of the networks you 
 For every logic contract, besides the deployment address, the following info is also tracked:
 
 * `types` keeps track of all the types used in the contract or its ancestors, from basic types like `uint256` to custom `struct` types
-* `storage` tracks the storage layout of the linearized contract, referencing the types defined in the `types` section, and is used for verifying that any [storage layout changes between subsequent versions are compatible](faq#what-does-it-mean-for-an-implementation-to-be-compatible)
+* `storage` tracks the storage layout of the linearized contract, referencing the types defined in the `types` section, and is used for verifying that any [storage layout changes between subsequent versions are compatible](/upgrades-plugins/faq#what-does-it-mean-for-an-implementation-to-be-compatible)
 
 The naming of the file will be `<network_name>.json`, but note that `<network_name>` is not taken from the name of the network’s entry in the Hardhat configuration file, but is instead inferred from the chain id associated to the entry.
 

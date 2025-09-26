@@ -10,14 +10,14 @@ The following options are common to some functions.
 
 * `kind`: (`"uups" | "transparent" | "beacon"`) The kind of proxy to deploy, upgrade or import, or the kind of proxy that the implementation will be used with. `deployProxy()` and `upgradeProxy()` only support the values `"uups" | "transparent"`. Defaults to `"transparent"`. See [Transparent vs UUPS](/contracts/5.x/api/proxy#transparent-vs-uups).
 * `unsafeAllow`: (`ValidationError[]`) Selectively disable one or more validation errors or warnings:
-  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](faq#why-cant-i-use-external-libraries).)
+  * `"external-library-linking"`: Allows a deployment with external libraries linked to the implementation contract. (External libraries are otherwise [not yet supported](/upgrades-plugins/faq#why-cant-i-use-external-libraries).)
   * `"struct-definition"`, `"enum-definition"`: Used to be necessary to deploy a contract with structs or enums. No longer necessary.
   * `"state-variable-assignment"`: Allows assigning state variables in a contract even though they will be stored in the implementation.
   * `"state-variable-immutable"`: Allows use of immutable variables, which are not unsafe
   * `"constructor"`: Allows defining a constructor. See `constructorArgs`.
-  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](faq#delegatecall-selfdestruct)
+  * `"delegatecall"`, `"selfdestruct"`: Allow the use of these operations. Incorrect use of this option can put funds at risk of permanent loss. See [Can I safely use `delegatecall` and `selfdestruct`?](/upgrades-plugins/faq#delegatecall-selfdestruct)
   * `"missing-public-upgradeto"`: Allow UUPS implementations that do not contain a public `upgradeTo` or `upgradeToAndCall` function. Enabling this option is likely to cause a revert due to the built-in UUPS safety mechanism.
-  * `"internal-function-storage"`: Allow internal functions in storage variables. Internal functions are code pointers which will no longer be valid after an upgrade, so they must be reassigned during upgrades. See [How can I use internal functions in storage variables?](faq#internal-function-storage)
+  * `"internal-function-storage"`: Allow internal functions in storage variables. Internal functions are code pointers which will no longer be valid after an upgrade, so they must be reassigned during upgrades. See [How can I use internal functions in storage variables?](/upgrades-plugins/faq#internal-function-storage)
   * `"missing-initializer"`: Allows implementations where an initializer function is not detected.
   * `"missing-initializer-call"`: Allows implementations where a parent initializer is not called from the child initializer.
   * `"duplicate-initializer-call"`: Allows implementations where a parent initializer is called more than once from the child initializer.
@@ -36,7 +36,7 @@ The following options are common to some functions.
   * If set to `"never"`, the implementation contract is never redeployed. If the implementation contract was not previously deployed or is not found in the network file, an error will be thrown.
   * If set to `"onchange"`, the implementation contract is redeployed only if the bytecode has changed from previous deployments.
 * `txOverrides`: (`ethers.Overrides`) An ethers.js [Overrides](https://docs.ethers.org/v6/api/contract/#Overrides) object to override transaction parameters, such as `gasLimit` and `gasPrice`. Applies to all transactions sent by a function with this option, even if the function sends multiple transactions. For OpenZeppelin Defender deployments, only the `gasLimit`, `gasPrice`, `maxFeePerGas`, and `maxPriorityFeePerGas` parameters are supported.
-* `useDefenderDeploy`: (`boolean`) Deploy contracts using OpenZeppelin Defender instead of ethers.js. See [Using with OpenZeppelin Defender](defender-deploy).
+* `useDefenderDeploy`: (`boolean`) Deploy contracts using OpenZeppelin Defender instead of ethers.js. See [Using with OpenZeppelin Defender](/upgrades-plugins/defender-deploy).
 * `verifySourceCode`: (`boolean`) When using OpenZeppelin Defender deployments, whether to verify source code on block explorers. Defaults to `true`.
 * `relayerId`: (`string`) When using OpenZeppelin Defender deployments, the ID of the relayer to use for the deployment. Defaults to the relayer configured for your deployment environment on Defender.
 * `salt`: (`string`) When using OpenZeppelin Defender deployments, if this is not set, deployments will be performed using the CREATE opcode. If this is set, deployments will be performed using the CREATE2 opcode with the provided salt. Note that deployments using a Safe are done using CREATE2 and require a salt. ***Warning:*** CREATE2 affects `msg.sender` behavior. See [Caveats](/defender/tutorial/deploy#deploy-caveat) for more information.
@@ -46,7 +46,7 @@ The following options are common to some functions.
 * `deployFunction`: (`(hre, opts, factory, ...args) => Promise<EthersOrDefenderDeployment>`) Customizes the function used to deploy the proxy. Can be used along with the `proxyFactory` option to override constructor parameters for custom proxy deployments. See [deploy.ts](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/packages/plugin-hardhat/src/utils/deploy.ts) for the default deploy function.
   * **Since:** `@openzeppelin/hardhat-upgrades@3.7.0`
 
-Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](faq#how-can-i-disable-checks)
+Note that the options `unsafeAllow` can also be specified in a more granular way directly in the source code if using Solidity >=0.8.2. See [How can I disable some of the checks?](/upgrades-plugins/faq#how-can-i-disable-checks)
 
 The following options have been deprecated.
 
@@ -252,7 +252,7 @@ Forces the import of an existing proxy, beacon, or implementation contract deplo
 When importing a proxy or beacon, the `deployedImpl` argument must be the contract factory of the **current** implementation contract version that is being used, not the version that you are planning to upgrade to.
 </Callout>
 
-Use this function to recreate a lost [network file](network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
+Use this function to recreate a lost [network file](/upgrades-plugins/network-files) by importing previous deployments, or to register proxies or beacons for upgrading even if they were not originally deployed by this plugin. Supported for UUPS, Transparent, and Beacon proxies, as well as beacons and implementation contracts.
 
 **Parameters:**
 

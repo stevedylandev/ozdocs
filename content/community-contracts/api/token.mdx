@@ -44,7 +44,7 @@ Set of extensions and utilities for tokens (e.g ERC-20, ERC-721, ERC-1155) and d
 import "@openzeppelin/community-contracts/token/ERC20/extensions/ERC20Allowlist.sol";
 ```
 
-Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement an allowlist
+Extension of [`PaymasterERC20`](./account#PaymasterERC20) that allows to implement an allowlist
 mechanism that can be managed by an authorized account with the
 [`ERC20Allowlist._disallowUser`](#ERC20Allowlist-_disallowUser-address-) and [`ERC20Allowlist._allowUser`](#ERC20Allowlist-_allowUser-address-) functions.
 
@@ -62,7 +62,7 @@ Deprecated. Use [`ERC20Restricted`](#ERC20Restricted) instead.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-- [allowed(account)](#ERC20Allowlist-allowed-address-)
+- [allowed(./account)](#ERC20Allowlist-allowed-address-)
 - [_allowUser(user)](#ERC20Allowlist-_allowUser-address-)
 - [_disallowUser(user)](#ERC20Allowlist-_disallowUser-address-)
 - [_update(from, to, value)](#ERC20Allowlist-_update-address-address-uint256-)
@@ -72,14 +72,14 @@ Deprecated. Use [`ERC20Restricted`](#ERC20Restricted) instead.
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
 #### IERC20Errors [!toc]
@@ -272,7 +272,7 @@ The operation failed because the user is not allowed.
 import "@openzeppelin/community-contracts/token/ERC20/extensions/ERC20Blocklist.sol";
 ```
 
-Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement a blocklist
+Extension of [`PaymasterERC20`](./account#PaymasterERC20) that allows to implement a blocklist
 mechanism that can be managed by an authorized account with the
 [`ERC20Blocklist._blockUser`](#ERC20Blocklist-_blockUser-address-) and [`ERC20Blocklist._unblockUser`](#ERC20Blocklist-_unblockUser-address-) functions.
 
@@ -290,7 +290,7 @@ Deprecated. Use [`ERC20Restricted`](#ERC20Restricted) instead.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-- [blocked(account)](#ERC20Blocklist-blocked-address-)
+- [blocked(./account)](#ERC20Blocklist-blocked-address-)
 - [_blockUser(user)](#ERC20Blocklist-_blockUser-address-)
 - [_unblockUser(user)](#ERC20Blocklist-_unblockUser-address-)
 - [_update(from, to, value)](#ERC20Blocklist-_update-address-address-uint256-)
@@ -300,14 +300,14 @@ Deprecated. Use [`ERC20Restricted`](#ERC20Restricted) instead.
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
 #### IERC20Errors [!toc]
@@ -500,7 +500,7 @@ The operation failed because the user is blocked.
 import "@openzeppelin/community-contracts/token/ERC20/extensions/ERC20Collateral.sol";
 ```
 
-Extension of [`PaymasterERC20`](account#PaymasterERC20) that limits the supply of tokens based
+Extension of [`PaymasterERC20`](./account#PaymasterERC20) that limits the supply of tokens based
 on a collateral amount and time-based expiration.
 
 The [`ERC20Collateral.collateral`](#ERC20Collateral-collateral--) function must be implemented to return the collateral
@@ -521,14 +521,14 @@ data. This function can call external oracles or use any local storage.
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
@@ -723,7 +723,7 @@ Collateral amount has expired.
 import "@openzeppelin/community-contracts/token/ERC20/extensions/ERC20Custodian.sol";
 ```
 
-Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement a custodian
+Extension of [`PaymasterERC20`](./account#PaymasterERC20) that allows to implement a custodian
 mechanism that can be managed by an authorized account with the
 [`ERC20Custodian.freeze`](#ERC20Custodian-freeze-address-uint256-) function.
 
@@ -751,7 +751,7 @@ Deprecated. Use [`ERC20Freezable`](#ERC20Freezable) instead.
 <div className="font-mono">
 - [frozen(user)](#ERC20Custodian-frozen-address-)
 - [freeze(user, amount)](#ERC20Custodian-freeze-address-uint256-)
-- [availableBalance(account)](#ERC20Custodian-availableBalance-address-)
+- [availableBalance(./account)](#ERC20Custodian-availableBalance-address-)
 - [_isCustodian(user)](#ERC20Custodian-_isCustodian-address-)
 - [_update(from, to, value)](#ERC20Custodian-_update-address-address-uint256-)
 #### ERC20 [!toc]
@@ -759,14 +759,14 @@ Deprecated. Use [`ERC20Freezable`](#ERC20Freezable) instead.
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
@@ -911,7 +911,7 @@ Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints
 (or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
 this function.
 
-Emits a [`ERC7786OpenBridge.UnsupportedNativeTransfer`](crosschain#ERC7786OpenBridge-UnsupportedNativeTransfer--) event.
+Emits a [`ERC7786OpenBridge.UnsupportedNativeTransfer`](./crosschain#ERC7786OpenBridge-UnsupportedNativeTransfer--) event.
 
 </div>
 </div>
@@ -1018,7 +1018,7 @@ Error thrown when a non-custodian account attempts to perform a custodian-only o
 import "@openzeppelin/community-contracts/token/ERC20/extensions/ERC20Freezable.sol";
 ```
 
-Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement a freezing
+Extension of [`PaymasterERC20`](./account#PaymasterERC20) that allows to implement a freezing
 mechanism that can be managed by an authorized account with the
 `_freezeTokens` and `_unfreezeTokens` functions.
 
@@ -1030,8 +1030,8 @@ tokens are unfrozen using `_unfreezeTokens`.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-- [frozen(account)](#ERC20Freezable-frozen-address-)
-- [available(account)](#ERC20Freezable-available-address-)
+- [frozen(./account)](#ERC20Freezable-frozen-address-)
+- [available(./account)](#ERC20Freezable-available-address-)
 - [_setFrozen(user, amount)](#ERC20Freezable-_setFrozen-address-uint256-)
 - [_update(from, to, value)](#ERC20Freezable-_update-address-address-uint256-)
 #### ERC20 [!toc]
@@ -1039,14 +1039,14 @@ tokens are unfrozen using `_unfreezeTokens`.
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
@@ -1190,37 +1190,37 @@ The operation failed because the user has insufficient unfrozen balance.
 import "@openzeppelin/community-contracts/token/ERC20/extensions/ERC20Restricted.sol";
 ```
 
-Extension of [`PaymasterERC20`](account#PaymasterERC20) that allows to implement user account transfer restrictions
-through the [`IERC7943.isUserAllowed`](interfaces#IERC7943-isUserAllowed-address-) function. Inspired by [EIP-7943](https://eips.ethereum.org/EIPS/eip-7943).
+Extension of [`PaymasterERC20`](./account#PaymasterERC20) that allows to implement user account transfer restrictions
+through the [`IERC7943.isUserAllowed`](./interfaces#IERC7943-isUserAllowed-address-) function. Inspired by [EIP-7943](https://eips.ethereum.org/EIPS/eip-7943).
 
-By default, each account has no explicit restriction. The [`IERC7943.isUserAllowed`](interfaces#IERC7943-isUserAllowed-address-) function acts as
-a blocklist. Developers can override [`IERC7943.isUserAllowed`](interfaces#IERC7943-isUserAllowed-address-) to check that `restriction == ALLOWED`
+By default, each account has no explicit restriction. The [`IERC7943.isUserAllowed`](./interfaces#IERC7943-isUserAllowed-address-) function acts as
+a blocklist. Developers can override [`IERC7943.isUserAllowed`](./interfaces#IERC7943-isUserAllowed-address-) to check that `restriction == ALLOWED`
 to implement an allowlist.
 
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Functions</h3>
 <div className="font-mono">
-- [getRestriction(account)](#ERC20Restricted-getRestriction-address-)
-- [isUserAllowed(account)](#ERC20Restricted-isUserAllowed-address-)
+- [getRestriction(./account)](#ERC20Restricted-getRestriction-address-)
+- [isUserAllowed(./account)](#ERC20Restricted-isUserAllowed-address-)
 - [_update(from, to, value)](#ERC20Restricted-_update-address-address-uint256-)
-- [_setRestriction(account, restriction)](#ERC20Restricted-_setRestriction-address-enum-ERC20Restricted-Restriction-)
-- [_blockUser(account)](#ERC20Restricted-_blockUser-address-)
-- [_allowUser(account)](#ERC20Restricted-_allowUser-address-)
-- [_resetUser(account)](#ERC20Restricted-_resetUser-address-)
-- [_checkRestriction(account)](#ERC20Restricted-_checkRestriction-address-)
+- [_setRestriction(./account, restriction)](#ERC20Restricted-_setRestriction-address-enum-ERC20Restricted-Restriction-)
+- [_blockUser(./account)](#ERC20Restricted-_blockUser-address-)
+- [_allowUser(./account)](#ERC20Restricted-_allowUser-address-)
+- [_resetUser(./account)](#ERC20Restricted-_resetUser-address-)
+- [_checkRestriction(./account)](#ERC20Restricted-_checkRestriction-address-)
 #### ERC20 [!toc]
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
@@ -1233,7 +1233,7 @@ to implement an allowlist.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Events</h3>
 <div className="font-mono">
-- [UserRestrictionsUpdated(account, restriction)](#ERC20Restricted-UserRestrictionsUpdated-address-enum-ERC20Restricted-Restriction-)
+- [UserRestrictionsUpdated(./account, restriction)](#ERC20Restricted-UserRestrictionsUpdated-address-enum-ERC20Restricted-Restriction-)
 #### ERC20 [!toc]
 #### IERC20Errors [!toc]
 #### IERC20Metadata [!toc]
@@ -1246,7 +1246,7 @@ to implement an allowlist.
 <div className="bg-secondary p-4 rounded-md mb-6">
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
-- [ERC20UserRestricted(account)](#ERC20Restricted-ERC20UserRestricted-address-)
+- [ERC20UserRestricted(./account)](#ERC20Restricted-ERC20UserRestricted-address-)
 #### ERC20 [!toc]
 #### IERC20Errors [!toc]
 - [ERC20InsufficientBalance(sender, balance, needed)](#IERC20Errors-ERC20InsufficientBalance-address-uint256-uint256-)
@@ -1297,7 +1297,7 @@ To convert into an allowlist, override as:
 
 ```solidity
 function isUserAllowed(address account) public view virtual override returns (bool) {
-    return getRestriction(account) == Restriction.ALLOWED;
+    return getRestriction(./account) == Restriction.ALLOWED;
 }
 ```
 
@@ -1320,8 +1320,8 @@ See `ERC20-_update`. Enforces restriction transfers (excluding minting and burni
 
 Requirements:
 
-* `from` must be allowed to transfer tokens (see [`IERC7943.isUserAllowed`](interfaces#IERC7943-isUserAllowed-address-)).
-* `to` must be allowed to receive tokens (see [`IERC7943.isUserAllowed`](interfaces#IERC7943-isUserAllowed-address-)).
+* `from` must be allowed to transfer tokens (see [`IERC7943.isUserAllowed`](./interfaces#IERC7943-isUserAllowed-address-)).
+* `to` must be allowed to receive tokens (see [`IERC7943.isUserAllowed`](./interfaces#IERC7943-isUserAllowed-address-)).
 
 </div>
 </div>
@@ -1462,7 +1462,7 @@ The operation failed because the user account is restricted.
 import "@openzeppelin/community-contracts/token/ERC20/extensions/ERC20uRWA.sol";
 ```
 
-Extension of [`PaymasterERC20`](account#PaymasterERC20) according to [EIP-7943](https://eips.ethereum.org/EIPS/eip-7943).
+Extension of [`PaymasterERC20`](./account#PaymasterERC20) according to [EIP-7943](https://eips.ethereum.org/EIPS/eip-7943).
 
 Combines standard ERC-20 functionality with RWA-specific features like user restrictions,
 asset freezing, and forced asset transfers.
@@ -1481,15 +1481,15 @@ asset freezing, and forced asset transfers.
 - [_checkFreezer(user, amount)](#ERC20uRWA-_checkFreezer-address-uint256-)
 #### IERC7943 [!toc]
 #### ERC20Restricted [!toc]
-- [getRestriction(account)](#ERC20Restricted-getRestriction-address-)
-- [_setRestriction(account, restriction)](#ERC20Restricted-_setRestriction-address-enum-ERC20Restricted-Restriction-)
-- [_blockUser(account)](#ERC20Restricted-_blockUser-address-)
-- [_allowUser(account)](#ERC20Restricted-_allowUser-address-)
-- [_resetUser(account)](#ERC20Restricted-_resetUser-address-)
-- [_checkRestriction(account)](#ERC20Restricted-_checkRestriction-address-)
+- [getRestriction(./account)](#ERC20Restricted-getRestriction-address-)
+- [_setRestriction(./account, restriction)](#ERC20Restricted-_setRestriction-address-enum-ERC20Restricted-Restriction-)
+- [_blockUser(./account)](#ERC20Restricted-_blockUser-address-)
+- [_allowUser(./account)](#ERC20Restricted-_allowUser-address-)
+- [_resetUser(./account)](#ERC20Restricted-_resetUser-address-)
+- [_checkRestriction(./account)](#ERC20Restricted-_checkRestriction-address-)
 #### ERC20Freezable [!toc]
-- [frozen(account)](#ERC20Freezable-frozen-address-)
-- [available(account)](#ERC20Freezable-available-address-)
+- [frozen(./account)](#ERC20Freezable-frozen-address-)
+- [available(./account)](#ERC20Freezable-available-address-)
 - [_setFrozen(user, amount)](#ERC20Freezable-_setFrozen-address-uint256-)
 #### ERC165 [!toc]
 #### IERC165 [!toc]
@@ -1498,14 +1498,14 @@ asset freezing, and forced asset transfers.
 - [symbol()](#ERC20-symbol--)
 - [decimals()](#ERC20-decimals--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)
@@ -1522,7 +1522,7 @@ asset freezing, and forced asset transfers.
 - [ForcedTransfer(from, to, tokenId, amount)](#IERC7943-ForcedTransfer-address-address-uint256-uint256-)
 - [Frozen(user, tokenId, amount)](#IERC7943-Frozen-address-uint256-uint256-)
 #### ERC20Restricted [!toc]
-- [UserRestrictionsUpdated(account, restriction)](#ERC20Restricted-UserRestrictionsUpdated-address-enum-ERC20Restricted-Restriction-)
+- [UserRestrictionsUpdated(./account, restriction)](#ERC20Restricted-UserRestrictionsUpdated-address-enum-ERC20Restricted-Restriction-)
 #### ERC20Freezable [!toc]
 #### ERC165 [!toc]
 #### IERC165 [!toc]
@@ -1539,11 +1539,11 @@ asset freezing, and forced asset transfers.
 <h3 style={{ marginTop: "0"}}>Errors</h3>
 <div className="font-mono">
 #### IERC7943 [!toc]
-- [ERC7943NotAllowedUser(account)](#IERC7943-ERC7943NotAllowedUser-address-)
+- [ERC7943NotAllowedUser(./account)](#IERC7943-ERC7943NotAllowedUser-address-)
 - [ERC7943NotAllowedTransfer(from, to, tokenId, amount)](#IERC7943-ERC7943NotAllowedTransfer-address-address-uint256-uint256-)
 - [ERC7943InsufficientUnfrozenBalance(user, tokenId, amount, unfrozen)](#IERC7943-ERC7943InsufficientUnfrozenBalance-address-uint256-uint256-uint256-)
 #### ERC20Restricted [!toc]
-- [ERC20UserRestricted(account)](#ERC20Restricted-ERC20UserRestricted-address-)
+- [ERC20UserRestricted(./account)](#ERC20Restricted-ERC20UserRestricted-address-)
 #### ERC20Freezable [!toc]
 - [ERC20InsufficientUnfrozenBalance(user, needed, available)](#ERC20Freezable-ERC20InsufficientUnfrozenBalance-address-uint256-uint256-)
 #### ERC165 [!toc]
@@ -1581,7 +1581,7 @@ To convert into an allowlist, override as:
 
 ```solidity
 function isUserAllowed(address account) public view virtual override returns (bool) {
-    return getRestriction(account) == Restriction.ALLOWED;
+    return getRestriction(./account) == Restriction.ALLOWED;
 }
 ```
 
@@ -1622,7 +1622,7 @@ This function call must use less than 30 000 gas.
 </div>
 <div className="px-4">
 
-See [`IERC7943.isTransferAllowed`](interfaces#IERC7943-isTransferAllowed-address-address-uint256-uint256-).
+See [`IERC7943.isTransferAllowed`](./interfaces#IERC7943-isTransferAllowed-address-address-uint256-uint256-).
 
 CAUTION: This function is only meant for external use. Overriding it will not apply the new checks to
 the internal [`ERC20Allowlist._update`](#ERC20Allowlist-_update-address-address-uint256-) function. Consider overriding [`ERC20Allowlist._update`](#ERC20Allowlist-_update-address-address-uint256-) accordingly to keep both functions in sync.
@@ -1657,10 +1657,10 @@ the internal [`ERC20Allowlist._update`](#ERC20Allowlist-_update-address-address-
 </div>
 <div className="px-4">
 
-See [`IERC7943.setFrozen`](interfaces#IERC7943-setFrozen-address-uint256-uint256-).
+See [`IERC7943.setFrozen`](./interfaces#IERC7943-setFrozen-address-uint256-uint256-).
 
 <Callout>
-The `amount` is capped to the balance of the `user` to ensure the [`IERC7943.Frozen`](interfaces#IERC7943-Frozen-address-uint256-uint256-) event
+The `amount` is capped to the balance of the `user` to ensure the [`IERC7943.Frozen`](./interfaces#IERC7943-Frozen-address-uint256-uint256-) event
 emits values that consistently reflect the actual amount of tokens that are frozen.
 </Callout>
 
@@ -1679,7 +1679,7 @@ emits values that consistently reflect the actual amount of tokens that are froz
 </div>
 <div className="px-4">
 
-See [`IERC7943.forceTransfer`](interfaces#IERC7943-forceTransfer-address-address-uint256-uint256-).
+See [`IERC7943.forceTransfer`](./interfaces#IERC7943-forceTransfer-address-address-uint256-uint256-).
 
 Bypasses the [`ERC20Restricted`](#ERC20Restricted) restrictions for the `from` address and adjusts the frozen balance
 to the new balance after the transfer.
@@ -1710,7 +1710,7 @@ Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints
 (or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding
 this function.
 
-Emits a [`ERC7786OpenBridge.UnsupportedNativeTransfer`](crosschain#ERC7786OpenBridge-UnsupportedNativeTransfer--) event.
+Emits a [`ERC7786OpenBridge.UnsupportedNativeTransfer`](./crosschain#ERC7786OpenBridge-UnsupportedNativeTransfer--) event.
 
 </div>
 </div>
@@ -1814,15 +1814,15 @@ ERC-4626 vault with entry/exit fees expressed in [basis point (bp)](https://en.w
 - [name()](#ERC20-name--)
 - [symbol()](#ERC20-symbol--)
 - [totalSupply()](#ERC20-totalSupply--)
-- [balanceOf(account)](#ERC20-balanceOf-address-)
+- [balanceOf(./account)](#ERC20-balanceOf-address-)
 - [transfer(to, value)](#ERC20-transfer-address-uint256-)
 - [allowance(owner, spender)](#ERC20-allowance-address-address-)
 - [approve(spender, value)](#ERC20-approve-address-uint256-)
 - [transferFrom(from, to, value)](#ERC20-transferFrom-address-address-uint256-)
 - [_transfer(from, to, value)](#ERC20-_transfer-address-address-uint256-)
 - [_update(from, to, value)](#ERC20-_update-address-address-uint256-)
-- [_mint(account, value)](#ERC20-_mint-address-uint256-)
-- [_burn(account, value)](#ERC20-_burn-address-uint256-)
+- [_mint(./account, value)](#ERC20-_mint-address-uint256-)
+- [_burn(./account, value)](#ERC20-_burn-address-uint256-)
 - [_approve(owner, spender, value)](#ERC20-_approve-address-address-uint256-)
 - [_approve(owner, spender, value, emitEvent)](#ERC20-_approve-address-address-uint256-bool-)
 - [_spendAllowance(owner, spender, value)](#ERC20-_spendAllowance-address-address-uint256-)

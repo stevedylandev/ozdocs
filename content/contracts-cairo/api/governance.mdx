@@ -26,7 +26,7 @@ use openzeppelin_interfaces::governor::IGovernor;
 
 Interface of a governor contract.
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0x1100a1f8546595b5bd75a6cd8fcc5b015370655e66f275963321c5cd0357ac9
@@ -1148,7 +1148,7 @@ Core of the governance system.
 
 The extension traits presented below are what make the GovernorComponent a modular and configurable system. The embeddable and internal implementations depends on these trait. They can be implemented locally in the contract, or through the provided library [component extensions](#governor_extensions).
 
-Implementing [SRC5Component](introspection#SRC5Component) is a requirement for this component to be implemented.
+Implementing [SRC5Component](./introspection#SRC5Component) is a requirement for this component to be implemented.
 
 Extensions traits
 
@@ -3385,9 +3385,9 @@ Component that implements [ITimelock](#ITimelock) and enables the implementing c
 #### TimelockMixinImpl [!toc] [#TimelockControllerComponent-TimelockMixinImpl]
 
 - [`TimelockImpl`](#TimelockControllerComponent-Embeddable-Impls-TimelockImpl)
-- [`SRC5Impl`](introspection#SRC5Component-Embeddable-Impls)
-- [`AccessControlImpl`](access#AccessControlComponent-Embeddable-Impls)
-- [`AccessControlCamelImpl`](access#AccessControlComponent-Embeddable-Impls)
+- [`SRC5Impl`](./introspection#SRC5Component-Embeddable-Impls)
+- [`AccessControlImpl`](./access#AccessControlComponent-Embeddable-Impls)
+- [`AccessControlCamelImpl`](./access#AccessControlComponent-Embeddable-Impls)
 
 Embeddable Implementations
 
@@ -3411,23 +3411,23 @@ Embeddable Implementations
 
 #### SRC5Impl [!toc] [#TimelockControllerComponent-SRC5Impl]
 
-- [`supports_interface(self, interface_id: felt252)`](introspection#ISRC5-supports_interface)
+- [`supports_interface(self, interface_id: felt252)`](./introspection#ISRC5-supports_interface)
 
 #### AccessControlImpl [!toc] [#TimelockControllerComponent-AccessControlImpl]
 
-- [`has_role(self, role, account)`](access#IAccessControl-has_role)
-- [`get_role_admin(self, role)`](access#IAccessControl-get_role_admin)
-- [`grant_role(self, role, account)`](access#IAccessControl-grant_role)
-- [`revoke_role(self, role, account)`](access#IAccessControl-revoke_role)
-- [`renounce_role(self, role, account)`](access#IAccessControl-renounce_role)
+- [`has_role(self, role, account)`](./access#IAccessControl-has_role)
+- [`get_role_admin(self, role)`](./access#IAccessControl-get_role_admin)
+- [`grant_role(self, role, account)`](./access#IAccessControl-grant_role)
+- [`revoke_role(self, role, account)`](./access#IAccessControl-revoke_role)
+- [`renounce_role(self, role, account)`](./access#IAccessControl-renounce_role)
 
 #### AccessControlCamelImpl [!toc] [#TimelockControllerComponent-AccessControlCamelImpl]
 
-- [`hasRole(self, role, account)`](access#IAccessControl-hasRole)
-- [`getRoleAdmin(self, role)`](access#IAccessControl-getRoleAdmin)
-- [`grantRole(self, role, account)`](access#IAccessControl-grantRole)
-- [`revokeRole(self, role, account)`](access#IAccessControl-revokeRole)
-- [`renounceRole(self, role, account)`](access#IAccessControl-renounceRole)
+- [`hasRole(self, role, account)`](./access#IAccessControl-hasRole)
+- [`getRoleAdmin(self, role)`](./access#IAccessControl-getRoleAdmin)
+- [`grantRole(self, role, account)`](./access#IAccessControl-grantRole)
+- [`revokeRole(self, role, account)`](./access#IAccessControl-revokeRole)
+- [`renounceRole(self, role, account)`](./access#IAccessControl-renounceRole)
 
 Internal Implementations
 
@@ -3648,11 +3648,11 @@ This function also configures the contract with the following parameters:
 
 The optional admin can aid with initial configuration of roles after deployment without being subject to delay, but this role should be subsequently renounced in favor of administration through timelocked proposals.
 
-Emits two [IAccessControl::RoleGranted](access#IAccessControl-RoleGranted) events for each account in `proposers` with `PROPOSER_ROLE` and `CANCELLER_ROLE` roles.
+Emits two [IAccessControl::RoleGranted](./access#IAccessControl-RoleGranted) events for each account in `proposers` with `PROPOSER_ROLE` and `CANCELLER_ROLE` roles.
 
-Emits a [IAccessControl::RoleGranted](access#IAccessControl-RoleGranted) event for each account in `executors` with `EXECUTOR_ROLE` role.
+Emits a [IAccessControl::RoleGranted](./access#IAccessControl-RoleGranted) event for each account in `executors` with `EXECUTOR_ROLE` role.
 
-May emit a [IAccessControl::RoleGranted](access#IAccessControl-RoleGranted) event for `admin` with `DEFAULT_ADMIN_ROLE` role (if `admin` is not zero).
+May emit a [IAccessControl::RoleGranted](./access#IAccessControl-RoleGranted) event for `admin` with `DEFAULT_ADMIN_ROLE` role (if `admin` is not zero).
 
 Emits [MinDelayChanged](#TimelockControllerComponent-MinDelayChanged) event.
 </APIItem>

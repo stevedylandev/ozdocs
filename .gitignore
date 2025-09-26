@@ -29,6 +29,7 @@ next-env.d.ts
 old-docs
 .claude
 TODO.md
+broken-links.md
 
 # Local Netlify folder
 .netlify

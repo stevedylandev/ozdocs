@@ -19,25 +19,25 @@ The Balances pallet provides functions for:
 * Slashing an account balance.
 * Account creation and removal.
 * Managing total issuance.
-* Setting and managing [locks](glossary#lock).
+* Setting and managing [locks](/substrate-runtimes/glossary#lock).
 
 ## Config
 
 * Pallet-specific configs
-  * `RuntimeHoldReason` -- The overarching [hold](glossary#hold) reason.
-  * `RuntimeFreezeReason` -- The overarching [freeze](glossary#freeze) reason.
+  * `RuntimeHoldReason` -- The overarching [hold](/substrate-runtimes/glossary#hold) reason.
+  * `RuntimeFreezeReason` -- The overarching [freeze](/substrate-runtimes/glossary#freeze) reason.
   * `Balance` -- The balance of an account
   * `DustRemoval` -- Handler for the unbalanced reduction when removing a dust account.
   * `ExistentialDeposit` -- The minimum amount required to keep an account open. MUST BE GREATER THAN ZERO!
   * `AccountStore` -- The means of storing the balances of an account.
-  * `ReserveIdentifier` --  The ID type for [reserves](glossary#reserve). The use of reserves is deprecated in favor of holds. See [PR #12951](https://github.com/paritytech/substrate/pull/12951/)
+  * `ReserveIdentifier` --  The ID type for [reserves](/substrate-runtimes/glossary#reserve). The use of reserves is deprecated in favor of holds. See [PR #12951](https://github.com/paritytech/substrate/pull/12951/)
   * `FreezeIdentifier` -- The ID type for freezes.
   * `MaxLocks` -- The maximum number of locks that should exist on an account.
   * `MaxReserves` -- The maximum number of named reserves that can exist on an account. The use of reserves is deprecated in favor of holds. See [PR #12951](https://github.com/paritytech/substrate/pull/12951/)
   * `MaxFreezes` -- The maximum number of individual freeze locks that can exist on an account at any time.
 * Common configs
   * `RuntimeEvent` -- The overarching event type.
-  * `WeightInfo` -- [Weight](glossary#weight) information for extrinsics in this pallet.
+  * `WeightInfo` -- [Weight](/substrate-runtimes/glossary#weight) information for extrinsics in this pallet.
 
 ## Events
 

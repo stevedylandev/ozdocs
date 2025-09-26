@@ -8,7 +8,7 @@ It’s worth mentioning that these restrictions have their roots in how the Ethe
 
 ## Initializers
 
-You can use your Solidity contracts with OpenZeppelin Upgrades without any modifications, except for their _constructors_. Due to a requirement of the proxy-based upgradeability system, no constructors can be used in upgradeable contracts. To learn about the reasons behind this restriction, head to [Proxies](proxies#the-constructor-caveat).
+You can use your Solidity contracts with OpenZeppelin Upgrades without any modifications, except for their _constructors_. Due to a requirement of the proxy-based upgradeability system, no constructors can be used in upgradeable contracts. To learn about the reasons behind this restriction, head to [Proxies](/upgrades-plugins/proxies#the-constructor-caveat).
 
 This means that, when using a contract with the OpenZeppelin Upgrades, you need to change its constructor into a regular function, typically named `initialize`, where you run all the setup logic:
 
@@ -249,7 +249,7 @@ As such, it is not allowed to use either `selfdestruct` or `delegatecall` in you
 
 ## Modifying Your Contracts
 
-When writing new versions of your contracts, either due to new features or bug fixing, there is an additional restriction to observe: you cannot change the order in which the contract state variables are declared, nor their type. You can read more about the reasons behind this restriction by learning about our [Proxies](proxies).
+When writing new versions of your contracts, either due to new features or bug fixing, there is an additional restriction to observe: you cannot change the order in which the contract state variables are declared, nor their type. You can read more about the reasons behind this restriction by learning about our [Proxies](/upgrades-plugins/proxies).
 
 <Callout type='warn'>
 Violating any of these storage layout restrictions will cause the upgraded version of the contract to have its storage values mixed up, and can lead to critical errors in your application.
@@ -426,7 +426,7 @@ contract Base {
 }
 ```
 
-To help determine the proper storage gap size in the new version of your contract, you can simply attempt an upgrade using `upgradeProxy` or just run the validations with `validateUpgrade` (see docs for [Hardhat Upgrades](api-hardhat-upgrades) or [Foundry Upgrades](foundry/api)). If a storage gap is not being reduced properly, you will see an error message indicating the expected size of the storage gap.
+To help determine the proper storage gap size in the new version of your contract, you can simply attempt an upgrade using `upgradeProxy` or just run the validations with `validateUpgrade` (see docs for [Hardhat Upgrades](/upgrades-plugins/api-hardhat-upgrades) or [Foundry Upgrades](/upgrades-plugins/foundry/api)). If a storage gap is not being reduced properly, you will see an error message indicating the expected size of the storage gap.
 
 ### Namespaced Storage Layout
 

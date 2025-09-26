@@ -21,13 +21,13 @@ Class hashes were computed using class-hash-cairo-version.
 
 | Name | Sierra Class Hash |
 | --- | --- |
-| `[AccountUpgradeable](/api/account#AccountUpgradeable)` | `AccountUpgradeable-class-hash` |
-| `[ERC20Upgradeable](/api/erc20#ERC20Upgradeable)` | `ERC20Upgradeable-class-hash` |
-| `[ERC721Upgradeable](/api/erc721#ERC721Upgradeable)` | `ERC721Upgradeable-class-hash` |
-| `[ERC1155Upgradeable](/api/erc1155#ERC1155Upgradeable)` | `ERC1155Upgradeable-class-hash` |
-| `[EthAccountUpgradeable](/api/account#EthAccountUpgradeable)` | `EthAccountUpgradeable-class-hash` |
-| `[UniversalDeployer](/api/udc#UniversalDeployer)` | `UniversalDeployer-class-hash` |
-| `[VestingWallet](/api/finance#VestingWallet)` | `VestingWallet-class-hash` |
+| `[AccountUpgradeable](/contracts-cairo/api/account#AccountUpgradeable)` | `AccountUpgradeable-class-hash` |
+| `[ERC20Upgradeable](/contracts-cairo/api/erc20#ERC20Upgradeable)` | `ERC20Upgradeable-class-hash` |
+| `[ERC721Upgradeable](/contracts-cairo/api/erc721#ERC721Upgradeable)` | `ERC721Upgradeable-class-hash` |
+| `[ERC1155Upgradeable](/contracts-cairo/api/erc1155#ERC1155Upgradeable)` | `ERC1155Upgradeable-class-hash` |
+| `[EthAccountUpgradeable](/contracts-cairo/api/account#EthAccountUpgradeable)` | `EthAccountUpgradeable-class-hash` |
+| `[UniversalDeployer](/contracts-cairo/api/udc#UniversalDeployer)` | `UniversalDeployer-class-hash` |
+| `[VestingWallet](/contracts-cairo/api/finance#VestingWallet)` | `VestingWallet-class-hash` |
 
 <Callout>
 [starkli](https://book.starkli.rs/introduction) class-hash command can be used to compute the class hash from a Sierra artifact.
@@ -46,7 +46,7 @@ starkli deploy {ERC20Upgradeable-class-hash} \
 ```
 
 If a class hash has yet to be declared, copy/paste the preset contract code and declare it locally.
-Start by [setting up a project](index#set_up_your_project) and [installing the Contracts for Cairo library](index#install_the_library).
+Start by [setting up a project](/contracts-cairo/2.0.0#set_up_your_project) and [installing the Contracts for Cairo library](/contracts-cairo/2.0.0#install_the_library).
 Copy the target preset contract from the [presets directory](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v2.0.0/packages/presets/src) and paste it in the new project’s `src/lib.cairo` like this:
 
 ```cairo
