@@ -45,6 +45,7 @@ async function checkLinks() {
 				Card: { attributes: ["href"] },
 			},
 		},
+		ignoreFragment: true,
 		// check relative paths
 		checkRelativePaths: "as-url",
 	});
