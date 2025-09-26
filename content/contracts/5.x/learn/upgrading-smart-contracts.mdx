@@ -83,7 +83,7 @@ In order to upgrade a contract like `Box` we need to first deploy it as an upgra
 
 With Hardhat, we use [scripts](https://hardhat.org/hardhat-runner/docs/advanced/scripts#writing-scripts-with-hardhat) to deploy upgradeable contracts.
 
-We will create a script to deploy our upgradeable Box contract using [`deployProxy`](/upgrades-plugins/api-hardhat-upgrades#deploy-proxy).  We will save this file as `scripts/deploy_upgradeable_box.js`.
+We will create a script to deploy our upgradeable Box contract using [`deployProxy`](/upgrades-plugins/api-hardhat-upgrades#deployproxy).  We will save this file as `scripts/deploy_upgradeable_box.js`.
 
 ```js
 const { ethers, upgrades } = require('hardhat');
@@ -150,7 +150,7 @@ After creating the Solidity file, we can now upgrade the instance we had deploye
 1. Deploy the implementation contract (our `BoxV2` contract)
 2. Call the `ProxyAdmin` to update the proxy contract to use the new implementation.
 
-We will create a script to upgrade our `Box` contract to use `BoxV2` using [`upgradeProxy`](/upgrades-plugins/api-hardhat-upgrades#upgrade-proxy).  We will save this file as `scripts/upgrade_box.js`.
+We will create a script to upgrade our `Box` contract to use `BoxV2` using [`upgradeProxy`](/upgrades-plugins/api-hardhat-upgrades#upgradeproxy).  We will save this file as `scripts/upgrade_box.js`.
 We need to specify the address of our proxy contract from when we deployed our `Box` contract.
 
 ```js

@@ -23,8 +23,8 @@ provides a lightweight upgradeability framework with additional support for stru
 
 It consists of two main components:
 
-1. ***[`Upgradeable`](/stellar-contracts/0.3.0/utils/upgradeable#upgrade_only)*** for cases where only the WASM binary needs to be updated.
-2. ***[`UpgradeableMigratable`](/stellar-contracts/0.3.0/utils/upgradeable#upgrade_and_migrate)*** for more advanced scenarios where, in addition to the WASM binary, specific storage entries
+1. ***[`Upgradeable`](/stellar-contracts/0.3.0/utils/upgradeable#upgrade-only)*** for cases where only the WASM binary needs to be updated.
+2. ***[`UpgradeableMigratable`](/stellar-contracts/0.3.0/utils/upgradeable#upgrade-and-migrate)*** for more advanced scenarios where, in addition to the WASM binary, specific storage entries
 must be modified (migrated) during the upgrade process.
 
 The recommended way to use this module is through the `\#[derive(Upgradeable)]` and `#[derive(UpgradeableMigratable)]`
