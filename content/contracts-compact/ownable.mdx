@@ -96,7 +96,7 @@ Here’s a complete contract showcasing how to integrate the Ownable module and 
 pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/ownable/src/Ownable"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/Ownable"
   prefix Ownable_;
 
 /**
@@ -331,7 +331,7 @@ It’s recommended to prefix the module with `ZOwnablePK_` to avoid circuit sign
 pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK"
   prefix ZOwnablePK_;
 
 constructor(
