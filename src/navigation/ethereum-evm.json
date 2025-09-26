@@ -1134,7 +1134,7 @@
 			{
 				"type": "page",
 				"name": "Technical Rust Documentation",
-				"url": "https://release-v1-0-0--monitor.netlify.app/openzeppelin_monitor/",
+				"url": "https://docs-v1-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/",
 				"external": true
 			}
 		]
