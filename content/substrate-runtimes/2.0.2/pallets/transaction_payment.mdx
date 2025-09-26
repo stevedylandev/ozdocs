@@ -18,7 +18,7 @@ This pallet also exposes
 - how to update fees for the next block based on past fees (`Config::FeeMultiplierUpdate`)
 - how fees are paid (`Config::OnChargeTransaction`)
 
-The base fee and adjusted [weight](/substrate-runtimes/2.0.2/glossary#weight_fee) and [length](/substrate-runtimes/2.0.2/glossary#length_fee) fees constitute the _inclusion fee_, which is the minimum fee for a transaction to be included in a block. The formula of final fee:
+The base fee and adjusted [weight](/substrate-runtimes/2.0.2/glossary#weight-fee) and [length](/substrate-runtimes/2.0.2/glossary#length-fee) fees constitute the _inclusion fee_, which is the minimum fee for a transaction to be included in a block. The formula of final fee:
 ```rust, ignore
 inclusion_fee = base_fee + length_fee + [fee_multiplier_update * weight_fee];
 final_fee = inclusion_fee + tip;

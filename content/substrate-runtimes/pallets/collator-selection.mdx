@@ -15,7 +15,7 @@ This pallet is needed to manage the set of [collators](/substrate-runtimes/gloss
 ## Config
 
 * Pallet-specific configs
-  * `UpdateOrigin` — defines the list of origins that are able to modify the settings of collators (e.g. set and remove list of [invulnerables](/substrate-runtimes/glossary#invulnerable), desired [candidates](/substrate-runtimes/glossary#candidates), [candidacy bond](/substrate-runtimes/glossary#candidacy_bond)). This type should implement the trait `EnsureOrigin`.
+  * `UpdateOrigin` — defines the list of origins that are able to modify the settings of collators (e.g. set and remove list of [invulnerables](/substrate-runtimes/glossary#invulnerable), desired [candidates](/substrate-runtimes/glossary#candidate), [candidacy bond](/substrate-runtimes/glossary#candidacy-bond)). This type should implement the trait `EnsureOrigin`.
   * `PotId` — id of account that will hold a [Pot](/substrate-runtimes/glossary#pot).
   * `MaxCandidates` — maximum number of candidates
   * `MinEligibleCollators` — minimum number of collators to collect for the session

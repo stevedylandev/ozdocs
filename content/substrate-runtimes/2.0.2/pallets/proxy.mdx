@@ -117,7 +117,7 @@ If the proxy requires an announcement before the call, this dispatchable will fa
 ***Params:***
 
 * `real: AccountIdLookupOf<T>` — the account on which behalf this call will be made
-* `force_proxy_type: Option<T::ProxyType>` — specific [proxy type](/substrate-runtimes/2.0.2/glossary#proxy_type) to get proxy for. If not specified, first one found in the storage will be used.
+* `force_proxy_type: Option<T::ProxyType>` — specific [proxy type](/substrate-runtimes/2.0.2/glossary#proxy-type) to get proxy for. If not specified, first one found in the storage will be used.
 * `call: Box<<T as Config>::RuntimeCall>` — a call to execute
 
 ***Errors:***
@@ -264,7 +264,7 @@ pub fn create_pure<T: Config>(
 )
 ```
 
-This call creates a [pure account](/substrate-runtimes/2.0.2/glossary#pur_account) with a proxy issued to it from the call’s origin.
+This call creates a [pure account](/substrate-runtimes/2.0.2/glossary#pure-account) with a proxy issued to it from the call’s origin.
 
 The origin must be signed for this call.
 

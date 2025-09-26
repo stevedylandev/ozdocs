@@ -231,7 +231,7 @@ When using a timelock, it is the timelock that will execute proposals and thus t
 hold any funds, ownership, and access control roles.
 </Callout>
 
-TimelockController uses an [AccessControl](/contracts-cairo/1.0.0/access#role_based_accesscontrol) setup that we need to understand in order to set up roles.
+TimelockController uses an [AccessControl](/contracts-cairo/1.0.0/access#role-based-accesscontrol) setup that we need to understand in order to set up roles.
 
 The Proposer role is in charge of queueing operations: this is the role the Governor instance must be granted,
 and it MUST be the only proposer (and canceller) in the system.

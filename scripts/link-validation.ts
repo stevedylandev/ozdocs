@@ -87,7 +87,22 @@ async function getHeadings({
 	data,
 }: InferPageType<typeof source>): Promise<string[]> {
 	const pageData = await data.load();
-	return pageData.toc.map((item) => item.url.slice(1));
+	const tocHeadings = pageData.toc.map((item) => item.url.slice(1));
+
+	// Also extract actual anchor IDs from the content for API reference pages
+	const content = await data.getText("raw");
+	const anchorRegex = /<a id="([^"]+)"><\/a>/g;
+	const anchorIds: string[] = [];
+	let match: any;
+
+	while ((match = anchorRegex.exec(content)) !== null) {
+		anchorIds.push(match[1]);
+	}
+
+	// Combine TOC headings and actual anchor IDs, removing duplicates
+	const allHeadings = [...new Set([...tocHeadings, ...anchorIds])];
+
+	return allHeadings;
 }
 
 function getFiles(scope?: string | null) {

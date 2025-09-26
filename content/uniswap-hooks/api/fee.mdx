@@ -22,7 +22,7 @@ import "uniswap-hooks/src/fee/BaseDynamicAfterFee.sol";
 Base implementation for dynamic target hook fees applied after swaps.
 
 Enables to enforce a dynamic target determined by [`BaseDynamicAfterFee._getTargetUnspecified`](#BaseDynamicAfterFee-_getTargetUnspecified-address-struct-PoolKey-struct-SwapParams-bytes-) for the unspecified currency of the swap
-during [`BaseAsyncSwap._beforeSwap`](/uniswap-hooks/base#BaseAsyncSwap-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-), where if the swap outcome results better than the target, any positive difference is taken
+during [`BaseAsyncSwap._beforeSwap`](/uniswap-hooks/api/base#BaseAsyncSwap-_beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-), where if the swap outcome results better than the target, any positive difference is taken
 as a hook fee, being posteriorily handled or distributed by the hook via [`BaseDynamicAfterFee._afterSwapHandler`](#BaseDynamicAfterFee-_afterSwapHandler-struct-PoolKey-struct-SwapParams-BalanceDelta-uint256-uint256-).
 
 <Callout>
@@ -283,7 +283,7 @@ Customizable handler called after `_afterSwap` to handle or distribute the fees.
 </div>
 <div className="px-4">
 
-Set the hook permissions, specifically [`BaseHook.beforeSwap`](/uniswap-hooks/base#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-), [`BaseHook.afterSwap`](/uniswap-hooks/base#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-) and `afterSwapReturnDelta`.
+Set the hook permissions, specifically [`BaseHook.beforeSwap`](/uniswap-hooks/api/base#BaseHook-beforeSwap-address-struct-PoolKey-struct-SwapParams-bytes-), [`BaseHook.afterSwap`](/uniswap-hooks/api/base#BaseHook-afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-) and `afterSwapReturnDelta`.
 
 </div>
 </div>
