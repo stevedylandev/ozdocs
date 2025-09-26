@@ -216,7 +216,7 @@ imposed by `transfer`, making them unable to receive funds via
 <Callout type="warn">
 because control is transferred to `recipient`, care must be
 taken to not create reentrancy vulnerabilities. Consider using
-[`ReentrancyGuard`](security#ReentrancyGuard) or the
+[`ReentrancyGuard`](/contracts/4.x/api/security#ReentrancyGuard) or the
 [checks-effects-interactions pattern](https://solidity.readthedocs.io/en/v0.8.0/security-considerations.html#use-the-checks-effects-interactions-pattern).
 </Callout>
 
@@ -615,7 +615,7 @@ import "@openzeppelin/contracts/utils/Checkpoints.sol";
 ```
 
 This library defines the `History` struct, for checkpointing values as they change at different points in
-time, and later looking up past values by block number. See [`Votes`](governance#Votes) as an example.
+time, and later looking up past values by block number. See [`Votes`](/contracts/4.x/api/governance#Votes) as an example.
 
 To create a history of checkpoints define a variable type `Checkpoints.History` in your contract, and store a new
 checkpoint for the current transaction block using the [`Checkpoints.push`](#Checkpoints-push-struct-Checkpoints-Trace160-uint96-uint160-) function.
@@ -1316,10 +1316,10 @@ Consider any assumption about calldata validation performed by the sender may be
 careful about sending transactions invoking [`Multicall.multicall`](#Multicall-multicall-bytes---). For example, a relay address that filters function
 selectors won't filter calls nested within a [`Multicall.multicall`](#Multicall-multicall-bytes---) operation.
 
-NOTE: Since 5.0.1 and 4.9.4, this contract identifies non-canonical contexts (i.e. `msg.sender` is not [`ERC2771Context._msgSender`](metatx#ERC2771Context-_msgSender--)).
+NOTE: Since 5.0.1 and 4.9.4, this contract identifies non-canonical contexts (i.e. `msg.sender` is not [`ERC2771Context._msgSender`](/contracts/4.x/api/metatx#ERC2771Context-_msgSender--)).
 If a non-canonical context is identified, the following self `delegatecall` appends the last bytes of `msg.data`
-to the subcall. This makes it safe to use with [`ERC2771Context`](metatx#ERC2771Context). Contexts that don't affect the resolution of
-[`ERC2771Context._msgSender`](metatx#ERC2771Context-_msgSender--) are not propagated to subcalls.
+to the subcall. This makes it safe to use with [`ERC2771Context`](/contracts/4.x/api/metatx#ERC2771Context). Contexts that don't affect the resolution of
+[`ERC2771Context._msgSender`](/contracts/4.x/api/metatx#ERC2771Context-_msgSender--) are not propagated to subcalls.
 
 _Available since v4.1._
 
@@ -2632,7 +2632,7 @@ pair of leaves and each pair of pre-images are assumed to be sorted.
 </div>
 <div className="px-4">
 
-Calldata version of [`MinimalForwarder.verify`](metatx#MinimalForwarder-verify-struct-MinimalForwarder-ForwardRequest-bytes-)
+Calldata version of [`MinimalForwarder.verify`](/contracts/4.x/api/metatx#MinimalForwarder-verify-struct-MinimalForwarder-ForwardRequest-bytes-)
 
 _Available since v4.7._
 
@@ -2925,7 +2925,7 @@ recipient.
 <Callout type="warn">
 Forwarding all gas opens the door to reentrancy vulnerabilities.
 Make sure you trust the recipient, or are either following the
-checks-effects-interactions pattern or using [`ReentrancyGuard`](security#ReentrancyGuard).
+checks-effects-interactions pattern or using [`ReentrancyGuard`](/contracts/4.x/api/security#ReentrancyGuard).
 </Callout>
 
 </div>
@@ -3033,7 +3033,7 @@ recipient.
 <Callout type="warn">
 Forwarding all gas opens the door to reentrancy vulnerabilities.
 Make sure you trust the recipient, or are either following the
-checks-effects-interactions pattern or using [`ReentrancyGuard`](security#ReentrancyGuard).
+checks-effects-interactions pattern or using [`ReentrancyGuard`](/contracts/4.x/api/security#ReentrancyGuard).
 </Callout>
 
 </div>
@@ -3315,7 +3315,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 Implementation of the [`IERC165`](#IERC165) interface.
 
-Contracts that want to implement ERC165 should inherit from this contract and override [`AccessControl.supportsInterface`](access#AccessControl-supportsInterface-bytes4-) to check
+Contracts that want to implement ERC165 should inherit from this contract and override [`AccessControl.supportsInterface`](/contracts/4.x/api/access#AccessControl-supportsInterface-bytes4-) to check
 for the additional interface id that will be supported. For example:
 
 ```solidity

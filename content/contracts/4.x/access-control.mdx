@@ -8,7 +8,7 @@ Access control—that is, "who is allowed to do this thing"—is incredibly impo
 
 The most common and basic form of access control is the concept of _ownership_: there’s an account that is the `owner` of a contract and can do administrative tasks on it. This approach is perfectly reasonable for contracts that have a single administrative user.
 
-OpenZeppelin Contracts provides [`Ownable`](contracts/v4.x/api/access#Ownable) for implementing ownership in your contracts.
+OpenZeppelin Contracts provides [`Ownable`](/contracts/4.x/api/access#Ownable) for implementing ownership in your contracts.
 
 ```solidity
 // contracts/MyContract.sol
@@ -28,12 +28,12 @@ contract MyContract is Ownable
 }
 ```
 
-By default, the [`owner`](contracts/v4.x/api/access#Ownable-owner--) of an `Ownable` contract is the account that deployed it, which is usually exactly what you want.
+By default, the [`owner`](/contracts/4.x/api/access#Ownable-owner--) of an `Ownable` contract is the account that deployed it, which is usually exactly what you want.
 
 Ownable also lets you:
 
-* [`transferOwnership`](contracts/v4.x/api/access#Ownable-transferOwnership-address-) from the owner account to a new one, and
-* [`renounceOwnership`](contracts/v4.x/api/access#Ownable-renounceOwnership--) for the owner to relinquish this administrative privilege, a common pattern after an initial stage with centralized administration is over.
+* [`transferOwnership`](/contracts/4.x/api/access#Ownable-transferOwnership-address-) from the owner account to a new one, and
+* [`renounceOwnership`](/contracts/4.x/api/access#Ownable-renounceOwnership--) for the owner to relinquish this administrative privilege, a common pattern after an initial stage with centralized administration is over.
 
 <Callout type='warn'>
 Removing the owner altogether will mean that administrative tasks that are protected by `onlyOwner` will no longer be callable!
@@ -53,10 +53,10 @@ Most software uses access control systems that are role-based: some users are re
 
 ### Using `AccessControl`
 
-OpenZeppelin Contracts provides [`AccessControl`](contracts/v4.x/api/access#AccessControl) for implementing role-based access control. Its usage is straightforward: for each role that you want to define,
+OpenZeppelin Contracts provides [`AccessControl`](/contracts/4.x/api/access#AccessControl) for implementing role-based access control. Its usage is straightforward: for each role that you want to define,
 you will create a new _role identifier_ that is used to grant, revoke, and check if an account has that role.
 
-Here’s a simple example of using `AccessControl` in an [`ERC20` token](tokens#ERC20) to define a 'minter' role, which allows accounts that have it create new tokens:
+Here’s a simple example of using `AccessControl` in an [`ERC20` token](/contracts/4.x/tokens#ERC20) to define a 'minter' role, which allows accounts that have it create new tokens:
 
 ```solidity
 // contracts/MyToken.sol
@@ -84,7 +84,7 @@ contract MyToken is ERC20, AccessControl
 ```
 
 <Callout>
-Make sure you fully understand how [`AccessControl`](contracts/v4.x/api/access#AccessControl) works before using it on your system, or copy-pasting the examples from this guide.
+Make sure you fully understand how [`AccessControl`](/contracts/4.x/api/access#AccessControl) works before using it on your system, or copy-pasting the examples from this guide.
 </Callout>
 
 While clear and explicit, this isn’t anything we wouldn’t have been able to achieve with `Ownable`. Indeed, where `AccessControl` shines is in scenarios where granular permissions are required, which can be implemented by defining _multiple_ roles.
@@ -130,7 +130,7 @@ Every role has an associated admin role, which grants permission to call the `gr
 
 This mechanism can be used to create complex permissioning structures resembling organizational charts, but it also provides an easy way to manage simpler applications. `AccessControl` includes a special role, called `DEFAULT_ADMIN_ROLE`, which acts as the ***default admin role for all roles***. An account with this role will be able to manage any other role, unless `_setRoleAdmin` is used to select a new admin role.
 
-Since it is the admin for all roles by default, and in fact it is also its own admin, this role carries significant risk. To mitigate this risk we provide [`AccessControlDefaultAdminRules`](contracts/v4.x/api/access#AccessControlDefaultAdminRules), a recommended extension of `AccessControl` that adds a number of enforced security measures for this role: the admin is restricted to a single account, with a 2-step transfer procedure with a delay in between steps.
+Since it is the admin for all roles by default, and in fact it is also its own admin, this role carries significant risk. To mitigate this risk we provide [`AccessControlDefaultAdminRules`](/contracts/4.x/api/access#AccessControlDefaultAdminRules), a recommended extension of `AccessControl` that adds a number of enforced security measures for this role: the admin is restricted to a single account, with a 2-step transfer procedure with a delay in between steps.
 
 Let’s take a look at the ERC20 token example, this time taking advantage of the default admin role:
 
@@ -183,19 +183,19 @@ for (let i = 0; i < minterCount; i)
 
 ## Delayed operation
 
-Access control is essential to prevent unauthorized access to critical functions. These functions may be used to mint tokens, freeze transfers or perform an upgrade that completely changes the smart contract logic. While [`Ownable`](contracts/v4.x/api/access#Ownable) and [`AccessControl`](contracts/v4.x/api/access#AccessControl) can prevent unauthorized access, they do not address the issue of a misbehaving administrator attacking their own system to the prejudice of their users.
+Access control is essential to prevent unauthorized access to critical functions. These functions may be used to mint tokens, freeze transfers or perform an upgrade that completely changes the smart contract logic. While [`Ownable`](/contracts/4.x/api/access#Ownable) and [`AccessControl`](/contracts/4.x/api/access#AccessControl) can prevent unauthorized access, they do not address the issue of a misbehaving administrator attacking their own system to the prejudice of their users.
 
-This is the issue the [`TimelockController`](contracts/v4.x/api/governance#TimelockController) is addressing.
+This is the issue the [`TimelockController`](/contracts/4.x/api/governance#TimelockController) is addressing.
 
-The [`TimelockController`](contracts/v4.x/api/governance#TimelockController) is a proxy that is governed by proposers and executors. When set as the owner/admin/controller of a smart contract, it ensures that whichever maintenance operation is ordered by the proposers is subject to a delay. This delay protects the users of the smart contract by giving them time to review the maintenance operation and exit the system if they consider it is in their best interest to do so.
+The [`TimelockController`](/contracts/4.x/api/governance#TimelockController) is a proxy that is governed by proposers and executors. When set as the owner/admin/controller of a smart contract, it ensures that whichever maintenance operation is ordered by the proposers is subject to a delay. This delay protects the users of the smart contract by giving them time to review the maintenance operation and exit the system if they consider it is in their best interest to do so.
 
 ### Using `TimelockController`
 
-By default, the address that deployed the [`TimelockController`](contracts/v4.x/api/governance#TimelockController) gets administration privileges over the timelock. This role grants the right to assign proposers, executors, and other administrators.
+By default, the address that deployed the [`TimelockController`](/contracts/4.x/api/governance#TimelockController) gets administration privileges over the timelock. This role grants the right to assign proposers, executors, and other administrators.
 
-The first step in configuring the [`TimelockController`](contracts/v4.x/api/governance#TimelockController) is to assign at least one proposer and one executor. These can be assigned during construction or later by anyone with the administrator role. These roles are not exclusive, meaning an account can have both roles.
+The first step in configuring the [`TimelockController`](/contracts/4.x/api/governance#TimelockController) is to assign at least one proposer and one executor. These can be assigned during construction or later by anyone with the administrator role. These roles are not exclusive, meaning an account can have both roles.
 
-Roles are managed using the [`AccessControl`](contracts/v4.x/api/access#AccessControl) interface and the `bytes32` values for each role are accessible through the `ADMIN_ROLE`, `PROPOSER_ROLE` and `EXECUTOR_ROLE` constants.
+Roles are managed using the [`AccessControl`](/contracts/4.x/api/access#AccessControl) interface and the `bytes32` values for each role are accessible through the `ADMIN_ROLE`, `PROPOSER_ROLE` and `EXECUTOR_ROLE` constants.
 
 There is an additional feature built on top of `AccessControl`: giving the executor role to `address(0)` opens access to anyone to execute a proposal once the timelock has expired. This feature, while useful, should be used with caution.
 
@@ -215,6 +215,6 @@ A recommended configuration is to grant both roles to a secure governance contra
 
 ### Minimum delay
 
-Operations executed by the [`TimelockController`](contracts/v4.x/api/governance#TimelockController) are not subject to a fixed delay but rather a minimum delay. Some major updates might call for a longer delay. For example, if a delay of just a few days might be sufficient for users to audit a minting operation, it makes sense to use a delay of a few weeks, or even a few months, when scheduling a smart contract upgrade.
+Operations executed by the [`TimelockController`](/contracts/4.x/api/governance#TimelockController) are not subject to a fixed delay but rather a minimum delay. Some major updates might call for a longer delay. For example, if a delay of just a few days might be sufficient for users to audit a minting operation, it makes sense to use a delay of a few weeks, or even a few months, when scheduling a smart contract upgrade.
 
-The minimum delay (accessible through the [`getMinDelay`](contracts/v4.x/api/governance#TimelockController-getMinDelay--) method) can be updated by calling the [`updateDelay`](contracts/v4.x/api/governance#TimelockController-updateDelay-uint256-) function. Bear in mind that access to this function is only accessible by the timelock itself, meaning this maintenance operation has to go through the timelock itself.
+The minimum delay (accessible through the [`getMinDelay`](/contracts/4.x/api/governance#TimelockController-getMinDelay--) method) can be updated by calling the [`updateDelay`](/contracts/4.x/api/governance#TimelockController-updateDelay-uint256-) function. Bear in mind that access to this function is only accessible by the timelock itself, meaning this maintenance operation has to go through the timelock itself.

@@ -3,7 +3,7 @@ title: "Proxy"
 description: "Smart contract proxy utilities and implementations"
 ---
 
-This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](upgrades-plugins::proxies) page.
+This is a low-level set of contracts implementing different proxy patterns with and without upgradeability. For an in-depth overview of this pattern check out the [Proxy Upgrade Pattern](/upgrades-plugins/proxies) page.
 
 Most of the proxies below are built on an abstract base contract.
 
@@ -20,7 +20,7 @@ There are two alternative ways to add upgradeability to an ERC1967 proxy. Their 
 * [`UUPSUpgradeable`](#UUPSUpgradeable): An upgradeability mechanism to be included in the implementation contract.
 
 **🔥 CAUTION**\
-Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](upgrades-plugins::index) for Truffle and Hardhat.
+Using upgradeable proxies correctly and securely is a difficult task that requires deep knowledge of the proxy pattern, Solidity, and the EVM. Unless you want a lot of low level control, we recommend using the [OpenZeppelin Upgrades Plugins](/upgrades-plugins) for Truffle and Hardhat.
 
 A different family of proxies are beacon proxies. This pattern, popularized by Dharma, allows multiple proxies to be upgraded to a different implementation in a single transaction.
 
@@ -56,7 +56,7 @@ The current implementation of this security mechanism uses [EIP1822](https://eip
 
 ## ERC1967
 
-[`IERC1967`](interfaces#IERC1967)
+[`IERC1967`](/contracts/4.x/api/interfaces#IERC1967)
 
 [`ERC1967Proxy`](#ERC1967Proxy)
 
@@ -369,7 +369,7 @@ Returns the current implementation address.
 
 Perform implementation upgrade
 
-Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+Emits an [`IERC1967.Upgraded`](/contracts/4.x/api/interfaces#IERC1967-Upgraded-address-) event.
 
 </div>
 </div>
@@ -388,7 +388,7 @@ Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
 Perform implementation upgrade with additional setup call.
 
-Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+Emits an [`IERC1967.Upgraded`](/contracts/4.x/api/interfaces#IERC1967-Upgraded-address-) event.
 
 </div>
 </div>
@@ -407,7 +407,7 @@ Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 
 Perform implementation upgrade with security checks for UUPS proxies, and additional setup call.
 
-Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+Emits an [`IERC1967.Upgraded`](/contracts/4.x/api/interfaces#IERC1967-Upgraded-address-) event.
 
 </div>
 </div>
@@ -443,7 +443,7 @@ Returns the current admin.
 
 Changes the admin of the proxy.
 
-Emits an [`IERC1967.AdminChanged`](interfaces#IERC1967-AdminChanged-address-address-) event.
+Emits an [`IERC1967.AdminChanged`](/contracts/4.x/api/interfaces#IERC1967-AdminChanged-address-address-) event.
 
 </div>
 </div>
@@ -480,7 +480,7 @@ Returns the current beacon.
 Perform beacon upgrade with additional setup call. Note: This upgrades the address of the beacon, it does
 not upgrade the implementation contained in the beacon (see [`UpgradeableBeacon._setImplementation`](#UpgradeableBeacon-_setImplementation-address-) for that).
 
-Emits a [`IERC1967.BeaconUpgraded`](interfaces#IERC1967-BeaconUpgraded-address-) event.
+Emits a [`IERC1967.BeaconUpgraded`](/contracts/4.x/api/interfaces#IERC1967-BeaconUpgraded-address-) event.
 
 </div>
 </div>
@@ -506,7 +506,7 @@ instruction `delegatecall`. We refer to the second contract as the _implementati
 be specified by overriding the virtual [`ERC1967Proxy._implementation`](#ERC1967Proxy-_implementation--) function.
 
 Additionally, delegation to the implementation can be triggered manually through the [`Proxy._fallback`](#Proxy-_fallback--) function, or to a
-different contract through the [`Votes._delegate`](governance#Votes-_delegate-address-address-) function.
+different contract through the [`Votes._delegate`](/contracts/4.x/api/governance#Votes-_delegate-address-address-) function.
 
 The success and return data of the delegated call will be returned back to the caller of the proxy.
 
@@ -918,7 +918,7 @@ Returns the current implementation address.
 
 Upgrades the beacon to a new implementation.
 
-Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+Emits an [`IERC1967.Upgraded`](/contracts/4.x/api/interfaces#IERC1967-Upgraded-address-) event.
 
 Requirements:
 
@@ -1747,7 +1747,7 @@ callable on the implementing contract but not through proxies.
 </div>
 <div className="px-4">
 
-Implementation of the ERC1822 [`IERC1822Proxiable.proxiableUUID`](interfaces#IERC1822Proxiable-proxiableUUID--) function. This returns the storage slot used by the
+Implementation of the ERC1822 [`IERC1822Proxiable.proxiableUUID`](/contracts/4.x/api/interfaces#IERC1822Proxiable-proxiableUUID--) function. This returns the storage slot used by the
 implementation. It is used to validate the implementation's compatibility when performing an upgrade.
 
 <Callout type="warn">
@@ -1775,7 +1775,7 @@ Upgrade the implementation of the proxy to `newImplementation`.
 
 Calls [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-address-).
 
-Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+Emits an [`IERC1967.Upgraded`](/contracts/4.x/api/interfaces#IERC1967-Upgraded-address-) event.
 
 </div>
 </div>
@@ -1797,7 +1797,7 @@ encoded in `data`.
 
 Calls [`UUPSUpgradeable._authorizeUpgrade`](#UUPSUpgradeable-_authorizeUpgrade-address-).
 
-Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
+Emits an [`IERC1967.Upgraded`](/contracts/4.x/api/interfaces#IERC1967-Upgraded-address-) event.
 
 </div>
 </div>
@@ -1817,7 +1817,7 @@ Emits an [`IERC1967.Upgraded`](interfaces#IERC1967-Upgraded-address-) event.
 Function that should revert when `msg.sender` is not authorized to upgrade the contract. Called by
 [`UpgradeableBeacon.upgradeTo`](#UpgradeableBeacon-upgradeTo-address-) and [`ITransparentUpgradeableProxy.upgradeToAndCall`](#ITransparentUpgradeableProxy-upgradeToAndCall-address-bytes-).
 
-Normally, this function will use an xref:access[access control] modifier such as [`Ownable.onlyOwner`](access#Ownable-onlyOwner--).
+Normally, this function will use an xref:access[access control] modifier such as [`Ownable.onlyOwner`](/contracts/4.x/api/access#Ownable-onlyOwner--).
 
 ```solidity
 function _authorizeUpgrade(address) internal override onlyOwner {}
