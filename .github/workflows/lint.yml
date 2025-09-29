@@ -6,10 +6,16 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  NEXT_TELEMETRY_DISABLED: 1
+
 jobs:
   lint:
     name: Lint and Format Check
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22]
 
     steps:
       - name: Checkout code
@@ -17,6 +23,12 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
