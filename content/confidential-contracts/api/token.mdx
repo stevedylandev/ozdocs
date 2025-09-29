@@ -5,7 +5,7 @@ description: "Smart contract token utilities and implementations"
 
 This set of interfaces, contracts, and utilities are all related to the evolving Confidential Token Standard. The standard utilizes the Zama fhEVM co-processor for manipulating FHE values. All amounts are stored on-chain as ciphertext handles (or pointers) to values stored on the co-processor.
 
-* [`ConfidentialFungibleToken`](#ConfidentialFungibleToken): Implementation of [`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken).
+* [`ConfidentialFungibleToken`](#ConfidentialFungibleToken): Implementation of [`IConfidentialFungibleToken`](./interfaces#IConfidentialFungibleToken).
 * [`ConfidentialFungibleTokenERC20Wrapper`](#ConfidentialFungibleTokenERC20Wrapper): Extension of [`ConfidentialFungibleToken`](#ConfidentialFungibleToken) which wraps an `ERC20` into a confidential token. The wrapper allows for free conversion in both directions at a fixed rate.
 * [`ConfidentialFungibleTokenUtils`](#ConfidentialFungibleTokenUtils): A library that provides the on-transfer callback check used by [`ConfidentialFungibleToken`](#ConfidentialFungibleToken).
 
@@ -34,7 +34,7 @@ This set of interfaces, contracts, and utilities are all related to the evolving
 import "@openzeppelin/confidential-contracts/token/ConfidentialFungibleToken.sol";
 ```
 
-Reference implementation for [`IConfidentialFungibleToken`](interfaces#IConfidentialFungibleToken).
+Reference implementation for [`IConfidentialFungibleToken`](./interfaces#IConfidentialFungibleToken).
 
 This contract implements a fungible token where balances and transfers are encrypted using the Zama fhEVM,
 providing confidentiality to users. Token amounts are stored as encrypted, unsigned integers (`euint64`)
@@ -349,7 +349,7 @@ The caller *must* be already allowed by ACL for the given `amount`.
 Similar to interfaces#IConfidentialFungibleToken-confidentialTransfer-address-externalEuint64-bytes- but with a callback to `to` after
 the transfer.
 
-The callback is made to the [`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) function on the
+The callback is made to the [`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](./interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) function on the
 to address with the actual transferred amount (may differ from the given `encryptedAmount`) and the given
 data `data`.
 
@@ -421,7 +421,7 @@ after the transfer.
 </div>
 <div className="px-4">
 
-Discloses an encrypted amount `encryptedAmount` publicly via an [`IConfidentialFungibleToken.AmountDisclosed`](interfaces#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
+Discloses an encrypted amount `encryptedAmount` publicly via an [`IConfidentialFungibleToken.AmountDisclosed`](./interfaces#IConfidentialFungibleToken-AmountDisclosed-euint64-uint64-)
 event. The caller and this contract must be authorized to use the encrypted amount on the ACL.
 
 <Callout>
@@ -971,7 +971,7 @@ ERC-20 token.
 </div>
 <div className="px-4">
 
-Returns the maximum number that will be used for [`IConfidentialFungibleToken.decimals`](interfaces#IConfidentialFungibleToken-decimals--) by the wrapper.
+Returns the maximum number that will be used for [`IConfidentialFungibleToken.decimals`](./interfaces#IConfidentialFungibleToken-decimals--) by the wrapper.
 
 </div>
 </div>
@@ -1193,7 +1193,7 @@ after all transfers "withCallback" on a [`ConfidentialFungibleToken`](#Confident
 
 The transfer callback is not invoked on the recipient if the recipient has no code (i.e. is an EOA). If the
 recipient has non-zero code, it must implement
-[`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) and return an `ebool` indicating
+[`IConfidentialFungibleTokenReceiver.onConfidentialTransferReceived`](./interfaces#IConfidentialFungibleTokenReceiver-onConfidentialTransferReceived-address-address-euint64-bytes-) and return an `ebool` indicating
 whether the transfer was accepted or not. If the `ebool` is `false`, the transfer will be reversed.
 
 </div>

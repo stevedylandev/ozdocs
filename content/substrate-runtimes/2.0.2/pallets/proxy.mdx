@@ -13,11 +13,11 @@ This pallet enables delegation of rights to execute certain call types from one 
 ## Config
 
 * Pallet-specific configs:
-  * `ProxyType` -- a type that describes different variants of [proxy](glossary#proxy). It must implement `Default` trait and `InstanceFilter<RuntimeCall>` trait.
+  * `ProxyType` -- a type that describes different variants of [proxy](/substrate-runtimes/2.0.2/glossary#proxy). It must implement `Default` trait and `InstanceFilter<RuntimeCall>` trait.
   * `ProxyDepositBase` -- a base amount of currency that defines a deposit for proxy creation.
   * `ProxyDepositFactor` -- an amount of currency that will be frozen along with the `ProxyDepositBase` for each additional proxy.
   * `MaxProxies` -- maximum number of proxies that single account can create.
-  * `MaxPending` -- maximum number of [announcements](glossary#announcement) that can be made per account.
+  * `MaxPending` -- maximum number of [announcements](/substrate-runtimes/2.0.2/glossary#announcement) that can be made per account.
   * `CallHasher` -- a type implementing a `Hash` trait. Will be used to hash the executed call.
   * `AnnouncementDepositBase` -- a base amount of currency that defines a deposit for announcement creation.
   * `AnnouncementDepositFactor` -- an amount of currency that will be frozen along with the `AnnouncementDepositBase` for each additional announcement.
@@ -40,7 +40,7 @@ Create a new `Proxy`  that allows `delegate` to execute calls that fulfill `prox
 
 The origin must be signed for this call.
 
-This call will take (or modify) a deposit based on number of proxies created by [delegator](glossary#delegator) and calculated by this formula: `ProxyDepositBase + ProxyDepositFactor * <number of proxies>`
+This call will take (or modify) a deposit based on number of proxies created by [delegator](/substrate-runtimes/2.0.2/glossary#delegator) and calculated by this formula: `ProxyDepositBase + ProxyDepositFactor * <number of proxies>`
 
 There may not be more proxies than `MaxProxies`
 
@@ -56,7 +56,7 @@ There may not be more proxies than `MaxProxies`
 * `LookupError` — delegate not found
 * `NoSelfProxy` — delegate and call origin is the same account
 * `Duplicate` — proxy already exists
-* `TooMany` — too many proxies created for this delegate with this type and the same [delay](glossary#delay)
+* `TooMany` — too many proxies created for this delegate with this type and the same [delay](/substrate-runtimes/2.0.2/glossary#delay)
 * `InsufficientBalance` — delegator does not have enough funds for deposit for proxy creation
 * `LiquidityRestrictions` —  account restrictions (like frozen funds or vesting) prevent from creating a deposit
 * `Overflow` — reserved funds overflow the currency type. Should not happen in usual scenarios.
@@ -117,7 +117,7 @@ If the proxy requires an announcement before the call, this dispatchable will fa
 ***Params:***
 
 * `real: AccountIdLookupOf<T>` — the account on which behalf this call will be made
-* `force_proxy_type: Option<T::ProxyType>` — specific [proxy type](glossary#proxy_type) to get proxy for. If not specified, first one found in the storage will be used.
+* `force_proxy_type: Option<T::ProxyType>` — specific [proxy type](/substrate-runtimes/2.0.2/glossary#proxy-type) to get proxy for. If not specified, first one found in the storage will be used.
 * `call: Box<<T as Config>::RuntimeCall>` — a call to execute
 
 ***Errors:***
@@ -175,7 +175,7 @@ pub fn reject_announcement<T: Config>(
 
 Remove the given announcement. Deposit is returned in case of success.
 
-May be called from delegator of the proxy to remove announcement made by [delegatee](glossary#delegatee).
+May be called from delegator of the proxy to remove announcement made by [delegatee](/substrate-runtimes/2.0.2/glossary#delegatee).
 
 The origin must be signed for this call.
 
@@ -264,7 +264,7 @@ pub fn create_pure<T: Config>(
 )
 ```
 
-This call creates a [pure account](glossary#pur_account) with a proxy issued to it from the call’s origin.
+This call creates a [pure account](/substrate-runtimes/2.0.2/glossary#pure-account) with a proxy issued to it from the call’s origin.
 
 The origin must be signed for this call.
 

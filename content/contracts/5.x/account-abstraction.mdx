@@ -79,13 +79,13 @@ interface IAccountExecute {
 The `IAccountExecute` interface is optional. Developers might want to use [`ERC-7821`](/contracts/5.x/api/account#ERC7821) for a minimal batched execution interface or rely on ERC-7579 or any other execution logic.
 </Callout>
 
-To build your own account, see [accounts](accounts).
+To build your own account, see [accounts](./accounts).
 
 ### Factory Contract
 
 The smart contract accounts are created by a Factory contract defined by the Account developer. This factory receives arbitrary bytes as `initData` and returns an `address` where the logic of the account is deployed.
 
-To build your own factory, see [account factories](./accounts#accounts_factory).
+To build your own factory, see [account factories](./accounts#accounts-factory).
 
 ### Paymaster Contract
 

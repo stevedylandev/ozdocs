@@ -7,11 +7,11 @@ Implementation of the ERC-4626 "Tokenized Vault Standard" as defined in [ERC-462
 This extension allows the minting and burning of "shares" (represented using the ERC-20 inheritance) in exchange for underlying "assets" through standardized `deposit`, `mint`, `redeem` and `burn` workflows. This contract extends the ERC-20 standard. Any additional extensions included along it would affect the "shares" token represented by this contract and not the "assets" token which is an independent contract.
 
 ## Security concern: Inflation attack
-To read more about the security concerns associated with the ERC-4626, check the [Inflation attack](/contracts-stylus/docs.openzeppelin.com/contracts/5.x/erc4626#inflation-attack) description.
+To read more about the security concerns associated with the ERC-4626, check the [Inflation attack](/contracts/5.x/erc4626#security-concern-inflation-attack) description.
 
 ## Usage
 
-In order to make [`ERC-4626`](/contracts-stylus/docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/token/erc20/extensions/erc4626/index.html) methods "external" so that other contracts can call them, you need to implement them by yourself for your final contract as follows:
+In order to make [`ERC-4626`](https://docs.rs/openzeppelin-stylus/0.3.0/openzeppelin_stylus/token/erc20/extensions/erc4626/index.html) methods "external" so that other contracts can call them, you need to implement them by yourself for your final contract as follows:
 
 ```rust
 use openzeppelin_stylus::{

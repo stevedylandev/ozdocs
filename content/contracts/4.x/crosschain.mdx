@@ -4,7 +4,7 @@ title: Adding cross-chain support to contracts
 
 If your contract is targeting to be used in the context of multichain operations, you may need specific tools to identify and process these cross-chain operations.
 
-OpenZeppelin provides the [`CrossChainEnabled`](contracts/v4.x/api/crosschain#CrossChainEnabled) abstract contract, that includes dedicated internal functions.
+OpenZeppelin provides the [`CrossChainEnabled`](/contracts/4.x/api/crosschain#CrossChainEnabled) abstract contract, that includes dedicated internal functions.
 
 In this guide, we will go through an example use case: _how to build an upgradeable & mintable ERC20 token controlled by a governor present on a foreign chain_.
 
@@ -51,11 +51,11 @@ This token is mintable and upgradeable by the owner of the contract.
 
 ## Preparing our contract for cross-chain operations.
 
-Let’s now imagine that this contract is going to live on one chain, but we want the minting and the upgrading to be performed by a [`governor`](governance) contract on another chain.
+Let’s now imagine that this contract is going to live on one chain, but we want the minting and the upgrading to be performed by a [`governor`](/contracts/4.x/governance) contract on another chain.
 
 For example, we could have our token on xDai, with our governor on mainnet, or we could have our token on mainnet, with our governor on optimism.
 
-In order to do that, we will start by adding [`CrossChainEnabled`](contracts/v4.x/api/crosschain#CrossChainEnabled) to our contract. You will notice that the contract is now abstract. This is because `CrossChainEnabled` is an abstract contract: it is not tied to any particular chain and it deals with cross-chain interactions in an abstract way. This is what enables us to easily reuse the code for different chains. We will specialize it later by inheriting from a chain-specific implementation of the abstraction.
+In order to do that, we will start by adding [`CrossChainEnabled`](/contracts/4.x/api/crosschain#CrossChainEnabled) to our contract. You will notice that the contract is now abstract. This is because `CrossChainEnabled` is an abstract contract: it is not tied to any particular chain and it deals with cross-chain interactions in an abstract way. This is what enables us to easily reuse the code for different chains. We will specialize it later by inheriting from a chain-specific implementation of the abstraction.
 
 ```diff
  import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
@@ -119,11 +119,11 @@ Due to the way smart contract addresses are computed, and the fact that smart co
 
 ## Going further with access control
 
-In the previous example, we have both an `onlyOwner()` modifier and the `onlyCrossChainSender(owner)` mechanism. We didn’t use the [`Ownable`](access-control#ownership-and-ownable) pattern because the ownership transfer mechanism in includes is not designed to work with the owner being a cross-chain entity. Unlike [`Ownable`](access-control#ownership-and-ownable), [`AccessControl`](access-control#role-based-access-control) is more effective at capturing the nuances and can effectively be used to build cross-chain-aware contracts.
+In the previous example, we have both an `onlyOwner()` modifier and the `onlyCrossChainSender(owner)` mechanism. We didn’t use the [`Ownable`](/contracts/4.x/access-control#ownership-and-ownable) pattern because the ownership transfer mechanism in includes is not designed to work with the owner being a cross-chain entity. Unlike [`Ownable`](/contracts/4.x/access-control#ownership-and-ownable), [`AccessControl`](/contracts/4.x/access-control#role-based-access-control) is more effective at capturing the nuances and can effectively be used to build cross-chain-aware contracts.
 
-Using [`AccessControlCrossChain`](contracts/v4.x/api/access#AccessControlCrossChain) includes both the [`AccessControl`](contracts/v4.x/api/access#AccessControl) core and the [`CrossChainEnabled`](contracts/v4.x/api/crosschain#CrossChainEnabled) abstraction. It also includes some binding to make role management compatible with cross-chain operations.
+Using [`AccessControlCrossChain`](/contracts/4.x/api/access#AccessControlCrossChain) includes both the [`AccessControl`](/contracts/4.x/api/access#AccessControl) core and the [`CrossChainEnabled`](/contracts/4.x/api/crosschain#CrossChainEnabled) abstraction. It also includes some binding to make role management compatible with cross-chain operations.
 
-In the case of the `mint` function, the caller must have the `MINTER_ROLE` when the call originates from the same chain. If the caller is on a remote chain, then the caller should not have the `MINTER_ROLE`, but the "aliased" version (`MINTER_ROLE ^ CROSSCHAIN_ALIAS`). This mitigates the danger described in the previous section by strictly separating local accounts from remote accounts from a different chain. See the [`AccessControlCrossChain`](contracts/v4.x/api/access#AccessControlCrossChain) documentation for more details.
+In the case of the `mint` function, the caller must have the `MINTER_ROLE` when the call originates from the same chain. If the caller is on a remote chain, then the caller should not have the `MINTER_ROLE`, but the "aliased" version (`MINTER_ROLE ^ CROSSCHAIN_ALIAS`). This mitigates the danger described in the previous section by strictly separating local accounts from remote accounts from a different chain. See the [`AccessControlCrossChain`](/contracts/4.x/api/access#AccessControlCrossChain) documentation for more details.
 
 ```diff
  import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";

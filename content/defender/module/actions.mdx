@@ -2,13 +2,13 @@
 title: Actions
 ---
 
-Actions allow you to implement custom app logic for on-chain and off-chain operations. You can enable automated responses to threats detected by the [Monitor](module/monitor) and [Workflows](module/actions#workflows) modules.
+Actions allow you to implement custom app logic for on-chain and off-chain operations. You can enable automated responses to threats detected by the [Monitor](/defender/module/monitor) and [Workflows](/defender/module/actions#workflows) modules.
 
 ## Use cases
 
 * Automate smart contract operations
-* Execute actions as response to a [Monitor](module/monitor) alert
-* Automate [Workflow](module/actions#workflows) steps with Actions
+* Execute actions as response to a [Monitor](/defender/module/monitor) alert
+* Automate [Workflow](/defender/module/actions#workflows) steps with Actions
 * Call external APIs and interact with other smart contracts
 
 ## Actions
@@ -28,7 +28,7 @@ The following triggers are supported:
 When sending requests to the webhook, make sure to include the `Content-Type: application/json` header. We have a strict requirement for this header to be present in the request. Otherwise you will see `415 Unsupported Media Type` error.
 </Callout>
 
-* **Monitor**: Triggered by a Defender [Monitor](module/monitor). It will contain a body property with the details for the triggering event that you can use to run custom logic.
+* **Monitor**: Triggered by a Defender [Monitor](/defender/module/monitor). It will contain a body property with the details for the triggering event that you can use to run custom logic.
 
 ### Environment
 
@@ -190,7 +190,7 @@ exports.handler = async function(event)
 
 Actions triggered from a Monitor can have two types of body properties and scheme, depending what type of Monitor triggered the action:
 
-* In the case of a Defender monitor, the body will contain the [monitor event schema](module/monitor#monitor_event_schema).
+* In the case of a Defender monitor, the body will contain the [monitor event schema](/defender/module/monitor#monitor-event-schema).
 
 If the action is written in TypeScript, `BlockTriggerEvent` type from the [defender-sdk-action-client](https://www.npmjs.com/package/@openzeppelin/defender-sdk-action-client) package can be used.
 
@@ -398,7 +398,7 @@ If you want to reproduce the behavior of an action locally for debugging or test
 
 * Initialize a new npm project (`npm init`)
 * Set the `dependencies` key in `package.json` to the packages indicated in the [Environment](#environment) section above
-* Download `yarn.lock`: 📎 [yarn.lock](attachmentsdir/yarn.lock)
+* Download `yarn.lock`: 📎 [yarn.lock]()
 * Run `yarn install --frozen-lockfile`.
 
 You can also use the following template for local development, which will run the action code when invoked using `node`. It will load the relayer credentials from environment variables, or use the injected credentials when run by Defender.
@@ -436,7 +436,7 @@ The code bundle must not exceed 5MB in size after being compressed and base64-en
 
 Workflows allow you to instantly detect, respond, and resolve threats and attacks with pre-defined actions and scenarios. You can conduct attack simulations and test real-world scenarios on forked networks too.
 
-Workflows are processes that combine automatic actions and transaction templates. Actions can be run in parallel or connected sequentially. Workflows can be triggered manually or via a [Monitor](module/monitor).
+Workflows are processes that combine automatic actions and transaction templates. Actions can be run in parallel or connected sequentially. Workflows can be triggered manually or via a [Monitor](/defender/module/monitor).
 
 Creating workflows is a seamless experience guided through a form that allows you to organize actions in the workflow process easily.
 
@@ -453,7 +453,7 @@ To run multiple actions in parallel, click "Add Parallel Sequence" and drag acti
 You can drag actions back off the workflow to remove them or click the visible minus icon in the upper right to remove an empty step. The "Save" button on the top right saves the workflow with its configuration and name.
 
 <Callout>
-We provide a quickstart tutorial to create and use Workflows. Check it out [here](tutorial/workflows)!
+We provide a quickstart tutorial to create and use Workflows. Check it out [here](/defender/tutorial/workflows)!
 </Callout>
 
 ## A complete example
@@ -495,5 +495,5 @@ The code does not need to wait for the transaction to be mined. Defender will ta
 The code for each action is isolated in Defender, and actions are restricted via strict access controls to have zero access to other Defender internal infrastructure. The only exception is that an action may access its linked relayer, which is negotiated via temporary credentials injected by the action service upon each execution. Still, the action can only call the relayer’s exposed methods and has no direct access to the backing private key or any other services.
 
 <Callout>
-We provide a quickstart tutorial to create an automatic action for a smart contract using Defender. Check it out [here](tutorial/actions)!
+We provide a quickstart tutorial to create an automatic action for a smart contract using Defender. Check it out [here](/defender/tutorial/actions)!
 </Callout>

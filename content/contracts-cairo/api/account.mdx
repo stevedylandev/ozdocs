@@ -25,7 +25,7 @@ use openzeppelin_interfaces::accounts::ISRC6;
 
 Interface of the SRC6 Standard Account as defined in the [SNIP-6](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-6.md).
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91e03caecc1cd
@@ -81,7 +81,7 @@ use openzeppelin_interfaces::src9::ISRC9_V2;
 
 Interface of the SRC9 Standard as defined in the [SNIP-9](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-9.md).
 
-[SRC5 ID](introspection#ISRC5)
+[SRC5 ID](./introspection#ISRC5)
 
 ```text
 0x1d1144bb2138366ff28d8e9ab57456b1d332ac42196230c3a602003c89872
@@ -133,7 +133,7 @@ use openzeppelin_account::AccountComponent;
 
 Account component implementing [`ISRC6`](#ISRC6) for signatures over the [Starknet curve](https://docs.starknet.io/architecture-and-concepts/cryptography/#stark-curve).
 
-Implementing [SRC5Component](introspection#SRC5Component) is a requirement for this component to be implemented.
+Implementing [SRC5Component](./introspection#SRC5Component) is a requirement for this component to be implemented.
 
 [Embeddable Mixin Implementations](../components#mixins)
 
@@ -145,7 +145,7 @@ Implementing [SRC5Component](introspection#SRC5Component) is a requirement for t
 - [`PublicKeyImpl`](#AccountComponent-Embeddable-Impls-PublicKeyImpl)
 - [`SRC6CamelOnlyImpl`](#AccountComponent-Embeddable-Impls-SRC6CamelOnlyImpl)
 - [`PublicKeyCamelImpl`](#AccountComponent-Embeddable-Impls-PublicKeyCamelImpl)
-- [`SRC5Impl`](introspection#SRC5Component-Embeddable-Impls)
+- [`SRC5Impl`](./introspection#SRC5Component-Embeddable-Impls)
 
 Embeddable Implementations
 
@@ -179,7 +179,7 @@ Embeddable Implementations
 
 #### SRC5Impl [!toc] [#AccountComponent-Embeddable-Impls-SRC5Impl]
 
-- [`supports_interface(self, interface_id: felt252)`](introspection#ISRC5-supports_interface)
+- [`supports_interface(self, interface_id: felt252)`](./introspection#ISRC5-supports_interface)
 
 Internal Implementations
 
@@ -395,7 +395,7 @@ use openzeppelin_account::eth_account::EthAccountComponent;
 
 Account component implementing [`ISRC6`](#ISRC6) for signatures over the [Secp256k1 curve](https://en.bitcoin.it/wiki/Secp256k1).
 
-Implementing [SRC5Component](introspection#SRC5Component) is a requirement for this component to be implemented.
+Implementing [SRC5Component](./introspection#SRC5Component) is a requirement for this component to be implemented.
 
 The `EthPublicKey` type is an alias for `starknet::secp256k1::Secp256k1Point`.
 
@@ -409,7 +409,7 @@ The `EthPublicKey` type is an alias for `starknet::secp256k1::Secp256k1Point`.
 - [`PublicKeyImpl`](#EthAccountComponent-Embeddable-Impls-PublicKeyImpl)
 - [`SRC6CamelOnlyImpl`](#EthAccountComponent-Embeddable-Impls-SRC6CamelOnlyImpl)
 - [`PublicKeyCamelImpl`](#EthAccountComponent-Embeddable-Impls-PublicKeyCamelImpl)
-- [`SRC5Impl`](introspection#SRC5Component-Embeddable-Impls)
+- [`SRC5Impl`](./introspection#SRC5Component-Embeddable-Impls)
 
 Embeddable Implementations
 
@@ -443,7 +443,7 @@ Embeddable Implementations
 
 #### SRC5Impl [!toc] [#EthAccountComponent-Embeddable-Impls-SRC5Impl]
 
-- [`supports_interface(self, interface_id: felt252)`](introspection#ISRC5-supports_interface)
+- [`supports_interface(self, interface_id: felt252)`](./introspection#ISRC5-supports_interface)
 
 Internal Implementations
 

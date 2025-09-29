@@ -6,7 +6,7 @@ description: "Smart contract ERC721 utilities and implementations"
 This set of interfaces, contracts, and utilities are all related to the [ERC721 Non-Fungible Token Standard](https://eips.ethereum.org/EIPS/eip-721).
 
 <Callout>
-For a walk through on how to create an ERC721 token read our [ERC721 guide](ROOT:erc721).
+For a walk through on how to create an ERC721 token read our [ERC721 guide](/contracts/4.x/erc721).
 </Callout>
 
 The EIP specifies four interfaces:
@@ -33,7 +33,7 @@ Additionally there are a few of other extensions:
 * [`ERC721Wrapper`](#ERC721Wrapper): Wrapper to create an ERC721 backed by another ERC721, with deposit and withdraw methods. Useful in conjunction with [`ERC721Votes`](#ERC721Votes).
 
 <Callout>
-This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC721 (such as [`_mint`](#ERC721-_mint-address-uint256-)) and expose them as external functions in the way they prefer. On the other hand, [ERC721 Presets](ROOT:erc721#Presets) (such as [`ERC721PresetMinterPauserAutoId`](#ERC721PresetMinterPauserAutoId)) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
+This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC721 (such as [`_mint`](#ERC721-_mint-address-uint256-)) and expose them as external functions in the way they prefer. On the other hand, [ERC721 Presets](/contracts/4.x/erc721#preset-erc721-contract) (such as [`ERC721PresetMinterPauserAutoId`](#ERC721PresetMinterPauserAutoId)) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
 </Callout>
 
 ## Core
@@ -423,7 +423,7 @@ are aware of the ERC721 protocol to prevent tokens from being forever locked.
 
 `data` is additional data, it has no specified format and it is sent in call to `to`.
 
-This internal function is equivalent to [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-), and can be used to e.g.
+This internal function is equivalent to [`ERC1155.safeTransferFrom`](/contracts/4.x/api/token/ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-), and can be used to e.g.
 implement alternative mechanisms to perform token transfer, such as signature-based.
 
 Requirements:
@@ -433,7 +433,7 @@ Requirements:
 - `tokenId` token must exist and be owned by `from`.
 - If `to` refers to a smart contract, it must implement [`IERC721Receiver.onERC721Received`](#IERC721Receiver-onERC721Received-address-address-uint256-bytes-), which is called upon a safe transfer.
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -469,7 +469,7 @@ Returns the owner of the `tokenId`. Does NOT revert if token doesn't exist
 
 Returns whether `tokenId` exists.
 
-Tokens can be managed by their owner or approved accounts via [`ERC20.approve`](ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](ERC1155#ERC1155-setApprovalForAll-address-bool-).
+Tokens can be managed by their owner or approved accounts via [`ERC20.approve`](/contracts/4.x/api/token/ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](/contracts/4.x/api/token/ERC1155#ERC1155-setApprovalForAll-address-bool-).
 
 Tokens start existing when they are minted (`_mint`),
 and stop existing when they are burned (`_burn`).
@@ -517,7 +517,7 @@ Requirements:
 - `tokenId` must not exist.
 - If `to` refers to a smart contract, it must implement [`IERC721Receiver.onERC721Received`](#IERC721Receiver-onERC721Received-address-address-uint256-bytes-), which is called upon a safe transfer.
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -563,7 +563,7 @@ Requirements:
 - `tokenId` must not exist.
 - `to` cannot be the zero address.
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -588,7 +588,7 @@ Requirements:
 
 - `tokenId` must exist.
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -606,14 +606,14 @@ Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) even
 <div className="px-4">
 
 Transfers `tokenId` from `from` to `to`.
- As opposed to [`ERC20.transferFrom`](ERC20#ERC20-transferFrom-address-address-uint256-), this imposes no restrictions on msg.sender.
+ As opposed to [`ERC20.transferFrom`](/contracts/4.x/api/token/ERC20#ERC20-transferFrom-address-address-uint256-), this imposes no restrictions on msg.sender.
 
 Requirements:
 
 - `to` cannot be the zero address.
 - `tokenId` token must be owned by `from`.
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -632,7 +632,7 @@ Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) even
 
 Approve `to` to operate on `tokenId`
 
-Emits an [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) event.
+Emits an [`IERC20.Approval`](/contracts/4.x/api/token/ERC20#IERC20-Approval-address-address-uint256-) event.
 
 </div>
 </div>
@@ -651,7 +651,7 @@ Emits an [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) eve
 
 Approve `operator` to operate on all of `owner` tokens
 
-Emits an [`IERC1155.ApprovalForAll`](ERC1155#IERC1155-ApprovalForAll-address-address-bool-) event.
+Emits an [`IERC1155.ApprovalForAll`](/contracts/4.x/api/token/ERC1155#IERC1155-ApprovalForAll-address-address-bool-) event.
 
 </div>
 </div>
@@ -854,10 +854,10 @@ Requirements:
 - `from` cannot be the zero address.
 - `to` cannot be the zero address.
 - `tokenId` token must exist and be owned by `from`.
-- If the caller is not `from`, it must be approved to move this token by either [`ERC20.approve`](ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](ERC1155#ERC1155-setApprovalForAll-address-bool-).
+- If the caller is not `from`, it must be approved to move this token by either [`ERC20.approve`](/contracts/4.x/api/token/ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](/contracts/4.x/api/token/ERC1155#ERC1155-setApprovalForAll-address-bool-).
 - If `to` refers to a smart contract, it must implement [`IERC721Receiver.onERC721Received`](#IERC721Receiver-onERC721Received-address-address-uint256-bytes-), which is called upon a safe transfer.
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -882,10 +882,10 @@ Requirements:
 - `from` cannot be the zero address.
 - `to` cannot be the zero address.
 - `tokenId` token must exist and be owned by `from`.
-- If the caller is not `from`, it must have been allowed to move this token by either [`ERC20.approve`](ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](ERC1155#ERC1155-setApprovalForAll-address-bool-).
+- If the caller is not `from`, it must have been allowed to move this token by either [`ERC20.approve`](/contracts/4.x/api/token/ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](/contracts/4.x/api/token/ERC1155#ERC1155-setApprovalForAll-address-bool-).
 - If `to` refers to a smart contract, it must implement [`IERC721Receiver.onERC721Received`](#IERC721Receiver-onERC721Received-address-address-uint256-bytes-), which is called upon a safe transfer.
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -906,7 +906,7 @@ Transfers `tokenId` token from `from` to `to`.
 
 <Callout type="warn">
 Note that the caller is responsible to confirm that the recipient is capable of receiving ERC721
-or else they may be permanently lost. Usage of [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) prevents loss, though the caller must
+or else they may be permanently lost. Usage of [`ERC1155.safeTransferFrom`](/contracts/4.x/api/token/ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) prevents loss, though the caller must
 understand this adds an external call which potentially creates a reentrancy vulnerability.
 </Callout>
 
@@ -915,9 +915,9 @@ Requirements:
 - `from` cannot be the zero address.
 - `to` cannot be the zero address.
 - `tokenId` token must be owned by `from`.
-- If the caller is not `from`, it must be approved to move this token by either [`ERC20.approve`](ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](ERC1155#ERC1155-setApprovalForAll-address-bool-).
+- If the caller is not `from`, it must be approved to move this token by either [`ERC20.approve`](/contracts/4.x/api/token/ERC20#ERC20-approve-address-uint256-) or [`ERC1155.setApprovalForAll`](/contracts/4.x/api/token/ERC1155#ERC1155-setApprovalForAll-address-bool-).
 
-Emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event.
+Emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event.
 
 </div>
 </div>
@@ -944,7 +944,7 @@ Requirements:
 - The caller must own the token or be an approved operator.
 - `tokenId` must exist.
 
-Emits an [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) event.
+Emits an [`IERC20.Approval`](/contracts/4.x/api/token/ERC20#IERC20-Approval-address-address-uint256-) event.
 
 </div>
 </div>
@@ -962,13 +962,13 @@ Emits an [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) eve
 <div className="px-4">
 
 Approve or remove `operator` as an operator for the caller.
-Operators can call [`ERC20.transferFrom`](ERC20#ERC20-transferFrom-address-address-uint256-) or [`ERC1155.safeTransferFrom`](ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) for any token owned by the caller.
+Operators can call [`ERC20.transferFrom`](/contracts/4.x/api/token/ERC20#ERC20-transferFrom-address-address-uint256-) or [`ERC1155.safeTransferFrom`](/contracts/4.x/api/token/ERC1155#ERC1155-safeTransferFrom-address-address-uint256-uint256-bytes-) for any token owned by the caller.
 
 Requirements:
 
 - The `operator` cannot be the caller.
 
-Emits an [`IERC1155.ApprovalForAll`](ERC1155#IERC1155-ApprovalForAll-address-address-bool-) event.
+Emits an [`IERC1155.ApprovalForAll`](/contracts/4.x/api/token/ERC1155#IERC1155-ApprovalForAll-address-address-bool-) event.
 
 </div>
 </div>
@@ -1008,7 +1008,7 @@ Requirements:
 
 Returns if the `operator` is allowed to manage all of the assets of `owner`.
 
-See [`ERC1155.setApprovalForAll`](ERC1155#ERC1155-setApprovalForAll-address-bool-)
+See [`ERC1155.setApprovalForAll`](/contracts/4.x/api/token/ERC1155#ERC1155-setApprovalForAll-address-bool-)
 
 </div>
 </div>
@@ -1235,14 +1235,14 @@ Using this extension removes the ability to mint single tokens during contract c
 regained after construction. During construction, only batch minting is allowed.
 
 <Callout type="warn">
-This extension bypasses the hooks [`ERC1155._beforeTokenTransfer`](ERC1155#ERC1155-_beforeTokenTransfer-address-address-address-uint256---uint256---bytes-) and [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-) for tokens minted in
+This extension bypasses the hooks [`ERC1155._beforeTokenTransfer`](/contracts/4.x/api/token/ERC1155#ERC1155-_beforeTokenTransfer-address-address-address-uint256---uint256---bytes-) and [`ERC1155._afterTokenTransfer`](/contracts/4.x/api/token/ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-) for tokens minted in
 batch. When using this extension, you should consider the `_beforeConsecutiveTokenTransfer` and
-`_afterConsecutiveTokenTransfer` hooks in addition to [`ERC1155._beforeTokenTransfer`](ERC1155#ERC1155-_beforeTokenTransfer-address-address-address-uint256---uint256---bytes-) and [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-).
+`_afterConsecutiveTokenTransfer` hooks in addition to [`ERC1155._beforeTokenTransfer`](/contracts/4.x/api/token/ERC1155#ERC1155-_beforeTokenTransfer-address-address-address-uint256---uint256---bytes-) and [`ERC1155._afterTokenTransfer`](/contracts/4.x/api/token/ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-).
 </Callout>
 
 <Callout type="warn">
-When overriding [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-), be careful about call ordering. [`ERC721.ownerOf`](#ERC721-ownerOf-uint256-) may return invalid
-values during the [`ERC1155._afterTokenTransfer`](ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-) execution if the super call is not called first. To be safe, execute the
+When overriding [`ERC1155._afterTokenTransfer`](/contracts/4.x/api/token/ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-), be careful about call ordering. [`ERC721.ownerOf`](#ERC721-ownerOf-uint256-) may return invalid
+values during the [`ERC1155._afterTokenTransfer`](/contracts/4.x/api/token/ERC1155#ERC1155-_afterTokenTransfer-address-address-address-uint256---uint256---bytes-) execution if the super call is not called first. To be safe, execute the
 super call before your custom logic.
 </Callout>
 
@@ -1391,8 +1391,8 @@ Emits a [`IERC2309.ConsecutiveTransfer`](../interfaces#IERC2309-ConsecutiveTrans
 
 See [`ERC721._mint`](#ERC721-_mint-address-uint256-). Override version that restricts normal minting to after construction.
 
-Warning: Using [`ERC721Consecutive`](#ERC721Consecutive) prevents using [`ERC1155._mint`](ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-) during construction in favor of [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-).
-After construction, [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-) is no longer available and [`ERC1155._mint`](ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-) becomes available.
+Warning: Using [`ERC721Consecutive`](#ERC721Consecutive) prevents using [`ERC1155._mint`](/contracts/4.x/api/token/ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-) during construction in favor of [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-).
+After construction, [`ERC721Consecutive._mintConsecutive`](#ERC721Consecutive-_mintConsecutive-address-uint96-) is no longer available and [`ERC1155._mint`](/contracts/4.x/api/token/ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-) becomes available.
 
 </div>
 </div>
@@ -1711,8 +1711,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol";
 Extension of ERC721 with the ERC2981 NFT Royalty Standard, a standardized way to retrieve royalty payment
 information.
 
-Royalty information can be specified globally for all token ids via [`ERC2981._setDefaultRoyalty`](common#ERC2981-_setDefaultRoyalty-address-uint96-), and/or individually for
-specific token ids via [`ERC2981._setTokenRoyalty`](common#ERC2981-_setTokenRoyalty-uint256-address-uint96-). The latter takes precedence over the first.
+Royalty information can be specified globally for all token ids via [`ERC2981._setDefaultRoyalty`](contracts/4.x/api/token/common#ERC2981-_setDefaultRoyalty-address-uint96-), and/or individually for
+specific token ids via [`ERC2981._setTokenRoyalty`](contracts/4.x/api/token/common#ERC2981-_setTokenRoyalty-uint256-address-uint96-). The latter takes precedence over the first.
 
 <Callout type="warn">
 ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See
@@ -2276,7 +2276,7 @@ Overrides [`IERC721Receiver.onERC721Received`](#IERC721Receiver-onERC721Received
 this contract.
 
 In case there's data attached, it validates that the operator is this contract, so only trusted data
-is accepted from [`ERC20Wrapper.depositFor`](ERC20#ERC20Wrapper-depositFor-address-uint256-).
+is accepted from [`ERC20Wrapper.depositFor`](/contracts/4.x/api/token/ERC20#ERC20Wrapper-depositFor-address-uint256-).
 
 <Callout type="warn">
 Doesn't work with unsafe transfers (eg. [`IERC721.transferFrom`](#IERC721-transferFrom-address-address-uint256-)). Use [`ERC721Wrapper._recover`](#ERC721Wrapper-_recover-address-uint256-)
@@ -2401,7 +2401,7 @@ Returns the total amount of tokens stored by the contract.
 <div className="px-4">
 
 Returns a token ID owned by `owner` at a given `index` of its token list.
-Use along with [`ERC1155.balanceOf`](ERC1155#ERC1155-balanceOf-address-uint256-) to enumerate all of ``owner``'s tokens.
+Use along with [`ERC1155.balanceOf`](/contracts/4.x/api/token/ERC1155#ERC1155-balanceOf-address-uint256-) to enumerate all of ``owner``'s tokens.
 
 </div>
 </div>
@@ -2419,7 +2419,7 @@ Use along with [`ERC1155.balanceOf`](ERC1155#ERC1155-balanceOf-address-uint256-)
 <div className="px-4">
 
 Returns a token ID at a given `index` of all the tokens stored by the contract.
-Use along with [`ERC1155Supply.totalSupply`](ERC1155#ERC1155Supply-totalSupply-uint256-) to enumerate all tokens.
+Use along with [`ERC1155Supply.totalSupply`](/contracts/4.x/api/token/ERC1155#ERC1155Supply-totalSupply-uint256-) to enumerate all tokens.
 
 </div>
 </div>

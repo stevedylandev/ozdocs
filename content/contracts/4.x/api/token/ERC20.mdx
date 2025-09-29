@@ -6,7 +6,7 @@ description: "Smart contract ERC20 utilities and implementations"
 This set of interfaces, contracts, and utilities are all related to the [ERC20 Token Standard](https://eips.ethereum.org/EIPS/eip-20).
 
 <Callout>
-For an overview of ERC20 tokens and a walk through on how to create a token contract read our [ERC20 guide](ROOT:erc20).
+For an overview of ERC20 tokens and a walk through on how to create a token contract read our [ERC20 guide](/contracts/4.x/erc20).
 </Callout>
 
 There are a few core contracts that implement the behavior specified in the EIP:
@@ -34,7 +34,7 @@ Finally, there are some utilities to interact with ERC20 contracts in various wa
 * [`TokenTimelock`](#TokenTimelock): hold tokens for a beneficiary until a specified time.
 
 <Callout>
-This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC20 (such as [`_mint`](#ERC20-_mint-address-uint256-)) and expose them as external functions in the way they prefer. On the other hand, [ERC20 Presets](ROOT:erc20#Presets) (such as [`ERC20PresetMinterPauser`](#ERC20PresetMinterPauser)) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
+This core set of contracts is designed to be unopinionated, allowing developers to access the internal functions in ERC20 (such as [`_mint`](#ERC20-_mint-address-uint256-)) and expose them as external functions in the way they prefer. On the other hand, [ERC20 Presets](/contracts/4.x/erc20#preset-erc20-contract) (such as [`ERC20PresetMinterPauser`](#ERC20PresetMinterPauser)) are designed using opinionated patterns to provide developers with ready to use, deployable contracts.
 </Callout>
 
 ## Core
@@ -102,7 +102,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 Implementation of the [`IERC20`](#IERC20) interface.
 
 This implementation is agnostic to the way tokens are created. This means
-that a supply mechanism has to be added in a derived contract using [`ERC1155._mint`](ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-).
+that a supply mechanism has to be added in a derived contract using [`ERC1155._mint`](/contracts/4.x/api/token/ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-).
 For a generic mechanism see [`ERC20PresetMinterPauser`](#ERC20PresetMinterPauser).
 
 TIP: For a detailed writeup see our guide
@@ -2425,7 +2425,7 @@ Implementation of the ERC4626 "Tokenized Vault Standard" as defined in
 [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626).
 
 This extension allows the minting and burning of "shares" (represented using the ERC20 inheritance) in exchange for
-underlying "assets" through standardized [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-), [`IERC4626.mint`](../interfaces#IERC4626-mint-uint256-address-), [`IERC4626.redeem`](../interfaces#IERC4626-redeem-uint256-address-address-) and [`ERC1155Burnable.burn`](ERC1155#ERC1155Burnable-burn-address-uint256-uint256-) workflows. This contract extends
+underlying "assets" through standardized [`IERC4626.deposit`](../interfaces#IERC4626-deposit-uint256-address-), [`IERC4626.mint`](../interfaces#IERC4626-mint-uint256-address-), [`IERC4626.redeem`](../interfaces#IERC4626-redeem-uint256-address-address-) and [`ERC1155Burnable.burn`](/contracts/4.x/api/token/ERC1155#ERC1155Burnable-burn-address-uint256-uint256-) workflows. This contract extends
 the ERC20 standard. Any additional extensions included along it would affect the "shares" token represented by this
 contract and not the "assets" token which is an independent contract.
 

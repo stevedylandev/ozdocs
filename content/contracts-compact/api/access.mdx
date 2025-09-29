@@ -104,7 +104,7 @@ None.
   circuitSig="hasRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="circuit"
   complexity="k=10, rows=487"
-  id="AccessControl-_operatorRoles"
+  modulePrefix="AccessControl"
 >
   Returns `true` if `account` has been granted `roleId`.
 </APIItemCompact>
@@ -115,7 +115,7 @@ None.
   circuitSig="assertOnlyRole(roleId: Bytes<32>) → []"
   kind="circuit"
   complexity="k=10, rows=345"
-  id="AccessControl-assertOnlyRole"
+  modulePrefix="AccessControl"
 >
   Reverts if caller is missing `roleId`.
 
@@ -131,7 +131,7 @@ None.
   circuitSig="_checkRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   kind="circuit"
   complexity="k=10, rows=467"
-  id="AccessControl-_checkRole"
+  modulePrefix="AccessControl"
 >
   Reverts if `account` is missing `roleId`.
 
@@ -146,7 +146,7 @@ None.
   circuitSig="getRoleAdmin(roleId: Bytes<32>) → Bytes<32>"
   kind="circuit"
   complexity="k=10, rows=207"
-  id="AccessControl-getRoleAdmin"
+  modulePrefix="AccessControl"
 >
   Returns the admin role that controls `roleId` or a byte array with all zero bytes if `roleId` doesn’t exist.
   See [grantRole](#AccessControl-grantRole) and [revokeRole](#AccessControl-revokeRole).
@@ -160,7 +160,7 @@ None.
   circuitSig="grantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   kind="circuit"
   complexity="k=10, rows=994"
-  id="AccessControl-grantRole"
+  modulePrefix="AccessControl"
 >
   Grants `roleId` to `account`.
 
@@ -181,7 +181,7 @@ None.
   circuitSig="revokeRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → []"
   kind="circuit"
   complexity="k=10, rows=827"
-  id="AccessControl-revokeRole"
+  modulePrefix="AccessControl"
 >
   Revokes `roleId` from `account`.
 
@@ -197,7 +197,7 @@ None.
   stackParams="true"
   kind="circuit"
   complexity="k=10, rows=640"
-  id="AccessControl-renounceRole"
+  modulePrefix="AccessControl"
 >
   Revokes `roleId` from the calling account.
 
@@ -222,7 +222,7 @@ None.
   circuitSig="_setRoleAdmin(roleId: Bytes<32>, adminRole: Bytes<32>) → []"
   kind="circuit"
   complexity="k=10, rows=209"
-  id="AccessControl-_setRoleAdmin"
+  modulePrefix="AccessControl"
 >
   Sets `adminRole` as `roleId`’s admin role.
 </APIItemCompact>
@@ -233,7 +233,7 @@ None.
   circuitSig="_grantRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="circuit"
   complexity="k=10, rows=734"
-  id="AccessControl-_grantRole"
+  modulePrefix="AccessControl"
 >
   Attempts to grant `roleId` to `account` and returns a boolean indicating if `roleId` was granted.
 
@@ -256,7 +256,7 @@ None.
   kind="circuit"
   complexity="k=10, rows=733"
   stackParams="true"
-  id="AccessControl-_unsafeGrantRole"
+  modulePrefix="AccessControl"
 >
   Unsafe variant of [_grantRole](#AccessControl-_grantRole).
 
@@ -273,7 +273,7 @@ None.
   circuitSig="_revokeRole(roleId: Bytes<32>, account: Either<ZswapCoinPublicKey, ContractAddress>) → Boolean"
   kind="circuit"
   complexity="k=10, rows=563"
-  id="AccessControl-_revokeRole"
+  modulePrefix="AccessControl"
 >
   Attempts to revoke `roleId` from `account` and returns a boolean indicating if `roleId` was revoked.
 

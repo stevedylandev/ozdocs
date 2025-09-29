@@ -7,25 +7,25 @@ description: "Smart contract interfaces utilities and implementations"
 These interfaces are available as `.sol` files, and also as compiler `.json` ABI files (through the npm package). These
 are useful to interact with third party contracts that implement them.
 
-* [`IERC20`](token/ERC20#IERC20)
-* [`IERC20Metadata`](token/ERC20#IERC20Metadata)
-* [`IERC165`](utils#IERC165)
-* [`IERC721`](token/ERC721#IERC721)
-* [`IERC721Receiver`](token/ERC721#IERC721Receiver)
-* [`IERC721Enumerable`](token/ERC721#IERC721Enumerable)
-* [`IERC721Metadata`](token/ERC721#IERC721Metadata)
-* [`IERC777`](token/ERC777#IERC777)
-* [`IERC777Recipient`](token/ERC777#IERC777Recipient)
-* [`IERC777Sender`](token/ERC777#IERC777Sender)
-* [`IERC1155`](token/ERC1155#IERC1155)
-* [`IERC1155Receiver`](token/ERC1155#IERC1155Receiver)
-* [`IERC1155MetadataURI`](token/ERC1155#IERC1155MetadataURI)
+* [`IERC20`](/contracts/4.x/api/token/ERC20#IERC20)
+* [`IERC20Metadata`](/contracts/4.x/api/token/ERC20#IERC20Metadata)
+* [`IERC165`](/contracts/4.x/api/utils#IERC165)
+* [`IERC721`](/contracts/4.x/api/token/ERC721#IERC721)
+* [`IERC721Receiver`](/contracts/4.x/api/token/ERC721#IERC721Receiver)
+* [`IERC721Enumerable`](/contracts/4.x/api/token/ERC721#IERC721Enumerable)
+* [`IERC721Metadata`](/contracts/4.x/api/token/ERC721#IERC721Metadata)
+* [`IERC777`](/contracts/4.x/api/token/ERC777#IERC777)
+* [`IERC777Recipient`](/contracts/4.x/api/token/ERC777#IERC777Recipient)
+* [`IERC777Sender`](/contracts/4.x/api/token/ERC777#IERC777Sender)
+* [`IERC1155`](/contracts/4.x/api/token/ERC1155#IERC1155)
+* [`IERC1155Receiver`](/contracts/4.x/api/token/ERC1155#IERC1155Receiver)
+* [`IERC1155MetadataURI`](/contracts/4.x/api/token/ERC1155#IERC1155MetadataURI)
 * [`IERC1271`](#IERC1271)
 * [`IERC1363`](#IERC1363)
 * [`IERC1363Receiver`](#IERC1363Receiver)
 * [`IERC1363Spender`](#IERC1363Spender)
-* [`IERC1820Implementer`](utils#IERC1820Implementer)
-* [`IERC1820Registry`](utils#IERC1820Registry)
+* [`IERC1820Implementer`](/contracts/4.x/api/utils#IERC1820Implementer)
+* [`IERC1820Registry`](/contracts/4.x/api/utils#IERC1820Registry)
 * [`IERC1822Proxiable`](#IERC1822Proxiable)
 * [`IERC2612`](#IERC2612)
 * [`IERC2981`](#IERC2981)
@@ -48,9 +48,9 @@ are useful to interact with third party contracts that implement them.
 
 [`IERC1363Spender`](#IERC1363Spender)
 
-[`IERC1820Implementer`](utils#IERC1820Implementer)
+[`IERC1820Implementer`](/contracts/4.x/api/utils#IERC1820Implementer)
 
-[`IERC1820Registry`](utils#IERC1820Registry)
+[`IERC1820Registry`](/contracts/4.x/api/utils#IERC1820Registry)
 
 [`IERC1822Proxiable`](#IERC1822Proxiable)
 
@@ -76,7 +76,7 @@ are useful to interact with third party contracts that implement them.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC1271` 
+## `IERC1271`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC1271.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -121,7 +121,7 @@ Should return whether the signature provided is valid for the provided data
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC1363` 
+## `IERC1363`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC1363.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -278,7 +278,7 @@ and then call `onApprovalReceived` on spender.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC1363Receiver` 
+## `IERC1363Receiver`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC1363Receiver.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -325,7 +325,7 @@ Note: the token contract address is always the message sender.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC1363Spender` 
+## `IERC1363Spender`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC1363Spender.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -372,7 +372,7 @@ Note: the token contract address is always the message sender.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC1967` 
+## `IERC1967`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC1967.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -453,7 +453,7 @@ Emitted when the beacon is changed.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC2309` 
+## `IERC2309`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC2309.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -498,7 +498,7 @@ Emitted when the tokens from `fromTokenId` to `toTokenId` are transferred from `
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC2612` 
+## `IERC2612`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC2612.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -524,7 +524,7 @@ import "@openzeppelin/contracts/interfaces/IERC2612.sol";
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC2981` 
+## `IERC2981`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC2981.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -574,7 +574,7 @@ exchange. The royalty amount is denominated and should be paid in that same unit
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC3156FlashBorrower` 
+## `IERC3156FlashBorrower`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC3156FlashBorrower.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -619,7 +619,7 @@ Receive a flash loan.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC3156FlashLender` 
+## `IERC3156FlashLender`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC3156FlashLender.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -700,7 +700,7 @@ Initiate a flash loan.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC4626` 
+## `IERC4626`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC4626.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1196,7 +1196,7 @@ Those methods should be performed separately.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC4906` 
+## `IERC4906`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC4906.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1282,7 +1282,7 @@ timely update the images and related attributes of the NFTs.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC5267` 
+## `IERC5267`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC5267.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1348,7 +1348,7 @@ MAY be emitted to signal that the domain could have changed.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC5313` 
+## `IERC5313`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC5313.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1394,7 +1394,7 @@ Gets the address of the owner.
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC5805` 
+## `IERC5805`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC5805.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1436,7 +1436,7 @@ import "@openzeppelin/contracts/interfaces/IERC5805.sol";
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC6372` 
+## `IERC6372`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/IERC6372.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1494,7 +1494,7 @@ Description of the clock
 
 <div style={{marginTop: "4em"}} className="w-full flex flex-row items-center justify-between">
 
-## `IERC1822Proxiable` 
+## `IERC1822Proxiable`
 
 <a target="_blank" style={{marginTop: "1.5em"}} href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.6/contracts/interfaces/draft-IERC1822.sol">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github-icon lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
@@ -1539,4 +1539,3 @@ function revert if invoked through a proxy.
 
 </div>
 </div>
-

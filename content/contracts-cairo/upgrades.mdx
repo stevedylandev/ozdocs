@@ -44,10 +44,10 @@ OpenZeppelin Contracts for Cairo provides [Upgradeable](https://github.com/OpenZ
 ### Usage
 
 Upgrades are often very sensitive operations, and some form of access control is usually required to
-avoid unauthorized upgrades. The [Ownable](access#ownership-and-ownable) module is used in this example.
+avoid unauthorized upgrades. The [Ownable](./access#ownership-and-ownable) module is used in this example.
 
 <Callout>
-We will be using the following module to implement the [IUpgradeable](api/upgrades#IUpgradeable) interface described in the API Reference section.
+We will be using the following module to implement the [IUpgradeable](/contracts-cairo/api/upgrades#IUpgradeable) interface described in the API Reference section.
 </Callout>
 
 ```rust
@@ -112,7 +112,7 @@ Upgrades can be very sensitive operations, and security should always be top of 
 * API changes that might affect integration. For example, changing an external function’s arguments might break existing contracts or offchain systems calling your contract.
 * Storage changes that might result in lost data (e.g. changing a storage slot name, making existing storage inaccessible).
 * Collisions (e.g. mistakenly reusing the same storage slot from another component) are also possible, although less likely if best practices are followed, for example prepending storage variables with the component’s name (e.g. `ERC20_balances`).
-* Always check for [backwards compatibility](backwards-compatibility) before upgrading between versions of OpenZeppelin Contracts.
+* Always check for [backwards compatibility](./backwards-compatibility) before upgrading between versions of OpenZeppelin Contracts.
 
 ## Proxies in Starknet
 

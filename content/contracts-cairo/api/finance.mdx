@@ -162,7 +162,7 @@ Internal implementations
 
 A trait that defines the logic for calculating the vested amount based on a given timestamp.
 
-You can read more about the trait's purpose and how to use it [here](../finance#vesting_schedule).
+You can read more about the trait's purpose and how to use it [here](../finance#vesting-schedule).
 
 <APIItem
   functionSignature="calculate_vested_amount(self: @ContractState, token: ContractAddress, total_allocation: u256, timestamp: u64, start: u64, duration: u64, cliff: u64) → u256"
@@ -294,7 +294,7 @@ Defines the logic for calculating the vested amount, incorporating a cliff perio
 use openzeppelin::presets::VestingWallet;
 ```
 
-A non-upgradable contract leveraging [VestingComponent](#VestingComponent) and [OwnableComponent](access#OwnableComponent).
+A non-upgradable contract leveraging [VestingComponent](#VestingComponent) and [OwnableComponent](./access#OwnableComponent).
 
 The contract is intentionally designed to be non-upgradable to ensure that neither the vesting initiator nor the vesting beneficiary can modify the vesting schedule without the consent of the other party.
 
@@ -316,7 +316,7 @@ VestingComponent
 
 OwnableComponent
 
-- [`OwnableMixinImpl`](access#OwnableComponent-Mixin-Impl)
+- [`OwnableMixinImpl`](./access#OwnableComponent-Mixin-Impl)
 
 #### Constructor [!toc] [#VestingWallet-constructor-section]
 

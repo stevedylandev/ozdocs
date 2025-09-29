@@ -12,7 +12,7 @@ Branch/Release: `release-polkadot-v1.10.0`
 
 `pallet-transaction-payment` implements transaction fee logic.
 
-In substrate, every transaction has an associated `call`, and each `call` has its own [weight](glossary#weight) function. The weight function estimates the time it takes to execute the `call`.
+In substrate, every transaction has an associated `call`, and each `call` has its own [weight](/substrate-runtimes/glossary#weight) function. The weight function estimates the time it takes to execute the `call`.
 
 `Config::WeightToFee` is a mapping between the smallest unit of compute (**Weight**) and smallest unit of fee.
 
@@ -20,7 +20,7 @@ This pallet also exposes
 - how to update fees for the next block based on past fees (`Config::FeeMultiplierUpdate`)
 - how fees are paid (`Config::OnChargeTransaction`)
 
-The base fee and adjusted [weight](glossary#weight_fee) and [length](glossary#length_fee) fees constitute the _inclusion fee_, which is the minimum fee for a transaction to be included in a block. The formula of final fee:
+The base fee and adjusted [weight](/substrate-runtimes/glossary#weight-fee) and [length](/substrate-runtimes/glossary#length-fee) fees constitute the _inclusion fee_, which is the minimum fee for a transaction to be included in a block. The formula of final fee:
 ```rust
 inclusion_fee = base_fee + length_fee + [fee_multiplier_update * weight_fee];
 final_fee = inclusion_fee + tip;

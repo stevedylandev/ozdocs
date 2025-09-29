@@ -158,7 +158,7 @@ Handles the before swap hook.
 For the first swap in a block, it saves the current pool state as a checkpoint.
 
 For subsequent swaps in the same block, it calculates a target output based on the beginning-of-block state,
-and sets the inherited `_targetOutput` and `_applyTargetOutput` variables to enforce price limits in [`BaseHook._afterSwap`](base#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-).
+and sets the inherited `_targetOutput` and `_applyTargetOutput` variables to enforce price limits in [`BaseHook._afterSwap`](/uniswap-hooks/api/base#BaseHook-_afterSwap-address-struct-PoolKey-struct-SwapParams-BalanceDelta-bytes-).
 
 </div>
 </div>
@@ -471,7 +471,7 @@ Hooks into the `afterSwap` hook to get the ticks crossed by the swap and fill th
 Places a limit order by adding liquidity out of range at a specific tick. The order will be filled when the
 pool price crosses the specified `tick`. Takes a `PoolKey` `key`, target `tick`, direction `zeroForOne` indicating
 whether to buy currency0 or currency1, and amount of `liquidity` to place. The interaction with the `poolManager` is done
-via the `unlock` function, which will trigger the `[`BaseCustomAccounting.unlockCallback`](base#BaseCustomAccounting-unlockCallback-bytes-)` function.
+via the `unlock` function, which will trigger the [`BaseCustomAccounting.unlockCallback`](/uniswap-hooks/api/base#BaseCustomAccounting-unlockCallback-bytes-) function.
 
 </div>
 </div>
@@ -492,7 +492,7 @@ Cancels a limit order by removing liquidity from the pool. Takes a `PoolKey` `ke
 direction `zeroForOne` indicating whether it was buying currency0 or currency1, and recipient address `to` for the
 removed liquidity. Note that partial cancellation is not supported - the entire liquidity added by the msg.sender will be removed.
 Note also that cancelling an order will cancel the order placed by the msg.sender, not orders placed by other users in the same tick range.
-The interaction with the `poolManager` is done via the `unlock` function, which will trigger the `[`BaseCustomAccounting.unlockCallback`](base#BaseCustomAccounting-unlockCallback-bytes-)` function.
+The interaction with the `poolManager` is done via the `unlock` function, which will trigger the [`BaseCustomAccounting.unlockCallback`](/uniswap-hooks/api/base#BaseCustomAccounting-unlockCallback-bytes-) function.
 
 </div>
 </div>
@@ -512,7 +512,7 @@ The interaction with the `poolManager` is done via the `unlock` function, which 
 Withdraws liquidity from a filled order, sending it to address `to`. Takes an `OrderId` `orderId` of the filled
 order to withdraw from. Returns the withdrawn amounts as `(amount0, amount1)`. Can only be called after the order is
 filled - use `cancelOrder` to remove liquidity from unfilled orders. The interaction with the `poolManager` is done via the
-`unlock` function, which will trigger the `[`BaseCustomAccounting.unlockCallback`](base#BaseCustomAccounting-unlockCallback-bytes-)` function.
+`unlock` function, which will trigger the [`BaseCustomAccounting.unlockCallback`](/uniswap-hooks/api/base#BaseCustomAccounting-unlockCallback-bytes-) function.
 
 </div>
 </div>
@@ -934,8 +934,8 @@ import "uniswap-hooks/src/general/LiquidityPenaltyHook.sol";
 
 Just-in-Time (JIT) liquidity provisioning resistant hook.
 
-This hook disincentivizes JIT attacks by penalizing LP fee collection during [`BaseHook._afterRemoveLiquidity`](base#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-),
-and disabling it during [`BaseHook._afterAddLiquidity`](base#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-) if liquidity was recently added to the position.
+This hook disincentivizes JIT attacks by penalizing LP fee collection during [`BaseHook._afterRemoveLiquidity`](/uniswap-hooks/api/base#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-),
+and disabling it during [`BaseHook._afterAddLiquidity`](/uniswap-hooks/api/base#BaseHook-_afterAddLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-) if liquidity was recently added to the position.
 The penalty is donated to the pool's liquidity providers in range at the time of removal.
 
 See [`LiquidityPenaltyHook._calculateLiquidityPenalty`](#LiquidityPenaltyHook-_calculateLiquidityPenalty-BalanceDelta-uint48-) for penalty calculation.
@@ -1054,7 +1054,7 @@ Sets the `PoolManager` address and the `getBlockNumberOffset`.
 Tracks `lastAddedLiquidityBlock` and withholds `feeDelta` if liquidity was recently added within
 the `blockNumberOffset` period.
 
-See [`BaseHook._afterRemoveLiquidity`](base#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-) for claiming the withheld fees back.
+See [`BaseHook._afterRemoveLiquidity`](/uniswap-hooks/api/base#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-) for claiming the withheld fees back.
 
 </div>
 </div>
@@ -1221,7 +1221,7 @@ Returns the `withheldFees` for a liquidity position.
 
 `withheldFees` are UniswapV4's `feesAccrued` retained by this hook during liquidity addition if liquidity
 has been recently added within the `blockNumberOffset` block time window, with the purpose of disabling fee
-collection during JIT liquidity provisioning attacks. See [`BaseHook._afterRemoveLiquidity`](base#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-) for claiming the fees back.
+collection during JIT liquidity provisioning attacks. See [`BaseHook._afterRemoveLiquidity`](/uniswap-hooks/api/base#BaseHook-_afterRemoveLiquidity-address-struct-PoolKey-struct-ModifyLiquidityParams-BalanceDelta-BalanceDelta-bytes-) for claiming the fees back.
 
 </div>
 </div>

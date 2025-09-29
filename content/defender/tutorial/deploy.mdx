@@ -2,7 +2,7 @@
 title: Securely deploy and upgrade a smart contract
 ---
 
-Defender allows you to easily deploy and upgrade smart contracts across chains while maintaining the best security practices. This tutorial shows how to use a [Relayer](:settings#relayers) to deploy a contract called Box and upgrade it with the UUPS proxy pattern via a [Safe wallet](https://safe.global/) (multisig).
+Defender allows you to easily deploy and upgrade smart contracts across chains while maintaining the best security practices. This tutorial shows how to use a [Relayer](/defender/module/relayers) to deploy a contract called Box and upgrade it with the UUPS proxy pattern via a [Safe wallet](https://safe.global/) (multisig).
 
 ## Pre-requisites
 
@@ -37,7 +37,7 @@ Now, you will create a Defender test environment with the Sepolia testnet, where
 4. Select the approval process associated with your funded relayer that will execute the deployments for the test environment. In case you don’t already have an approval process, Defender will allow you to create one within the wizard flow. Relayers automate the payment of gas fees and take care of private key secure storage, transaction signing, nonce management, gas pricing estimation, and resubmissions. However, you may also choose to deploy using an EOA ("Externally Owned Account") or Safe wallet.
 
    <Callout>
-   Read more about relayers and how to manage them [here](:settings#relayers).
+   Read more about relayers and how to manage them [here](/defender/module/relayers).
    </Callout>
 
 +
@@ -409,12 +409,12 @@ Your box should now be upgraded to the new version! The upgrade proposal in your
 Congratulations! You can now deploy and upgrade other contracts using the same environment. In case you are interested in advanced use cases, we are working on deploy-related guides.
 
 <Callout>
-After deploying a contract, we recommended using Defender to monitor its state and transactions. Learn how to use Monitor [here](:tutorial/monitor).
+After deploying a contract, we recommended using Defender to monitor its state and transactions. Learn how to use Monitor [here](/defender/tutorial/monitor).
 </Callout>
 
 ## References
 
-* [Deploy Documentation](:module/deploy)
+* [Deploy Documentation](/defender/module/deploy)
 * [Foundry Upgrades Package](https://github.com/OpenZeppelin/openzeppelin-foundry-upgrades)
 * [Hardhat Upgrades Package](https://www.npmjs.com/package/@openzeppelin/hardhat-upgrades)
 * [Upgrades Core Package](https://www.npmjs.com/package/@openzeppelin/upgrades-core)

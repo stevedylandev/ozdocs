@@ -165,7 +165,7 @@ Note that this function does not throw validation errors directly. Instead, you 
 * `buildInfoDir` - the path to the build info directory which contains JSON files with Solidity compiler input and output. Defaults to `artifacts/build-info` for Hardhat projects or `out/build-info` for Foundry projects. If your project uses a custom output directory, you must specify its build info directory here.
 * `contract` - The name or fully qualified name of the contract to validate. If not specified, all upgradeable contracts in the build info directory will be validated.
 * `reference` - Can only be used when the `contract` argument is also provided. The name or fully qualified name of the reference contract to use for storage layout comparisons. If not specified, uses the `@custom:oz-upgrades-from` annotation if it is defined in the contract that is being validated.
-* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades#common-options):
+* `opts` - an object with the following options as defined in [Common Options](/upgrades-plugins/api-hardhat-upgrades#common-options):
   * `unsafeAllow`
   * `unsafeAllowRenames`
   * `unsafeSkipStorageCheck`
@@ -247,7 +247,7 @@ Creates a new instance of `UpgradeableContract`.
 * `name` - the name of the implementation contract as either a fully qualified name or contract name. If multiple contracts have the same name, you must use the fully qualified name e.g., `contracts/Bar.sol:Bar`.
 * `solcInput` - the Solidity input JSON object for the implementation contract.
 * `solcOutput` - the Solidity output JSON object for the implementation contract.
-* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades#common-options):
+* `opts` - an object with the following options as defined in [Common Options](/upgrades-plugins/api-hardhat-upgrades#common-options):
   * `kind`
   * `unsafeAllow`
   * `unsafeAllowRenames`
@@ -285,7 +285,7 @@ Compares the storage layout of an upgradeable contract with that of a proposed u
 **Parameters:**
 
 * `upgradedContract` - another instance of `UpgradeableContract` representing the proposed upgrade.
-* `opts` - an object with the following options as defined in [Common Options](api-hardhat-upgrades#common-options):
+* `opts` - an object with the following options as defined in [Common Options](/upgrades-plugins/api-hardhat-upgrades#common-options):
   * `kind`
   * `unsafeAllow`
   * `unsafeAllowRenames`

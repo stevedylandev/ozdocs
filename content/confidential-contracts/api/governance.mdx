@@ -33,7 +33,7 @@ This contract keeps a history (checkpoints) of each account's confidential vote 
 voting power can be delegated either by calling the [`VotesConfidential.delegate`](#VotesConfidential-delegate-address-) function directly, or by providing
 a signature to be used with [`VotesConfidential.delegateBySig`](#VotesConfidential-delegateBySig-address-uint256-uint256-uint8-bytes32-bytes32-). Confidential voting power handles can be queried
 through the public accessors [`VotesConfidential.getVotes`](#VotesConfidential-getVotes-address-) and [`VotesConfidential.getPastVotes`](#VotesConfidential-getPastVotes-address-uint256-) but can only be decrypted by accounts
-allowed to access them. Ensure that [`HandleAccessManager._validateHandleAllowance`](utils#HandleAccessManager-_validateHandleAllowance-bytes32-) is implemented properly, allowing all
+allowed to access them. Ensure that [`HandleAccessManager._validateHandleAllowance`](./utils#HandleAccessManager-_validateHandleAllowance-bytes32-) is implemented properly, allowing all
 necessary addresses to access voting power handles.
 
 By default, voting units does not account for voting power. This makes transfers of underlying

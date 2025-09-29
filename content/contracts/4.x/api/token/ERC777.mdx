@@ -9,7 +9,7 @@ As of v4.9, OpenZeppelin’s implementation of ERC-777 is deprecated and will be
 This set of interfaces and contracts are all related to the [ERC777 token standard](https://eips.ethereum.org/EIPS/eip-777).
 
 <Callout>
-For an overview of ERC777 tokens and a walk through on how to create a token contract read our [ERC777 guide](ROOT:erc777).
+For an overview of ERC777 tokens and a walk through on how to create a token contract read our [ERC777 guide](/contracts/4.x/erc777).
 </Callout>
 
 The token behavior itself is implemented in the core contracts: [`IERC777`](#IERC777), [`ERC777`](#ERC777).
@@ -53,11 +53,11 @@ import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 Implementation of the [`IERC777`](#IERC777) interface.
 
 This implementation is agnostic to the way tokens are created. This means
-that a supply mechanism has to be added in a derived contract using [`ERC1155._mint`](ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-).
+that a supply mechanism has to be added in a derived contract using [`ERC1155._mint`](/contracts/4.x/api/token/ERC1155#ERC1155-_mint-address-uint256-uint256-bytes-).
 
 Support for ERC20 is included in this contract, as specified by the EIP: both
 the ERC777 and ERC20 interfaces can be safely used when interacting with it.
-Both [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) events are emitted on token
+Both [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) events are emitted on token
 movements.
 
 Additionally, the [`IERC777.granularity`](#IERC777-granularity--) value is hard-coded to `1`, meaning that there
@@ -178,7 +178,7 @@ See [`IERC777.symbol`](#IERC777-symbol--).
 </div>
 <div className="px-4">
 
-See [`ERC20.decimals`](ERC20#ERC20-decimals--).
+See [`ERC20.decimals`](/contracts/4.x/api/token/ERC20#ERC20-decimals--).
 
 Always returns 18, as per the
 [ERC777 EIP](https://eips.ethereum.org/EIPS/eip-777#backward-compatibility).
@@ -253,7 +253,7 @@ Returns the amount of tokens owned by an account (`tokenHolder`).
 
 See [`IERC777.send`](#IERC777-send-address-uint256-bytes-).
 
-Also emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event for ERC20 compatibility.
+Also emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event for ERC20 compatibility.
 
 </div>
 </div>
@@ -270,7 +270,7 @@ Also emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-)
 </div>
 <div className="px-4">
 
-See [`IERC20.transfer`](ERC20#IERC20-transfer-address-uint256-).
+See [`IERC20.transfer`](/contracts/4.x/api/token/ERC20#IERC20-transfer-address-uint256-).
 
 Unlike `send`, `recipient` is _not_ required to implement the [`IERC777Recipient`](#IERC777Recipient)
 interface if it is a contract.
@@ -294,7 +294,7 @@ Also emits a [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-byte
 
 See [`IERC777.burn`](#IERC777-burn-uint256-bytes-).
 
-Also emits a [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) event for ERC20 compatibility.
+Also emits a [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) event for ERC20 compatibility.
 
 </div>
 </div>
@@ -381,7 +381,7 @@ See [`IERC777.defaultOperators`](#IERC777-defaultOperators--).
 
 See [`IERC777.operatorSend`](#IERC777-operatorSend-address-address-uint256-bytes-bytes-).
 
-Emits [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) events.
+Emits [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) events.
 
 </div>
 </div>
@@ -400,7 +400,7 @@ Emits [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes
 
 See [`IERC777.operatorBurn`](#IERC777-operatorBurn-address-uint256-bytes-bytes-).
 
-Emits [`IERC777.Burned`](#IERC777-Burned-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) events.
+Emits [`IERC777.Burned`](#IERC777-Burned-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) events.
 
 </div>
 </div>
@@ -417,7 +417,7 @@ Emits [`IERC777.Burned`](#IERC777-Burned-address-address-uint256-bytes-bytes-) a
 </div>
 <div className="px-4">
 
-See [`IERC20.allowance`](ERC20#IERC20-allowance-address-address-).
+See [`IERC20.allowance`](/contracts/4.x/api/token/ERC20#IERC20-allowance-address-address-).
 
 Note that operator and allowance concepts are orthogonal: operators may
 not have allowance, and accounts with allowance may not be operators
@@ -438,7 +438,7 @@ themselves.
 </div>
 <div className="px-4">
 
-See [`IERC20.approve`](ERC20#IERC20-approve-address-uint256-).
+See [`IERC20.approve`](/contracts/4.x/api/token/ERC20#IERC20-approve-address-uint256-).
 
 NOTE: If `value` is the maximum `uint256`, the allowance is not updated on
 `transferFrom`. This is semantically equivalent to an infinite approval.
@@ -460,7 +460,7 @@ Note that accounts cannot have allowance issued by their operators.
 </div>
 <div className="px-4">
 
-See [`IERC20.transferFrom`](ERC20#IERC20-transferFrom-address-address-uint256-).
+See [`IERC20.transferFrom`](/contracts/4.x/api/token/ERC20#IERC20-transferFrom-address-address-uint256-).
 
 NOTE: Does not update the allowance if the current allowance
 is the maximum `uint256`.
@@ -469,7 +469,7 @@ Note that operator and allowance concepts are orthogonal: operators cannot
 call `transferFrom` (unless they have allowance), and accounts with
 allowance cannot call `operatorSend` (unless they are operators).
 
-Emits [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-), [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) and [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) events.
+Emits [`IERC777.Sent`](#IERC777-Sent-address-address-address-uint256-bytes-bytes-), [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) and [`IERC20.Approval`](/contracts/4.x/api/token/ERC20#IERC20-Approval-address-address-uint256-) events.
 
 </div>
 </div>
@@ -495,7 +495,7 @@ will be called with the caller address as the `operator` and with
 
 See [`IERC777Sender`](#IERC777Sender) and [`IERC777Recipient`](#IERC777Recipient).
 
-Emits [`IERC777.Minted`](#IERC777-Minted-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) events.
+Emits [`IERC777.Minted`](#IERC777-Minted-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) events.
 
 Requirements
 
@@ -527,7 +527,7 @@ registered for `account`, the corresponding function will be called with
 
 See [`IERC777Sender`](#IERC777Sender) and [`IERC777Recipient`](#IERC777Recipient).
 
-Emits [`IERC777.Minted`](#IERC777-Minted-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](ERC20#IERC20-Transfer-address-address-uint256-) events.
+Emits [`IERC777.Minted`](#IERC777-Minted-address-address-uint256-bytes-bytes-) and [`IERC20.Transfer`](/contracts/4.x/api/token/ERC20#IERC20-Transfer-address-address-uint256-) events.
 
 Requirements
 
@@ -584,7 +584,7 @@ Burn tokens
 </div>
 <div className="px-4">
 
-See [`ERC20._approve`](ERC20#ERC20-_approve-address-address-uint256-).
+See [`ERC20._approve`](/contracts/4.x/api/token/ERC20#ERC20-_approve-address-address-uint256-).
 
 Note that accounts cannot have allowance issued by their operators.
 
@@ -608,7 +608,7 @@ Updates `owner` s allowance for `spender` based on spent `amount`.
 Does not update the allowance amount in case of infinite allowance.
 Revert if not enough allowance is available.
 
-Might emit an [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-) event.
+Might emit an [`IERC20.Approval`](/contracts/4.x/api/token/ERC20#IERC20-Approval-address-address-uint256-) event.
 
 </div>
 </div>
@@ -626,7 +626,7 @@ Might emit an [`IERC20.Approval`](ERC20#IERC20-Approval-address-address-uint256-
 <div className="px-4">
 
 Hook that is called before any token transfer. This includes
-calls to [`ERC777.send`](#ERC777-send-address-uint256-bytes-), [`ERC20.transfer`](ERC20#ERC20-transfer-address-uint256-), [`ERC777.operatorSend`](#ERC777-operatorSend-address-address-uint256-bytes-bytes-), [`ERC20.transferFrom`](ERC20#ERC20-transferFrom-address-address-uint256-), minting and burning.
+calls to [`ERC777.send`](#ERC777-send-address-uint256-bytes-), [`ERC20.transfer`](/contracts/4.x/api/token/ERC20#ERC20-transfer-address-uint256-), [`ERC777.operatorSend`](#ERC777-operatorSend-address-address-uint256-bytes-bytes-), [`ERC20.transferFrom`](/contracts/4.x/api/token/ERC20#ERC20-transferFrom-address-address-uint256-), minting and burning.
 
 Calling conditions:
 

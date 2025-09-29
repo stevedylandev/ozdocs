@@ -17,10 +17,10 @@ Before we begin, we first need an environment where we can deploy our contracts.
 
 To solve this, a number of "testnets" (for "test networks") exist: these include the Sepolia and Holesky blockchains. They work very similarly to mainnet, with one difference: you can get Ether for these networks for free, so that using them doesn't cost you a single cent. However, you will still need to deal with private key management, blocktimes of 12 seconds or more, and actually getting this free Ether.
 
-During development, it is a better idea to instead use a _local_ blockchain. It runs on your machine, requires no Internet access, provides you with all the Ether that you need, and mines blocks instantly. These reasons also make local blockchains a great fit for [automated tests](writing-automated-tests#setting-up-a-testing-environment).
+During development, it is a better idea to instead use a _local_ blockchain. It runs on your machine, requires no Internet access, provides you with all the Ether that you need, and mines blocks instantly. These reasons also make local blockchains a great fit for [automated tests](./writing-automated-tests#setting-up-a-testing-environment).
 
 <Callout>
-If you want to learn how to deploy and use contracts on a _public_ blockchain, like the Ethereum testnets, head to our [Connecting to Public Test Networks](connecting-to-public-test-networks) guide.
+If you want to learn how to deploy and use contracts on a _public_ blockchain, like the Ethereum testnets, head to our [Connecting to Public Test Networks](./connecting-to-public-test-networks) guide.
 </Callout>
 
 Hardhat comes with a local blockchain built-in, the [Hardhat Network](https://hardhat.org/hardhat-network/).
@@ -45,11 +45,11 @@ You can also run an actual Ethereum node in _[development mode](https://geth.eth
 
 ## Deploying a Smart Contract
 
-In the [Developing Smart Contracts guide](developing-smart-contracts) we set up our development environment.
+In the [Developing Smart Contracts guide](./developing-smart-contracts) we set up our development environment.
 
-If you don't already have this setup, please [create](setting-up-a-node-project#creating-a-project) and [setup](developing-smart-contracts#setting-up-a-solidity-project) the project and then [create](developing-smart-contracts#first-contract) and [compile](developing-smart-contracts#compiling-solidity-source-code) our Box smart contract.
+If you don't already have this setup, please [create](./setting-up-a-node-project#creating-a-project) and [setup](./developing-smart-contracts#setting-up-a-project) the project and then [create](./developing-smart-contracts#first-contract) and [compile](./developing-smart-contracts#compiling-solidity) our Box smart contract.
 
-With our project setup complete we're now ready to deploy a contract. We'll be deploying `Box`, from the [Developing Smart Contracts](developing-smart-contracts#box-contract) guide. Make sure you have a copy of [Box](developing-smart-contracts#box-contract) in `contracts/Box.sol`.
+With our project setup complete we're now ready to deploy a contract. We'll be deploying `Box`, from the [Developing Smart Contracts](./developing-smart-contracts#first-contract) guide. Make sure you have a copy of [Box](./developing-smart-contracts#first-contract) in `contracts/Box.sol`.
 
 Hardhat uses either [declarative deployments](https://hardhat.org/hardhat-runner/docs/guides/deploying) or [scripts](https://hardhat.org/hardhat-runner/docs/advanced/scripts#writing-scripts-with-hardhat) to deploy contracts.
 
@@ -294,6 +294,6 @@ npx hardhat run --network localhost ./scripts/index.js
 
 Now that you know how to set up a local blockchain, deploy contracts and interact with them both manually and programmatically, you will need to learn about testing environments, public test networks and going to production:
 
-* [Writing Automated Tests](writing-automated-tests)
-* [Connecting to Public Test Networks](connecting-to-public-test-networks)
-* [Preparing for Mainnet](preparing-for-mainnet)
+* [Writing Automated Tests](./writing-automated-tests)
+* [Connecting to Public Test Networks](./connecting-to-public-test-networks)
+* [Preparing for Mainnet](./preparing-for-mainnet)

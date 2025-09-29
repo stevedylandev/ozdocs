@@ -12,15 +12,15 @@ This modular system of Governor contracts allows the deployment on-chain voting 
 <Callout>
 For a guided experience, set up your Governor contract using [Contracts Wizard](https://wizard.openzeppelin.com/#governor).
 
-For a written walkthrough, check out our guide on [How to set up on-chain governance](ROOT:governance).
+For a written walkthrough, check out our guide on [How to set up on-chain governance](/contracts/4.x/governance).
 </Callout>
 
 * [`Governor`](#Governor): The core contract that contains all the logic and primitives. It is abstract and requires choosing one of each of the modules below, or custom ones.
 
 Votes modules determine the source of voting power, and sometimes quorum number.
 
-* [`GovernorVotes`](#GovernorVotes): Extracts voting weight from an [`ERC20Votes`](token/ERC20#ERC20Votes), or since v4.5 an [`ERC721Votes`](token/ERC721#ERC721Votes) token.
-* [`GovernorVotesComp`](#GovernorVotesComp): Extracts voting weight from a COMP-like or [`ERC20VotesComp`](token/ERC20#ERC20VotesComp) token.
+* [`GovernorVotes`](#GovernorVotes): Extracts voting weight from an [`ERC20Votes`](/contracts/4.x/api/token/ERC20#ERC20Votes), or since v4.5 an [`ERC721Votes`](/contracts/4.x/api/token/ERC721#ERC721Votes) token.
+* [`GovernorVotesComp`](#GovernorVotesComp): Extracts voting weight from a COMP-like or [`ERC20VotesComp`](/contracts/4.x/api/token/ERC20#ERC20VotesComp) token.
 * [`GovernorVotesQuorumFraction`](#GovernorVotesQuorumFraction): Combines with `GovernorVotes` to set the quorum as a fraction of the total token supply.
 
 Counting modules determine valid voting options.
@@ -92,7 +92,7 @@ In a governance system, the [`TimelockController`](#TimelockController) contract
 
 #### Terminology
 
-* **Operation:** A transaction (or a set of transactions) that is the subject of the timelock. It has to be scheduled by a proposer and executed by an executor. The timelock enforces a minimum delay between the proposition and the execution (see [operation lifecycle](access-control#operation_lifecycle)). If the operation contains multiple transactions (batch mode), they are executed atomically. Operations are identified by the hash of their content.
+* **Operation:** A transaction (or a set of transactions) that is the subject of the timelock. It has to be scheduled by a proposer and executed by an executor. The timelock enforces a minimum delay between the proposition and the execution (see [operation lifecycle](/contracts/4.x/access-control#operation_lifecycle)). If the operation contains multiple transactions (batch mode), they are executed atomically. Operations are identified by the hash of their content.
 * **Operation status:**
   * **Unset:** An operation that is not part of the timelock mechanism.
   * **Pending:** An operation that has been scheduled, before the timer expires.
@@ -106,7 +106,7 @@ In a governance system, the [`TimelockController`](#TimelockController) contract
 
 #### Operation structure
 
-Operation executed by the [`TimelockController`](contracts/4.x/api/governance#TimelockController) can contain one or multiple subsequent calls. Depending on whether you need to multiple calls to be executed atomically, you can either use simple or batched operations.
+Operation executed by the [`TimelockController`](/contracts/4.x/api/governance#TimelockController) can contain one or multiple subsequent calls. Depending on whether you need to multiple calls to be executed atomically, you can either use simple or batched operations.
 
 Both operations contain:
 
@@ -129,16 +129,16 @@ Timelocked operations are identified by a unique id (their hash) and follow a sp
 
 `Unset` -> `Pending` -> `Pending` + `Ready` -> `Done`
 
-* By calling [`schedule`](contracts/4.x/api/governance#TimelockController-schedule-address-uint256-bytes-bytes32-bytes32-uint256-) (or [`scheduleBatch`](contracts/4.x/api/governance#TimelockController-scheduleBatch-address---uint256---bytes---bytes32-bytes32-uint256-)), a proposer moves the operation from the `Unset` to the `Pending` state. This starts a timer that must be longer than the minimum delay. The timer expires at a timestamp accessible through the [`getTimestamp`](contracts/4.x/api/governance#TimelockController-getTimestamp-bytes32-) method.
+* By calling [`schedule`](/contracts/4.x/api/governance#TimelockController-schedule-address-uint256-bytes-bytes32-bytes32-uint256-) (or [`scheduleBatch`](/contracts/4.x/api/governance#TimelockController-scheduleBatch-address---uint256---bytes---bytes32-bytes32-uint256-)), a proposer moves the operation from the `Unset` to the `Pending` state. This starts a timer that must be longer than the minimum delay. The timer expires at a timestamp accessible through the [`getTimestamp`](/contracts/4.x/api/governance#TimelockController-getTimestamp-bytes32-) method.
 * Once the timer expires, the operation automatically gets the `Ready` state. At this point, it can be executed.
-* By calling [`execute`](contracts/4.x/api/governance#TimelockController-TimelockController-execute-address-uint256-bytes-bytes32-bytes32-) (or [`executeBatch`](contracts/4.x/api/governance#TimelockController-executeBatch-address---uint256---bytes---bytes32-bytes32-)), an executor triggers the operation’s underlying transactions and moves it to the `Done` state. If the operation has a predecessor, it has to be in the `Done` state for this transition to succeed.
-* [`cancel`](contracts/4.x/api/governance#TimelockController-TimelockController-cancel-bytes32-) allows proposers to cancel any `Pending` operation. This resets the operation to the `Unset` state. It is thus possible for a proposer to re-schedule an operation that has been cancelled. In this case, the timer restarts when the operation is re-scheduled.
+* By calling [`execute`](/contracts/4.x/api/governance#TimelockController-TimelockController-execute-address-uint256-bytes-bytes32-bytes32-) (or [`executeBatch`](/contracts/4.x/api/governance#TimelockController-executeBatch-address---uint256---bytes---bytes32-bytes32-)), an executor triggers the operation’s underlying transactions and moves it to the `Done` state. If the operation has a predecessor, it has to be in the `Done` state for this transition to succeed.
+* [`cancel`](/contracts/4.x/api/governance#TimelockController-TimelockController-cancel-bytes32-) allows proposers to cancel any `Pending` operation. This resets the operation to the `Unset` state. It is thus possible for a proposer to re-schedule an operation that has been cancelled. In this case, the timer restarts when the operation is re-scheduled.
 
 Operations status can be queried using the functions:
 
-* [`isOperationPending(bytes32)`](contracts/4.x/api/governance#TimelockController-isOperationPending-bytes32-)
-* [`isOperationReady(bytes32)`](contracts/4.x/api/governance#TimelockController-isOperationReady-bytes32-)
-* [`isOperationDone(bytes32)`](contracts/4.x/api/governance#TimelockController-isOperationDone-bytes32-)
+* [`isOperationPending(bytes32)`](/contracts/4.x/api/governance#TimelockController-isOperationPending-bytes32-)
+* [`isOperationReady(bytes32)`](/contracts/4.x/api/governance#TimelockController-isOperationReady-bytes32-)
+* [`isOperationDone(bytes32)`](/contracts/4.x/api/governance#TimelockController-isOperationDone-bytes32-)
 
 #### Roles
 
@@ -165,7 +165,7 @@ The executors are in charge of executing the operations scheduled by the propose
 This role is identified by the **EXECUTOR_ROLE** value: `0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63`
 
 <Callout type='warn'>
-A live contract without at least one proposer and one executor is locked. Make sure these roles are filled by reliable entities before the deployer renounces its administrative rights in favour of the timelock contract itself. See the [`AccessControl`](access#AccessControl) documentation to learn more about role management.
+A live contract without at least one proposer and one executor is locked. Make sure these roles are filled by reliable entities before the deployer renounces its administrative rights in favour of the timelock contract itself. See the [`AccessControl`](/contracts/4.x/api/access#AccessControl) documentation to learn more about role management.
 </Callout>
 
 <a id="Governor"></a>
@@ -356,7 +356,7 @@ Function to receive ETH that will be handled by the governor (disabled if execut
 </div>
 <div className="px-4">
 
-See [`IERC165.supportsInterface`](utils#IERC165-supportsInterface-bytes4-).
+See [`IERC165.supportsInterface`](/contracts/4.x/api/utils#IERC165-supportsInterface-bytes4-).
 
 </div>
 </div>
@@ -928,7 +928,7 @@ through another contract such as a timelock.
 </div>
 <div className="px-4">
 
-See [`IERC721Receiver.onERC721Received`](token/ERC721#IERC721Receiver-onERC721Received-address-address-uint256-bytes-).
+See [`IERC721Receiver.onERC721Received`](/contracts/4.x/api/token/ERC721#IERC721Receiver-onERC721Received-address-address-uint256-bytes-).
 
 </div>
 </div>
@@ -945,7 +945,7 @@ See [`IERC721Receiver.onERC721Received`](token/ERC721#IERC721Receiver-onERC721Re
 </div>
 <div className="px-4">
 
-See [`IERC1155Receiver.onERC1155Received`](token/ERC1155#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-).
+See [`IERC1155Receiver.onERC1155Received`](/contracts/4.x/api/token/ERC1155#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-).
 
 </div>
 </div>
@@ -962,7 +962,7 @@ See [`IERC1155Receiver.onERC1155Received`](token/ERC1155#IERC1155Receiver-onERC1
 </div>
 <div className="px-4">
 
-See [`IERC1155Receiver.onERC1155BatchReceived`](token/ERC1155#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-).
+See [`IERC1155Receiver.onERC1155BatchReceived`](/contracts/4.x/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-).
 
 </div>
 </div>
@@ -1140,7 +1140,7 @@ Version of the governor instance (used in building the ERC712 domain separator).
 </div>
 <div className="px-4">
 
-See [`IERC6372`](interfaces#IERC6372)
+See [`IERC6372`](/contracts/4.x/api/interfaces#IERC6372)
 
 </div>
 </div>
@@ -1342,7 +1342,7 @@ duration compared to the voting delay.
 Minimum number of cast voted required for a proposal to be successful.
 
 NOTE: The `timepoint` parameter corresponds to the snapshot used for counting vote. This allows to scale the
-quorum depending on values such as the totalSupply of a token at this timepoint (see [`ERC20Votes`](token/ERC20#ERC20Votes)).
+quorum depending on values such as the totalSupply of a token at this timepoint (see [`ERC20Votes`](/contracts/4.x/api/token/ERC20#ERC20Votes)).
 
 </div>
 </div>
@@ -1362,7 +1362,7 @@ quorum depending on values such as the totalSupply of a token at this timepoint 
 Voting power of an `account` at a specific `timepoint`.
 
 Note: this can be implemented in a number of ways, for example by reading the delegated balance from one (or
-multiple), [`ERC20Votes`](token/ERC20#ERC20Votes) tokens.
+multiple), [`ERC20Votes`](/contracts/4.x/api/token/ERC20#ERC20Votes) tokens.
 
 </div>
 </div>
@@ -1834,7 +1834,7 @@ Contract might receive/hold ETH as part of the maintenance process.
 </div>
 <div className="px-4">
 
-See [`IERC165.supportsInterface`](utils#IERC165-supportsInterface-bytes4-).
+See [`IERC165.supportsInterface`](/contracts/4.x/api/utils#IERC165-supportsInterface-bytes4-).
 
 </div>
 </div>
@@ -2147,7 +2147,7 @@ an operation where the timelock is the target and the data is the ABI-encoded ca
 </div>
 <div className="px-4">
 
-See [`IERC721Receiver.onERC721Received`](token/ERC721#IERC721Receiver-onERC721Received-address-address-uint256-bytes-).
+See [`IERC721Receiver.onERC721Received`](/contracts/4.x/api/token/ERC721#IERC721Receiver-onERC721Received-address-address-uint256-bytes-).
 
 </div>
 </div>
@@ -2164,7 +2164,7 @@ See [`IERC721Receiver.onERC721Received`](token/ERC721#IERC721Receiver-onERC721Re
 </div>
 <div className="px-4">
 
-See [`IERC1155Receiver.onERC1155Received`](token/ERC1155#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-).
+See [`IERC1155Receiver.onERC1155Received`](/contracts/4.x/api/token/ERC1155#IERC1155Receiver-onERC1155Received-address-address-uint256-uint256-bytes-).
 
 </div>
 </div>
@@ -2181,7 +2181,7 @@ See [`IERC1155Receiver.onERC1155Received`](token/ERC1155#IERC1155Receiver-onERC1
 </div>
 <div className="px-4">
 
-See [`IERC1155Receiver.onERC1155BatchReceived`](token/ERC1155#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-).
+See [`IERC1155Receiver.onERC1155BatchReceived`](/contracts/4.x/api/token/ERC1155#IERC1155Receiver-onERC1155BatchReceived-address-address-uint256---uint256---bytes-).
 
 </div>
 </div>
@@ -4036,7 +4036,7 @@ Set the timelock.
 </div>
 <div className="px-4">
 
-See [`IERC165.supportsInterface`](utils#IERC165-supportsInterface-bytes4-).
+See [`IERC165.supportsInterface`](/contracts/4.x/api/utils#IERC165-supportsInterface-bytes4-).
 
 </div>
 </div>
@@ -4379,7 +4379,7 @@ Set the timelock.
 </div>
 <div className="px-4">
 
-See [`IERC165.supportsInterface`](utils#IERC165-supportsInterface-bytes4-).
+See [`IERC165.supportsInterface`](/contracts/4.x/api/utils#IERC165-supportsInterface-bytes4-).
 
 </div>
 </div>
@@ -4558,7 +4558,7 @@ Emitted when the timelock controller used for proposal execution is modified.
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 ```
 
-Extension of [`Governor`](#Governor) for voting weight extraction from an [`ERC20Votes`](token/ERC20#ERC20Votes) token, or since v4.5 an [`ERC721Votes`](token/ERC721#ERC721Votes) token.
+Extension of [`Governor`](#Governor) for voting weight extraction from an [`ERC20Votes`](/contracts/4.x/api/token/ERC20#ERC20Votes) token, or since v4.5 an [`ERC721Votes`](/contracts/4.x/api/token/ERC721#ERC721Votes) token.
 
 _Available since v4.3._
 
@@ -4932,7 +4932,7 @@ Machine-readable description of the clock as specified in EIP-6372.
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 ```
 
-Extension of [`Governor`](#Governor) for voting weight extraction from an [`ERC20Votes`](token/ERC20#ERC20Votes) token and a quorum expressed as a
+Extension of [`Governor`](#Governor) for voting weight extraction from an [`ERC20Votes`](/contracts/4.x/api/token/ERC20#ERC20Votes) token and a quorum expressed as a
 fraction of the total supply.
 
 _Available since v4.3._
@@ -5333,7 +5333,7 @@ _Available since v4.3._
 import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 ```
 
-Common interface for [`ERC20Votes`](token/ERC20#ERC20Votes), [`ERC721Votes`](token/ERC721#ERC721Votes), and other [`Votes`](#Votes)-enabled contracts.
+Common interface for [`ERC20Votes`](/contracts/4.x/api/token/ERC20#ERC20Votes), [`ERC721Votes`](/contracts/4.x/api/token/ERC721#ERC721Votes), and other [`Votes`](#Votes)-enabled contracts.
 
 _Available since v4.5._
 
@@ -5523,15 +5523,15 @@ decisions. In fact, voting units _must_ be delegated in order to count as actual
 delegate those votes to itself if it wishes to participate in decisions and does not have a trusted representative.
 
 This contract is often combined with a token contract such that voting units correspond to token units. For an
-example, see [`ERC721Votes`](token/ERC721#ERC721Votes).
+example, see [`ERC721Votes`](/contracts/4.x/api/token/ERC721#ERC721Votes).
 
 The full history of delegate votes is tracked on-chain so that governance protocols can consider votes as distributed
 at a particular block number to protect against flash loans and double voting. The opt-in delegate system makes the
 cost of this history tracking optional.
 
 When using this module the derived contract must implement [`Votes._getVotingUnits`](#Votes-_getVotingUnits-address-) (for example, make it return
-[`ERC721.balanceOf`](token/ERC721#ERC721-balanceOf-address-)), and can use [`Votes._transferVotingUnits`](#Votes-_transferVotingUnits-address-address-uint256-) to track a change in the distribution of those units (in the
-previous example, it would be included in [`ERC721._beforeTokenTransfer`](token/ERC721#ERC721-_beforeTokenTransfer-address-address-uint256-uint256-)).
+[`ERC721.balanceOf`](/contracts/4.x/api/token/ERC721#ERC721-balanceOf-address-)), and can use [`Votes._transferVotingUnits`](#Votes-_transferVotingUnits-address-address-uint256-) to track a change in the distribution of those units (in the
+previous example, it would be included in [`ERC721._beforeTokenTransfer`](/contracts/4.x/api/token/ERC721#ERC721-_beforeTokenTransfer-address-address-uint256-uint256-)).
 
 _Available since v4.5._
 
@@ -5831,7 +5831,7 @@ Returns an address nonce.
 </div>
 <div className="px-4">
 
-Returns the contract's [`EIP712`](utils#EIP712) domain separator.
+Returns the contract's [`EIP712`](/contracts/4.x/api/utils#EIP712) domain separator.
 
 </div>
 </div>

@@ -2,11 +2,11 @@
 title: Connecting to public test networks
 ---
 
-After you have [written your contracts](developing-smart-contracts), and [tried them out locally](deploying-and-interacting) and [tested them thoroughly](writing-automated-tests), it’s time to move to a persistent public testing environment, where you and your beta users can start interacting with your application.
+After you have [written your contracts](./developing-smart-contracts), and [tried them out locally](./deploying-and-interacting) and [tested them thoroughly](./writing-automated-tests), it’s time to move to a persistent public testing environment, where you and your beta users can start interacting with your application.
 
 We will use **public testing networks** (aka _testnets_) for this, which are networks that operate similar to the main Ethereum network, but where Ether has no value and is free to acquire - making them ideal for testing your contracts at no cost.
 
-In this guide, we will use our beloved [`Box` contract](developing-smart-contracts#box-contract), and deploy it to a testnet, while learning:
+In this guide, we will use our beloved [`Box` contract](./developing-smart-contracts#first-contract), and deploy it to a testnet, while learning:
 
 * [What test networks are available](#available-testnets)
 * [How to set up your project for working on a testnet](#connecting-a-project-to-a-public-network)
@@ -61,7 +61,7 @@ Make sure to keep your mnemonic secure. Do not commit secrets to version control
 Since we are using public nodes, we will need to sign all our transactions locally. We will configure the network with our mnemonic and an Alchemy endpoint.
 
 <Callout>
-This part assumes you have already set up a project. If you haven’t, head over to the guide on [Setting up a Solidity project](developing-smart-contracts#setting-up-a-solidity-project).
+This part assumes you have already set up a project. If you haven’t, head over to the guide on [Setting up a Solidity project](./developing-smart-contracts#setting-up-a-project).
 </Callout>
 
 We need to update our configuration file with a new network connection to the testnet. Here we will use Sepolia, but you can use whichever you want:
@@ -125,7 +125,7 @@ Armed with a funded account, let’s deploy our contracts to the testnet!
 
 ## Working on a testnet
 
-With a project configured to work on a public testnet, we can now finally [deploy our `Box` contract](:deploying-and-interacting#deploying-a-smart-contract). The command here is exactly the same as if you were on your [local development network](:deploying-and-interacting#local-blockchain), though it will take a few seconds to run as new blocks are mined.
+With a project configured to work on a public testnet, we can now finally [deploy our `Box` contract](./deploying-and-interacting#deploying-a-smart-contract). The command here is exactly the same as if you were on your [local development network](./deploying-and-interacting#setting-up-a-local-blockchain), though it will take a few seconds to run as new blocks are mined.
 
 ```console
 $ npx hardhat run --network sepolia scripts/deploy.js
@@ -141,7 +141,7 @@ You can see your contract on a block explorer such as [Etherscan](https://ethers
 You can check out the contract we deployed in the example above, along with all transactions sent to it, [here](https://sepolia.etherscan.io/address/0x1b99CCaCea0e4046db618770dEF72180F8138641).
 </Callout>
 
-You can also interact with your instance as you regularly would, either using the [console](:deploying-and-interacting#interacting-from-the-console), or [programmatically](:deploying-and-interacting#interacting-programatically).
+You can also interact with your instance as you regularly would, either using the [console](./deploying-and-interacting#interacting-from-the-console), or [programmatically](./deploying-and-interacting#interacting-programmatically).
 
 ```console
 $ npx hardhat console --network sepolia
@@ -162,4 +162,4 @@ Keep in mind that every transaction will cost some gas, so you will eventually n
 
 ## Next steps
 
-After thoroughly testing your application on a public testnet, you are ready for the last step on the development journey: [deploying your application in production](preparing-for-mainnet).
+After thoroughly testing your application on a public testnet, you are ready for the last step on the development journey: [deploying your application in production](./preparing-for-mainnet).
