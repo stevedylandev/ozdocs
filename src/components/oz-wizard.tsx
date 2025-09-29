@@ -26,31 +26,17 @@ interface OZWizardProps {
 	version?: string;
 }
 
-// Global flag to prevent multiple script loads
-let wizardScriptLoaded = false;
-
 function OZWizardComponent({ tab, lang, version }: OZWizardProps) {
 	const wizardRef = useRef<HTMLElement>(null);
 
 	useEffect(() => {
-		if (!wizardScriptLoaded) {
-			// Check if script is already in DOM
-			const existingScript = document.querySelector(
-				'script[src="https://wizard.openzeppelin.com/build/embed.js"]',
-			);
+		// Dynamically load the wizard script
+		const script = document.createElement("script");
+		script.src = "https://wizard.openzeppelin.com/build/embed.js";
+		script.async = true;
 
-			if (!existingScript) {
-				wizardScriptLoaded = true;
-
-				// Dynamically load the wizard script
-				const script = document.createElement("script");
-				script.src = "https://wizard.openzeppelin.com/build/embed.js";
-				script.async = true;
-
-				// Add script to head
-				document.head.appendChild(script);
-			}
-		}
+		// Add script to head
+		document.head.appendChild(script);
 	}, []);
 
 	return (
