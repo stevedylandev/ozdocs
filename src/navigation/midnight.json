@@ -41,7 +41,7 @@
           {
             "type": "page",
             "name": "AccessControl",
-            "url": "/contracts-compact/access-control"
+            "url": "/contracts-compact/accessControl"
           }
         ]
       },
@@ -85,7 +85,7 @@
       {
         "type": "page",
         "name": "AccessControl API",
-        "url": "/contracts-compact/api/access"
+        "url": "/contracts-compact/api/accessControl"
       },
       {
         "type": "page",
