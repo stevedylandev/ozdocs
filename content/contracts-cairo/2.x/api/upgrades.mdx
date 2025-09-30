@@ -6,19 +6,14 @@ import { UMBRELLA_VERSION } from "../utils/constants.js";
 
 This crate provides interfaces and utilities related to upgradeability.
 
-## [](#interfaces)Interfaces
-
-<Callout type='info'>
-Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_access` package. The references
-documented here are contained in the `openzeppelin_interfaces` package version `{{openzeppelin_interfaces_version}}`.
-</Callout>
+## Interfaces
 
 ### [](#IUpgradeable)`IUpgradeable` [toc] [#IUpgradeable]
 
-<APIGithubLinkHeader moduleName="IUpgradeable" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/interfaces/src/upgrades.cairo`} />
+<APIGithubLinkHeader moduleName="IUpgradeable" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/upgrades/src/interface.cairo`} />
 
 ```rust
-use openzeppelin_interfaces::upgrades::IUpgradeable;
+use openzeppelin_upgrades::interface::IUpgradeable;
 ```
 
 Interface of an upgradeable contract.
@@ -41,10 +36,10 @@ This function is usually protected by an [Access Control](../access) mechanism.
 
 ### [](#IUpgradeAndCall)`IUpgradeAndCall` [toc] [#IUpgradeAndCall]
 
-<APIGithubLinkHeader moduleName="IUpgradeAndCall" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/interfaces/src/upgrades.cairo`} />
+<APIGithubLinkHeader moduleName="IUpgradeAndCall" link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/upgrades/src/interface.cairo`} />
 
 ```rust
-use openzeppelin_interfaces::upgrades::IUpgradeAndCall;
+use openzeppelin_upgrades::interface::IUpgradeAndCall;
 ```
 
 Interface for an upgradeable contract that couples an upgrade with a function call in the upgraded context.

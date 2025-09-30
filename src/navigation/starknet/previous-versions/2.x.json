@@ -49,11 +49,6 @@
 			"children": [
 				{
 					"type": "page",
-					"name": "Interfaces",
-					"url": "/contracts-cairo/2.x/interfaces"
-				},
-				{
-					"type": "page",
 					"name": "Access Control",
 					"url": "/contracts-cairo/2.x/access"
 				},
@@ -167,9 +162,20 @@
 					]
 				},
 				{
-					"type": "page",
+					"type": "folder",
 					"name": "Universal Deployer Contract",
-					"url": "/contracts-cairo/2.x/udc"
+					"children": [
+						{
+							"type": "page",
+							"name": "Overview",
+							"url": "/contracts-cairo/2.x/udc"
+						},
+						{
+							"type": "page",
+							"name": "UDC Appchain Deployment",
+							"url": "/contracts-cairo/2.x/guides/deploy-udc"
+						}
+					]
 				},
 				{
 					"type": "page",

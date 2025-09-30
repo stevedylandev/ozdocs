@@ -6,22 +6,17 @@ import { UMBRELLA_VERSION } from "../utils/constants.js";
 
 This crate includes primitives for on-chain governance.
 
-## [](#interfaces)Interfaces
-
-<Callout type='info'>
-Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_access` package. The references
-documented here are contained in the `openzeppelin_interfaces` package version `{{openzeppelin_interfaces_version}}`.
-</Callout>
+## Interfaces
 
 ### `IGovernor` [toc] [#IGovernor]
 
 <APIGithubLinkHeader
   moduleName="IGovernor"
-  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/interfaces/src/governance/governor.cairo`}
+  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/governance/src/governor/interface.cairo`}
 />
 
 ```rust
-use openzeppelin_interfaces::governor::IGovernor;
+use openzeppelin_governance::governor::interface::IGovernor;
 ```
 
 Interface of a governor contract.
@@ -405,11 +400,11 @@ Emitted when a vote is cast with params.
 
 <APIGithubLinkHeader
   moduleName="IMultisig"
-  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/interfaces/src/governance/multisig.cairo`}
+  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/governance/src/multisig/interface.cairo`}
 />
 
 ```rust
-use openzeppelin_interfaces::multisig::IMultisig;
+use openzeppelin_governance::multisig::interface::IMultisig;
 ```
 
 Interface of a multisig contract.
@@ -773,11 +768,11 @@ Emitted when a new transaction is submitted with non-zero salt.
 
 <APIGithubLinkHeader
   moduleName="ITimelock"
-  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/interfaces/src/governance/timelock.cairo`}
+  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/governance/src/timelock/interface.cairo`}
 />
 
 ```rust
-use openzeppelin_interfaces::timelock::ITimelock;
+use openzeppelin_governance::timelock::interface::ITimelock;
 ```
 
 Interface of a timelock contract.
@@ -1031,11 +1026,11 @@ Emitted when the minimum delay for future operations is modified.
 
 <APIGithubLinkHeader
   moduleName="IVotes"
-  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/interfaces/src/governance/votes.cairo`}
+  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/governance/src/votes/interface.cairo`}
 />
 
 ```rust
-use openzeppelin_interfaces::votes::IVotes;
+use openzeppelin_governance::votes::interface::IVotes;
 ```
 
 Common interface for Votes-enabled contracts.

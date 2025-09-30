@@ -6,22 +6,17 @@ import { UMBRELLA_VERSION } from "../utils/constants.js";
 
 This crate includes primitives for financial systems.
 
-## [](#interfaces)Interfaces
-
-<Callout type='info'>
-Starting from version `3.x.x`, the interfaces are no longer part of the `openzeppelin_access` package. The references
-documented here are contained in the `openzeppelin_interfaces` package version `{{openzeppelin_interfaces_version}}`.
-</Callout>
+## Interfaces
 
 ### `IVesting` [toc] [#IVesting]
 
 <APIGithubLinkHeader
   moduleName="IVesting"
-  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/interfaces/src/finance/vesting.cairo`}
+  link={`https://github.com/OpenZeppelin/cairo-contracts/blob/${UMBRELLA_VERSION}/packages/finance/src/vesting/interface.cairo`}
 />
 
 ```rust
-use openzeppelin_interfaces::vesting::IVesting;
+use openzeppelin_finance::vesting::interface::IVesting;
 ```
 
 Common interface for contracts implementing the vesting functionality.
