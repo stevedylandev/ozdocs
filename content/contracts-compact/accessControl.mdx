@@ -1,5 +1,5 @@
 ---
-title: Access Control
+title: AccessControl
 ---
 
 {/* links */}
@@ -9,14 +9,14 @@ title: Access Control
 [FungibleToken]: ./fungibleToken.mdx
 [Ownable]: ./ownable.mdx
 [Initializable]: ./security#initializable
-[AccessControl]: api/accessControl.mdx#accessControl
+[AccessControl]: api/accessControl
 
-[assertOnlyRole]: api/access#AccessControl-assertOnlyRole
-[grantRole]: api/access#AccessControl-grantRole
-[_grantRole]: api/access#AccessControl-_grantRole
-[_unsafeGrantRole]: api/access#AccessControl-_unsafeGrantRole
-[revokeRole]: api/access#AccessControl-revokeRole
-[_setRoleAdmin]: api/access#AccessControl-_setRoleAdmin
+[assertOnlyRole]: api/accessControl#AccessControl-assertOnlyRole
+[grantRole]: api/accessControl#AccessControl-grantRole
+[_grantRole]: api/accessControl#AccessControl-_grantRole
+[_unsafeGrantRole]: api/accessControl#AccessControl-_unsafeGrantRole
+[revokeRole]: api/accessControl#AccessControl-revokeRole
+[_setRoleAdmin]: api/accessControl#AccessControl-_setRoleAdmin
 
 This module provides a role-based access control mechanism,
 where roles can be used to represent a set of permissions providing the flexibility to create different levels of account authorization.
@@ -50,12 +50,12 @@ Here’s a simple example of using `AccessControl` with [FungibleToken] to defin
 which allows accounts that have this role to create new tokens:
 
 ```ts
-pragma language_version >= 0.16.0;
+pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
@@ -93,12 +93,12 @@ which can be implemented by defining _multiple_ roles.
 Let's augment our FungibleToken example by also defining a 'burner' role, which lets accounts destroy tokens.
 
 ```ts
-pragma language_version >= 0.16.0;
+pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;
@@ -169,12 +169,12 @@ and in fact it is also its own admin, this role carries significant risk.
 Let’s take a look at the FungibleToken example, this time taking advantage of the default admin role:
 
 ```ts
-pragma language_version >= 0.16.0;
+pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/access-control/src/AccessControl"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   prefix AccessControl_;
-import "./node_modules/@openzeppelin-compact/fungible-token/src/FungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/FungibleToken"
   prefix FungibleToken_;
 
 export sealed ledger MINTER_ROLE: Bytes<32>;

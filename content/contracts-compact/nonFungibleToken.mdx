@@ -3,7 +3,7 @@ title: NonFungibleToken
 ---
 
 {/* links */}
-[non-fungible tokens]: https://docs.openzeppelin.com/contracts/5.x/tokens#different-kinds-of-tokens
+[non-fungible tokens]: ../contracts/5.x/tokens.mdx#different-kinds-of-tokens
 [EIP-721]: https://eips.ethereum.org/EIPS/eip-721
 [ERC-165]: https://eips.ethereum.org/EIPS/eip-165
 [Module/Contract Pattern]: ./extensibility#the-modulecontract-pattern
@@ -58,10 +58,10 @@ Import the NonFungibleToken module into the implementing contract.
 It’s recommended to prefix the module with `NonFungibleToken_` to avoid circuit signature clashes.
 
 ```typescript
-pragma language_version >= 0.16.0;
+pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/non-fungible-token/src/NonFungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/NonFungibleToken"
   prefix NonFungibleToken_;
 
 constructor(name: Opaque<"string">, symbol: Opaque<"string">) {
@@ -93,10 +93,10 @@ The following example is a simple non-fungible token contract that mints an NFT 
 ```typescript
 // SimpleNonFungibleToken.compact
 
-pragma language_version >= 0.16.0;
+pragma language_version >= {{compact_language_version}};
 
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/non-fungible-token/src/NonFungibleToken"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/token/NonFungibleToken"
   prefix NonFungibleToken_;
 
 constructor(
