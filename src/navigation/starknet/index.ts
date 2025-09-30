@@ -1,6 +1,6 @@
+import type { NavigationNode } from "../types";
 import currentData from "./current.json";
 import twoXData from "./previous-versions/2.x.json";
-import type { NavigationNode } from "../types";
 
 const current = currentData as NavigationNode[];
 const previousVersions: NavigationNode[] = [twoXData as NavigationNode];
