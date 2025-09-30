@@ -39,8 +39,7 @@ The latest version of the UDC available in the `openzeppelin_presets` package wa
 If you are using a different compiler version, you need to make sure the class hash is the same as the one above in order to keep the same address across all networks.
 </Callout>
 
-
-
+<Callout type='info'>
 To avoid potential issues by using a different compiler version, you can directly import the contract class deployed on Starknet mainnet and declare it on your appchain. At
 the time of writing, this is not easily achievable with the `sncast` tool, but you can leverage `[starkli](https://book.starkli.rs/declaring-classes)` to do it.
 
@@ -58,6 +57,7 @@ This will output a `udc.json` file that you can use to declare the UDC on your a
 ```bash
 starkli declare udc.json --rpc <rpc-url>
 ```
+</Callout>
 
 
 ## Madara Appchains
@@ -213,7 +213,7 @@ sncast -p <profile-name> declare \
 ```
 
 <Callout>
-If you followed the [Note on the UDC final address](#note_on_the_udc_final_address) section, your declared class hash should be
+If you followed the [Note on the UDC final address](#note-on-the-udc-final-address) section, your declared class hash should be
 `0x01b2df6d8861670d4a8ca4670433b2418d78169c2947f46dc614e69f333745c8`.
 </Callout>
 
@@ -229,7 +229,7 @@ sncast call \
   --arguments '<udc-class-hash>'
 ```
 
-If the UDC class hash is the same as the one in the [Note on the UDC final address](#note_on_the_udc_final_address) section,
+If the UDC class hash is the same as the one in the [Note on the UDC final address](#note-on-the-udc-final-address) section,
 the output should be `0x2ceed65a4bd731034c01113685c831b01c15d7d432f71afb1cf1634b53a2125`.
 
 #### Deploying the UDC

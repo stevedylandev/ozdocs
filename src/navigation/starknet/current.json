@@ -169,9 +169,20 @@
 				]
 			},
 			{
-				"type": "page",
+				"type": "folder",
 				"name": "Universal Deployer Contract",
-				"url": "/contracts-cairo/alpha/udc"
+				"children": [
+					{
+						"type": "page",
+						"name": "Overview",
+						"url": "/contracts-cairo/alpha/udc"
+					},
+					{
+						"type": "page",
+						"name": "UDC Appchain Deployment",
+						"url": "/contracts-cairo/alpha/guides/deploy-udc"
+					}
+				]
 			},
 			{
 				"type": "page",
