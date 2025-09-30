@@ -11,7 +11,7 @@
 	{
 		"type": "page",
 		"name": "Wizard",
-		"url": "/contracts-cairo/alpha/alpha/wizard"
+		"url": "/contracts-cairo/alpha/wizard"
 	},
 	{
 		"type": "folder",

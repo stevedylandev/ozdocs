@@ -1,5 +1,6 @@
 "use client";
 
+import { latestStable } from "content/contracts-cairo/latest-versions";
 import { Callout } from "fumadocs-ui/components/callout";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,7 +18,7 @@ export function VersionBanner() {
 	// Define current versions for each ecosystem
 	const currentVersions: Record<string, { version: string; path: string }> = {
 		contracts: { version: "5.x", path: "/contracts/5.x" },
-		"cairo-contracts": { version: "latest", path: "/cairo-contracts" },
+		"cairo-contracts": { version: latestStable, path: "/cairo-contracts" },
 		"contracts-stylus": { version: "latest", path: "/contracts-stylus" },
 		"stellar-contracts": { version: "latest", path: "/stellar-contracts" },
 		"substrate-runtimes": { version: "latest", path: "/substrate-runtimes" },
