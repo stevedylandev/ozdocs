@@ -3,7 +3,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins";
 import remarkReplace from "@/lib/remark-replace";
-import { REPLACEMENTS as cairoContractReplacements } from "content/contracts-cairo/utils/replacements";
+import { CAIRO_REPLACEMENTS as cairoContractReplacements } from "content/contracts-cairo/cairo-replacements";
 
 // You can customise Zod schemas for frontmatter and `meta.json` here
 // see https://fumadocs.vercel.app/docs/mdx/collections#define-docs
@@ -31,8 +31,8 @@ export default defineConfig({
       [
 				remarkReplace,
 				[
-					cairoContractReplacements,
-				]
+					...cairoContractReplacements,
+				],
 			],
 		],
 		rehypePlugins: (v) => [rehypeKatex, ...v],
