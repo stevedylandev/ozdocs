@@ -34,11 +34,6 @@ status = 301
 # Contracts Cairo
 
 [[redirects]]
-from = "/contracts-cairo/3.0.0/*"
-to = "/contracts-cairo/alpha/:splat"
-status = 301
-
-[[redirects]]
 from = "/contracts-cairo/3.0.0-alpha.2/*"
 to = "/contracts-cairo/alpha/:splat"
 status = 301
