@@ -10,7 +10,7 @@ The best way to achieve this is by using `export sealed ledger` hash digests tha
 
 ```typescript
 import CompactStandardLibrary;
-import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   prefix AccessControl_;
 
 export sealed ledger MY_ROLE: Bytes<32>;
@@ -45,21 +45,22 @@ implement the `Initializable` module and set `DEFAULT_ADMIN_ROLE` in the `initia
 </Callout>
 
 <Callout type='info'>
-  For an overview of the module, read the [Access Control guide](../access).
+  For an overview of the module, read the [AccessControl guide](../accessControl).
 </Callout>
 
-## Core
-
-### AccessControl
-
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/access/AccessControl.compact)
+## AccessControl [toc] [#AccessControl]
+<APIGithubLinkHeader
+    moduleName="AccessControl"
+    link={`https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/access/AccessControl.compact`}
+/>
 
 ```ts
-import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl";
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/AccessControl";
 ```
 
 ---
 
+### Ledger [toc] [#AccessControl-Ledger]
 ### Ledger [!toc] [#AccessControl-Ledger]
 
 #### _operatorRoles [toc] [#AccessControl-_operatorRoles]
@@ -92,10 +93,12 @@ import "./node_modules/@openzeppelin-compact/contracts/src/access/AccessControl"
   The default `Bytes<32>` value mimicking a constant.
 </APIItemCompact>
 
+### Witnesses [toc] [#AccessControl-Witnesses]
 ### Witnesses [!toc] [#AccessControl-Witnesses]
 
 None.
 
+### Circuits [toc] [#AccessControl-Circuits]
 ### Circuits [!toc] [#AccessControl-Circuits]
 
 #### hasRole [toc] [#AccessControl-hasRole]

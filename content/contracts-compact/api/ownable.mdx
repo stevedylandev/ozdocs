@@ -8,18 +8,19 @@ This module provides the full Ownable module API.
 For an overview of the module, read the [Ownable guide](../ownable).
 </Callout>
 
-## Core
-
-### Ownable
-
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/access/Ownable.compact)
+## Ownable [toc] [#Ownable]
+<APIGithubLinkHeader
+    moduleName="Ownable"
+    link={`https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/access/Ownable.compact`}
+/>
 
 ```ts
-import "./node-modules/@openzeppelin-compact/contracts/src/access/Ownable";
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/Ownable";
 ```
 
 ---
 
+### Ledger [toc] [#Ownable-Ledger]
 ### Ledger [!toc] [#Ownable-Ledger]
 
 #### _owner [toc] [#Ownable-_owner]
@@ -32,10 +33,12 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/Ownable";
   Either a `ZswapCoinPublicKey` or `ContractAddress` representing the owner.
 </APIItemCompact>
 
+### Witnesses [toc] [#Ownable-Witnesses]
 ### Witnesses [!toc] [#Ownable-Witnesses]
 
 None.
 
+### Circuits [toc] [#Ownable-Circuits]
 ### Circuits [!toc] [#Ownable-Circuits]
 
 #### initialize [toc] [#Ownable-initialize]
@@ -194,14 +197,21 @@ None.
   * Contract is initialized.
 </APIItemCompact>
 
-### ZOwnablePK [#ZOwnablePK]
+---
 
-[View on GitHub](https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/access/ZOwnablePK.compact)
+## ZOwnablePK [toc] [#ZOwnablePK]
+<APIGithubLinkHeader
+    moduleName="ZOwnablePK"
+    link={`https://github.com/OpenZeppelin/compact-contracts/blob/main/contracts/src/access/ZOwnablePK.compact`}
+/>
 
 ```ts
-import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
+import "./compact-contracts/node_modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
 ```
 
+---
+
+### Ledger [toc] [#ZOwnablePK-ledger]
 ### Ledger [!toc] [#ZOwnablePK-ledger]
 
 #### _ownerCommitment [toc] [#ZOwnablePK-_ownerCommitment]
@@ -244,6 +254,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
   It is immutable after initialization.
 </APIItemCompact>
 
+### Witnesses [toc] [#ZOwnablePK-witnesses]
 ### Witnesses [!toc] [#ZOwnablePK-witnesses]
 
 #### wit_secretNonce [toc] [#ZOwnablePK-wit_secretNonce]
@@ -259,6 +270,7 @@ import "./node-modules/@openzeppelin-compact/contracts/src/access/ZOwnablePK";
   Users are encouraged to rotate this value on ownership changes.
 </APIItemCompact>
 
+### Circuits [toc] [#ZOwnablePK-circuits]
 ### Circuits [!toc] [#ZOwnablePK-circuits]
 
 #### initialize [toc] [#ZOwnablePK-initialize]

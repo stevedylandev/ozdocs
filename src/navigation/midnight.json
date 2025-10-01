@@ -35,13 +35,13 @@
 				"children": [
 					{
 						"type": "page",
-						"name": "Access Control",
-						"url": "/contracts-compact/access"
+						"name": "Ownable",
+						"url": "/contracts-compact/ownable"
 					},
 					{
 						"type": "page",
-						"name": "Ownable",
-						"url": "/contracts-compact/ownable"
+						"name": "AccessControl",
+						"url": "/contracts-compact/accessControl"
 					}
 				]
 			},
@@ -84,8 +84,8 @@
 		"children": [
 			{
 				"type": "page",
-				"name": "Access API",
-				"url": "/contracts-compact/api/access"
+				"name": "AccessControl API",
+				"url": "/contracts-compact/api/accessControl"
 			},
 			{
 				"type": "page",
