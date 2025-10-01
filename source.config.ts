@@ -31,7 +31,10 @@ export default defineConfig({
 		remarkPlugins: [
 			remarkMath,
 			remarkMdxMermaid,
-			[remarkReplace, [cairoContractReplacements, compactContractReplacements]],
+			[
+				remarkReplace,
+				[...cairoContractReplacements, compactContractReplacements],
+			],
 		],
 		rehypePlugins: (v) => [rehypeKatex, ...v],
 	},
