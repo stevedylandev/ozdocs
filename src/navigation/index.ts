@@ -2,7 +2,7 @@ import arbitrumStylusData from "./arbitrum-stylus.json";
 import ethereumEvmData from "./ethereum-evm.json";
 import midnightData from "./midnight.json";
 import polkadotData from "./polkadot.json";
-import starknetData from "./starknet.json";
+import starknetData from "./starknet";
 import stellarData from "./stellar.json";
 import type { NavigationNode, NavigationTree } from "./types";
 import uniswapData from "./uniswap.json";
