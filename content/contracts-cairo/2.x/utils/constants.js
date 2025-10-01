@@ -1,18 +1,19 @@
 export const UMBRELLA_VERSION = "2.0.0";
+export const CLASS_HASH_SCARB_VERSION = "2.11.4";
 
 export const CLASS_HASHES = {
 	AccountUpgradeableClassHash:
-		"0x002de258cce5b9e160bf83956b09f982059582469f7e6fad07b438128317d029",
+		"0x079a9a12fdfa0481e8d8d46599b90226cd7247b2667358bb00636dd864002314",
 	ERC20UpgradeableClassHash:
-		"0x07802658d99373a4002434cbdc8897d1936c6b1beea48af0cc3b5574707f8d92",
+		"0x065daa9c6005dcbccb0571ffdf530e2e263d1ff00eac2cbd66b2d0fa0871dafa",
 	ERC721UpgradeableClassHash:
-		"0x04080084ac1ba5a26b4638ac7ca2ff009a9a9b86bf6db5df05e96c90aa143df5",
+		"0x06d1cd9d8c2008d36bd627e204c3e5f565d4e632de4e50b36d2388c7ba7a64ce",
 	ERC1155UpgradeableClassHash:
-		"0x06c8912d4397bb25c73a571bced14cedb959a7caa40b76fb0ce19a57d4a7a9c0",
+		"0x036d453774916578336db8f5f18257f0211011270a5c31adf3a2bd86416943b7",
 	EthAccountUpgradeableClassHash:
-		"0x07f54a43da3f7beb5099c87f5627b7fba5f31c7a704cce57f8fb73287c1ea3be",
+		"0x070177fca30a0a9025465f16f8174d4ea220f61bf44cb1beecb89459fe966285",
 	UniversalDeployerClassHash:
-		"0x037f5901deb2b20bf5b2ddb04f6c770a7c5581edd68aa49f199cf74dfaf03c06",
+		"0x01b2df6d8861670d4a8ca4670433b2418d78169c2947f46dc614e69f333745c8",
 	VestingWalletClassHash:
-		"0x062050f8eb6942d067d9d6fc6c2d01aaedbee284f339e58196d5a3bd3d4d6c6f",
+		"0x010a786d4e5f74d68e0a500aeadbf7a81486f069c06afa242a050a1a09ac42f0",
 };
