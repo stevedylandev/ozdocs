@@ -1,5 +1,10 @@
 [
 	{
+		"type": "page",
+		"name": "Getting Started",
+		"url": "/contracts-cairo"
+	},
+	{
 		"type": "separator",
 		"name": "Starknet Contracts"
 	},
