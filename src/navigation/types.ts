@@ -8,6 +8,7 @@ export interface NavigationPage {
 export interface NavigationFolder {
 	type: "folder";
 	name: string;
+	defaultOpen?: boolean;
 	index?: NavigationPage;
 	children: NavigationNode[];
 }
