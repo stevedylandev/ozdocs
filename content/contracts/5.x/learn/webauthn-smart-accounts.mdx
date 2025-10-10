@@ -8,12 +8,12 @@ Account abstraction is becoming a vital tool to advance onchain technology for e
 
 In this tutorial we'll show you how you can build fullstack application that allows users to create smart accounts with WebAuthn passkeys and conduct an example user operation like minting an NFT.
 
-## Prequisites
+## Prerequisites
 
 Before we get started make sure you have the following installed
 
 - [`Node.js`](https://nodejs.org/en/download)
-- [`pmpm`](https://pnpm.io/installation)
+- [`pnpm`](https://pnpm.io/installation)
 - [`Foundry`](https://getfoundry.sh/introduction/installation)
 
 Once you have confirmed those are all installed, let's make sure we have a wallet setup with Foundry. If you already have one setup and funded with testnet eth, you can skip this part.
@@ -44,7 +44,7 @@ For context our final project will look something like this
 ```
 .
 └── contracts // Smart contracts
-└── server // Secure server enviornment
+└── server // Secure server environment
 └── shared // Shared addresses and ABIs
 └── client // Web UI
 ```
@@ -56,7 +56,7 @@ mkdir webauthn-tutorial
 cd webauthn-tutorial
 ```
 
-With the initial structure setup we can move on to intializing the different projects.
+With the initial structure setup we can move on to initializing the different projects.
 
 ## Contracts
 
@@ -1104,7 +1104,7 @@ export PRIVATE_KEY=$(cast wallet private-key --account sepolia)
 ```
 
 <Callout>
-  It is highly recommend to use an RPC URL that will be performant and not rate limited. Make a free one at DRPC.org or Alchemy!
+  It is highly recommended to use an RPC URL that will be performant and not rate limited. Make a free one at DRPC.org or Alchemy!
 </Callout>
 
 One last thing we need to do is edit the `server/wrangler.jsonc` file by uncommenting the `	"compatibility_flags"` field like so:
@@ -1964,4 +1964,4 @@ You should be able to visit `http://localhost:5173` and click on the `Create Acc
 
 ## Next Steps
 
-This tutorial is just scraping the surface of what is possible with OpenZeppelin account abstraction. With `AccountWebAuthn.sol` we could customize the logic and build custom use cases such as multifactor authentication, social recovery, time based controls, and more! We would highly encourage you to check out what other pieces you can add into Accounts with the [Wizard](https://wizard.openzeppelin.com) under the `Accounts` tab.
+This tutorial is just scratching the surface of what is possible with OpenZeppelin account abstraction. With `AccountWebAuthn.sol` we could customize the logic and build custom use cases such as multifactor authentication, social recovery, time based controls, and more! We would highly encourage you to check out what other pieces you can add into Accounts with the [Wizard](https://wizard.openzeppelin.com) under the `Accounts` tab.
