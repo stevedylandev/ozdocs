@@ -1085,6 +1085,11 @@
 	{
 		"type": "folder",
 		"name": "Monitor",
+		"index": {
+			"type": "page",
+			"name": "Overview",
+			"url": "/monitor"
+		},
 		"children": [
 			{
 				"type": "page",
