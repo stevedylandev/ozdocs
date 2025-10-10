@@ -69,13 +69,8 @@ status = 301
 # Contracts Cairo
 
 [[redirects]]
-from = "/contracts-cairo/3.0.0-alpha.2/*"
-to = "/contracts-cairo/alpha/:splat"
-status = 301
-
-[[redirects]]
 from = "/contracts-cairo/3.0.0-alpha.1/*"
-to = "/contracts-cairo/alpha/:splat"
+to = "https://old-docs.openzeppelin.com/contracts-cairo/3.0.0-alpha.1/:splat"
 status = 301
 
 [[redirects]]
