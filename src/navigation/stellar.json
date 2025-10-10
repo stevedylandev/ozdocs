@@ -128,16 +128,6 @@
 			},
 			{
 				"type": "page",
-				"name": "EVM Integration",
-				"url": "/relayer/evm"
-			},
-			{
-				"type": "page",
-				"name": "Solana Integration",
-				"url": "/relayer/solana"
-			},
-			{
-				"type": "page",
 				"name": "Stellar Integration",
 				"url": "/relayer/stellar"
 			},
