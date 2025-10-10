@@ -780,6 +780,11 @@
 				"type": "page",
 				"name": "Preparing for mainnet",
 				"url": "/contracts/5.x/learn/preparing-for-mainnet"
+			},
+			{
+				"type": "page",
+				"name": "WebAuthn Smart Accounts",
+				"url": "/contracts/5.x/learn/webauthn-smart-accounts"
 			}
 		]
 	},
