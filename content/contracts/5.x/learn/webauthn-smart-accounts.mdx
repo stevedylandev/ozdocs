@@ -4,7 +4,9 @@ title: WebAuthn Smart Accounts
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-Account abstraction is becoming a vital tool to advance onchain technology for everyday users, making it easier to create and use a wallet without needing to handle a private key. One of the most popular forms of this is through [Passkeys](https://www.webauthn.me/passkeys). One particular schema of passkey signers is WebAuthn, a standard that is used across multiple devices and ecosystems. OpenZeppelin has created a `WebAuthn.sol` contract that can be used to create smart accounts using this signature standard. The result is a powerful and secure experience using biometrics and industry standards of cryptography.
+Account abstraction is becoming a vital tool to advance onchain technology for everyday users, making it easier to create and use a wallet without needing to handle a private key. One of the most popular forms of this is through [Passkeys](https://www.webauthn.me/passkeys), which use the WebAuthn standard to create cryptographic [Authentication Assertions](https://www.w3.org/TR/webauthn-2/#sctn-verifying-assertion) across multiple devices and ecosystems.
+
+OpenZeppelin's `WebAuthn.sol` contract enables smart accounts to verify these WebAuthn assertions onchain. This creates a powerful and secure user experience that leverages biometrics and industry-standard cryptography for wallet interactions.
 
 In this tutorial we'll show you how you can build fullstack application that allows users to create smart accounts with WebAuthn passkeys and conduct an example user operation like minting an NFT.
 
