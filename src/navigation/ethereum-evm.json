@@ -785,7 +785,7 @@
 	},
 	{
 		"type": "separator",
-		"name": "Tools"
+		"name": "Open Source Tools"
 	},
 	{
 		"type": "folder",
@@ -836,11 +836,6 @@
 				"type": "page",
 				"name": "Solana Integration",
 				"url": "/relayer/solana"
-			},
-			{
-				"type": "page",
-				"name": "Stellar Integration",
-				"url": "/relayer/stellar"
 			},
 			{
 				"type": "folder",
