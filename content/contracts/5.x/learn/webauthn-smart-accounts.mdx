@@ -142,7 +142,13 @@ contract AccountWebAuthn is
 }
 ```
 
-Let's go over some of the details we have going on. First we've imported some of the Account modules and extensions we need for things like ERC721 or ERC1155 support, as well as using ERC7821 for authorized execution. Since we'll be using a factory to make accounts we don't want to use the constructor, however the `P256` signer does require a valid key when being setup. To bypass this we'll simply pass in a dummy public key and then setup an initializer function to set the signer after the fact. Once it's initialized it won't be updated again.
+Let's break down the key components of our WebAuthn account implementation:
+
+Our contract inherits from `Account.sol`, which provides the core ERC-4337 functionality, along with `EIP712.sol` for typed data signatures. We also include `ERC721Holder.sol` and `ERC1155Holder.sol` to enable the account to receive NFTs and multi-tokens. The `ERC7739.sol` extension enables readable typed signatures that prevent replay attacks, while `ERC7821.sol` provides the minimal batch executor interface for transaction batching.
+
+The account uses a factory pattern with minimal proxies (like `Clones.sol`) for gas-efficient deployment. Since each account is deployed as a proxy, we use an initializer function instead of a constructor to set up the account's state after deployment.
+
+WebAuthn verification relies on `P256.sol` elliptic curve operations, which require a valid public key during contract construction. To work around this factory pattern constraint, we provide a dummy public key in the constructor and set the real WebAuthn public key through the `initializeWebAuthn` function. Once initialized, the signer cannot be changed.
 
 Now paste the following code into `AccountFactory.sol`:
 
