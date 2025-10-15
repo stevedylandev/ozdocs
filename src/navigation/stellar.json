@@ -257,5 +257,351 @@
 				]
 			}
 		]
+	},
+	{
+		"type": "separator",
+		"name": "Open Source Tools"
+	},
+	{
+		"type": "folder",
+		"name": "Relayer",
+		"children": [
+			{
+				"type": "page",
+				"name": "Overview",
+				"url": "/relayer"
+			},
+			{
+				"type": "page",
+				"name": "Quickstart",
+				"url": "/relayer/quickstart"
+			},
+			{
+				"type": "folder",
+				"name": "Configuration",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/relayer/configuration"
+				},
+				"children": [
+					{
+						"type": "page",
+						"name": "Signers",
+						"url": "/relayer/configuration/signers"
+					},
+					{
+						"type": "page",
+						"name": "Network Configuration",
+						"url": "/relayer/network_configuration"
+					},
+					{
+						"type": "page",
+						"name": "Storage Configuration",
+						"url": "/relayer/configuration/storage"
+					}
+				]
+			},
+			{
+				"type": "page",
+				"name": "Stellar Integration",
+				"url": "/relayer/stellar"
+			},
+			{
+				"type": "folder",
+				"name": "API Reference",
+				"index": {
+					"type": "page",
+					"name": "Overview",
+					"url": "/relayer/api"
+				},
+				"children": [
+					{
+						"type": "folder",
+						"name": "Relayers",
+						"children": [
+							{
+								"type": "page",
+								"name": "List Relayers",
+								"url": "/relayer/api/listRelayers"
+							},
+							{
+								"type": "page",
+								"name": "Create Relayer",
+								"url": "/relayer/api/createRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Get Relayer",
+								"url": "/relayer/api/getRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Delete Relayer",
+								"url": "/relayer/api/deleteRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Update Relayer",
+								"url": "/relayer/api/updateRelayer"
+							},
+							{
+								"type": "page",
+								"name": "Get Relayer Balance",
+								"url": "/relayer/api/getRelayerBalance"
+							},
+							{
+								"type": "page",
+								"name": "RPC",
+								"url": "/relayer/api/rpc"
+							},
+							{
+								"type": "page",
+								"name": "Sign",
+								"url": "/relayer/api/sign"
+							},
+							{
+								"type": "page",
+								"name": "Sign Transaction",
+								"url": "/relayer/api/signTransaction"
+							},
+							{
+								"type": "page",
+								"name": "Sign Typed Data",
+								"url": "/relayer/api/signTypedData"
+							},
+							{
+								"type": "page",
+								"name": "Get Relayer Status",
+								"url": "/relayer/api/getRelayerStatus"
+							},
+							{
+								"type": "page",
+								"name": "Send Transaction",
+								"url": "/relayer/api/sendTransaction"
+							},
+							{
+								"type": "page",
+								"name": "List Transactions",
+								"url": "/relayer/api/listTransactions"
+							},
+							{
+								"type": "page",
+								"name": "Get Transaction by Nonce",
+								"url": "/relayer/api/getTransactionByNonce"
+							},
+							{
+								"type": "page",
+								"name": "Delete Pending Transactions",
+								"url": "/relayer/api/deletePendingTransactions"
+							},
+							{
+								"type": "page",
+								"name": "Get Transaction by ID",
+								"url": "/relayer/api/getTransactionById"
+							},
+							{
+								"type": "page",
+								"name": "Replace Transaction",
+								"url": "/relayer/api/replaceTransaction"
+							},
+							{
+								"type": "page",
+								"name": "Cancel Transaction",
+								"url": "/relayer/api/cancelTransaction"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Plugins",
+						"children": [
+							{
+								"type": "page",
+								"name": "Call Plugin",
+								"url": "/relayer/api/callPlugin"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Notifications",
+						"children": [
+							{
+								"type": "page",
+								"name": "List Notifications",
+								"url": "/relayer/api/listNotifications"
+							},
+							{
+								"type": "page",
+								"name": "Create Notification",
+								"url": "/relayer/api/createNotification"
+							},
+							{
+								"type": "page",
+								"name": "Get Notification",
+								"url": "/relayer/api/getNotification"
+							},
+							{
+								"type": "page",
+								"name": "Delete Notification",
+								"url": "/relayer/api/deleteNotification"
+							},
+							{
+								"type": "page",
+								"name": "Update Notification",
+								"url": "/relayer/api/updateNotification"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Signers",
+						"children": [
+							{
+								"type": "page",
+								"name": "List Signers",
+								"url": "/relayer/api/listSigners"
+							},
+							{
+								"type": "page",
+								"name": "Create Signer",
+								"url": "/relayer/api/createSigner"
+							},
+							{
+								"type": "page",
+								"name": "Get Signer",
+								"url": "/relayer/api/getSigner"
+							},
+							{
+								"type": "page",
+								"name": "Delete Signer",
+								"url": "/relayer/api/deleteSigner"
+							},
+							{
+								"type": "page",
+								"name": "Update Signer",
+								"url": "/relayer/api/updateSigner"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Metrics",
+						"children": [
+							{
+								"type": "page",
+								"name": "Scrape Metrics",
+								"url": "/relayer/api/scrape_metrics"
+							},
+							{
+								"type": "page",
+								"name": "List Metrics",
+								"url": "/relayer/api/list_metrics"
+							},
+							{
+								"type": "page",
+								"name": "Metric Detail",
+								"url": "/relayer/api/metric_detail"
+							}
+						]
+					},
+					{
+						"type": "folder",
+						"name": "Health",
+						"children": [
+							{
+								"type": "page",
+								"name": "Health",
+								"url": "/relayer/api/health"
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "page",
+				"name": "Project Structure",
+				"url": "/relayer/structure"
+			},
+			{
+				"type": "page",
+				"name": "Project Roadmap",
+				"url": "/relayer/roadmap"
+			},
+			{
+				"type": "page",
+				"name": "Plugins",
+				"url": "/relayer/plugins"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/relayer/changelog"
+			},
+			{
+				"type": "page",
+				"name": "Rust Book",
+				"url": "https://docs-v1-1--openzeppelin-relayer.netlify.app/openzeppelin_relayer/",
+				"external": true
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Monitor",
+		"children": [
+			{
+				"type": "page",
+				"name": "Quickstart",
+				"url": "/monitor/quickstart"
+			},
+			{
+				"type": "page",
+				"name": "Architecture Guide",
+				"url": "/monitor/architecture"
+			},
+			{
+				"type": "page",
+				"name": "Project Structure",
+				"url": "/monitor/project-structure"
+			},
+			{
+				"type": "page",
+				"name": "RPC Client",
+				"url": "/monitor/rpc"
+			},
+			{
+				"type": "page",
+				"name": "Custom scripts",
+				"url": "/monitor/scripts"
+			},
+			{
+				"type": "page",
+				"name": "Error Handling",
+				"url": "/monitor/error"
+			},
+			{
+				"type": "page",
+				"name": "Testing",
+				"url": "/monitor/testing"
+			},
+			{
+				"type": "page",
+				"name": "Contribution guidelines",
+				"url": "/monitor/contribution"
+			},
+			{
+				"type": "page",
+				"name": "Changelog",
+				"url": "/monitor/changelog"
+			},
+			{
+				"type": "page",
+				"name": "Technical Rust Documentation",
+				"url": "https://docs-v1-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/",
+				"external": true
+			}
+		]
 	}
 ]
