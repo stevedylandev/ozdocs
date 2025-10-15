@@ -64,6 +64,10 @@ export function useNavigationTree() {
 			switch (lastEcosystem) {
 				case "stellar":
 					return stellarTree;
+				case "ethereum":
+					return ethereumEvmTree;
+				default:
+					return ethereumEvmTree;
 			}
 		}
 	}
