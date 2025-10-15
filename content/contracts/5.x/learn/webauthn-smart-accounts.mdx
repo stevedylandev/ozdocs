@@ -1031,7 +1031,7 @@ In a real world application you might use a bundler instead of a server like we 
 
 Make sure you are in the root directory and run the following command
 
-```npm
+```
 pnpm create vite@latest client
 ```
 
@@ -1067,7 +1067,7 @@ This will be a helper function to help process `BigInt` types that can't be seri
 
 Move back out into the main root directory of the tutorial and then run the following command to create a [Hono]() app:
 
-```npm
+```
 pnpm create hono@latest server
 ```
 
@@ -1643,16 +1643,12 @@ app.post("/account/create", async (c) => {
 			args: [qx, qy],
 		});
 
-		// Generate random salt
-		const accountSalt =
-			`0x${Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString("hex")}` as Hex;
-
 		// Predict account address
 		const [predictedAddress] = await publicClient.readContract({
 			address: FACTORY_ADDRESS,
 			abi: accountFactoryAbi,
 			functionName: "predictAddress",
-			args: [accountSalt, initCallData],
+			args: [initCallData],
 		});
 
 		// Deploy the account
@@ -1660,7 +1656,7 @@ app.post("/account/create", async (c) => {
 			address: FACTORY_ADDRESS,
 			abi: accountFactoryAbi,
 			functionName: "cloneAndInitialize",
-			args: [accountSalt, initCallData],
+			args: [initCallData],
 		});
 
 		// Wait for transaction
@@ -1688,9 +1684,9 @@ app.post("/account/create", async (c) => {
 });
 ```
 
-In this endpoint the server parses the JSON body to grab the serialized coordinates of the public key, then we put together what we need to do in order to predict our address. We don't necessarily need this in our flow, but it's good to know how it works. The predicted address is calculated by creating `initCallData` from `initializeWebAuthn` function and the coordiantes we got from the client. We combine that with a random salt that's generated and then we can read the `predictAddress` from the factory.
+In this endpoint the server parses the JSON body to grab the serialized coordinates of the public key, then we put together what we need to do in order to predict our address. We don't necessarily need this in our flow, but it's good to know how it works. The predicted address is calculated by creating `initCallData` from `initializeWebAuthn` function and the coordiantes we got from the client.
 
-To actually deploy our smart account we'll take the same `initCallData` and `randomSalt` as arguments, then call `cloneAndInitialize` from the factory. This will return the smart account address, which we can then fund with our server wallet. Finally we can return the result of our process to the client.
+To actually deploy our smart account we'll take the same `initCallData` as the argument, then call `cloneAndInitialize` from the factory. This will return the smart account address, which we can then fund with our server wallet. Finally we can return the result of our process to the client.
 
 </Step>
 
