@@ -1,0 +1,63 @@
+[
+	{
+		"type": "separator",
+		"name": "OpenZeppelin Impact"
+	},
+	{
+		"type": "page",
+		"name": "Overview",
+		"url": "/impact"
+	},
+	{
+		"type": "folder",
+		"name": "Contracts",
+		"children": [
+			{
+				"type": "page",
+				"name": "A Decade of OpenZeppelin Contracts",
+				"url": "/impact/a-decade-of-openzeppelin-contracts"
+			},
+			{
+				"type": "page",
+				"name": "Powering Top Financial Institutions",
+				"url": "/impact/openzeppelin-contracts-for-financial-institutions"
+			},
+			{
+				"type": "page",
+				"name": "The Future of OpenZeppelin Contracts",
+				"url": "/impact/the-future-of-openzeppelin-contracts"
+			}
+		]
+	},
+	{
+		"type": "folder",
+		"name": "Innovation & Research",
+		"children": [
+			{
+				"type": "page",
+				"name": "Chain Abstraction at OpenZeppelin",
+				"url": "/impact/chain-abstraction-at-openzeppelin"
+			},
+			{
+				"type": "page",
+				"name": "Privacy at OpenZeppelin",
+				"url": "/impact/privacy-at-openzeppelin"
+			},
+			{
+				"type": "page",
+				"name": "Scalability at OpenZeppelin",
+				"url": "/impact/scalability-at-openzeppelin"
+			},
+			{
+				"type": "page",
+				"name": "Tokenization and Real World Assets",
+				"url": "/impact/tokenization-and-real-world-assets-at-openzeppelin"
+			}
+		]
+	},
+	{
+		"type": "page",
+		"name": "Advancing Security Standards",
+		"url": "/impact/advancing-security-standards-at-openzeppelin"
+	}
+]
