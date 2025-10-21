@@ -17,6 +17,7 @@ The OpenZeppelin Monitor includes a robust RPC client implementation with automa
 ### RPC URLs
 
 RPC endpoints are configured in the network configuration files with weights for load balancing:
+
 ```json
 {
   "rpc_urls": [
@@ -34,6 +35,8 @@ RPC endpoints are configured in the network configuration files with weights for
 }
 ```
 
+
+
 For high-availability setups, configure at least 3 (private) RPC endpoints with appropriate weights to ensure continuous operation even if multiple endpoints fail.
 
 
@@ -41,14 +44,14 @@ For high-availability setups, configure at least 3 (private) RPC endpoints with 
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `type_` | `String` | Type of endpoint (currently only "rpc" is supported) |
-| `url.type` | `String` | Secret type ("Plain", "Environment", or "HashicorpCloudVault") |
-| `url.value` | `String` | The RPC endpoint URL |
-| `weight` | `Number` | Load balancing weight (0-100) |
+| `**type_**` | `String` | Type of endpoint (currently only "rpc" is supported) |
+| `**url.type**` | `String` | Secret type ("Plain", "Environment", or "HashicorpCloudVault") |
+| `**url.value**` | `String` | The RPC endpoint URL |
+| `**weight**` | `Number` | Load balancing weight (0-100) |
 
 ## Endpoint Management
 
-The endpoint manager handles:
+The endpoint manager handles
 
 * Initial endpoint selection based on weights
 * Automatic rotation on failures
@@ -167,6 +170,7 @@ let retryable_client = create_retryable_http_client(
   base_http_client,
   Some(TransientErrorRetryStrategy), // Use custom or default retry strategy
 );
+
 ```
 
 ### Implementation Details
