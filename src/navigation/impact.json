@@ -1,7 +1,7 @@
 [
 	{
 		"type": "separator",
-		"name": "OpenZeppelin Impact"
+		"name": "OpenZeppelin's Impact"
 	},
 	{
 		"type": "page",
@@ -14,18 +14,18 @@
 		"children": [
 			{
 				"type": "page",
-				"name": "A Decade of OpenZeppelin Contracts",
-				"url": "/impact/a-decade-of-openzeppelin-contracts"
+				"name": "The Journey of OpenZeppelin Contracts",
+				"url": "/impact/contracts-journey"
 			},
 			{
 				"type": "page",
 				"name": "Powering Top Financial Institutions",
-				"url": "/impact/openzeppelin-contracts-for-financial-institutions"
+				"url": "/impact/contracts-for-financial-institutions"
 			},
 			{
 				"type": "page",
 				"name": "The Future of OpenZeppelin Contracts",
-				"url": "/impact/the-future-of-openzeppelin-contracts"
+				"url": "/impact/contracts-future"
 			}
 		]
 	},
@@ -35,29 +35,33 @@
 		"children": [
 			{
 				"type": "page",
-				"name": "Chain Abstraction at OpenZeppelin",
-				"url": "/impact/chain-abstraction-at-openzeppelin"
+				"name": "Privacy",
+				"url": "/impact/privacy"
 			},
 			{
 				"type": "page",
-				"name": "Privacy at OpenZeppelin",
-				"url": "/impact/privacy-at-openzeppelin"
+				"name": "Chain Abstraction",
+				"url": "/impact/chain-abstraction"
 			},
 			{
 				"type": "page",
-				"name": "Scalability at OpenZeppelin",
-				"url": "/impact/scalability-at-openzeppelin"
+				"name": "Tokenization & Real World Assets",
+				"url": "/impact/tokenization-and-real-world-assets"
 			},
 			{
 				"type": "page",
-				"name": "Tokenization and Real World Assets",
-				"url": "/impact/tokenization-and-real-world-assets-at-openzeppelin"
+				"name": "Scalability",
+				"url": "/impact/scalability"
 			}
 		]
 	},
 	{
 		"type": "page",
-		"name": "Advancing Security Standards",
-		"url": "/impact/advancing-security-standards-at-openzeppelin"
+		"name": "Security",
+		"url": "/impact/security-standards"
+	},
+	{
+		"type": "page",
+		"name": "Policy"
 	}
 ]
