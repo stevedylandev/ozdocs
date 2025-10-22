@@ -17,8 +17,8 @@ import {
 	WrenchIcon,
 } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
-import { Mermaid } from "@/components/mdx/mermaid";
 import { VersionedLink } from "@/components/link/versioned-link";
+import { Mermaid } from "@/components/mdx/mermaid";
 import { openapi } from "@/lib/openapi";
 import OZWizard from "./components/oz-wizard";
 import { APIGithubLinkHeader } from "./components/ui/api-reference/api-github-link-header";

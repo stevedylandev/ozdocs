@@ -265,11 +265,11 @@
 	{
 		"type": "folder",
 		"name": "Relayer",
-    "index": {
-      "type": "page",
-      "name": "Overview",
-      "url": "/relayer/1.1.x"
-    },
+		"index": {
+			"type": "page",
+			"name": "Overview",
+			"url": "/relayer/1.1.x"
+		},
 		"children": [
 			{
 				"type": "page",
