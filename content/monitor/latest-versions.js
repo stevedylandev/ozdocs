@@ -10,6 +10,22 @@ export const latestStable = "1.0.x";
 
 /** @type {VersionConfig[]} */
 export const allVersions = [
-  { label: "Development", value: "development", path: "/monitor", isStable: false },
-  { label: "v1.0.x (latest stable)", value: "1.0.x", path: "/monitor/1.0.x", isStable: true },
+	{
+		label: "Development",
+		value: "development",
+		path: "/monitor",
+		isStable: false,
+	},
+	{
+		label: "v1.1.x (latest stable)",
+		value: "1.1.x",
+		path: "/monitor/1.1.x",
+		isStable: true,
+	},
+	{
+		label: "v1.0.x",
+		value: "1.0.x",
+		path: "/monitor/1.0.x",
+		isStable: true,
+	},
 ];
