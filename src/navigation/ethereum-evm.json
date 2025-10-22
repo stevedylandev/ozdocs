@@ -1138,7 +1138,7 @@
 			},
 			{
 				"type": "page",
-				"name": "Technical Rust Documentation",
+				"name": "Rust Book",
 				"url": "https://docs-v1-0--openzeppelin-monitor.netlify.app/openzeppelin_monitor/",
 				"external": true
 			}
