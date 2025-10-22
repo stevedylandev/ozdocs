@@ -31,7 +31,7 @@ In the rapidly evolving world of blockchain technology, effective monitoring is 
 
 
 
-To get started immediately, see [Quickstart](/monitor/quickstart).
+To get started immediately, see [Quickstart](/monitor/1.0.x/quickstart).
 
 
 ## Installation
@@ -658,7 +658,7 @@ A Trigger defines actions to take when monitored conditions are met. Triggers ca
 | `**arguments**` | `Array[String]` | The arguments of the script (optional). |
 | `**timeout_ms**` | `Number` | The timeout of the script is important to avoid infinite loops during the execution. If the script takes longer than the timeout, it will be killed. |
 
-For more information about custom scripts, see [Custom Scripts Section](/monitor/scripts).
+For more information about custom scripts, see [Custom Scripts Section](/monitor/1.0.x/scripts).
 
 
 
@@ -1206,7 +1206,7 @@ You can find the contract specification through Stellar contract explorer tool. 
 
 Custom filters allow you to create sophisticated filtering logic for processing monitor matches. These filters act as additional validation layers that determine whether a match should trigger the execution of a trigger or not.
 
-For more information about custom scripts, see [Custom Scripts Section](/monitor/scripts).
+For more information about custom scripts, see [Custom Scripts Section](/monitor/1.0.x/scripts).
 
 
 
@@ -1397,21 +1397,21 @@ Specific Block Mode requires both parameters:
 
 ## Error Handling
 
-The monitor implements a comprehensive error handling system with rich context and tracing capabilities. For detailed information about error handling, see [Error Handling Guide](/monitor/error).
+The monitor implements a comprehensive error handling system with rich context and tracing capabilities. For detailed information about error handling, see [Error Handling Guide](/monitor/1.0.x/error).
 
 ## Important Considerations
 
 ### Performance Considerations
 
 * Monitor performance depends on network congestion and RPC endpoint reliability.
-  * View the [list of RPC calls](/monitor/rpc#list-of-rpc-calls) made by the monitor.
+  * View the [list of RPC calls](/monitor/1.0.x/rpc#list-of-rpc-calls) made by the monitor.
 * The `max_past_blocks` configuration is critical:
   * Calculate as: `(cron_interval_ms/block_time_ms) + confirmation_blocks + 1` (defaults to this calculation if not specified).
   * Example for 1-minute Ethereum cron: `(60000/12000) + 12 + 1 = 18 blocks`.
   * Too low settings may result in missed blocks.
 * Trigger conditions are executed sequentially based on their position in the trigger conditions array. Proper execution also depends on the number of available file descriptors on your system. To ensure optimal performance, it is recommended to increase the limit for open file descriptors to at least 2048 or higher. On Unix-based systems you can check the current limit by running `ulimit -n` and _***temporarily***_ increase it with `ulimit -n 2048`.
 * Since scripts are loaded at startup, any modifications to script files require restarting the monitor to take effect.
-* See performance considerations about custom scripts [here](/monitor/scripts#performance-considerations).
+* See performance considerations about custom scripts [here](/monitor/1.0.x/scripts#performance-considerations).
 
 ### Notification Considerations
 

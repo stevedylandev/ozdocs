@@ -112,7 +112,7 @@ For comprehensive details on configuring all supported signer types including:
 * Turnkey signers
 * Security best practices and troubleshooting
 
-See the dedicated [Signers Configuration](signers) guide.
+See the dedicated [Signers Configuration](/relayer/1.0.x/configuration/signers) guide.
 
 ### 2. Notifications
 
@@ -184,9 +184,9 @@ Available configuration fields
 | notification_id | String | ID of a configured notification object |
 | signer_id | String | ID of a configured signer |
 | network_type | String | Type of network the relayer will connect to (`evm`, `solana`) |
-| network | String | Network the relayer will connect to. Must match a network identifier defined in your network configuration files. See [Network Configuration](network_configuration) for details on defining networks. |
+| network | String | Network the relayer will connect to. Must match a network identifier defined in your network configuration files. See [Network Configuration](/relayer/1.0.x/network_configuration) for details on defining networks. |
 | custom_rpc_urls | list | Optional custom RPC URLs for the network. If provided, this will be used instead of the public RPC URLs. This is useful for using your own RPC node or a paid service provider. The first url of the list is going to be used as the default |
-| policies | list | Overrides default policies. Please refer to the [`Policies`](configuration#network-policies) table |
+| policies | list | Overrides default policies. Please refer to the [`Policies`](/relayer/1.0.x/configuration#network-policies) table |
 
 <a name="network_policies"></a>Policies
 | Network type | Policy | Type | Description |
@@ -266,7 +266,7 @@ When using custom RPC URLs:
 
 ### 4. Plugins
 
-For more information on how to write a plugin, please refer to the [Plugins](plugins) page.
+For more information on how to write a plugin, please refer to the [Plugins](/relayer/1.0.x/plugins) page.
 
 * `plugins` array, containing plugin configurations:
 
@@ -300,7 +300,7 @@ For comprehensive network configuration details, including:
 * Special tags and their behavior
 * Best practices and troubleshooting
 
-See the dedicated [Network Configuration](network-configuration) guide.
+See the dedicated [Network Configuration](/relayer/1.0.x/network_configuration) guide.
 
 ## Configuration File Example
 

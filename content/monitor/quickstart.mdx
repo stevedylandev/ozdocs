@@ -181,7 +181,7 @@ Copy the example environment file and customize it:
 cp .env.example .env
 ```
 
-For detailed configuration options, see [Basic Configuration](index#basic_configuration).
+For detailed configuration options, see [Basic Configuration](/monitor#basic_configuration).
 
 ## Practical Examples
 
@@ -560,7 +560,7 @@ cp examples/config/filters/stellar_filter_block_number.sh config/filters/stellar
 * The `contract_spec` field is optional for Stellar contracts. If not provided, the monitor automatically fetches the contract’s SEP-48 interface from the chain
 * You can explore Stellar contract interfaces using the [Stellar Contract Explorer](https://lab.stellar.org/smart-contracts/contract-explorer)
 * The expression `"out_min > 1000000000"` monitors swaps with minimum output over 1 billion tokens
-* Now, you can also filter by parameters event’s name (Stellar Protocol 23 has introduced this new feature). See this [section](index#stellar_specifics) for more details
+* Now, you can also filter by parameters event’s name (Stellar Protocol 23 has introduced this new feature). See this [section](/monitor#stellar_specifics) for more details
 
 </Callout>
 
@@ -627,13 +627,13 @@ Now that you have OpenZeppelin Monitor running, here are some suggestions for wh
 
 ### Testing and Validation
 
-* [Test your configuration](index#testing_your_configuration) against specific block numbers
+* [Test your configuration](/monitor#testing_your_configuration) against specific block numbers
 * Verify your RPC endpoints are working correctly
 * Test notification channels with small transactions
 
 ### Security and Best Practices
 
-* [Configure secure secret management](index#secret_management) for sensitive data
+* [Configure secure secret management](/monitor#secret_management) for sensitive data
 * Use environment variables or Hashicorp Cloud Vault for credentials
 * Regularly update your RPC endpoints and monitor configurations
 
@@ -646,10 +646,9 @@ Now that you have OpenZeppelin Monitor running, here are some suggestions for wh
 ### Getting Help
 
 * Check the [GitHub Issues](https://github.com/OpenZeppelin/openzeppelin-monitor/issues) for known problems
-* Review the [User Documentation](index) for detailed configuration options
+* Review the [User Documentation](/monitor) for detailed configuration options
 * Join the OpenZeppelin community for support
 
 
 
 Start with simple monitoring scenarios and gradually add complexity. This helps you understand how the system works and makes troubleshooting easier.
-
