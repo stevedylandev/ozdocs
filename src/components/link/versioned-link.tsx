@@ -10,11 +10,16 @@ import type { ComponentProps } from "react";
  *
  * Example:
  * - User on: /relayer/1.1.x/configuration
- * - Clicks link to: /relayer/signers
+ * - Clicks: /relayer/signers
  * - Navigates to: /relayer/1.1.x/signers (version preserved)
  */
 export function VersionedLink({ href, ...props }: ComponentProps<typeof Link>) {
 	const pathname = usePathname();
+
+	// If pathname is not available, render regular Link
+	if (!pathname) {
+		return <Link href={href} {...props} />;
+	}
 
 	// Only process string hrefs (not objects or undefined)
 	if (typeof href !== "string") {
