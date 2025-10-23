@@ -98,10 +98,27 @@ async function generateApiDocs(options) {
 		// Clean up previous runs
 		console.log("🧹 Cleaning up previous runs...");
 		await fs.rm(tempDir, { recursive: true, force: true });
+
+		// Backup index.mdx if it exists
+		const indexPath = path.join(apiOutputDir, "index.mdx");
+		let indexBackup = null;
+		try {
+			indexBackup = await fs.readFile(indexPath, "utf8");
+			console.log("💾 Backing up index.mdx...");
+		} catch {
+			// index.mdx doesn't exist, no need to backup
+		}
+
 		await fs.rm(apiOutputDir, { recursive: true, force: true });
 
 		// Create output directory
 		await fs.mkdir(apiOutputDir, { recursive: true });
+
+		// Restore index.mdx if it was backed up
+		if (indexBackup !== null) {
+			await fs.writeFile(indexPath, indexBackup, "utf8");
+			console.log("♻️  Restored index.mdx...");
+		}
 
 		// Clone the contracts repository
 		console.log("📦 Cloning contracts repository...");
