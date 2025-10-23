@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
-const fs = require("node:fs").promises;
-const path = require("node:path");
-const { execSync } = require("node:child_process");
+import fs from "node:fs/promises";
+import path from "node:path";
+import { execSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Parse command line arguments
 function parseArgs() {
