@@ -696,6 +696,9 @@ specific functions.
 The initial owner is set to the address provided by the deployer. This can
 later be changed with [`Ownable.transferOwnership`](#Ownable-transferOwnership-address-).
 
+Santas Pajamas
+Santas Pajamas
+
 This module is used through inheritance. It will make available the modifier
 `onlyOwner`, which can be applied to your functions to restrict their use to
 the owner.
@@ -1473,7 +1476,7 @@ to take effect. Default to 5 days.
 When the [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--) is scheduled to be increased, it goes into effect after the new delay has passed with
 the purpose of giving enough time for reverting any accidental change (i.e. using milliseconds instead of seconds)
 that may lock the contract. However, to avoid excessive schedules, the wait is capped by this function and it can
-be overrode for a custom [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--) increase scheduling.
+be overridden for a custom [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--) increase scheduling.
 
 <Callout type="warn">
 Make sure to add a reasonable amount of time while overriding this value, otherwise,
@@ -2251,7 +2254,7 @@ to take effect. Default to 5 days.
 When the [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--) is scheduled to be increased, it goes into effect after the new delay has passed with
 the purpose of giving enough time for reverting any accidental change (i.e. using milliseconds instead of seconds)
 that may lock the contract. However, to avoid excessive schedules, the wait is capped by this function and it can
-be overrode for a custom [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--) increase scheduling.
+be overridden for a custom [`AccessControlDefaultAdminRules.defaultAdminDelay`](#AccessControlDefaultAdminRules-defaultAdminDelay--) increase scheduling.
 
 <Callout type="warn">
 Make sure to add a reasonable amount of time while overriding this value, otherwise,
@@ -2967,7 +2970,7 @@ disabling any scheduling usage.
 <div className="px-4">
 
 Minimum setback for all delay updates, with the exception of execution delays. It
-can be increased without setback (and reset via [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) in the case event of an
+can be increased without setback (and reset via [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) in the event of an
 accidental increase). Defaults to 5 days.
 
 </div>
@@ -3100,7 +3103,7 @@ Changes to this value, including effect timepoint are notified in advance by the
 <div className="px-4">
 
 Get the access details for a given account for a given role. These details include the timepoint at which
-membership becomes active, and the delay applied to all operation by this user that requires this permission
+membership becomes active, and the delay applied to all operations by this user that requires this permission
 level.
 
 Returns:
@@ -3668,7 +3671,7 @@ Emits a [`IAccessManager.OperationCanceled`](#IAccessManager-OperationCanceled-b
 Consume a scheduled operation targeting the caller. If such an operation exists, mark it as consumed
 (emit an [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event and clean the state). Otherwise, throw an error.
 
-This is useful for contract that want to enforce that calls targeting them were scheduled on the manager,
+This is useful for contracts that want to enforce that calls targeting them were scheduled on the manager,
 with all the verifications that it implies.
 
 Emit a [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event.
@@ -4126,7 +4129,7 @@ disabling any scheduling usage.
 <div className="px-4">
 
 Minimum setback for all delay updates, with the exception of execution delays. It
-can be increased without setback (and reset via [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) in the case event of an
+can be increased without setback (and reset via [`AccessControl.revokeRole`](#AccessControl-revokeRole-bytes32-address-) in the event of an
 accidental increase). Defaults to 5 days.
 
 </div>
@@ -4259,7 +4262,7 @@ Changes to this value, including effect timepoint are notified in advance by the
 <div className="px-4">
 
 Get the access details for a given account for a given role. These details include the timepoint at which
-membership becomes active, and the delay applied to all operation by this user that requires this permission
+membership becomes active, and the delay applied to all operations by this user that requires this permission
 level.
 
 Returns:
@@ -4664,7 +4667,7 @@ Emits a [`IAccessManager.OperationCanceled`](#IAccessManager-OperationCanceled-b
 Consume a scheduled operation targeting the caller. If such an operation exists, mark it as consumed
 (emit an [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event and clean the state). Otherwise, throw an error.
 
-This is useful for contract that want to enforce that calls targeting them were scheduled on the manager,
+This is useful for contracts that want to enforce that calls targeting them were scheduled on the manager,
 with all the verifications that it implies.
 
 Emit a [`IAccessManager.OperationExecuted`](#IAccessManager-OperationExecuted-bytes32-uint32-) event.
